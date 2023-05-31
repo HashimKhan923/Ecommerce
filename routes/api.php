@@ -17,3 +17,54 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+//common routes start
+
+Route::post('/login', '\App\Http\Controllers\AuthController@login');
+Route::post('/forgetPassword', '\App\Http\Controllers\AuthController@forgetpassword');
+Route::post('/checktoken', '\App\Http\Controllers\AuthController@token_check');
+Route::post('/resetPassword', '\App\Http\Controllers\AuthController@reset_password');
+Route::get('/logout/{id}', 'App\Http\Controllers\AuthController@logout');
+
+
+// common routes ends
+
+/// admin Register
+Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@register');
+
+/// seller Register
+Route::post('/seller/register', 'App\Http\Controllers\Seller\AuthController@register');
+
+/// customer Register
+Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@register');
+
+
+Route::group(['middleware' => ['auth:api']], function(){
+
+       /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+       Route::get('/admin/profile/view/{id}', 'App\Http\Controllers\Admin\AuthController@profile_view');
+       Route::post('/admin/profile', 'App\Http\Controllers\Admin\AuthController@profile_update');
+       Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+       Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck'); 
+       Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
+
+        /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+        Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
+        Route::post('/seller/profile', 'App\Http\Controllers\Seller\AuthController@profile_update');
+        Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+        Route::get('/seller/profile/check', 'App\Http\Controllers\Seller\AuthController@usercheck'); 
+        Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
+
+        /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+        Route::get('/customer/profile/view/{id}', 'App\Http\Controllers\Customer\AuthController@profile_view');
+        Route::post('/customer/profile', 'App\Http\Controllers\Customer\AuthController@profile_update');
+        Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+        Route::get('/customer/profile/check', 'App\Http\Controllers\Customer\AuthController@usercheck'); 
+        Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
+
+});     
