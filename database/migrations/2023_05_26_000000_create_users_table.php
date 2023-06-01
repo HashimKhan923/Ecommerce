@@ -29,9 +29,6 @@ return new class extends Migration
             $table->decimal('balance')->nullable();
             $table->integer('banned')->default(0);
             $table->string('referral_code')->nullable();
-            $table->bigInteger('customer_package_id')->unsigned()->nullable();
-            $table->foreign('customer_package_id')->references('id')->on('customer_packages')->onDelete('cascade')->onUpdate('cascade'); 
-            $table->integer('remaining_uploads')->default(0);
             $table->boolean('is_active')->default(0);
             $table->rememberToken();
             $table->timestamps();
