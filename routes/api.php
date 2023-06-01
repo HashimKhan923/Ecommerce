@@ -51,6 +51,33 @@ Route::group(['middleware' => ['auth:api']], function(){
        Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck'); 
        Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
 
+
+
+                                       /// Category \\\
+
+        Route::group(['prefix' => '/admin/category/'], function() {
+            Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
+                // Route::get('edit/{id}','edit');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
+
+                                               /// Brand \\\
+
+        Route::group(['prefix' => '/admin/brand/'], function() {
+            Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
+                // Route::get('edit/{id}','edit');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
         /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');

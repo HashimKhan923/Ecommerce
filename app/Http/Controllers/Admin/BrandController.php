@@ -38,7 +38,7 @@ class BrandController extends Controller
 
     public function update(Request $request)
     {
-        $update = Category::where('id',$request->id)->first();
+        $update = Brand::where('id',$request->id)->first();
         $update->name = $request->name;
         if($request->file('logo')){
             $file= $request->file('logo');
@@ -58,7 +58,7 @@ class BrandController extends Controller
 
     public function delete($id)
     {
-        $file = Category::find($id);
+        $file = Brand::find($id);
 
         $BrandLogo = public_path('BrandLogo/'.$file->logo);
       if (File::exists($BrandLogo))

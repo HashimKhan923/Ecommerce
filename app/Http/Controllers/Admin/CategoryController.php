@@ -24,13 +24,13 @@ class CategoryController extends Controller
             $file= $request->file('banner');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('CategoryBanner'), $filename);
-            $new->thumbnail = $filename;
+            $new->banner = $filename;
         }
         if($request->file('icon')){
             $file= $request->file('icon');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('CategoryIcon'), $filename);
-            $new->thumbnail = $filename;
+            $new->icon = $filename;
         }
         $new->slug = $request->slug;
         $new->meta_title = $request->meta_title;
@@ -71,7 +71,7 @@ class CategoryController extends Controller
         $update->meta_description = $request->meta_description;
         $update->save();
 
-        $response = ['status'=>true,"message" => "New Category Added Successfully!"];
+        $response = ['status'=>true,"message" => "Category Updated Successfully!"];
         return response($response, 200);
 
     }
