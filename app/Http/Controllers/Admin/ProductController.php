@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
     {
         $new = new Product();
         $new->name = $request->name;
-        $new->added_by = $request->added_by;
+        $new->added_by = 'admin';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
         $new->year = $request->year;

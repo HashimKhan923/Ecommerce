@@ -4,37 +4,35 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Color;
+use App\Models\Size;
 
-class ColorController extends Controller
+class SizeController extends Controller
 {
     public function index()
     {
-      $Colors = Color::all();
+      $Sizes = Size::all();
 
-      return response()->json(['Colors'=>$Colors]);
+      return response()->json(['Sizes'=>$Sizes]);
     }
 
     public function create(Request $request)
     {
-        $new = new Color();
+        $new = new Size();
         $new->name = $request->name;
-        $new->code = $request->code;
         $new->save();
 
-        $response = ['status'=>true,"message" => "New Color Added Successfully!"];
+        $response = ['status'=>true,"message" => "New Size Added Successfully!"];
         return response($response, 200);
 
     }
 
     public function update(Request $request)
     {
-        $update = Color::where('id',$request->id)->first();
+        $update = Size::where('id',$request->id)->first();
         $update->name = $request->name;
-        $update->code = $request->code;
         $update->save();
 
-        $response = ['status'=>true,"message" => "Color Updated Successfully!"];
+        $response = ['status'=>true,"message" => "Size Updated Successfully!"];
         return response($response, 200);
 
     }
@@ -42,10 +40,10 @@ class ColorController extends Controller
 
     public function delete($id)
     {
-        $file = Color::find($id);
+        $file = Size::find($id);
         $file->delete();
 
-        $response = ['status'=>true,"message" => "Color Deleted Successfully!"];
+        $response = ['status'=>true,"message" => "Size Deleted Successfully!"];
         return response($response, 200);
     }
 }
