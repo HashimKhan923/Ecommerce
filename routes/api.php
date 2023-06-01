@@ -78,6 +78,19 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         });
 
+
+                                        /// Product \\\
+
+        Route::group(['prefix' => '/admin/product/'], function() {
+            Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
+                // Route::get('edit/{id}','edit');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
         /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');

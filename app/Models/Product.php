@@ -9,7 +9,8 @@ class Product extends Model
 {
     protected $casts = [
         'photos' => 'array',
-        'colors' => 'array',
+        'color_id' => 'array',
+        'size_id' => 'array',
         'tags' => 'array',
     ];
     use HasFactory;

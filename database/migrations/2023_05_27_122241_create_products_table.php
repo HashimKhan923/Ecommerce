@@ -28,8 +28,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price')->nullable();
             $table->integer('variant_product')->default(0);
-            $table->text('colors')->nullable();
-            $table->text('variations')->nullable();
+            $table->bigInteger('color_id')->unsigned()->nullable();
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('size_id')->unsigned()->nullable();
+            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('todays_deal')->default(0);
             $table->integer('published')->default(0);
             $table->integer('approved')->default(0);
