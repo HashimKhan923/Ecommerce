@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Validator;
+use App\Models\User;
+use Hash;
 
 class AuthController extends Controller
 {
