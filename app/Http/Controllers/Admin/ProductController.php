@@ -25,21 +25,21 @@ class ProductController extends Controller
         $new->category_id = $request->category_id;
         $new->year = $request->year;
         $new->brand_id = $request->brand_id;
-        // if($request->file('photos'))
-        // {
+        if($request->file('photos'))
+        {
             
-        //     foreach($request->photos as $photo)
-        //     { 
-        //         $file= $photo;
-        //         $filename= date('YmdHi').$file->getClientOriginalName();
-        //         $file->move(public_path('ProductGallery'), $filename);
-        //         $ProductGallery[] = $filename;
+            foreach($request->photos as $photo)
+            { 
+                $file= $photo;
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file->move(public_path('ProductGallery'), $filename);
+                $ProductGallery[] = $filename;
                 
-        //     }
+            }
 
-        //     $new->photos = $ProductGallery;
+            $new->photos = $ProductGallery;
 
-        // }
+        }
 
         if($request->file('thumbnail_img'))
         {
@@ -101,6 +101,7 @@ class ProductController extends Controller
     {
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
+        $update->added_by = 'admin';
         $update->added_by = $request->added_by;
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
