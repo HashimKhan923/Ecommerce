@@ -43,6 +43,13 @@ Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@
 
 Route::group(['middleware' => ['auth:api']], function(){
 
+
+});  
+
+
+
+
+
        /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
        Route::get('/admin/profile/view/{id}', 'App\Http\Controllers\Admin\AuthController@profile_view');
@@ -128,5 +135,3 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
         Route::get('/customer/profile/check', 'App\Http\Controllers\Customer\AuthController@usercheck'); 
         Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
-
-});     
