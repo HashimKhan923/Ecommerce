@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -31,8 +31,8 @@ class ProductController extends Controller
             foreach($request->photos as $photo)
             { 
                 $file= $photo;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('ProductGallery'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $ProductGallery[] = $filename;
                 
             }
@@ -44,8 +44,8 @@ class ProductController extends Controller
         if($request->file('thumbnail_img'))
         {
                 $file= $request->thumbnail_img;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('ProductThumbnail'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $new->thumbnail_img = $filename;
         }
         $new->tags = $request->tags;
@@ -76,8 +76,8 @@ class ProductController extends Controller
         if($request->file('meta_img'))
         {
                 $file= $request->meta_img;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('ProductMetaImage'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $new->meta_img = $filename;
         }
         $new->pdf = $request->pdf;
@@ -113,10 +113,10 @@ class ProductController extends Controller
 
            foreach($update->photos as $photosList)
            {
-            $DeletePhotos = public_path('ProductGallery/'.$photosList);
-            if (File::exists($DeletePhotos))
+            $DeletePhotos = $photosList;
+            if (Storage::exists($DeletePhotos))
             {
-                File::delete($DeletePhotos);
+                Storage::delete($DeletePhotos);
             }
       
            }     
@@ -125,8 +125,8 @@ class ProductController extends Controller
             foreach($request->photos as $photos)
             {
                 $file= $photos;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('ProductGallery'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $ProductGallery[] = $filename;
                 
             }
@@ -138,16 +138,16 @@ class ProductController extends Controller
         if($request->file('thumbnail_img'))
         {
 
-            $DeletePhoto = public_path('ProductThumbnail/'.$update->thumbnail_img);
-            if (File::exists($DeletePhoto))
+            $DeletePhoto = $update->thumbnail_img;
+            if (Storage::exists($DeletePhoto))
             {
-                File::delete($DeletePhoto);
+                Storage::delete($DeletePhoto);
             }
 
 
                 $file= $request->thumbnail_img;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('ProductThumbnail'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $update->thumbnail_img = $filename;
         }
         $update->tags = $request->tags;
@@ -178,16 +178,16 @@ class ProductController extends Controller
         if($request->file('meta_img'))
         {
 
-            $DeletePhoto = public_path('ProductMetaImage/'.$update->meta_img);
-            if (File::exists($DeletePhoto))
+            $DeletePhoto = $update->meta_img;
+            if (Storage::exists($DeletePhoto))
             {
-                File::delete($DeletePhoto);
+                Storage::delete($DeletePhoto);
             }
 
 
                 $file= $request->meta_img;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('ProductMetaImage'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $update->meta_img = $filename;
         }
         $update->pdf = $request->pdf;
@@ -213,10 +213,10 @@ class ProductController extends Controller
 
         foreach($file->photos as $photosList)
         {
-         $DeletePhotos = public_path('ProductGallery/'.$photosList);
-         if (File::exists($DeletePhotos))
+         $DeletePhotos = $photosList;
+         if (Storage::exists($DeletePhotos))
          {
-             File::delete($DeletePhotos);
+             Storage::delete($DeletePhotos);
          }
    
         }  
@@ -225,16 +225,16 @@ class ProductController extends Controller
 
 
 
-        $ProductThumbnail = public_path('ProductThumbnail/'.$file->thumbnail_img);
-      if (File::exists($ProductThumbnail))
+        $ProductThumbnail = $file->thumbnail_img;
+      if (Storage::exists($ProductThumbnail))
       {
-          File::delete($ProductThumbnail);
+          Storage::delete($ProductThumbnail);
       }
 
-      $ProductMetaImage = public_path('ProductMetaImage/'.$file->meta_img);
-      if (File::exists($ProductMetaImage))
+      $ProductMetaImage = $file->meta_img;
+      if (Storage::exists($ProductMetaImage))
       {
-          File::delete($ProductMetaImage);
+          Storage::delete($ProductMetaImage);
       }
 
       $file->delete();

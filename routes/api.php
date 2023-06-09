@@ -84,28 +84,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
 
 
-                                    /// Color \\\
 
-        Route::group(['prefix' => '/admin/color/'], function() {
-            Route::controller(App\Http\Controllers\Admin\ColorController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-            });
-         });
-
-
-                                    /// Size \\\
-
-        Route::group(['prefix' => '/admin/size/'], function() {
-            Route::controller(App\Http\Controllers\Admin\SizeController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-            });
-         });
 
 
                                         /// Product \\\
@@ -114,7 +93,18 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
                 Route::get('show','index');
                 Route::post('create','create');
-                // Route::get('edit/{id}','edit');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
+
+                                        /// Package \\\
+
+        Route::group(['prefix' => '/admin/package/'], function() {
+            Route::controller(App\Http\Controllers\Admin\PackageController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
                 Route::post('update','update');
                 Route::get('delete/{id}','delete');
             });

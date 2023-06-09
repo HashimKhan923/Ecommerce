@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -22,8 +22,8 @@ class BrandController extends Controller
         $new->name = $request->name;
         if($request->file('logo')){
             $file= $request->file('logo');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('BrandLogo'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->logo = $filename;
         }
         $new->slug = $request->slug;
@@ -41,9 +41,17 @@ class BrandController extends Controller
         $update = Brand::where('id',$request->id)->first();
         $update->name = $request->name;
         if($request->file('logo')){
+
+            $image_path = $update->logo;
+            if(Storage::exists($image_path))
+            {
+                Storage::delete($image_path);
+            }
+            
+
             $file= $request->file('logo');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('BrandLogo'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->logo = $filename;
         }
         $update->slug = $request->slug;
@@ -60,11 +68,11 @@ class BrandController extends Controller
     {
         $file = Brand::find($id);
 
-        $BrandLogo = public_path('BrandLogo/'.$file->logo);
-      if (File::exists($BrandLogo))
-      {
-          File::delete($BrandLogo);
-      }
+        $BrandLogo = $file->logo;
+        if (Storage::exists($BrandLogo)) {
+            // Delete the file
+            Storage::delete($BrandLogo);
+        }
 
       $file->delete();
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -22,14 +22,14 @@ class CategoryController extends Controller
         $new->name = $request->name;
         if($request->file('banner')){
             $file= $request->file('banner');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryBanner'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->banner = $filename;
         }
         if($request->file('icon')){
             $file= $request->file('icon');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryIcon'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->icon = $filename;
         }
         $new->slug = $request->slug;
@@ -48,22 +48,25 @@ class CategoryController extends Controller
         $update->name = $request->name;
         if($request->file('banner')){
 
-            $image_path = public_path('CategoryBanner/'.$update->banner);
-            File::delete($image_path);
+            $image_path = $update->banner;
+            if(Storage::exists($image_path))
+            {
+                Storage::delete($image_path);
+            }
 
             $file= $request->file('banner');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryBanner'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->banner = $filename;
 
         }
         if($request->file('icon')){
-            $image_path = public_path('CategoryIcon/'.$update->icon);
-            File::delete($image_path);
+            $image_path = $update->icon;
+            Storage::delete($image_path);
 
             $file= $request->file('icon');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryIcon'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->icon = $filename;
         }
         $update->slug = $request->slug;
@@ -80,16 +83,16 @@ class CategoryController extends Controller
     {
         $file = Category::find($id);
 
-        $CategoryBanner = public_path('CategoryBanner/'.$file->banner);
-      if (File::exists($CategoryBanner))
+        $CategoryBanner = $file->banner;
+      if (Storage::exists($CategoryBanner))
       {
-          File::delete($CategoryBanner);
+          Storage::delete($CategoryBanner);
       }
 
-      $CategoryIcon = public_path('CategoryIcon/'.$file->icon);
-      if (File::exists($CategoryIcon))
+      $CategoryIcon = $file->icon;
+      if (Storage::exists($CategoryIcon))
       {
-          File::delete($CategoryIcon);
+          Storage::delete($CategoryIcon);
       }
 
       $file->delete();
