@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('logo')->nullable();
             $table->string('time_name')->nullable();
             $table->integer('time_number')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

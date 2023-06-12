@@ -118,6 +118,32 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::get('/seller/profile/check', 'App\Http\Controllers\Seller\AuthController@usercheck'); 
         Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
 
+
+
+                                         /// Product \\\
+
+        Route::group(['prefix' => '/customer/product/'], function() {
+            Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
+                Route::get('show/{id}','index');
+                Route::post('create','create');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
+
+
+                                        /// Package \\\
+
+        Route::group(['prefix' => '/customer/package/'], function() {
+            Route::controller(App\Http\Controllers\Seller\PackageController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('subscribe','subscribe');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         Route::get('/customer/profile/view/{id}', 'App\Http\Controllers\Customer\AuthController@profile_view');
