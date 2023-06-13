@@ -44,109 +44,110 @@ Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@
 Route::group(['middleware' => ['auth:api']], function(){
 
 
+     /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+     Route::get('/admin/profile/view/{id}', 'App\Http\Controllers\Admin\AuthController@profile_view');
+     Route::post('/admin/profile', 'App\Http\Controllers\Admin\AuthController@profile_update');
+     Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+     Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck'); 
+     Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
+
+
+
+                                     /// Category \\\
+
+      Route::group(['prefix' => '/admin/category/'], function() {
+          Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
+              Route::get('show','index');
+              Route::post('create','create');
+              Route::post('update','update');
+              Route::get('delete/{id}','delete');
+          });
+      });
+
+
+                                             /// Brand \\\
+
+      Route::group(['prefix' => '/admin/brand/'], function() {
+          Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {
+              Route::get('show','index');
+              Route::post('create','create');
+              Route::post('update','update');
+              Route::get('delete/{id}','delete');
+          });
+      });
+
+
+
+
+
+                                      /// Product \\\
+
+      Route::group(['prefix' => '/admin/product/'], function() {
+          Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
+              Route::get('show','index');
+              Route::post('create','create');
+              Route::post('update','update');
+              Route::get('delete/{id}','delete');
+              Route::get('is_approved/{id}','is_approved');
+              Route::get('is_featured/{id}','is_featured');
+              Route::get('is_published/{id}','is_published');
+          });
+      });
+
+
+                                      /// Package \\\
+
+      Route::group(['prefix' => '/admin/package/'], function() {
+          Route::controller(App\Http\Controllers\Admin\PackageController::class)->group(function () {
+              Route::get('show','index');
+              Route::post('create','create');
+              Route::post('update','update');
+              Route::get('delete/{id}','delete');
+          });
+      });
+
+      /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+      Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
+      Route::post('/seller/profile', 'App\Http\Controllers\Seller\AuthController@profile_update');
+      Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+      Route::get('/seller/profile/check', 'App\Http\Controllers\Seller\AuthController@usercheck'); 
+      Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
+
+
+
+                                       /// Product \\\
+
+      Route::group(['prefix' => '/seller/product/'], function() {
+          Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
+              Route::get('show/{id}','index');
+              Route::post('create','create');
+              Route::post('update','update');
+              Route::get('delete/{id}','delete');
+              Route::get('is_published/{id}','is_published');
+          });
+      });
+
+
+
+                                      /// Package \\\
+
+      Route::group(['prefix' => '/seller/package/'], function() {
+          Route::controller(App\Http\Controllers\Seller\PackageController::class)->group(function () {
+              Route::get('show','index');
+              Route::post('subscribe','subscribe');
+
+          });
+      });
+
 });  
 
 
 
 
 
-       /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-       Route::get('/admin/profile/view/{id}', 'App\Http\Controllers\Admin\AuthController@profile_view');
-       Route::post('/admin/profile', 'App\Http\Controllers\Admin\AuthController@profile_update');
-       Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
-       Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck'); 
-       Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
-
-
-
-                                       /// Category \\\
-
-        Route::group(['prefix' => '/admin/category/'], function() {
-            Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-            });
-        });
-
-
-                                               /// Brand \\\
-
-        Route::group(['prefix' => '/admin/brand/'], function() {
-            Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-            });
-        });
-
-
-
-
-
-                                        /// Product \\\
-
-        Route::group(['prefix' => '/admin/product/'], function() {
-            Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-                Route::get('is_approved/{id}','is_approved');
-                Route::get('is_featured/{id}','is_featured');
-                Route::get('is_published/{id}','is_published');
-            });
-        });
-
-
-                                        /// Package \\\
-
-        Route::group(['prefix' => '/admin/package/'], function() {
-            Route::controller(App\Http\Controllers\Admin\PackageController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-            });
-        });
-
-        /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-        Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
-        Route::post('/seller/profile', 'App\Http\Controllers\Seller\AuthController@profile_update');
-        Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
-        Route::get('/seller/profile/check', 'App\Http\Controllers\Seller\AuthController@usercheck'); 
-        Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
-
-
-
-                                         /// Product \\\
-
-        Route::group(['prefix' => '/customer/product/'], function() {
-            Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
-                Route::get('show/{id}','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-                Route::get('is_published/{id}','is_published');
-            });
-        });
-
-
-
-                                        /// Package \\\
-
-        Route::group(['prefix' => '/customer/package/'], function() {
-            Route::controller(App\Http\Controllers\Seller\PackageController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('subscribe','subscribe');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-            });
-        });
+           
 
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -160,8 +161,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                     /// Home \\\
 
-        Route::group(['prefix' => '/customer/package/'], function() {
+        Route::group(['prefix' => '/'], function() {
             Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
-                Route::get('show','index');
+                Route::get('','index');
             });
         });
