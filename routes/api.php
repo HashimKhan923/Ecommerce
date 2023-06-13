@@ -95,6 +95,9 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::post('create','create');
                 Route::post('update','update');
                 Route::get('delete/{id}','delete');
+                Route::get('is_approved/{id}','is_approved');
+                Route::get('is_featured/{id}','is_featured');
+                Route::get('is_published/{id}','is_published');
             });
         });
 
@@ -128,6 +131,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::post('create','create');
                 Route::post('update','update');
                 Route::get('delete/{id}','delete');
+                Route::get('is_published/{id}','is_published');
             });
         });
 
@@ -151,3 +155,13 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
         Route::get('/customer/profile/check', 'App\Http\Controllers\Customer\AuthController@usercheck'); 
         Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
+
+
+
+                                    /// Home \\\
+
+        Route::group(['prefix' => '/customer/package/'], function() {
+            Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
+                Route::get('show','index');
+            });
+        });

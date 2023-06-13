@@ -242,4 +242,23 @@ class ProductController extends Controller
         $response = ['status'=>true,"message" => "Product Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function is_published($id)
+    {
+        $is_published = Product::where('id',$id)->first();
+
+        if($is_published->published == 0)
+        {
+            $is_published = 1;
+        }
+        else
+        {
+            $is_published = 0;
+        }
+
+        $is_published->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
 }

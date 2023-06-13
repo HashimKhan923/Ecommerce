@@ -242,4 +242,61 @@ class ProductController extends Controller
         $response = ['status'=>true,"message" => "Product Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function is_approved($id)
+    {
+        $is_approved = Product::where('id',$id)->first();
+
+        if($is_approved->approved == 0)
+        {
+            $is_approved = 1;
+        }
+        else
+        {
+            $is_approved = 0;
+        }
+
+        $is_approved->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
+    public function is_published($id)
+    {
+        $is_published = Product::where('id',$id)->first();
+
+        if($is_published->published == 0)
+        {
+            $is_published = 1;
+        }
+        else
+        {
+            $is_published = 0;
+        }
+
+        $is_published->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
+    public function is_featured($id)
+    {
+        $is_featured = Product::where('id',$id)->first();
+
+        if($is_featured->featured == 0)
+        {
+            $is_featured = 1;
+        }
+        else
+        {
+            $is_featured = 0;
+        }
+
+        $is_featured->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
 }
