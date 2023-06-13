@@ -48,7 +48,7 @@ class CategoryController extends Controller
         $update->name = $request->name;
         if($request->file('banner')){
 
-            $image_path = $update->banner;
+            $image_path = 'app/public'.$update->banner;
             if(Storage::exists($image_path))
             {
                 Storage::delete($image_path);
@@ -61,7 +61,7 @@ class CategoryController extends Controller
 
         }
         if($request->file('icon')){
-            $image_path = $update->icon;
+            $image_path = 'app/public'.$update->icon;
             Storage::delete($image_path);
 
             $file= $request->file('icon');
