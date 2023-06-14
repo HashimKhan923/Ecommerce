@@ -113,7 +113,7 @@ class ProductController extends Controller
 
            foreach($update->photos as $photosList)
            {
-            $DeletePhotos = $photosList;
+            $DeletePhotos = 'app/public'.$photosList;
             if (Storage::exists($DeletePhotos))
             {
                 Storage::delete($DeletePhotos);
@@ -138,7 +138,7 @@ class ProductController extends Controller
         if($request->file('thumbnail_img'))
         {
 
-            $DeletePhoto = $update->thumbnail_img;
+            $DeletePhoto = 'app/public'.$update->thumbnail_img;
             if (Storage::exists($DeletePhoto))
             {
                 Storage::delete($DeletePhoto);
@@ -178,7 +178,7 @@ class ProductController extends Controller
         if($request->file('meta_img'))
         {
 
-            $DeletePhoto = $update->meta_img;
+            $DeletePhoto = 'app/public'.$update->meta_img;
             if (Storage::exists($DeletePhoto))
             {
                 Storage::delete($DeletePhoto);
@@ -213,7 +213,7 @@ class ProductController extends Controller
 
         foreach($file->photos as $photosList)
         {
-         $DeletePhotos = $photosList;
+         $DeletePhotos = 'app/public'.$photosList;
          if (Storage::exists($DeletePhotos))
          {
              Storage::delete($DeletePhotos);
@@ -225,13 +225,13 @@ class ProductController extends Controller
 
 
 
-        $ProductThumbnail = $file->thumbnail_img;
+        $ProductThumbnail = 'app/public'.$file->thumbnail_img;
       if (Storage::exists($ProductThumbnail))
       {
           Storage::delete($ProductThumbnail);
       }
 
-      $ProductMetaImage = $file->meta_img;
+      $ProductMetaImage = 'app/public'.$file->meta_img;
       if (Storage::exists($ProductMetaImage))
       {
           Storage::delete($ProductMetaImage);

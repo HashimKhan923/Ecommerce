@@ -43,7 +43,7 @@ class PackageController extends Controller
     {
       $delete = SellerPackage::find($id);
 
-      $image_path = $delete->logo;
+      $image_path = 'app/public'.$delete->logo;
       if(Storage::exists($image_path))
       {
           Storage::delete($image_path);
@@ -66,7 +66,7 @@ class PackageController extends Controller
 
         if($request->file('logo')){
 
-            $image_path = $update->logo;
+            $image_path = 'app/public'.$update->logo;
             if(Storage::exists($image_path))
             {
                 Storage::delete($image_path);

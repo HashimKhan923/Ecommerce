@@ -42,7 +42,7 @@ class BrandController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            $image_path = $update->logo;
+            $image_path = 'app/public'.$update->logo;
             if(Storage::exists($image_path))
             {
                 Storage::delete($image_path);
@@ -68,7 +68,7 @@ class BrandController extends Controller
     {
         $file = Brand::find($id);
 
-        $BrandLogo = $file->logo;
+        $BrandLogo = 'app/public'.$file->logo;
         if (Storage::exists($BrandLogo)) {
             // Delete the file
             Storage::delete($BrandLogo);
