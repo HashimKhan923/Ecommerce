@@ -83,13 +83,13 @@ class CategoryController extends Controller
     {
         $file = Category::find($id);
 
-        $CategoryBanner = $file->banner;
+        $CategoryBanner = 'app/public'.$file->banner;
       if (Storage::exists($CategoryBanner))
       {
           Storage::delete($CategoryBanner);
       }
 
-      $CategoryIcon = $file->icon;
+      $CategoryIcon = 'app/public'.$file->icon;
       if (Storage::exists($CategoryIcon))
       {
           Storage::delete($CategoryIcon);
