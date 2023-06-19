@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $Products = Product::all();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping')->get();
 
         return response()->json(['Products'=>$Products]);
     }
@@ -24,6 +24,7 @@ class ProductController extends Controller
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
         $new->year = $request->year;
+        $new->model = $request->model;
         $new->brand_id = $request->brand_id;
         if($request->file('photos'))
         {
@@ -51,25 +52,8 @@ class ProductController extends Controller
         $new->tags = $request->tags;
         $new->description = $request->description;
         $new->price = $request->price;
-        $new->variant_product = $request->variant_product;
         $new->colors = $request->colors;
         $new->sizes = $request->sizes;
-        $new->todays_deal = $request->todays_deal;
-        $new->stock = $request->stock;
-        $new->unit = $request->unit;
-        $new->weight = $request->weight;
-        $new->min_qty = $request->min_qty;
-        $new->low_stock_quantity = $request->low_stock_quantity;
-        $new->discount = $request->discount;
-        $new->discount_type = $request->discount_type;
-        $new->discount_start_date = $request->discount_start_date;
-        $new->discount_end_date = $request->discount_end_date;
-        $new->tax = $request->tax;
-        $new->tax_type = $request->tax_type;
-        $new->shipping_type = $request->shipping_type;
-        $new->shipping_cost = $request->shipping_cost;
-        $new->is_quantity_multiplied = $request->is_quantity_multiplied;
-        $new->est_shipping_days = $request->est_shipping_days;
         $new->num_of_sale = $request->num_of_sale;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
@@ -80,18 +64,48 @@ class ProductController extends Controller
                 $file->storeAs('public', $filename);
                 $new->meta_img = $filename;
         }
-        $new->pdf = $request->pdf;
         $new->slug = $request->slug;
-        $new->refundable = $request->refundable;
         $new->rating = $request->rating;
-        $new->barcode = $request->barcode;
-        $new->digital = $request->digital;
-        $new->file_name = $request->file_name;
-        $new->file_path = $request->file_path;
-        $new->external_link = $request->external_link;
-        $new->external_link_btn = $request->external_link_btn;
-        $new->wholesale_product = $request->wholesale_product;
         $new->save();
+
+        if($request->stock != null)
+        {
+            $stock = new Stock();
+            $stock->product_id = $new->id;
+            $stock->stock = $request->stock;
+            $stock->min_stock = $request->min_stock;
+            $stock->save();
+        }
+
+        if($request->discount != null)
+        {
+            $discount = new Discount();
+            $discount->product_id = $new->id;
+            $discount->discount = $request->discount;
+            $discount->discount_type = $request->discount_type;
+            $discount->discount_start_date = Carbon::parse($request->discount_start_date);
+            $discount->discount_end_date = Carbon::parse($request->discount_end_date);
+            $discount->save();
+        }
+
+        if($request->tax != null)
+        {
+            $tax = new Tax();
+            $tax->product_id = $new->id;
+            $tax->tax = $request->tax;
+            $tax->tax_type = $request->tax_type;
+            $tax->save();
+        }
+
+        if($request->shipping_type != null)
+        {
+            $shipping = new Shipping();
+            $shipping->product_id = $new->id;
+            $shipping->shipping_type = $request->shipping_type;
+            $shipping->shipping_cost = $request->shipping_cost;
+            $shipping->est_shipping_days = $request->est_shipping_days;
+            $shipping->save();
+        }
         
 
     }
@@ -102,29 +116,17 @@ class ProductController extends Controller
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
         $update->added_by = 'admin';
-        $update->added_by = $request->added_by;
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
         $update->year = $request->year;
+        $update->model = $request->model;
         $update->brand_id = $request->brand_id;
         if($request->file('photos'))
         {
-
-
-           foreach($update->photos as $photosList)
-           {
-            $DeletePhotos = 'app/public'.$photosList;
-            if (Storage::exists($DeletePhotos))
-            {
-                Storage::delete($DeletePhotos);
-            }
-      
-           }     
-
-
-            foreach($request->photos as $photos)
-            {
-                $file= $photos;
+            
+            foreach($request->photos as $photo)
+            { 
+                $file= $photo;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $ProductGallery[] = $filename;
@@ -137,14 +139,6 @@ class ProductController extends Controller
 
         if($request->file('thumbnail_img'))
         {
-
-            $DeletePhoto = 'app/public'.$update->thumbnail_img;
-            if (Storage::exists($DeletePhoto))
-            {
-                Storage::delete($DeletePhoto);
-            }
-
-
                 $file= $request->thumbnail_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -153,55 +147,62 @@ class ProductController extends Controller
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
-        $update->variant_product = $request->variant_product;
         $update->colors = $request->colors;
         $update->sizes = $request->sizes;
-        $update->todays_deal = $request->todays_deal;
-        $update->stock = $request->stock;
-        $update->unit = $request->unit;
-        $update->weight = $request->weight;
-        $update->min_qty = $request->min_qty;
-        $update->low_stock_quantity = $request->low_stock_quantity;
-        $update->discount = $request->discount;
-        $update->discount_type = $request->discount_type;
-        $update->discount_start_date = $request->discount_start_date;
-        $update->discount_end_date = $request->discount_end_date;
-        $update->tax = $request->tax;
-        $update->tax_type = $request->tax_type;
-        $update->shipping_type = $request->shipping_type;
-        $update->shipping_cost = $request->shipping_cost;
-        $update->is_quantity_multiplied = $request->is_quantity_multiplied;
-        $update->est_shipping_days = $request->est_shipping_days;
         $update->num_of_sale = $request->num_of_sale;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
-
-            $DeletePhoto = $update->meta_img;
-            if (Storage::exists($DeletePhoto))
-            {
-                Storage::delete($DeletePhoto);
-            }
-
-
                 $file= $request->meta_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $update->meta_img = $filename;
         }
-        $update->pdf = $request->pdf;
         $update->slug = $request->slug;
-        $update->refundable = $request->refundable;
         $update->rating = $request->rating;
-        $update->barcode = $request->barcode;
-        $update->digital = $request->digital;
-        $update->file_name = $request->file_name;
-        $update->file_path = $request->file_path;
-        $update->external_link = $request->external_link;
-        $update->external_link_btn = $request->external_link_btn;
-        $update->wholesale_product = $request->wholesale_product;
         $update->save();
+
+
+
+        if($request->stock != null)
+        {
+            $stock = Stock::where('product_id',$update->id)->first();
+            $stock->product_id = $update->id;
+            $stock->stock = $request->stock;
+            $stock->min_stock = $request->min_stock;
+            $stock->save();
+        }
+
+        if($request->discount != null)
+        {
+            $discount = Discount::where('product_id',$update->id)->first();
+            $discount->product_id = $update->id;
+            $discount->discount = $request->discount;
+            $discount->discount_type = $request->discount_type;
+            $discount->discount_start_date = Carbon::parse($request->discount_start_date);
+            $discount->discount_end_date = Carbon::parse($request->discount_end_date);
+            $discount->save();
+        }
+
+        if($request->tax != null)
+        {
+            $tax = Tax::where('product_id',$update->id)->first();
+            $tax->product_id = $update->id;
+            $tax->tax = $request->tax;
+            $tax->tax_type = $request->tax_type;
+            $tax->save();
+        }
+
+        if($request->shipping_type != null)
+        {
+            $shipping = Shipping::where('product_id',$update->id)->first();
+            $shipping->product_id = $update->id;
+            $shipping->shipping_type = $request->shipping_type;
+            $shipping->shipping_cost = $request->shipping_cost;
+            $shipping->est_shipping_days = $request->est_shipping_days;
+            $shipping->save();
+        }
         
 
     }
