@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Discount;
+use App\Models\Shipping;
+use App\Models\Stock;
+use App\Models\Tax;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller

@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Discount;
+use App\Models\Shipping;
+use App\Models\Stock;
+use App\Models\Tax;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping')->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping')->where('user_id',$id)->get();
 
         return response()->json(['Products'=>$Products]);
     }
