@@ -28,8 +28,8 @@ class ProductController extends Controller
         $new->added_by = 'admin';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
-        $new->year = $request->year;
-        $new->model = $request->model;
+        $new->weight = $request->weight;
+        $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         if($request->file('photos'))
         {
@@ -70,7 +70,7 @@ class ProductController extends Controller
                 $new->meta_img = $filename;
         }
         $new->slug = $request->slug;
-        $new->rating = $request->rating;
+        $new->sku = $request->sku;
         $new->save();
 
         if($request->stock != null)
@@ -123,14 +123,15 @@ class ProductController extends Controller
         $update->added_by = 'admin';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
-        $update->year = $request->year;
-        $update->model = $request->model;
+        $update->weight = $request->weight;
+        $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
         if($request->file('photos'))
         {
             
             foreach($request->photos as $photo)
             { 
+
                 $file= $photo;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);

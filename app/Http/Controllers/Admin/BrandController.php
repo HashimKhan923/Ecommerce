@@ -52,7 +52,7 @@ class BrandController extends Controller
             $file= $request->file('logo');
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->storeAs('public', $filename);
-            $new->logo = $filename;
+            $update->logo = $filename;
         }
         $update->slug = $request->slug;
         $update->meta_title = $request->meta_title;

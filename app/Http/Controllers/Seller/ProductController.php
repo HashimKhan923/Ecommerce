@@ -29,8 +29,8 @@ class ProductController extends Controller
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
-        $new->year = $request->year;
-        $new->model = $request->model;
+        $new->weight = $request->weight;
+        $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         if($request->file('photos'))
         {
@@ -124,8 +124,8 @@ class ProductController extends Controller
         $update->added_by = 'seller';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
-        $update->year = $request->year;
-        $update->model = $request->model;
+        $update->weight = $request->weight;
+        $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
         if($request->file('photos'))
         {
