@@ -19,9 +19,12 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('deal_id')->unsigned()->nullable();
+            $table->foreign('deal_id')->references('id')->on('deals')->onDelete('cascade')->onUpdate('cascade');
             $table->string('weight')->nullable();
+            $table->decimal('unit')->nullable();
             $table->string('sku')->nullable();
-            // $table->string('model')->nullable();
+            $table->string('model')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
             $table->text('photos')->nullable();
@@ -31,10 +34,13 @@ return new class extends Migration
             $table->decimal('price')->nullable();
             $table->string('colors')->nullable();
             $table->string('sizes')->nullable();
-            $table->integer('published')->default(0);
-            $table->integer('approved')->default(0);
-            $table->integer('featured')->default(0);
-            $table->integer('seller_featured')->default(0);
+            $table->string('pdf')->nullable();
+            $table->boolean('published')->default(0);
+            $table->boolean('approved')->default(0);
+            $table->boolean('featured')->default(0);
+            $table->boolean('todays_deal')->default(0);
+            $table->boolean('cash_on_delivery')->default(0);
+            $table->boolean('seller_featured')->default(0);
             $table->integer('min_qty')->nullable();
             $table->integer('num_of_sale')->nullable();
             $table->string('meta_title')->nullable();
@@ -42,6 +48,7 @@ return new class extends Migration
             $table->text('meta_img')->nullable();
             $table->string('slug')->nullable();
             $table->integer('rating')->nullable();
+            $table->boolean('refundable')->default(1);
             $table->timestamps();
         });
     }

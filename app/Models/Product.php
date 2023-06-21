@@ -14,15 +14,15 @@ class Product extends Model
         'tags' => 'array',
     ];
 
-    // public function ratings()
-    // {
-    //     return $this->hasMany(ProductRating::class);
-    // }
+    public function ratings()
+    {
+        return $this->hasMany(ProductRating::class);
+    }
 
-    // public function getRatingAttribute()
-    // {
-    //     return $this->ratings()->avg('rating');
-    // }
+    public function getRatingAttribute()
+    {
+        return $this->ratings()->avg('rating');
+    }
 
     
     public function user()
@@ -59,6 +59,16 @@ class Product extends Model
     {
         return $this->hasOne(Shipping::class,'product_id','id');
     }
+
+    public function wholesale()
+    {
+        return $this->hasMany(WholesaleProduct::class,'product_id','id');
+    }
+
+    public function deal()
+    {
+        return $this->belongsTo(Deal::class,'deal_id','id');
+    } 
 
     use HasFactory;
 }

@@ -29,23 +29,37 @@ class ProductController extends Controller
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
+
+        if($request->deal_id != null)
+        {
+
+                $new->deal_id = $request->deal_id;
+
+                $discount = new Discount();
+                $discount->product_id = $new->id;
+                $discount->discount = $request->discount;
+                $discount->discount_type = $request->discount_type;
+                $discount->save();
+            
+        }
+
         $new->weight = $request->weight;
+        $new->unit = $request->unit;
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
-        if($request->file('photos'))
-        {
-            
-            foreach($request->photos as $photo)
-            { 
-                $file= $photo;
-                $filename= date('YmdHis').$file->getClientOriginalName();
+        $new->model = $request->model;
+
+        if ($request->file('photos')) {
+            $ProductGallery = array(); // Initialize the array
+        
+            foreach ($request->file('photos') as $photo) {
+                $file = $photo;
+                $filename = date('YmdHis') . $file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $ProductGallery[] = $filename;
-                
             }
-
+        
             $new->photos = $ProductGallery;
-
         }
 
         if($request->file('thumbnail_img'))
@@ -60,7 +74,9 @@ class ProductController extends Controller
         $new->price = $request->price;
         $new->colors = $request->colors;
         $new->sizes = $request->sizes;
-        $new->num_of_sale = $request->num_of_sale;
+        $new->cash_on_delivery = $request->cash_on_delivery;
+        $new->featured = $request->featured;
+        $new->todays_deal = $request->todays_deal;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
         if($request->file('meta_img'))
@@ -71,7 +87,7 @@ class ProductController extends Controller
                 $new->meta_img = $filename;
         }
         $new->slug = $request->slug;
-        $new->rating = $request->rating;
+        $new->sku = $request->sku;
         $new->save();
 
         if($request->stock != null)
@@ -83,16 +99,6 @@ class ProductController extends Controller
             $stock->save();
         }
 
-        if($request->discount != null)
-        {
-            $discount = new Discount();
-            $discount->product_id = $new->id;
-            $discount->discount = $request->discount;
-            $discount->discount_type = $request->discount_type;
-            $discount->discount_start_date = Carbon::parse($request->discount_start_date);
-            $discount->discount_end_date = Carbon::parse($request->discount_end_date);
-            $discount->save();
-        }
 
         if($request->tax != null)
         {
@@ -103,14 +109,29 @@ class ProductController extends Controller
             $tax->save();
         }
 
+        
+
         if($request->shipping_type != null)
         {
             $shipping = new Shipping();
             $shipping->product_id = $new->id;
-            $shipping->shipping_type = $request->shipping_type;
             $shipping->shipping_cost = $request->shipping_cost;
+            $shipping->is_qty_multiply = $request->is_qty_multiply;
             $shipping->est_shipping_days = $request->est_shipping_days;
             $shipping->save();
+        }
+
+        if($request->wholesale_price != null)
+        {
+            foreach($request->wholesale_price as $price)
+            {
+                $wholesale = new WholesaleProduct();
+                $wholesale->product_id = $new->id;
+                $wholesale->wholesale_price = $price;
+                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
+                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
+                $wholesale->save();               
+            }
         }
         
 
@@ -124,23 +145,37 @@ class ProductController extends Controller
         $update->added_by = 'seller';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
+
+        if($request->deal_id != null)
+        {
+
+                $update->deal_id = $request->deal_id;
+
+                $discount = Discount::where('product_id',$update->id)->first();
+                $discount->product_id = $update->id;
+                $discount->discount = $request->discount;
+                $discount->discount_type = $request->discount_type;
+                $discount->save();
+            
+        }
+
         $update->weight = $request->weight;
+        $update->unit = $request->unit;
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
-        if($request->file('photos'))
-        {
-            
-            foreach($request->photos as $photo)
-            { 
-                $file= $photo;
-                $filename= date('YmdHis').$file->getClientOriginalName();
+        $update->model = $request->model;
+        
+        if ($request->file('photos')) {
+            $ProductGallery = array(); // Initialize the array
+        
+            foreach ($request->file('photos') as $photo) {
+                $file = $photo;
+                $filename = date('YmdHis') . $file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $ProductGallery[] = $filename;
-                
             }
-
+        
             $update->photos = $ProductGallery;
-
         }
 
         if($request->file('thumbnail_img'))
@@ -155,7 +190,9 @@ class ProductController extends Controller
         $update->price = $request->price;
         $update->colors = $request->colors;
         $update->sizes = $request->sizes;
-        $update->num_of_sale = $request->num_of_sale;
+        $update->cash_on_delivery = $request->cash_on_delivery;
+        $update->featured = $request->featured;
+        $update->todays_deal = $request->todays_deal;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
@@ -166,10 +203,8 @@ class ProductController extends Controller
                 $update->meta_img = $filename;
         }
         $update->slug = $request->slug;
-        $update->rating = $request->rating;
+        $update->sku = $request->sku;
         $update->save();
-
-
 
         if($request->stock != null)
         {
@@ -180,16 +215,6 @@ class ProductController extends Controller
             $stock->save();
         }
 
-        if($request->discount != null)
-        {
-            $discount = Discount::where('product_id',$update->id)->first();
-            $discount->product_id = $update->id;
-            $discount->discount = $request->discount;
-            $discount->discount_type = $request->discount_type;
-            $discount->discount_start_date = Carbon::parse($request->discount_start_date);
-            $discount->discount_end_date = Carbon::parse($request->discount_end_date);
-            $discount->save();
-        }
 
         if($request->tax != null)
         {
@@ -204,12 +229,24 @@ class ProductController extends Controller
         {
             $shipping = Shipping::where('product_id',$update->id)->first();
             $shipping->product_id = $update->id;
-            $shipping->shipping_type = $request->shipping_type;
             $shipping->shipping_cost = $request->shipping_cost;
+            $shipping->is_qty_multiply = $request->is_qty_multiply;
             $shipping->est_shipping_days = $request->est_shipping_days;
             $shipping->save();
         }
-        
+
+        if($request->wholesale_price != null)
+        {
+            foreach($request->wholesale_price as $price)
+            {
+                $wholesale = WholesaleProduct::where('product_id',$update->id)->first();
+                $wholesale->product_id = $update->id;
+                $wholesale->wholesale_price = $price;
+                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
+                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
+                $wholesale->save();               
+            }
+        }
 
     }
 

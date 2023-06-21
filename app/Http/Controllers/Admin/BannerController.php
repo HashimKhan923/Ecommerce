@@ -11,6 +11,8 @@ class BannerController extends Controller
     public function index()
     {
         $data = Banner::all();
+
+        return response()->json(['data'=>$data]);
     }
 
     public function create(Request $request)
@@ -38,6 +40,9 @@ class BannerController extends Controller
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
         $new->save();
+
+        $response = ['status'=>true,"message" => "Banner Added Successfully!"];
+        return response($response, 200);
     }
 
     public function update(Request $request)
@@ -78,6 +83,9 @@ class BannerController extends Controller
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
         $update->save();
+
+        $response = ['status'=>true,"message" => "Banner Updated Successfully!"];
+        return response($response, 200);
     }
 
     public function delete($id)

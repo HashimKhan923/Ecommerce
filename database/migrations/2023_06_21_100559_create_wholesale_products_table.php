@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shippings', function (Blueprint $table) {
+        Schema::create('wholesale_products', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            $table->decimal('shipping_cost')->nullable();
-            $table->boolean('is_qty_multiply')->nullable();
-            $table->integer('est_shipping_days')->nullable();
+            $table->decimal('wholesale_price')->nullable();
+            $table->integer('wholesale_min_qty')->nullable();
+            $table->integer('wholesale_max_qty')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shippings');
+        Schema::dropIfExists('wholesale_products');
     }
 };

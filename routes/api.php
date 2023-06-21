@@ -79,6 +79,19 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                            /// Banner \\\
+
+    Route::group(['prefix' => '/admin/banner/'], function() {
+        Route::controller(App\Http\Controllers\Admin\BannerController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+
+
 
 
                                       /// Product \\\
@@ -86,6 +99,8 @@ Route::group(['middleware' => ['auth:api']], function(){
       Route::group(['prefix' => '/admin/product/'], function() {
           Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
               Route::get('show','index');
+              Route::get('admin_products','admin_products');
+              Route::get('seller_products','seller_products');
               Route::post('create','create');
               Route::post('update','update');
               Route::get('delete/{id}','delete');
@@ -166,3 +181,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::get('','index');
             });
         });
+
+
+                                               /// Product \\\
+
+      Route::group(['prefix' => 'product/'], function() {
+        Route::controller(App\Http\Controllers\Customer\ProductController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('comment','comment');
+            Route::post('rating','rating');
+            Route::get('detail/{id}','detail');
+        });
+    });
