@@ -193,3 +193,13 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('detail/{id}','detail');
         });
     });
+
+
+                                        /// Order \\\
+
+        Route::group(['prefix' => 'order/'], function() {
+        Route::controller(App\Http\Controllers\Customer\OrderController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('create','create');
+        });
+    });

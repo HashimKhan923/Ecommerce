@@ -10,6 +10,7 @@ use App\Models\Shipping;
 use App\Models\Stock;
 use App\Models\Tax;
 use App\Models\WholesaleProduct;
+use App\Models\DealProduct;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,20 +46,6 @@ class ProductController extends Controller
         $new->added_by = 'admin';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
-
-        if($request->deal_id != null)
-        {
-
-                $new->deal_id = $request->deal_id;
-
-                $discount = new Discount();
-                $discount->product_id = $new->id;
-                $discount->discount = $request->discount;
-                $discount->discount_type = $request->discount_type;
-                $discount->save();
-            
-        }
-
         $new->weight = $request->weight;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
@@ -106,6 +93,15 @@ class ProductController extends Controller
         $new->sku = $request->sku;
         $new->save();
 
+        if($request->discount != null)
+        {
+            $discount = new Discount();
+            $discount->product_id = $new->id;
+            $discount->discount = $request->discount;
+            $discount->discount_type = $request->discount_type;
+            $discount->save();
+        }
+
         if($request->stock != null)
         {
             $stock = new Stock();
@@ -115,7 +111,7 @@ class ProductController extends Controller
             $stock->save();
         }
 
-
+        
         if($request->tax != null)
         {
             $tax = new Tax();
@@ -125,6 +121,16 @@ class ProductController extends Controller
             $tax->save();
         }
 
+
+        if($request->deal_id != null)
+        {
+            $deal = new DealProduct();
+            $deal->deal_id = $request->deal_id;
+            $deal->product_id = $new->id;
+            $deal->discount = $request->deal_discount;
+            $deal->discount_type = $request->deal_discount_type;
+            $deal->save();
+        }
         
 
         if($request->shipping_type != null)
@@ -164,26 +170,12 @@ class ProductController extends Controller
         $update->added_by = 'admin';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
-
-        if($request->deal_id != null)
-        {
-
-                $update->deal_id = $request->deal_id;
-
-                $discount = Discount::where('product_id',$update->id)->first();
-                $discount->product_id = $update->id;
-                $discount->discount = $request->discount;
-                $discount->discount_type = $request->discount_type;
-                $discount->save();
-            
-        }
-
         $update->weight = $request->weight;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
         $update->model = $request->model;
-        
+
         if ($request->file('photos')) {
             $ProductGallery = array(); // Initialize the array
         
@@ -209,7 +201,6 @@ class ProductController extends Controller
         $update->price = $request->price;
         $update->colors = $request->colors;
         $update->sizes = $request->sizes;
-        $update->cash_on_delivery = $request->cash_on_delivery;
         $update->featured = $request->featured;
         $update->todays_deal = $request->todays_deal;
         $update->meta_title = $request->meta_title;
@@ -225,6 +216,15 @@ class ProductController extends Controller
         $update->sku = $request->sku;
         $update->save();
 
+        if($request->discount != null)
+        {
+            $discount = Discount::where('product_id',$update->id)->first();
+            $discount->product_id = $update->id;
+            $discount->discount = $request->discount;
+            $discount->discount_type = $request->discount_type;
+            $discount->save();
+        }
+
         if($request->stock != null)
         {
             $stock = Stock::where('product_id',$update->id)->first();
@@ -234,15 +234,27 @@ class ProductController extends Controller
             $stock->save();
         }
 
-
+        
         if($request->tax != null)
         {
-            $tax = Tax::where('product_id',$update->id)->first();
+            $tax =  Tax::where('product_id',$update->id)->first();
             $tax->product_id = $update->id;
             $tax->tax = $request->tax;
             $tax->tax_type = $request->tax_type;
             $tax->save();
         }
+
+
+        if($request->deal_id != null)
+        {
+            $deal = DealProduct::where('product_id',$update->id)->first();
+            $deal->deal_id = $request->deal_id;
+            $deal->product_id = $update->id;
+            $deal->discount = $request->deal_discount;
+            $deal->discount_type = $request->deal_discount_type;
+            $deal->save();
+        }
+        
 
         if($request->shipping_type != null)
         {
@@ -256,9 +268,11 @@ class ProductController extends Controller
 
         if($request->wholesale_price != null)
         {
+            WholesaleProduct::where('product_id',$update->id)->delete();
+
             foreach($request->wholesale_price as $price)
             {
-                $wholesale = WholesaleProduct::where('product_id',$update->id)->first();
+                $wholesale = new WholesaleProduct();
                 $wholesale->product_id = $update->id;
                 $wholesale->wholesale_price = $price;
                 $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
@@ -266,8 +280,8 @@ class ProductController extends Controller
                 $wholesale->save();               
             }
         }
-        
-        $response = ['status'=>true,"message" => "Product Updated Successfully!"];
+
+        $response = ['status'=>true,"message" => "Product updated Successfully!"];
         return response($response, 200);
     }
 
