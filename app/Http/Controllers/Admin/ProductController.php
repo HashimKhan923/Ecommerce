@@ -57,7 +57,7 @@ class ProductController extends Controller
         if ($request->photos) {
 
            
-            return $request->photos;
+            
             $ProductGallery = array(); // Initialize the array
             foreach ($request->photos as $photos) {
                 $file = $photos;
