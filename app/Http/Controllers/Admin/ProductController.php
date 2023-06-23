@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        
+        return $request->thumbnail_img;
         
         $new = new Product();
         $new->name = $request->name;
@@ -66,7 +66,7 @@ class ProductController extends Controller
         
             $new->photos = $ProductGallery;
         }
-        return $request->thumbnail_img;
+        
         if($request->file('thumbnail_img'))
         {
                 $file= $request->thumbnail_img;
