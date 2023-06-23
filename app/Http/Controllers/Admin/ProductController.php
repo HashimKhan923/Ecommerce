@@ -90,7 +90,6 @@ class ProductController extends Controller
                 $new->meta_img = $filename;
         }
         $new->slug = $request->slug;
-        $new->sku = $request->sku;
         $new->save();
 
         if($request->discount != null)
@@ -213,7 +212,6 @@ class ProductController extends Controller
                 $update->meta_img = $filename;
         }
         $update->slug = $request->slug;
-        $update->sku = $request->sku;
         $update->save();
 
         if($request->discount != null)
