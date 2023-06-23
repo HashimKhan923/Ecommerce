@@ -77,7 +77,7 @@ class ProductController extends Controller
         $new->price = $request->price;
         $new->colors = $request->colors;
         $new->sizes = $request->sizes;
-        $new->cash_on_delivery = $request->cash_on_delivery;
+        // $new->cash_on_delivery = $request->cash_on_delivery;
         $new->featured = $request->featured;
         $new->todays_deal = $request->todays_deal;
         $new->meta_title = $request->meta_title;
