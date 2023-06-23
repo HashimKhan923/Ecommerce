@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        dd($request->photos);
+        
         
         $new = new Product();
         $new->name = $request->name;
@@ -57,8 +57,8 @@ class ProductController extends Controller
         if ($request->photos) {
 
             $ProductGallery = array(); // Initialize the array
-            foreach ($request->photos as $photos) {
-                $file = $photos;
+            foreach ($request->file('photos') as $photo) {
+                $file = $photo;
                 $filename = date('YmdHis') . $file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $ProductGallery[] = $filename;
