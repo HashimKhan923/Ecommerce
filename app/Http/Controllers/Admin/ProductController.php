@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        
+        return $request->photos;
         
         $new = new Product();
         $new->name = $request->name;
@@ -56,8 +56,6 @@ class ProductController extends Controller
 
         if ($request->photos) {
 
-           
-            
             $ProductGallery = array(); // Initialize the array
             foreach ($request->photos as $photos) {
                 $file = $photos;
