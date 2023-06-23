@@ -41,6 +41,8 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+        dd($request->photos);
+
         $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'admin';
