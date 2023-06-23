@@ -41,7 +41,6 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        return $request->thumbnail_img;
         
         $new = new Product();
         $new->name = $request->name;
