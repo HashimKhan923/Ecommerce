@@ -16,7 +16,9 @@ return new class extends Migration
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('discount')->nullable();
-            $table->enum('discount_type', ['percentage','price'])->default('percentage');
+            $table->date('discount_start_date')->nullable();
+            $table->date('discount_end_date')->nullable();
+            $table->enum('discount_type', ['percentage','flat'])->default('percentage');
             $table->timestamps();
         });
     }
