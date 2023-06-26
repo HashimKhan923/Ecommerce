@@ -42,6 +42,7 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         
+        
         $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'admin';
@@ -288,7 +289,8 @@ class ProductController extends Controller
     {
         $file = Product::find($id);
 
-
+        if($file->photos != null)
+        {
         foreach($file->photos as $photosList)
         {
          $DeletePhotos = 'app/public'.$photosList;
@@ -298,6 +300,7 @@ class ProductController extends Controller
          }
    
         }  
+        }
 
 
 
