@@ -122,6 +122,18 @@ Route::group(['middleware' => ['auth:api']], function(){
           });
       });
 
+
+                                            /// Report \\\
+
+    Route::group(['prefix' => '/admin/report/'], function() {
+        Route::controller(App\Http\Controllers\Admin\ReportController::class)->group(function () {
+            Route::post('admin_product_sale','admin_product_sale');
+            Route::post('saller_product_sale','saller_product_sale');
+            Route::post('product_stock','product_stock');
+            Route::post('product_wishlist','product_wishlist');
+        });
+    });
+
       /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
       Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
