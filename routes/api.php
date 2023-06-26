@@ -195,6 +195,17 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
+                                          /// Wishlist \\\
+
+        Route::group(['prefix' => 'wishlist/'], function() {
+        Route::controller(App\Http\Controllers\Customer\WhishlistController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('create','create');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+
                                         /// Order \\\
 
         Route::group(['prefix' => 'order/'], function() {

@@ -65,6 +65,11 @@ class Product extends Model
         return $this->hasMany(WholesaleProduct::class,'product_id','id');
     }
 
+    public function wishlist()
+    {
+        return $this->hasMany(Whishlist::class,'product_id','id');
+    }
+
     public function deal()
     {
         return $this->belongsTo(Deal::class,'deal_id','id');

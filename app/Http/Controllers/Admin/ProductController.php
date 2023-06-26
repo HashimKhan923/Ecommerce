@@ -99,6 +99,8 @@ class ProductController extends Controller
             $discount = new Discount();
             $discount->product_id = $new->id;
             $discount->discount = $request->discount;
+            $discount->discount_start_date = $request->discount_start_date;
+            $discount->discount_end_date = $request->discount_end_date;
             $discount->discount_type = $request->discount_type;
             $discount->save();
         }
@@ -221,6 +223,8 @@ class ProductController extends Controller
             $discount = Discount::where('product_id',$update->id)->first();
             $discount->product_id = $update->id;
             $discount->discount = $request->discount;
+            $discount->discount_start_date = $request->discount_start_date;
+            $discount->discount_end_date = $request->discount_end_date;
             $discount->discount_type = $request->discount_type;
             $discount->save();
         }

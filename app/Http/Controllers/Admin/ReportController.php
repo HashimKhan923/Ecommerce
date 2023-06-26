@@ -28,4 +28,11 @@ class ReportController extends Controller
 
         return response()->json(['data'=>$data]);
     }
+
+    public function product_wishlist(Request $request)
+    {
+        $data = Product::with('wishlist')->where('category_id',$request->category_id)->get();
+
+        return response()->json(['data'=>$data]);
+    }
 }
