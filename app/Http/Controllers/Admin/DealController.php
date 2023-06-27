@@ -30,5 +30,38 @@ class DealController extends Controller
 
         $new->discount_start_date = $request->discount_start_date;
         $new->descount_end_date = $request->descount_end_date;
+        $new->save();
+
+        $response = ['status'=>true,"message" => "New Deal Added Successfully!"];
+        return response($response, 200);
+    }
+
+    public function update(Request $request)
+    {
+        $update = Deal::where('id',$request->id)->first();;
+        $update->name = $request->name;
+        $update->page_link = $request->page_link;
+
+        if($request->file('banner')){
+            $file= $request->file('banner');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
+            $update->banner = $filename;
+        }
+
+        $update->discount_start_date = $request->discount_start_date;
+        $update->descount_end_date = $request->descount_end_date;
+        $update->save();
+
+        $response = ['status'=>true,"message" => "Deal Updated Successfully!"];
+        return response($response, 200);
+    }
+
+    public function delete($id)
+    {
+        Deal::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "Deal Deleted Successfully!"];
+        return response($response, 200);
     }
 }
