@@ -50,7 +50,7 @@ class DealController extends Controller
         }
 
         $update->discount_start_date = $request->discount_start_date;
-        $update->descount_end_date = $request->descount_end_date;
+        $update->discount_end_date = $request->discount_end_date;
         $update->save();
 
         $response = ['status'=>true,"message" => "Deal Updated Successfully!"];
