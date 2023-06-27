@@ -10,7 +10,7 @@ class DealController extends Controller
 {
     public function index()
     {
-        $data = Deal::all();
+        $data = Deal::with('deal_product')->get();
 
         return response()->json(['data'=>$data]);
     }
