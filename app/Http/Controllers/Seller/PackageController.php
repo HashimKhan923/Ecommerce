@@ -24,15 +24,15 @@ class PackageController extends Controller
       
 
 
-      if($Subscription->time_name == 'day')
+      if($Subscription->time_name == 'days')
       {
         $end_time = Carbon::now()->addDay($Subscription->time_number);
       }
-      if($Subscription->time_name == 'month')
+      if($Subscription->time_name == 'months')
       {
         $end_time = Carbon::now()->addMonth($Subscription->time_number);
       }
-      if($Subscription->time_name == 'year')
+      if($Subscription->time_name == 'years')
       {
         $end_time = Carbon::now()->addYear($Subscription->time_number);
       }
