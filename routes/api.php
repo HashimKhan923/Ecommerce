@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth:api']], function(){
       });
 
 
-                                                   /// Brand \\\
+                                                   /// Deal \\\
 
         Route::group(['prefix' => '/admin/deal/'], function() {
         Route::controller(App\Http\Controllers\Admin\DealController::class)->group(function () {
@@ -179,6 +179,18 @@ Route::group(['middleware' => ['auth:api']], function(){
 
           });
       });
+
+
+                                            /// Payout \\\
+
+        Route::group(['prefix' => '/seller/payout/'], function() {
+            Route::controller(App\Http\Controllers\Seller\PayoutController::class)->group(function () {
+                Route::get('show/{id}','index');
+                Route::post('create','create');
+                Route::get('delete/{id}','delete');
+    
+            });
+        });
 
 });  
 

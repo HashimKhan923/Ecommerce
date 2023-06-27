@@ -24,7 +24,16 @@ class PayoutController extends Controller
         $new->requested_amount = $request->requested_amount;
         $new->message = $request->message;
         $new->save();
+
+        $response = ['status'=>true,"message" => "Payout Request Created Successfully!"];
+        return response($response, 200);
     }
 
-    public function 
+    public function delete($id)
+    {
+        Payout::find($id)->delete();
+        
+        $response = ['status'=>true,"message" => "Payout Request Deleted Successfully!"];
+        return response($response, 200);
+    }
 }
