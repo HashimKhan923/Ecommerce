@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('discount')->nullable();
             $table->date('discount_start_date')->nullable();
             $table->date('discount_end_date')->nullable();
-            $table->enum('discount_type', ['percentage','flat'])->default('percentage');
+            $table->enum('discount_type', ['percentage','flat'])->nullable();
             $table->timestamps();
         });
     }

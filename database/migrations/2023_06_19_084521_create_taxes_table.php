@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('tax')->nullable();
-            $table->enum('tax_type', ['percentage','flat'])->default('percentage');
+            $table->enum('tax_type', ['percentage','flat'])->nullable();
             $table->timestamps();
         });
     }

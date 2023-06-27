@@ -8,5 +8,8 @@ use App\Models\Payout;
 
 class PayoutController extends Controller
 {
-    public function 
+    public function index()
+    {
+        
+    }
 }
