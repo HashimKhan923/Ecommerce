@@ -103,6 +103,29 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
+                                                /// Bolg Category \\\
+
+    Route::group(['prefix' => '/admin/blog_category/'], function() {
+        Route::controller(App\Http\Controllers\Admin\BlogCategoryController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+                                                    /// Bolg  \\\
+
+    Route::group(['prefix' => '/admin/blog/'], function() {
+        Route::controller(App\Http\Controllers\Admin\BlogController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+
 
 
 
