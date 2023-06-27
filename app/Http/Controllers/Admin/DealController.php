@@ -29,7 +29,7 @@ class DealController extends Controller
         }
 
         $new->discount_start_date = $request->discount_start_date;
-        $new->descount_end_date = $request->descount_end_date;
+        $new->discount_end_date = $request->discount_end_date;
         $new->save();
 
         $response = ['status'=>true,"message" => "New Deal Added Successfully!"];
