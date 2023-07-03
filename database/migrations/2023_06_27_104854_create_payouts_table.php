@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('total_amount_topay')->nullable();
             $table->decimal('requested_amount')->nullable();
             $table->text('message')->nullable();
+            $table->text('details')->nullable();
             $table->enum('payment_status', ['Paid','Un Paid'])->default('Un Paid');
             $table->timestamps();
         });
