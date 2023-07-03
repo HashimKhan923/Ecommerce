@@ -10,7 +10,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $data = Blog::all();
+        $data = Blog::with('blog_category')->get();
 
         return response()->json(['data'=>$data]);
     }

@@ -12,4 +12,10 @@ class Blog extends Model
     protected $casts = [
         'meta_keywords' => 'array',
     ];
+
+
+    public function blog_category()
+    {
+        return $this->belongsTo(BlogCategory::class,'blogcat_id','id');
+    } 
 }

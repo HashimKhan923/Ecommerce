@@ -4,39 +4,40 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Discount;
-use App\Models\Shipping;
-use App\Models\Stock;
-use App\Models\Tax;
-use App\Models\WholesaleProduct;
-use App\Models\DealProduct;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
 
-class ProductController extends Controller
+class WholeSaleProductController extends Controller
 {
+    
+
     public function index()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product',)->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        {
+            $query->where('id','!=',null);
+        })->get();
 
         return response()->json(['Products'=>$Products]);
     }
 
     public function admin_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->where('added_by','admin')->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        {
+            $query->where('id','!=',null);
+        })->where('added_by','admin')->get();
 
         return response()->json(['Products'=>$Products]);
     }
 
     public function seller_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->where('added_by','seller')->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        {
+            $query->where('id','!=',null);
+        })->where('added_by','seller')->get();
 
         return response()->json(['Products'=>$Products]);
     }
-
 
 
     public function create(Request $request)
@@ -146,18 +147,18 @@ class ProductController extends Controller
             $shipping->save();
         }
 
-        // if($request->wholesale_price != null)
-        // {
-        //     foreach($request->wholesale_price as $price)
-        //     {
-        //         $wholesale = new WholesaleProduct();
-        //         $wholesale->product_id = $new->id;
-        //         $wholesale->wholesale_price = $price;
-        //         $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-        //         $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-        //         $wholesale->save();               
-        //     }
-        // }
+        if($request->wholesale_price != null)
+        {
+            foreach($request->wholesale_price as $price)
+            {
+                $wholesale = new WholesaleProduct();
+                $wholesale->product_id = $new->id;
+                $wholesale->wholesale_price = $price;
+                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
+                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
+                $wholesale->save();               
+            }
+        }
 
         $response = ['status'=>true,"message" => "Product Added Successfully!"];
         return response($response, 200);
@@ -270,20 +271,20 @@ class ProductController extends Controller
             $shipping->save();
         }
 
-        // if($request->wholesale_price != null)
-        // {
-        //     WholesaleProduct::where('product_id',$update->id)->delete();
+        if($request->wholesale_price != null)
+        {
+            WholesaleProduct::where('product_id',$update->id)->delete();
 
-        //     foreach($request->wholesale_price as $price)
-        //     {
-        //         $wholesale = new WholesaleProduct();
-        //         $wholesale->product_id = $update->id;
-        //         $wholesale->wholesale_price = $price;
-        //         $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-        //         $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-        //         $wholesale->save();               
-        //     }
-        // }
+            foreach($request->wholesale_price as $price)
+            {
+                $wholesale = new WholesaleProduct();
+                $wholesale->product_id = $update->id;
+                $wholesale->wholesale_price = $price;
+                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
+                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
+                $wholesale->save();               
+            }
+        }
 
         $response = ['status'=>true,"message" => "Product updated Successfully!"];
         return response($response, 200);

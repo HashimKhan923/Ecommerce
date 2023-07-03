@@ -43,6 +43,8 @@ Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@
 
 Route::group(['middleware' => ['auth:api']], function(){
 
+}); 
+
 
      /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -145,6 +147,22 @@ Route::group(['middleware' => ['auth:api']], function(){
           });
       });
 
+                                            /// Product \\\
+
+    Route::group(['prefix' => '/admin/wholesale_product/'], function() {
+        Route::controller(App\Http\Controllers\Admin\WholeSaleProductController::class)->group(function () {
+            Route::get('show','index');
+            Route::get('admin_products','admin_products');
+            Route::get('seller_products','seller_products');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+            Route::get('is_approved/{id}','is_approved');
+            Route::get('is_featured/{id}','is_featured');
+            Route::get('is_published/{id}','is_published');
+        });
+    });
+
 
                                       /// Package \\\
 
@@ -156,6 +174,16 @@ Route::group(['middleware' => ['auth:api']], function(){
               Route::get('delete/{id}','delete');
           });
       });
+
+
+                                            /// Customer \\\
+
+        Route::group(['prefix' => '/admin/customer/'], function() {
+            Route::controller(App\Http\Controllers\Admin\CustomerController::class)->group(function () {
+                Route::get('show','index');
+                Route::get('is_active/{id}','is_active');
+            });
+        });
 
 
                                             /// Report \\\
@@ -215,7 +243,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         });
 
-});  
+ 
 
 
 
