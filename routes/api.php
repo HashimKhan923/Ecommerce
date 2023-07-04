@@ -293,6 +293,15 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
+                                        /// Subscribe \\\
+
+        Route::group(['prefix' => 'subscribe/'], function() {
+        Route::controller(App\Http\Controllers\Customer\SubscriberController::class)->group(function () {
+            Route::post('create','create');     
+        });
+    });
+
+
                                         /// Order \\\
 
         Route::group(['prefix' => 'order/'], function() {
