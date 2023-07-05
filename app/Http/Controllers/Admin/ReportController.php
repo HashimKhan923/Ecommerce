@@ -17,7 +17,7 @@ class ReportController extends Controller
 
     public function saller_product_sale(Request $request)
     {
-        $data = Product::where('added_by','saller')->where('category_id',$request->category_id)->get();
+        $data = Product::where('added_by','seller')->where('category_id',$request->category_id)->get();
 
         return response()->json(['data'=>$data]);
     }

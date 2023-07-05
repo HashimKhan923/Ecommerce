@@ -147,7 +147,7 @@ Route::group(['middleware' => ['auth:api']], function(){
           });
       });
 
-                                            /// Product \\\
+                                            ///Wholesale Product \\\
 
     Route::group(['prefix' => '/admin/wholesale_product/'], function() {
         Route::controller(App\Http\Controllers\Admin\WholeSaleProductController::class)->group(function () {
@@ -160,6 +160,29 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('is_approved/{id}','is_approved');
             Route::get('is_featured/{id}','is_featured');
             Route::get('is_published/{id}','is_published');
+        });
+    });
+
+                                    /// Order \\\
+
+    Route::group(['prefix' => 'order/'], function() {
+        Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function () {
+            Route::get('show','index');
+            Route::get('admin_orders/{id}','admin_orders');
+            Route::get('seller_orders/{id}','seller_orders');
+            Route::post('delivery_status','delivery_status');
+            Route::post('payment_status','payment_status');
+        });
+    });
+
+                                          /// Coupon \\\
+
+        Route::group(['prefix' => '/admin/coupon/'], function() {
+        Route::controller(App\Http\Controllers\Admin\CouponController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
         });
     });
 
@@ -218,6 +241,17 @@ Route::group(['middleware' => ['auth:api']], function(){
               Route::get('is_published/{id}','is_published');
           });
       });
+
+
+                                              /// Order \\\
+
+        Route::group(['prefix' => '/seller/order/'], function() {
+        Route::controller(App\Http\Controllers\Seller\OrderController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('delivery_status','delivery_status');
+            Route::post('payment_status','payment_status');
+        });
+    });
 
 
 
