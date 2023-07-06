@@ -205,6 +205,18 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::controller(App\Http\Controllers\Admin\CustomerController::class)->group(function () {
                 Route::get('show','index');
                 Route::get('is_active/{id}','is_active');
+                Route::get('delete/{id}','delete');
+            });
+        });
+
+
+                                            /// Seller \\\
+
+        Route::group(['prefix' => '/admin/seller/'], function() {
+            Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {
+                Route::get('show','index');
+                Route::get('is_active/{id}','is_active');
+                Route::get('delete/{id}','delete');
             });
         });
 
