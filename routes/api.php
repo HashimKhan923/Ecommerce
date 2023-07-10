@@ -275,6 +275,21 @@ Route::group(['middleware' => ['auth:api']], function(){
       });
 
 
+                                                  ///Wholesale Product \\\
+
+        Route::group(['prefix' => '/admin/wholesale_product/'], function() {
+            Route::controller(App\Http\Controllers\Admin\WholeSaleProductController::class)->group(function () {
+                Route::get('show/{id}','index');
+                Route::post('create','create');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+                // Route::get('is_approved/{id}','is_approved');
+                // Route::get('is_featured/{id}','is_featured');
+                Route::get('is_published/{id}','is_published');
+            });
+        });
+
+
                                               /// Order \\\
 
         Route::group(['prefix' => '/seller/order/'], function() {

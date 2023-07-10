@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Storage;
 
 class WholeSaleProductController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
-        })->get();
+        })->where('user_id',$id)->get();
 
         return response()->json(['Products'=>$Products]);
     }
@@ -53,7 +53,7 @@ class WholeSaleProductController extends Controller
         
         $new = new Product();
         $new->name = $request->name;
-        $new->added_by = 'admin';
+        $new->added_by = 'seller';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
         $new->weight = $request->weight;
@@ -178,7 +178,7 @@ class WholeSaleProductController extends Controller
     {
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
-        $update->added_by = 'admin';
+        $update->added_by = 'seller';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
         $update->weight = $request->weight;
@@ -336,24 +336,24 @@ class WholeSaleProductController extends Controller
         return response($response, 200);
     }
 
-    public function is_approved($id)
-    {
-        $is_approved = Product::where('id',$id)->first();
+    // public function is_approved($id)
+    // {
+    //     $is_approved = Product::where('id',$id)->first();
 
-        if($is_approved->approved == 0)
-        {
-            $is_approved = 1;
-        }
-        else
-        {
-            $is_approved = 0;
-        }
+    //     if($is_approved->approved == 0)
+    //     {
+    //         $is_approved = 1;
+    //     }
+    //     else
+    //     {
+    //         $is_approved = 0;
+    //     }
 
-        $is_approved->save();
+    //     $is_approved->save();
 
-        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
-        return response($response, 200);
-    }
+    //     $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+    //     return response($response, 200);
+    // }
 
     public function is_published($id)
     {
@@ -374,22 +374,22 @@ class WholeSaleProductController extends Controller
         return response($response, 200);
     }
 
-    public function is_featured($id)
-    {
-        $is_featured = Product::where('id',$id)->first();
+    // public function is_featured($id)
+    // {
+    //     $is_featured = Product::where('id',$id)->first();
 
-        if($is_featured->featured == 0)
-        {
-            $is_featured = 1;
-        }
-        else
-        {
-            $is_featured = 0;
-        }
+    //     if($is_featured->featured == 0)
+    //     {
+    //         $is_featured = 1;
+    //     }
+    //     else
+    //     {
+    //         $is_featured = 0;
+    //     }
 
-        $is_featured->save();
+    //     $is_featured->save();
 
-        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
-        return response($response, 200);
-    }
+    //     $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+    //     return response($response, 200);
+    // }
 }
