@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $Products = Product::where('published',1)->get();
         $Categories = Category::where('is_active',1)->get();
-        $Barnds = Brand::where('is_active',1)->get();
+        $Brands = Brand::where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
 
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners]);
