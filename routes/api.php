@@ -186,6 +186,26 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
+                                              /// Refund \\\
+
+        Route::group(['prefix' => '/admin/refund/'], function() {
+        Route::controller(App\Http\Controllers\Admin\RefundController::class)->group(function () {
+            Route::get('show','index');
+            Route::get('approved','approved_refunds');
+            Route::get('rejected','rejected_refunds');
+            Route::post('status','change_status');
+        });
+    });
+
+                                                  /// Refund Time \\\
+
+        Route::group(['prefix' => '/admin/refund_time/'], function() {
+        Route::controller(App\Http\Controllers\Admin\RefundTimeController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('update','createOrupdate');
+        });
+    });
+
 
                                       /// Package \\\
 
@@ -354,5 +374,16 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::controller(App\Http\Controllers\Customer\OrderController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
+        });
+    });
+
+
+                                            /// Refund \\\
+
+    Route::group(['prefix' => 'refund/'], function() {
+        Route::controller(App\Http\Controllers\Customer\RefundController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('create','create');
+            Route::get('delete/{id}','delete');
         });
     });
