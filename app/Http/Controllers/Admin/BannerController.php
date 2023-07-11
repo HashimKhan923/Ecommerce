@@ -18,27 +18,15 @@ class BannerController extends Controller
     public function create(Request $request)
     {
         $new = new Banner();
-        $new->name = $request->name;
+        $new->link = $request->link;
 
-        if($request->file('banner'))
+        if($request->file('image'))
         {
-                $file= $request->banner;
+                $file= $request->image;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
-                $new->banner = $filename;
+                $new->image = $filename;
         }
-
-        if($request->file('icon'))
-        {
-                $file= $request->icon;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->icon = $filename;
-        }
-
-        $new->slug = $request->slug;
-        $new->meta_title = $request->meta_title;
-        $new->meta_description = $request->meta_description;
         $new->save();
 
         $response = ['status'=>true,"message" => "Banner Added Successfully!"];
@@ -48,40 +36,16 @@ class BannerController extends Controller
     public function update(Request $request)
     {
         $update = Banner::where('id',$request->id)->first();
-        $update->name = $request->name;
+        $update->link = $request->link;
 
-        if($request->file('banner'))
+        if($request->file('image'))
         {
-            $bannerpath = 'app/public'.$update->banner;
-            if (Storage::exists($bannerpath))
-            {
-                Storage::delete($bannerpath);
-            }
-
-                $file= $request->banner;
+                $file= $request->image;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
-                $update->banner = $filename;
+                $update->image = $filename;
         }
-
-        if($request->file('icon'))
-        {
-
-            $bannerpath = 'app/public'.$update->icon;
-            if (Storage::exists($iconpath))
-            {
-                Storage::delete($iconpath);
-            }
-
-                $file= $request->icon;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->icon = $filename;
-        }
-
-        $update->slug = $request->slug;
-        $update->meta_title = $request->meta_title;
-        $update->meta_description = $request->meta_description;
+        
         $update->save();
 
         $response = ['status'=>true,"message" => "Banner Updated Successfully!"];
@@ -92,7 +56,7 @@ class BannerController extends Controller
     {
         $file = Banner::find($id);
 
-        $bannerpath = 'app/public'.$file->logo;
+        $bannerpath = 'app/public'.$file->image;
         if (Storage::exists($bannerpath)) {
             // Delete the file
             Storage::delete($bannerpath);

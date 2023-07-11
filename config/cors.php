@@ -31,6 +31,5 @@ return [
 
     'supports_credentials' => false,
 
-    'Access-Control-Allow-Origin' => true,
 
 ];
