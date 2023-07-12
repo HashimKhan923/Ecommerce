@@ -156,18 +156,17 @@ class WholeSaleProductController extends Controller
             $shipping->save();
         }
 
-        if($request->wholesale_price != null)
-        {
-            foreach($request->wholesale_price as $price)
-            {
+        // if($request->wholesale_price != null)
+        // {
+            foreach ($request as $item) {
                 $wholesale = new WholesaleProduct();
                 $wholesale->product_id = $new->id;
-                $wholesale->wholesale_price = $price;
-                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-                $wholesale->save();               
+                $wholesale->wholesale_price = $item['wholesale_price'];
+                $wholesale->wholesale_min_qty = $item['wholesale_min_qty'];
+                $wholesale->wholesale_max_qty = $item['wholesale_max_qty'];
+                $wholesale->save();
             }
-        }
+        // }
 
         $response = ['status'=>true,"message" => "Product Added Successfully!"];
         return response($response, 200);
