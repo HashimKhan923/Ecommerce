@@ -24,7 +24,7 @@ class ReportController extends Controller
 
     public function product_stock(Request $request)
     {
-        $data = Product::where('category_id',$request->category_id)->get();
+        $data = Product::with('stock')->where('category_id',$request->category_id)->get();
 
         return response()->json(['data'=>$data]);
     }
