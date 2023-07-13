@@ -353,11 +353,11 @@ class ProductController extends Controller
 
         if($is_published->published == 0)
         {
-            $is_published = 1;
+            $is_published->published = 1;
         }
         else
         {
-            $is_published = 0;
+            $is_published->published = 0;
         }
 
         $is_published->save();

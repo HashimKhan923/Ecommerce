@@ -158,12 +158,12 @@ class WholeSaleProductController extends Controller
 
         // if($request->wholesale_price != null)
         // {
-            foreach ($request as $item) {
+            foreach ($request->wholesale_price as $item) {
                 $wholesale = new WholesaleProduct();
                 $wholesale->product_id = $new->id;
-                $wholesale->wholesale_price = $item['wholesale_price'];
-                $wholesale->wholesale_min_qty = $item['wholesale_min_qty'];
-                $wholesale->wholesale_max_qty = $item['wholesale_max_qty'];
+                $wholesale->wholesale_price = $item;
+                $wholesale->wholesale_min_qty = $item->wholesale_min_qty;
+                $wholesale->wholesale_max_qty = $item->wholesale_max_qty;
                 $wholesale->save();
             }
         // }
