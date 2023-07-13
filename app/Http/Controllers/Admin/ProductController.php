@@ -372,11 +372,11 @@ class ProductController extends Controller
 
         if($is_featured->featured == 0)
         {
-            $is_featured = 1;
+            $is_featured->featured = 1;
         }
         else
         {
-            $is_featured = 0;
+            $is_featured->featured = 0;
         }
 
         $is_featured->save();
