@@ -9,6 +9,8 @@ use App\Models\Discount;
 use App\Models\Shipping;
 use App\Models\Stock;
 use App\Models\Tax;
+use App\Models\WholesaleProduct;
+use App\Models\DealProduct;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Storage;
