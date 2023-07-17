@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Package;
+use App\Models\SellerPackage;
 use App\Models\SubscribeUser;
 use Carbon\Carbon;
 
@@ -12,7 +12,7 @@ class PackageController extends Controller
 {
     public function index()
     {
-        $Subscription=Package::all();
+        $Package=SellerPackage::all();
         return response()->json(['Package'=>$Package]);
     }
 
@@ -20,7 +20,7 @@ class PackageController extends Controller
     {
 
       $start_time = Carbon::now();  
-      $Package = Package::where('id',$request->subscription_id)->first();
+      $Package = SellerPackage::where('id',$request->subscription_id)->first();
       
 
 
