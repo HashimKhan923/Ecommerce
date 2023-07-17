@@ -308,6 +308,7 @@ Route::group(['middleware' => ['auth:api']], function(){
           Route::controller(App\Http\Controllers\Seller\PackageController::class)->group(function () {
               Route::get('show','index');
               Route::post('subscribe','subscribe');
+              Route::get('subscribe_user/{id}','subscribeUser');
 
           });
       });
