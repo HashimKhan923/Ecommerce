@@ -29,7 +29,7 @@ class FilterController extends Controller
 
     public function price(Request $request)
     {
-        $data = Product::where('price','>=',$request->min_price)->where('price','<=',$request->min_price)->get();
+        $data = Product::where('price','>=',$request->min_price)->where('price','<=',$request->max_price)->get();
 
         return response()->json(['data'=>$data]);
     }
