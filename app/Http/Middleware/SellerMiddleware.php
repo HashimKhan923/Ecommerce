@@ -15,10 +15,8 @@ class SellerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->user_type != 'seller') {
-            abort(403, 'Unauthorized');
+        if ($request->user() && $request->user()->user_type == 'seller') {
+            return $next($request);
         }
-        return $next($request);
-          
-    }
+        abort(403, 'Unauthorized');    }
 }
