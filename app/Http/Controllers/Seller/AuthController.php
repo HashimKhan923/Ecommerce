@@ -41,6 +41,54 @@ class AuthController extends Controller
         return response($response, 200);
     }
 
+    public function login(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+
+        if($user->is_active == 1)
+        {
+            if (Hash::check($request->password, $user->password)) {
+
+                if($user->user_type == 'seller')
+                {
+                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                    $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                    return response($response, 200);
+                }
+                else
+                {
+                    $response = ['status'=>false,"message" => "You are not a seller"];
+                    return response($response, 422);
+                }
+
+
+                
+            } else {
+                $response = ['status'=>false,"message" => "Password mismatch"];
+                return response($response, 422);
+            }
+
+        }
+        else
+        {
+            $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+            return response($response, 422);
+        }
+        } else {
+            $response = ['status'=>false,"message" =>'User does not exist'];
+            return response($response, 422);
+        }
+    }
+
     public function profile_view($id)
     {
       $admin_profile = User::where('id',$id)->first();

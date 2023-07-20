@@ -32,18 +32,23 @@ Route::get('/logout/{id}', 'App\Http\Controllers\AuthController@logout');
 // common routes ends
 
 /// admin Register
+Route::post('/admin/login', '\App\Http\Controllers\Admin\AuthController@login');
 Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@register');
 
 /// seller Register
+Route::post('/seller/login', '\App\Http\Controllers\Seller\AuthController@login');
 Route::post('/seller/register', 'App\Http\Controllers\Seller\AuthController@register');
 
 /// customer Register
+Route::post('/login', '\App\Http\Controllers\Customer\AuthController@login');
 Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@register');
 
 
 Route::group(['middleware' => ['auth:api']], function(){
 
 }); 
+
+Route::middleware(['admin'])->group(function () {
 
 
      /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -252,6 +257,11 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
+
+    });
+
+    Route::middleware(['seller'])->group(function () {
+
       /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
       Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
@@ -328,7 +338,7 @@ Route::group(['middleware' => ['auth:api']], function(){
  
 
 
-
+    });
 
 
            
