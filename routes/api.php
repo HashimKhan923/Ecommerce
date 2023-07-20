@@ -46,7 +46,7 @@ Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@
 
 Route::group(['middleware' => ['auth:api']], function(){
 
-}); 
+
 
 Route::middleware(['admin'])->group(function () {
 
@@ -341,7 +341,7 @@ Route::middleware(['admin'])->group(function () {
     });
 
 
-           
+    }); 
 
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
