@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $Products = Product::where('published',1)->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->get();
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
