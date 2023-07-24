@@ -355,7 +355,7 @@ Route::middleware(['admin'])->group(function () {
 
                                     /// Home \\\
 
-        Route::group(['prefix' => '/'], function() {
+        Route::group(['prefix' => '/home'], function() {
             Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
                 Route::get('','index');
             });
@@ -364,7 +364,7 @@ Route::middleware(['admin'])->group(function () {
 
                                                /// Product \\\
 
-      Route::group(['prefix' => 'product/'], function() {
+      Route::group(['prefix' => '/product'], function() {
         Route::controller(App\Http\Controllers\Customer\ProductController::class)->group(function () {
             Route::get('show','index');
             Route::post('comment','comment');
