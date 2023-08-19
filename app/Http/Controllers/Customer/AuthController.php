@@ -53,8 +53,8 @@ class AuthController extends Controller
             $message->subject('Email Verification');
         });
         
-        $token = $new->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['status'=>true,"message" => "Register Customer Successfully",'token' => $token];
+
+        $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
         return response($response, 200);
     }
 
