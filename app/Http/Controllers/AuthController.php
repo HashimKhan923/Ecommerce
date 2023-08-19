@@ -189,7 +189,7 @@ class AuthController extends Controller
       {
         $check->remember_token = '';
 
-        $response = ['status'=>true,"message" => "Email Verified Successfully"];
+        $response = ['status'=>true,"message" => "Email Verified Successfully",'user'=>$check];
         return response($response, 200);
 
       }
