@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
 use Hash;
+use Mail;
 
 class AuthController extends Controller
 {
@@ -72,35 +73,45 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user) {
 
-        if($user->is_active == 1)
-        {
-            if (Hash::check($request->password, $user->password)) {
-
-                if($user->user_type == 'seller')
-                {
-                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                    $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-                    return response($response, 200);
-                }
-                else
-                {
-                    $response = ['status'=>false,"message" => "You are not a seller"];
+         if($user->remember_token == null)
+         {
+            if($user->is_active == 1)
+            {
+                if (Hash::check($request->password, $user->password)) {
+    
+                    if($user->user_type == 'seller')
+                    {
+                        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                        return response($response, 200);
+                    }
+                    else
+                    {
+                        $response = ['status'=>false,"message" => "You are not a seller"];
+                        return response($response, 422);
+                    }
+    
+    
+                    
+                } else {
+                    $response = ['status'=>false,"message" => "Password mismatch"];
                     return response($response, 422);
                 }
-
-
-                
-            } else {
-                $response = ['status'=>false,"message" => "Password mismatch"];
+    
+            }
+            else
+            {
+                $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
                 return response($response, 422);
             }
-
-        }
-        else
-        {
-            $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+         } 
+         else
+         {
+            $response = ['status'=>false,"message" =>'your email is not verified'];
             return response($response, 422);
-        }
+         }
+
+
         } else {
             $response = ['status'=>false,"message" =>'User does not exist'];
             return response($response, 422);
