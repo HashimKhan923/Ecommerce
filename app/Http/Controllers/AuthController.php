@@ -179,4 +179,28 @@ class AuthController extends Controller
         }
 
     }
+
+
+    public function verification($id)
+    {
+      $check = User::where('remember_token',$id)->first();
+
+      if($check)
+      {
+        $check->remember_token = null;
+
+        $response = ['status'=>true,"message" => "Email Verified Successfully"];
+        return response($response, 200);
+
+      }
+      else
+      {
+        $response = ['status'=>true,"message" => "something went wrong!"];
+        return response($response, 422);
+      }
+
+
+    }
+
+
 }

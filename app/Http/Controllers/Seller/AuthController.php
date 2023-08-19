@@ -31,10 +31,28 @@ class AuthController extends Controller
         $new->country = $request->country;
         $new->postal_code = $request->postal_code;
         $new->phone = $request->phone;
+        $token = uniqid();
+        $new->remember_token = $token;
         $new->password = Hash::make($request->password);
         $new->user_type = 'seller';
         $new->is_active = 1;
         $new->save();
+
+        Mail::send(
+            'email.verification',
+            [
+                'token'=>$token,
+                'name'=>$query->name,
+                //'last_name'=>$query->last_name
+            ], 
+        
+        function ($message) use ($query) {
+            $message->from(env('MAIL_USERNAME'));
+            $message->to($query->email);
+            $message->subject('Forget Password');
+        });
+
+
         
         $token = $new->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['status'=>true,"message" => "Register Admin Successfully",'token' => $token];
