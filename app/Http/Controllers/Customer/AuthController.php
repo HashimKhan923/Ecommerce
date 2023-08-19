@@ -72,26 +72,36 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user) {
 
-        if($user->is_active == 1)
-        {
-            if (Hash::check($request->password, $user->password)) {
-
-                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                    $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-                    return response($response, 200);
-
-                
-            } else {
-                $response = ['status'=>false,"message" => "Password mismatch"];
+        if($user->remember_token == null)
+        {   
+            if($user->is_active == 1)
+            {
+                if (Hash::check($request->password, $user->password)) {
+    
+                        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                        return response($response, 200);
+    
+                    
+                } else {
+                    $response = ['status'=>false,"message" => "Password mismatch"];
+                    return response($response, 422);
+                }
+    
+            }
+            else
+            {
+                $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
                 return response($response, 422);
             }
-
-        }
+        } 
         else
         {
-            $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+            $response = ['status'=>false,"message" =>'your email is not verified'];
             return response($response, 422);
-        }
+        }  
+
+
         } else {
             $response = ['status'=>false,"message" =>'User does not exist'];
             return response($response, 422);
