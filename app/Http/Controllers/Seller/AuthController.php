@@ -43,14 +43,14 @@ class AuthController extends Controller
             'email.verification',
             [
                 'token'=>$token,
-                'name'=>$query->name,
+                'name'=>$new->name,
                 //'last_name'=>$query->last_name
             ], 
         
-        function ($message) use ($query) {
+        function ($message) use ($new) {
             $message->from(env('MAIL_USERNAME'));
-            $message->to($query->email);
-            $message->subject('Forget Password');
+            $message->to($new->email);
+            $message->subject('Email Verification');
         });
 
 
