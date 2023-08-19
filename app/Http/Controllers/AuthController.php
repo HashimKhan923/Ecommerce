@@ -187,7 +187,7 @@ class AuthController extends Controller
 
       if($check)
       {
-        $check->remember_token = null;
+        $check->remember_token = '';
 
         $response = ['status'=>true,"message" => "Email Verified Successfully"];
         return response($response, 200);
