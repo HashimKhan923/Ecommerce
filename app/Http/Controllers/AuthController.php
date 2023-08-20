@@ -187,17 +187,20 @@ class AuthController extends Controller
 
       if($check)
       {
-        $check->remember_token = null;
-        $check->save();
-
-        $response = ['status'=>true,"message" => "Email Verified Successfully",'user'=>$check];
-        return response($response, 200);
+        $response = ['status' => true, "message" => "Email Verified Successfully!"];
+        $jsonMessage = json_encode($response);
+        $redirectUrl = "https://dragonautomart-website.vercel.app/?jsonMessage=" . urlencode($jsonMessage);
+        
+        return redirect($redirectUrl);
 
       }
       else
       {
-        $response = ['status'=>true,"message" => "something went wrong!"];
-        return response($response, 422);
+        $response = ['status' => true, "message" => "something went wrong!"];
+        $jsonMessage = json_encode($response);
+        $redirectUrl = "https://dragonautomart-website.vercel.app/?jsonMessage=" . urlencode($jsonMessage);
+        
+        return redirect($redirectUrl);
       }
 
 
