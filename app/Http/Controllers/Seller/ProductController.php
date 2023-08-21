@@ -11,6 +11,7 @@ use App\Models\Stock;
 use App\Models\Tax;
 use App\Models\WholesaleProduct;
 use App\Models\DealProduct;
+use App\Models\Varient;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +36,7 @@ class ProductController extends Controller
         $new->unit = $request->unit;
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
-        $new->model = $request->model;
+        $new->model_id = $request->model_id;
 
         if ($request->file('photos')) {
             $ProductGallery = array(); // Initialize the array
@@ -60,8 +61,6 @@ class ProductController extends Controller
         $new->tags = $request->tags;
         $new->description = $request->description;
         $new->price = $request->price;
-        $new->colors = $request->colors;
-        $new->sizes = $request->sizes;
         $new->cash_on_delivery = $request->cash_on_delivery;
         $new->featured = $request->featured;
         $new->todays_deal = $request->todays_deal;
@@ -77,6 +76,21 @@ class ProductController extends Controller
         $new->slug = $request->slug;
         $new->sku = $request->sku;
         $new->save();
+
+        
+        if($request->color != null)
+        {
+            foreach($request->color as $item)
+            {
+                $color = new Varient();
+                $color->product_id = $new->id;
+                $color->color = $item->color;
+                $color->price = $item->price;
+                $color->available = $item->available;
+                $color->save();
+            }
+
+        }
 
         if($request->discount != null)
         {

@@ -41,6 +41,13 @@ class BannerController extends Controller
 
         if($request->file('image'))
         {
+
+            $path = 'app/public'.$update->image;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+
                 $file= $request->image;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);

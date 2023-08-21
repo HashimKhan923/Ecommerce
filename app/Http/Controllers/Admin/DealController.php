@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Deal;
+use Storage;
 
 class DealController extends Controller
 {
@@ -43,6 +44,12 @@ class DealController extends Controller
         $update->page_link = $request->page_link;
 
         if($request->file('banner')){
+
+            $path = 'app/public'.$update->banner;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
             $file= $request->file('banner');
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->storeAs('public', $filename);
@@ -59,7 +66,15 @@ class DealController extends Controller
 
     public function delete($id)
     {
-        Deal::find($id)->delete();
+      $file = Deal::find($id);
+
+        $path = 'app/public'.$file->banner;
+        if (Storage::exists($path)) {
+            // Delete the file
+            Storage::delete($path);
+        }
+
+        $file->delete();
 
         $response = ['status'=>true,"message" => "Deal Deleted Successfully!"];
         return response($response, 200);
