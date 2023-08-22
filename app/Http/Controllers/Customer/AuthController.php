@@ -109,9 +109,9 @@ class AuthController extends Controller
                     //'last_name'=>$query->last_name
                 ], 
             
-            function ($message) use ($new) {
+            function ($message) use ($user) {
                 $message->from(env('MAIL_USERNAME'));
-                $message->to($new->email);
+                $message->to($user->email);
                 $message->subject('Email Verification');
             });
 

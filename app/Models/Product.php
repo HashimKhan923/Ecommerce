@@ -40,6 +40,16 @@ class Product extends Model
         return $this->belongsTo(Brand::class,'brand_id','id');
     } 
 
+    public function model()
+    {
+        return $this->belongsTo(Models::class,'model_id','id');
+    } 
+
+    public function varient()
+    {
+        return $this->hasMany(Varient::class,'product_id','id');
+    }
+
     public function stock()
     {
         return $this->hasOne(Stock::class,'product_id','id');

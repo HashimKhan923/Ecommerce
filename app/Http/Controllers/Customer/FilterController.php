@@ -13,8 +13,10 @@ class FilterController extends Controller
 
         if($request->category_id != null)
         {
-            $data = Product::where('name', 'LIKE', '%'.$request->searchValue.'%')
+            $data = Product::with('user','category','brand','model','stock','varient','discount','tax','shipping','deal.deal_product','wholesale')
+            ->where('name', 'LIKE', '%'.$request->searchValue.'%')
             ->where('category_id',$request->category_id)
+            ->where('published',1)
             ->get();
         }
         else
@@ -27,9 +29,11 @@ class FilterController extends Controller
 
     }
 
-    public function price(Request $request)
+    public function target_search(Request $request)
     {
-        $data = Product::where('price','>=',$request->min_price)->where('price','<=',$request->max_price)->get();
+        $data = Product::where('category_id',$request->category_id)
+        ->where('brand_id',$request->brand_id)
+        ->where('model_id',$request->model_id)->get();
 
         return response()->json(['data'=>$data]);
     }

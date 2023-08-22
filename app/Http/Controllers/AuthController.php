@@ -183,6 +183,7 @@ class AuthController extends Controller
 
     public function verification($id)
     {
+        return $id;
       $check = User::where('remember_token',$id)->first();
 
       if($check)
