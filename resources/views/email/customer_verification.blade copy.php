@@ -9,6 +9,12 @@
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Dragon Auto Mart</a>
     </div>
     <p style="font-size:1.1em">Hi, Mr. {{$name}}</p>
+
+    <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever have any questions, concerns, or suggestions</p> 
+    
+    <p>don't hesitate to contact us at support@dragonautomart.com.</p>
+
+
     <p>click on the following Link to complete your email verification procedures.</p>
     <h5><a href="https://ecommerce.businesswayz.com/public/api/verification/{{$token}}">https://dragonautomart-website.vercel.app/</a></h5>
     <p style="font-size:0.9em;">Regards,<br />Dragon Auto Mart</p>
