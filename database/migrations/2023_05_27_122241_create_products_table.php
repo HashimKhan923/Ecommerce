@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('deal_id')->references('id')->on('deals')->onDelete('cascade')->onUpdate('cascade');
             $table->string('weight')->nullable();
             $table->decimal('unit')->nullable();
+            $table->string('year')->nullable();
             $table->string('sku')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
