@@ -43,6 +43,7 @@ class OrderController extends Controller
                 $newOrderDetail->order_id = $newOrder->id;
                 $newOrderDetail->product_id = $product->id;
                 $newOrderDetail->quantity = $request->quantity;
+                $newOrderDetail->varient = $request->varient;
                 $newOrderDetail->save();
             }
         }
