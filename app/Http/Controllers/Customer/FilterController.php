@@ -31,7 +31,7 @@ class FilterController extends Controller
 
     public function target_search(Request $request)
     {
-        $data = Product::where('category_id',$request->category_id)
+        $data = Product::where('year',$request->year)
         ->where('brand_id',$request->brand_id)
         ->where('model_id',$request->model_id)->get();
 
