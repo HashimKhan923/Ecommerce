@@ -11,7 +11,7 @@ class BrandController extends Controller
 {
     public function index()
     {
-      $Brands = Brand::all();
+      $Brands = Brand::wih('model')->get();
 
       return response()->json(['Brands'=>$Brands]);
     }
