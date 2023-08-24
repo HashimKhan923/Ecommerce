@@ -201,7 +201,7 @@ class WholeSaleProductController extends Controller
         $update->unit = $request->unit;
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
-        $update->model = $request->model;
+        $update->model_id = $request->model_id;
 
         if ($request->file('photos')) {
             $ProductGallery = array(); // Initialize the array
