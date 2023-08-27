@@ -449,3 +449,11 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::post('multi_search','multisearch');   
         });
     });
+
+                                                    /// Filter \\\
+
+    Route::group(['prefix' => 'payment/'], function() {
+        Route::controller(App\Http\Controllers\Customer\PaymentController::class)->group(function () {
+            Route::post('stripe','payment');     
+        });
+    });
