@@ -450,7 +450,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
-                                                    /// Filter \\\
+                                                    /// Payment \\\
 
     Route::group(['prefix' => 'payment/'], function() {
         Route::controller(App\Http\Controllers\Customer\PaymentController::class)->group(function () {

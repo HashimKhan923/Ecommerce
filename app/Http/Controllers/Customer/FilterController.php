@@ -64,7 +64,7 @@ class FilterController extends Controller
 
 
     
-        $data = $query::with('user','category','brand','model','stock','varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->get();
+        $data = $query->with('user','category','brand','model','stock','varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->get();
     
         return response()->json(['data'=>$data]);
     }
