@@ -33,7 +33,7 @@ class PaymentController extends Controller
                 'customer' => $customer->id,
                 'amount' => $amount * 100, // Stripe uses smallest currency unit (cents)
                 'currency' => 'usd',
-                'description' => 'Donation',
+                'description' => 'Dragonautomart-website-payment',
                 'receipt_email' => $token['email'],
             ]);
 
