@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
+use App\Models\SellerInformation;
 use Hash;
 use Mail;
 
@@ -38,6 +39,24 @@ class AuthController extends Controller
         $new->user_type = 'seller';
         $new->is_active = 1;
         $new->save();
+
+        $new1 = new SellerInformation();
+        $new1->user_id = $new->id;
+        $new1->social_security_number = $request->social_security_number;
+        $new1->business_ein_number = $request->business_ein_number;
+        $new1->credit_card_number = $request->credit_card_number;
+        $new1->paypal_address = $request->paypal_address;
+        if($request->file('document'))
+        {
+                $file= $request->document;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $new1->document = $filename;
+        }
+
+        $new1->save();
+
+
 
         Mail::send(
             'email.seller_verification',
@@ -138,7 +157,7 @@ class AuthController extends Controller
 
     public function profile_view($id)
     {
-      $admin_profile = User::where('id',$id)->first();
+      $admin_profile = User::with('seller_information')->where('id',$id)->first();
 
       return response()->json(['admin_profile'=>$admin_profile],200);
     }
@@ -172,8 +191,24 @@ class AuthController extends Controller
                 $file->storeAs('public', $filename);
                 $new->avatar = $filename;
         }
-        //$admin->save();
-        if($admin->save()){
+        $admin->save();
+
+        $admin1 = SellerInformation::where('user_id',$admin->id)->first();
+        $admin1->user_id = $admin->id;
+        $admin1->social_security_number = $request->social_security_number;
+        $admin1->business_ein_number = $request->business_ein_number;
+        $admin1->credit_card_number = $request->credit_card_number;
+        $admin1->paypal_address = $request->paypal_address;
+        if($request->file('document'))
+        {
+                $file= $request->document;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $admin1->document = $filename;
+        }
+
+        
+        if($admin1->save()){
           $response = ['status'=>true,"message" => "Profile Update Successfully","user"=>$admin];
           return response($response, 200);
         }
