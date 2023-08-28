@@ -24,23 +24,24 @@ class PackageController extends Controller
       
 
 
-      if($Subscription->time_name == 'days')
+      if($Package->time_name == 'days')
       {
-        $end_time = Carbon::now()->addDay($Subscription->time_number);
+        $end_time = Carbon::now()->addDay($Package->time_number);
       }
-      if($Subscription->time_name == 'months')
+      if($Package->time_name == 'months')
       {
-        $end_time = Carbon::now()->addMonth($Subscription->time_number);
+        $end_time = Carbon::now()->addMonth($Package->time_number);
       }
-      if($Subscription->time_name == 'years')
+      if($Package->time_name == 'years')
       {
-        $end_time = Carbon::now()->addYear($Subscription->time_number);
+        $end_time = Carbon::now()->addYear($Package->time_number);
       }
 
 
         $new = new SubscribeUser;
-        $new->user_id = $request->user_id;
+        $new->user_id = $request->auth()->user()->id;
         $new->subscription_id = $request->subscription_id;
+        $new->product_upload_limit = $Package->product_upload_limit;
         $new->start_time = $start_time;
         $new->end_time = $end_time;
         $new->save();
@@ -50,9 +51,9 @@ class PackageController extends Controller
   
     }
 
-    public function subscribeUser($id)
+    public function subscribeUser()
     {
-      $SubscribeUser = SubscribeUser::with('user','plan')->where('user_id',$id)->get();
+      $SubscribeUser = SubscribeUser::with('user','plan')->where('user_id',auth()->user()->id)->get();
       return response()->json(['SubscribeUser'=>$SubscribeUser]);
     }
 }

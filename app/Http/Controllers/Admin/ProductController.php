@@ -57,6 +57,7 @@ class ProductController extends Controller
         $new->model_id = $request->model_id;
 
         if ($request->photos) {
+
             // return $request->photos;
             $ProductGallery = array(); // Initialize the array
             foreach ($request->file('photos') as $photo) {
@@ -195,6 +196,21 @@ class ProductController extends Controller
         $update->model_id = $request->model_id;
 
         if ($request->file('photos')) {
+            if($update->photos != null)
+            {
+                foreach($update->photos as $item)
+                {
+                    $path = 'app/public'.$item;
+                    if (Storage::exists($path)) {
+                        // Delete the file
+                        Storage::delete($path);
+                    }
+                }
+            }
+
+
+
+
             $ProductGallery = array(); // Initialize the array
         
             foreach ($request->file('photos') as $photo) {
@@ -209,6 +225,12 @@ class ProductController extends Controller
 
         if($request->file('thumbnail_img'))
         {
+            $path = 'app/public'.$update->thumbnail_img;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+
                 $file= $request->thumbnail_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -217,7 +239,6 @@ class ProductController extends Controller
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
-        $update->colors = $request->colors;
         $update->sizes = $request->sizes;
         $update->featured = $request->featured;
         $update->todays_deal = $request->todays_deal;
@@ -225,6 +246,12 @@ class ProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
+            $path = 'app/public'.$update->meta_img;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+
                 $file= $request->meta_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -232,6 +259,30 @@ class ProductController extends Controller
         }
         $update->slug = $request->slug;
         $update->save();
+
+        if ($request->color != null) {
+            foreach ($request->color as $colorData) {
+                // Check if the color already exists
+                $color = Varient::where('product_id', $update->id)
+                    ->where('color', $colorData['color'])
+                    ->first();
+        
+                if ($color) {
+                    // Update existing color data
+                    $color->price = $colorData['price'];
+                    $color->available = $colorData['available'];
+                    $color->save();
+                } else {
+                    // Create a new color record
+                    $color = new Varient();
+                    $color->product_id = $update->id;
+                    $color->color = $colorData['color'];
+                    $color->price = $colorData['price'];
+                    $color->available = $colorData['available'];
+                    $color->save();
+                }
+            }
+        }
 
         if($request->discount != null)
         {

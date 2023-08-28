@@ -16,7 +16,7 @@
 
 
     <p>click on the following Link to complete your email verification procedures.</p>
-    <h5><a href="https://ecommerce.businesswayz.com/public/api/verification/{{$token}}">https://dragonautomart-website.vercel.app/</a></h5>
+    <h5><a href="https://ecommerce.businesswayz.com/public/api/verification/{{$token}}">https://dragonautomart.com/</a></h5>
     <p style="font-size:0.9em;">Regards,<br />Dragon Auto Mart</p>
     <hr style="border:none;border-top:1px solid #eee" />
     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">

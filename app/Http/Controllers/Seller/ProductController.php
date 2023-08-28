@@ -10,6 +10,7 @@ use App\Models\Shipping;
 use App\Models\Stock;
 use App\Models\Tax;
 use App\Models\WholesaleProduct;
+use App\Models\SubscribeUser;
 use App\Models\DealProduct;
 use App\Models\Varient;
 use Carbon\Carbon;
@@ -27,7 +28,10 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        $new = new Product();
+        $checkPackage = SubscribeUser::where('user_id',auth()->user()->id)->first();
+        if($checkPackage)
+        {
+            $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
@@ -160,6 +164,14 @@ class ProductController extends Controller
 
         $response = ['status'=>true,"message" => "Product Added Successfully!"];
         return response($response, 200);
+
+        }
+        else
+        {
+            $response = ['status'=>true,"message" => "you dont have any subscription to upload new product. please buy any subscription to upload products!"];
+            return response($response, 200);
+        }
+        
         
 
     }
@@ -181,6 +193,18 @@ class ProductController extends Controller
 
         if ($request->file('photos')) {
             $ProductGallery = array(); // Initialize the array
+
+            if($update->photos != null)
+            {
+                foreach($update->photos as $item)
+                {
+                    $path = 'app/public'.$item;
+                    if (Storage::exists($path)) {
+                        // Delete the file
+                        Storage::delete($path);
+                    }
+                }
+            }
         
             foreach ($request->file('photos') as $photo) {
                 $file = $photo;
@@ -194,6 +218,12 @@ class ProductController extends Controller
 
         if($request->file('thumbnail_img'))
         {
+            $path = 'app/public'.$update->thumbnail_img;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+
                 $file= $request->thumbnail_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -202,7 +232,6 @@ class ProductController extends Controller
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
-        $update->colors = $request->colors;
         $update->sizes = $request->sizes;
         $update->featured = $request->featured;
         $update->todays_deal = $request->todays_deal;
@@ -210,6 +239,11 @@ class ProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
+            $path = 'app/public'.$update->meta_img;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
                 $file= $request->meta_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -218,6 +252,30 @@ class ProductController extends Controller
         $update->slug = $request->slug;
         $update->sku = $request->sku;
         $update->save();
+
+        if ($request->color != null) {
+            foreach ($request->color as $colorData) {
+                // Check if the color already exists
+                $color = Varient::where('product_id', $update->id)
+                    ->where('color', $colorData['color'])
+                    ->first();
+        
+                if ($color) {
+                    // Update existing color data
+                    $color->price = $colorData['price'];
+                    $color->available = $colorData['available'];
+                    $color->save();
+                } else {
+                    // Create a new color record
+                    $color = new Varient();
+                    $color->product_id = $update->id;
+                    $color->color = $colorData['color'];
+                    $color->price = $colorData['price'];
+                    $color->available = $colorData['available'];
+                    $color->save();
+                }
+            }
+        }
 
         if($request->discount != null)
         {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->bigInteger('package_id')->unsigned()->nullable();
             $table->foreign('package_id')->references('id')->on('seller_packages')->onDelete('cascade')->onUpdate('cascade');  
+            $table->integer('product_upload_limit')->nullable();
             $table->date('start_time')->nullable();
             $table->date('end_time')->nullable();   
             $table->timestamps();
