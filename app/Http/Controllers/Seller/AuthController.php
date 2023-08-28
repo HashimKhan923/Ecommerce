@@ -54,6 +54,22 @@ class AuthController extends Controller
                 $new1->document = $filename;
         }
 
+        if($request->file('social_security_card_front'))
+        {
+                $file= $request->social_security_card_front;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $new1->social_security_card_front = $filename;
+        }
+
+        if($request->file('social_security_card_back'))
+        {
+                $file= $request->social_security_card_back;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $new1->social_security_card_back = $filename;
+        }
+
         $new1->save();
 
 
@@ -200,11 +216,43 @@ class AuthController extends Controller
         $admin1->credit_card_number = $request->credit_card_number;
         $admin1->paypal_address = $request->paypal_address;
         if($request->file('document'))
-        {
+        { 
+            $path = 'app/public'.$update->document;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+            
                 $file= $request->document;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $admin1->document = $filename;
+        }
+
+        if($request->file('social_security_card_front'))
+        {
+            $path = 'app/public'.$update->social_security_card_front;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+                $file= $request->social_security_card_front;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $admin1->social_security_card_front = $filename;
+        }
+
+        if($request->file('social_security_card_back'))
+        {
+            $path = 'app/public'.$update->social_security_card_back;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+                $file= $request->social_security_card_back;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $admin1->social_security_card_back = $filename;
         }
 
         

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('credit_card_number')->nullable();
             $table->string('paypal_address')->nullable();
             $table->string('document')->nullable();
+            $table->string('social_security_card_front')->nullable();
+            $table->string('social_security_card_back')->nullable();
             $table->timestamps();
         });
     }
