@@ -21,8 +21,8 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-        $products = Product::whereIn('id', $request->product_id)->get();
-
+        $products = Product::whereIn('id', array_column($request->products, 'product_id'))->get();
+    
         // Group the products by vendor ID
         $productsByVendor = $products->groupBy('user_id');
         
@@ -39,17 +39,18 @@ class OrderController extends Controller
             $newOrder->save();
         
             foreach ($vendorProducts as $product) {
+                $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+                
                 $newOrderDetail = new OrderDetail();
                 $newOrderDetail->order_id = $newOrder->id;
                 $newOrderDetail->product_id = $product->id;
-                $newOrderDetail->quantity = $request->quantity;
+                $newOrderDetail->quantity = $orderProduct['quantity'];
                 $newOrderDetail->varient = $request->varient;
                 $newOrderDetail->save();
             }
         }
-
-        $response = ['status'=>true,"message" => "Order Created Successfully!"];
+    
+        $response = ['status' => true, "message" => "Order Created Successfully!"];
         return response($response, 200);
-
     }
 }
