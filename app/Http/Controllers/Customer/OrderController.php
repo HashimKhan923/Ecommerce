@@ -19,38 +19,44 @@ class OrderController extends Controller
         return response()->json(['MyOrders'=>$MyOrders]);
     }
 
-    public function create(Request $request)
-    {
-        $products = Product::whereIn('id', array_column($request->products, 'product_id'))->get();
-    
-        // Group the products by vendor ID
-        $productsByVendor = $products->groupBy('user_id');
-        
-        foreach ($productsByVendor as $vendorId => $vendorProducts) {
-            $newOrder = new Order();
-            $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
-            $newOrder->number_of_products = count($vendorProducts);
-            $newOrder->customer_id = $request->customer_id;
-            $newOrder->seller_id = $vendorId; // Set the vendor ID for each order
-            $newOrder->amount = $request->amount; 
-            $newOrder->information = $request->information;
-            $newOrder->payment_method = $request->payment_method;
-            $newOrder->refund = $request->refund;
-            $newOrder->save();
-        
-            foreach ($vendorProducts as $product) {
-                $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-                
-                $newOrderDetail = new OrderDetail();
-                $newOrderDetail->order_id = $newOrder->id;
-                $newOrderDetail->product_id = $product->id;
-                $newOrderDetail->quantity = $orderProduct['quantity'];
-                $newOrderDetail->varient = $request->varient;
-                $newOrderDetail->save();
-            }
-        }
-    
-        $response = ['status' => true, "message" => "Order Created Successfully!"];
-        return response($response, 200);
+public function create(Request $request)
+{
+
+    $productIds = [];
+    foreach ($request->products as $product) {
+        $productIds[] = $product['product_id'];
     }
+
+    $products = Product::whereIn('id',$productIds)->get();
+
+    // Group the products by vendor ID
+    $productsByVendor = $products->groupBy('user_id');
+    
+    foreach ($productsByVendor as $vendorId => $vendorProducts) {
+        $newOrder = new Order();
+        $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
+        $newOrder->number_of_products = count($vendorProducts);
+        $newOrder->customer_id = $request->customer_id;
+        $newOrder->seller_id = $vendorId; // Set the vendor ID for each order
+        $newOrder->amount = $request->amount; 
+        $newOrder->information = $request->information;
+        $newOrder->payment_method = $request->payment_method;
+        $newOrder->refund = $request->refund;
+        $newOrder->save();
+    
+        foreach ($vendorProducts as $product) {
+            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+            
+            $newOrderDetail = new OrderDetail();
+            $newOrderDetail->order_id = $newOrder->id;
+            $newOrderDetail->product_id = $product->id;
+            $newOrderDetail->quantity = $orderProduct['quantity'];
+            $newOrderDetail->varient = $request->varient;
+            $newOrderDetail->save();
+        }
+    }
+
+    $response = ['status' => true, "message" => "Order Created Successfully!"];
+    return response($response, 200);
+}
 }
