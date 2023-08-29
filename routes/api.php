@@ -195,7 +195,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                             /// Order \\\
 
-            Route::group(['prefix' => 'order/'], function() {
+            Route::group(['prefix' => '/admin/order/'], function() {
                 Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function () {
                     Route::get('show','index');
                     Route::get('admin_orders/{id}','admin_orders');

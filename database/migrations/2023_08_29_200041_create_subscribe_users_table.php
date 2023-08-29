@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('package_id')->references('id')->on('seller_packages')->onDelete('cascade')->onUpdate('cascade');  
             $table->integer('product_upload_limit')->nullable();
             $table->date('start_time')->nullable();
-            $table->date('end_time')->nullable();   
+            $table->date('end_time')->nullable();  
             $table->timestamps();
         });
     }
