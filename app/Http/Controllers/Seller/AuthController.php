@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
-use App\Models\SellerInformation;
+use App\Models\SellerInfromation;
 use Hash;
 use Mail;
 
@@ -40,7 +40,7 @@ class AuthController extends Controller
         $new->is_active = 1;
         $new->save();
 
-        $new1 = new SellerInformation();
+        $new1 = new SellerInfromation();
         $new1->user_id = $new->id;
         $new1->social_security_number = $request->social_security_number;
         $new1->business_ein_number = $request->business_ein_number;
