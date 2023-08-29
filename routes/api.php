@@ -295,6 +295,14 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('/seller/profile/check', 'App\Http\Controllers\Seller\AuthController@usercheck'); 
             Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
 
+                                            /// Dashboard \\\
+
+            Route::group(['prefix' => '/seller/dashboard/'], function() {
+                Route::controller(App\Http\Controllers\Seller\DashboardController::class)->group(function () {
+                    Route::get('show','index');
+                });
+            });
+
 
 
                                             /// Product \\\
