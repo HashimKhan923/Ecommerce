@@ -162,6 +162,12 @@ class ProductController extends Controller
             }
         }
 
+        $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
+        $dedect->product_limit_upload = $dedect->product_limit_upload - 1;
+        $dedect->save();
+
+
+
         $response = ['status'=>true,"message" => "Product Added Successfully!"];
         return response($response, 200);
 
