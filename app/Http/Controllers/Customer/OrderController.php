@@ -41,6 +41,7 @@ public function create(Request $request)
         $newOrder->amount = $request->amount; 
         $newOrder->information = $request->information;
         $newOrder->payment_method = $request->payment_method;
+        $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
         $newOrder->save();
     
@@ -55,6 +56,20 @@ public function create(Request $request)
             $newOrderDetail->save();
         }
     }
+
+    Mail::send(
+        'email.password-reset',
+        [
+            'token'=>$token,
+            'name'=>$query->name,
+            //'last_name'=>$query->last_name
+        ], 
+    
+    function ($message) use ($query) {
+        $message->from(env('MAIL_USERNAME'));
+        $message->to($query->email);
+        $message->subject('Forget Password');
+    });
 
     $response = ['status' => true, "message" => "Order Created Successfully!"];
     return response($response, 200);

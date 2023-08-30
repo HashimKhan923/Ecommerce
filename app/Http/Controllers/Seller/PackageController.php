@@ -39,7 +39,7 @@ class PackageController extends Controller
 
 
         $new = new SubscribeUser;
-        $new->user_id = $request->auth()->user()->id;
+        $new->user_id = auth()->user()->id;
         $new->subscription_id = $request->subscription_id;
         $new->product_upload_limit = $Package->product_upload_limit;
         $new->start_time = $start_time;
