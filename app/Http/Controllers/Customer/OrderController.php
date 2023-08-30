@@ -58,19 +58,19 @@ public function create(Request $request)
         }
     }
 
-    Mail::send(
-        'email.password-reset',
-        [
-            'token'=>$token,
-            'name'=>$query->name,
-            //'last_name'=>$query->last_name
-        ], 
+    // Mail::send(
+    //     'email.password-reset',
+    //     [
+    //         'token'=>$token,
+    //         'name'=>$query->name,
+    //         //'last_name'=>$query->last_name
+    //     ], 
     
-    function ($message) use ($query) {
-        $message->from(env('MAIL_USERNAME'));
-        $message->to($query->email);
-        $message->subject('Forget Password');
-    });
+    // function ($message) use ($query) {
+    //     $message->from(env('MAIL_USERNAME'));
+    //     $message->to($query->email);
+    //     $message->subject('Forget Password');
+    // });
 
     $response = ['status' => true, "message" => "Order Created Successfully!"];
     return response($response, 200);
