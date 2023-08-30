@@ -359,16 +359,19 @@ class ProductController extends Controller
     {
         $file = Product::find($id);
 
-
-        foreach($file->photos as $photosList)
+        if($file->photos != null )
         {
-         $DeletePhotos = 'app/public'.$photosList;
-         if (Storage::exists($DeletePhotos))
-         {
-             Storage::delete($DeletePhotos);
-         }
-   
-        }  
+            foreach($file->photos as $photosList)
+            {
+             $DeletePhotos = 'app/public'.$photosList;
+             if (Storage::exists($DeletePhotos))
+             {
+                 Storage::delete($DeletePhotos);
+             }
+       
+            }  
+        }
+
 
 
 
