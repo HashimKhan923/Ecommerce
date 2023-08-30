@@ -163,7 +163,7 @@ class ProductController extends Controller
         }
 
         $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
-        $dedect->product_limit_upload = $dedect->product_limit_upload - 1;
+        $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
         $dedect->save();
 
 
