@@ -54,7 +54,7 @@ class HomeBannerController extends Controller
 
     public function update(Request $request)
     {
-        $update = HomeBanner::where('id',$request->id);
+        $update = HomeBanner::first();
 
         if($request->file('banner1'))
         {
