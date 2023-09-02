@@ -19,6 +19,14 @@ class HomeBannerController extends Controller
 
     public function create(Request $request)
     {
+        $check = HomeBanner::first();
+
+        if($check)
+        {
+            $response = ['status'=>true,"message" => "Already Created!"];
+            return response($response, 200);
+        }
+
         $new = new HomeBanner();
 
         if($request->file('banner1'))
