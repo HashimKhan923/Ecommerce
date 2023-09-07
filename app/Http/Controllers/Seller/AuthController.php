@@ -13,26 +13,12 @@ use Mail;
 class AuthController extends Controller
 {
     public function register (Request $request) {
-
-        $new = User::where('email',$request->email)->where('user_type','customer')->first();
-
-        if($new == null)
-        {
-            $new = new User();
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                "email" => "required|email|unique:users,email",
-                'password' => 'required|string|min:6',
-            ]);
-            if ($validator->fails())
-            {
-                return response(['errors'=>$validator->errors()->all()], 422);
-            }
-        }
         
+        User::where('email',$request->email)->where('user_type','customer')->delete();
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            "email" => "required|email",
+            "email" => "required|email|unique:users,email",
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails())
@@ -40,7 +26,7 @@ class AuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         
-        
+        $new = new User();
         $new->name = $request->name;
         $new->email = $request->email;
         $new->address = $request->address;
