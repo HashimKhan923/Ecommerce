@@ -29,6 +29,7 @@ class HomeBannerController extends Controller
 
         $new = new HomeBanner();
 
+        
         if($request->file('banner1'))
         {
                 $file= $request->banner1;
