@@ -44,4 +44,13 @@ class BlogCategoryController extends Controller
         $response = ['status'=>true,"message" => "Blog Category Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function multi_delete(Request $request)
+    {
+        BlogCategory::whereIn('id',$request->ids)->delete();
+
+
+        $response = ['status'=>true,"message" => "Blog Categories Deleted Successfully!"];
+        return response($response, 200);
+    }
 }

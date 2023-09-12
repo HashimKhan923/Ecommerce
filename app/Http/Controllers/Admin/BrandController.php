@@ -79,4 +79,25 @@ class BrandController extends Controller
         $response = ['status'=>true,"message" => "Brand Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function multi_delete(Request $request)
+    {
+        $data = Brand::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+            $bannerpath = 'app/public'.$item->logo;
+            if (Storage::exists($bannerpath)) {
+                // Delete the file
+                Storage::delete($bannerpath);
+            }
+        }
+
+        $data->delete();
+
+        $response = ['status'=>true,"message" => "Brands Deleted Successfully!"];
+        return response($response, 200);
+    }
+
+    
 }

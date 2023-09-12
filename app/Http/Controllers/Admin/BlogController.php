@@ -110,4 +110,33 @@ class BlogController extends Controller
         $response = ['status'=>true,"message" => "Blog Deleted Successfully!"];
         return response($response, 200);
     }
+
+
+    public function multi_delete(Request $request)
+    {
+        $data = Blog::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+            $path = 'app/public'.$item->banner;
+            if (Storage::exists($path)) {
+                // Delete the file
+                Storage::delete($path);
+            }
+    
+            $path2 = 'app/public'.$item->meta_img;
+            if (Storage::exists($path2)) {
+                // Delete the file
+                Storage::delete($path2);
+            }
+        }
+
+        $data->delete();
+
+        $response = ['status'=>true,"message" => "Blogs Deleted Successfully!"];
+        return response($response, 200);
+    }
+
+
+    
 }

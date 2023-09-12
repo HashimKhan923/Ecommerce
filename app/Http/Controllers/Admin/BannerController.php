@@ -75,4 +75,23 @@ class BannerController extends Controller
         $response = ['status'=>true,"message" => "Banner Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function multi_delete(Request $request)
+    {
+        $data = Banner::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+            $bannerpath = 'app/public'.$item->image;
+            if (Storage::exists($bannerpath)) {
+                // Delete the file
+                Storage::delete($bannerpath);
+            }
+        }
+
+        $data->delete();
+
+        $response = ['status'=>true,"message" => "Banners Deleted Successfully!"];
+        return response($response, 200);
+    }
 }
