@@ -91,9 +91,11 @@ class BrandController extends Controller
                 // Delete the file
                 Storage::delete($bannerpath);
             }
+
+            $item->delete();
         }
 
-        $data->delete();
+        
 
         $response = ['status'=>true,"message" => "Brands Deleted Successfully!"];
         return response($response, 200);
