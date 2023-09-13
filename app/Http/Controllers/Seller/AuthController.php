@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
 use App\Models\SellerInfromation;
+use App\Models\Shop;
 use Hash;
 use Mail;
 
@@ -41,6 +42,19 @@ class AuthController extends Controller
         $new->user_type = 'seller';
         $new->is_active = 1;
         $new->save();
+
+        $shop = new Shop();
+        $shop->seller_id = $new->id;
+        $shop->name = $request->shop_name;
+        $shop->address = $request->shop_address;
+        if($request->file('logo'))
+        {
+                $file= $request->logo;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $shop->logo = $filename;
+        }
+        $shop->save();
 
         $new1 = new SellerInfromation();
         $new1->user_id = $new->id;
