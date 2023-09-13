@@ -129,9 +129,11 @@ class BlogController extends Controller
                 // Delete the file
                 Storage::delete($path2);
             }
+
+            $item->delete();
         }
 
-        $data->delete();
+       
 
         $response = ['status'=>true,"message" => "Blogs Deleted Successfully!"];
         return response($response, 200);

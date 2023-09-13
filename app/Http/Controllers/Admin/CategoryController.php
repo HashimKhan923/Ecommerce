@@ -118,9 +118,11 @@ class CategoryController extends Controller
                 // Delete the file
                 Storage::delete($path2);
             }
+
+            $item->delete();
         }
 
-        $data->delete();
+        
 
         $response = ['status'=>true,"message" => "Category Deleted Successfully!"];
         return response($response, 200);
