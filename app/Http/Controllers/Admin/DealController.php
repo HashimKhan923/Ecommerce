@@ -79,4 +79,26 @@ class DealController extends Controller
         $response = ['status'=>true,"message" => "Deal Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function multi_delete(Request $request)
+    {
+        $data = Deal::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+            $path1 = 'app/public'.$item->banner;
+            if (Storage::exists($path1)) {
+                // Delete the file
+                Storage::delete($path1);
+            }
+
+            $item->delete();
+        }
+
+        
+
+        $response = ['status'=>true,"message" => "Deals Deleted Successfully!"];
+        return response($response, 200);
+    }
+    
 }

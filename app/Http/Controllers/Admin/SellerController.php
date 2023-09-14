@@ -41,4 +41,17 @@ class SellerController extends Controller
         $response = ['status'=>true,"message" => "Customer Deleted Successfully!"];
         return response($response, 200);
     }
+
+
+    public function multi_delete(Request $request)
+    {
+        User::whereIn('id',$request->ids)->delete();
+
+ 
+
+        
+
+        $response = ['status'=>true,"message" => "Sellers Deleted Successfully!"];
+        return response($response, 200);
+    }
 }

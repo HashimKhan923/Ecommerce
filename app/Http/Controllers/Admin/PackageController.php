@@ -106,4 +106,26 @@ class PackageController extends Controller
         return response($response, 200);
 
     }
+
+
+    public function multi_delete(Request $request)
+    {
+        $data = SellerPackage::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+            $path1 = 'app/public'.$item->logo;
+            if (Storage::exists($path1)) {
+                // Delete the file
+                Storage::delete($path1);
+            }
+
+            $item->delete();
+        }
+
+        
+
+        $response = ['status'=>true,"message" => "Packages Deleted Successfully!"];
+        return response($response, 200);
+    }
 }
