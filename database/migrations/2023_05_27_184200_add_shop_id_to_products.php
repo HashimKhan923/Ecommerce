@@ -12,16 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('shop_id'); // Define the foreign key column
+            $table->bigInteger('model_id')->unsigned()->nullable();
+            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade')->onUpdate('cascade');// Define the desired on delete behavior (e.g., cascade)
 
-            // Define the foreign key constraint
-            $table->foreign('shop_id')
-                ->references('id')
-                ->on('shops')
-                ->onDelete('cascade'); // Define the desired on delete behavior (e.g., cascade)
-
-            // If you want to index the foreign key column for performance
-            // $table->index('shop_id');
         });
     }
 
