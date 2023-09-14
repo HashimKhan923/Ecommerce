@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->bigInteger('model_id')->unsigned()->nullable();
-            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade')->onUpdate('cascade');// Define the desired on delete behavior (e.g., cascade)
+            $table->bigInteger('shop_id')->unsigned()->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');// Define the desired on delete behavior (e.g., cascade)
 
         });
     }
