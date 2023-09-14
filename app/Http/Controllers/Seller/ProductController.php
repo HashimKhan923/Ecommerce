@@ -42,6 +42,7 @@ class ProductController extends Controller
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
+        $new->shop_id = $request->shop_id;
 
         if ($request->file('photos')) {
             $ProductGallery = array(); // Initialize the array
