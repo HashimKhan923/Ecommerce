@@ -298,6 +298,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         Route::middleware(['seller'])->group(function () {
 
+
+
             /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
             Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
@@ -307,6 +309,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
 
                                             /// Dashboard \\\
+
 
             Route::group(['prefix' => '/seller/dashboard/'], function() {
                 Route::controller(App\Http\Controllers\Seller\DashboardController::class)->group(function () {

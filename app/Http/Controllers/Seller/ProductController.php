@@ -396,6 +396,57 @@ class ProductController extends Controller
         return response($response, 200);
     }
 
+
+
+
+    public function multi_delete(Request $request)
+    {
+        $data = Product::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+            if($item->photos != null)
+            {
+            foreach($item->photos as $photosList)
+            {
+             $DeletePhotos = 'app/public'.$photosList;
+             if (Storage::exists($DeletePhotos))
+             {
+                 Storage::delete($DeletePhotos);
+             }
+       
+            }  
+            }
+    
+    
+    
+    
+    
+            $ProductThumbnail = 'app/public'.$item->thumbnail_img;
+          if (Storage::exists($ProductThumbnail))
+          {
+              Storage::delete($ProductThumbnail);
+          }
+    
+          $ProductMetaImage = 'app/public'.$item->meta_img;
+          if (Storage::exists($ProductMetaImage))
+          {
+              Storage::delete($ProductMetaImage);
+          }
+    
+
+            $item->delete();
+        }
+
+        
+
+        $response = ['status'=>true,"message" => "Products Deleted Successfully!"];
+        return response($response, 200);
+    }
+
+
+
+
     public function is_published($id)
     {
         $is_published = Product::where('id',$id)->first();
