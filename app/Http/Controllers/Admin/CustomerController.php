@@ -21,11 +21,11 @@ class CustomerController extends Controller
 
         if($is_active->is_active == 0)
         {
-            $is_active = 1;
+            $is_active->is_active = 1;
         }
         else
         {
-            $is_active = 0;
+            $is_active->is_active = 0;
         }
 
         $is_active->save();
