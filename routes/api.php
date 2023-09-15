@@ -328,6 +328,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
+                    Route::post('multi_delete','multi_delete');
                 });
             });
 
