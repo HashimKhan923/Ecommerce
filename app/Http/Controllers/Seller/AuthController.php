@@ -15,19 +15,46 @@ class AuthController extends Controller
 {
     public function register (Request $request) {
         
-        User::where('email',$request->email)->where('user_type','customer')->delete();
+      $check = User::where('email',$request->email)->first();
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            "email" => "required|email|unique:users,email",
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails())
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:255',
+        //     "email" => "required|email|unique:users,email",
+        //     'password' => 'required|string|min:6',
+        // ]);
+        // if ($validator->fails())
+        // {
+        //     return response(['errors'=>$validator->errors()->all()], 422);
+        // }
+
+        if($check == null)
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            $new = new User();
+
+            $token = uniqid();
+            $new->remember_token = $token;
+
+            Mail::send(
+                'email.seller_verification',
+                [
+                    'token'=>$token,
+                    'name'=>$request->name,
+                    //'last_name'=>$query->last_name
+                ], 
+            
+            function ($message) use ($request) {
+                $message->from(env('MAIL_USERNAME'));
+                $message->to($request->email);
+                $message->subject('Email Verification');
+            });
+        }
+        else
+        {
+            $new = User::where('email',$request->email)->first();
         }
         
-        $new = new User();
+        
+        
         $new->name = $request->name;
         $new->email = $request->email;
         $new->address = $request->address;
@@ -36,8 +63,6 @@ class AuthController extends Controller
         $new->country = $request->country;
         $new->postal_code = $request->postal_code;
         $new->phone = $request->phone;
-        $token = uniqid();
-        $new->remember_token = $token;
         $new->password = Hash::make($request->password);
         $new->user_type = 'seller';
         $new->is_active = 1;
@@ -90,25 +115,21 @@ class AuthController extends Controller
 
 
 
-        Mail::send(
-            'email.seller_verification',
-            [
-                'token'=>$token,
-                'name'=>$new->name,
-                //'last_name'=>$query->last_name
-            ], 
-        
-        function ($message) use ($new) {
-            $message->from(env('MAIL_USERNAME'));
-            $message->to($new->email);
-            $message->subject('Email Verification');
-        });
+        if($check == null)
+        {
+            $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
+            return response($response, 200);
+        }
+        else
+        {
+            $response = ['status'=>true,"message" => "your registration as a seller successfully completed!"];
+            return response($response, 200);
+        }
 
 
         
         
-        $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
-        return response($response, 200);
+
     }
 
     public function login(Request $request) {
