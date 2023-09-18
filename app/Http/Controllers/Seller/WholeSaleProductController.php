@@ -19,7 +19,7 @@ class WholeSaleProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('user_id',$id)->get();
@@ -29,7 +29,7 @@ class WholeSaleProductController extends Controller
 
     public function admin_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('added_by','admin')->get();
@@ -39,7 +39,7 @@ class WholeSaleProductController extends Controller
 
     public function seller_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('added_by','seller')->get();
@@ -63,6 +63,7 @@ class WholeSaleProductController extends Controller
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
+        $new->shop_id = $request->shop_id;
 
         if ($request->photos) {
             // return $request->photos;
