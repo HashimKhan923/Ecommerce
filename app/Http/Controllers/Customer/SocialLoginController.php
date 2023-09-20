@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class SocialLoginController extends Controller
 {
@@ -21,7 +22,7 @@ public function handleProviderCallback($provider)
         'email' => $socialUser->getEmail(),
     ], [
         'name' => $socialUser->getName(),
-        'password' => bcrypt(str_random(16)),
+        'password' => bcrypt(Str::random(16)),
         'user_type' => 'customer',
         'is_active' => 1,
     ]);
