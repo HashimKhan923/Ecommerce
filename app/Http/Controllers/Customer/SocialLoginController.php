@@ -12,7 +12,7 @@ class SocialLoginController extends Controller
 {
 public function redirectToProvider($provider)
 {
-    return Socialite::driver($provider)->redirect();
+    return Socialite::driver($provider)->redirect()->header('Access-Control-Allow-Origin', '*');
 }
 
 public function handleProviderCallback($provider)
@@ -29,6 +29,6 @@ public function handleProviderCallback($provider)
 
     $token = $user->createToken('Laravel Password Grant Client')->accessToken;
     $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-    return response($response, 200);
+    return response($response, 200)->header('Access-Control-Allow-Origin', '*');
 }
 }
