@@ -400,6 +400,9 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
 
 
+        Route::post('login/social', 'App\Http\Controllers\Customer\AuthController@social_login');
+
+
         // Social Login Routes
             Route::get('login/{provider}', 'App\Http\Controllers\Customer\SocialLoginController@redirectToProvider')->middleware('web');;
             Route::get('login/{provider}/callback', 'App\Http\Controllers\Customer\SocialLoginController@handleProviderCallback')->middleware('web');
