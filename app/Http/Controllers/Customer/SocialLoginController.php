@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
 {
 public function redirectToProvider($provider)
 {
-    return Socialite::driver('google')->redirect();
+    return Socialite::driver($provider)->redirect();
 }
 
 public function handleProviderCallback($provider)
