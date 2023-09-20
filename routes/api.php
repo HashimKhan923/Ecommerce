@@ -401,8 +401,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
         // Social Login Routes
-            Route::get('login/{provider}', 'App\Http\Controllers\Customer\SocialLoginController@redirectToProvider');
-            Route::get('login/{provider}/callback', 'App\Http\Controllers\Customer\SocialLoginController@handleProviderCallback');
+            Route::get('login/{provider}', 'App\Http\Controllers\Customer\SocialLoginController@redirectToProvider')->middleware('web');;
+            Route::get('login/{provider}/callback', 'App\Http\Controllers\Customer\SocialLoginController@handleProviderCallback')->middleware('web');
 
 
                                     /// Home \\\
