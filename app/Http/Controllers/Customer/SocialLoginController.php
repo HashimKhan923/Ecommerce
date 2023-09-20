@@ -10,7 +10,7 @@ class SocialLoginController extends Controller
 {
 public function redirectToProvider($provider)
 {
-    return Socialite::driver($provider)->redirect();
+    return Socialite::driver('google')->redirect();
 }
 
 public function handleProviderCallback($provider)
