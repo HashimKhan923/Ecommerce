@@ -58,7 +58,7 @@ public function create(Request $request)
         }
     }
 
-    $OrderDetails = Order::where('cudtomer_id',auth()->user()->id)->latest();
+    $OrderDetails = Order::where('customer_id',auth()->user()->id)->latest();
 
     Mail::send(
         'order_information',
