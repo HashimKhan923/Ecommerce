@@ -69,7 +69,7 @@ public function create(Request $request)
     
     function ($message) {
         $message->from(env('MAIL_USERNAME'));
-        $message->to($auth()->user()->email);
+        $message->to(auth()->user()->email);
         $message->subject('Order Confirmation');
     });
 
