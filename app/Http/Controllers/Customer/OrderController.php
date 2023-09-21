@@ -58,13 +58,12 @@ public function create(Request $request)
         }
     }
 
-    $OrderDetails = Order::where('customer_id',auth()->user()->id)->latest()->first();
+    
 
     Mail::send(
         'order_information',
         [
             'buyer_name'=>auth()->user()->name,
-            'tracking_id'=>$OrderDetails->order_code,
             //'last_name'=>$query->last_name
         ], 
     

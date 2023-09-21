@@ -53,10 +53,7 @@
         <p>Dear {{$buyer_name}},</p>
         <br>
         <p>Your order is confirmed and is currently being prepared for delivery. You can expect your order to arrive within 4 to 5 days.</p>
-        
-        <h3>Order Details:</h3>
-        <p><strong>Tracking id:</strong>{{$tracking_id}}<br>
-        <strong>Estimated Delivery:</strong> 4-5 days</p>
+        <br>
         
         
         <p>We will send you the tracking information as soon as your order is dispatched. If you have any questions or need assistance, feel free to contact our customer support at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a> </p>
