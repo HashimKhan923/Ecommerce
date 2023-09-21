@@ -59,21 +59,21 @@ public function create(Request $request)
         }
     }
 
-    $user = User::where('id',$request->customer_id)->first();
+    $user = User::where('id', $request->customer_id)->first();
 
     Mail::send(
         'order_information',
         [
-            'buyer_name'=>$user->name,
-            //'last_name'=>$query->last_name
-        ], 
+            'buyer_name' => $user->name,
+            // 'last_name' => $query->last_name
+        ],
+        function ($message) use ($user) { // Add $user variable here
+            $message->from(env('MAIL_USERNAME'));
+            $message->to($user->email);
+            $message->subject('Order Confirmation');
+        }
+    );
     
-    function ($message) use ($user) {
-        $message->from(env('MAIL_USERNAME'));
-        $message->to($user->email);
-        $message->subject('Order Confirmation');
-    });
-
     $response = ['status' => true, "message" => "Order Created Successfully!"];
     return response($response, 200);
 }
