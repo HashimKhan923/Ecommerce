@@ -58,7 +58,7 @@
     <div class="container">
         <div class="header mb-5">
             <!-- Add your company logo here -->
-            <a href="#"><img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="200" alt="Dragon Auto Mart Logo"></a>
+            <a href="#"><img src="https://dashboard.dragonautomart.com/assets/authlogo-9138a1c6.png" width="200" alt="Dragon Auto Mart Logo"></a>
             <a href="#" style="font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600">Dragon Auto Mart</a>
         </div>
         <p class="greeting">Hi, Mr. {{$name}}</p>

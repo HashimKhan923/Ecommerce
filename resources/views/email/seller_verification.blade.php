@@ -56,7 +56,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="#"><img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="200" alt="Dragon Auto Mart Logo"></a>
+            <a href="#"><img src="https://dashboard.dragonautomart.com/assets/authlogo-9138a1c6.png" width="200" alt="Dragon Auto Mart Logo"></a>
         </div>
         <div class="content mt-5">
             <p>Welcome to Dragon Auto Mart! We're absolutely thrilled to have you join us on this exciting journey.</p>

@@ -10,7 +10,7 @@
     <div class="row justify-content-center" style="margin:50px auto; padding:20px 0">
       <div class="col-md-8" style="border-bottom:1px solid #eee">
         <!-- Add your company logo image here -->
-        <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="200" alt="Company Logo" class="img-fluid">
+        <img src="https://dashboard.dragonautomart.com/assets/authlogo-9138a1c6.png" width="200" alt="Company Logo" class="img-fluid">
         <h1 class="mt-3"><a href="#" style="font-size:1.4em; color: #00466a; text-decoration:none; font-weight:600">Dragon Auto Mart</a></h1>
         <p class="font-size-18">Hi, Mr. {{$name}}</p>
         <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever have any questions, concerns, or suggestions,</p> 
