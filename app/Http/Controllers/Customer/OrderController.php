@@ -68,7 +68,7 @@ public function create(Request $request)
             //'last_name'=>$query->last_name
         ], 
     
-    function ($message) {
+    function ($message) use ($user) {
         $message->from(env('MAIL_USERNAME'));
         $message->to($user->email);
         $message->subject('Order Confirmation');
