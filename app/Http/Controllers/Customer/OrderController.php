@@ -58,18 +58,18 @@ public function create(Request $request)
         }
     }
 
-    
+    $user = User::where('id',$request->customer_id)->first();
 
     Mail::send(
         'order_information',
         [
-            'buyer_name'=>auth()->user()->name,
+            'buyer_name'=>$user->name,
             //'last_name'=>$query->last_name
         ], 
     
     function ($message) {
         $message->from(env('MAIL_USERNAME'));
-        $message->to(auth()->user()->email);
+        $message->to($user->email);
         $message->subject('Order Confirmation');
     });
 
