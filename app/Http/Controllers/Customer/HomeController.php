@@ -22,7 +22,7 @@ class HomeController extends Controller
                 // 'last_name' => $query->last_name
             ],
             function ($message) { // Add $user variable here
-                $message->from(env('MAIL_USERNAME'));
+                $message->from('support@dragonautomart.com');
                 $message->to('khanhash1994@gmail.com');
                 $message->subject('Order Confirmation');
             }
