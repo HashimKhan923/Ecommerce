@@ -2,35 +2,69 @@
 <html>
 <head>
     <title>Your Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #888;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            margin: 0;
+            color: #777;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            max-width: 100px;
+        }
+    </style>
 </head>
 <body>
-<div style="border-bottom:1px solid #eee">
-      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Dragon Auto Mart</a>
+    <div class="container">
+        <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="200" alt="Company Logo" class="logo">
+        <h2>Order Confirmation</h2>
+        <p>Dear {{$buyer_name}},</p>
+        <br>
+        <p>Your order is confirmed and is currently being prepared for delivery. You can expect your order to arrive within 4 to 5 days.</p>
+        
+        <h3>Order Details:</h3>
+        <p><strong>Tracking id:</strong>{{$tracking_id}}<br>
+        <strong>Estimated Delivery:</strong> 4-5 days</p>
+        
+        
+        <p>We will send you the tracking information as soon as your order is dispatched. If you have any questions or need assistance, feel free to contact our customer support at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a> </p>
+        <br>
+        <p>Thank you for choosing Dragon Auto Mart!</p>
+        <br>
+        <p>Best regards,<br>
+        Dragon Auto Mart</p>
     </div>
-    <h2>Order Confirmation - Delivery in 4 to 5 Days</h2>
-    <p>Dear [Customer's Name],</p>
-    
-    <p>Exciting news! Your order is confirmed and is currently being prepared for delivery. You can expect your order to arrive within 4 to 5 days.</p>
-    
-    <h3>Order Details:</h3>
-    <p><strong>Order Number:</strong> [Order Number]<br>
-    <strong>Estimated Delivery:</strong> 4-5 days</p>
-    
-    <h3>Products:</h3>
-    <ul>
-        <li>[Product 1 Name]</li>
-        <li>[Product 2 Name]</li>
-        <li>[Product 3 Name]</li>
-        <!-- Add more products as needed -->
-    </ul>
-    
-    <p>We will send you the tracking information as soon as your order is dispatched. If you have any questions or need assistance, feel free to contact our customer support at [Customer Support Email] or [Customer Support Phone].</p>
-    
-    <p>Thank you for choosing [Company Name]!</p>
-    
-    <p>Best regards,<br>
-    [Your Name]<br>
-    [Your Title]<br>
-    [Company Name]</p>
 </body>
 </html>

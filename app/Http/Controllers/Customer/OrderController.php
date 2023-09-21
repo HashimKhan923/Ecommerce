@@ -58,19 +58,21 @@ public function create(Request $request)
         }
     }
 
-    // Mail::send(
-    //     'email.password-reset',
-    //     [
-    //         'token'=>$token,
-    //         'name'=>$query->name,
-    //         //'last_name'=>$query->last_name
-    //     ], 
+    $OrderDetails = Order::where('cudtomer_id',auth()->user()->id)->latest();
+
+    Mail::send(
+        'order_information',
+        [
+            'buyer_name'=>auth()->user()->name,
+            'tracking_id'=>$OrderDetails->order_code,
+            //'last_name'=>$query->last_name
+        ], 
     
-    // function ($message) use ($query) {
-    //     $message->from(env('MAIL_USERNAME'));
-    //     $message->to($query->email);
-    //     $message->subject('Forget Password');
-    // });
+    function ($message) {
+        $message->from(env('MAIL_USERNAME'));
+        $message->to($auth()->user()->email);
+        $message->subject('Order Confirmation');
+    });
 
     $response = ['status' => true, "message" => "Order Created Successfully!"];
     return response($response, 200);

@@ -1,79 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset</title>
-    <!-- Add Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Your Order Confirmation</title>
     <style>
-        /* Custom CSS can be added here */
         body {
-            font-family: Helvetica, Arial, sans-serif;
-            min-width: 1000px;
-            overflow: auto;
-            line-height: 2;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            margin: 50px auto;
-            width: 70%;
-            padding: 20px 0;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #888;
         }
 
-        .header {
-            border-bottom: 1px solid #eee;
+        h2 {
+            color: #333;
+        }
+
+        p {
+            margin: 0;
+            color: #777;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
         }
 
         .logo {
-            max-width: 150px; /* Adjust the logo size as needed */
-        }
-
-        .greeting {
-            font-size: 1.1em;
-        }
-
-        .otp-box {
-            background: #00466a;
-            margin: 0 auto;
-            width: max-content;
-            padding: 0 10px;
-            color: #fff;
-            border-radius: 4px;
-            font-size: 1.5em;
-            text-align: center;
-        }
-
-        .footer {
-            font-size: 0.9em;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #eee;
+            max-width: 100px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header mb-5">
-            <!-- Add your company logo here -->
-            <a href="#"><img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="200" alt="Dragon Auto Mart Logo"></a>
-            <a href="#" style="font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600">Dragon Auto Mart</a>
-        </div>
-        <p class="greeting">Hi, Mr. {{$name}}</p>
-        <p>Use the following OTP to complete your Reset Password procedures:</p>
-        <h2 class="otp-box">{{ $token }}</h2>
-        <p class="footer">Regards,<br />Dragon Auto Mart</p>
-        <hr>
-        <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-            <!-- Add your company address and other details here -->
-        </div>
+        <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="200" alt="Company Logo" class="logo">
+        <h2>Order Confirmation</h2>
+        <p>Dear [Customer's Name],</p>
+        <br>
+        <p>Your order is confirmed and is currently being prepared for delivery. You can expect your order to arrive within 4 to 5 days.</p>
+        
+        <h3>Order Details:</h3>
+        <p><strong>Order Number:</strong> [Order Number]<br>
+        <strong>Estimated Delivery:</strong> 4-5 days</p>
+        
+        <h3>Products:</h3>
+        <ul>
+            <li>[Product 1 Name]</li>
+            <li>[Product 2 Name]</li>
+            <li>[Product 3 Name]</li>
+            <!-- Add more products as needed -->
+        </ul>
+        
+        <p>We will send you the tracking information as soon as your order is dispatched. If you have any questions or need assistance, feel free to contact our customer support at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a> </p>
+        <br>
+        <p>Thank you for choosing [Company Name]!</p>
+        <br>
+        <p>Best regards,<br>
+        [Your Name]<br>
+        [Your Title]<br>
+        [Company Name]</p>
     </div>
-
-    <!-- Add Bootstrap JS if needed -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
