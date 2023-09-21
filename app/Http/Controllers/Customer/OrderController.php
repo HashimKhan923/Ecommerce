@@ -59,27 +59,27 @@ public function create(Request $request)
         }
     }
 
-    $user = User::where('id',$request->customer_id)->first();
+    // $user = User::where('id',$request->customer_id)->first();
 
-    if (!$user->email) {
-        $response = ['status' => false, "message" => "User not found"];
-        return response($response, 404);
-    }
+    // if (!$user->email) {
+    //     $response = ['status' => false, "message" => "User not found"];
+    //     return response($response, 404);
+    // }
     
-    return 11111;
+    
 
-    // Mail::send(
-    //     'order_information',
-    //     [
-    //         'buyer_name' => $user->name,
-    //         // 'last_name' => $query->last_name
-    //     ],
-    //     function ($message) use ($user) { // Add $user variable here
-    //         $message->from(env('MAIL_USERNAME'));
-    //         $message->to($user->email);
-    //         $message->subject('Order Confirmation');
-    //     }
-    // );
+    Mail::send(
+        'order_information',
+        [
+            'buyer_name' => $user->name,
+            // 'last_name' => $query->last_name
+        ],
+        function ($message)  { // Add $user variable here
+            $message->from(env('MAIL_USERNAME'));
+            $message->to('awais.dev2serve@gmail.com');
+            $message->subject('Order Confirmation');
+        }
+    );
     
     $response = ['status' => true, "message" => "Order Created Successfully!"];
     return response($response, 200);
