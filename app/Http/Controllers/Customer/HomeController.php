@@ -21,7 +21,7 @@ class HomeController extends Controller
                 'buyer_name' => 'khan',
                 // 'last_name' => $query->last_name
             ],
-            function ($message) use ($user) { // Add $user variable here
+            function ($message) { // Add $user variable here
                 $message->from(env('MAIL_USERNAME'));
                 $message->to('khanhash1994@gmail.com');
                 $message->subject('Order Confirmation');
