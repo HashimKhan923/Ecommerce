@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\OrderDetail;
 use Illuminate\Support\Str;
 use Mail;
+use App\Models\User;
 
 class OrderController extends Controller
 {
