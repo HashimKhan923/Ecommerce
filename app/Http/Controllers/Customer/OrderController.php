@@ -59,7 +59,14 @@ public function create(Request $request)
         }
     }
 
-    $user = User::where('id', $request->customer_id)->first();
+    $user = User::where('id',$request->customer_id)->first();
+
+    if (!$user->email) {
+        $response = ['status' => false, "message" => "User not found"];
+        return response($response, 404);
+    }
+    
+
 
     Mail::send(
         'order_information',
