@@ -8,11 +8,25 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Banner;
+use Mail;
 
 class HomeController extends Controller
 {
     public function index()
     {
+
+        Mail::send(
+            'email.order_information',
+            [
+                'buyer_name' => 'khan',
+                // 'last_name' => $query->last_name
+            ],
+            function ($message) { // Add $user variable here
+                $message->from(env('MAIL_USERNAME'));
+                $message->to('khanhash1994@gmail.com');
+                $message->subject('Order Confirmation');
+            }
+        );
 
         $Products = Product::with('user','category','brand','model','stock','varient','discount','tax','shipping','deal.deal_product','wholesale','shop')->where('published',1)->get();
         $Categories = Category::where('is_active',1)->get();
