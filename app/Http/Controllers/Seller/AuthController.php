@@ -51,7 +51,7 @@ class AuthController extends Controller
                 ], 
             
             function ($message) use ($request) {
-                $message->from(env('MAIL_USERNAME'));
+                $message->from('support@dragonautomart.com');
                 $message->to($request->email);
                 $message->subject('Email Verification');
             });

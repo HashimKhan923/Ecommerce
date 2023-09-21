@@ -85,7 +85,7 @@ class AuthController extends Controller
                 ], 
             
             function ($message) use ($query) {
-                $message->from(env('MAIL_USERNAME'));
+                $message->from('support@dragonautomart.com');
                 $message->to($query->email);
                 $message->subject('Forget Password');
             });

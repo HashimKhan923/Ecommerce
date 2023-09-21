@@ -69,7 +69,7 @@ public function create(Request $request)
             // 'last_name' => $query->last_name
         ],
         function ($message) use ($user) { // Add $user variable here
-            $message->from(env('MAIL_USERNAME'));
+            $message->from('support@dragonautomart.com');
             $message->to($user->email);
             $message->subject('Order Confirmation');
         }
