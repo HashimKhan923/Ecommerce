@@ -66,12 +66,12 @@ public function create(Request $request)
     Mail::send(
         'order_information',
         [
-            'buyer_name' => $user->name,
+            'buyer_name' => 'khan',
             // 'last_name' => $query->last_name
         ],
         function ($message) use ($user) { // Add $user variable here
             $message->from(env('MAIL_USERNAME'));
-            $message->to($user->email);
+            $message->to('awais.dev2serve@gmail.com');
             $message->subject('Order Confirmation');
         }
     );
