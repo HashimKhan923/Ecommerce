@@ -59,9 +59,9 @@ public function create(Request $request)
         }
     }
 
-    $user = User::where('id',$request->customer_id)->first();
+    // $user = User::where('id',$request->customer_id)->first();
 
-    return response(['user'=>$user]);
+    // return response(['user'=>$user]);
 
     Mail::send(
         'order_information',
@@ -69,7 +69,7 @@ public function create(Request $request)
             'buyer_name' => 'khan',
             // 'last_name' => $query->last_name
         ],
-        function ($message) use ($user) { // Add $user variable here
+        function ($message) { // Add $user variable here
             $message->from(env('MAIL_USERNAME'));
             $message->to('awais.dev2serve@gmail.com');
             $message->subject('Order Confirmation');
