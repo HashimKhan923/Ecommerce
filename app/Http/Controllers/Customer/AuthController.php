@@ -149,7 +149,7 @@ class AuthController extends Controller
             $new->save();
             
             $token = $new->createToken('Laravel Password Grant Client')->accessToken;
-            $response = ['status'=>true,"message" => "Customer Register Successfully",'token' => $token,'user'=>$check_user];
+            $response = ['status'=>true,"message" => "Customer Register Successfully",'token' => $token,'user'=>$new];
             return response($response, 200);
         }
     }
