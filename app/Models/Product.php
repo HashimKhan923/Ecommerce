@@ -14,15 +14,7 @@ class Product extends Model
         'tags' => 'array',
     ];
 
-    public function ratings()
-    {
-        return $this->hasMany(ProductRating::class);
-    }
 
-    public function getRatingAttribute()
-    {
-        return $this->ratings()->avg('rating');
-    }
 
     
     public function user()
