@@ -180,21 +180,22 @@ class AuthController extends Controller
             $user->remember_token = $token;
             $user->save();
 
-            Mail::send(
-                'email.seller_verification',
-                [
-                    'token'=>$token,
-                    'name'=>$user->name,
-                    //'last_name'=>$query->last_name
-                ], 
+            // Mail::send(
+            //     'email.seller_verification',
+            //     [
+            //         'token'=>$token,
+            //         'name'=>$user->name,
+            //         //'last_name'=>$query->last_name
+            //     ], 
             
-            function ($message) use ($user) {
-                $message->from(env('MAIL_USERNAME'));
-                $message->to($user->email);
-                $message->subject('Email Verification');
-            });
+            // function ($message) use ($user) {
+            //     $message->from(env('MAIL_USERNAME'));
+            //     $message->to($user->email);
+            //     $message->subject('Email Verification');
+            // });
 
-            $response = ['status'=>false,"message" =>'your email is not verified. we have sent a verification link to your email!'];
+
+            $response = ['status'=>false,"message" =>'your email is not verified. we have sent a verification link to your email while registration!'];
             return response($response, 422);
          }
 

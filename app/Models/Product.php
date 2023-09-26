@@ -90,6 +90,10 @@ class Product extends Model
         return $this->belongsTo(Deal::class,'deal_id','id');
     } 
 
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
     
 
 

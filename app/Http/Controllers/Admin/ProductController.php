@@ -19,21 +19,21 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','shop')->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','shop','reviews')->get();
 
         return response()->json(['Products'=>$Products]);
     }
 
     public function admin_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop')->where('added_by','admin')->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews')->where('added_by','admin')->get();
 
         return response()->json(['Products'=>$Products]);
     }
 
     public function seller_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop')->where('added_by','seller')->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews')->where('added_by','seller')->get();
 
         return response()->json(['Products'=>$Products]);
     }

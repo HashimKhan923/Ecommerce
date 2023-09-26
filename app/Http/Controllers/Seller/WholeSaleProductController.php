@@ -19,7 +19,7 @@ class WholeSaleProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('user_id',$id)->get();
