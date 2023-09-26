@@ -460,6 +460,15 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
+                                                   /// Product Review \\\
+
+        Route::group(['prefix' => '/review'], function() {
+        Route::controller(App\Http\Controllers\Customer\ReviewController::class)->group(function () {   
+            Route::post('create','create');
+        });
+    });
+
+
                                           /// Wishlist \\\
 
         Route::group(['prefix' => 'wishlist/'], function() {
