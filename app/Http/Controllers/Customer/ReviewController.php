@@ -10,12 +10,12 @@ class ReviewController extends Controller
 {
     public function create(Request $request)
     {
-        Review::create([
-            'product_id' => $request->product_id,
-            'user_id' => $request->user_id,
-            'comment' => $request->comment,
-            'rating' => $request->rating,
-        ]);
+         $new = new Review(); 
+         $new->product_id = $request->product_id;
+         $new->user_id = $request->user_id;
+         $new->comment = $request->comment;
+         $new->rating = $request->rating;
+         $new->save();
 
 
         $response = ['status'=>true,"message" => "Review submited successfully!"];
