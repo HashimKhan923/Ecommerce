@@ -12,7 +12,7 @@ class ReviewController extends Controller
     {
         Review::create([
             'product_id' => $request->product_id,
-            'user_id' => auth()->user()->id,
+            'user_id' => $request->user_id,
             'comment' => $request->comment,
             'rating' => $request->rating,
         ]);
