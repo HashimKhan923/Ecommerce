@@ -43,7 +43,7 @@ class OrderController extends Controller
         if($request->delivery_status == 'Confirmed')
         {
             Mail::send(
-                'email.order_confirmation',
+                'email.Order.order_confirmation',
                 [
                     'buyer_name' => $user->name,
                     // 'last_name' => $query->last_name
@@ -59,7 +59,7 @@ class OrderController extends Controller
         {
 
             Mail::send(
-                'email.order_completed',
+                'email.Order.order_completed',
                 [
                     'buyer_name' => $user->name,
                     // 'last_name' => $query->last_name
@@ -77,7 +77,7 @@ class OrderController extends Controller
         {
 
             Mail::send(
-                'email.order_ontheway',
+                'email.Order.order_ontheway',
                 [
                     'buyer_name' => $user->name,
                     // 'last_name' => $query->last_name
