@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payout;
+use App\Models\User;
 use Carbon\Carbon;
 
 class OrderController extends Controller
@@ -20,6 +21,7 @@ class OrderController extends Controller
     public function delivery_status(Request $request)
     {
         $order = Order::where('id',$request->id)->first();
+        $user = User::where('id',$order->customer_id)->first();
 
         if($request->delivery_status == 'Confirmed')
         {
