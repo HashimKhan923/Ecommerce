@@ -115,4 +115,20 @@ class OrderController extends Controller
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
     }
+
+    public function delete($id)
+    {
+        Order::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "Order Deleted Successfully!"];
+        return response($response, 200);
+    }
+
+    public function multi_delete(Request $request)
+    {
+        $data = Order::whereIn('id',$request->ids)->delete();
+
+        $response = ['status'=>true,"message" => "Orders Deleted Successfully!"];
+        return response($response, 200);
+    }
 }

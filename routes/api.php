@@ -210,6 +210,8 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('seller_orders/{id}','seller_orders');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
                 });
             });
 
@@ -386,6 +388,8 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show/{id}','index');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
                 });
             });
 
