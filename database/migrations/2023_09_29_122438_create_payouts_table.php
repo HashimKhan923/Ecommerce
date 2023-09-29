@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('date')->nullable();
             $table->bigInteger('seller_id')->unsigned()->nullable();
             $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('order_id')->unsigned()->nullable();
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('amount')->nullable();
             $table->enum('status', ['Paid','Un Paid'])->default('Un Paid');
             $table->enum('payment_status', ['Stripe','Paypal','Cash on delivery'])->nullable();

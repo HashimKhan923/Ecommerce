@@ -63,7 +63,7 @@ public function create(Request $request)
 
 
     Mail::send(
-        'email.order_information',
+        'email.order_recive',
         [
             'buyer_name' => $user->name,
             // 'last_name' => $query->last_name
