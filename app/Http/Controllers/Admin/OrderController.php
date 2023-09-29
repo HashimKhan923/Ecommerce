@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Payout;
 use App\Models\User;
 use Carbon\Carbon;
+use Mail;
 class OrderController extends Controller
 {
 
