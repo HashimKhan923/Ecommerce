@@ -55,6 +55,7 @@ class ProductController extends Controller
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
+        $new->deal_id = $request->deal_id;
 
         if ($request->photos) {
 
@@ -194,6 +195,7 @@ class ProductController extends Controller
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
+        $update->deal_id = $request->deal_id;
 
         if ($request->file('photos')) {
             if($update->photos != null)
