@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Deal;
 use Storage;
+use Carbon\Carbon;
 
 class DealController extends Controller
 {
@@ -29,8 +30,8 @@ class DealController extends Controller
             $new->banner = $filename;
         }
 
-        $new->discount_start_date = $request->discount_start_date;
-        $new->discount_end_date = $request->discount_end_date;
+        $new->discount_start_date = Carbon::parse($request->discount_start_date);
+        $new->discount_end_date = Carbon::parse($request->discount_end_date);
         $new->save();
 
         $response = ['status'=>true,"message" => "New Deal Added Successfully!"];
@@ -56,8 +57,8 @@ class DealController extends Controller
             $update->banner = $filename;
         }
 
-        $update->discount_start_date = $request->discount_start_date;
-        $update->discount_end_date = $request->discount_end_date;
+        $update->discount_start_date = Carbon::parse($request->discount_start_date);
+        $update->discount_end_date = Carbon::parse($request->discount_end_date);
         $update->save();
 
         $response = ['status'=>true,"message" => "Deal Updated Successfully!"];
