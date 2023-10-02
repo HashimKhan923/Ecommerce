@@ -391,7 +391,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
                 });
-            });
+             });
 
 
 

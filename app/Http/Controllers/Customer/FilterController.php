@@ -50,7 +50,7 @@ class FilterController extends Controller
             $query->where('price', '>=', $request->min_price)->where('price', '<=', $request->max_price);
         } elseif ($request->min_price != null) {
             $query->where('price', '>=', $request->min_price);
-        } elseif ($request->man_price != null) {
+        } elseif ($request->max_price != null) {
             $query->where('price', '<=', $request->max_price);
         }
     
