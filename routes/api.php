@@ -395,6 +395,19 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                                             /// Coupon \\\
+
+                Route::group(['prefix' => '/seller/coupon/'], function() {
+                Route::controller(App\Http\Controllers\Seller\CouponController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                });
+            });
+
+
+
                                             /// Package \\\
 
             Route::group(['prefix' => '/seller/package/'], function() {
@@ -510,6 +523,14 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('delete/{id}','delete');
+        });
+    });
+
+                                                    /// Coupon \\\
+
+    Route::group(['prefix' => 'coupon/'], function() {
+        Route::controller(App\Http\Controllers\Customer\CouponController::class)->group(function () {
+            Route::post('apply','apply');
         });
     });
 

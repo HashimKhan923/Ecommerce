@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use Cabron\Carbon;
 
 class CouponController extends Controller
 {
@@ -18,12 +19,13 @@ class CouponController extends Controller
     public function create(Request $request)
     {
         $new = new Coupon();
+        $new->creator_id = $request->creator_id;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;
         $new->discount_type = $request->discount_type;
-        $new->start_date = $request->start_date;
-        $new->end_date = $request->end_date;
+        $new->start_date = Carbon::parse($request->start_date);
+        $new->end_date = Carbon::parse($request->end_date);
         $new->save();
 
         $response = ['status'=>true,"message" => "Coupon Created Successfully!"];
@@ -37,8 +39,8 @@ class CouponController extends Controller
         $update->code = $request->code;
         $update->discount = $request->discount;
         $update->discount_type = $request->discount_type;
-        $update->start_date = $request->start_date;
-        $update->end_date = $request->end_date;
+        $update->start_date = Carbon::parse($request->start_date);
+        $update->end_date = Carbon::parse($request->end_date);
         $update->save();
 
         $response = ['status'=>true,"message" => "Coupon Updated Successfully!"];
