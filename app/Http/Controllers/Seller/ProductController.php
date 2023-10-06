@@ -91,7 +91,7 @@ class ProductController extends Controller
             {
                 $color = new Varient();
                 $color->product_id = $new->id;
-                $color->color = $item->color;
+                $color->color = $item;
                 $color->price = $item->price;
                 $color->quantity = $item->quantity;
                 $color->available = $item->available;
