@@ -92,10 +92,9 @@ class ProductController extends Controller
             {
                 $color = new Color();
                 $color->product_id = $new->id;
-                $color->color = $item;
-                $color->price = $item->price;
-                $color->quantity = $item->quantity;
-                $color->available = $item->available;
+                $color->color = $item['color'];
+                $color->price = $item['price'];
+                $color->quantity = $item['quantity'];
                 $color->save();
             }
 
