@@ -21,7 +21,8 @@ class ProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','color')->where('user_id',$id)->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','color'
+        )->where('user_id',$id)->get();
 
         return response()->json(['Products'=>$Products]);
     }
