@@ -12,7 +12,7 @@ use App\Models\Tax;
 use App\Models\WholesaleProduct;
 use App\Models\SubscribeUser;
 use App\Models\DealProduct;
-use App\Models\Varient;
+use App\Models\Color;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Storage;
@@ -89,7 +89,7 @@ class ProductController extends Controller
         {
             foreach($request->color as $item)
             {
-                $color = new Varient();
+                $color = new Color();
                 $color->product_id = $new->id;
                 $color->color = $item;
                 $color->price = $item->price;
@@ -266,7 +266,7 @@ class ProductController extends Controller
         if ($request->color != null) {
             foreach ($request->color as $colorData) {
                 // Check if the color already exists
-                $color = Varient::where('product_id', $update->id)
+                $color = Color::where('product_id', $update->id)
                     ->where('color', $colorData['color'])
                     ->first();
         
@@ -278,7 +278,7 @@ class ProductController extends Controller
                     $color->save();
                 } else {
                     // Create a new color record
-                    $color = new Varient();
+                    $color = new Color();
                     $color->product_id = $update->id;
                     $color->color = $colorData['color'];
                     $color->price = $colorData['price'];
