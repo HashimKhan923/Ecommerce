@@ -113,6 +113,7 @@ class WholeSaleProductController extends Controller
                 $color->product_id = $new->id;
                 $color->color = $item->color;
                 $color->price = $item->color_price;
+                $color->quantity = $item->quantity;
                 $color->available = $item->available;
                 $color->save();
             }
@@ -280,6 +281,7 @@ class WholeSaleProductController extends Controller
                     // Update existing color data
                     $color->price = $colorData['price'];
                     $color->available = $colorData['available'];
+                    $color->quantity = $colorData['quantity'];
                     $color->save();
                 } else {
                     // Create a new color record
@@ -288,6 +290,7 @@ class WholeSaleProductController extends Controller
                     $color->color = $colorData['color'];
                     $color->price = $colorData['price'];
                     $color->available = $colorData['available'];
+                    $color->quantity = $colorData['quantity'];
                     $color->save();
                 }
             }
