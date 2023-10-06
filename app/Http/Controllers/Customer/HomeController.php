@@ -18,9 +18,9 @@ class HomeController extends Controller
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
-        $HomeBanner = HomeBanner::first();
+        $HomeBanners = HomeBanner::first();
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanner'=>$HomeBanner]);
+        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners]);
     }
 
     
