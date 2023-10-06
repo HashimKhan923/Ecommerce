@@ -42,9 +42,9 @@ class Product extends Model
         return $this->belongsTo(Models::class,'model_id','id');
     } 
 
-    public function varient()
+    public function color()
     {
-        return $this->hasMany(Varient::class,'product_id','id');
+        return $this->hasMany(Color::class,'product_id','id');
     }
 
     public function stock()
