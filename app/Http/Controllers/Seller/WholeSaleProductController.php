@@ -271,19 +271,14 @@ class WholeSaleProductController extends Controller
 
         if ($request->color != null) {
             foreach ($request->color as $colorData) {
-                // Check if the color already exists
-                $color = Color::where('product_id', $update->id)
-                    ->where('color', $colorData['color'])
-                    ->first();
+                $color = Color::where('id',$colorData['id'])->first();
         
                 if ($color) {
-                    // Update existing color data
                     $color->price = $colorData['price'];
                     $color->available = $colorData['available'];
                     $color->quantity = $colorData['quantity'];
                     $color->save();
                 } else {
-                    // Create a new color record
                     $color = new Color();
                     $color->product_id = $update->id;
                     $color->color = $colorData['color'];
