@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
-use App\Models\SellerInfromation;
+// use App\Models\SellerInfromation;
 use App\Models\Shop;
+use App\Models\BusineesInformation;
+use App\Models\SellingPlatforms;
+use App\Models\BankDetail;
+use App\Models\CreditCard;
 use Hash;
 use Mail;
 
@@ -78,37 +82,74 @@ class AuthController extends Controller
         }
         $shop->save();
 
-        $new1 = new SellerInfromation();
-        $new1->user_id = $new->id;
-        $new1->social_security_number = $request->social_security_number;
-        $new1->business_ein_number = $request->business_ein_number;
-        $new1->credit_card_number = $request->credit_card_number;
-        $new1->paypal_address = $request->paypal_address;
-        if($request->file('document'))
-        {
-                $file= $request->document;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new1->document = $filename;
-        }
 
-        if($request->file('social_security_card_front'))
-        {
-                $file= $request->social_security_card_front;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new1->social_security_card_front = $filename;
-        }
+        $BusineesInformation = new BusineesInformation();
+        $BusineesInformation->seller_id = $new->id;
+        $BusineesInformation->business_name = $request->business_name;
+        $BusineesInformation->ein_number = $request->ein_number;
+        $BusineesInformation->address1 = $request->address1;
+        $BusineesInformation->address2 = $request->address2;
+        $BusineesInformation->zip_code = $request->business_zip_code;
+        $BusineesInformation->country = $request->business_country;
+        $BusineesInformation->phone_number = $request->business_phone_number;
+        $BusineesInformation->save();
 
-        if($request->file('social_security_card_back'))
-        {
-                $file= $request->social_security_card_back;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new1->social_security_card_back = $filename;
-        }
+        $SellingPlatforms = new SellingPlatforms();
+        $SellingPlatforms->seller_id = $new->id;
+        $SellingPlatforms->name = $request->platform_name;
+        $SellingPlatforms->link = $request->platform_link;
+        $SellingPlatforms->save();
 
-        $new1->save();
+        $BankDetail = new BankDetail();
+        $BankDetail->seller_id = $new->id;
+        $BankDetail->business_name = $BusineesInformation->business_name;
+        $BankDetail->bank_name = $request->bank_name;
+        $BankDetail->routing_number = $request->routing_number;
+        $BankDetail->account_number = $request->account_number;
+        $BankDetail->save();
+        
+
+        $CreditCard = new CreditCard();
+        $CreditCard->seller_id = $new->id;
+        $CreditCard->name_on_card = $request->name_on_card;
+        $CreditCard->cc_number = $request->cc_number;
+        $CreditCard->exp_date = $request->exp_date;
+        $CreditCard->cvv = $request->cvv;
+        $CreditCard->zip_code = $request->card_zip_code;
+        $CreditCard->save();
+
+
+        // $new1 = new SellerInfromation();
+        // $new1->user_id = $new->id;
+        // $new1->social_security_number = $request->social_security_number;
+        // $new1->business_ein_number = $request->business_ein_number;
+        // $new1->credit_card_number = $request->credit_card_number;
+        // $new1->paypal_address = $request->paypal_address;
+        // if($request->file('document'))
+        // {
+        //         $file= $request->document;
+        //         $filename= date('YmdHis').$file->getClientOriginalName();
+        //         $file->storeAs('public', $filename);
+        //         $new1->document = $filename;
+        // }
+
+        // if($request->file('social_security_card_front'))
+        // {
+        //         $file= $request->social_security_card_front;
+        //         $filename= date('YmdHis').$file->getClientOriginalName();
+        //         $file->storeAs('public', $filename);
+        //         $new1->social_security_card_front = $filename;
+        // }
+
+        // if($request->file('social_security_card_back'))
+        // {
+        //         $file= $request->social_security_card_back;
+        //         $filename= date('YmdHis').$file->getClientOriginalName();
+        //         $file->storeAs('public', $filename);
+        //         $new1->social_security_card_back = $filename;
+        // }
+
+        // $new1->save();
 
 
 
