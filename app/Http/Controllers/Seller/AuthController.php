@@ -94,11 +94,14 @@ class AuthController extends Controller
         $BusineesInformation->phone_number = $request->business_phone_number;
         $BusineesInformation->save();
 
+        foreach($request->selling_platforms as $items)
+        {
         $SellingPlatforms = new SellingPlatforms();
         $SellingPlatforms->seller_id = $new->id;
-        $SellingPlatforms->name = $request->platform_name;
-        $SellingPlatforms->link = $request->platform_link;
+        $SellingPlatforms->name = $items->platform_name;
+        $SellingPlatforms->link = $items->platform_link;
         $SellingPlatforms->save();
+        }
 
         $BankDetail = new BankDetail();
         $BankDetail->seller_id = $new->id;
