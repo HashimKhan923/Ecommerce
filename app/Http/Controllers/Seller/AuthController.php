@@ -8,7 +8,7 @@ use Validator;
 use App\Models\User;
 // use App\Models\SellerInfromation;
 use App\Models\Shop;
-use App\Models\BusineesInformation;
+use App\Models\BusinessInformation;
 use App\Models\SellingPlatforms;
 use App\Models\SocialPlatforms;
 use App\Models\BankDetail;
@@ -84,7 +84,7 @@ class AuthController extends Controller
         $shop->save();
 
 
-        $BusineesInformation = new BusineesInformation();
+        $BusineesInformation = new BusinessInformation();
         $BusineesInformation->seller_id = $new->id;
         $BusineesInformation->business_name = $request->business_name;
         $BusineesInformation->ein_number = $request->ein_number;
