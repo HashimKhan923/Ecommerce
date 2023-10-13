@@ -100,8 +100,8 @@ class AuthController extends Controller
         {
         $SellingPlatforms = new SellingPlatforms();
         $SellingPlatforms->seller_id = $new->id;
-        $SellingPlatforms->name = $items->platform_name;
-        $SellingPlatforms->link = $items->platform_link;
+        $SellingPlatforms->name = $items->selling_platform_name;
+        $SellingPlatforms->link = $items->selling_platform_link;
         $SellingPlatforms->save();
         }
 
@@ -109,8 +109,8 @@ class AuthController extends Controller
         {
         $SocialPlatforms = new SocialPlatforms();
         $SocialPlatforms->seller_id = $new->id;
-        $SocialPlatforms->name = $items->platform_name;
-        $SocialPlatforms->link = $items->platform_link;
+        $SocialPlatforms->name = $items->social_platform_name;
+        $SocialPlatforms->link = $items->social_platform_link;
         $SocialPlatforms->save();
         }
 
