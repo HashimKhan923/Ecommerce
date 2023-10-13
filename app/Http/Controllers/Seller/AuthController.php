@@ -93,6 +93,7 @@ class AuthController extends Controller
         $BusineesInformation->zip_code = $request->business_zip_code;
         $BusineesInformation->country = $request->business_country;
         $BusineesInformation->phone_number = $request->business_phone_number;
+        $BusineesInformation->business_email = $request->business_business_email;
         $BusineesInformation->save();
 
         foreach($request->selling_platforms as $items)
