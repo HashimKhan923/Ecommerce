@@ -105,13 +105,13 @@ class AuthController extends Controller
         $SellingPlatforms->save();
         }
 
-        foreach($request->selling_platforms as $items)
+        foreach($request->social_platforms as $items)
         {
-        $SellingPlatforms = new SocialPlatforms();
-        $SellingPlatforms->seller_id = $new->id;
-        $SellingPlatforms->name = $items->platform_name;
-        $SellingPlatforms->link = $items->platform_link;
-        $SellingPlatforms->save();
+        $SocialPlatforms = new SocialPlatforms();
+        $SocialPlatforms->seller_id = $new->id;
+        $SocialPlatforms->name = $items->platform_name;
+        $SocialPlatforms->link = $items->platform_link;
+        $SocialPlatforms->save();
         }
 
         $BankDetail = new BankDetail();
