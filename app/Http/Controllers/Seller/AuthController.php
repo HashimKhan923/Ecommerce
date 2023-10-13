@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Shop;
 use App\Models\BusineesInformation;
 use App\Models\SellingPlatforms;
+use App\Models\SocialPlatforms;
 use App\Models\BankDetail;
 use App\Models\CreditCard;
 use Hash;
@@ -97,6 +98,15 @@ class AuthController extends Controller
         foreach($request->selling_platforms as $items)
         {
         $SellingPlatforms = new SellingPlatforms();
+        $SellingPlatforms->seller_id = $new->id;
+        $SellingPlatforms->name = $items->platform_name;
+        $SellingPlatforms->link = $items->platform_link;
+        $SellingPlatforms->save();
+        }
+
+        foreach($request->selling_platforms as $items)
+        {
+        $SellingPlatforms = new SocialPlatforms();
         $SellingPlatforms->seller_id = $new->id;
         $SellingPlatforms->name = $items->platform_name;
         $SellingPlatforms->link = $items->platform_link;
