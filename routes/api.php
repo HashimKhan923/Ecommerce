@@ -344,7 +344,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                             /// Dashboard \\\
 
 
-            Route::group(['prefix' => '/seller/dashboard/'], function() {
+            Route::group(['prefix' => '/seller/dashboard/{id}'], function() {
                 Route::controller(App\Http\Controllers\Seller\DashboardController::class)->group(function () {
                     Route::get('show','index');
                 });

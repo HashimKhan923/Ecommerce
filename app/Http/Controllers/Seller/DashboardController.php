@@ -8,10 +8,10 @@ use App\Models\SubscribeUser;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        SubscribeUser::where('user_id',auth()->user()->id)->where('end_time','<=',now())->orWhere('product_upload_limit','<',1)->delete();
-         $SubscribeUser = SubscribeUser::where('user_id',auth()->user()->id)->first();
+        SubscribeUser::where('user_id',$id)->where('end_time','<=',now())->orWhere('product_upload_limit','<',1)->delete();
+         $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
 
          return response()->json(['SubscribeUser'=>$SubscribeUser]);
     }
