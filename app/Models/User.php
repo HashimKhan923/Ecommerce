@@ -45,11 +45,31 @@ class User extends Authenticatable
 
     public function seller_information()
     {
-        return $this->hasOne(SellerInformation::class,'user_id','id');
+        return $this->hasOne(BusinessInformation::class,'seller_id','id');
     }
 
     public function shop()
     {
         return $this->hasOne(Shop::class,'seller_id','id');
+    }
+
+    public function SellingPlatforms()
+    {
+        return $this->hasOne(SellingPlatforms::class,'seller_id','id');
+    }
+
+    public function SocialPlatforms()
+    {
+        return $this->hasOne(SocialPlatforms::class,'seller_id','id');
+    }
+
+    public function BankDetail()
+    {
+        return $this->hasOne(BankDetail::class,'seller_id','id');
+    }
+
+    public function CreditCard()
+    {
+        return $this->hasOne(CreditCard::class,'seller_id','id');
     }
 }

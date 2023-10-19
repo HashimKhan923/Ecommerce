@@ -10,7 +10,7 @@ class SellerController extends Controller
 {
     public function index()
     {
-        $Sellers = User::where('user_type','seller')->get();
+        $Sellers = User::with('seller_information','SellingPlatforms','SocialPlatforms','BankDetail','CreditCard')->where('user_type','seller')->get();
 
         return response()->json(["Sellers"=>$Sellers]);
     }
