@@ -34,6 +34,25 @@ class SellerController extends Controller
         return response($response, 200);
     }
 
+    public function is_verify($id)
+    {
+        $is_active = User::where('id',$id)->first();
+
+        if($is_active->is_verify == 0)
+        {
+            $is_active->is_verify = 1;
+        }
+        else
+        {
+            $is_active->is_verify = 0;
+        }
+
+        $is_active->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
     public function delete($id)
     {
         User::find($id)->delete();

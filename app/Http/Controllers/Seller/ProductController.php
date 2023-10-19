@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        $checkPackage = SubscribeUser::where('user_id',auth()->user()->id)->first();
+        $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
         if($checkPackage)
         {
             $new = new Product();
