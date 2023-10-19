@@ -278,6 +278,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {
                         Route::get('show','index');
                         Route::get('is_active/{id}','is_active');
+                        Route::get('is_verify/{id}','is_verify');
                         Route::get('delete/{id}','delete');
                         Route::post('multi_delete','multi_delete');
                     });
@@ -344,9 +345,9 @@ Route::group(['middleware' => ['auth:api']], function(){
                                             /// Dashboard \\\
 
 
-            Route::group(['prefix' => '/seller/dashboard/'], function() {
+            Route::group(['prefix' => '/seller/dashboard'], function() {
                 Route::controller(App\Http\Controllers\Seller\DashboardController::class)->group(function () {
-                    Route::get('show','index');
+                    Route::get('show/{id}','index');
                 });
             });
 
