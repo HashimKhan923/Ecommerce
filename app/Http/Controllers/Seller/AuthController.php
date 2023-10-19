@@ -169,7 +169,7 @@ class AuthController extends Controller
 
         if($check == null)
         {
-            $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
+            $response = ['status'=>true,"message" => "we have send the verification email to your provided email, please verify your email so that you may login to your dashboard."];
             return response($response, 200);
         }
         else
@@ -205,9 +205,18 @@ class AuthController extends Controller
     
                     if($user->user_type == 'seller')
                     {
-                        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-                        return response($response, 200);
+                        if($user->user_type == 'seller')
+                        {
+                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                            $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                            return response($response, 200);
+                        }
+                        else
+                        {
+                            $response = ['status'=>false,"message" => "Your account is not verify by admin"];
+                            return response($response, 422);
+                        }   
+
                     }
                     else
                     {
