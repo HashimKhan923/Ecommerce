@@ -48,7 +48,7 @@ class AuthController extends Controller
             ], 
         
         function ($message) use ($new) {
-            $message->from('support@dragonautomart.com');
+            $message->from('support@dragonautomart.com','Dragon Auto Mart');
             $message->to($new->email);
             $message->subject('Email Verification');
         });

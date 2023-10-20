@@ -33,7 +33,7 @@ class OrderController extends Controller
                     // 'last_name' => $query->last_name
                 ],
                 function ($message) use ($user) { // Add $user variable here
-                    $message->from('support@dragonautomart.com');
+                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($user->email);
                     $message->subject('Order Confirmation');
                 }
@@ -49,7 +49,7 @@ class OrderController extends Controller
                     // 'last_name' => $query->last_name
                 ],
                 function ($message) use ($user) { // Add $user variable here
-                    $message->from('support@dragonautomart.com');
+                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($user->email);
                     $message->subject('Order Confirmation');
                 }
@@ -76,7 +76,7 @@ class OrderController extends Controller
                     // 'last_name' => $query->last_name
                 ],
                 function ($message) use ($user) { // Add $user variable here
-                    $message->from('support@dragonautomart.com');
+                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($user->email);
                     $message->subject('Order Confirmation');
                 }
