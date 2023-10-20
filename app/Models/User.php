@@ -55,12 +55,12 @@ class User extends Authenticatable
 
     public function SellingPlatforms()
     {
-        return $this->hasOne(SellingPlatforms::class,'seller_id','id');
+        return $this->hasMany(SellingPlatforms::class,'seller_id','id');
     }
 
     public function SocialPlatforms()
     {
-        return $this->hasOne(SocialPlatforms::class,'seller_id','id');
+        return $this->hasMany(SocialPlatforms::class,'seller_id','id');
     }
 
     public function BankDetail()
