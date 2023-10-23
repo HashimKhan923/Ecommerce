@@ -185,6 +185,14 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+                                                            /// Varient \\\
+
+            Route::group(['prefix' => '/admin/varient/'], function() {
+                Route::controller(App\Http\Controllers\Admin\VarientController::class)->group(function () {
+                    Route::get('delete/{id}','delete');
+                });
+            });
+
                                                     ///Wholesale Product \\\
 
             Route::group(['prefix' => '/admin/wholesale_product/'], function() {
@@ -363,6 +371,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
                     Route::post('multi_delete','multi_delete');
+                });
+            });
+
+
+                                                         /// Varient \\\
+
+            Route::group(['prefix' => '/seller/varient/'], function() {
+                Route::controller(App\Http\Controllers\Seller\VarientController::class)->group(function () {
+                    Route::get('delete/{id}','delete');
                 });
             });
 
