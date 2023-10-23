@@ -93,11 +93,11 @@ class ProductController extends Controller
             {
                 $varient = new ProductVarient();
                 $varient->product_id = $new->id;
-                $varient->color = $item->color;
-                $varient->size = $item->size;
-                $varient->bolt_pattern = $item->bolt_pattern;
-                $varient->price = $item->varient_price;
-                $varient->stock = $item->varient_stock;
+                $varient->color = $item['color'];
+                $varient->size = $item['size'];
+                $varient->bolt_pattern = $item['bolt_pattern'];
+                $varient->price = $item['varient_price'];
+                $varient->stock = $item['varient_stock'];
                 $varient->save();
             }
 
