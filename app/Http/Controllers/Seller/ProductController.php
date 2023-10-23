@@ -11,6 +11,7 @@ use App\Models\Stock;
 use App\Models\Tax;
 use App\Models\WholesaleProduct;
 use App\Models\SubscribeUser;
+use App\Models\ProductVarient;
 use App\Models\DealProduct;
 use App\Models\Color;
 use Carbon\Carbon;
@@ -21,7 +22,7 @@ class ProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','color'
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient'
         )->where('user_id',$id)->get();
 
         return response()->json(['Products'=>$Products]);
@@ -86,16 +87,18 @@ class ProductController extends Controller
         $new->save();
 
         
-        if($request->color != null)
+        if($request->varients != null)
         {
-            foreach($request->color as $item)
+            foreach($request->varients as $item)
             {
-                $color = new Color();
-                $color->product_id = $new->id;
-                $color->color = $item['color'];
-                $color->price = $item['price'];
-                $color->quantity = $item['quantity'];
-                $color->save();
+                $varient = new ProductVarient();
+                $varient->product_id = $new->id;
+                $varient->color = $item['color'];
+                $varient->size = $item['size'];
+                $varient->bolt_pattern = $item['bolt_pattern'];
+                $varient->price = $item['varient_price'];
+                $varient->stock = $item['varient_stock'];
+                $varient->save();
             }
 
         }
@@ -263,23 +266,26 @@ class ProductController extends Controller
         $update->sku = $request->sku;
         $update->save();
 
-        if ($request->color != null) {
-            foreach ($request->color as $colorData) {
-                $color = Color::where('id',$colorData['id'])->first();
+        if ($request->varients != null) {
+            foreach ($request->varients as $varientData) {
+                $varient = ProductVarient::where('id',$varientData['id'])->first();
         
-                if ($color) {
-                    $color->price = $colorData['price'];
-                    $color->available = $colorData['available'];
-                    $color->quantity = $colorData['quantity'];
-                    $color->save();
+                if ($varient) {
+                    $varient->color = $varientData['color'];
+                    $varient->size = $varientData['size'];
+                    $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->price = $varientData['varient_price'];
+                    $varient->stock = $varientData['varient_stock'];
+                    $varient->save();
                 } else {
-                    $color = new Color();
-                    $color->product_id = $update->id;
-                    $color->color = $colorData['color'];
-                    $color->price = $colorData['price'];
-                    $color->available = $colorData['available'];
-                    $color->quantity = $colorData['quantity'];
-                    $color->save();
+                    $varient = new ProductVarient();
+                    $varient->product_id = $update->id;
+                    $varient->color = $varientData['color'];
+                    $varient->size = $varientData['size'];
+                    $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->price = $varientData['varient_price'];
+                    $varient->stock = $varientData['varient_stock'];
+                    $varient->save();
                 }
             }
         }

@@ -11,6 +11,7 @@ use App\Models\Stock;
 use App\Models\Tax;
 use App\Models\WholesaleProduct;
 use App\Models\DealProduct;
+use App\Models\ProductVarient;
 use App\Models\Color;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,7 @@ class WholeSaleProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','color')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('user_id',$id)->get();
@@ -29,7 +30,7 @@ class WholeSaleProductController extends Controller
 
     public function admin_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','color')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','product_varient')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('added_by','admin')->get();
@@ -39,7 +40,7 @@ class WholeSaleProductController extends Controller
 
     public function seller_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','color')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','product_varient')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('added_by','seller')->get();
@@ -105,18 +106,28 @@ class WholeSaleProductController extends Controller
         $new->save();
 
         
-        if($request->color != null)
-        {
-            foreach($request->color as $item)
-            {
-                $color = new Color();
-                $color->product_id = $new->id;
-                $color->color = $item['color'];
-                $color->price = $item['price'];
-                $color->quantity = $item['quantity'];
-                $color->save();
+        if ($request->varients != null) {
+            foreach ($request->varients as $varientData) {
+                $varient = ProductVarient::where('id',$varientData['id'])->first();
+        
+                if ($varient) {
+                    $varient->color = $varientData['color'];
+                    $varient->size = $varientData['size'];
+                    $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->price = $varientData['varient_price'];
+                    $varient->stock = $varientData['varient_stock'];
+                    $varient->save();
+                } else {
+                    $varient = new ProductVarient();
+                    $varient->product_id = $update->id;
+                    $varient->color = $varientData['color'];
+                    $varient->size = $varientData['size'];
+                    $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->price = $varientData['varient_price'];
+                    $varient->stock = $varientData['varient_stock'];
+                    $varient->save();
+                }
             }
-
         }
 
         if($request->discount != null)
