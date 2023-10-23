@@ -30,6 +30,8 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+
+        dd($request->varients);
         $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
         if($checkPackage)
         {
@@ -89,15 +91,16 @@ class ProductController extends Controller
         
         if($request->varients != null)
         {
+            
             foreach($request->varients as $item)
             {
                 $varient = new ProductVarient();
                 $varient->product_id = $new->id;
-                $varient->color = $item->color;
-                $varient->size = $item->size;
-                $varient->bolt_pattern = $item->bolt_pattern;
-                $varient->price = $item->varient_price;
-                $varient->stock = $item->varient_stock;
+                $varient->color = $item['color'];
+                $varient->size = $item['size'];
+                $varient->bolt_pattern = $item['bolt_pattern'];
+                $varient->price = $item['varient_price'];
+                $varient->stock = $item['varient_stock'];
                 $varient->save();
             }
 
