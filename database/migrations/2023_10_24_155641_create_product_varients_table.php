@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('bolt_pattern')->nullable();
             $table->decimal('price')->nullable();
+            $table->decimal('discount_price')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('image')->nullable();
             $table->integer('stock')->nullable();
             $table->timestamps();
         });
