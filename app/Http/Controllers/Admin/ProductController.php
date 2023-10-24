@@ -98,6 +98,7 @@ class ProductController extends Controller
 
         if($request->varients != null)
         {
+            
             foreach($request->varients as $item)
             {
                 $varient = new ProductVarient();
@@ -106,7 +107,16 @@ class ProductController extends Controller
                 $varient->size = $item['size'];
                 $varient->bolt_pattern = $item['bolt_pattern'];
                 $varient->price = $item['varient_price'];
+                $varient->discount_price = $item['varient_discount_price'];
+                $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
+                if($request->file('varient_image'))
+                {
+                        $file= $request->varient_image;
+                        $filename= date('YmdHis').$file->getClientOriginalName();
+                        $file->storeAs('public', $filename);
+                        $new->image = $filename;
+                }
                 $varient->save();
             }
 
@@ -273,7 +283,16 @@ class ProductController extends Controller
                     $varient->size = $varientData['size'];
                     $varient->bolt_pattern = $varientData['bolt_pattern'];
                     $varient->price = $varientData['varient_price'];
+                    $varient->discount_price = $varientData['varient_discount_price'];
+                    $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
+                    if($request->file('varient_image'))
+                    {
+                            $file= $request->varient_image;
+                            $filename= date('YmdHis').$file->getClientOriginalName();
+                            $file->storeAs('public', $filename);
+                            $new->image = $filename;
+                    }
                     $varient->save();
                 } else {
                     $varient = new ProductVarient();
@@ -282,7 +301,16 @@ class ProductController extends Controller
                     $varient->size = $varientData['size'];
                     $varient->bolt_pattern = $varientData['bolt_pattern'];
                     $varient->price = $varientData['varient_price'];
+                    $varient->discount_price = $varientData['varient_discount_price'];
+                    $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
+                    if($request->file('varient_image'))
+                    {
+                            $file= $request->varient_image;
+                            $filename= date('YmdHis').$file->getClientOriginalName();
+                            $file->storeAs('public', $filename);
+                            $new->image = $filename;
+                    }
                     $varient->save();
                 }
             }

@@ -106,28 +106,30 @@ class WholeSaleProductController extends Controller
         $new->save();
 
         
-        if ($request->varients != null) {
-            foreach ($request->varients as $varientData) {
-                $varient = ProductVarient::where('id',$varientData['id'])->first();
-        
-                if ($varient) {
-                    $varient->color = $varientData['color'];
-                    $varient->size = $varientData['size'];
-                    $varient->bolt_pattern = $varientData['bolt_pattern'];
-                    $varient->price = $varientData['varient_price'];
-                    $varient->stock = $varientData['varient_stock'];
-                    $varient->save();
-                } else {
-                    $varient = new ProductVarient();
-                    $varient->product_id = $update->id;
-                    $varient->color = $varientData['color'];
-                    $varient->size = $varientData['size'];
-                    $varient->bolt_pattern = $varientData['bolt_pattern'];
-                    $varient->price = $varientData['varient_price'];
-                    $varient->stock = $varientData['varient_stock'];
-                    $varient->save();
+        if($request->varients != null)
+        {
+            
+            foreach($request->varients as $item)
+            {
+                $varient = new ProductVarient();
+                $varient->product_id = $new->id;
+                $varient->color = $item['color'];
+                $varient->size = $item['size'];
+                $varient->bolt_pattern = $item['bolt_pattern'];
+                $varient->price = $item['varient_price'];
+                $varient->discount_price = $item['varient_discount_price'];
+                $varient->sku = $item['varient_sku'];
+                $varient->stock = $item['varient_stock'];
+                if($request->file('varient_image'))
+                {
+                        $file= $request->varient_image;
+                        $filename= date('YmdHis').$file->getClientOriginalName();
+                        $file->storeAs('public', $filename);
+                        $new->image = $filename;
                 }
+                $varient->save();
             }
+
         }
 
         if($request->discount != null)
@@ -280,23 +282,44 @@ class WholeSaleProductController extends Controller
         $update->slug = $request->slug;
         $update->save();
 
-        if ($request->color != null) {
-            foreach ($request->color as $colorData) {
-                $color = Color::where('id',$colorData['id'])->first();
+        if ($request->varients != null) {
+            foreach ($request->varients as $varientData) {
+                $varient = ProductVarient::where('id',$varientData['id'])->first();
         
-                if ($color) {
-                    $color->price = $colorData['price'];
-                    $color->available = $colorData['available'];
-                    $color->quantity = $colorData['quantity'];
-                    $color->save();
+                if ($varient) {
+                    $varient->color = $varientData['color'];
+                    $varient->size = $varientData['size'];
+                    $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->price = $varientData['varient_price'];
+                    $varient->discount_price = $varientData['varient_discount_price'];
+                    $varient->sku = $varientData['varient_sku'];
+                    $varient->stock = $varientData['varient_stock'];
+                    if($request->file('varient_image'))
+                    {
+                            $file= $request->varient_image;
+                            $filename= date('YmdHis').$file->getClientOriginalName();
+                            $file->storeAs('public', $filename);
+                            $new->image = $filename;
+                    }
+                    $varient->save();
                 } else {
-                    $color = new Color();
-                    $color->product_id = $update->id;
-                    $color->color = $colorData['color'];
-                    $color->price = $colorData['price'];
-                    $color->available = $colorData['available'];
-                    $color->quantity = $colorData['quantity'];
-                    $color->save();
+                    $varient = new ProductVarient();
+                    $varient->product_id = $update->id;
+                    $varient->color = $varientData['color'];
+                    $varient->size = $varientData['size'];
+                    $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->price = $varientData['varient_price'];
+                    $varient->discount_price = $varientData['varient_discount_price'];
+                    $varient->sku = $varientData['varient_sku'];
+                    $varient->stock = $varientData['varient_stock'];
+                    if($request->file('varient_image'))
+                    {
+                            $file= $request->varient_image;
+                            $filename= date('YmdHis').$file->getClientOriginalName();
+                            $file->storeAs('public', $filename);
+                            $new->image = $filename;
+                    }
+                    $varient->save();
                 }
             }
         }
