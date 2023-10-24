@@ -9,6 +9,10 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'varient' => 'array',
+    ];
+
     public function products() {
         return $this->belongsTo(Product::class,'product_id','id');
     }
