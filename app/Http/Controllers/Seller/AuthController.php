@@ -205,7 +205,7 @@ class AuthController extends Controller
     
                     if($user->user_type == 'seller')
                     {
-                        if($user->user_type == 'seller')
+                        if($user->is_verify == 1)
                         {
                             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                             $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
