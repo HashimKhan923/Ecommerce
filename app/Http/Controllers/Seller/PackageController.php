@@ -42,8 +42,9 @@ class PackageController extends Controller
        if($already_subscriber)
        {
           $already_subscriber->product_upload_limit = $already_subscriber->product_upload_limit + $Package->product_upload_limit;
+          $already_subscriber->end_time = $already_subscriber->end_time->add($end_time->diff($start_time));
           $already_subscriber->save();
-          
+
           return response()->json(['message'=>'Your Package upgrated successfully!']);
        }
        else
