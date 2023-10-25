@@ -37,9 +37,19 @@ class PackageController extends Controller
         $end_time = Carbon::now()->addYear($Package->time_number);
       }
 
+       $already_subscriber = SubscribeUser::where('user_id',$request->user_id)->first();
 
+       if($already_subscriber)
+       {
+          $already_subscriber->product_upload_limit = $already_subscriber->product_upload_limit + $Package->product_upload_limit;
+          $already_subscriber->save();
+          
+          return response()->json(['message'=>'Your Package upgrated successfully!']);
+       }
+       else
+       {
         $new = new SubscribeUser;
-        $new->user_id = auth()->user()->id;
+        $new->user_id = $request->user_id;
         $new->package_id = $request->subscription_id;
         $new->product_upload_limit = $Package->product_upload_limit;
         $new->start_time = $start_time;
@@ -47,6 +57,11 @@ class PackageController extends Controller
         $new->save();
 
         return response()->json(['message'=>'Your Subscription Completed Successfully!']);
+       }
+
+
+
+
 
   
     }
