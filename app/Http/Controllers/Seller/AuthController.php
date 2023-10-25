@@ -48,7 +48,7 @@ class AuthController extends Controller
             $new->remember_token = $token;
 
             Mail::send(
-                'email.seller_verification',
+                'email.seller_email_verification',
                 [
                     'token'=>$token,
                     'name'=>$request->name,

@@ -306,6 +306,18 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                                    /// Subscriber \\\
+
+        Route::group(['prefix' => '/admin/subscribe/'], function() {
+            Route::controller(App\Http\Controllers\Admin\SubscriberController::class)->group(function () {
+                Route::post('show','index');    
+                Route::get('delete/{id}','delete'); 
+                Route::post('multi_delete','multi_delete'); 
+            });
+        });
+
+
+
                                                     /// TermCondition \\\
 
             Route::group(['prefix' => '/admin/term_condition/'], function() {
