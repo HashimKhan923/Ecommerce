@@ -189,7 +189,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => '/admin/varient/'], function() {
                 Route::controller(App\Http\Controllers\Admin\VarientController::class)->group(function () {
-                    Route::get('delete/{id}','delete');
+                    Route::post('delete','delete');
                 });
             });
 
@@ -391,7 +391,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => '/seller/varient/'], function() {
                 Route::controller(App\Http\Controllers\Seller\VarientController::class)->group(function () {
-                    Route::get('delete/{id}','delete');
+                    Route::post('delete','delete');
                 });
             });
 
