@@ -42,6 +42,7 @@ class ProductController extends Controller
         $new->category_id = $request->category_id;
         $new->weight = $request->weight;
         $new->year = $request->year;
+        $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
@@ -210,6 +211,7 @@ class ProductController extends Controller
         $update->category_id = $request->category_id;
         $update->weight = $request->weight;
         $update->year = $request->year;
+        $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
