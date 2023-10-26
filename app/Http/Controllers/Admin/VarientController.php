@@ -10,7 +10,7 @@ class VarientController extends Controller
 {
     public function delete($id)
     {
-        ProductVarient::find($id)->delete();
+        ProductVarient::where('id',$request->id)->where('product_id',$request->product_id)->delete();
 
         $response = ['status'=>true,"message" => "Varient Deleted Successfully!"];
         return response($response, 200);
