@@ -175,18 +175,6 @@ class ProductController extends Controller
             $shipping->save();
         }
 
-        // if($request->wholesale_price != null)
-        // {
-        //     foreach($request->wholesale_price as $price)
-        //     {
-        //         $wholesale = new WholesaleProduct();
-        //         $wholesale->product_id = $new->id;
-        //         $wholesale->wholesale_price = $price;
-        //         $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-        //         $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-        //         $wholesale->save();               
-        //     }
-        // }
 
         $response = ['status'=>true,"message" => "Product Added Successfully!"];
         return response($response, 200);
@@ -370,20 +358,6 @@ class ProductController extends Controller
             $shipping->save();
         }
 
-        // if($request->wholesale_price != null)
-        // {
-        //     WholesaleProduct::where('product_id',$update->id)->delete();
-
-        //     foreach($request->wholesale_price as $price)
-        //     {
-        //         $wholesale = new WholesaleProduct();
-        //         $wholesale->product_id = $update->id;
-        //         $wholesale->wholesale_price = $price;
-        //         $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-        //         $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-        //         $wholesale->save();               
-        //     }
-        // }
 
         $response = ['status'=>true,"message" => "Product updated Successfully!"];
         return response($response, 200);
@@ -449,9 +423,6 @@ class ProductController extends Controller
        
             }  
             }
-    
-    
-    
     
     
             $ProductThumbnail = 'app/public'.$item->thumbnail_img;
