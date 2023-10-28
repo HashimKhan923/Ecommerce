@@ -58,7 +58,7 @@ public function create(Request $request)
             $newOrderDetail->save();
 
             $sale = Product::where('id',$product->id)->first();
-            $sale->number_of_sale = $sale->number_of_sale + $orderProduct['quantity'];
+            $sale->num_of_sale = $sale->num_of_sale + $orderProduct['quantity'];
             $sale->save();
         }
     }
