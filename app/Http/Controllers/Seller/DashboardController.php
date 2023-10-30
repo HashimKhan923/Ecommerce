@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubscribeUser;
+use App\Models\Product;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
     public function index($id)
     {
         SubscribeUser::where('user_id',$id)->where('end_time','<=',now())->orWhere('product_upload_limit','<',1)->delete();
-         $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
+        $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
 
-         return response()->json(['SubscribeUser'=>$SubscribeUser]);
+        $Products = Product::where('user_id',$id)->get();
+        $Orders = Order::where('seller_id',$id)->get();
+
+        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders]);
     }
 }

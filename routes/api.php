@@ -61,6 +61,16 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
 
 
+                                                        /// Dashboard \\\
+
+
+            Route::group(['prefix' => '/admin/dashboard'], function() {
+                Route::controller(App\Http\Controllers\Admin\DashboardController::class)->group(function () {
+                    Route::get('show/{id}','index');
+                });
+            });
+
+
 
                                             /// Category \\\
 
