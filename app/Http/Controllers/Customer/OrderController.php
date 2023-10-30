@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Stock;
 use App\Models\OrderDetail;
 use Illuminate\Support\Str;
 use Mail;
@@ -57,9 +58,23 @@ public function create(Request $request)
             $newOrderDetail->varient = $request->varient;
             $newOrderDetail->save();
 
+            $VarientStock = ProductVarient::where('product_id',$product->id)->first();
             $sale = Product::where('id',$product->id)->first();
+            $stock = Stock::where('product_id',$product->id)->first();
+            if($VarientStock)
+            {
+                $VarientStock->stock = $VarientStock->stock - $orderProduct['quantity'];
+                $VarientStock->save();
+            }
+            else
+            {
+                $stock->stock = $stock->stock - $orderProduct['quantity'];
+                $stock->save();
+            }
+
             $sale->num_of_sale = $sale->num_of_sale + $orderProduct['quantity'];
             $sale->save();
+
         }
     }
 
