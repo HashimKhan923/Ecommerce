@@ -12,6 +12,7 @@ use App\Models\Tax;
 use App\Models\WholesaleProduct;
 use App\Models\DealProduct;
 use App\Models\ProductVarient;
+use App\Models\ProductGallery;
 use App\Models\Color;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,7 @@ class WholeSaleProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('user_id',$id)->get();
@@ -30,7 +31,7 @@ class WholeSaleProductController extends Controller
 
     public function admin_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','product_varient')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','product_varient')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('added_by','admin')->get();
@@ -40,7 +41,7 @@ class WholeSaleProductController extends Controller
 
     public function seller_products()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','shop','product_varient')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','product_varient')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('added_by','seller')->get();
@@ -67,27 +68,6 @@ class WholeSaleProductController extends Controller
         $new->model_id = $request->model_id;
         $new->shop_id = $request->shop_id;
         $new->deal_id = $request->deal_id;
-
-        if ($request->photos) {
-            // return $request->photos;
-            $ProductGallery = array(); // Initialize the array
-            foreach ($request->file('photos') as $photo) {
-                $file = $photo;
-                $filename = date('YmdHis') . $file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $ProductGallery[] = $filename;
-            }
-        
-            $new->photos = $ProductGallery;
-        }
-        
-        if($request->file('thumbnail_img'))
-        {
-                $file= $request->thumbnail_img;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->thumbnail_img = $filename;
-        }
         $new->tags = $request->tags;
         $new->description = $request->description;
         $new->price = $request->price;
@@ -105,6 +85,17 @@ class WholeSaleProductController extends Controller
         }
         $new->slug = $request->slug;
         $new->save();
+
+        if ($request->photos) {
+            foreach ($request->file('photos') as $image) {
+                $gallery = new ProductGallery();
+                $gallery->product_id = $new->id;
+                $filename = date('YmdHis') . $image->getClientOriginalName();
+                $image->storeAs('public', $filename);
+                $gallery->image = $filename;
+                $gallery->save();
+            }
+        }
 
         
         if($request->varients != null)
@@ -220,45 +211,6 @@ class WholeSaleProductController extends Controller
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
         $update->deal_id = $request->deal_id;
-
-        if ($request->file('photos')) {
-            $ProductGallery = array(); // Initialize the array
-
-            if($update->photos != null)
-            {
-                foreach($update->photos as $item)
-                {
-                    $path = 'app/public'.$item;
-                    if (Storage::exists($path)) {
-                        // Delete the file
-                        Storage::delete($path);
-                    }
-                }
-            }
-        
-            foreach ($request->file('photos') as $photo) {
-                $file = $photo;
-                $filename = date('YmdHis') . $file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $ProductGallery[] = $filename;
-            }
-        
-            $update->photos = $ProductGallery;
-        }
-
-        if($request->file('thumbnail_img'))
-        {
-            $path = 'app/public'.$update->thumbnail_img;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
-            }
-
-                $file= $request->thumbnail_img;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->thumbnail_img = $filename;
-        }
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
@@ -283,6 +235,28 @@ class WholeSaleProductController extends Controller
         }
         $update->slug = $request->slug;
         $update->save();
+
+        if ($request->photos) {
+            foreach ($request->photos as $imageData) {
+                $gallery = ProductGallery::find($imageData['id']);
+        
+                if ($gallery) {
+                    $gallery->product_id = $update->id; 
+                    $file = $request->imageData['image'];
+                    $filename = date('YmdHis') . $file->getClientOriginalName();
+                    $file->storeAs('public', $filename);
+                    $gallery->image = $filename;
+                } else {
+                    $gallery = new ProductGallery();
+                    $gallery->product_id = $update->id;
+                        $file = $request->imageData['image'];
+                        $filename = date('YmdHis') . $file->getClientOriginalName();
+                        $file->storeAs('public', $filename);
+                        $gallery->image = $filename;
+                }
+                $gallery->save();
+            }
+        }
 
         if ($request->varients != null) {
             foreach ($request->varients as $varientData) {
