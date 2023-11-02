@@ -22,15 +22,6 @@ class AuthController extends Controller
         
       $check = User::where('email',$request->email)->first();
 
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string|max:255',
-        //     "email" => "required|email|unique:users,email",
-        //     'password' => 'required|string|min:6',
-        // ]);
-        // if ($validator->fails())
-        // {
-        //     return response(['errors'=>$validator->errors()->all()], 422);
-        // }
 
         if($check == null)
         {
@@ -47,19 +38,7 @@ class AuthController extends Controller
             $token = uniqid();
             $new->remember_token = $token;
 
-            Mail::send(
-                'email.seller_email_verification',
-                [
-                    'token'=>$token,
-                    'name'=>$request->name,
-                    //'last_name'=>$query->last_name
-                ], 
-            
-            function ($message) use ($request) {
-                $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                $message->to($request->email);
-                $message->subject('Email Verification');
-            });
+
         }
         else
         {
@@ -165,7 +144,18 @@ class AuthController extends Controller
 
         // $new1->save();
 
-
+        Mail::send(
+            'email.seller_email_verification',
+            [
+                'token'=>$token,
+                'name'=>$request->name,
+            ], 
+        
+        function ($message) use ($request) {
+            $message->from('support@dragonautomart.com','Dragon Auto Mart');
+            $message->to($request->email);
+            $message->subject('Email Verification');
+        });
 
         if($check == null)
         {
