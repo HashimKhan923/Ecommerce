@@ -244,6 +244,18 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+                                                        /// States \\\
+
+            Route::group(['prefix' => '/admin/state/'], function() {
+                Route::controller(App\Http\Controllers\Admin\StateController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
+                });
+            });
+
                                                     /// Refund \\\
 
                 Route::group(['prefix' => '/admin/refund/'], function() {
