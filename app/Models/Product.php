@@ -47,6 +47,11 @@ class Product extends Model
         return $this->hasMany(ProductVarient::class,'product_id','id');
     }
 
+    public function product_gallery()
+    {
+        return $this->hasMany(ProductGallery::class,'product_id','id');
+    }
+
     public function stock()
     {
         return $this->hasOne(Stock::class,'product_id','id');
