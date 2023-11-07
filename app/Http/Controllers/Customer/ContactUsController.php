@@ -31,6 +31,9 @@ class ContactUsController extends Controller
             }
         );
 
+        $response = ['status'=>true,"message" => "Sent Successfully!"];
+        return response($response, 200);
+
 
     }
 }
