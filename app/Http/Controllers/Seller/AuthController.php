@@ -22,7 +22,6 @@ class AuthController extends Controller
         
       $check = User::where('email',$request->email)->first();
 
-
         if($check == null)
         {
             $new = new User();
