@@ -234,25 +234,12 @@ class ProductController extends Controller
 
 
         if ($request->photos) {
-            foreach ($request->photos as $imageData) {
-                $gallery = ProductGallery::find($imageData['id']);
-        
-                if ($gallery) {
-                    $gallery->product_id = $update->id; 
-                    $file = $request->imageData['image'];
-                    $filename = date('YmdHis') . $file->getClientOriginalName();
-                    $file->storeAs('public', $filename);
-                    $gallery->image = $filename;
-                } else {
-                    $gallery = new ProductGallery();
-                    $gallery->product_id = $update->id;
-                    
-                        $file = $request->imageData['image'];
-                        $filename = date('YmdHis') . $file->getClientOriginalName();
-                        $file->storeAs('public', $filename);
-                        $gallery->image = $filename;
-                }
-        
+            foreach ($request->file('photos') as $image) {
+                $gallery = new ProductGallery();
+                $gallery->product_id = $new->id;
+                $filename = date('YmdHis') . $image->getClientOriginalName();
+                $image->storeAs('public', $filename);
+                $gallery->image = $filename;
                 $gallery->save();
             }
         }
@@ -478,6 +465,14 @@ class ProductController extends Controller
         $is_published->save();
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
+    public function gallery_delete($id)
+    {
+        ProductGallery::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "Deleted Successfully!"];
         return response($response, 200);
     }
 }

@@ -405,6 +405,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
                     Route::post('multi_delete','multi_delete');
+                    Route::get('gallery_delete/{id}','gallery_delete');
                 });
             });
 
