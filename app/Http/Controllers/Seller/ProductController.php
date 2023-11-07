@@ -236,7 +236,7 @@ class ProductController extends Controller
         if ($request->photos) {
             foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
-                $gallery->product_id = $new->id;
+                $gallery->product_id = $update->id;
                 $filename = date('YmdHis') . $image->getClientOriginalName();
                 $image->storeAs('public', $filename);
                 $gallery->image = $filename;
