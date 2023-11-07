@@ -67,9 +67,9 @@
             <p>Best regards,</p>
             <p class="signature">The Dragon Auto Mart Team</p>
         </div>
-        <div class="cta-button text-center text-white">
+      
             <a href="https://api.dragonautomart.com/api/verification/{{$token}}" class="text-white">Click Here Complete Email Verification</a>
-        </div>
+        
     </div>
 </body>
 </html>

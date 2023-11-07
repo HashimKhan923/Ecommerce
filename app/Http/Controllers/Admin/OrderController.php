@@ -15,21 +15,21 @@ class OrderController extends Controller
 
     public function index()
     {
-        $data = Order::with('order_detail')->get();
+        $data = Order::with('order_detail.products.product_gallery')->get();
 
         return response()->json(['data'=>$data]);
     }
 
     public function admin_orders($id)
     {
-        $data = Order::with('order_detail')->where('seller_id',$id)->get();
+        $data = Order::with('order_detail.products.product_gallery')->where('seller_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
 
     public function seller_orders($id)
     {
-        $data = Order::with('order_detail')->where('seller_id','!=',$id)->get();
+        $data = Order::with('order_detail.products.product_gallery')->where('seller_id','!=',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
