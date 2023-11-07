@@ -35,8 +35,7 @@ class AuthController extends Controller
             $new->postal_code = $request->postal_code;
             $new->phone = $request->phone;
             $new->password = Hash::make($request->password);
-            $token = uniqid();
-            $new->remember_token = $token;
+
 
 
         }
@@ -45,6 +44,8 @@ class AuthController extends Controller
             $new = User::where('email',$request->email)->first();
         }
         
+        $token = uniqid();
+        $new->remember_token = $token;
         $new->user_type = 'seller';
         $new->is_active = 1;
         $new->save();
