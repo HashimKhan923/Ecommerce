@@ -369,6 +369,15 @@ Route::group(['middleware' => ['auth:api']], function(){
             });  
 
 
+                                                /// Contact us \\\
+
+        Route::group(['prefix' => '/admin/contactus'], function() {
+            Route::controller(App\Http\Controllers\Admin\ContactUsController::class)->group(function () {   
+                Route::post('show','index');
+            });
+        });
+
+
 
         });
 
@@ -534,6 +543,14 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         Route::group(['prefix' => '/review'], function() {
         Route::controller(App\Http\Controllers\Customer\ReviewController::class)->group(function () {   
+            Route::post('create','create');
+        });
+    });
+
+                                                       /// Contact us \\\
+
+        Route::group(['prefix' => '/contactus'], function() {
+        Route::controller(App\Http\Controllers\Customer\ContactUsController::class)->group(function () {   
             Route::post('create','create');
         });
     });
