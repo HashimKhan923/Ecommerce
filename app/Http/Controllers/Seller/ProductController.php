@@ -56,6 +56,7 @@ class ProductController extends Controller
         $new->cash_on_delivery = $request->cash_on_delivery;
         $new->featured = $request->featured;
         $new->todays_deal = $request->todays_deal;
+        $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
         if($request->file('meta_img'))
@@ -128,14 +129,14 @@ class ProductController extends Controller
         }
 
         
-        if($request->tax != null)
-        {
-            $tax = new Tax();
-            $tax->product_id = $new->id;
-            $tax->tax = $request->tax;
-            $tax->tax_type = $request->tax_type;
-            $tax->save();
-        }
+        // if($request->tax != null)
+        // {
+        //     $tax = new Tax();
+        //     $tax->product_id = $new->id;
+        //     $tax->tax = $request->tax;
+        //     $tax->tax_type = $request->tax_type;
+        //     $tax->save();
+        // }
 
 
         if($request->deal_id != null)
@@ -214,6 +215,7 @@ class ProductController extends Controller
         $update->sizes = $request->sizes;
         $update->featured = $request->featured;
         $update->todays_deal = $request->todays_deal;
+        $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
@@ -323,22 +325,22 @@ class ProductController extends Controller
         }
 
         
-        if($request->tax != null)
-        {
-            $tax =  Tax::where('product_id',$update->id)->first();
+        // if($request->tax != null)
+        // {
+        //     $tax =  Tax::where('product_id',$update->id)->first();
 
-            if($tax == null)
-            {
-                $tax = new Tax();
-            }
+        //     if($tax == null)
+        //     {
+        //         $tax = new Tax();
+        //     }
 
 
-                $tax->product_id = $update->id;
-                $tax->tax = $request->tax;
-                $tax->tax_type = $request->tax_type;
-                $tax->save();
+        //         $tax->product_id = $update->id;
+        //         $tax->tax = $request->tax;
+        //         $tax->tax_type = $request->tax_type;
+        //         $tax->save();
 
-        }
+        // }
 
 
         if($request->deal_id != null)
