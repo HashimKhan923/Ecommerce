@@ -23,12 +23,9 @@ class HomeController extends Controller
         $States = State::first();
 
 
-<<<<<<< HEAD
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners]);
 
-=======
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States]);
->>>>>>> 6f6445c71516f47e232d19c7a7c0ce596f619a8c
+
     }
 
     
