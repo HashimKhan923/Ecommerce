@@ -289,28 +289,36 @@ class ProductController extends Controller
         if($request->discount != null)
         {
             $discount = Discount::where('product_id',$update->id)->first();
-            if($discount)
+
+            if($discount == null)
             {
-                $discount->product_id = $update->id;
-                $discount->discount = $request->discount;
-                $discount->discount_start_date = $request->discount_start_date;
-                $discount->discount_end_date = $request->discount_end_date;
-                $discount->discount_type = $request->discount_type;
-                $discount->save();
+                $discount = new Discount();
             }
+
+            $discount->product_id = $update->id;
+            $discount->discount = $request->discount;
+            $discount->discount_start_date = $request->discount_start_date;
+            $discount->discount_end_date = $request->discount_end_date;
+            $discount->discount_type = $request->discount_type;
+            $discount->save();
+
+
 
         }
 
         if($request->stock != null)
         {
             $stock = Stock::where('product_id',$update->id)->first();
-            if($stock)
+
+            if($stock == null)
             {
-                $stock->product_id = $update->id;
-                $stock->stock = $request->stock;
-                $stock->min_stock = $request->min_stock;
-                $stock->save();
+                $stock = new Stock();
             }
+ 
+            $stock->product_id = $update->id;
+            $stock->stock = $request->stock;
+            $stock->min_stock = $request->min_stock;
+            $stock->save();
 
         }
 
@@ -318,13 +326,17 @@ class ProductController extends Controller
         if($request->tax != null)
         {
             $tax =  Tax::where('product_id',$update->id)->first();
-            if($tax)
+
+            if($tax == null)
             {
+                $tax = new Tax();
+            }
+
+
                 $tax->product_id = $update->id;
                 $tax->tax = $request->tax;
                 $tax->tax_type = $request->tax_type;
                 $tax->save();
-            }
 
         }
 
@@ -332,14 +344,18 @@ class ProductController extends Controller
         if($request->deal_id != null)
         {
             $deal = DealProduct::where('product_id',$update->id)->first();
-            if($deal)
+
+            if($deal == null)
             {
+                $deal = new DealProduct();
+            }
+
                 $deal->deal_id = $request->deal_id;
                 $deal->product_id = $update->id;
                 $deal->discount = $request->deal_discount;
                 $deal->discount_type = $request->deal_discount_type;
                 $deal->save();
-            }
+            
 
         }
         
@@ -347,14 +363,19 @@ class ProductController extends Controller
         if($request->shipping_type != null)
         {
             $shipping = Shipping::where('product_id',$update->id)->first();
-            if($shipping)
+
+            if($shipping == null)
             {
+                $shipping = new Shipping();
+            }
+
+
                 $shipping->product_id = $update->id;
                 $shipping->shipping_cost = $request->shipping_cost;
                 $shipping->is_qty_multiply = $request->is_qty_multiply;
                 $shipping->est_shipping_days = $request->est_shipping_days;
                 $shipping->save();
-            }
+            
 
         }
 
