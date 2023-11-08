@@ -20,7 +20,7 @@ class HomeController extends Controller
         $Brands = Brand::with('model')->where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
         $HomeBanners = HomeBanner::first();
-        $States = State::first();
+        $States = State::all();
 
 
 
