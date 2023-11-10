@@ -20,12 +20,12 @@ class ContactUsController extends Controller
         Mail::send(
             'email.contactus',
             [
-                'email' => $request->name,
+                'email' => $request->email,
                 'subject' => $request->subject,
                 'message1' => $request->message,
             ],
-            function ($message) use ($request) { // Add $user variable here
-                $message->from('support@dragonautomart.com','Dragon Auto Mart');
+            function ($message) use ($request) { 
+                $message->from($request->email,'Dragon Auto Mart');
                 $message->to('support@dragonautomart.com');
                 $message->subject('Contact');
             }
