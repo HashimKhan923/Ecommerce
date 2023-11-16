@@ -53,6 +53,7 @@ class ProductController extends Controller
         $new->tags = $request->tags;
         $new->description = $request->description;
         $new->price = $request->price;
+        $new->shipping = $request->shipping;
         $new->cash_on_delivery = $request->cash_on_delivery;
         $new->featured = $request->featured;
         $new->todays_deal = $request->todays_deal;
@@ -212,6 +213,7 @@ class ProductController extends Controller
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
+        $update->shipping = $request->shipping;
         $update->sizes = $request->sizes;
         $update->featured = $request->featured;
         $update->todays_deal = $request->todays_deal;
