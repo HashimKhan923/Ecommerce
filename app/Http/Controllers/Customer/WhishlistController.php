@@ -10,7 +10,7 @@ class WhishlistController extends Controller
 {
     public function index($id)
     {
-        $data = Whishlist::where('customer_id',$id)->get();
+        $data = Whishlist::with('product')->where('customer_id',$id)->get();
 
         return response()->json(["data"=>$data]);
     }
@@ -28,6 +28,7 @@ class WhishlistController extends Controller
         {
             $new = new Whishlist();
             $new->customer_id = $request->customer_id;
+     
             $new->product_id = $request->product_id;
             $new->save();
 
