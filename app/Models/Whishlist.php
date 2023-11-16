@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Whishlist extends Model
 {
+
     use HasFactory;
+
+    public function product()
+    {
+        return $this->hasOne(Product::class,'product_id','id');
+    }
 }
