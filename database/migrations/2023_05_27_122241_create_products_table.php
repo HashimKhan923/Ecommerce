@@ -34,8 +34,6 @@ return new class extends Migration
             $table->text('tags')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price')->nullable();
-            $table->bigInteger('varient_id')->unsigned()->nullable();
-            $table->foreign('varient_id')->references('id')->on('varients')->onDelete('cascade')->onUpdate('cascade');
             $table->string('sizes')->nullable();
             $table->string('pdf')->nullable();
             $table->boolean('published')->default(0);
