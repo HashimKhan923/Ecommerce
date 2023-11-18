@@ -8,6 +8,7 @@ use Validator;
 use App\Models\User;
 use Hash;
 use Mail;
+use File;
 
 class AuthController extends Controller
 {
@@ -127,7 +128,7 @@ class AuthController extends Controller
             $new = new User();
             $new->name = $request->name;
             $new->email = $request->email;
-            $new->password = Hash::make('customer123');
+            $new->password = Hash::make(uniqid());
             $new->user_type = 'customer';
             $new->is_active = 1;
             $new->save();
@@ -153,31 +154,46 @@ class AuthController extends Controller
     }
 
     public function profile_update(Request $request){
-        $id=$request->id;
+        $id=$request->user_id;
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => "required|email|max:255|unique:users,email,$id,id",
-            'phone_number'=>'required|min:10|max:15',
+            'phone'=>'required|min:10|max:15',
             //'password' => 'required|string|min:6|confirmed',
         ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $admin=User::find($id);
-        $admin->name=$request->name;
-        $admin->email=$request->email;
-        $admin->phone_number=$request->phone_number;
+        $update=User::find($id);
+        $update->name = $request->name;
+        $update->email = $request->email;
+        $update->address = $request->address;
+        $update->city = $request->city;
+        $update->state = $request->state;
+        $update->country = $request->country;
+        $update->postal_code = $request->postal_code;
+        $update->phone = $request->phone;
         if($request->file('avatar'))
         {
+            $path = public_path($update->avatar);
+            // if (File::exists($path)) {
+            //     // Delete the file
+            //     File::delete($path);
+            // }
+
+            if($path)
+            {
+                unlink($path);
+            }
                 $file= $request->avatar;
                 $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->avatar = $filename;
+                $file->move(public_path(),$filename);
+                $update->avatar = $filename;
         }
         //$admin->save();
-        if($admin->save()){
-          $response = ['status'=>true,"message" => "Profile Update Successfully","user"=>$admin];
+        if($update->save()){
+          $response = ['status'=>true,"message" => "Profile Update Successfully","user"=>$update];
           return response($response, 200);
         }
         $response = ['status'=>false,"message" => "Profile Not Update Successfully"];
