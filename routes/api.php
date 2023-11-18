@@ -504,7 +504,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         Route::get('/customer/profile/view/{id}', 'App\Http\Controllers\Customer\AuthController@profile_view');
-        Route::post('/customer/profile', 'App\Http\Controllers\Customer\AuthController@profile_update');
+        Route::post('/customer/profile/update', 'App\Http\Controllers\Customer\AuthController@profile_update');
         Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
         Route::get('/customer/profile/check', 'App\Http\Controllers\Customer\AuthController@usercheck'); 
         Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
@@ -535,6 +535,17 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::post('comment','comment');
             Route::post('rating','rating');
             Route::get('detail/{id}','detail');
+        });
+    });
+
+                                                   /// Address \\\
+
+        Route::group(['prefix' => '/address'], function() {
+        Route::controller(App\Http\Controllers\Customer\AddressController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
         });
     });
 
