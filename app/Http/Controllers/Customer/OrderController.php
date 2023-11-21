@@ -31,7 +31,7 @@ public function create(Request $request)
         $productIds[] = $product['product_id'];
     }
 
-    $products = Product::whereIn('id',$productIds)->get();
+    $products = Product::with('product_gallery')->whereIn('id',$productIds)->get();
 
     // Group the products by vendor ID
     $productsByVendor = $products->groupBy('user_id');
@@ -86,7 +86,8 @@ public function create(Request $request)
         'email.Order.order_recive',
         [
             'buyer_name' => $user->name,
-            // 'last_name' => $query->last_name
+            'products' => $vendorProducts,
+            'qty' => $orderProduct
         ],
         function ($message) use ($user) { // Add $user variable here
             $message->from('support@dragonautomart.com','Dragon Auto Mart');
