@@ -111,14 +111,19 @@ For what reason would it be advisable for me to think about business content? Th
                             <table>    
 
 
-                            @foreach($products as $product)
+                            @foreach($productsByVendor as $vendorId => $vendorProducts)
+                            @foreach($vendorProducts as $product)
+                            <?php
+                            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+                            ?>
+
                             <tr>
                                   
                                   <td   style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIQXk_6Zjy5krgPEusqV8JsoSQwGiD2rJVEi-MPUma&s" width="100px" alt="">
                                   </td>
                                   <td   style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                      Qty( {{ $qty['quantity'] }} )
+                                      Qty( {{ $orderProduct['quantity'] }} )
                                   </td>
                                   <td   style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                       
@@ -134,15 +139,12 @@ For what reason would it be advisable for me to think about business content? Th
                                   <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                       $10.00
                                   </td>
-                              </tr>
+                            </tr>
+
+
                             @endforeach
-                              
+                            @endforeach
 
-
-
-
-
-                                
                                 <tr>
                                     <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                         
