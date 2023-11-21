@@ -86,8 +86,8 @@ public function create(Request $request)
         'email.Order.order_recive',
         [
             'buyer_name' => $user->name,
-            'products' => $vendorProducts,
-            'qty' => $orderProduct
+            'products' => $productsByVendor,
+            'request' => $request
         ],
         function ($message) use ($user) { // Add $user variable here
             $message->from('support@dragonautomart.com','Dragon Auto Mart');
