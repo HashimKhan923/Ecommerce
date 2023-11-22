@@ -201,7 +201,7 @@
                                                 <tr>
                                                     <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
                                                         <p style="font-weight: 800;">Delivery Address</p>
-                                                        <p>{{$request->information[1]}}<br>{{$request->information[2]}}<br>{{$request->information[3]}}, {{$request->information[4]}} {{$request->information[5]}}</p>
+                                                        <p>{{$request->information[1]}}<br>{{$request->information[2]}}<br>{{$request->information[3]}}, {{$request->information[4]}}</p>
 
                                                     </td>
                                                 </tr>
