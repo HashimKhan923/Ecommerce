@@ -71,9 +71,6 @@
 
 <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-        For what reason would it be advisable for me to think about business content? That might be a bit risky to have a crew member like them.
-    </div>
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
@@ -130,12 +127,13 @@
                                                 <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Product
                                                 </td>
+                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                                                    Name
+                                                </td>
                                                 <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Quantity
                                                 </td>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Description
-                                                </td>
+
                                                 <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Price
                                                 </td>
@@ -145,10 +143,11 @@
                                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIQXk_6Zjy5krgPEusqV8JsoSQwGiD2rJVEi-MPUma&s" width="100px" alt="">
                                                 </td>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    Qty(6)
+                                                welkwl ekwek;w elkwlek wkelwk kwlekwl wkelwke wlkelwke wkewke wkelwke wkelwke wekwlek
+
                                                 </td>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    welkwl ekwek;w elkwlek wkelwk kwlekwl wkelwke wlkelwke wkewke wkelwke wkelwke wekwlek
+                                                qty(6)
                                                 </td>
                                                 <td width="20%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                     $10.00
