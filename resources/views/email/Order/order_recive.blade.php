@@ -143,7 +143,12 @@
                             @foreach($vendorProducts as $product)
                             <?php
                             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+
+                            $price = $orderProduct['product_price'] * $orderProduct['quantity'];
+
                             ?>
+
+                                   
 
                                             <tr>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
@@ -157,7 +162,7 @@
                                                 qty( {{ $orderProduct['quantity'] }} )
                                                 </td>
                                                 <td width="20%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    {{$orderProduct['product_price']}}
+                                                    {{$price}}
                                                 </td>
                                             </tr>
 
