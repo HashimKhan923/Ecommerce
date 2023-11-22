@@ -116,7 +116,7 @@
                                 <tr>
                                     <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                         <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Hi Fahad, we're getting your order ready to be shipped. We will notify you when it has been sent.
+                                            Hi {{$buyer_name}}, we're getting your order ready to be shipped. We will notify you when it has been sent.
                                         </p>
                                     </td>
                                 </tr>
@@ -159,10 +159,10 @@
 
                                                 </td>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                qty( {{ $orderProduct['quantity'] }} )
+                                                {{ $orderProduct['quantity'] }}
                                                 </td>
                                                 <td width="20%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    {{$price}}
+                                                    ${{$price}}
                                                 </td>
                                             </tr>
 
@@ -181,7 +181,7 @@
                                                     TOTAL
                                                 </td>
                                                 <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    {{$request->amount}}
+                                                    ${{$request->amount}}
                                                 </td>
                                             </tr>
                                         </table>
@@ -201,50 +201,15 @@
                                                 <tr>
                                                     <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
                                                         <p style="font-weight: 800;">Delivery Address</p>
-                                                        <p>675 Massachusetts Avenue<br>11th Floor<br>Cambridge, MA 02139</p>
+                                                        <p>{{$request->information[1]}}<br>{{$request->information[2]}}<br>{{$request->information[3]}}, {{$request->information[4]}} {{$request->information[5]}}</p>
 
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
-                                        <div style="display:inline-block; max-width:50%; min-width:240px; vertical-align:top; width:100%;">
-                                            <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                                <tr>
-                                                    <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-                                                        <p style="font-weight: 800;">Estimated Delivery Date</p>
-                                                        <p>January 1st, 2016</p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
+
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-                    <tr>
-                        <td align="center" style=" padding: 35px; background-color: #ff7361;" bgcolor="#1b9ba3">
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
-                                <tr>
-                                    <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-                                        <h2 style="font-size: 24px; font-weight: 800; line-height: 30px; color: #ffffff; margin: 0;">
-                                            Get 30% off your next order.
-                                        </h2>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="padding: 25px 0 15px 0;">
-                                        <table border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td align="center" style="border-radius: 5px;" bgcolor="#66b3b7">
-                                                    <a href="#" target="_blank" style="font-size: 18px; font-family: Open Sans, Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; background-color: #F44336; padding: 15px 30px; border: 1px solid #F44336; display: block;">Shop Again</a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" style="padding: 35
