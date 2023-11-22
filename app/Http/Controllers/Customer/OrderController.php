@@ -55,7 +55,7 @@ public function create(Request $request)
             $newOrderDetail = new OrderDetail();
             $newOrderDetail->order_id = $newOrder->id;
             $newOrderDetail->product_id = $product->id;
-            $newOrderDetail->product_price = $request->product_price;
+            $newOrderDetail->product_price = $orderProduct['product_price'];
             $newOrderDetail->quantity = $orderProduct['quantity'];
             $newOrderDetail->varient = $request->varient;
             $newOrderDetail->save();
