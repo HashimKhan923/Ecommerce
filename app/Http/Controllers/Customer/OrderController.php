@@ -55,6 +55,7 @@ public function create(Request $request)
             $newOrderDetail = new OrderDetail();
             $newOrderDetail->order_id = $newOrder->id;
             $newOrderDetail->product_id = $product->id;
+            $newOrderDetail->product_price = $request->product_price;
             $newOrderDetail->quantity = $orderProduct['quantity'];
             $newOrderDetail->varient = $request->varient;
             $newOrderDetail->save();
@@ -86,7 +87,7 @@ public function create(Request $request)
         'email.Order.order_recive',
         [
             'buyer_name' => $user->name,
-            'products' => $productsByVendor,
+            'productsByVendor' => $productsByVendor,
             'request' => $request
         ],
         function ($message) use ($user) { // Add $user variable here
