@@ -57,9 +57,7 @@ class ProductController extends Controller
         $new->description = $request->description;
         $new->price = $request->price;
         $new->shipping = $request->shipping;
-        $new->cash_on_delivery = $request->cash_on_delivery;
         $new->featured = $request->featured;
-        $new->todays_deal = $request->todays_deal;
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
@@ -71,7 +69,6 @@ class ProductController extends Controller
                 $new->meta_img = $filename;
         }
         $new->slug = $request->slug;
-        $new->sku = $request->sku;
         $new->save();
 
         if ($request->photos) {
@@ -220,9 +217,7 @@ class ProductController extends Controller
         $update->description = $request->description;
         $update->price = $request->price;
         $update->shipping = $request->shipping;
-        $update->sizes = $request->sizes;
         $update->featured = $request->featured;
-        $update->todays_deal = $request->todays_deal;
         $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
