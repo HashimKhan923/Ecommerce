@@ -17,7 +17,9 @@ class DashboardController extends Controller
 
         $Products = Product::where('user_id',$id)->get();
         $Orders = Order::where('seller_id',$id)->get();
+        $Categories = Category::where('is_active',1)->get();
+        $Brands = Brand::with('model')->where('is_active',1)->get();
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders]);
+        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Categories'=>$Categories,'Brands'=>$Brands]);
     }
 }
