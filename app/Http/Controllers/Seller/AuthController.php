@@ -112,38 +112,6 @@ class AuthController extends Controller
         $CreditCard->save();
 
 
-        // $new1 = new SellerInfromation();
-        // $new1->user_id = $new->id;
-        // $new1->social_security_number = $request->social_security_number;
-        // $new1->business_ein_number = $request->business_ein_number;
-        // $new1->credit_card_number = $request->credit_card_number;
-        // $new1->paypal_address = $request->paypal_address;
-        // if($request->file('document'))
-        // {
-        //         $file= $request->document;
-        //         $filename= date('YmdHis').$file->getClientOriginalName();
-        //         $file->storeAs('public', $filename);
-        //         $new1->document = $filename;
-        // }
-
-        // if($request->file('social_security_card_front'))
-        // {
-        //         $file= $request->social_security_card_front;
-        //         $filename= date('YmdHis').$file->getClientOriginalName();
-        //         $file->storeAs('public', $filename);
-        //         $new1->social_security_card_front = $filename;
-        // }
-
-        // if($request->file('social_security_card_back'))
-        // {
-        //         $file= $request->social_security_card_back;
-        //         $filename= date('YmdHis').$file->getClientOriginalName();
-        //         $file->storeAs('public', $filename);
-        //         $new1->social_security_card_back = $filename;
-        // }
-
-        // $new1->save();
-
         Mail::send(
             'email.seller_email_verification',
             [
@@ -278,79 +246,82 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => "required|email|max:255|unique:users,email,$id,id",
-            'phone_number'=>'required|min:10|max:15',
+            'phone'=>'required|min:10|max:15',
             //'password' => 'required|string|min:6|confirmed',
         ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $admin=User::find($id);
-        $admin->name=$request->name;
-        $admin->email=$request->email;
-        $admin->phone_number=$request->phone_number;
-        if($request->file('avatar'))
-        {
-                $file= $request->avatar;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->avatar = $filename;
-        }
-        $admin->save();
+        $update=User::find($id);
 
-        $admin1 = SellerInformation::where('user_id',$admin->id)->first();
-        $admin1->user_id = $admin->id;
-        $admin1->social_security_number = $request->social_security_number;
-        $admin1->business_ein_number = $request->business_ein_number;
-        $admin1->credit_card_number = $request->credit_card_number;
-        $admin1->paypal_address = $request->paypal_address;
-        if($request->file('document'))
-        { 
-            $path = 'app/public'.$update->document;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
-            }
+
             
-                $file= $request->document;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $admin1->document = $filename;
-        }
-
-        if($request->file('social_security_card_front'))
+        $update->name = $request->name; 
+        $update->email = $request->email;
+        $update->address = $request->address;
+        $update->city = $request->city;
+        $update->state = $request->state;
+        $update->country = $request->country;
+        $update->postal_code = $request->postal_code;
+        $update->phone = $request->phone;
+        $update->save();
+            
+        $shop = Shop::where('seller_id',$update->id)->first();
+        $shop->name = $request->shop_name;
+        $shop->address = $request->shop_address;
+        if($request->file('logo'))
         {
-            $path = 'app/public'.$update->social_security_card_front;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
-            }
-                $file= $request->social_security_card_front;
+                $file= $request->logo;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
-                $admin1->social_security_card_front = $filename;
+                $shop->logo = $filename;
         }
+        $shop->save();
 
-        if($request->file('social_security_card_back'))
+
+        $BusineesInformation = BusinessInformation::where('seller_id',$update->id)->first();
+        $BusineesInformation->business_name = $request->business_name;
+        $BusineesInformation->ein_number = $request->ein_number;
+        $BusineesInformation->address1 = $request->address1;
+        $BusineesInformation->address2 = $request->address2;
+        $BusineesInformation->zip_code = $request->business_zip_code;
+        $BusineesInformation->country = $request->business_country;
+        $BusineesInformation->phone_number = $request->business_phone_number;
+        $BusineesInformation->business_email = $request->business_email;
+        $BusineesInformation->save();
+
+        foreach($request->selling_platforms as $items)
         {
-            $path = 'app/public'.$update->social_security_card_back;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
-            }
-                $file= $request->social_security_card_back;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $admin1->social_security_card_back = $filename;
+        $SellingPlatforms = SellingPlatforms::where('seller_id',$update->id)->first();
+        $SellingPlatforms->name = $items['selling_platform_name'];
+        $SellingPlatforms->link = $items['selling_platform_link'];
+        $SellingPlatforms->save();
         }
 
+        foreach($request->social_platforms as $items)
+        {
+        $SocialPlatforms = SocialPlatforms::where('seller_id',$update->id)->first();
+        $SocialPlatforms->name = $items['social_platform_name'];
+        $SocialPlatforms->link = $items['social_platform_link'];
+        $SocialPlatforms->save();
+        }
+
+        $BankDetail = BankDetail::where('seller_id',$update->id)->first();
+        $BankDetail->business_name = $BusineesInformation->business_name;
+        $BankDetail->bank_name = $request->bank_name;
+        $BankDetail->routing_number = $request->routing_number;
+        $BankDetail->account_number = $request->account_number;
+        $BankDetail->save();
         
-        if($admin1->save()){
-          $response = ['status'=>true,"message" => "Profile Update Successfully","user"=>$admin];
-          return response($response, 200);
-        }
-        $response = ['status'=>false,"message" => "Profile Not Update Successfully"];
-         return response($response, 422);  
+
+        $CreditCard = CreditCard::where('seller_id',$update->id)->first();
+        $CreditCard->name_on_card = $request->name_on_card;
+        $CreditCard->cc_number = $request->cc_number;
+        $CreditCard->exp_date = $request->exp_date;
+        $CreditCard->cvv = $request->cvv;
+        $CreditCard->zip_code = $request->card_zip_code;
+        $CreditCard->save();
     }
 
     public function passwordChange(Request $request){
