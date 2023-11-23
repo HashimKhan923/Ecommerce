@@ -201,8 +201,11 @@ class WholeSaleProductController extends Controller
         $update->added_by = 'admin';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
+        $update->height = $request->height;
         $update->weight = $request->weight;
-        $update->year = $request->year;
+        $update->lenght = $request->lenght;
+        $update->start_year = $request->start_year;
+        $update->end_year = $request->end_year;
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;

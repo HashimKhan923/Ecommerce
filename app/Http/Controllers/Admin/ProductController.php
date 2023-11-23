@@ -50,8 +50,11 @@ class ProductController extends Controller
         $new->added_by = 'admin';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
+        $new->height = $request->height;
         $new->weight = $request->weight;
-        $new->year = $request->year;
+        $new->lenght = $request->lenght;
+        $new->start_year = $request->start_year;
+        $new->end_year = $request->end_year;
         $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
@@ -181,8 +184,11 @@ class ProductController extends Controller
         $update->added_by = 'admin';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
+        $update->height = $request->height;
         $update->weight = $request->weight;
-        $update->year = $request->year;
+        $update->lenght = $request->lenght;
+        $update->start_year = $request->start_year;
+        $update->end_year = $request->end_year;
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
@@ -193,7 +199,6 @@ class ProductController extends Controller
         $update->description = $request->description;
         $update->price = $request->price;
         $update->shipping = $request->shipping;
-        $update->sizes = $request->sizes;
         $update->featured = $request->featured;
         $update->todays_deal = $request->todays_deal;
         $update->meta_title = $request->meta_title;
