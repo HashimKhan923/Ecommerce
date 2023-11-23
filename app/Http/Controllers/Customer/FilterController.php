@@ -31,23 +31,10 @@ class FilterController extends Controller
 
     public function target_search(Request $request)
     {
-        $data = Product::where(function ($query) use ($request) {
-            if ($request->has('start_year')) {
-                $query->where('start_year', '>=', $request->start_year);
-            }
-        
-            if ($request->has('end_year')) {
-                $query->where('end_year', '<=', $request->end_year);
-            }
-        
-            if ($request->has('brand_id')) {
-                $query->where('brand_id', $request->brand_id);
-            }
-        
-            if ($request->has('model_id')) {
-                $query->where('model_id', $request->model_id);
-            }
-        })->get();
+        $data = Product::where('start_year','>=',$request->year)
+        ->where('end_year','<=',$request->year)
+        ->where('brand_id',$request->brand_id)
+        ->where('model_id',$request->model_id)->get();
 
         return response()->json(['data'=>$data]);
     }
