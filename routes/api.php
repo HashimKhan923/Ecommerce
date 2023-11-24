@@ -550,6 +550,18 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
+                                                       /// Address \\\
+
+        Route::group(['prefix' => '/cart'], function() {
+        Route::controller(App\Http\Controllers\Customer\CartController::class)->group(function () {
+            Route::get('show/{customer_id}','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{cart_id}','delete');
+            Route::get('clear/{customer_id}','clear');
+        });
+    });
+
                                                    /// Product Review \\\
 
         Route::group(['prefix' => '/review'], function() {
