@@ -10,7 +10,7 @@ class AddressController extends Controller
 {
     public function index($id)
     {
-        $data = Address::where('user_id',$id)->first();
+        $data = Address::where('user_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
