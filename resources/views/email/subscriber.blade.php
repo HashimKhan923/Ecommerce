@@ -14,15 +14,12 @@
       max-width: 600px;
       margin: 0 auto;
     }
-    .logo {
-      max-width: 100%;
-      height: auto;
-    }
+
   </style>
 </head>
 <body>
   <div class="container mt-4">
-    <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" alt="Company Logo" class="logo"> <!-- Replace with your company logo URL -->
+    <img src="https://dragonautomart.com/assets/logo-773651ec.webp" alt="Company Logo" width="200"> <!-- Replace with your company logo URL -->
     
     <h2 class="mt-3">Thank You for Subscribing!</h2>
     
