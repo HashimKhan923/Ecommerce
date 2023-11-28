@@ -10,16 +10,13 @@
     body {
       font-family: 'Arial', sans-serif;
     }
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-    }
+
 
   </style>
 </head>
 <body>
   <div class="container mt-4">
-    <img src="https://dragonautomart.com/assets/logo-773651ec.webp" alt="Company Logo" width="200"> <!-- Replace with your company logo URL -->
+    <img src="{{asset('dragonlogo.jpeg')}}" alt="Company Logo" width="200"> <!-- Replace with your company logo URL -->
     
     <h2 class="mt-3">Thank You for Subscribing!</h2>
     
