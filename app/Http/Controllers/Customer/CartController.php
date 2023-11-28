@@ -17,6 +17,12 @@ class CartController extends Controller
 
     public function create(Request $request)
     {
+
+        $check = Cart::where('product_id',$request->product_id)->first();
+        if($check)
+        {
+            return response()->json(['message'=>'already added in cart']);
+        }
         $new = new Cart();
         $new->customer_id = $request->customer_id;
         $new->product_id = $request->product_id;
