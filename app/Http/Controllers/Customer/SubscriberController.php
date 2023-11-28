@@ -23,6 +23,18 @@ class SubscriberController extends Controller
             $new->email = $request->email;
             $new->date = Carbon::now('Asia/Karachi');
             $new->save();
+
+            Mail::send(
+                'email.subscriber',
+                [
+                    
+                ],
+                function ($message) use ($request) { 
+                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                    $message->to($request->email);
+                    $message->subject('Subscription Confirmation');
+                }
+            );
     
             $response = ['status'=>true,"message" => "You have Subscribe Successfully!"];
             return response($response, 200);
