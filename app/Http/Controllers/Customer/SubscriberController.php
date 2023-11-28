@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use Carbon\Carbon;
+use Mail;
 
 class SubscriberController extends Controller
 {
