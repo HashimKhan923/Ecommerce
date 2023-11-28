@@ -45,7 +45,7 @@ class CartController extends Controller
 
     public function clear($customer_id)
     {
-        Cart::find($customer_id)->delete();
+        Cart::where('customer_id',$customer_id)->delete();
 
         return response()->json(['message'=>'deleted successfully!',200]);
 
