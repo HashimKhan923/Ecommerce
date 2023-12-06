@@ -176,19 +176,16 @@ class AuthController extends Controller
         $update->phone = $request->phone;
         if($request->file('avatar'))
         {
-            $path = public_path($update->avatar);
-            // if (File::exists($path)) {
-            //     // Delete the file
-            //     File::delete($path);
-            // }
+            
 
-            if($path)
+
+            if($update->avatar)
             {
-                unlink($path);
+                unlink(public_path('Profile/'.$update->avatar));
             }
                 $file= $request->avatar;
                 $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->move(public_path(),$filename);
+                $file->move(public_path('Profile'),$filename);
                 $update->avatar = $filename;
         }
         //$admin->save();

@@ -10,8 +10,13 @@ class VarientController extends Controller
 {
     public function delete(Request $request)
     {
-        ProductVarient::where('id',$request->id)->where('product_id',$request->product_id)->delete();
+        $file = ProductVarient::where('id',$request->id)->where('product_id',$request->product_id)->first();
 
+
+        if($file->image)
+        {
+            unlink(public_path('ProductVarient/'.$file->image));
+        }
         $response = ['status'=>true,"message" => "Varient Deleted Successfully!"];
         return response($response, 200);
     }

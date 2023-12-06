@@ -30,28 +30,28 @@ class HomeBannerController extends Controller
         $new = new HomeBanner();
 
         
-        if($request->file('banner1'))
-        {
-                $file= $request->banner1;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->banner1 = $filename;
+        if($request->file('banner1')){
+
+            $file= $request->banner1;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->banner1 = $filename;
         }
 
-        if($request->file('banner2'))
-        {
-                $file= $request->banner2;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->banner2 = $filename;
+        if($request->file('banner2')){
+
+            $file= $request->banner2;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->banner2 = $filename;
         }
 
-        if($request->file('banner3'))
-        {
-                $file= $request->banner3;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->banner3 = $filename;
+        if($request->file('banner3')){
+
+            $file= $request->banner3;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->banner3 = $filename;
         }
 
         $new->save();
@@ -65,44 +65,43 @@ class HomeBannerController extends Controller
     {
         $update = HomeBanner::first();
 
-        if($request->file('banner1'))
-        {
-            $path = 'app/public'.$update->banner1;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+        if($request->file('banner1')){
+
+            if($update->banner1)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner1));
             }
-                $file= $request->banner1;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->banner1 = $filename;
+
+            $file= $request->banner1;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->banner1 = $filename;
         }
 
-        if($request->file('banner2'))
-        {
+        if($request->file('banner2')){
 
-            $path = 'app/public'.$update->banner2;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($update->banner2)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner2));
             }
-                $file= $request->banner2;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->banner2 = $filename;
+
+            $file= $request->banner2;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->banner2 = $filename;
         }
 
-        if($request->file('banner3'))
-        {
-            $path = 'app/public'.$update->banner3;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+        if($request->file('banner3')){
+
+            if($update->banner3)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner3));
             }
-                $file= $request->banner3;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->banner3 = $filename;
+
+            $file= $request->banner3;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->banner3 = $filename;
         }
 
         $update->save();
@@ -112,26 +111,23 @@ class HomeBannerController extends Controller
         return response($response, 200);
     }
 
-    public function delete($id)
+    public function delete()
     {
-        $file = HomeBanner::find($id);
+        $file = HomeBanner::first();
 
-        $path1 = 'app/public'.$file->banner1;
-        if (Storage::exists($path1)) {
-            // Delete the file
-            Storage::delete($path1);
+        if($file->banner1)
+        {
+            unlink(public_path('HomeBanner/'.$file->banner1));
         }
 
-        $path2 = 'app/public'.$file->banner1;
-        if (Storage::exists($path2)) {
-            // Delete the file
-            Storage::delete($path2);
+        if($file->banner2)
+        {
+            unlink(public_path('HomeBanner/'.$file->banner2));
         }
 
-        $path3 = 'app/public'.$file->banner1;
-        if (Storage::exists($path3)) {
-            // Delete the file
-            Storage::delete($path3);
+        if($file->banner3)
+        {
+            unlink(public_path('HomeBanner/'.$file->banner3));
         }
 
         $file->delete();

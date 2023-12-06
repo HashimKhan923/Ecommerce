@@ -24,9 +24,15 @@ class RefundTimeController extends Controller
             $createOrupdate->days = $request->days;
 
             if($request->file('sticker')){
-                $file= $request->file('sticker');
+
+                if($createOrupdate->sticker)
+                {
+                    unlink(public_path('Refund/'.$createOrupdate->sticker));
+                }
+
+                $file= $request->sticker;
                 $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
+                $file->move(public_path('Refund'),$filename);
                 $createOrupdate->sticker = $filename;
             }
             else
@@ -34,9 +40,9 @@ class RefundTimeController extends Controller
                 $createOrupdate = new RefundTime();
                 $createOrupdate->days = $request->days;
                 if($request->file('sticker')){
-                    $file= $request->file('sticker');
+                    $file= $request->sticker;
                     $filename= date('YmdHis').$file->getClientOriginalName();
-                    $file->storeAs('public', $filename);
+                    $file->move(public_path('Refund'),$filename);
                     $createOrupdate->sticker = $filename;
                 }
 

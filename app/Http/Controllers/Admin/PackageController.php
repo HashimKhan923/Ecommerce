@@ -25,9 +25,9 @@ class PackageController extends Controller
         $new->product_upload_limit = $request->product_upload_limit;
 
         if($request->file('logo')){
-            $file= $request->file('logo');
+            $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Package'),$filename);
             $new->logo = $filename;
         }
         $new->time_name = $request->time_name;
@@ -43,10 +43,9 @@ class PackageController extends Controller
     {
       $delete = SellerPackage::find($id);
 
-      $image_path = 'app/public'.$delete->logo;
-      if(Storage::exists($image_path))
+      if($delete->logo)
       {
-          Storage::delete($image_path);
+          unlink(public_path('Package/'.$delete->logo));
       }
 
       $delete->delete();
@@ -66,15 +65,14 @@ class PackageController extends Controller
 
         if($request->file('logo')){
 
-            $image_path = 'app/public'.$update->logo;
-            if(Storage::exists($image_path))
+            if($update->logo)
             {
-                Storage::delete($image_path);
+                unlink(public_path('Package/'.$update->logo));
             }
 
-            $file= $request->file('logo');
+            $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Package'),$filename);
             $update->logo = $filename;
         }
         $update->time_name = $request->time_name;
@@ -114,10 +112,9 @@ class PackageController extends Controller
 
         foreach($data as $item)
         {
-            $path1 = 'app/public'.$item->logo;
-            if (Storage::exists($path1)) {
-                // Delete the file
-                Storage::delete($path1);
+            if($item->logo)
+            {
+                unlink(public_path('Package/'.$item->logo));
             }
 
             $item->delete();

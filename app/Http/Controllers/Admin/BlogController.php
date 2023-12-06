@@ -25,18 +25,23 @@ class BlogController extends Controller
         $new->short_description = $request->short_description;
         $new->description = $request->description;
         if($request->file('banner')){
-            $file= $request->file('banner');
+
+            $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Blog'),$filename);
             $new->banner = $filename;
         }
+
         $new->meta_title = $request->meta_title;
+
         if($request->file('meta_img')){
-            $file= $request->file('meta_img');
+
+            $file= $request->meta_img;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('BlogMetaImage'),$filename);
             $new->meta_img = $filename;
         }
+
         $new->meta_description = $request->meta_description;
         $new->meta_keywords = $request->meta_keywords;
         $new->save();
@@ -55,30 +60,30 @@ class BlogController extends Controller
         $update->description = $request->description;
         if($request->file('banner')){
 
-            $path = 'app/public'.$update->banner;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($update->banner)
+            {
+                unlink(public_path('Blog/'.$update->banner));
             }
 
-            $file= $request->file('banner');
+            $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Blog'),$filename);
             $update->banner = $filename;
         }
+
         $update->meta_title = $request->meta_title;
+
         if($request->file('meta_img')){
 
 
-            $path = 'app/public'.$update->meta_img;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($update->meta_img)
+            {
+                unlink(public_path('BlogMetaImage/'.$update->meta_img));
             }
 
-            $file= $request->file('meta_img');
+            $file= $request->meta_img;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('BlogMetaImage'),$filename);
             $update->meta_img = $filename;
         }
         $update->meta_description = $request->meta_description;
@@ -93,17 +98,15 @@ class BlogController extends Controller
     {
       $file = Blog::find($id);
 
-        $path = 'app/public'.$file->banner;
-        if (Storage::exists($path)) {
-            // Delete the file
-            Storage::delete($path);
-        }
+      if($file->banner)
+      {
+          unlink(public_path('Blog/'.$file->banner));
+      }
 
-        $path2 = 'app/public'.$file->meta_img;
-        if (Storage::exists($path2)) {
-            // Delete the file
-            Storage::delete($path2);
-        }
+      if($file->meta_img)
+      {
+          unlink(public_path('BlogMetaImage/'.$file->meta_img));
+      }
 
         $file->delete();
         
@@ -119,16 +122,14 @@ class BlogController extends Controller
 
         foreach($data as $item)
         {
-            $path = 'app/public'.$item->banner;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($item->banner)
+            {
+                unlink(public_path('Blog/'.$item->banner));
             }
-    
-            $path2 = 'app/public'.$item->meta_img;
-            if (Storage::exists($path2)) {
-                // Delete the file
-                Storage::delete($path2);
+      
+            if($item->meta_img)
+            {
+                unlink(public_path('BlogMetaImage/'.$item->meta_img));
             }
 
             $item->delete();
