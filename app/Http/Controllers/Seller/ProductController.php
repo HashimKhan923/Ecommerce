@@ -286,7 +286,7 @@ class ProductController extends Controller
 
         if ($request->photos) {
             foreach ($request->photos as $imageData) {
-                $gallery = ProductGallery::find($imageData['id']);
+                $gallery = ProductGallery::find($imageData->id);
 
                 if($gallery->image)
                 {
