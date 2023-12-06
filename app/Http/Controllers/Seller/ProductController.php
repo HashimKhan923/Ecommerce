@@ -88,7 +88,7 @@ class ProductController extends Controller
                 $gallery->product_id = $new->id;   
 
                 $filename= date('YmdHis').$image->getClientOriginalName();
-                $file->move(public_path('ProductGallery'),$filename);
+                $image->move(public_path('ProductGallery'),$filename);
 
                 $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
                 ->encode('jpg', 50); 
