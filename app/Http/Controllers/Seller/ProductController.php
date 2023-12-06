@@ -288,14 +288,18 @@ class ProductController extends Controller
             foreach ($request->photos as $imageData) {
                 $gallery = ProductGallery::find($imageData->id);
 
-                if($gallery->image)
-                {
-                    unlink(public_path('ProductGallery/'.$gallery->image));
-                }
+
         
                 if ($gallery) {
+
+
+                    if($gallery->image)
+                    {
+                        unlink(public_path('ProductGallery/'.$gallery->image));
+                    }
+
                     $gallery->product_id = $update->id; 
-                    $file = $imageData['image'];
+                    $file = $imageData->file('image');;
                     $filename= date('YmdHis').$file->getClientOriginalName();
                     $file->move(public_path('ProductGallery'),$filename);
 
