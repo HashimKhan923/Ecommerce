@@ -85,24 +85,25 @@ class ProductController extends Controller
         if ($request->photos) {
             foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
-                $gallery->product_id = $new->id;   
-
-                $filename= date('YmdHis').$image->getClientOriginalName();
-                $image->move(public_path('ProductGallery'),$filename);
-
+                $gallery->product_id = $new->id;
+            
+                $filename = date('YmdHis') . $image->getClientOriginalName();
+            
+                $image->move(public_path('ProductGallery'), $filename);
+            
                 $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                ->encode('jpg', 50); 
-        
-                
+                    ->encode('jpg', 50); 
+            
                 $compressedFilename = 'compressed_' . $filename;
                 $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
-        
-                unlink(public_path('ProductGallery/'.$filename));
-
+            
+                unlink(public_path('ProductGallery') . '/' . $filename);
+            
                 $gallery->image = $compressedFilename;
-                
+            
                 $gallery->save();
             }
+            
         }
 
         
