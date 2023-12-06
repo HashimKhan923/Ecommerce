@@ -24,9 +24,10 @@ class DealController extends Controller
         $new->page_link = $request->page_link;
 
         if($request->file('banner')){
-            $file= $request->file('banner');
+
+            $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('DealBanner'),$filename);
             $new->banner = $filename;
         }
 
@@ -46,14 +47,14 @@ class DealController extends Controller
 
         if($request->file('banner')){
 
-            $path = 'app/public'.$update->banner;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($update->banner)
+            {
+                unlink(public_path('DealBanner/'.$update->banner));
             }
-            $file= $request->file('banner');
+
+            $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('DealBanner'),$filename);
             $update->banner = $filename;
         }
 
@@ -69,11 +70,10 @@ class DealController extends Controller
     {
       $file = Deal::find($id);
 
-        $path = 'app/public'.$file->banner;
-        if (Storage::exists($path)) {
-            // Delete the file
-            Storage::delete($path);
-        }
+      if($file->banner)
+      {
+          unlink(public_path('DealBanner/'.$file->banner));
+      }
 
         $file->delete();
 
@@ -87,10 +87,9 @@ class DealController extends Controller
 
         foreach($data as $item)
         {
-            $path1 = 'app/public'.$item->banner;
-            if (Storage::exists($path1)) {
-                // Delete the file
-                Storage::delete($path1);
+            if($item->banner)
+            {
+                unlink(public_path('DealBanner/'.$item->banner));
             }
 
             $item->delete();

@@ -22,9 +22,10 @@ class ModelController extends Controller
         $new->brand_id = $request->brand_id;
         $new->name = $request->name;
         if($request->file('logo')){
-            $file= $request->file('logo');
+
+            $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Model'),$filename);
             $new->logo = $filename;
         }
         $new->slug = $request->slug;
@@ -44,16 +45,14 @@ class ModelController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            $image_path = 'app/public'.$update->logo;
-            if(Storage::exists($image_path))
+            if($update->logo)
             {
-                Storage::delete($image_path);
+                unlink(public_path('Model/'.$update->logo));
             }
-            
 
-            $file= $request->file('logo');
+            $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Model'),$filename);
             $update->logo = $filename;
         }
         $update->slug = $request->slug;
@@ -70,10 +69,9 @@ class ModelController extends Controller
     {
         $file = Models::find($id);
 
-        $ModelsLogo = 'app/public'.$file->logo;
-        if (Storage::exists($ModelsLogo)) {
-            // Delete the file
-            Storage::delete($ModelsLogo);
+        if($file->logo)
+        {
+            unlink(public_path('Model/'.$file->logo));
         }
 
       $file->delete();
@@ -88,10 +86,9 @@ class ModelController extends Controller
 
         foreach($data as $item)
         {
-            $path1 = 'app/public'.$item->logo;
-            if (Storage::exists($path1)) {
-                // Delete the file
-                Storage::delete($path1);
+            if($item->logo)
+            {
+                unlink(public_path('Model/'.$item->logo));
             }
 
             $item->delete();

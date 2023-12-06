@@ -21,15 +21,17 @@ class CategoryController extends Controller
         $new = new Category();
         $new->name = $request->name;
         if($request->file('banner')){
-            $file= $request->file('banner');
+
+            $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('CategoryBanner'),$filename);
             $new->banner = $filename;
         }
         if($request->file('icon')){
-            $file= $request->file('icon');
+
+            $file= $request->icon;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('CategoryIcon'),$filename);
             $new->icon = $filename;
         }
         $new->slug = $request->slug;
@@ -48,25 +50,26 @@ class CategoryController extends Controller
         $update->name = $request->name;
         if($request->file('banner')){
 
-            $image_path = 'app/public'.$update->banner;
-            if(Storage::exists($image_path))
+            if($update->banner)
             {
-                Storage::delete($image_path);
+                unlink(public_path('CategoryBanner/'.$update->banner));
             }
 
-            $file= $request->file('banner');
+            $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('CategoryBanner'),$filename);
             $update->banner = $filename;
-
         }
         if($request->file('icon')){
-            $image_path = 'app/public'.$update->icon;
-            Storage::delete($image_path);
 
-            $file= $request->file('icon');
+            if($update->icon)
+            {
+                unlink(public_path('Categoryicon/'.$update->icon));
+            }
+
+            $file= $request->icon;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('CategoryIcon'),$filename);
             $update->icon = $filename;
         }
         $update->slug = $request->slug;
@@ -83,17 +86,16 @@ class CategoryController extends Controller
     {
         $file = Category::find($id);
 
-        $CategoryBanner = 'app/public'.$file->banner;
-      if (Storage::exists($CategoryBanner))
-      {
-          Storage::delete($CategoryBanner);
-      }
+        if($file->banner)
+        {
+            unlink(public_path('CategoryBanner/'.$file->banner));
+        }
 
-      $CategoryIcon = 'app/public'.$file->icon;
-      if (Storage::exists($CategoryIcon))
-      {
-          Storage::delete($CategoryIcon);
-      }
+        if($file->icon)
+        {
+            unlink(public_path('CategoryIcon/'.$file->icon));
+        }
+
 
       $file->delete();
 
@@ -107,16 +109,14 @@ class CategoryController extends Controller
 
         foreach($data as $item)
         {
-            $path1 = 'app/public'.$item->banner;
-            if (Storage::exists($path1)) {
-                // Delete the file
-                Storage::delete($path1);
+            if($item->banner)
+            {
+                unlink(public_path('CategoryBanner/'.$item->banner));
             }
-
-            $path2 = 'app/public'.$item->icon;
-            if (Storage::exists($path2)) {
-                // Delete the file
-                Storage::delete($path2);
+    
+            if($item->icon)
+            {
+                unlink(public_path('CategoryIcon/'.$item->icon));
             }
 
             $item->delete();

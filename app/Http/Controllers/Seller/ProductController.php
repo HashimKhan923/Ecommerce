@@ -16,7 +16,7 @@ use App\Models\DealProduct;
 use App\Models\ProductGallery;
 use App\Models\Color;
 use Carbon\Carbon;
-
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -63,10 +63,21 @@ class ProductController extends Controller
         $new->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
-                $file= $request->meta_img;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->meta_img = $filename;
+            $file= $request->meta_img;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ProductMetaImg'),$filename);
+
+            $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+            ->encode('jpg', 50); 
+    
+            
+            $compressedFilename = 'compressed_' . $filename;
+            $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+    
+            unlink(public_path('ProductMetaImg/'.$filename));
+
+
+            $new->meta_img = $compressedFilename;
         }
         $new->slug = $request->slug;
         $new->save();
@@ -74,10 +85,22 @@ class ProductController extends Controller
         if ($request->photos) {
             foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
-                $gallery->product_id = $new->id;
-                $filename = date('YmdHis') . $image->getClientOriginalName();
-                $image->storeAs('public', $filename);
-                $gallery->image = $filename;
+                $gallery->product_id = $new->id;   
+
+                $filename= date('YmdHis').$image->getClientOriginalName();
+                $file->move(public_path('ProductGallery'),$filename);
+
+                $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
+                ->encode('jpg', 50); 
+        
+                
+                $compressedFilename = 'compressed_' . $filename;
+                $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
+        
+                unlink(public_path('ProductGallery/'.$filename));
+
+                $gallery->image = $compressedFilename;
+                
                 $gallery->save();
             }
         }
@@ -97,12 +120,23 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($request->file('varient_image'))
+                if($item->file('varient_image'))
                 {
-                        $file= $request->varient_image;
+                        $file= $item->varient_image;
                         $filename= date('YmdHis').$file->getClientOriginalName();
-                        $file->storeAs('public', $filename);
-                        $new->image = $filename;
+                        $file->move(public_path('ProductVarient'),$filename);
+
+                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                        ->encode('jpg', 50); 
+                
+                        
+                        $compressedFilename = 'compressed_' . $filename;
+                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                        unlink(public_path('ProductVarient/'.$filename));
+
+
+                        $varient->image = $compressedFilename;
                 }
                 $varient->save();
             }
@@ -223,15 +257,26 @@ class ProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
-            $path = 'app/public'.$update->meta_img;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($update->meta_img)
+            {
+                unlink(public_path('ProductMetaImg/'.$update->meta_img));
             }
-                $file= $request->meta_img;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->meta_img = $filename;
+
+            $file= $request->meta_img;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ProductMetaImg'),$filename);
+
+            $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+            ->encode('jpg', 50); 
+    
+            
+            $compressedFilename = 'compressed_' . $filename;
+            $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+    
+            unlink(public_path('ProductMetaImg/'.$filename));
+
+
+            $update->meta_img = $compressedFilename;
         }
         $update->slug = $request->slug;
         $update->sku = $request->sku;
@@ -239,12 +284,52 @@ class ProductController extends Controller
 
 
         if ($request->photos) {
-            foreach ($request->file('photos') as $image) {
-                $gallery = new ProductGallery();
-                $gallery->product_id = $update->id;
-                $filename = date('YmdHis') . $image->getClientOriginalName();
-                $image->storeAs('public', $filename);
-                $gallery->image = $filename;
+            foreach ($request->photos as $imageData) {
+                $gallery = ProductGallery::find($imageData['id']);
+
+                if($gallery->image)
+                {
+                    unlink(public_path('ProductGallery/'.$gallery->image));
+                }
+        
+                if ($gallery) {
+                    $gallery->product_id = $update->id; 
+                    $file = $imageData['image'];
+                    $filename= date('YmdHis').$file->getClientOriginalName();
+                    $file->move(public_path('ProductGallery'),$filename);
+
+                    $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
+                    ->encode('jpg', 50); 
+            
+                    
+                    $compressedFilename = 'compressed_' . $filename;
+                    $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
+            
+                    unlink(public_path('ProductGallery/'.$filename));
+
+
+                    $gallery->image = $compressedFilename;
+                } else {
+                    $gallery = new ProductGallery();
+                    $gallery->product_id = $update->id;
+                    
+                    $file = $imageData['image'];
+                    $filename= date('YmdHis').$file->getClientOriginalName();
+                    $file->move(public_path('ProductGallery'),$filename);
+
+
+                    $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
+                    ->encode('jpg', 50); 
+            
+                    
+                    $compressedFilename = 'compressed_' . $filename;
+                    $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
+            
+                    unlink(public_path('ProductGallery/'.$filename));
+
+                    $gallery->image = $compressedFilename;
+                }
+        
                 $gallery->save();
             }
         }
@@ -263,10 +348,21 @@ class ProductController extends Controller
                     $varient->stock = $varientData['varient_stock'];
                     if($request->file('varient_image'))
                     {
-                            $file= $request->varient_image;
-                            $filename= date('YmdHis').$file->getClientOriginalName();
-                            $file->storeAs('public', $filename);
-                            $new->image = $filename;
+                        $file= $varientData['varient_image'];
+                        $filename= date('YmdHis').$file->getClientOriginalName();
+                        $file->move(public_path('ProductVarient'),$filename);
+
+
+                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                        ->encode('jpg', 50); 
+                
+                        
+                        $compressedFilename = 'compressed_' . $filename;
+                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                        unlink(public_path('ProductVarient/'.$filename));
+
+                        $varient->image = $compressedFilename;
                     }
                     $varient->save();
                 } else {
@@ -281,10 +377,21 @@ class ProductController extends Controller
                     $varient->stock = $varientData['varient_stock'];
                     if($request->file('varient_image'))
                     {
-                            $file= $request->varient_image;
-                            $filename= date('YmdHis').$file->getClientOriginalName();
-                            $file->storeAs('public', $filename);
-                            $new->image = $filename;
+                        $file= $varientData['varient_image'];
+                        $filename= date('YmdHis').$file->getClientOriginalName();
+                        $file->move(public_path('ProductVarient'),$filename);
+
+                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                        ->encode('jpg', 50); 
+                
+                        
+                        $compressedFilename = 'compressed_' . $filename;
+                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                        unlink(public_path('ProductVarient/'.$filename));
+
+
+                        $varient->image = $compressedFilename;
                     }
                     $varient->save();
                 }
@@ -408,34 +515,28 @@ class ProductController extends Controller
     {
         $file = Product::find($id);
 
-        if($file->photos != null )
+        $gallery = ProductGallery::where('product_id',$id)->get();
+        foreach($gallery as $item)
         {
-            foreach($file->photos as $photosList)
+            if($item->image)
             {
-             $DeletePhotos = 'app/public'.$photosList;
-             if (Storage::exists($DeletePhotos))
-             {
-                 Storage::delete($DeletePhotos);
-             }
-       
-            }  
+                unlink(public_path('ProductGallery/'.$item->image));
+            }
+        }
+        
+        $varients = ProductVarient::where('product_id',$id)->get();
+        foreach($varients as $item)
+        {
+            if($item->image)
+            {
+                unlink(public_path('ProductVarient/'.$item->image));
+            }
         }
 
 
-
-
-
-
-        $ProductThumbnail = 'app/public'.$file->thumbnail_img;
-      if (Storage::exists($ProductThumbnail))
+      if($file->meta_img)
       {
-          Storage::delete($ProductThumbnail);
-      }
-
-      $ProductMetaImage = 'app/public'.$file->meta_img;
-      if (Storage::exists($ProductMetaImage))
-      {
-          Storage::delete($ProductMetaImage);
+          unlink(public_path('ProductMetaImg/'.$file->meta_img));
       }
 
       $file->delete();
@@ -453,33 +554,28 @@ class ProductController extends Controller
 
         foreach($data as $item)
         {
-            if($item->photos != null)
+            $gallery = ProductGallery::where('product_id',$item->id)->get();
+            foreach($gallery as $item1)
             {
-            foreach($item->photos as $photosList)
+                if($item1->image)
+                {
+                    unlink(public_path('ProductGallery/'.$item1->image));
+                }
+            }
+            
+            $varients = ProductVarient::where('product_id',$item->id)->get();
+            foreach($varients as $item2)
             {
-             $DeletePhotos = 'app/public'.$photosList;
-             if (Storage::exists($DeletePhotos))
-             {
-                 Storage::delete($DeletePhotos);
-             }
-       
-            }  
+                if($item2->image)
+                {
+                    unlink(public_path('ProductVarient/'.$item2->image));
+                }
             }
     
     
-    
-    
-    
-            $ProductThumbnail = 'app/public'.$item->thumbnail_img;
-          if (Storage::exists($ProductThumbnail))
+          if($item->meta_img)
           {
-              Storage::delete($ProductThumbnail);
-          }
-    
-          $ProductMetaImage = 'app/public'.$item->meta_img;
-          if (Storage::exists($ProductMetaImage))
-          {
-              Storage::delete($ProductMetaImage);
+              unlink(public_path('ProductMetaImg/'.$item->meta_img));
           }
     
 

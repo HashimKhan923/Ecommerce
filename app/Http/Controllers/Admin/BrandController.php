@@ -21,9 +21,10 @@ class BrandController extends Controller
         $new = new Brand();
         $new->name = $request->name;
         if($request->file('logo')){
-            $file= $request->file('logo');
+
+            $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Brand'),$filename);
             $new->logo = $filename;
         }
         $new->slug = $request->slug;
@@ -42,16 +43,14 @@ class BrandController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            $image_path = 'app/public'.$update->logo;
-            if(Storage::exists($image_path))
+            if($update->logo)
             {
-                Storage::delete($image_path);
+                unlink(public_path('Brand/'.$update->logo));
             }
-            
 
-            $file= $request->file('logo');
+            $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Brand'),$filename);
             $update->logo = $filename;
         }
         $update->slug = $request->slug;
@@ -68,10 +67,9 @@ class BrandController extends Controller
     {
         $file = Brand::find($id);
 
-        $BrandLogo = 'app/public'.$file->logo;
-        if (Storage::exists($BrandLogo)) {
-            // Delete the file
-            Storage::delete($BrandLogo);
+        if($file->logo)
+        {
+            unlink(public_path('Brand/'.$file->logo));
         }
 
       $file->delete();
@@ -86,10 +84,9 @@ class BrandController extends Controller
 
         foreach($data as $item)
         {
-            $bannerpath = 'app/public'.$item->logo;
-            if (Storage::exists($bannerpath)) {
-                // Delete the file
-                Storage::delete($bannerpath);
+            if($item->logo)
+            {
+                unlink(public_path('Brand/'.$file->logo));
             }
 
             $item->delete();

@@ -23,10 +23,10 @@ class BannerController extends Controller
 
         if($request->file('image'))
         {
-                $file= $request->image;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $new->image = $filename;
+            $file= $request->image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Banner'),$filename);
+            $new->image = $filename;
         }
         $new->save();
 
@@ -42,16 +42,15 @@ class BannerController extends Controller
         if($request->file('image'))
         {
 
-            $path = 'app/public'.$update->image;
-            if (Storage::exists($path)) {
-                // Delete the file
-                Storage::delete($path);
+            if($update->image)
+            {
+                unlink(public_path('Banner/'.$update->image));
             }
 
-                $file= $request->image;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $update->image = $filename;
+            $file= $request->image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Banner'),$filename);
+            $update->image = $filename;
         }
         
         $update->save();
@@ -64,10 +63,9 @@ class BannerController extends Controller
     {
         $file = Banner::find($id);
 
-        $bannerpath = 'app/public'.$file->image;
-        if (Storage::exists($bannerpath)) {
-            // Delete the file
-            Storage::delete($bannerpath);
+        if($file->image)
+        {
+            unlink(public_path('Banner/'.$file->image));
         }
 
       $file->delete();
@@ -82,10 +80,9 @@ class BannerController extends Controller
 
         foreach($data as $item)
         {
-            $bannerpath = 'app/public'.$item->image;
-            if (Storage::exists($bannerpath)) {
-                // Delete the file
-                Storage::delete($bannerpath);
+            if($item->image)
+            {
+                unlink(public_path('Banner/'.$item->image));
             }
 
             $item->delete();

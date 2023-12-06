@@ -236,11 +236,11 @@ class AuthController extends Controller
       return response()->json(['admin_profile'=>$admin_profile],200);
     }
 
-    public function usercheck(Request $request)
-    {
-        $user=auth('api')->user();
-        return response()->json(['admin_profile'=>$user],200);
-    }
+        public function usercheck(Request $request)
+        {
+            $user=auth('api')->user();
+            return response()->json(['admin_profile'=>$user],200);
+        }
 
     public function profile_update(Request $request){
         $id=$request->id;
@@ -248,7 +248,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => "required|email|max:255|unique:users,email,$id,id",
             'phone'=>'required|min:10|max:15',
-            //'password' => 'required|string|min:6|confirmed',
+            //'password' => 'required|string|min:6|confirmed'n,
         ]);
         if ($validator->fails())
         {
@@ -345,7 +345,7 @@ class AuthController extends Controller
         if(Hash::check($request->old_password , $hashedPassword )) {
  
             if (!Hash::check($request->new_password , $hashedPassword)) {
-                $users =User::find($request->id);
+                $users = User::find($request->id);
                 $users->password = bcrypt($request->new_password);
                 $users->save();
                 $response = ['status'=>true,"message" => "Password Changed Successfully"];
