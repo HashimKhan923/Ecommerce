@@ -299,7 +299,7 @@ class ProductController extends Controller
                     }
 
                     $gallery->product_id = $update->id; 
-                    $file = $imageData->file('image');;
+                    $file = $imageData->file('image');
                     $filename= date('YmdHis').$file->getClientOriginalName();
                     $file->move(public_path('ProductGallery'),$filename);
 
@@ -318,7 +318,7 @@ class ProductController extends Controller
                     $gallery = new ProductGallery();
                     $gallery->product_id = $update->id;
                     
-                    $file = $imageData['image'];
+                    $file = $imageData->file('image');
                     $filename= date('YmdHis').$file->getClientOriginalName();
                     $file->move(public_path('ProductGallery'),$filename);
 
