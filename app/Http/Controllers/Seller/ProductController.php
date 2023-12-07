@@ -490,22 +490,22 @@ class ProductController extends Controller
         $file = Product::find($id);
 
         $gallery = ProductGallery::where('product_id',$id)->get();
-        foreach($gallery as $item)
-        {
-            // if($item->image)
-            // {
-            //     unlink(public_path('ProductGallery/'.$item->image));
-            // }
-        }
+        // foreach($gallery as $item)
+        // {
+        //     if($item->image)
+        //     {
+        //         unlink(public_path('ProductGallery/'.$item->image));
+        //     }
+        // }
         
         $varients = ProductVarient::where('product_id',$id)->get();
-    //     foreach($varients as $item)
-    //     {
-    //         if($item->image)
-    //         {
-    //             unlink(public_path('ProductVarient/'.$item->image));
-    //         }
-    //     }
+        // foreach($varients as $item)
+        // {
+        //     if($item->image)
+        //     {
+        //         unlink(public_path('ProductVarient/'.$item->image));
+        //     }
+        // }
 
 
     //   if($file->meta_img)
@@ -513,7 +513,7 @@ class ProductController extends Controller
     //       unlink(public_path('ProductMetaImg/'.$file->meta_img));
     //   }
 
-      $file->delete();
+        $file->delete();
 
         $response = ['status'=>true,"message" => "Product Deleted Successfully!"];
         return response($response, 200);
