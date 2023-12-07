@@ -54,12 +54,20 @@ class AuthController extends Controller
         $shop->seller_id = $new->id;
         $shop->name = $request->shop_name;
         $shop->address = $request->shop_address;
-        if($request->file('logo'))
-        {
-                $file= $request->logo;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $shop->logo = $filename;
+        if($request->file('logo')){
+
+            $file= $request->logo;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShopLogo'),$filename);
+            $new->logo = $filename;
+        }
+
+        if($request->file('banner')){
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShopBanner'),$filename);
+            $new->banner = $filename;
         }
         $shop->save();
 
