@@ -43,7 +43,7 @@ class BrandController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            if($update->logo)
+            if(public_path('Brand/'.$update->logo))
             {
                 unlink(public_path('Brand/'.$update->logo));
             }
