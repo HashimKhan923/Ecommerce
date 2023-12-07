@@ -80,7 +80,7 @@ class ProductController extends Controller
             unlink(public_path('ProductMetaImg/'.$filename));
 
 
-            $new->meta_img = $filename;
+            $new->meta_img = $compressedFilename;
         }
         $new->slug = $request->slug;
         $new->save();
@@ -102,7 +102,7 @@ class ProductController extends Controller
             
                 unlink(public_path('ProductGallery') . '/' . $filename);
             
-                $gallery->image = $filename;
+                $gallery->image = $compressedFilename;
             
                 $gallery->save();
             }
@@ -140,7 +140,7 @@ class ProductController extends Controller
                         unlink(public_path('ProductVarient/'.$filename));
 
 
-                        $varient->image = $filename;
+                        $varient->image = $compressedFilename;
                 }
                 $varient->save();
             }
