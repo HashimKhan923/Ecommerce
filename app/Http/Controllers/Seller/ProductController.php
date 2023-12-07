@@ -294,7 +294,7 @@ class ProductController extends Controller
                 $image->move(public_path('ProductGallery'), $filename);
             
                 $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                    ->encode('jpg', 50); 
+                    ->encode('jpg', 70); 
             
                 $compressedFilename = 'compressed_' . $filename;
                 $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
