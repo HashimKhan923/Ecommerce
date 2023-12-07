@@ -499,19 +499,19 @@ class ProductController extends Controller
         }
         
         $varients = ProductVarient::where('product_id',$id)->get();
-        foreach($varients as $item)
-        {
-            if($item->image)
-            {
-                unlink(public_path('ProductVarient/'.$item->image));
-            }
-        }
+    //     foreach($varients as $item)
+    //     {
+    //         if($item->image)
+    //         {
+    //             unlink(public_path('ProductVarient/'.$item->image));
+    //         }
+    //     }
 
 
-      if($file->meta_img)
-      {
-          unlink(public_path('ProductMetaImg/'.$file->meta_img));
-      }
+    //   if($file->meta_img)
+    //   {
+    //       unlink(public_path('ProductMetaImg/'.$file->meta_img));
+    //   }
 
       $file->delete();
 
