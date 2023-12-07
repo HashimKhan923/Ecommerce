@@ -25,10 +25,10 @@ class RefundTimeController extends Controller
 
             if($request->file('sticker')){
 
-                if($createOrupdate->sticker)
-                {
-                    unlink(public_path('Refund/'.$createOrupdate->sticker));
-                }
+                // if($createOrupdate->sticker)
+                // {
+                //     unlink(public_path('Refund/'.$createOrupdate->sticker));
+                // }
 
                 $file= $request->sticker;
                 $filename= date('YmdHis').$file->getClientOriginalName();

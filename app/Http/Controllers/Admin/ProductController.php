@@ -240,10 +240,10 @@ class ProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
-            if($update->meta_img)
-            {
-                unlink(public_path('ProductMetaImg/'.$update->meta_img));
-            }
+            // if($update->meta_img)
+            // {
+            //     unlink(public_path('ProductMetaImg/'.$update->meta_img));
+            // }
 
             $file= $request->meta_img;
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -268,10 +268,10 @@ class ProductController extends Controller
             foreach ($request->photos as $imageData) {
                 $gallery = ProductGallery::find($imageData['id']);
 
-                if($gallery->image)
-                {
-                    unlink(public_path('ProductGallery/'.$gallery->image));
-                }
+                // if($gallery->image)
+                // {
+                //     unlink(public_path('ProductGallery/'.$gallery->image));
+                // }
         
                 if ($gallery) {
                     $gallery->product_id = $update->id; 
