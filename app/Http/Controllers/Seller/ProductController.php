@@ -261,23 +261,23 @@ class ProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
-            // if($update->meta_img)
-            // {
-            //     unlink(public_path('ProductMetaImg/'.$update->meta_img));
-            // }
+            if($update->meta_img)
+            {
+                unlink(public_path('ProductMetaImg/'.$update->meta_img));
+            }
 
             $file= $request->meta_img;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('ProductMetaImg'),$filename);
 
-            // $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-            // ->encode('jpg', 50); 
+            $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+            ->encode('jpg', 50); 
     
             
-            // $compressedFilename = 'compressed_' . $filename;
-            // $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+            $compressedFilename = 'compressed_' . $filename;
+            $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
     
-            // unlink(public_path('ProductMetaImg/'.$filename));
+            unlink(public_path('ProductMetaImg/'.$filename));
 
 
             $update->meta_img = $filename;
@@ -296,13 +296,13 @@ class ProductController extends Controller
             
                 $image->move(public_path('ProductGallery'), $filename);
             
-                // $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                //     ->encode('jpg', 70); 
+                $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
+                    ->encode('jpg', 70); 
             
-                // $compressedFilename = 'compressed_' . $filename;
-                // $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
+                $compressedFilename = 'compressed_' . $filename;
+                $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
             
-                // unlink(public_path('ProductGallery') . '/' . $filename);
+                unlink(public_path('ProductGallery') . '/' . $filename);
             
                 $gallery->image = $filename;
             
@@ -330,14 +330,14 @@ class ProductController extends Controller
                         $file->move(public_path('ProductVarient'),$filename);
 
 
-                        // $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                        // ->encode('jpg', 50); 
+                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                        ->encode('jpg', 50); 
                 
                         
-                        // $compressedFilename = 'compressed_' . $filename;
-                        // $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                        $compressedFilename = 'compressed_' . $filename;
+                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
                 
-                        // unlink(public_path('ProductVarient/'.$filename));
+                        unlink(public_path('ProductVarient/'.$filename));
 
                         $varient->image = $filename;
                     }
@@ -358,14 +358,14 @@ class ProductController extends Controller
                         $filename= date('YmdHis').$file->getClientOriginalName();
                         $file->move(public_path('ProductVarient'),$filename);
 
-                        // $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                        // ->encode('jpg', 50); 
+                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                        ->encode('jpg', 50); 
                 
                         
-                        // $compressedFilename = 'compressed_' . $filename;
-                        // $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                        $compressedFilename = 'compressed_' . $filename;
+                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
                 
-                        // unlink(public_path('ProductVarient/'.$filename));
+                        unlink(public_path('ProductVarient/'.$filename));
 
 
                         $varient->image = $filename;

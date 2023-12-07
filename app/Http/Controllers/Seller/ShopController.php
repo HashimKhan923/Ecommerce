@@ -24,10 +24,10 @@ class ShopController extends Controller
 
         if($request->file('logo')){
 
-            if($update->logo)
-            {
-                unlink(public_path('ShopLogo/'.$update->logo));
-            }
+            // if($update->logo)
+            // {
+            //     unlink(public_path('ShopLogo/'.$update->logo));
+            // }
             
 
             $file= $request->logo;
