@@ -60,10 +60,10 @@ class BlogController extends Controller
         $update->description = $request->description;
         if($request->file('banner')){
 
-            if($update->banner)
-            {
-                unlink(public_path('Blog/'.$update->banner));
-            }
+            // if($update->banner)
+            // {
+            //     unlink(public_path('Blog/'.$update->banner));
+            // }
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();

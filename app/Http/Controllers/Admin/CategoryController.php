@@ -50,10 +50,10 @@ class CategoryController extends Controller
         $update->name = $request->name;
         if($request->file('banner')){
 
-            if($update->banner)
-            {
-                unlink(public_path('CategoryBanner/'.$update->banner));
-            }
+            // if($update->banner)
+            // {
+            //     unlink(public_path('CategoryBanner/'.$update->banner));
+            // }
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
