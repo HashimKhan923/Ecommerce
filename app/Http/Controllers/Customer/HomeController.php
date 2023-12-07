@@ -10,6 +10,7 @@ use App\Models\Brand;
 use App\Models\Banner;
 use App\Models\HomeBanner;
 use App\Models\State;
+use App\Models\Shop;
 
 class HomeController extends Controller
 {
@@ -21,9 +22,10 @@ class HomeController extends Controller
         $Banners = Banner::where('status',1)->get();
         $HomeBanners = HomeBanner::first();
         $States = State::all();
+        $Shops = Shop::with('seller')->get();
 
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States]);
+        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
     }
 
     
