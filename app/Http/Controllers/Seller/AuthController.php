@@ -276,17 +276,17 @@ class AuthController extends Controller
         $update->phone = $request->phone;
         $update->save();
             
-        $shop = Shop::where('seller_id',$update->id)->first();
-        $shop->name = $request->shop_name;
-        $shop->address = $request->shop_address;
-        if($request->file('logo'))
-        {
-                $file= $request->logo;
-                $filename= date('YmdHis').$file->getClientOriginalName();
-                $file->storeAs('public', $filename);
-                $shop->logo = $filename;
-        }
-        $shop->save();
+        // $shop = Shop::where('seller_id',$update->id)->first();
+        // $shop->name = $request->shop_name;
+        // $shop->address = $request->shop_address;
+        // if($request->file('logo'))
+        // {
+        //         $file= $request->logo;
+        //         $filename= date('YmdHis').$file->getClientOriginalName();
+        //         $file->storeAs('public', $filename);
+        //         $shop->logo = $filename;
+        // }
+        // $shop->save();
 
 
         $BusineesInformation = BusinessInformation::where('seller_id',$update->id)->first();
@@ -368,5 +368,22 @@ class AuthController extends Controller
             return response($response, 422);
         }
 
+    }
+
+    public function delete_selling_platforms($id)
+    {
+        SellingPlatforms::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "deleted successfully"];
+        return response($response, 200);
+    }
+
+
+    public function delete_social_platforms($id)
+    {
+        SocialPlatforms::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "deleted successfully"];
+        return response($response, 200);
     }
 }
