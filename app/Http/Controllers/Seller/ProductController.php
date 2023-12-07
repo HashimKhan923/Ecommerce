@@ -131,7 +131,7 @@ class ProductController extends Controller
                         $file->move(public_path('ProductVarient'),$filename);
 
                         $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                        ->encode('jpg', 50); 
+                        ->encode('webp', 70); 
                 
                         
                         $compressedFilename = 'compressed_' . $filename;
