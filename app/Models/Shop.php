@@ -11,6 +11,6 @@ class Shop extends Model
 
     public function seller()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class,'seller_id');
     }
 }
