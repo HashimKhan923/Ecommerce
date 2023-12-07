@@ -64,7 +64,7 @@ class CategoryController extends Controller
 
             if($update->icon)
             {
-                unlink(public_path('Categoryicon/'.$update->icon));
+                unlink(public_path('CategoryIcon/'.$update->icon));
             }
 
             $file= $request->icon;
