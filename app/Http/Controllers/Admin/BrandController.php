@@ -67,7 +67,7 @@ class BrandController extends Controller
     {
         $file = Brand::find($id);
 
-        if($file->logo)
+        if(public_path('Brand/'.$file->logo))
         {
             unlink(public_path('Brand/'.$file->logo));
         }
