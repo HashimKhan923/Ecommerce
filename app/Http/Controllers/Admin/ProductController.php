@@ -439,28 +439,28 @@ class ProductController extends Controller
         $file = Product::find($id);
 
         $gallery = ProductGallery::where('product_id',$id)->get();
-        foreach($gallery as $item)
-        {
-            if($item->image)
-            {
-                unlink(public_path('ProductGallery/'.$item->image));
-            }
-        }
+        // foreach($gallery as $item)
+        // {
+        //     if($item->image)
+        //     {
+        //         unlink(public_path('ProductGallery/'.$item->image));
+        //     }
+        // }
         
         $varients = ProductVarient::where('product_id',$id)->get();
-        foreach($varients as $item)
-        {
-            if($item->image)
-            {
-                unlink(public_path('ProductVarient/'.$item->image));
-            }
-        }
+        // foreach($varients as $item)
+        // {
+        //     if($item->image)
+        //     {
+        //         unlink(public_path('ProductVarient/'.$item->image));
+        //     }
+        // }
 
 
-      if($file->meta_img)
-      {
-          unlink(public_path('ProductMetaImg/'.$file->meta_img));
-      }
+    //   if($file->meta_img)
+    //   {
+    //       unlink(public_path('ProductMetaImg/'.$file->meta_img));
+    //   }
 
       $file->delete();
 
@@ -480,26 +480,26 @@ class ProductController extends Controller
             $gallery = ProductGallery::where('product_id',$item->id)->get();
             foreach($gallery as $item1)
             {
-                if($item1->image)
-                {
-                    unlink(public_path('ProductGallery/'.$item1->image));
-                }
+                // if($item1->image)
+                // {
+                //     unlink(public_path('ProductGallery/'.$item1->image));
+                // }
             }
             
             $varients = ProductVarient::where('product_id',$item->id)->get();
-            foreach($varients as $item2)
-            {
-                if($item2->image)
-                {
-                    unlink(public_path('ProductVarient/'.$item2->image));
-                }
-            }
+        //     foreach($varients as $item2)
+        //     {
+        //         if($item2->image)
+        //         {
+        //             unlink(public_path('ProductVarient/'.$item2->image));
+        //         }
+        //     }
     
     
-          if($item->meta_img)
-          {
-              unlink(public_path('ProductMetaImg/'.$item->meta_img));
-          }
+        //   if($item->meta_img)
+        //   {
+        //       unlink(public_path('ProductMetaImg/'.$item->meta_img));
+        //   }
     
 
             $item->delete();
