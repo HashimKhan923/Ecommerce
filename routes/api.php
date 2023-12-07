@@ -427,6 +427,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+                                                /// Shop \\\
+
+                Route::group(['prefix' => '/seller/shop/'], function() {
+                Route::controller(App\Http\Controllers\Seller\ShopController::class)->group(function () {
+                    Route::get('show/{seller_id}','index');
+                    Route::post('update','update');
+                });
+            });
+
 
                                                         ///Wholesale Product \\\
 
