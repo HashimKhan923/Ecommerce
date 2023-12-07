@@ -62,10 +62,10 @@ class CategoryController extends Controller
         }
         if($request->file('icon')){
 
-            if($update->icon)
-            {
-                unlink(public_path('CategoryIcon/'.$update->icon));
-            }
+            // if($update->icon)
+            // {
+            //     unlink(public_path('CategoryIcon/'.$update->icon));
+            // }
 
             $file= $request->icon;
             $filename= date('YmdHis').$file->getClientOriginalName();
