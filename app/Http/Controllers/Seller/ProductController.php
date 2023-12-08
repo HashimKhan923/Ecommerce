@@ -124,24 +124,24 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($item->file('varient_image'))
-                {
-                        $file= $item->varient_image;
-                        $filename= date('YmdHis').$file->getClientOriginalName();
-                        $file->move(public_path('ProductVarient'),$filename);
+                // if($item->file('varient_image'))
+                // {
+                //         $file= $item->varient_image;
+                //         $filename= date('YmdHis').$file->getClientOriginalName();
+                //         $file->move(public_path('ProductVarient'),$filename);
 
-                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                        ->encode('webp', 70); 
+                //         $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                //         ->encode('webp', 70); 
                 
                         
-                        $compressedFilename = 'compressed_' . $filename;
-                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                //         $compressedFilename = 'compressed_' . $filename;
+                //         $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
                 
-                        unlink(public_path('ProductVarient/'.$filename));
+                //         unlink(public_path('ProductVarient/'.$filename));
 
 
-                        $varient->image = $compressedFilename;
-                }
+                //         $varient->image = $compressedFilename;
+                // }
                 $varient->save();
             }
 
@@ -271,7 +271,7 @@ class ProductController extends Controller
             $file->move(public_path('ProductMetaImg'),$filename);
 
             $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-            ->encode('jpg', 50); 
+            ->encode('webp', 70); 
     
             
             $compressedFilename = 'compressed_' . $filename;
@@ -297,7 +297,7 @@ class ProductController extends Controller
                 $image->move(public_path('ProductGallery'), $filename);
             
                 $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                    ->encode('jpg', 70); 
+                    ->encode('webp', 70); 
             
                 $compressedFilename = 'compressed_' . $filename;
                 $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
@@ -323,24 +323,24 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if($request->file('varient_image'))
-                    {
-                        $file= $varientData['varient_image'];
-                        $filename= date('YmdHis').$file->getClientOriginalName();
-                        $file->move(public_path('ProductVarient'),$filename);
+                    // if($request->file('varient_image'))
+                    // {
+                    //     $file= $varientData['varient_image'];
+                    //     $filename= date('YmdHis').$file->getClientOriginalName();
+                    //     $file->move(public_path('ProductVarient'),$filename);
 
 
-                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                        ->encode('jpg', 50); 
+                    //     $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                    //     ->encode('webp', 70); 
                 
                         
-                        $compressedFilename = 'compressed_' . $filename;
-                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                    //     $compressedFilename = 'compressed_' . $filename;
+                    //     $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
                 
-                        unlink(public_path('ProductVarient/'.$filename));
+                    //     unlink(public_path('ProductVarient/'.$filename));
 
-                        $varient->image = $filename;
-                    }
+                    //     $varient->image = $filename;
+                    // }
                     $varient->save();
                 } else {
                     $varient = new ProductVarient();
@@ -352,24 +352,24 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if($request->file('varient_image'))
-                    {
-                        $file= $varientData['varient_image'];
-                        $filename= date('YmdHis').$file->getClientOriginalName();
-                        $file->move(public_path('ProductVarient'),$filename);
+                    // if($request->file('varient_image'))
+                    // {
+                    //     $file= $varientData['varient_image'];
+                    //     $filename= date('YmdHis').$file->getClientOriginalName();
+                    //     $file->move(public_path('ProductVarient'),$filename);
 
-                        $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                        ->encode('jpg', 50); 
+                    //     $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                    //     ->encode('webp', 70); 
                 
                         
-                        $compressedFilename = 'compressed_' . $filename;
-                        $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                    //     $compressedFilename = 'compressed_' . $filename;
+                    //     $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
                 
-                        unlink(public_path('ProductVarient/'.$filename));
+                    //     unlink(public_path('ProductVarient/'.$filename));
 
 
-                        $varient->image = $filename;
-                    }
+                    //     $varient->image = $filename;
+                    // }
                     $varient->save();
                 }
             }
