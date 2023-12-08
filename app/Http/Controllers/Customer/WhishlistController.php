@@ -10,7 +10,7 @@ class WhishlistController extends Controller
 {
     public function index($id)
     {
-        $data = Whishlist::with('product')->where('customer_id',$id)->get();
+        $data = Whishlist::with('product.product_gallery')->where('customer_id',$id)->get();
 
         return response()->json(["data"=>$data]);
     }
