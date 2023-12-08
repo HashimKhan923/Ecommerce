@@ -17,7 +17,7 @@ use App\Models\ProductGallery;
 use App\Models\Color;
 use Carbon\Carbon;
 use Validator;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -89,26 +89,21 @@ class ProductController extends Controller
             foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
                 $gallery->product_id = $new->id;
-                
+            
                 $filename = date('YmdHis') . $image->getClientOriginalName();
-                
-                // Move the original image to the "ProductGallery" directory
+            
                 $image->move(public_path('ProductGallery'), $filename);
-                
-                // Load the original image and encode it to WebP format
+            
                 $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                    ->encode('webp', 70);
-                
-                // Save the compressed image with the same filename as the original
-                $compressedImage->save(public_path('ProductGallery') . '/' . $filename);
-                
-                // Optionally, you can unlink the original image if you want to keep only the compressed version
+                    ->encode('webp', 70); 
+            
+                $compressedFilename = 'compressed_' . $filename;
+                $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
+            
                 unlink(public_path('ProductGallery') . '/' . $filename);
-                
-                // Update the gallery record with the compressed image filename
-                $gallery->image = $filename;
-                
-                // Save the gallery record to the database
+            
+                $gallery->image = $compressedFilename;
+            
                 $gallery->save();
             }
             
