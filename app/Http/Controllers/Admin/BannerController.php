@@ -42,10 +42,10 @@ class BannerController extends Controller
         if($request->file('image'))
         {
 
-            // if($update->image)
-            // {
-            //     unlink(public_path('Banner/'.$update->image));
-            // }
+            if($update->image)
+            {
+                unlink(public_path('Banner/'.$update->image));
+            }
 
             $file= $request->image;
             $filename= date('YmdHis').$file->getClientOriginalName();

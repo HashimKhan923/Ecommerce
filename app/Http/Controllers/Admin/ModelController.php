@@ -45,10 +45,10 @@ class ModelController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            // if($update->logo)
-            // {
-            //     unlink(public_path('Model/'.$update->logo));
-            // }
+            if($update->logo)
+            {
+                unlink(public_path('Model/'.$update->logo));
+            }
 
             $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
