@@ -67,10 +67,10 @@ class HomeBannerController extends Controller
 
         if($request->file('banner1')){
 
-            // if($update->banner1)
-            // {
-            //     unlink(public_path('HomeBanner/'.$update->banner1));
-            // }
+            if($update->banner1)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner1));
+            }
 
             $file= $request->banner1;
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -80,10 +80,10 @@ class HomeBannerController extends Controller
 
         if($request->file('banner2')){
 
-            // if($update->banner2)
-            // {
-            //     unlink(public_path('HomeBanner/'.$update->banner2));
-            // }
+            if($update->banner2)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner2));
+            }
 
             $file= $request->banner2;
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -93,10 +93,10 @@ class HomeBannerController extends Controller
 
         if($request->file('banner3')){
 
-            // if($update->banner3)
-            // {
-            //     unlink(public_path('HomeBanner/'.$update->banner3));
-            // }
+            if($update->banner3)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner3));
+            }
 
             $file= $request->banner3;
             $filename= date('YmdHis').$file->getClientOriginalName();

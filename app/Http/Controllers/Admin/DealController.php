@@ -47,10 +47,10 @@ class DealController extends Controller
 
         if($request->file('banner')){
 
-            // if($update->banner)
-            // {
-            //     unlink(public_path('DealBanner/'.$update->banner));
-            // }
+            if($update->banner)
+            {
+                unlink(public_path('DealBanner/'.$update->banner));
+            }
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();

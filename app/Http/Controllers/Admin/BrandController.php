@@ -43,10 +43,10 @@ class BrandController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            // if(public_path('Brand/'.$update->logo))
-            // {
-            //     unlink(public_path('Brand/'.$update->logo));
-            // }
+            if(public_path('Brand/'.$update->logo))
+            {
+                unlink(public_path('Brand/'.$update->logo));
+            }
 
             $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
