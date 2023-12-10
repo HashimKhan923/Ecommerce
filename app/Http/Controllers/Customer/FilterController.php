@@ -21,7 +21,8 @@ class FilterController extends Controller
         }
         else
         {
-            $data = Product::where('name', 'LIKE', '%'.$request->searchValue.'%')->get();
+            $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+            ->where('name', 'LIKE', '%'.$request->searchValue.'%')->get();
         }
 
         return response()->json(['data'=>$data]);
@@ -31,7 +32,8 @@ class FilterController extends Controller
 
     public function target_search(Request $request)
     {
-        $data = Product::where('start_year','>=',$request->year)
+        $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')   
+         ->where('start_year','>=',$request->year)
         ->where('end_year','<=',$request->year)
         ->where('brand_id',$request->brand_id)
         ->where('model_id',$request->model_id)->get();
