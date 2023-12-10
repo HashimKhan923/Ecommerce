@@ -25,13 +25,9 @@ class HomeController extends Controller
         $Shops = Shop::with('seller')->get();
 
 
-<<<<<<< HEAD
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States]);
-
-=======
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
->>>>>>> 0d8aade54a157faeed557e3e3d43ff4ab977535c
+
     }
 
     
