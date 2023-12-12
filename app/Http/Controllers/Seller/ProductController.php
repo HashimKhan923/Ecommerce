@@ -100,7 +100,7 @@ class ProductController extends Controller
                 // $compressedFilename = 'compressed_' . $filename;
                 $compressedImage->save(public_path('ProductGallery') . '/' . $filename);
             
-                unlink(public_path('ProductGallery') . '/' . $filename);
+                // unlink(public_path('ProductGallery') . '/' . $filename);
             
                 $gallery->image = $filename;
             
