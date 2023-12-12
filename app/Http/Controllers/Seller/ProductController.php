@@ -91,19 +91,16 @@ class ProductController extends Controller
                 $gallery->product_id = $new->id;
             
                 $filename = date('YmdHis') . $image->getClientOriginalName();
-            
-                // $image->move(public_path('ProductGallery'), $filename);
-            
-                $compressedImage = Image::make($image->getRealPath())
-                    ->encode('webp'); 
-            
-                // $compressedFilename = 'compressed_' . $filename;
-                $compressedImage->save(public_path('ProductGallery') . '/' . $filename);
-            
-                // unlink(public_path('ProductGallery') . '/' . $filename);
-            
-                $gallery->image = $filename;
-            
+
+                // Create an instance of the Intervention Image class
+                $compressedImage = Image::make($image->getRealPath());
+                
+                // Convert the image to WebP format and save with the .webp extension
+                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                
+                // Update your model or database record with the new filename
+                $gallery->image = $filename . '.webp';
+                
                 $gallery->save();
             }
             
