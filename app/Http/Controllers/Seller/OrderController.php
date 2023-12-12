@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payout;
 use App\Models\User;
+use App\Models\OrderStatus;
 use Carbon\Carbon;
 use Mail;
 
@@ -24,8 +25,17 @@ class OrderController extends Controller
         $order = Order::where('id',$request->id)->first();
         $user = User::where('id',$order->customer_id)->first();
 
+
+
         if($request->delivery_status == 'Confirmed')
         {
+
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'confirmed';
+            $OrderStatus->save();
+
             Mail::send(
                 'email.Order.order_confirmation',
                 [
@@ -39,8 +49,22 @@ class OrderController extends Controller
                 }
             );
         }
+        elseif($request->delivery_status == 'Picked Up')
+        {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'picked up';
+            $OrderStatus->save();
+
+        }
         elseif($request->delivery_status == 'Delivered')
         {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'deliverd';
+            $OrderStatus->save();
 
             Mail::send(
                 'email.Order.order_completed',
@@ -68,6 +92,11 @@ class OrderController extends Controller
         }
         else
         {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'on_the_way';
+            $OrderStatus->save();
 
             Mail::send(
                 'email.Order.order_ontheway',

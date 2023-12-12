@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Payout;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\OrderStatus;
 use Mail;
 class OrderController extends Controller
 {
@@ -42,6 +43,12 @@ class OrderController extends Controller
 
         if($request->delivery_status == 'Confirmed')
         {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'confirmed';
+            $OrderStatus->save();
+
             Mail::send(
                 'email.Order.order_confirmation',
                 [
@@ -55,8 +62,22 @@ class OrderController extends Controller
                 }
             );
         }
+        elseif($request->delivery_status == 'Picked Up')
+        {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'picked up';
+            $OrderStatus->save();
+
+        }
         elseif($request->delivery_status == 'Delivered')
         {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'deliverd';
+            $OrderStatus->save();
 
             Mail::send(
                 'email.Order.order_completed',

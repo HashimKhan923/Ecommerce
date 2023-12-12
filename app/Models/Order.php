@@ -17,5 +17,10 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class,'order_id','id');
     } 
 
+    public function order_status()
+    {
+        return $this->hasMany(OrderStatus::class,'order_id','id');
+    } 
+
     use HasFactory;
 }
