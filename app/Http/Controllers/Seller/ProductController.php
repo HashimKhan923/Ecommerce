@@ -294,7 +294,6 @@ class ProductController extends Controller
                 
                 $gallery->image = $filename . '.webp';
             
-                $gallery->image = $filename;
             
                 $gallery->save();
             }
