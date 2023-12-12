@@ -251,12 +251,12 @@ class AuthController extends Controller
 
     public function profile_update(Request $request){
         $id=$request->id;
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => "required|email|max:255|unique:users,email,$id,id",
-            'phone'=>'required|min:10|max:15',
-            //'password' => 'required|string|min:6|confirmed'n,
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:255',
+        //     'email' => "required|email|max:255|unique:users,email,$id,id",
+        //     'phone'=>'required|min:10|max:15',
+        //     //'password' => 'required|string|min:6|confirmed'n,
+        // ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
