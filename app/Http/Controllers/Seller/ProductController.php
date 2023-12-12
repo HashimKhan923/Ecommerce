@@ -92,17 +92,17 @@ class ProductController extends Controller
             
                 $filename = date('YmdHis') . $image->getClientOriginalName();
             
-                $image->move(public_path('ProductGallery'), $filename);
+                // $image->move(public_path('ProductGallery'), $filename);
             
-                $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                    ->encode('webp', 70); 
+                $compressedImage = Image::make($image->getRealPath())
+                    ->encode('webp'); 
             
-                $compressedFilename = 'compressed_' . $filename;
-                $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
+                // $compressedFilename = 'compressed_' . $filename;
+                $compressedImage->save(public_path('ProductGallery') . '/' . $filename);
             
                 unlink(public_path('ProductGallery') . '/' . $filename);
             
-                $gallery->image = $compressedFilename;
+                $gallery->image = $filename;
             
                 $gallery->save();
             }
