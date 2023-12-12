@@ -390,8 +390,8 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('/seller/profile/view/{id}', 'App\Http\Controllers\Seller\AuthController@profile_view');
             Route::post('/seller/profile/update', 'App\Http\Controllers\Seller\AuthController@profile_update');
             Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
-            Route::get('/seller/delete_selling/{id}', 'App\Http\Controllers\AuthController@delete_selling_platforms');
-            Route::get('/seller/delete_social/{id}', 'App\Http\Controllers\AuthController@delete_social_platforms');
+            Route::get('/seller/delete_selling/{id}', 'App\Http\Controllers\Seller\AuthController@delete_selling_platforms');
+            Route::get('/seller/delete_social/{id}', 'App\Http\Controllers\Seller\AuthController@delete_social_platforms');
             Route::get('/seller/profile/check', 'App\Http\Controllers\Seller\AuthController@usercheck'); 
             Route::get('/seller/dashboard','App\Http\Controllers\Seller\DashboardController@index');
 
