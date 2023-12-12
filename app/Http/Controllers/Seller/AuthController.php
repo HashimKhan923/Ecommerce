@@ -258,16 +258,15 @@ class AuthController extends Controller
         //     'phone'=>'required|min:10|max:15',
         //     //'password' => 'required|string|min:6|confirmed'n,
         // ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
-        }
+        // if ($validator->fails())
+        // {
+        //     return response(['errors'=>$validator->errors()->all()], 422);
+        // }
         $update=User::find($id);
 
 
             
         $update->name = $request->name; 
-        $update->email = $request->email;
         $update->address = $request->address;
         $update->city = $request->city;
         $update->state = $request->state;
