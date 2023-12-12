@@ -64,24 +64,24 @@ class ProductController extends Controller
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
-        if($request->file('meta_img'))
-        {
-            $file= $request->meta_img;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('ProductMetaImg'),$filename);
+        // if($request->file('meta_img'))
+        // {
+        //     $file= $request->meta_img;
+        //     $filename= date('YmdHis').$file->getClientOriginalName();
+        //     $file->move(public_path('ProductMetaImg'),$filename);
 
-            $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-            ->encode('webp', 70); 
+        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+        //     ->encode('webp', 70); 
     
             
-            $compressedFilename = 'compressed_' . $filename;
-            $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+        //     $compressedFilename = 'compressed_' . $filename;
+        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
     
-            unlink(public_path('ProductMetaImg/'.$filename));
+        //     unlink(public_path('ProductMetaImg/'.$filename));
 
 
-            $new->meta_img = $compressedFilename;
-        }
+        //     $new->meta_img = $compressedFilename;
+        // }
         $new->slug = $request->slug;
         $new->save();
 
@@ -92,13 +92,10 @@ class ProductController extends Controller
             
                 $filename = date('YmdHis') . $image->getClientOriginalName();
 
-                // Create an instance of the Intervention Image class
                 $compressedImage = Image::make($image->getRealPath());
                 
-                // Convert the image to WebP format and save with the .webp extension
                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                 
-                // Update your model or database record with the new filename
                 $gallery->image = $filename . '.webp';
                 
                 $gallery->save();
@@ -256,29 +253,29 @@ class ProductController extends Controller
         $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
-        if($request->file('meta_img'))
-        {
-            if($update->meta_img)
-            {
-                unlink(public_path('ProductMetaImg/'.$update->meta_img));
-            }
+        // if($request->file('meta_img'))
+        // {
+        //     if($update->meta_img)
+        //     {
+        //         unlink(public_path('ProductMetaImg/'.$update->meta_img));
+        //     }
 
-            $file= $request->meta_img;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('ProductMetaImg'),$filename);
+        //     $file= $request->meta_img;
+        //     $filename= date('YmdHis').$file->getClientOriginalName();
+        //     $file->move(public_path('ProductMetaImg'),$filename);
 
-            $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-            ->encode('webp', 70); 
+        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+        //     ->encode('webp', 70); 
     
             
-            $compressedFilename = 'compressed_' . $filename;
-            $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+        //     $compressedFilename = 'compressed_' . $filename;
+        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
     
-            unlink(public_path('ProductMetaImg/'.$filename));
+        //     unlink(public_path('ProductMetaImg/'.$filename));
 
 
-            $update->meta_img = $filename;
-        }
+        //     $update->meta_img = $filename;
+        // }
         $update->slug = $request->slug;
         $update->sku = $request->sku;
         $update->save();
@@ -290,16 +287,12 @@ class ProductController extends Controller
                 $gallery->product_id = $update->id;
             
                 $filename = date('YmdHis') . $image->getClientOriginalName();
-            
-                $image->move(public_path('ProductGallery'), $filename);
-            
-                $compressedImage = Image::make(public_path('ProductGallery') . '/' . $filename)
-                    ->encode('webp', 70); 
-            
-                $compressedFilename = 'compressed_' . $filename;
-                $compressedImage->save(public_path('ProductGallery') . '/' . $compressedFilename);
-            
-                unlink(public_path('ProductGallery') . '/' . $filename);
+
+                $compressedImage = Image::make($image->getRealPath());
+                
+                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                
+                $gallery->image = $filename . '.webp';
             
                 $gallery->image = $filename;
             
