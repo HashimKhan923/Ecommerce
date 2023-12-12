@@ -238,9 +238,9 @@ class AuthController extends Controller
 
     public function profile_view($id)
     {
-      $admin_profile = User::with('seller_information')->where('id',$id)->first();
+      $data = User::with('seller_information','SellingPlatforms','SocialPlatforms','BankDetail','CreditCard',)->where('id',$id)->first();
 
-      return response()->json(['admin_profile'=>$admin_profile],200);
+      return response()->json(['data'=>$data],200);
     }
 
         public function usercheck(Request $request)
@@ -302,6 +302,10 @@ class AuthController extends Controller
         foreach($request->selling_platforms as $items)
         {
         $SellingPlatforms = SellingPlatforms::where('seller_id',$update->id)->first();
+        if(!$SellingPlatforms)
+        {
+            $SellingPlatforms = new SellingPlatforms();
+        }
         $SellingPlatforms->name = $items['selling_platform_name'];
         $SellingPlatforms->link = $items['selling_platform_link'];
         $SellingPlatforms->save();
@@ -310,6 +314,12 @@ class AuthController extends Controller
         foreach($request->social_platforms as $items)
         {
         $SocialPlatforms = SocialPlatforms::where('seller_id',$update->id)->first();
+
+        if(!$SocialPlatforms)
+        {
+            $SocialPlatforms = new SocialPlatforms();
+        }
+
         $SocialPlatforms->name = $items['social_platform_name'];
         $SocialPlatforms->link = $items['social_platform_link'];
         $SocialPlatforms->save();

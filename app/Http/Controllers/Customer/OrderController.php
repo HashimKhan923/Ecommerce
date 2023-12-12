@@ -41,7 +41,7 @@ public function create(Request $request)
         $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
         $newOrder->number_of_products = count($vendorProducts);
         $newOrder->customer_id = $request->customer_id;
-        $newOrder->seller_id = $vendorId; // Set the vendor ID for each order
+        $newOrder->seller_id = $vendorId; 
         $newOrder->amount = $request->amount; 
         $newOrder->information = $request->information;
         $newOrder->payment_method = $request->payment_method;
