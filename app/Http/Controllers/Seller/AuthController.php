@@ -84,23 +84,33 @@ class AuthController extends Controller
         $BusineesInformation->business_email = $request->business_email;
         $BusineesInformation->save();
 
-        foreach($request->selling_platforms as $items)
-        {
-        $SellingPlatforms = new SellingPlatforms();
-        $SellingPlatforms->seller_id = $new->id;
-        $SellingPlatforms->name = $items['selling_platform_name'];
-        $SellingPlatforms->link = $items['selling_platform_link'];
-        $SellingPlatforms->save();
-        }
 
-        foreach($request->social_platforms as $items)
+        if($request->selling_platforms)
         {
-        $SocialPlatforms = new SocialPlatforms();
-        $SocialPlatforms->seller_id = $new->id;
-        $SocialPlatforms->name = $items['social_platform_name'];
-        $SocialPlatforms->link = $items['social_platform_link'];
-        $SocialPlatforms->save();
-        }
+            foreach($request->selling_platforms as $items)
+            {
+            $SellingPlatforms = new SellingPlatforms();
+            $SellingPlatforms->seller_id = $new->id;
+            $SellingPlatforms->name = $items['selling_platform_name'];
+            $SellingPlatforms->link = $items['selling_platform_link'];
+            $SellingPlatforms->save();
+            }
+        }    
+
+        if($request->social_platforms)
+        {
+            foreach($request->social_platforms as $items)
+            {
+            $SocialPlatforms = new SocialPlatforms();
+            $SocialPlatforms->seller_id = $new->id;
+            $SocialPlatforms->name = $items['social_platform_name'];
+            $SocialPlatforms->link = $items['social_platform_link'];
+            $SocialPlatforms->save();
+            }
+        }    
+
+
+
 
         $BankDetail = new BankDetail();
         $BankDetail->seller_id = $new->id;
@@ -298,32 +308,42 @@ class AuthController extends Controller
         $BusineesInformation->phone_number = $request->business_phone_number;
         $BusineesInformation->business_email = $request->business_email;
         $BusineesInformation->save();
-
-        foreach($request->selling_platforms as $items)
+        
+        
+        if($request->selling_platforms)
         {
-        $SellingPlatforms = SellingPlatforms::where('seller_id',$update->id)->first();
-        if(!$SellingPlatforms)
-        {
-            $SellingPlatforms = new SellingPlatforms();
-        }
-        $SellingPlatforms->name = $items['selling_platform_name'];
-        $SellingPlatforms->link = $items['selling_platform_link'];
-        $SellingPlatforms->save();
-        }
-
-        foreach($request->social_platforms as $items)
-        {
-        $SocialPlatforms = SocialPlatforms::where('seller_id',$update->id)->first();
-
-        if(!$SocialPlatforms)
-        {
-            $SocialPlatforms = new SocialPlatforms();
+            foreach($request->selling_platforms as $items)
+            {
+            $SellingPlatforms = SellingPlatforms::where('seller_id',$update->id)->first();
+            if(!$SellingPlatforms)
+            {
+                $SellingPlatforms = new SellingPlatforms();
+            }
+            $SellingPlatforms->name = $items['selling_platform_name'];
+            $SellingPlatforms->link = $items['selling_platform_link'];
+            $SellingPlatforms->save();
+            }
         }
 
-        $SocialPlatforms->name = $items['social_platform_name'];
-        $SocialPlatforms->link = $items['social_platform_link'];
-        $SocialPlatforms->save();
+        if($request->social_platforms)
+        {
+            foreach($request->social_platforms as $items)
+            {
+            $SocialPlatforms = SocialPlatforms::where('seller_id',$update->id)->first();
+    
+            if(!$SocialPlatforms)
+            {
+                $SocialPlatforms = new SocialPlatforms();
+            }
+    
+            $SocialPlatforms->name = $items['social_platform_name'];
+            $SocialPlatforms->link = $items['social_platform_link'];
+            $SocialPlatforms->save();
+            }
         }
+
+
+
 
         $BankDetail = BankDetail::where('seller_id',$update->id)->first();
         $BankDetail->business_name = $BusineesInformation->business_name;
