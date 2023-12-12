@@ -578,7 +578,14 @@ class ProductController extends Controller
 
     public function gallery_delete($id)
     {
-        ProductGallery::find($id)->delete();
+      $file = ProductGallery::find($id);
+
+        if($file->image)
+        {
+            unlink(public_path('ProductGallery/'.$file->image));
+        }
+  
+          $file->delete();
 
         $response = ['status'=>true,"message" => "Deleted Successfully!"];
         return response($response, 200);
