@@ -49,6 +49,15 @@ class OrderController extends Controller
                 }
             );
         }
+        elseif($request->delivery_status == 'Picked Up')
+        {
+
+            $OrderStatus = new OrderStatus();
+            $OrderStatus->order_id = $request->id;
+            $OrderStatus->status = 'picked up';
+            $OrderStatus->save();
+
+        }
         elseif($request->delivery_status == 'Delivered')
         {
 
