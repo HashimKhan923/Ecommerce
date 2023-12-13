@@ -154,6 +154,8 @@ class AuthController extends Controller
     }
 
     public function profile_update(Request $request){
+
+        return $request;
         $id=$request->user_id;
         // $validator = Validator::make($request->all(), [
         //     'name' => 'required|string|max:255',
