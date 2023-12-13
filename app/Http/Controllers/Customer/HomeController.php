@@ -22,7 +22,7 @@ class HomeController extends Controller
         $Banners = Banner::where('status',1)->get();
         $HomeBanners = HomeBanner::first();
         $States = State::all();
-        $Shops = Shop::with('seller','product')->get();
+        $Shops = Shop::with('seller','product.product_gallery','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax')->get();
 
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
     }
