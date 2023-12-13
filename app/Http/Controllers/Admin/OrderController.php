@@ -16,7 +16,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $data = Order::with('order_detail.products.product_gallery')->get();
+        $data = Order::with('order_detail.products.product_gallery','order_status')->get();
 
         return response()->json(['data'=>$data]);
     }
