@@ -34,8 +34,8 @@ class FilterController extends Controller
     {
         
         $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')   
-        ->where('start_year','>=',$request->year)
-        ->where('end_year','<=',$request->year)->get();
+        ->where('start_year','>=',2020)
+        ->where('end_year','<=',2023)->get();
         // ->where('brand_id',$request->brand_id)
         // ->where('model_id',$request->model_id)->get();
 
