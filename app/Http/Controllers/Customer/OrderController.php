@@ -30,19 +30,25 @@ public function create(Request $request)
     foreach ($request->products as $product) {
         $productIds[] = $product['product_id'];
     }
-
-    $products = Product::with('product_gallery')->whereIn('id',$productIds)->get();
-
+    
+    $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
+    
     // Group the products by vendor ID
     $productsByVendor = $products->groupBy('user_id');
     
     foreach ($productsByVendor as $vendorId => $vendorProducts) {
+        // Calculate the total amount for the current vendor
+        $vendorTotalAmount = $vendorProducts->sum(function ($product) use ($request) {
+            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+            return $orderProduct['product_price'] * $orderProduct['quantity'];
+        });
+    
         $newOrder = new Order();
         $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
         $newOrder->number_of_products = count($vendorProducts);
         $newOrder->customer_id = $request->customer_id;
-        $newOrder->seller_id = $vendorId; 
-        $newOrder->amount = $request->amount; 
+        $newOrder->seller_id = $vendorId;
+        $newOrder->amount = $vendorTotalAmount; // Set the total amount for the current vendor
         $newOrder->information = $request->information;
         $newOrder->payment_method = $request->payment_method;
         $newOrder->payment_status = $request->payment_status;
@@ -51,7 +57,7 @@ public function create(Request $request)
     
         foreach ($vendorProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-            
+    
             $newOrderDetail = new OrderDetail();
             $newOrderDetail->order_id = $newOrder->id;
             $newOrderDetail->product_id = $product->id;
@@ -59,24 +65,20 @@ public function create(Request $request)
             $newOrderDetail->quantity = $orderProduct['quantity'];
             $newOrderDetail->varient = $request->varient;
             $newOrderDetail->save();
-
-            $VarientStock = ProductVarient::where('product_id',$product->id)->first();
-            $sale = Product::where('id',$product->id)->first();
-            $stock = Stock::where('product_id',$product->id)->first();
-            if($VarientStock)
-            {
+    
+            $VarientStock = ProductVarient::where('product_id', $product->id)->first();
+            $sale = Product::where('id', $product->id)->first();
+            $stock = Stock::where('product_id', $product->id)->first();
+            if ($VarientStock) {
                 $VarientStock->stock = $VarientStock->stock - $orderProduct['quantity'];
                 $VarientStock->save();
-            }
-            else
-            {
+            } else {
                 $stock->stock = $stock->stock - $orderProduct['quantity'];
                 $stock->save();
             }
-
+    
             $sale->num_of_sale = $sale->num_of_sale + $orderProduct['quantity'];
             $sale->save();
-
         }
     }
 

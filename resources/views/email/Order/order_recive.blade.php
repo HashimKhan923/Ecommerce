@@ -116,7 +116,13 @@
                                 <tr>
                                     <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                         <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Hi {{$buyer_name}}, we're getting your order ready to be shipped. We will notify you when it has been sent.
+                                            Hi {{$buyer_name}}, Thank you for placing your order. We're currently preparing it for shipment. Due to high demand, please allow 3-5 business days for preparation and shipping. 
+<br>
+For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. 
+<br>
+You'll receive an email with tracking information once your order is shipped. 
+<br>
+If you have a shipping address at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.
                                         </p>
                                     </td>
                                 </tr>

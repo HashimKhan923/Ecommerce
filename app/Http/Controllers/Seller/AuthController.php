@@ -105,9 +105,6 @@ class AuthController extends Controller
             }
         }    
 
-
-
-
         $BankDetail = new BankDetail();
         $BankDetail->seller_id = $new->id;
         $BankDetail->business_name = $BusineesInformation->business_name;
