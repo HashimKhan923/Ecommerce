@@ -193,7 +193,17 @@ class AuthController extends Controller
         $check->save();
         $response = ['status' => true, "message" => "Email Verified Successfully!"];
         $jsonMessage = json_encode($response);
-        $redirectUrl = "https://dragonautomart.com/?jsonMessage=" . urlencode($jsonMessage);
+        if($check->user_type == 'seller')
+        {
+            
+
+            $redirectUrl = "https://seller.dragonautomart.com/login" . urlencode($jsonMessage);
+        }
+        else
+        {
+            $redirectUrl = "https://dragonautomart.com/?jsonMessage=" . urlencode($jsonMessage);
+
+        }
         
         return redirect($redirectUrl);
 
