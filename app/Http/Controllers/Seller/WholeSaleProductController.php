@@ -68,6 +68,7 @@ class WholeSaleProductController extends Controller
         $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
+        $new->condition = $request->condition;
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->deal_id = $request->deal_id;
@@ -246,6 +247,7 @@ class WholeSaleProductController extends Controller
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
+        $update->condition = $request->condition;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
         $update->deal_id = $request->deal_id;
