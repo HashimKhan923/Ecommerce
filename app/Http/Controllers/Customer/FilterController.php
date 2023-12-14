@@ -42,8 +42,7 @@ class FilterController extends Controller
     // Debugging SQL
     dd($data->toSql());
     
-    $results = $data->get();
-    dd($results);
+
     }
 
     public function multiSearch(Request $request)
