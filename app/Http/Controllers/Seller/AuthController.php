@@ -26,19 +26,22 @@ class AuthController extends Controller
         if($check == null)
         {
             $new = new User();
-            $new->name = $request->name; 
+           
             $new->email = $request->email;
-            $new->address = $request->address;
-            $new->city = $request->city;
-            $new->state = $request->state;
-            $new->country = $request->country;
-            $new->postal_code = $request->postal_code;
-            $new->phone = $request->phone;
+
         }
         else
         {
             $new = User::where('email',$request->email)->first();
         }
+        
+        $new->name = $request->name; 
+        $new->address = $request->address;
+        $new->city = $request->city;
+        $new->state = $request->state;
+        $new->country = $request->country;
+        $new->postal_code = $request->postal_code;
+        $new->phone = $request->phone;
         
         $token = uniqid();
         $new->remember_token = $token;
