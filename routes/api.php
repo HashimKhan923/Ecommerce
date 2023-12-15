@@ -415,6 +415,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
+                    Route::get('is_featured/{id}','is_featured');
                     Route::post('multi_delete','multi_delete');
                     Route::get('gallery_delete/{id}','gallery_delete');
                 });

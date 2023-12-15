@@ -36,10 +36,10 @@ class ProductController extends Controller
 
 
         
-        $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
-        if($checkPackage)
-        {
-            $new = new Product();
+        // $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
+        // if($checkPackage)
+        // {
+        $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
@@ -216,12 +216,12 @@ class ProductController extends Controller
         $response = ['status'=>true,"message" => "Product Added Successfully!"];
         return response($response, 200);
 
-        }
-        else
-        {
-            $response = ['status'=>true,"message" => "you dont have any subscription to upload new product. please buy any subscription to upload products!"];
-            return response($response, 401);
-        }
+        // }
+        // else
+        // {
+        //     $response = ['status'=>true,"message" => "you dont have any subscription to upload new product. please buy any subscription to upload products!"];
+        //     return response($response, 401);
+        // }
         
         
 
@@ -561,21 +561,58 @@ class ProductController extends Controller
 
     public function is_published($id)
     {
-        $is_published = Product::where('id',$id)->first();
 
-        if($is_published->published == 0)
+
+
+
+                    $is_published = Product::where('id',$id)->first();
+
+                    if($is_published->published == 0)
+                    {
+                        $is_published->published = 1;
+                    }
+                    else
+                    {
+                        $is_published->published = 0;
+                    }
+
+                    $is_published->save();
+
+                    $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+                    return response($response, 200);
+
+    }
+
+    public function is_featured($id)
+    {
+
+        $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
+        if($checkPackage)
         {
-            $is_published->published = 1;
+
+
+        $is_featured = Product::where('id',$id)->first();
+
+        if($is_featured->featured == 0)
+        {
+            $is_featured->featured = 1;
         }
         else
         {
-            $is_published->published = 0;
+            $is_featured->featured = 0;
         }
 
-        $is_published->save();
+        $is_featured->save();
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
+
+        }
+        else
+        {
+            $response = ['status'=>true,"message" => "you dont have any subscription to feature products. please buy any subscription"];
+            return response($response, 401);
+        }
     }
 
     public function gallery_delete($id)
