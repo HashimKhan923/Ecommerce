@@ -52,7 +52,7 @@
         <h2>Your Order is Completed</h2>
         <p>Dear {{$buyer_name}},</p>
         <br>
-        <p>We are delighted to inform you that your order has been successfully delivered to your specified address. We hope you are satisfied with your purchase and that it meets your expectations.</p>
+        <p>We are delighted to inform you that your order has been successfully delivered by  to your specified address. We hope you are satisfied with your purchase and that it meets your expectations.</p>
         <br>
         <p>If you have any questions or require further assistance, please do not hesitate to contact our customer support at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
         <br>

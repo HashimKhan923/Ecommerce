@@ -9,6 +9,7 @@ use App\Models\Payout;
 use App\Models\User;
 use App\Models\OrderStatus;
 use Carbon\Carbon;
+use App\Models\OrderTracking;
 use Mail;
 
 class OrderController extends Controller
@@ -66,11 +67,12 @@ class OrderController extends Controller
             $OrderStatus->status = 'deliverd';
             $OrderStatus->save();
 
+
+
             Mail::send(
                 'email.Order.order_completed',
                 [
                     'buyer_name' => $user->name,
-                    // 'last_name' => $query->last_name
                 ],
                 function ($message) use ($user) { // Add $user variable here
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
@@ -98,11 +100,17 @@ class OrderController extends Controller
             $OrderStatus->status = 'on_the_way';
             $OrderStatus->save();
 
+            $TrackingOrder = new OrderTracking();
+            $TrackingOrder->order_id = $order->id;
+            $TrackingOrder->tracking_number = $request->tracking_number;
+            $TrackingOrder->courier_name = $request->courier_name;
+            $TrackingOrder->save();
+
             Mail::send(
                 'email.Order.order_ontheway',
                 [
                     'buyer_name' => $user->name,
-                    // 'last_name' => $query->last_name
+                    'TrackingOrder' => $TrackingOrder
                 ],
                 function ($message) use ($user) { // Add $user variable here
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
