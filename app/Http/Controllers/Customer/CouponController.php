@@ -18,7 +18,7 @@ class CouponController extends Controller
 
         if($check)
         {
-            $response = ['status'=>true,"message" => "Coupon matched Successfully!"];
+            $response = ['status'=>true,"message" => "Coupon matched Successfully!","data" => $check];
             return response($response, 200);
         }
         else
