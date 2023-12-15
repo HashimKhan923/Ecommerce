@@ -22,5 +22,10 @@ class Order extends Model
         return $this->hasMany(OrderStatus::class,'order_id','id');
     } 
 
+    public function order_tracking()
+    {
+        return $this->hasOne(OrderTracking::class,'order_id','id');
+    } 
+
     use HasFactory;
 }
