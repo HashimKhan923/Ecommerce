@@ -9,9 +9,9 @@ use Carbon\Carbon;
 
 class CouponController extends Controller
 {
-    public function index($id)
+    public function index($seller_id)
     {
-        $data = Coupon::where('creator_id',$id)->get();
+        $data = Coupon::where('creator_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
