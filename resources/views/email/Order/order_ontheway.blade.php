@@ -50,9 +50,12 @@
     <div class="container">
         <img src="https://dashboard.dragonautomart.com/assets/authlogo-9138a1c6.png" width="200" alt="Company Logo" class="logo">
         <h2>Your Order Is On the Way</h2>
+        <br>
+        <h3>Tracking Number: {{$TrackingOrder->tracking_number}}</h3>
+        <br>
         <p>Dear {{$buyer_name}},</p>
         <br>
-        <p>We are excited to inform you that your order is now on its way to your delivery address. You can expect your order to arrive within the estimated delivery time frame.</p>
+        <p>We are excited to inform you that your order is now on its way to your delivery address by {{$TrackingOrder->courier_name}}. You can expect your order to arrive within the estimated delivery time frame.</p>
         <br>
         <p>If you have any questions or need assistance with your order, please feel free to contact our customer support at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
         <br>
