@@ -583,7 +583,7 @@ class ProductController extends Controller
 
     }
 
-    public function is_featured($id)
+    public function is_featured(Request $request)
     {
 
         $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
@@ -591,7 +591,7 @@ class ProductController extends Controller
         {
 
 
-        $is_featured = Product::where('id',$id)->first();
+        $is_featured = Product::where('id',$request->product_id)->first();
 
         if($is_featured->featured == 0)
         {
