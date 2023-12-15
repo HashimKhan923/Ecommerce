@@ -604,6 +604,10 @@ class ProductController extends Controller
 
         $is_featured->save();
 
+        $dedect = SubscribeUser::where('user_id',$request->user_id)->first();
+        $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
+        $dedect->save();
+
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
 
