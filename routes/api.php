@@ -473,7 +473,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/coupon/'], function() {
                 Route::controller(App\Http\Controllers\Seller\CouponController::class)->group(function () {
-                    Route::get('show/{id}','index');
+                    Route::get('show/{seller_id}','index');
                     Route::post('create','create');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
