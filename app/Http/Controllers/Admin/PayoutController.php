@@ -25,9 +25,9 @@ class PayoutController extends Controller
         $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
 
         $bankAccountDetails = [
-            'account_number' => $BankDetail->account_number,
-            'routing_number' => $BankDetail->routing_number,    
-            'account_holder_name' => $BankDetail->account_title,           
+            'account_holder_name' => utf8_encode($BankDetail->account_title),
+            'account_number' => utf8_encode($BankDetail->account_number),
+            'routing_number' => utf8_encode($BankDetail->routing_number),          
         ];
 
         
