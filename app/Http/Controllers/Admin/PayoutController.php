@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\Payout as payout;
+use App\Models\Payout;
 use App\Models\BankDetail;
 use Stripe\Stripe;
-use Stripe\Payout;
+use Stripe\Transfer;
 
 class PayoutController extends Controller
 {
@@ -34,18 +34,22 @@ class PayoutController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         
-        Payout::create([
-            'amount' => $request->amount * 100, // Amount in cents
+        Transfer::create([
+            'amount' => $request->amount * 100,
             'currency' => 'usd',
-            'destination' => $bankAccountDetails['account_number'], // Use the account number as the destination
-            'source_type' => 'bank_account', // Specify the source type as a bank account
+            'destination' => $bankAccountDetails,
         ]);
 
 
-        // $PaymentStatus = Payout::where('id',$request->payout_id)->first();
-        // $PaymentStatus->payment_status = 'Paid';
-        // $PaymentStatus->save();
+        $PaymentStatus = Payout::where('id',$request->payout_id)->first();
+        $PaymentStatus->payment_status = 'Paid';
+        $PaymentStatus->save();
 
+
+
+
+
+        
 
         return response()->json(['message' => 'Payment made successfully']);
     
