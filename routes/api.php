@@ -276,7 +276,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                         });
                     });
 
-                    Route::post('/v1/transfers', 'App\Http\Controllers\Admin\PayoutController@payment');
+                    Route::post('/v1/payouts', 'App\Http\Controllers\Admin\PayoutController@payment');
 
 
                                                         /// Refund Time \\\
