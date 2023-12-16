@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Payout;
+use App\Models\BankDetail;
 use Stripe\Stripe;
 use Stripe\Transfer;
 
@@ -21,26 +22,29 @@ class PayoutController extends Controller
     {
 
         
-        $vendor = User::findOrFail($vendorId);
+        $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
 
         $bankAccountDetails = [
-            'account_number' => 'XXXXXXXXXXXX', 
-            'routing_number' => 'YYYYYYYYY',    
-            'account_holder_name' => 'Vendor Name',            
+            'account_number' => $BankDetail->account_number,
+            'routing_number' => $BankDetail->routing_number,    
+            'account_holder_name' => $BankDetail->account_title,           
         ];
 
         
         Stripe::setApiKey(config('services.stripe.secret'));
 
         
-        $transfer = Transfer::create([
+        Transfer::create([
             'amount' => $request->amount * 100,
             'currency' => 'usd',
-            'source_transaction' => $request->source_transaction,
             'destination' => $bankAccountDetails,
         ]);
 
-        
+
+        $PaymentStatus = Payout::where('id',$request->payout_id)->first();
+        $PaymentStatus->payment_status = 'Paid';
+        $PaymentStatus->save();
+
 
         return response()->json(['message' => 'Payment made successfully']);
     
