@@ -272,11 +272,12 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                     Route::group(['prefix' => '/admin/payout/'], function() {
                         Route::controller(App\Http\Controllers\Admin\PayoutController::class)->group(function () {
-                            Route::get('show','index');
-                            Route::post('v1/transfers','payment');
-                            
+                            Route::get('show','index');                            
                         });
                     });
+
+                    Route::post('/v1/transfers', 'App\Http\Controllers\Admin\PayoutController@payment');
+
 
                                                         /// Refund Time \\\
 
