@@ -20,7 +20,6 @@ class PayoutController extends Controller
 
     public function payment(Request $request)
     {
-        return 1;
 
         
         $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
