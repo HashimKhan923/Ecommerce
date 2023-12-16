@@ -20,6 +20,7 @@ class RefundController extends Controller
 
         $new = new Refund();
         $new->order_id = $request->order_id;
+        $new->seller_id = $request->seller_id;
         $new->reason = $request->reason;
         $new->save();
 
