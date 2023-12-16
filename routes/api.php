@@ -273,7 +273,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::group(['prefix' => '/admin/payout/'], function() {
                         Route::controller(App\Http\Controllers\Admin\PayoutController::class)->group(function () {
                             Route::get('show','index');
-                            Route::post('pay','payment');
+                            Route::get('status/{payout_id}','status');
                             Route::get('delete/{id}','delete'); 
                         });
                     });
