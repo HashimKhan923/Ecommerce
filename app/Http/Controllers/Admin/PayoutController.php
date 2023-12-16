@@ -18,13 +18,15 @@ class PayoutController extends Controller
         return response()->json(['data'=>$data]);
     }
 
+    private function normalizeString($string)
+    {
+        return preg_replace('/[^\p{L}\p{N}\s]/u', '', $string);
+    }
+
     public function payment(Request $request)
     {
 
-        function normalizeString($string)
-        {
-            return preg_replace('/[^\p{L}\p{N}\s]/u', '', $string);
-        }
+
 
         
         $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
