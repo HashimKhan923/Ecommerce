@@ -63,6 +63,7 @@ class ProductController extends Controller
         $new->price = $request->price;
         $new->shipping = $request->shipping;
         $new->featured = $request->featured;
+        $new->published = $request->published;
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
@@ -254,6 +255,7 @@ class ProductController extends Controller
         $update->price = $request->price;
         $update->shipping = $request->shipping;
         $update->featured = $request->featured;
+        $update->published = $request->published;
         $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
