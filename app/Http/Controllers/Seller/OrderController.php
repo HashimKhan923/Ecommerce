@@ -87,7 +87,7 @@ class OrderController extends Controller
             $NewPayout->seller_id = $order->seller_id;
             $NewPayout->order_id = $order->id;
             $NewPayout->amount = $order->amount;
-            $NewPayout->payment_status = $order->payment_method;
+            // $NewPayout->payment_status = $order->payment_method;
             $NewPayout->save();
 
 
