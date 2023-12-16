@@ -34,11 +34,22 @@ class PayoutController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         
-        Transfer::create([
-            'amount' => $request->amount * 100,
-            'currency' => 'usd',
-            'destination' => $bankAccountDetails,
-        ]);
+        try {
+            Transfer::create([
+                'amount' => $request->amount * 100,
+                'currency' => 'usd',
+                'destination' => $bankAccountDetails,
+            ]);
+        } catch (\Stripe\Exception\CardException $e) {
+            // Handle specific card errors
+            dd($e->getError());
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Handle general API errors
+            dd($e->getError());
+        } catch (Exception $e) {
+            // Handle other exceptions
+            dd($e->getMessage());
+        }
 
 
         $PaymentStatus = Payout::where('id',$request->payout_id)->first();
