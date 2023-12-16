@@ -34,11 +34,29 @@ class PayoutController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         
-        Transfer::create([
-            'amount' => $request->amount * 100,
-            'currency' => 'usd',
-            'destination' => $bankAccountDetails,
-        ]);
+        try {
+            Transfer::create([
+                'amount' => $request->amount * 100,
+                'currency' => 'usd',
+                'destination' => $bankAccountDetails,
+            ]);
+        } catch (\Stripe\Exception\CardException $e) {
+            // This will catch errors like card errors
+            echo 'Error: ' . $e->getError()->message;
+        } catch (\Stripe\Exception\RateLimitException $e) {
+            // Too many requests made to the API too quickly
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Invalid parameters were supplied to Stripe's API
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Authentication with Stripe's API failed
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Network communication with Stripe failed
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // General API error
+            echo 'Error: ' . $e->getError()->message;
+        } catch (Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+        }
 
 
         $PaymentStatus = Payout::where('id',$request->payout_id)->first();
