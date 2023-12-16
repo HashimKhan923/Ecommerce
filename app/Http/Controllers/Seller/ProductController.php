@@ -208,9 +208,9 @@ class ProductController extends Controller
             }
         }
 
-        $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
-        $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
-        $dedect->save();
+        // $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
+        // $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
+        // $dedect->save();
 
 
 
