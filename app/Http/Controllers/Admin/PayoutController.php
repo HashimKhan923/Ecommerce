@@ -21,14 +21,18 @@ class PayoutController extends Controller
     public function payment(Request $request)
     {
 
+        function normalizeString($string)
+        {
+            return preg_replace('/[^\p{L}\p{N}\s]/u', '', $string);
+        }
+
         
         $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
 
         $bankAccountDetails = [
-            'account_holder_name' => trim($BankDetail->account_title),
-            'account_number' => trim($BankDetail->account_number),
-            'routing_number' => trim($BankDetail->routing_number),
-                      
+            'account_holder_name' => $this->normalizeString($BankDetail->account_title),
+            'account_number' => $this->normalizeString($BankDetail->account_number),
+            'routing_number' => $this->normalizeString($BankDetail->routing_number),
         ];
 
         
