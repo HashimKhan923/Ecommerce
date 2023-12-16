@@ -267,6 +267,17 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+            
+                                                    /// Payout \\\
+
+                    Route::group(['prefix' => '/admin/payout/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\PayoutController::class)->group(function () {
+                            Route::get('show','index');
+                            Route::post('pay','payment');
+                            
+                        });
+                    });
+
                                                         /// Refund Time \\\
 
                 Route::group(['prefix' => '/admin/refund_time/'], function() {
