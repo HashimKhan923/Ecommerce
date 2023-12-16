@@ -113,6 +113,7 @@ class AuthController extends Controller
         $BankDetail->seller_id = $new->id;
         $BankDetail->business_name = $BusineesInformation->business_name;
         $BankDetail->bank_name = $request->bank_name;
+        $BankDetail->account_title = $request->account_title;
         $BankDetail->routing_number = $request->routing_number;
         $BankDetail->account_number = $request->account_number;
         $BankDetail->save();
@@ -346,6 +347,7 @@ class AuthController extends Controller
         $BankDetail = BankDetail::where('seller_id',$update->id)->first();
         $BankDetail->business_name = $BusineesInformation->business_name;
         $BankDetail->bank_name = $request->bank_name;
+        $BankDetail->account_title = $request->account_title;
         $BankDetail->routing_number = $request->routing_number;
         $BankDetail->account_number = $request->account_number;
         $BankDetail->save();
