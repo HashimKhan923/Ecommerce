@@ -59,7 +59,7 @@ class AuthController extends Controller
             $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('ShopLogo'),$filename);
-            $new->logo = $filename;
+            $shop->logo = $filename;
         }
 
         if($request->file('banner')){
@@ -67,7 +67,7 @@ class AuthController extends Controller
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('ShopBanner'),$filename);
-            $new->banner = $filename;
+            $shop->banner = $filename;
         }
         $shop->save();
 
