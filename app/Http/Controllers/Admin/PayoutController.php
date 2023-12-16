@@ -20,53 +20,54 @@ class PayoutController extends Controller
 
 
 
-    public function payment(Request $request)
+    public function status($payout_id)
     {
 
+        // $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
 
-
-        
-        $BankDetail = BankDetail::where('seller_id',$request->seller_id)->first();
-
-        $bankAccountDetails = [
-            'account_holder_name' => utf8_encode(trim($BankDetail->account_title)),
-            'account_number' => utf8_encode(trim($BankDetail->account_number)),
-            'routing_number' => utf8_encode(trim($BankDetail->routing_number)),
-        ];
+        // $bankAccountDetails = [
+        //     'account_holder_name' => utf8_encode(trim($BankDetail->account_title)),
+        //     'account_number' => utf8_encode(trim($BankDetail->account_number)),
+        //     'routing_number' => utf8_encode(trim($BankDetail->routing_number)),
+        // ];
 
         
-        Stripe::setApiKey(config('services.stripe.secret'));
+        // Stripe::setApiKey(config('services.stripe.secret'));
 
         
-        try {
-            Transfer::create([
-                'amount' => $request->amount * 100,
-                'currency' => 'usd',
-                'destination' => $bankAccountDetails,
-            ]);
-        } catch (\Stripe\Exception\CardException $e) {
-            // Handle specific card errors
-            dd($e->getError());
-        } catch (\Stripe\Exception\ApiErrorException $e) {
-            // Handle general API errors
-            dd($e->getError());
-        } catch (Exception $e) {
-            // Handle other exceptions
-            dd($e->getMessage());
+        // try {
+        //     Transfer::create([
+        //         'amount' => $request->amount * 100,
+        //         'currency' => 'usd',
+        //         'destination' => $bankAccountDetails,
+        //     ]);
+        // } catch (\Stripe\Exception\CardException $e) {
+        //     // Handle specific card errors
+        //     dd($e->getError());
+        // } catch (\Stripe\Exception\ApiErrorException $e) {
+        //     // Handle general API errors
+        //     dd($e->getError());
+        // } catch (Exception $e) {
+        //     // Handle other exceptions
+        //     dd($e->getMessage());
+        // }
+
+
+        $PaymentStatus = Payout::where('id',$payout_id)->first();
+
+        if($PaymentStatus->payment_status == 'un_paid')
+        {
+            $PaymentStatus->payment_status = 'Paid';
         }
-
-
-        $PaymentStatus = Payout::where('id',$request->payout_id)->first();
-        $PaymentStatus->payment_status = 'Paid';
+        else
+        {
+            $PaymentStatus->payment_status = 'Un Paid';
+        }
+        
         $PaymentStatus->save();
 
 
-
-
-
-        
-
-        return response()->json(['message' => 'Payment made successfully']);
+        return response()->json(['message' => 'status changed successfully']);
     
     }
 }
