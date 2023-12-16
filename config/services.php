@@ -32,8 +32,8 @@ return [
     ],
 
     'stripe' => [
-        'key' => 'pk_live_51NiN6ZBn8IlFKsgyLkTQUuad9S06TXXV7rZ95Iuuiy1iQkYK27OLc9TaXu9gz2tFnFwmZs62giktyTKxEo5Gatco00REWd2ffQ',
-        'secret' => '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',
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
         
     ],
 
