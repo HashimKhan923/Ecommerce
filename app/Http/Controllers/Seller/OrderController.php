@@ -28,41 +28,8 @@ class OrderController extends Controller
         $user = User::where('id',$order->customer_id)->first();
         $shop = Shop::where('seller_id',$order->seller_id)->first();
 
-
-
-        // if($request->delivery_status == 'Confirmed')
-        // {
-
-
-        //     $OrderStatus = new OrderStatus();
-        //     $OrderStatus->order_id = $request->id;
-        //     $OrderStatus->status = 'confirmed';
-        //     $OrderStatus->save();
-
-        //     Mail::send(
-        //         'email.Order.order_confirmation',
-        //         [
-        //             'buyer_name' => $user->name,
-        //             // 'last_name' => $query->last_name
-        //         ],
-        //         function ($message) use ($user) { // Add $user variable here
-        //             $message->from('support@dragonautomart.com','Dragon Auto Mart');
-        //             $message->to($user->email);
-        //             $message->subject('Order Confirmation');
-        //         }
-        //     );
-        // }
-        // elseif($request->delivery_status == 'Picked Up')
-        // {
-
-        //     $OrderStatus = new OrderStatus();
-        //     $OrderStatus->order_id = $request->id;
-        //     $OrderStatus->status = 'picked up';
-        //     $OrderStatus->save();
-
-        // }
-        // elseif($request->delivery_status == 'Delivered')
-        // {
+        if($request->delivery_status == 'Delivered')
+        {
 
             $OrderStatus = new OrderStatus();
             $OrderStatus->order_id = $request->id;
@@ -104,28 +71,18 @@ class OrderController extends Controller
             $NewPayout->save();
 
 
-        // }
-        // else
-        // {
+        }
+        else
+        {
 
 
+            OrderTracking::where('order_id',$request->id)->delete();
 
-        //     Mail::send(
-        //         'email.Order.order_ontheway',
-        //         [
-        //             'buyer_name' => $user->name,
-        //             'TrackingOrder' => $TrackingOrder
-        //         ],
-        //         function ($message) use ($user) { // Add $user variable here
-        //             $message->from('support@dragonautomart.com','Dragon Auto Mart');
-        //             $message->to($user->email);
-        //             $message->subject('Order Confirmation');
-        //         }
-        //     );
+            $response = ['status'=>true,"message" => "Order Canceled Successfully!"];
+            return response($response, 200);
 
 
-
-        // }
+        }
 
         $order->delivery_status = $request->delivery_status;
         $order->save();
