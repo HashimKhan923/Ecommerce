@@ -75,10 +75,7 @@ class OrderController extends Controller
         else
         {
 
-
             OrderTracking::where('order_id',$request->id)->delete();
-
-
 
         }
 
