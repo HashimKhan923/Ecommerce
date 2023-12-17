@@ -12,12 +12,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $SubscribeUser = SubscribeUser::all();
+        $Users = User::all();
 
         $Products = Product::all();
         $Orders = Order::all();
         
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders]);
+        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders]);
     }
 }
