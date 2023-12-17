@@ -127,9 +127,9 @@ appear in your account.
                                     <td align="left" style="padding-top: 20px;">
                                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                                                <!-- <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Product
-                                                </td>
+                                                </td> -->
                                                 <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Name
                                                 </td>
@@ -145,9 +145,7 @@ appear in your account.
                             @foreach($order->order_detail as $item)
                                             @php $price = $item->price * $item->quantity @endphp
                                             <tr>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                <img src="https://api.dragonautomart.com/ProductGallery/<?php echo $item->products->product_gallery->take(1)->image; ?>" width="100px" alt="">
-                                                </td>
+                                               
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                 {{$item->products->name}}
 
