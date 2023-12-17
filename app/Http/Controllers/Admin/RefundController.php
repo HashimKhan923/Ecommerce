@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Refund;
+use App\Models\Order;
+use App\Models\User;
+use Mail;
 
 class RefundController extends Controller
 {
@@ -34,6 +37,25 @@ class RefundController extends Controller
         $change = Refund::where('id',$request->id)->fisrt();
         $change->refund_status = $request->refund_status;
         $change->save();
+
+
+        $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
+        $user = User::where('id',$Order->customer_id)->first();
+
+
+        Mail::send(
+            'email.Order.order_refund',
+            [
+                'buyer_name' => $user->name,
+                'order' => $Order,
+                // 'last_name' => $query->last_name
+            ],
+            function ($message) use ($user) { // Add $user variable here
+                $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                $message->to($user->email);
+                $message->subject('Order Refund');
+            }
+        );
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
