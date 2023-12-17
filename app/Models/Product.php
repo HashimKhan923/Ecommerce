@@ -52,6 +52,11 @@ class Product extends Model
         return $this->hasMany(ProductGallery::class,'product_id','id');
     }
 
+    public function product_single_gallery()
+    {
+        return $this->hasOne(ProductGallery::class,'product_id','id');
+    }
+
     public function stock()
     {
         return $this->hasOne(Stock::class,'product_id','id');
