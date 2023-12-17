@@ -39,7 +39,7 @@ class RefundController extends Controller
         $change->save();
 
 
-        $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
+        $Order = Order::with('order_detail.products.product_gallery')->where('id',$change->order_id)->first();
         $user = User::where('id',$Order->customer_id)->first();
 
 
