@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>Your Order is Completed</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,12 +55,15 @@
         <h2>Your Order is Completed</h2>
         <p>Dear {{$buyer_name}},</p>
         <br>
-        <p>We are delighted to inform you that your order has been successfully delivered by  to your specified address. We hope you are satisfied with your purchase and that it meets your expectations.</p>
+        <p>Thank you for your order from {{$shop->name}}! We wanted to let you know that your order (#{{$order->id}}) was shipped via {{$TrackingOrder->courier_name}}, on {{$date}}.</p>
         <br>
-        <p>If you have any questions or require further assistance, please do not hesitate to contact our customer support at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
+        <p>You can track your package at any time using the button below.</p>
+        <br>
+        <a href="{{$TrackingOrder->courier_link}}" class="btn btn-info">Track My Order</a>
         <br>
         <p>Thank you for choosing Dragon Auto Mart!</p>
         <br>
+        
         <p>Best regards,<br>
         Dragon Auto Mart</p>
     </div>

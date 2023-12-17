@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payout;
 use App\Models\User;
+use App\Models\Shop;
 use App\Models\OrderStatus;
 use Carbon\Carbon;
 use App\Models\OrderTracking;
@@ -25,47 +26,55 @@ class OrderController extends Controller
     {
         $order = Order::where('id',$request->id)->first();
         $user = User::where('id',$order->customer_id)->first();
+        $shop = Shop::where('seller_id',$order->seller_id)->first();
 
 
 
-        if($request->delivery_status == 'Confirmed')
-        {
+        // if($request->delivery_status == 'Confirmed')
+        // {
 
 
-            $OrderStatus = new OrderStatus();
-            $OrderStatus->order_id = $request->id;
-            $OrderStatus->status = 'confirmed';
-            $OrderStatus->save();
+        //     $OrderStatus = new OrderStatus();
+        //     $OrderStatus->order_id = $request->id;
+        //     $OrderStatus->status = 'confirmed';
+        //     $OrderStatus->save();
 
-            Mail::send(
-                'email.Order.order_confirmation',
-                [
-                    'buyer_name' => $user->name,
-                    // 'last_name' => $query->last_name
-                ],
-                function ($message) use ($user) { // Add $user variable here
-                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($user->email);
-                    $message->subject('Order Confirmation');
-                }
-            );
-        }
-        elseif($request->delivery_status == 'Picked Up')
-        {
+        //     Mail::send(
+        //         'email.Order.order_confirmation',
+        //         [
+        //             'buyer_name' => $user->name,
+        //             // 'last_name' => $query->last_name
+        //         ],
+        //         function ($message) use ($user) { // Add $user variable here
+        //             $message->from('support@dragonautomart.com','Dragon Auto Mart');
+        //             $message->to($user->email);
+        //             $message->subject('Order Confirmation');
+        //         }
+        //     );
+        // }
+        // elseif($request->delivery_status == 'Picked Up')
+        // {
 
-            $OrderStatus = new OrderStatus();
-            $OrderStatus->order_id = $request->id;
-            $OrderStatus->status = 'picked up';
-            $OrderStatus->save();
+        //     $OrderStatus = new OrderStatus();
+        //     $OrderStatus->order_id = $request->id;
+        //     $OrderStatus->status = 'picked up';
+        //     $OrderStatus->save();
 
-        }
-        elseif($request->delivery_status == 'Delivered')
-        {
+        // }
+        // elseif($request->delivery_status == 'Delivered')
+        // {
 
             $OrderStatus = new OrderStatus();
             $OrderStatus->order_id = $request->id;
             $OrderStatus->status = 'deliverd';
             $OrderStatus->save();
+
+            $TrackingOrder = new OrderTracking();
+            $TrackingOrder->order_id = $order->id;
+            $TrackingOrder->tracking_number = $request->tracking_number;
+            $TrackingOrder->courier_name = $request->courier_name;
+            $TrackingOrder->courier_link = $request->courier_link;
+            $TrackingOrder->save();
 
 
 
@@ -73,6 +82,10 @@ class OrderController extends Controller
                 'email.Order.order_completed',
                 [
                     'buyer_name' => $user->name,
+                    'shop' => $shop,
+                    'order'=> $order,
+                    'TrackingOrder' => $TrackingOrder,
+                    'date' => Carbon::today()->toDateString()
                 ],
                 function ($message) use ($user) { // Add $user variable here
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
@@ -80,6 +93,7 @@ class OrderController extends Controller
                     $message->subject('Order Confirmation');
                 }
             );
+
 
             
             $NewPayout = new Payout();
@@ -87,41 +101,31 @@ class OrderController extends Controller
             $NewPayout->seller_id = $order->seller_id;
             $NewPayout->order_id = $order->id;
             $NewPayout->amount = $order->amount;
-            // $NewPayout->payment_status = $order->payment_method;
             $NewPayout->save();
 
 
-        }
-        else
-        {
-
-            $OrderStatus = new OrderStatus();
-            $OrderStatus->order_id = $request->id;
-            $OrderStatus->status = 'on_the_way';
-            $OrderStatus->save();
-
-            $TrackingOrder = new OrderTracking();
-            $TrackingOrder->order_id = $order->id;
-            $TrackingOrder->tracking_number = $request->tracking_number;
-            $TrackingOrder->courier_name = $request->courier_name;
-            $TrackingOrder->save();
-
-            Mail::send(
-                'email.Order.order_ontheway',
-                [
-                    'buyer_name' => $user->name,
-                    'TrackingOrder' => $TrackingOrder
-                ],
-                function ($message) use ($user) { // Add $user variable here
-                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($user->email);
-                    $message->subject('Order Confirmation');
-                }
-            );
+        // }
+        // else
+        // {
 
 
 
-        }
+        //     Mail::send(
+        //         'email.Order.order_ontheway',
+        //         [
+        //             'buyer_name' => $user->name,
+        //             'TrackingOrder' => $TrackingOrder
+        //         ],
+        //         function ($message) use ($user) { // Add $user variable here
+        //             $message->from('support@dragonautomart.com','Dragon Auto Mart');
+        //             $message->to($user->email);
+        //             $message->subject('Order Confirmation');
+        //         }
+        //     );
+
+
+
+        // }
 
         $order->delivery_status = $request->delivery_status;
         $order->save();

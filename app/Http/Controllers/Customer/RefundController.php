@@ -35,7 +35,6 @@ class RefundController extends Controller
 
         $response = ['status'=>true,'message'=>'deleted successfully!'];
         return response($response,200);
-
     }
 
 }
