@@ -24,7 +24,7 @@ class RefundController extends Controller
         $new->reason = $request->reason;
         $new->save();
 
-        $response = ['status'=>true,'message'=>'sent successfully!'];
+        $response = ['status'=>true,'message'=>'Refunf request sent successfully!'];
         return response($response,200);
 
     }
