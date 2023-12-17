@@ -78,8 +78,6 @@ class OrderController extends Controller
 
             OrderTracking::where('order_id',$request->id)->delete();
 
-            $response = ['status'=>true,"message" => "Order Canceled Successfully!"];
-            return response($response, 200);
 
 
         }
