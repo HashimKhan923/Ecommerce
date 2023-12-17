@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('order_trackings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('order_id')->unsigned()->nullable();
-            $table->foreign('order_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
             $table->string('tracking_number')->nullable();
             $table->string('courier_name')->nullable();
+            $table->string('courier_link')->nullable();
             $table->timestamps();
         });
     }
