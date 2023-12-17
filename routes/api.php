@@ -646,7 +646,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => 'refund/'], function() {
         Route::controller(App\Http\Controllers\Customer\RefundController::class)->group(function () {
-            Route::get('show/{id}','index');
+            Route::get('show/{customer_id}','index');
             Route::post('create','create');
             Route::get('delete/{id}','delete');
         });
