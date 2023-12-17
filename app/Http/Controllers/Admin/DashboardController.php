@@ -10,7 +10,7 @@ use App\Models\Order;
 
 class DashboardController extends Controller
 {
-    public function index($id)
+    public function index()
     {
         $SubscribeUser = SubscribeUser::all();
 
