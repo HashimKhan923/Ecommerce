@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SubscribeUser;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
