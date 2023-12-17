@@ -11,7 +11,7 @@ class RefundController extends Controller
 {
     public function index($customer_id)
     {
-        $data = Refund::where('customer_id',$customer_id)->get();
+        $data = Refund::with('order')->where('customer_id',$customer_id)->get();
 
         return response()->json(['data'=>$data]);
     }
