@@ -13,7 +13,7 @@ class RefundController extends Controller
 {
     public function index()
     {
-        $data = Refund::all();
+        $data = Refund::with('order')->get();
 
         return response()->json(['data'=>$data]);
     }
