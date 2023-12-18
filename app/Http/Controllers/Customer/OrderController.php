@@ -50,6 +50,7 @@ public function create(Request $request)
         $newOrder->seller_id = $vendorId;
         $newOrder->amount = $vendorTotalAmount; // Set the total amount for the current vendor
         $newOrder->information = $request->information;
+        $newOrder->strip_payment_id = $request->strip_payment_id;
         $newOrder->payment_method = $request->payment_method;
         $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
