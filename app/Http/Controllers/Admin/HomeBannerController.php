@@ -54,6 +54,14 @@ class HomeBannerController extends Controller
             $new->banner3 = $filename;
         }
 
+        if($request->file('banner4')){
+
+            $file= $request->banner4;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->banner4 = $filename;
+        }
+
         $new->save();
 
         
@@ -104,6 +112,19 @@ class HomeBannerController extends Controller
             $update->banner3 = $filename;
         }
 
+        if($request->file('banner4')){
+
+            if($update->banner4)
+            {
+                unlink(public_path('HomeBanner/'.$update->banner4));
+            }
+
+            $file= $request->banner4;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->banner4 = $filename;
+        }
+
         $update->save();
 
         
@@ -128,6 +149,11 @@ class HomeBannerController extends Controller
         if($file->banner3)
         {
             unlink(public_path('HomeBanner/'.$file->banner3));
+        }
+
+        if($file->banner4)
+        {
+            unlink(public_path('HomeBanner/'.$file->banner4));
         }
 
         $file->delete();
