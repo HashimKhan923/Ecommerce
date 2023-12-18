@@ -116,7 +116,7 @@
                                 <tr>
                                     <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                         <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Total amount refunded: <b>{{$order->amount}}</b>. It may take upto 10 days for this refund to
+                                            Total amount refunded: <b>${{$order->amount}}</b>. It may take upto 10 days for this refund to
 <br>
 appear in your account.
 
@@ -143,7 +143,7 @@ appear in your account.
                                             </tr>
                                             
                             @foreach($order->order_detail as $item)
-                                            @php $price = $item->price * $item->quantity @endphp
+                                            @php $price = $item->product_price * $item->quantity @endphp
                                             <tr>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                 <img src="https://api.dragonautomart.com/ProductGallery/<?php echo $item->products->product_single_gallery->image; ?>" width="100px" alt="">
