@@ -34,12 +34,12 @@ class RefundController extends Controller
 
     public function change_status(Request $request)
     {
-        $change = Refund::where('id',$request->id)->fisrt();
+        $change = Refund::where('id',$request->id)->first();
         $change->refund_status = $request->refund_status;
         $change->save();
 
 
-        $Order = Order::with('order_detail.products.product_gallery')->where('id',$change->order_id)->first();
+        $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
         $user = User::where('id',$Order->customer_id)->first();
 
 
@@ -50,7 +50,7 @@ class RefundController extends Controller
                 'order' => $Order,
                 // 'last_name' => $query->last_name
             ],
-            function ($message) use ($user) { // Add $user variable here
+            function ($message) use ($user) {
                 $message->from('support@dragonautomart.com','Dragon Auto Mart');
                 $message->to($user->email);
                 $message->subject('Order Refund');
