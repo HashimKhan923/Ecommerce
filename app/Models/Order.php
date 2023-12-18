@@ -27,5 +27,10 @@ class Order extends Model
         return $this->hasOne(OrderTracking::class,'order_id','id');
     } 
 
+    public function order_refund()
+    {
+        return $this->hasOne(Refund::class,'order_id','id');
+    } 
+
     use HasFactory;
 }
