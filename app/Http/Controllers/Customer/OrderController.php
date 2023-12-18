@@ -33,11 +33,9 @@ public function create(Request $request)
     
     $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
     
-    // Group the products by vendor ID
     $productsByVendor = $products->groupBy('user_id');
     
     foreach ($productsByVendor as $vendorId => $vendorProducts) {
-        // Calculate the total amount for the current vendor
         $vendorTotalAmount = $vendorProducts->sum(function ($product) use ($request) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
             return $orderProduct['product_price'] * $orderProduct['quantity'];
@@ -48,7 +46,7 @@ public function create(Request $request)
         $newOrder->number_of_products = count($vendorProducts);
         $newOrder->customer_id = $request->customer_id;
         $newOrder->seller_id = $vendorId;
-        $newOrder->amount = $vendorTotalAmount; // Set the total amount for the current vendor
+        $newOrder->amount = $vendorTotalAmount; 
         $newOrder->information = $request->information;
         $newOrder->stripe_payment_id = $request->stripe_payment_id;
         $newOrder->payment_method = $request->payment_method;
