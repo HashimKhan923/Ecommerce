@@ -49,6 +49,11 @@ class PaymentController extends Controller
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
+                'metadata' => [
+                    'customer_name' => $request->customer_name,
+                    'customer_email' => $request->customer_email,
+                    // Add any other metadata you want to include
+                ],
             ]);
     
             return response()->json([
