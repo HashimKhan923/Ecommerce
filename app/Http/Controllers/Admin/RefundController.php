@@ -42,7 +42,7 @@ class RefundController extends Controller
 
         $refund = StripeRefund::create([
             'payment_intent' => $request->payment_intent_id,
-            'amount' => $request->amount,
+            'amount' => $request->amount * 100,
         ]);
 
 
