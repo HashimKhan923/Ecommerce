@@ -65,10 +65,10 @@ class PackageController extends Controller
 
         if($request->file('logo')){
 
-            if($update->logo)
-            {
-                unlink(public_path('Package/'.$update->logo));
-            }
+            // if($update->logo)
+            // {
+            //     unlink(public_path('Package/'.$update->logo));
+            // }
 
             $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
