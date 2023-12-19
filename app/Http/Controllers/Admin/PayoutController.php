@@ -55,13 +55,13 @@ class PayoutController extends Controller
 
         $PaymentStatus = Payout::where('id',$payout_id)->first();
 
-        if($PaymentStatus->payment_status == 'Un Paid')
+        if($PaymentStatus->status == 'Un Paid')
         {
-            $PaymentStatus->payment_status = 'Paid';
+            $PaymentStatus->status = 'Paid';
         }
         else
         {
-            $PaymentStatus->payment_status = 'Un Paid';
+            $PaymentStatus->status = 'Un Paid';
         }
         
         $PaymentStatus->save();
