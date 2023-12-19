@@ -67,10 +67,12 @@ class OrderController extends Controller
             $NewPayout->date = Carbon::now();
             $NewPayout->seller_id = $order->seller_id;
             $NewPayout->order_id = $order->id;
-            
-            $adjustedAmount = $order->amount * (1 - 0.03);
-            
-            $NewPayout->amount = $adjustedAmount;
+            $orderAmountInCents = $order->amount * 100; 
+            $percentageDeduction = $orderAmountInCents * 0.03; 
+            $fixedDeduction = 30; 
+            $adjustedAmountInCents = $orderAmountInCents - $percentageDeduction - $fixedDeduction;
+            $adjustedAmountInDollars = $adjustedAmountInCents / 100;
+            $NewPayout->amount = $adjustedAmountInDollars;
             $NewPayout->save();
 
 
