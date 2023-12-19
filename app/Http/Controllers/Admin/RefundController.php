@@ -8,6 +8,8 @@ use App\Models\Refund;
 use App\Models\Order;
 use App\Models\User;
 use Mail;
+use Stripe\Stripe;
+use Stripe\Refund as StripeRefund;
 
 class RefundController extends Controller
 {
@@ -34,6 +36,16 @@ class RefundController extends Controller
 
     public function change_status(Request $request)
     {
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+
+        $refund = StripeRefund::create([
+            'payment_intent' => $request->payment_intent_id,
+            'amount' => $request->amount,
+        ]);
+
+
         $change = Refund::where('id',$request->id)->first();
         $change->refund_status = $request->refund_status;
         $change->save();
