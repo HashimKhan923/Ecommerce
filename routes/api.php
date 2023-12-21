@@ -369,6 +369,16 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('createOrUpdate','createOrUpdate');
                 });
             }); 
+
+
+                                                                    /// ReturnPolicy \\\
+
+            Route::group(['prefix' => '/admin/return_policy/'], function() {
+                Route::controller(App\Http\Controllers\Admin\ReturnPolicyController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::post('createOrUpdate','createOrUpdate');
+                });
+            }); 
             
                                                                 /// Disclaimer \\\
     
@@ -385,6 +395,19 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/admin/contactus'], function() {
             Route::controller(App\Http\Controllers\Admin\ContactUsController::class)->group(function () {   
                 Route::post('show','index');
+            });
+        });
+
+
+                                                    /// F&Qs \\\
+
+        Route::group(['prefix' => '/admin/f&qs/'], function() {
+            Route::controller(App\Http\Controllers\Admin\FandQController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+                Route::get('multi_delete/{ids}','multi_delete');
             });
         });
 
