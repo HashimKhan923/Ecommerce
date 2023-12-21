@@ -43,11 +43,10 @@ class FandQController extends Controller
 
     }
 
-    public function multi_delete($ids)
+    public function multi_delete(Request $request)
     {
-        FandQ::whereIn('id',$id)->delete();
+        FandQ::whereIn('id',$request->ids)->delete();
 
         return response()->json(['message'=>'deleted successfully!',200]);
-
     }
 }
