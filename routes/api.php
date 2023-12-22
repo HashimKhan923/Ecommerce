@@ -730,3 +730,21 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::get('app/show','app_index');
             });
         });  
+
+
+                                                        /// F&Qs \\\
+
+            Route::group(['prefix' => 'f&qs/'], function() {
+                Route::controller(App\Http\Controllers\Customer\FandQController::class)->group(function () {
+                    Route::get('show','index');
+                });
+            });  
+
+
+                                                                    /// Return Policy \\\
+
+            Route::group(['prefix' => 'return_policy/'], function() {
+                Route::controller(App\Http\Controllers\Customer\ReturnPolicyController::class)->group(function () {
+                    Route::get('show','index');
+                });
+            });  
