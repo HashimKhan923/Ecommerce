@@ -8,9 +8,16 @@ use App\Models\ReturnPolicy;
 
 class ReturnPolicyController extends Controller
 {
-    public function index()
+    public function web_index()
     {
-        $data = ReturnPolicy::first();
+        $data = ReturnPolicy::select('web_text')->first();
+
+        return response()->json(['data'=>$data]);
+    }
+
+    public function app_index()
+    {
+        $data = ReturnPolicy::select('app_text')->first();
 
         return response()->json(['data'=>$data]);
     }
