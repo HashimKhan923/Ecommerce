@@ -13,6 +13,6 @@ class FandQController extends Controller
     {
         $data = FandQ::all();
 
-        return response()->jaon(['data'=>$data]);
+        return response()->json(['data'=>$data]);
     }
 }
