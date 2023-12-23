@@ -745,7 +745,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => 'return_policy/'], function() {
                 Route::controller(App\Http\Controllers\Customer\ReturnPolicyController::class)->group(function () {
-                    Route::get('show','index');
+                    Route::get('web/show','index');
                     Route::get('app/show','app_index');
                 });
             });  
