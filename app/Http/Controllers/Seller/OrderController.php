@@ -11,6 +11,7 @@ use App\Models\Shop;
 use App\Models\OrderStatus;
 use Carbon\Carbon;
 use App\Models\OrderTracking;
+use App\Models\Notification;
 use Mail;
 
 class OrderController extends Controller
@@ -74,6 +75,12 @@ class OrderController extends Controller
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             $NewPayout->amount = $adjustedAmountInDollars;
             $NewPayout->save();
+
+
+            $notification = new Notification();
+            $notification->customer_id = $user->id;
+            $notification->notification = 'your order #'.$order->id.'has been ready to delivered';
+            $notification->save();
 
 
         }

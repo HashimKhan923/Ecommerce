@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Refund;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Notification;
 use Mail;
 use Stripe\Stripe;
 use Stripe\Refund as StripeRefund;
@@ -53,6 +54,11 @@ class RefundController extends Controller
 
         $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
         $user = User::where('id',$Order->customer_id)->first();
+
+        $notification = new Notification();
+        $notification->customer_id = $user->id;
+        $notification->notification = 'your #'.$order->id.' refund request has been fulfield by admin and you will recive your amount in 5 to 10 working days.';
+        $notification->save();
 
 
         Mail::send(
