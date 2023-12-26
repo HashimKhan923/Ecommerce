@@ -754,7 +754,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => 'notifications/'], function() {
                 Route::controller(App\Http\Controllers\Customer\NotificationController::class)->group(function () {
-                    Route::get('show','index');
+                    Route::get('show/{customer_id}','index');
                     Route::get('delete/{notification_id}','delete');
                 });
             });  
