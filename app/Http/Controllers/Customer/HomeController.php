@@ -25,9 +25,12 @@ class HomeController extends Controller
 
         $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
-        ->withCount('reviews') 
-        ->withAvg('reviews.rating as average_rating')
-        ->orderByDesc('average_rating')
+        ->withCount('reviews')
+        ->with(['reviews' => function ($query) {
+            $query->select('product_id', \DB::raw('AVG(rating) as average_rating'))
+                ->groupBy('product_id');
+        }])
+        ->orderByDesc('reviews.average_rating')
         ->get();
 
         $Categories = Category::where('is_active',1)->get();
