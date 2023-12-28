@@ -17,6 +17,19 @@ class HomeController extends Controller
     public function index()
     {
         $Products = Product::with('user','category','brand','model','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
+
+        $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
+        ->where('published', 1)
+        ->orderBy('num_of_sale', 'desc')
+        ->get();
+
+        $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
+        ->where('published', 1)
+        ->withCount('reviews') 
+        ->withAvg('reviews.rating as average_rating')
+        ->orderByDesc('average_rating')
+        ->get();
+
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
@@ -25,8 +38,7 @@ class HomeController extends Controller
         $Shops = Shop::with('seller','product.product_gallery','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax')->get();
 
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
-
+        return response()->json(['Products'=>$Products,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
     }
 
     
