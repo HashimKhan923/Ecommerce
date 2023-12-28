@@ -30,7 +30,7 @@ class HomeController extends Controller
             $query->select('product_id', DB::raw('AVG(rating) as avg_rating'))
                 ->groupBy('product_id');
         }])
-        ->orderByDesc('reviews.avg_rating')
+        ->orderByDesc('reviews.rating')
         ->get();
 
         $Categories = Category::where('is_active',1)->get();
