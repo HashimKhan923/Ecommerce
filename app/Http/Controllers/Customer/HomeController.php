@@ -11,6 +11,7 @@ use App\Models\Banner;
 use App\Models\HomeBanner;
 use App\Models\State;
 use App\Models\Shop;
+use DB;
 
 class HomeController extends Controller
 {
@@ -25,12 +26,11 @@ class HomeController extends Controller
 
         $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
-        ->withCount('reviews') // Add a 'reviews_count' attribute to each product
         ->with(['reviews' => function ($query) {
-            $query->select('product_id', \DB::raw('AVG(rating) as average_rating'))
+            $query->select('product_id', DB::raw('AVG(rating) as avg_rating'))
                 ->groupBy('product_id');
         }])
-        ->orderByDesc('reviews.average_rating')
+        ->orderByDesc('reviews.avg_rating')
         ->get();
 
         $Categories = Category::where('is_active',1)->get();
