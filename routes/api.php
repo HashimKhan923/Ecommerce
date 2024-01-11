@@ -760,3 +760,13 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('delete/{notification_id}','delete');
                 });
             });  
+
+
+
+                                                        /// SellerContact \\\
+
+                Route::group(['prefix' => 'product/query/'], function() {
+                    Route::controller(App\Http\Controllers\Customer\SellerContactController::class)->group(function () {
+                        Route::get('send','send');;
+                    });
+                });  
