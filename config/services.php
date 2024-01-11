@@ -37,6 +37,11 @@ return [
         
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'secret' => env('PAYPAL_SECRET'),
+    ],
+
 
         'google' => [
             'client_id' => '400530329929-hlp4g1d951orjf69l7nauf90c7qlqvdr.apps.googleusercontent.com',

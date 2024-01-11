@@ -607,7 +607,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
-                                                       /// Address \\\
+                                                       /// Cart \\\
 
         Route::group(['prefix' => '/cart'], function() {
         Route::controller(App\Http\Controllers\Customer\CartController::class)->group(function () {
@@ -699,7 +699,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => 'payment/'], function() {
         Route::controller(App\Http\Controllers\Customer\PaymentController::class)->group(function () {
-            Route::post('stripe','payment');     
+            Route::post('stripe','stripe_payment');    
+            Route::post('paypal','paypal_payment');    
         });
     });
 
