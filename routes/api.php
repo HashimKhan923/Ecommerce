@@ -767,6 +767,6 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => 'product/query/'], function() {
                     Route::controller(App\Http\Controllers\Customer\SellerContactController::class)->group(function () {
-                        Route::get('send','send');;
+                        Route::post('send','send');
                     });
                 });  
