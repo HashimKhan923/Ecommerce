@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Contact Us Information</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -71,23 +71,21 @@
 
 <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
-
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
                     <tr>
-                        <td align="center" valign="top" style="font-size:0;padding: 6px;padding-top: 43px;" bgcolor="#4D4D4D">
+                        <td align="center" valign="top" style="font-size:0; padding: 6px;padding-top: 43px;" bgcolor="#4D4D4D">
 
-                            <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;">
+                        <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;">
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                     <tr>
                                         <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 48px;" class="mobile-center">
-                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff; margin-left: 24px">Dragon Auto Mart</h1>
+                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff; margin-left:24px">Dragon Auto Mart</h1>
                                         </td>
                                     </tr>
-                                    
                                 </table>
                             </div>
 
@@ -95,7 +93,7 @@
                                 <table align="right" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                     <tr>
                                         <td align="right" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
-                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px; margin-right: 24px" alt="">
+                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px; margin-right:24px"alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -107,104 +105,27 @@
                         <td align="center" style="padding: 35px 35px 20px 35px; background-color: #ffffff;" bgcolor="#ffffff">
                             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
                                 <tr>
-                                    <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-                                        <img src="https://img.icons8.com/carbon-copy/100/000000/checked-checkbox.png" width="125" height="120" style="display: block; border: 0px;" /><br>
-                                        <h2 style="font-size: 30px; font-weight: 600; line-height: 36px; color: #333333; margin: 0;">
-                                            Thank You For Your Order!
-                                        </h2>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-                                        <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Hi Khan, Thank you for placing your order. We're currently preparing it for shipment. Due to high demand, please allow 3-5 business days for preparation and shipping. 
-<br>
-For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. 
-<br>
-You'll receive an email with tracking information once your order is shipped. 
-<br>
-If you have a shipping address at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="padding-top: 20px;">
-                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Product
-                                                </td>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Name
-                                                </td>
-                                                <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Quantity
-                                                </td>
+    
+    <h2 class="mt-3">Thank You for Subscribing!</h2>
+    
 
-                                                <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Price
-                                                </td>
-                                            </tr>
+    <p>We are thrilled to welcome you to our community! Thank you for subscribing to our newsletter. You are now part of an exclusive group that receives the latest updates, news, and special offers from Dragon Auto Mart.</p>
 
-                                   
+    <p>If you have any questions or need assistance, feel free to reach out to us at support@dragonautomart.com.</p>
 
-                                            <tr>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                <img src="https://api.dragonautomart.com/ProductGallery/ " width="100px" alt="">
-                                                </td>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    product 1
-                                                </td>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                5
-                                                </td>
-                                                <td width="20%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    65.0
-                                                </td>
-                                            </tr>
+    <p>Thank you once again for joining us!</p>
 
-
-
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="padding-top: 20px;">
-                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    TOTAL
-                                                </td>
-                                                <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                $45.9
-                                                </td>
-                                            </tr>
-                                        </table>
+    <p>Best regards,<br>Dragon Auto Mart</p>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-                    <tr>
-                        <td align="center" height="100%" valign="top" width="100%" style="padding: 0 35px 35px 35px; background-color: #ffffff;" bgcolor="#ffffff">
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px;">
-                                <tr>
-                                    <td align="center" valign="top" style="font-size:0;">
-                                        <div style="display:inline-block; max-width:50%; min-width:240px; vertical-align:top; width:100%;">
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
 
-                                            <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                                <tr>
-                                                    <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-                                                        <p style="font-weight: 800;">Delivery Address</p>
-                                                        <p>dsds<br>dsdsds<br>dssddsd, dsdasd</p>
-
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+</html>

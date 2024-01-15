@@ -1,79 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset</title>
-    <!-- Add Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom CSS can be added here */
+    <title>Contact Us Information</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
         body {
-            font-family: Helvetica, Arial, sans-serif;
-            min-width: 1000px;
-            overflow: auto;
-            line-height: 2;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
         }
 
-        .container {
-            margin: 50px auto;
-            width: 70%;
-            padding: 20px 0;
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
         }
 
-        .header {
-            border-bottom: 1px solid #eee;
+        @media screen and (max-width: 480px) {
+            .mobile-hide {
+                display: none !important;
+            }
+
+            .mobile-center {
+                text-align: center !important;
+            }
         }
 
-        .logo {
-            max-width: 150px; /* Adjust the logo size as needed */
-        }
-
-        .greeting {
-            font-size: 1.1em;
-        }
-
-        .otp-box {
-            background: #00466a;
-            margin: 0 auto;
-            width: max-content;
-            padding: 0 10px;
-            color: #fff;
-            border-radius: 4px;
-            font-size: 1.5em;
-            text-align: center;
-        }
-
-        .footer {
-            font-size: 0.9em;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #eee;
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header mb-5">
-            <!-- Add your company logo here -->
-            <a href="#"><img src="https://dashboard.dragonautomart.com/assets/authlogo-9138a1c6.png" width="200" alt="Dragon Auto Mart Logo"></a>
-            <a href="#" style="font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600">Dragon Auto Mart</a>
-        </div>
-        <p class="greeting">Hi, Mr. {{$name}}</p>
+
+<body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
+
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
+                    <tr>
+                        <td align="center" valign="top" style="font-size:0; padding: 6px;padding-top: 43px;" bgcolor="#4D4D4D">
+
+                        <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;">
+                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
+                                    <tr>
+                                        <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 48px;" class="mobile-center">
+                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff; margin-left:24px">Dragon Auto Mart</h1>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;" class="mobile-hide">
+                                <table align="right" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
+                                    <tr>
+                                        <td align="right" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
+                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px; margin-right:24px"alt="">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 35px 35px 20px 35px; background-color: #ffffff;" bgcolor="#ffffff">
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
+                                <tr>
+                                    <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
+                                    <p class="greeting">Hi, Mr. {{$name}}</p>
         <p>Use the following OTP to complete your Reset Password procedures:</p>
         <h2 class="otp-box">{{ $token }}</h2>
         <p class="footer">Regards,<br />Dragon Auto Mart</p>
-        <hr>
-        <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-            <!-- Add your company address and other details here -->
-        </div>
-    </div>
-
-    <!-- Add Bootstrap JS if needed -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
+
 </html>
