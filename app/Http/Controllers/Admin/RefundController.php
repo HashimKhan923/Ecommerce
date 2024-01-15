@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Refund;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Payout;
 use App\Models\Notification;
 use Mail;
 use Stripe\Stripe;
@@ -51,6 +52,8 @@ class RefundController extends Controller
         $change->refund_status = $request->refund_status;
         $change->save();
 
+
+        Payout::where('order_id',$change->order_id)->delete();
 
         $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
         $user = User::where('id',$Order->customer_id)->first();
