@@ -84,7 +84,7 @@
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                     <tr>
                                         <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 48px;" class="mobile-center">
-                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff;">Dragon Auto Mart</h1>
+                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff; margin-left:24px">Dragon Auto Mart</h1>
                                         </td>
                                     </tr>
                                 </table>
@@ -94,7 +94,7 @@
                                 <table align="right" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                     <tr>
                                         <td align="right" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
-                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px;"alt="">
+                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px; margin-right:24px"alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -108,7 +108,7 @@
                                 <tr>
                                     <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
                                         <img src="https://img.icons8.com/carbon-copy/100/000000/checked-checkbox.png" width="125" height="120" style="display: block; border: 0px;" /><br>
-                                        <h2 style="font-size: 30px; font-weight: 800; line-height: 36px; color: #333333; margin: 0;">
+                                        <h2 style="font-size: 30px; font-weight: 600; line-height: 36px; color: #333333; margin: 0;">
                                             Thank You For Your Order!
                                         </h2>
                                     </td>
