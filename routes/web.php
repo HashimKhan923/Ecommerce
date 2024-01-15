@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('email.subscriber');
+Route::get('/testing', function () {
+    return view('testing');
 });

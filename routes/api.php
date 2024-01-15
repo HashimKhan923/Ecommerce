@@ -414,6 +414,18 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+
+                                /// Commission \\\
+
+        Route::group(['prefix' => '/admin/commission/'], function() {
+            Route::controller(App\Http\Controllers\Admin\CommissionController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('createOrUpdate','createOrUpdate');
+            });
+        });
+
+
+
         });
 
         Route::middleware(['seller'])->group(function () {
