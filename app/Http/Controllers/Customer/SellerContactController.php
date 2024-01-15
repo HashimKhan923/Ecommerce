@@ -17,7 +17,7 @@ class SellerContactController extends Controller
 
         $ProductName = Product::where('id',$request->product_id)->first();
         $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
-        $Seller = User::where('id',$ProductName->seller_id)->first();
+        $Seller = User::where('id',$ProductName->user_id)->first();
         $Customer = User::where('id',$request->customer_id)->first();
 
         Mail::send(
