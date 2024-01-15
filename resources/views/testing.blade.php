@@ -87,6 +87,7 @@
                                             <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff;">Dragon Auto Mart</h1>
                                         </td>
                                     </tr>
+                                    
                                 </table>
                             </div>
 
@@ -94,7 +95,7 @@
                                 <table align="right" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                     <tr>
                                         <td align="right" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
-                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px;"alt="">
+                                            <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px;" alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -116,7 +117,7 @@
                                 <tr>
                                     <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                         <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Hi {{$buyer_name}}, Thank you for placing your order. We're currently preparing it for shipment. Due to high demand, please allow 3-5 business days for preparation and shipping. 
+                                            Hi Khan, Thank you for placing your order. We're currently preparing it for shipment. Due to high demand, please allow 3-5 business days for preparation and shipping. 
 <br>
 For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. 
 <br>
@@ -144,36 +145,24 @@ If you have a shipping address at an apartment complex or condo, your order will
                                                     Price
                                                 </td>
                                             </tr>
-                                            
-                            @foreach($productsByVendor as $vendorId => $vendorProducts)
-                            @foreach($vendorProducts as $product)
-                            <?php
-                            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-
-                            $price = $orderProduct['product_price'] * $orderProduct['quantity'];
-
-                            ?>
 
                                    
 
                                             <tr>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                <img src="https://api.dragonautomart.com/ProductGallery/<?php echo $orderProduct['product_image']; ?>" width="100px" alt="">
+                                                <img src="https://api.dragonautomart.com/ProductGallery/ " width="100px" alt="">
                                                 </td>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {{$product->name}}
-
+                                                    product 1
                                                 </td>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {{ $orderProduct['quantity'] }}
+                                                5
                                                 </td>
                                                 <td width="20%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    ${{$price}}
+                                                    65.0
                                                 </td>
                                             </tr>
 
-                            @endforeach
-                            @endforeach                
 
 
                                         </table>
@@ -187,7 +176,7 @@ If you have a shipping address at an apartment complex or condo, your order will
                                                     TOTAL
                                                 </td>
                                                 <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    ${{$request->amount}}
+                                                $45.9
                                                 </td>
                                             </tr>
                                         </table>
@@ -207,7 +196,7 @@ If you have a shipping address at an apartment complex or condo, your order will
                                                 <tr>
                                                     <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
                                                         <p style="font-weight: 800;">Delivery Address</p>
-                                                        <p>{{$request->information[1]}}<br>{{$request->information[2]}}<br>{{$request->information[3]}}, {{$request->information[4]}}</p>
+                                                        <p>dsds<br>dsdsds<br>dssddsd, dsdasd</p>
 
                                                     </td>
                                                 </tr>
