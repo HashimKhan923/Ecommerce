@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/testing', function () {
     return view('testing');
 });
+
+Route::get('/paypal/success','App\Http\Controllers\Customer\PaymentController@paypalSuccess')->name('paypal.success');
+
