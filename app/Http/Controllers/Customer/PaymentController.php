@@ -107,4 +107,12 @@ class PaymentController extends Controller
         }
     }
 
+
+    public function paypalSuccess(Request $request)
+    {
+
+
+        return redirect()->json(['message'=>'Payment Successfull.',200]);
+    }
+
     }

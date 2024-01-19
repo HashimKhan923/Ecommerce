@@ -91,7 +91,7 @@ public function create(Request $request)
             'productsByVendor' => $productsByVendor,
             'request' => $request
         ],
-        function ($message) use ($user) { // Add $user variable here
+        function ($message) use ($user) {
             $message->from('support@dragonautomart.com','Dragon Auto Mart');
             $message->to($user->email);
             $message->subject('Order Confirmation');
