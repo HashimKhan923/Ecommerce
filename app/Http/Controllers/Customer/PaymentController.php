@@ -112,7 +112,7 @@ class PaymentController extends Controller
     {
 
 
-        return redirect()->json(['message'=>'Payment Successfull.',200]);
+        return response()->json(['message'=>'Payment Successfull.',200]);
     }
 
     }
