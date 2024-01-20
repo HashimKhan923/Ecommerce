@@ -84,8 +84,8 @@ class PaymentController extends Controller
                 ->setDescription('Payment using PayPal');
 
             $redirectUrls = new RedirectUrls();
-            $redirectUrls->setReturnUrl(url('/paypal/success'))
-                ->setCancelUrl(url('/paypal/cancel'));
+            $redirectUrls->setReturnUrl(url('/api/paypal/success'))
+                ->setCancelUrl(url('/api/paypal/cancel'));
 
             $payment = new Payment();
             $payment->setIntent('sale')
@@ -112,7 +112,7 @@ class PaymentController extends Controller
     {
 
 
-        return response()->json(['message'=>'Payment Successfull.',200]);
+        return response()->json(['message'=>'Payment Successfull.','data'=>$request,200]);
     }
 
     }
