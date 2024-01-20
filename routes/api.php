@@ -264,7 +264,9 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show','index');
                     Route::get('approved','approved_refunds');
                     Route::get('rejected','rejected_refunds');
-                    Route::post('status','change_status');
+                    Route::post('stripe_refund','stripe_refund');
+                    Route::post('paypal_refund','paypal_refund');
+
                 });
             });
 
