@@ -718,7 +718,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
-    Route::get('/paypal/success', 'PaymentController@paypalSuccess')->name('paypal.success');
+    Route::get('/paypal/success', 'App\Http\Controllers\Customer\PaymentController@paypalSuccess')->name('paypal.success');
 
 
 
