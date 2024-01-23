@@ -19,8 +19,11 @@ class DashboardController extends Controller
         if ($package) {
             Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
         }
+        if($package)
+        {
+            $package->delete();
+        }
         
-        $package->delete();
         
 
 

@@ -25,7 +25,10 @@ class HomeController extends Controller
             Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
         }
         
-        $package->delete();
+        if($package)
+        {
+            $package->delete();
+        }
 
         $Products = Product::with('user','category','brand','model','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
 
