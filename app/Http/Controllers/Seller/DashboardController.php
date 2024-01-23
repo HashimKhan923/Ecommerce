@@ -14,9 +14,18 @@ class DashboardController extends Controller
 {
     public function index($id)
     {
-        SubscribeUser::where('user_id',$id)->where('end_time','<=',now())->orWhere('product_upload_limit','<',1)->delete();
-        $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
+        $package = SubscribeUser::where('end_time', '<=', now())->orWhere('product_upload_limit', '<', 1)->first();
 
+        if ($package) {
+            Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
+        }
+        
+        $package->delete();
+        
+
+
+
+        $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
         $Products = Product::where('user_id',$id)->get();
         $Orders = Order::with('order_refund')->where('seller_id',$id)->get();
         $Categories = Category::where('is_active',1)->get();
