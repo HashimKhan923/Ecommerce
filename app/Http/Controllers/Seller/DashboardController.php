@@ -15,15 +15,13 @@ class DashboardController extends Controller
 {
     public function index($id)
     {
-        $package = SubscribeUser::where('end_time', '<=', now())->orWhere('product_upload_limit', '<', 1)->first();
+        // $package = SubscribeUser::where('end_time', '<=', now())->first();
 
-        if ($package) {
-            Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
-        }
-        if($package)
-        {
-            $package->delete();
-        }
+        // if ($package) {
+        //     Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
+        //     $package->delete();
+        // }
+
         
         
 

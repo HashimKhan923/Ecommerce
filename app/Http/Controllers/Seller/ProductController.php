@@ -587,29 +587,29 @@ class ProductController extends Controller
     public function is_featured(Request $request)
     {
 
-        $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
+        // $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
 
-        if($checkPackage && $checkPackage->product_upload_limit > 0)
-        {
+        // if($checkPackage && $checkPackage->product_upload_limit > 0)
+        // {
 
 
         $is_featured = Product::where('id',$request->product_id)->first();
         $is_featured->featured = 1;
         $is_featured->save();
 
-        $dedect = SubscribeUser::where('user_id',$request->user_id)->first();
-        $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
-        $dedect->save();
+        // $dedect = SubscribeUser::where('user_id',$request->user_id)->first();
+        // $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
+        // $dedect->save();
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
 
-        }
-        else
-        {
-            $response = ['status'=>true,"message" => "you dont have any subscription to feature products. please buy any subscription"];
-            return response($response, 401);
-        }
+        // }
+        // else
+        // {
+        //     $response = ['status'=>true,"message" => "you dont have any subscription to feature products. please buy any subscription"];
+        //     return response($response, 401);
+        // }
     }
 
     public function gallery_delete($id)
