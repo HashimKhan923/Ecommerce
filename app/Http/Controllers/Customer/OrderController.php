@@ -8,10 +8,12 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVarient;
 use App\Models\Stock;
+use App\Models\Shop;
 use App\Models\OrderDetail;
 use Illuminate\Support\Str;
 use Mail;
 use App\Models\User;
+
 
 class OrderController extends Controller
 {
