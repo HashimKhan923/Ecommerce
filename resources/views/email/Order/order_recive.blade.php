@@ -1,134 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        body,
-        table,
-        td,
-        a {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-
-        table,
-        td {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-        }
-
-        img {
-            -ms-interpolation-mode: bicubic;
-        }
-
-        img {
-            border: 0;
-            height: auto;
-            line-height: 100%;
-            outline: none;
-            text-decoration: none;
-        }
-
-        table {
-            border-collapse: collapse !important;
-        }
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
         body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
 
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        @media screen and (max-width: 480px) {
-            .mobile-hide {
-                display: none !important;
-            }
-
-            .mobile-center {
-                text-align: center !important;
-            }
+        .logo img {
+            max-width: 100%;
+            height: auto;
         }
 
-        div[style*="margin: 16px 0;"] {
-            margin: 0 !important;
+        .company-name {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .content {
+            margin-top: 20px;
+        }
+
+        .verification-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888888;
         }
     </style>
 </head>
 
-<body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="logo">
+                    <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="100" class="img-responsive" alt="Company Logo">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="company-name text-left"  style="margin-top:36px">
+                    <h2>Dragon Auto Mart</h2>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="content">
+        <p>Hi khan,</p>
+        <p> Thank you for placing your order. We're currently preparing it for shipment.</p>
+        <p> Due to high demand, please allow 3-5 business days for preparation and shipping. </p>
+
+        <p>For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. </p>
+
+<p>You'll receive an email with tracking information once your order is shipped.</p>
+
+<p>If you have a shipping address at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.</p>
 
 
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
+        <br><br>
+        <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
 
-                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
-                    <tr>
-                        <td align="center" valign="top" style="font-size:0;padding: 6px;padding-top: 43px;" bgcolor="#4D4D4D">
 
-                            <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;">
-                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                    <tr>
-                                        <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 48px;" class="mobile-center">
-                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff; margin-left:24px">Dragon Auto Mart</h1>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+<hr>
 
-                            <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;" class="mobile-hide">
-                                <table align="right" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                    <tr>
-                                        <td align="right" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
-                                            <!-- <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px; margin-right:24px"alt=""> -->
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" style="padding: 35px 35px 20px 35px; background-color: #ffffff;" bgcolor="#ffffff">
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
-                                <tr>
-                                    <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-                                        <img src="https://img.icons8.com/carbon-copy/100/000000/checked-checkbox.png" width="125" height="120" style="display: block; border: 0px;" /><br>
-                                        <h2 style="font-size: 30px; font-weight: 600; line-height: 36px; color: #333333; margin: 0;">
-                                            Thank You For Your Order!
-                                        </h2>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-                                        <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Hi {{$buyer_name}}, Thank you for placing your order. We're currently preparing it for shipment. Due to high demand, please allow 3-5 business days for preparation and shipping. 
-<br>
-For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. 
-<br>
-You'll receive an email with tracking information once your order is shipped. 
-<br>
-If you have a shipping address at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="padding-top: 20px;">
-                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
                                                 <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Product
@@ -145,77 +105,63 @@ If you have a shipping address at an apartment complex or condo, your order will
                                                 </td>
                                             </tr>
                                             
-                            @foreach($productsByVendor as $vendorId => $vendorProducts)
-                            @foreach($vendorProducts as $product)
-                            <?php
-                            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
 
-                            $price = $orderProduct['product_price'] * $orderProduct['quantity'];
+                                            @foreach($productsByVendor as $vendorId => $vendorProducts)
+                                            @foreach($vendorProducts as $product)
+                                            <?php
+                                            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
 
-                            ?>
+                                            $price = $orderProduct['product_price'] * $orderProduct['quantity'];
 
-                                   
+                                            ?>
 
                                             <tr>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                 <img src="https://api.dragonautomart.com/ProductGallery/<?php echo $orderProduct['product_image']; ?>" width="100px" alt="">
                                                 </td>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                                <td  style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                 {{$product->name}}
 
                                                 </td>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                                <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                 {{ $orderProduct['quantity'] }}
                                                 </td>
-                                                <td width="20%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    ${{$price}}
+                                                <td width="20%" align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                                ${{$price}}
                                                 </td>
                                             </tr>
 
-                            @endforeach
-                            @endforeach                
 
+                                        
+                            @endforeach
+                            @endforeach    
 
                                         </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="padding-top: 20px;">
-                                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+
+                                        <table cellspacing="" cellpadding="0" border="0" width="100%">
                                             <tr>
                                                 <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
                                                     TOTAL
                                                 </td>
-                                                <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    ${{$request->amount}}
+                                                <td width="25%" align="right" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                                                ${{$request->amount}}
                                                 </td>
                                             </tr>
                                         </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" height="100%" valign="top" width="100%" style="padding: 0 35px 35px 35px; background-color: #ffffff;" bgcolor="#ffffff">
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px;">
-                                <tr>
-                                    <td align="center" valign="top" style="font-size:0;">
-                                        <div style="display:inline-block; max-width:50%; min-width:240px; vertical-align:top; width:100%;">
+                                        <br>
 
-                                            <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
+                                        <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                                 <tr>
                                                     <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
                                                         <p style="font-weight: 800;">Delivery Address</p>
-                                                        <p>{{$request->information[1]}}<br>{{$request->information[2]}}<br>{{$request->information[3]}}, {{$request->information[4]}}</p>
+                                                        <p>{{$request->information[1]}},<br>{{$request->information[2]}},<br>{{$request->information[3]}}, {{$request->information[4]}}</p>
 
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </div>
+        </div>
+    </div>
 
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+</body>
+
+</html>
