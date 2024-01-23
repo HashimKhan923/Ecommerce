@@ -68,6 +68,8 @@ public function create(Request $request)
             $VarientStock = ProductVarient::where('product_id', $product->id)->first();
             $sale = Product::where('id', $product->id)->first();
             $stock = Stock::where('product_id', $product->id)->first();
+
+
             if ($VarientStock) {
                 $VarientStock->stock = $VarientStock->stock - $orderProduct['quantity'];
                 $VarientStock->save();
@@ -75,6 +77,10 @@ public function create(Request $request)
                 $stock->stock = $stock->stock - $orderProduct['quantity'];
                 $stock->save();
             }
+
+            $sold_product = Shop::where('seller_id',$sale->user_id)->first();
+            $sold_product->sold_products = $sold_product->sold_products + $orderProduct['quantity'];
+            $sold_product->save();
     
             $sale->num_of_sale = $sale->num_of_sale + $orderProduct['quantity'];
             $sale->save();
