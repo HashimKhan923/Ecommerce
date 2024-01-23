@@ -88,6 +88,13 @@ class OrderController extends Controller
         {
 
             OrderTracking::where('order_id',$request->id)->delete();
+            Payout::where('order_id',$request->id)->delete();
+            OrderStatus::where('order_id',$request->id)->delete();
+
+            $notification = new Notification();
+            $notification->customer_id = $user->id;
+            $notification->notification = 'your order #'.$order->id.'has been stoped to deliver due to some miss understanding!';
+            $notification->save();
 
         }
 
