@@ -1,126 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Contact Us Information</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        body,
-        table,
-        td,
-        a {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-
-        table,
-        td {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-        }
-
-        img {
-            -ms-interpolation-mode: bicubic;
-        }
-
-        img {
-            border: 0;
-            height: auto;
-            line-height: 100%;
-            outline: none;
-            text-decoration: none;
-        }
-
-        table {
-            border-collapse: collapse !important;
-        }
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Email Verification</title>
+    <style>
         body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
 
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        @media screen and (max-width: 480px) {
-            .mobile-hide {
-                display: none !important;
-            }
-
-            .mobile-center {
-                text-align: center !important;
-            }
+        .logo img {
+            max-width: 100%;
+            height: auto;
         }
 
-        div[style*="margin: 16px 0;"] {
-            margin: 0 !important;
+        .company-name {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .content {
+            margin-top: 20px;
+        }
+
+        .verification-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888888;
         }
     </style>
 </head>
 
-<body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="logo">
+                    <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="100" class="img-responsive" alt="Company Logo">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="company-name text-left"  style="margin-top:36px">
+                    <h2>Dragon Auto Mart</h2>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="content">
+        <p class="font-size-18">Hi, Mr. {{$name}}</p>
 
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
-
-                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
-                    <tr>
-                        <td align="center" valign="top" style="font-size:0; padding: 6px;padding-top: 43px;" bgcolor="#4D4D4D">
-
-                        <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;">
-                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                    <tr>
-                                        <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 600; line-height: 48px;" class="mobile-center">
-                                            <h1 style="font-size: 32px; font-weight: 500; margin: 0; color: #ffffff; margin-left:24px">Dragon Auto Mart</h1>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div style="display:inline-block; max-width:100%; min-width:100px; vertical-align:top; width:100%;" class="mobile-hide">
-                                <table align="right" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                    <tr>
-                                        <td align="right" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400;">
-                                            <!-- <img src="https://development.dragonautomart.com/assets/logowhite-15c29e7e.webp" width="100px" style="margin-top: -73px; margin-right:24px"alt=""> -->
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" style="padding: 35px 35px 20px 35px; background-color: #ffffff;" bgcolor="#ffffff">
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
-                                <tr>
-                                    <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
-                                    <p class="font-size-18">Hi, Mr. {{$name}}</p>
         <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever have any questions, concerns, or suggestions,</p> 
         <p>don't hesitate to contact us at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
-        <p>Click on the following link to complete your email verification procedures:</p>
-        <h5><a href="https://api.dragonautomart.com/api/verification/{{$token}}">https://dragonautomart.com/</a></h5>
+        <p>Click on the following button to complete your email verification procedures:</p>
+        <a href="https://api.dragonautomart.com/api/verification/{{$token}}" class="btn btn-primary verification-link">Verify Email</a>
+        <br><br><br>
         <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+        </div>
+    </div>
+    <div class="footer">
+        <p>If you did not sign up for [Company Name], please ignore this email.</p>
+        <p>[Company Name] | Address | Phone Number</p>
+    </div>
 </body>
 
 </html>
