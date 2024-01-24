@@ -70,7 +70,7 @@ class OrderController extends Controller
             $NewPayout->seller_id = $order->seller_id;
             $NewPayout->order_id = $order->id;
             $orderAmountInCents = $order->amount * 100; 
-            $percentageDeduction = $orderAmountInCents * 0.03; 
+            $percentageDeduction = $orderAmountInCents * 0.07; 
             $fixedDeduction = 30; 
             $adjustedAmountInCents = $orderAmountInCents - $percentageDeduction - $fixedDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
