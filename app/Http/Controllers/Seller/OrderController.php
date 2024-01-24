@@ -12,6 +12,7 @@ use App\Models\OrderStatus;
 use Carbon\Carbon;
 use App\Models\OrderTracking;
 use App\Models\Notification;
+use App\Models\FeaturedProductOrder;
 use Mail;
 
 class OrderController extends Controller
@@ -73,7 +74,15 @@ class OrderController extends Controller
             $fixedDeduction = 30; 
             $adjustedAmountInCents = $orderAmountInCents - $percentageDeduction - $fixedDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
-            $NewPayout->amount = $adjustedAmountInDollars;
+
+            $is_featuredOrders = FeaturedProductOrder::where('order_id',$order->id)->first();
+            $featuredAmount = 0;
+            if($is_featuredOrders)
+            {
+                $featuredAmount = $is_featuredOrders->payment;
+            }
+
+            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount;
             $NewPayout->save();
 
 
