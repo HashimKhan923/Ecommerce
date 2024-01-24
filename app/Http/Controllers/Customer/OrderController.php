@@ -10,6 +10,7 @@ use App\Models\ProductVarient;
 use App\Models\Stock;
 use App\Models\Shop;
 use App\Models\OrderDetail;
+use App\Models\FeaturedProductOrder;
 use Illuminate\Support\Str;
 use Mail;
 use App\Models\User;
@@ -78,6 +79,22 @@ public function create(Request $request)
             } else {
                 $stock->stock = $stock->stock - $orderProduct['quantity'];
                 $stock->save();
+            }
+
+            $featured_product = Product::where('id',$product->id)->where('featured',1)->first();
+
+            if($featured_product)
+            {
+                $tenPercent = $orderProduct['product_price'] * 0.1;
+                $total = $tenPercent * $orderProduct['quantity'];
+
+                $new = new FeaturedProductOrder();
+                $new->order_id = $newOrder->id;
+                $new->product_id = $product->id;
+                $new->quantity = $orderProduct['quantity'];
+                $new->payment = $total;
+                $new->save();
+
             }
 
             $sold_product = Shop::where('seller_id',$sale->user_id)->first();
