@@ -51,7 +51,7 @@ public function create(Request $request)
         $newOrder->seller_id = $vendorId;
         $newOrder->amount = $vendorTotalAmount; 
         $newOrder->information = $request->information;
-        $newOrder->stripe_payment_id = $request->stripe_payment_id;
+        $newOrder->stripe_payment_id = $request->payment_id;
         $newOrder->payment_method = $request->payment_method;
         $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
