@@ -428,6 +428,39 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+
+                                /// Seller F&Qs \\\
+
+        Route::group(['prefix' => '/admin/seller_f&qs/'], function() {
+            Route::controller(App\Http\Controllers\Admin\SellerFandQController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+                Route::post('multi_delete','multi_delete');
+            });
+        });
+
+
+
+
+                            /// Seller Guide Videos \\\
+
+        Route::group(['prefix' => '/admin/seller_guide_video/'], function() {
+            Route::controller(App\Http\Controllers\Admin\SellerGuideVideoController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('create','create');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+                Route::post('multi_delete','multi_delete');
+            });
+        });
+
+
+
+
+
+
         });
 
         Route::middleware(['seller'])->group(function () {
