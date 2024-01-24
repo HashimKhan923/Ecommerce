@@ -35,7 +35,7 @@ class AuthController extends Controller
 
             if(!$new)
             {
-                $response = ['status'=>false,"message" => "The email is already registered!"];
+                $response = ['status'=>false,"message" => "This email is already registered as a seller please try diffrent email!"];
                 return response($response, 422);
             }
         }
