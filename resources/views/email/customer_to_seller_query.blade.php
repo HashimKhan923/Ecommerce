@@ -76,12 +76,13 @@
 
         <p>The following customer has sent a query about a product:</p>
         <hr>
-
+@if($ProductName)
 <div>
   <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="150" alt="Product Image">
   <h4>{{$ProductName}}</h4>
 </div>
 <hr>
+@endif
 
 <p><h3>Customer Information:</h3></p>
 <p><strong>Name:</strong> {{$Customer->name}}</p>
