@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Email Verification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,85 +59,38 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="logo">
-                    <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="100" class="img-responsive" alt="Company Logo">
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="logo">
+                        <img src="https://seller.dragonautomart.com/assets/logo-ea477fb2.png" width="70" class="img-responsive" alt="Company Logo">
+                        <div class=" text-left"  style="margin-top:10px">
+                        <h3>Dragon Auto Mart</h2>
+                    </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="company-name text-left"  style="margin-top:36px">
-                    <h2>Dragon Auto Mart</h2>
-                </div>
-            </div>
+             
+            
         </div>
         <hr>
         <div class="content">
-       <h4>Your order has been refunded! </h4> 
-       <p >
-                                            Total amount refunded: <b>${{$order->amount}}</b>. It may take upto 10 days for this refund to
-<br>
-appear in your account.
+        <p class="font-size-18">Hi, Mr. Kahn</p>
 
-                                        </p>
-        <br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+        <p>The following customer has sent a query about a product:</p>
+        <hr>
+
+<p><h4>Customer Information</h4></p>
+<p><strong>Name:</strong> Khan</p>
+<p><strong>Email:</strong> khan@gmail.com</p>
+<p><strong>Query:</strong> dsdsdsd</p>
 
 
 <hr>
 
-        <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Product
-                                                </td>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Name
-                                                </td>
-                                                <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Quantity
-                                                </td>
+<p>Please respond to the customer's query as soon as possible.</p>
 
-                                                <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Price
-                                                </td>
-                                            </tr>
-                                            
-
-                                            @foreach($order->order_detail as $item)
-                                            @php $price = $item->product_price * $item->quantity @endphp
-
-                                            <tr>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                <img src="https://api.dragonautomart.com/ProductGallery/<?php echo $item->products->product_single_gallery->image; ?>" width="100px" alt="">
-                                                </td>
-                                                <td  style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {{$item->products->name}}
-
-                                                </td>
-                                                <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {{ $item->quantity}}
-                                                </td>
-                                                <td width="20%" align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                ${{$price}}
-                                                </td>
-                                            </tr>
-
-
-                                    @endforeach    
-
-                                        </table>
-
-                                        <table cellspacing="" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    TOTAL
-                                                </td>
-                                                <td width="25%" align="right" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                ${{$order->amount}}
-                                                </td>
-                                            </tr>
-                                        </table>
-
+<h4>Thank you</h4>
+        <hr />
+        <p class="font-size-14">Regards, <br />Dragon Auto Mart</p>
         </div>
     </div>
 

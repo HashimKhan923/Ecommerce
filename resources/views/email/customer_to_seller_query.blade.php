@@ -58,18 +58,19 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="logo">
-                    <img src="https://dragonautomart.com/assets/logo-773651ec.webp" width="100" class="img-responsive" alt="Company Logo">
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="company-name text-left"  style="margin-top:36px">
-                    <h2>Dragon Auto Mart</h2>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <div class="logo">
+        <img src="https://seller.dragonautomart.com/assets/logo-ea477fb2.png" width="70" class="img-responsive" alt="Company Logo">
+        <div class=" text-left"  style="margin-top:10px">
+        <h3>Dragon Auto Mart</h2>
+    </div>
+    </div>
+</div>
+
+
+</div>
         <hr>
         <div class="content">
         <p class="font-size-18">Hi, Mr. {{$Seller->name}}</p>
@@ -85,11 +86,12 @@
 
 <hr>
 
+
 <p>Please respond to the customer's query as soon as possible.</p>
 
-<p>Thank you,</p>
-        <br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
+<h4>Thank you</h4>
+        <hr />
+        <p class="font-size-14">Regards, <br />Dragon Auto Mart</p>
         </div>
     </div>
 
