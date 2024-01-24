@@ -37,6 +37,6 @@ class SellerContactController extends Controller
             $message->subject('Customer Query');
         });
 
-        return response()->json(['query sent successfully!',200]);
+        return response()->json(['message'=>'query sent successfully!',200]);
     }
 }
