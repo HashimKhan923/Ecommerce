@@ -17,7 +17,7 @@ class SellerContactController extends Controller
 
         $ProductName = Product::where('id',$request->product_id)->first();
         $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
-        $Seller = User::where('id',$ProductName->user_id)->first();
+        $Seller = User::where('id',$request->seller_id)->first();
         $Customer = User::where('id',$request->customer_id)->first();
 
         Mail::send(
@@ -36,5 +36,7 @@ class SellerContactController extends Controller
             $message->to($Seller->email);
             $message->subject('Customer Query');
         });
+
+        return response()->json(['query sent successfully!',200]);
     }
 }
