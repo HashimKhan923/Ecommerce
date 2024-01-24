@@ -10,6 +10,10 @@ use App\Models\Order;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Payout;
+use App\Models\SellerGuideVideo;
+use App\Models\SellerFandQ;
+
+
 
 class DashboardController extends Controller
 {
@@ -33,7 +37,10 @@ class DashboardController extends Controller
         $Payouts = Payout::where('seller_id',$id)->get();
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
+        $SellerFandQ = SellerFandQ::all();
+        $SellerGuideVideo = SellerGuideVideo::all();
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands]);
+
+        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo]);
     }
 }
