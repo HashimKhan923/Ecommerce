@@ -22,7 +22,7 @@ class SellerContactController extends Controller
         if($ProductName)
         {
             Mail::send(
-                'email.customer_to_seller_query',
+                'email.customer_to_seller_query_with_product',
                 [
                     'ProductName'=>$ProductName->name,
                     'ProductImage'=>$ProductImage->image,
