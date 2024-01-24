@@ -32,7 +32,13 @@ class AuthController extends Controller
         }
         else
         {
-            $new = User::where('email',$request->email)->first();
+            $new = User::where('email',$request->email)->where('user_type','customer')->first();
+
+            if(!$new)
+            {
+                $response = ['status'=>false,"message" => "The email is already registered!"];
+                return response($response, 422);
+            }
         }
         
         $new->name = $request->name; 
