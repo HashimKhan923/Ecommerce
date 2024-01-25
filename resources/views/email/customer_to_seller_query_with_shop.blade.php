@@ -75,8 +75,14 @@
         <div class="content">
         <p class="font-size-18">Hi, Mr. {{$Seller->name}}</p>
 
-        <p>The following customer has sent a query about a product:</p>
+        <p>The following customer has sent a query about a shop:</p>
         <hr>
+
+        <div>
+  <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="150" alt="Product Image">
+  <h4>{{$ShoptName}}</h4>
+</div>
+<hr>
 
 <p><h3>Customer Information:</h3></p>
 <p><strong>Name:</strong> {{$Customer->name}}</p>
