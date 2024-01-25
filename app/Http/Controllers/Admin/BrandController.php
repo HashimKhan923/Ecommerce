@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Validator;
+
 
 class BrandController extends Controller
 {
@@ -19,6 +21,17 @@ class BrandController extends Controller
 
     public function create(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            "name" => "unique:brands,name",
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        
+
+
         $new = new Brand();
         $new->name = $request->name;
         if($request->file('logo')){
@@ -40,6 +53,10 @@ class BrandController extends Controller
 
     public function update(Request $request)
     {
+
+
+
+
         $update = Brand::where('id',$request->id)->first();
         $update->name = $request->name;
         if($request->file('logo')){
