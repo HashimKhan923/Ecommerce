@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Models;
+use App\Models\Product;
 use Storage;
 
 class ModelController extends Controller
@@ -69,6 +70,13 @@ class ModelController extends Controller
     {
         $file = Models::find($id);
 
+        $checkProduct = Product::where('model_id',$id)->first();
+        if($checkProduct)
+        {
+            $response = ['status'=>true,"message" => "first delete the products under this model!"];
+            return response($response, 200);
+        }
+
         if($file->logo)
         {
             unlink(public_path('Model/'.$file->logo));
@@ -86,6 +94,14 @@ class ModelController extends Controller
 
         foreach($data as $item)
         {
+            $checkProduct = Product::where('model_id',$item->id)->first();
+            
+            if($checkProduct)
+            {
+                $response = ['status'=>true,"message" => "first delete the products under '$item->name' model!"];
+                return response($response, 200);
+            }
+
             if($item->logo)
             {
                 unlink(public_path('Model/'.$item->logo));

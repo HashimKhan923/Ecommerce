@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -85,6 +86,12 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $file = Category::find($id);
+        $checkProduct = Product::where('category_id',$id)->first();
+        if($checkProduct)
+        {
+            $response = ['status'=>true,"message" => "first delete the products under this category!"];
+            return response($response, 200);
+        }
 
         if($file->banner)
         {
@@ -109,6 +116,14 @@ class CategoryController extends Controller
 
         foreach($data as $item)
         {
+
+            $checkProduct = Product::where('category_id',$item->id)->first();
+            if($checkProduct)
+            {
+                $response = ['status'=>true,"message" => "first delete the products under '$item->name' category!"];
+                return response($response, 200);
+            }
+
             if($item->banner)
             {
                 unlink(public_path('CategoryBanner/'.$item->banner));
