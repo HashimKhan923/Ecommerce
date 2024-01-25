@@ -15,9 +15,33 @@ class ShopController extends Controller
         return response()->json(['data'=>$data]);
     }
 
+    public function create(Request $request)
+    {
+        $shop = new Shop();
+        $shop->seller_id = $request->seller_id;
+        $shop->name = $request->shop_name;
+        $shop->address = $request->shop_address;
+        if($request->file('logo')){
+
+            $file= $request->logo;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShopLogo'),$filename);
+            $shop->logo = $filename;
+        }
+
+        if($request->file('banner')){
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShopBanner'),$filename);
+            $shop->banner = $filename;
+        }
+        $shop->save();
+    }
+
     public function update(Request $request)
     {
-        $update = Shop::where('seller_id',$request->seller_id)->first();
+        $update = Shop::where('id',$request->id)->first();
 
         $update->name = $request->name;
         $update->address = $request->address;

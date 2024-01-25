@@ -26,11 +26,6 @@ class DashboardController extends Controller
         //     $package->delete();
         // }
 
-        
-        
-
-
-
         $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
         $Products = Product::where('user_id',$id)->get();
         $Orders = Order::with('order_refund')->where('seller_id',$id)->get();
