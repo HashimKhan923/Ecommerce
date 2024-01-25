@@ -57,6 +57,7 @@
 </head>
 
 <body>
+    <div class="container">
     <div class="row">
 
 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -92,7 +93,7 @@
         <hr />
         <p class="font-size-14">Regards, <br />Dragon Auto Mart</p>
         </div>
-
+    </div>
 
 </body>
 
