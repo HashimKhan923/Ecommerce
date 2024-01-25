@@ -45,8 +45,8 @@ class SellerContactController extends Controller
             Mail::send(
                 'email.customer_to_seller_query_with_shop',
                 [
-                    'ShopName'=>$ShopName->name,
-                    'ShopImage'=>$ShopImage->logo,
+                    'ShopName'=>$Shop->name,
+                    'ShopImage'=>$Shop->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'Msg'=>$request->message,
