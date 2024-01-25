@@ -12,7 +12,7 @@ class ShopController extends Controller
 {
     public function index($seller_id)
     {
-        $data = Shop::where('seller_id',$seller_id)->first();
+        $data = Shop::where('seller_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
