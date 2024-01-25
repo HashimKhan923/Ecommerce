@@ -8,6 +8,7 @@ use Mail;
 use App\Models\ProductGallery;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Shop;
 
 class SellerContactController extends Controller
 {
@@ -16,6 +17,7 @@ class SellerContactController extends Controller
 
         
         $ProductName = Product::where('id',$request->product_id)->first();
+        $Shop = Shop::where('id',$request->shop_id)->first();
         $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
         $Seller = User::where('id',$request->seller_id)->first();
         $Customer = User::where('id',$request->customer_id)->first();
@@ -41,9 +43,10 @@ class SellerContactController extends Controller
         else
         {
             Mail::send(
-                'email.customer_to_seller_query',
+                'email.customer_to_seller_query_with_shop',
                 [
-
+                    'ShopName'=>$ShopName->name,
+                    'ShopImage'=>$ShopImage->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'Msg'=>$request->message,

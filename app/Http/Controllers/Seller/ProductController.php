@@ -253,6 +253,7 @@ class ProductController extends Controller
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
+        $update->shop_id = $request->shop_id;
         $update->shipping = $request->shipping;
         $update->featured = $request->featured;
         $update->published = $request->published;
