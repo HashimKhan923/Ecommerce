@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
@@ -67,6 +68,14 @@ class BrandController extends Controller
     {
         $file = Brand::find($id);
 
+        $checkProduct = Product::where('brand_id',$id)->first();
+        if($checkProduct)
+        {
+            $response = ['status'=>true,"message" => "first delete the products under this brand!"];
+            return response($response, 200);
+        }
+
+
         if(public_path('Brand/'.$file->logo))
         {
             unlink(public_path('Brand/'.$file->logo));
@@ -84,8 +93,15 @@ class BrandController extends Controller
 
         foreach($data as $item)
         {
+            $checkProduct = Product::where('brand_id',$item->id)->first();
+            if($checkProduct)
+            {
+                $response = ['status'=>true,"message" => "first delete the products under '$item->name' brand!"];
+                return response($response, 200);
+            }
             if($item->logo)
             {
+
                 unlink(public_path('Brand/'.$file->logo));
             }
 

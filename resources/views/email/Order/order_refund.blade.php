@@ -71,7 +71,7 @@
 </div>
         <hr>
         <div class="content">
-       <h4>Your order has been refunded! </h4> 
+       <h4>Your order has been refunded! </h4>
        <p >
                                             Total amount refunded: <b>${{$order->amount}}</b>. It may take upto 10 days for this refund to
 <br>
@@ -95,7 +95,6 @@ appear in your account.
                                                 <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Quantity
                                                 </td>
-
                                                 <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                                                     Price
                                                 </td>
