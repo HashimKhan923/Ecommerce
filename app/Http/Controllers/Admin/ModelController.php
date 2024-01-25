@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Models;
 use App\Models\Product;
 use Storage;
+use Validator;
+
 
 class ModelController extends Controller
 {
@@ -19,6 +21,15 @@ class ModelController extends Controller
 
     public function create(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            "name" => "unique:models,name",
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+
         $new = new Models();
         $new->brand_id = $request->brand_id;
         $new->name = $request->name;
@@ -41,6 +52,9 @@ class ModelController extends Controller
 
     public function update(Request $request)
     {
+
+
+
         $update = Models::where('id',$request->id)->first();
         $update->brand_id = $request->brand_id;
         $update->name = $request->name;

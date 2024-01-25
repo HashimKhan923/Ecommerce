@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Validator;
+
 
 class CategoryController extends Controller
 {
@@ -19,6 +21,14 @@ class CategoryController extends Controller
 
     public function create(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            "name" => "unique:categories,name",
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+
         $new = new Category();
         $new->name = $request->name;
         if($request->file('banner')){
@@ -47,6 +57,10 @@ class CategoryController extends Controller
 
     public function update(Request $request)
     {
+
+
+
+
         $update = Category::where('id',$request->id)->first();
         $update->name = $request->name;
         if($request->file('banner')){
