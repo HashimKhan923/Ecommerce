@@ -91,7 +91,7 @@ class ShopController extends Controller
     {
         $file = Shop::find($id);
 
-        $checkProduct = Product::where('brand_id',$item->id)->first();
+        $checkProduct = Product::where('shop_id',$id)->first();
         if($checkProduct)
         {
             $response = ['status'=>true,"message" => "first delete the products under this shop!"];
