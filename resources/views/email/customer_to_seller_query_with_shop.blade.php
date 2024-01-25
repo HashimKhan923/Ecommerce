@@ -80,7 +80,7 @@
 
         <div>
   <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="150" alt="Product Image">
-  <h4>{{$ShoptName}}</h4>
+  <h4>{{$ShopName}}</h4>
 </div>
 <hr>
 
