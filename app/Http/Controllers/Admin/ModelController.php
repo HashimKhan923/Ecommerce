@@ -95,7 +95,7 @@ class ModelController extends Controller
         foreach($data as $item)
         {
             $checkProduct = Product::where('model_id',$item->id)->first();
-            
+
             if($checkProduct)
             {
                 $response = ['status'=>true,"message" => "first delete the products under '$item->name' model!"];
@@ -109,8 +109,6 @@ class ModelController extends Controller
 
             $item->delete();
         }
-
-        
 
         $response = ['status'=>true,"message" => "Models Deleted Successfully!"];
         return response($response, 200);

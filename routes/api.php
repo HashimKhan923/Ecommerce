@@ -517,7 +517,9 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => '/seller/shop/'], function() {
                 Route::controller(App\Http\Controllers\Seller\ShopController::class)->group(function () {
                     Route::get('show/{seller_id}','index');
+                    Route::post('create','create');
                     Route::post('update','update');
+                    Route::get('delete/{id}','delete');
                 });
             });
 
