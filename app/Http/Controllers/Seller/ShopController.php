@@ -37,6 +37,11 @@ class ShopController extends Controller
             $shop->banner = $filename;
         }
         $shop->save();
+
+
+        $response = ['status'=>true,"message" => "Created Successfully!"];
+        return response($response, 200);
+
     }
 
     public function update(Request $request)
@@ -74,5 +79,33 @@ class ShopController extends Controller
         }
 
         $update->save();
+
+        $response = ['status'=>true,"message" => "Updated Successfully!"];
+        return response($response, 200);
+
+    }
+
+    public function delete($id)
+    {
+        $file = Shop::find($id);
+
+        if($file->logo)
+        {
+            unlink(public_path('ShopLogo/'.$file->logo));
+
+        }
+
+        if($file->banner)
+        {
+            unlink(public_path('ShopBanner/'.$file->banner));
+        }
+
+        $file->delete();
+
+
+        $response = ['status'=>true,"message" => "Deleted Successfully!"];
+        return response($response, 200);
+
+
     }
 }
