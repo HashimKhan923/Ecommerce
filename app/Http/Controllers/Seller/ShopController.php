@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Product;
+
 
 class ShopController extends Controller
 {
@@ -88,6 +90,13 @@ class ShopController extends Controller
     public function delete($id)
     {
         $file = Shop::find($id);
+
+        $checkProduct = Product::where('brand_id',$item->id)->first();
+        if($checkProduct)
+        {
+            $response = ['status'=>true,"message" => "first delete the products under this shop!"];
+            return response($response, 200);
+        }
 
         if($file->logo)
         {
