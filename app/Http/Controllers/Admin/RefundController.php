@@ -15,6 +15,7 @@ use Stripe\Refund as StripeRefund;
 use PayPal\Api\Refund as PaypalRefund;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
+use PayPal\Api\Sale;
 
 
 
@@ -90,28 +91,32 @@ class RefundController extends Controller
 
     public function paypal_refund(Request $request)
     {
-        $apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                config('services.paypal.client_id'),
-                config('services.paypal.secret')
-            )
-        );
 
-        try {
-            $saleId = $request->payment_intent_id; // You need to get the sale ID from your previous transaction
-
-            $refund = new PaypalRefund();
-            $refund->setAmount([
-                'total' => $request->amount,
-                'currency' => 'USD', // Set the currency according to your transaction
-            ]);
-
-            // $sale = new \PayPal\Api\Sale();
-            // $sale->setId($saleId);
-
-            $refund->setSaleId($saleId);
-
-            $refundResult = $refund->refund($apiContext);
+            $apiContext = new ApiContext(
+                new OAuthTokenCredential(
+                    config('services.paypal.client_id'),
+                    config('services.paypal.secret')
+                )
+            );
+        
+            try {
+                $saleId = $request->payment_intent_id; // You need to get the sale ID from your previous transaction
+        
+                $refund = new PaypalRefund();
+                $refund->setAmount([
+                    'total' => $request->amount,
+                    'currency' => 'USD', // Set the currency according to your transaction
+                ]);
+        
+                // Create a Sale object and set its ID
+                $sale = new Sale();
+                $sale->setId($saleId);
+        
+                // Set the Sale object for the refund
+                $refund->setSale($sale);
+        
+                // Perform the refund
+                $refundResult = $refund->refund($apiContext);
 
 
 
