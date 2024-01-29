@@ -270,6 +270,12 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+            Route::group(['prefix' => '/admin/refund/'], function() {
+                Route::controller(App\Http\Controllers\Admin\PaypalController::class)->group(function () {
+                    Route::post('paypal_refund','processRefund');
+                });
+            });
+
             
                                                     /// Payout \\\
 
