@@ -34,19 +34,30 @@ class PaypalController extends Controller
             // Retrieve sale details
             $sale = Sale::get($request->payment_intent_id, $this->apiContext);
 
-            // Create refund object
-            $refund = new Refund();
-            $refund->setAmount([
-                'total' => $request->amount,
-                'currency' => $sale->getAmount()->getCurrency(),
-            ]);
-
-            // Perform refund
-            $sale->refundTransaction($refund, $this->apiContext);
-
-            return response()->json(['message' => 'Refund processed successfully']);
-        } catch (PayPalException $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        // Check if the sale is refundable
+        if ($sale->getState() !== 'completed') {
+            return response()->json(['error' => 'Cannot refund a sale that is not completed.'], 400);
         }
+
+        // Create refund object
+        $refund = new Refund();
+        $refund->setAmount([
+            'total' => $amount,
+            'currency' => $sale->getAmount()->getCurrency(),
+        ]);
+
+        // Perform refund
+        $refundResponse = $sale->refundTransaction($refund, $this->apiContext);
+
+        // Check if the refund was successful
+        if ($refundResponse->getState() === 'completed') {
+            return response()->json(['message' => 'Refund processed successfully']);
+        } else {
+            return response()->json(['error' => 'Refund failed.'], 500);
+        }
+    } catch (PayPalConnectionException $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+
     }
 }
