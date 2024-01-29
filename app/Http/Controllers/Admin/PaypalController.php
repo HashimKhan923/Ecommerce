@@ -42,7 +42,7 @@ class PaypalController extends Controller
         // Create refund object
         $refund = new Refund();
         $refund->setAmount([
-            'total' => $amount,
+            'total' => $request->amount,
             'currency' => $sale->getAmount()->getCurrency(),
         ]);
 
