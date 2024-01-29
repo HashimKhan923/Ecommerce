@@ -100,7 +100,7 @@ class RefundController extends Controller
         try {
             $saleId = $request->payment_intent_id; // You need to get the sale ID from your previous transaction
 
-            $refund = new Refund();
+            $refund = new PaypalRefund();
             $refund->setAmount([
                 'total' => $request->amount,
                 'currency' => 'USD', // Set the currency according to your transaction
