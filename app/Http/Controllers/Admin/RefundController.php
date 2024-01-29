@@ -149,7 +149,7 @@ class RefundController extends Controller
 
         } catch (\Exception $e) {
             // Handle refund failure
-            return response()->json(['success' => false, 'message' => $e], 500);
+            return response()->json(['success' => false, 'message' => 'refund failed'], 500);
         }
     }
 }
