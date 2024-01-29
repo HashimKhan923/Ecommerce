@@ -88,7 +88,7 @@ class RefundController extends Controller
     }
 
 
-    public function paypal_refund()
+    public function paypal_refund(Request $request)
     {
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
