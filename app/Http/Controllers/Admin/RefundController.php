@@ -106,12 +106,12 @@ class RefundController extends Controller
                 'currency' => 'USD', // Set the currency according to your transaction
             ]);
 
-            $sale = new \PayPal\Api\Sale();
-            $sale->setId($saleId);
+            // $sale = new \PayPal\Api\Sale();
+            // $sale->setId($saleId);
 
-            $refund->setSale($sale);
+            $refund->setSaleId($saleId);
 
-            $refund->create($apiContext);
+            $refundResult = $refund->refund($apiContext);
 
 
 
