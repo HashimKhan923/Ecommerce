@@ -26,6 +26,13 @@ class RefundController extends Controller
             return response($response,201);
         }
 
+        $checkRefund = Refund::where('order_id',$request->order_id)->first();
+        if($checkRefund)
+        {
+            $response = ['status'=>true,'message'=>'you have already requested for this refund'];
+            return response($response,201);
+        }
+
         $new = new Refund();
         $new->order_id = $request->order_id;
         $new->seller_id = $request->seller_id;
