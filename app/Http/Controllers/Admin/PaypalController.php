@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\RefundRequest;
+use PayPal\Api\Refund;
 use PayPal\Api\Sale;
 use PayPal\Api\Amount;
 use PayPal\Exception\PayPalException;
@@ -41,7 +41,7 @@ class PaypalController extends Controller
             }
     
             // Create refund request
-            $refundRequest = new RefundRequest();
+            $refundRequest = new Refund();
             $refundRequest->setAmount(new Amount(['total' => $request->amount, 'currency' => $sale->getAmount()->getCurrency()]));
     
             // Perform refund
