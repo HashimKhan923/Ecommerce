@@ -17,6 +17,7 @@ class VarientController extends Controller
         {
             unlink(public_path('ProductVarient/'.$file->image));
         }
+        $file->delete();
         $response = ['status'=>true,"message" => "Varient Deleted Successfully!"];
         return response($response, 200);
     }
