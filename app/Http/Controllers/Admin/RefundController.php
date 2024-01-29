@@ -25,7 +25,7 @@ class RefundController extends Controller
 {
     public function index()
     {
-        $data = Refund::with('order')->get();
+        $data = Refund::with('order.order_detail.products.product_gallery')->get();
 
         return response()->json(['data'=>$data]);
     }
