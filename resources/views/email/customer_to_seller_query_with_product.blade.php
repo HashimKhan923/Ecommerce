@@ -79,8 +79,8 @@
 
 <div>
   <img src="https://api.dragonautomart.com/ProductGallery/{{$ProductImage}}" width="150" alt="Product Image">
-  <h4><strong>Product Name:</strong>{{$ProductName}}</h4>
-  <h4><strong>Shop Name:</strong>{{$ShopName}}</h4>
+  <h4><strong>Product : </strong>{{$ProductName}}</h4>
+  <h3><strong>Shop : </strong>{$ShopName}}</h3>
 </div>
 <hr>
 
