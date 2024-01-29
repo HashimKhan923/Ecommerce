@@ -13,7 +13,7 @@ class PayoutController extends Controller
 {
     public function index()
     {
-        $data = Payout::with('order.order_detail.products.product_gallery')->get();
+        $data = Payout::with('order.order_detail.products.shop')->get();
 
         return response()->json(['data'=>$data]);
     }
