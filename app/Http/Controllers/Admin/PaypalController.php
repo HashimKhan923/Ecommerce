@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Refund;
+use PayPal\Api\RefundRequest;
 use PayPal\Api\Sale;
+use PayPal\Api\Amount;
 use PayPal\Exception\PayPalException;
 
 class PaypalController extends Controller
@@ -33,31 +34,27 @@ class PaypalController extends Controller
         try {
             // Retrieve sale details
             $sale = Sale::get($request->payment_intent_id, $this->apiContext);
-
-        // Check if the sale is refundable
-        if ($sale->getState() !== 'completed') {
-            return response()->json(['error' => 'Cannot refund a sale that is not completed.'], 400);
+    
+            // Check if the sale is refundable
+            if ($sale->getState() !== 'completed') {
+                return response()->json(['error' => 'Cannot refund a sale that is not completed.'], 400);
+            }
+    
+            // Create refund request
+            $refundRequest = new RefundRequest();
+            $refundRequest->setAmount(new Amount(['total' => $request->amount, 'currency' => $sale->getAmount()->getCurrency()]));
+    
+            // Perform refund
+            $refund = $sale->refund($refundRequest, $this->apiContext);
+    
+            // Check if the refund was successful
+            if ($refund->getState() === 'completed') {
+                return response()->json(['message' => 'Refund processed successfully']);
+            } else {
+                return response()->json(['error' => 'Refund failed.'], 500);
+            }
+        } catch (PayPalConnectionException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        // Create refund object
-        $refund = new Refund();
-        $refund->setAmount([
-            'total' => $request->amount,
-            'currency' => $sale->getAmount()->getCurrency(),
-        ]);
-
-        // Perform refund
-        $refundResponse = $sale->refundTransaction($refund, $this->apiContext);
-
-        // Check if the refund was successful
-        if ($refundResponse->getState() === 'completed') {
-            return response()->json(['message' => 'Refund processed successfully']);
-        } else {
-            return response()->json(['error' => 'Refund failed.'], 500);
-        }
-    } catch (PayPalConnectionException $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
-
     }
 }
