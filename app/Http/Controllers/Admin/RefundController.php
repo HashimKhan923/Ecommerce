@@ -108,12 +108,7 @@ class RefundController extends Controller
                     'currency' => 'USD', // Set the currency according to your transaction
                 ]);
         
-                // Create a Sale object and set its ID
-                $sale = new Sale();
-                $sale->setId($saleId);
-        
-                // Set the Sale object for the refund
-                $refund->setSale($sale);
+                $refund->setSaleId($saleId);
         
                 // Perform the refund
                 $refundResult = $refund->refund($apiContext);
