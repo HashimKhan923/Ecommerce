@@ -28,6 +28,7 @@ class SellerContactController extends Controller
                 [
                     'ProductName'=>$ProductName->name,
                     'ProductImage'=>$ProductImage->image,
+                    'ShopName'=>$Shop->name,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'Msg'=>$request->message,
