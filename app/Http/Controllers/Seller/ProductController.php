@@ -47,8 +47,8 @@ class ProductController extends Controller
         $new->height = $request->height;
         $new->weight = $request->weight;
         $new->lenght = $request->lenght;
-        $new->start_year = $request->start_year;
-        $new->end_year = $request->end_year;
+        $new->start_year = $request->year;
+        // $new->end_year = $request->end_year;
         $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
@@ -240,8 +240,8 @@ class ProductController extends Controller
         $update->height = $request->height;
         $update->weight = $request->weight;
         $update->lenght = $request->lenght;
-        $update->start_year = $request->start_year;
-        $update->end_year = $request->end_year;
+        $update->start_year = $request->year;
+        // $update->end_year = $request->end_year;
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
@@ -583,6 +583,14 @@ class ProductController extends Controller
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
 
+    }
+
+    public function view($id)
+    {
+        $data = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient'
+        )->where('id',$id)->get();
+
+        return response()->json(['data'=>$data]);
     }
 
     public function is_featured(Request $request)
