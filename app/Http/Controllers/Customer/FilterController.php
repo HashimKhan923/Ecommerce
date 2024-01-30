@@ -10,6 +10,7 @@ class FilterController extends Controller
 {
     public function search(Request $request)
     {
+        return "khan";
 
         // if($request->category_id != null)
         // {
