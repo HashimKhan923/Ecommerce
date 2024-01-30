@@ -39,9 +39,9 @@ class FilterController extends Controller
     {
         
         $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
-        ->whereJsonContains('start_year', $request->year)
-        ->where('brand_id', $request->brand_id)
-        ->where('model_id', $request->model_id)
+        ->whereJsonContains('start_year',$request->year)
+        // ->where('brand_id', $request->brand_id)
+        // ->where('model_id', $request->model_id)
         ->get();
 
         return response()->json(['data'=>$data]);
