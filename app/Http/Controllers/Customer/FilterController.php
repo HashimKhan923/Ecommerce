@@ -11,7 +11,6 @@ class FilterController extends Controller
     public function search(Request $request)
     {
 
-        return $request;
 
         // if($request->category_id != null)
         // {
