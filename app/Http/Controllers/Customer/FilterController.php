@@ -11,22 +11,24 @@ class FilterController extends Controller
     public function search(Request $request)
     {
 
-
-        // if($request->category_id != null)
-        // {
-        //     $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
-        //     ->where('name', 'LIKE', '%'.$request->searchValue.'%')
-        //     ->where('category_id',$request->category_id)
-        //     ->where('published',1)
-        //     ->get();
-        // }
-        // else
-        // {
+        if($request->category_id != null)
+        {
+            $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+            ->where('name', 'LIKE', '%'.$request->searchValue.'%')
+            ->where('category_id',$request->category_id)
+            ->where('published',1)
+            ->get();
+        }
+        else
+        {
             $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
-            ->whereJsonContains('tags', 'LIKE', '%' . $request->searchValue . '%')
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->searchValue . '%')
+                    ->orWhereJsonContains('tags',$request->searchValue);
+            })
             ->get();
         
-        // }
+        }
 
         return response()->json(['data'=>$data]);
 
