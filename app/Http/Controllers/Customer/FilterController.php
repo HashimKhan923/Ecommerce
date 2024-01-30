@@ -22,8 +22,7 @@ class FilterController extends Controller
         else
         {
             $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
-            ->where('name', 'LIKE', '%' . $request->searchValue . '%')
-                    ->orWhereJsonContains('tags', 'LIKE', '%' . $request->searchValue . '%')->get();
+            ->whereJsonContains('tags', 'LIKE', '%' . $request->searchValue . '%')->get();
         
         }
 
