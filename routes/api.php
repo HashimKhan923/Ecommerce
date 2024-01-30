@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('seller_products','seller_products');
                     Route::post('create','create');
                     Route::post('update','update');
+                    Route::get('view/{id}','view');
                     Route::get('delete/{id}','delete');
                     Route::get('is_approved/{id}','is_approved');
                     Route::get('is_featured/{id}','is_featured');

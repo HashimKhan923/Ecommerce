@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $casts = [
-        'photos' => 'array',
-        'colors' => 'array',
-        'sizes' => 'array',
+        'start_year' => 'array',
         'tags' => 'array',
     ];
 
