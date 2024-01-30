@@ -157,11 +157,11 @@ class ProductController extends Controller
 
         if($request->stock != null)
         {
-            $stock = new Stock();
-            $stock->product_id = $new->id;
-            $stock->stock = $request->stock;
-            $stock->min_stock = $request->min_stock;
-            $stock->save();
+                $stock = new Stock();
+                $stock->product_id = $new->id;
+                $stock->stock = $request->stock;
+                $stock->min_stock = $request->min_stock;
+                $stock->save();
         }
 
         

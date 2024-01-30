@@ -87,7 +87,7 @@
 <p><h3>Customer Information:</h3></p>
 <p><strong>Name:</strong> {{$Customer->name}}</p>
 <p><strong>Email:</strong> {{$Customer->email}}</p>
-<p><strong>Query:</strong> {{$Msg}} </p>
+<p><strong>Query:</strong> {{$Msg}}</p>
 
 
 <hr>
