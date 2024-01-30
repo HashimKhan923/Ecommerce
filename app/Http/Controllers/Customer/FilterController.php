@@ -24,7 +24,9 @@ class FilterController extends Controller
             $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
             ->where(function ($query) use ($request) {
                 $query->where('name', 'LIKE', '%' . $request->searchValue . '%')
-                    ->orWhereJsonContains('tags',$request->searchValue);
+                    ->orWhere(function ($query) use ($request) {
+                        $query->whereRaw("JSON_CONTAINS(`tags`, ?)", ['%"' . $request->searchValue . '"%']);
+                    });
             })
             ->get();
         
@@ -42,6 +44,7 @@ class FilterController extends Controller
         ->whereJsonContains('start_year',$request->year)
         ->where('brand_id', $request->brand_id)
         ->where('model_id', $request->model_id)
+        ->where('published',1)
         ->get();
 
         return response()->json(['data'=>$data]);
