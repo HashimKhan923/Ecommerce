@@ -11,6 +11,8 @@ class FilterController extends Controller
     public function search(Request $request)
     {
 
+        return $request;
+
         // if($request->category_id != null)
         // {
         //     $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
