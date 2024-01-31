@@ -62,6 +62,46 @@ class HomeBannerController extends Controller
             $new->banner4 = $filename;
         }
 
+        if($request->file('all_category_banner')){
+
+            $file= $request->all_category_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->all_category_banner = $filename;
+        }
+
+        if($request->file('all_brand_banner')){
+
+            $file= $request->all_brand_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->all_brand_banner = $filename;
+        }
+
+        if($request->file('all_store_banner')){
+
+            $file= $request->all_store_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->all_store_banner = $filename;
+        }
+
+        if($request->file('cart_banner')){
+
+            $file= $request->cart_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->cart_banner = $filename;
+        }
+
+        if($request->file('wishlist_banner')){
+
+            $file= $request->wishlist_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->wishlist_banner = $filename;
+        }
+
         $new->save();
 
         
@@ -125,6 +165,71 @@ class HomeBannerController extends Controller
             $update->banner4 = $filename;
         }
 
+        if($request->file('all_category_banner')){
+
+            if($update->all_category_banner)
+            {
+                unlink(public_path('HomeBanner/'.$update->all_category_banner));
+            }
+
+            $file= $request->all_category_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->all_category_banner = $filename;
+        }
+
+        if($request->file('all_brand_banner')){
+
+            if($update->all_brand_banner)
+            {
+                unlink(public_path('HomeBanner/'.$update->all_brand_banner));
+            }
+
+            $file= $request->all_brand_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->all_brand_banner = $filename;
+        }
+
+        if($request->file('all_store_banner')){
+
+            if($update->all_store_banner)
+            {
+                unlink(public_path('HomeBanner/'.$update->all_store_banner));
+            }
+
+            $file= $request->all_store_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->all_store_banner = $filename;
+        }
+
+        if($request->file('cart_banner')){
+
+            if($update->cart_banner)
+            {
+                unlink(public_path('HomeBanner/'.$update->cart_banner));
+            }
+
+            $file= $request->cart_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->cart_banner = $filename;
+        }
+
+        if($request->file('wishlist_banner')){
+
+            if($update->wishlist_banner)
+            {
+                unlink(public_path('HomeBanner/'.$update->wishlist_banner));
+            }
+
+            $file= $request->wishlist_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->wishlist_banner = $filename;
+        }
+
         $update->save();
 
         
@@ -154,6 +259,31 @@ class HomeBannerController extends Controller
         if($file->banner4)
         {
             unlink(public_path('HomeBanner/'.$file->banner4));
+        }
+
+        if($file->all_category_banner)
+        {
+            unlink(public_path('HomeBanner/'.$file->all_category_banner));
+        }
+
+        if($file->all_brand_banner)
+        {
+            unlink(public_path('HomeBanner/'.$file->all_brand_banner));
+        }
+
+        if($file->all_store_banner)
+        {
+            unlink(public_path('HomeBanner/'.$file->all_store_banner));
+        }
+
+        if($file->cart_banner)
+        {
+            unlink(public_path('HomeBanner/'.$file->cart_banner));
+        }
+
+        if($file->wishlist_banner)
+        {
+            unlink(public_path('HomeBanner/'.$file->wishlist_banner));
         }
 
         $file->delete();
