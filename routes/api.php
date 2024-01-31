@@ -502,6 +502,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show/{id}','index');
                     Route::post('create','create');
                     Route::post('update','update');
+                    Route::get('view/{id}','view');
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
                     Route::post('is_featured','is_featured');
