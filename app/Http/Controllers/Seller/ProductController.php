@@ -603,7 +603,7 @@ class ProductController extends Controller
 
 
         $is_featured = Product::where('id',$request->product_id)->first();
-        $is_featured->featured = 1;
+        $is_featured->featured = $request->featured;
         $is_featured->save();
 
         // $dedect = SubscribeUser::where('user_id',$request->user_id)->first();
