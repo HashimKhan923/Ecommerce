@@ -88,13 +88,11 @@ class ProductController extends Controller
         $new->slug = $request->slug;
         $new->save();
 
-        $order = 0;
 
         if ($request->photos) {
             foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
                 $gallery->product_id = $new->id;
-                $gallery->order = $order++;
             
                 $filename = date('YmdHis') . $image->getClientOriginalName();
 
