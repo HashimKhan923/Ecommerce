@@ -88,10 +88,13 @@ class ProductController extends Controller
         $new->slug = $request->slug;
         $new->save();
 
+        $order = 0;
+
         if ($request->photos) {
             foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
                 $gallery->product_id = $new->id;
+                $gallery->order = $order++;
             
                 $filename = date('YmdHis') . $image->getClientOriginalName();
 
@@ -289,22 +292,29 @@ class ProductController extends Controller
 
 
         if ($request->photos) {
-            foreach ($request->file('photos') as $image) {
-                $gallery = new ProductGallery();
-                $gallery->product_id = $update->id;
-            
-                $filename = date('YmdHis') . $image->getClientOriginalName();
-
-                $compressedImage = Image::make($image->getRealPath());
-                
-                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
-                
-                $gallery->image = $filename . '.webp';
-            
-            
-                $gallery->save();
+            ProductGallery::where('product_id',$update->id)->delete();
+            foreach ($request->photos as $file) {
+                if ($file instanceof \Illuminate\Http\UploadedFile) {
+                    $gallery = new ProductGallery();
+        
+                    $gallery->product_id = $update->id;
+        
+                    $filename = date('YmdHis') . $file->getClientOriginalName();
+        
+                    $compressedImage = Image::make($file->getRealPath());
+                    
+                    $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                    
+                    $gallery->image = $filename . '.webp';
+        
+                    $gallery->save();
+                } else {
+                    $gallery = new ProductGallery();
+                    $gallery->product_id = $update->id;        
+                    $gallery->name = $file;
+                    $gallery->save();
+                }
             }
-            
         }
 
         if ($request->varients != null) {
