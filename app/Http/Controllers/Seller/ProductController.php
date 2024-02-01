@@ -233,6 +233,7 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
+        dd($request->photos);
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
         $update->added_by = 'seller';
