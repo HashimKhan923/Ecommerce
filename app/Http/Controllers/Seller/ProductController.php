@@ -296,6 +296,7 @@ class ProductController extends Controller
             foreach ($request->photos as $file) {
                 $gallery = new ProductGallery();
                 $gallery->product_id = $update->id; 
+                $gallery->order = $file->order;
                 if ($file instanceof \Illuminate\Http\UploadedFile) {
                     $gallery->product_id = $update->id;
         
