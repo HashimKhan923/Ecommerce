@@ -309,7 +309,7 @@ class ProductController extends Controller
                 } else {
                     $gallery = new ProductGallery();
                     $gallery->product_id = $update->id;        
-                    $gallery->name = $file;
+                    $gallery->image = $file;
                     $gallery->save();
                 }
             }
