@@ -292,9 +292,9 @@ class ProductController extends Controller
         if ($request->photos) {
             ProductGallery::where('product_id',$update->id)->delete();
             foreach ($request->photos as $file) {
+                $gallery = new ProductGallery();
+                $gallery->product_id = $update->id; 
                 if ($file instanceof \Illuminate\Http\UploadedFile) {
-                    $gallery = new ProductGallery();
-        
                     $gallery->product_id = $update->id;
         
                     $filename = date('YmdHis') . $file->getClientOriginalName();
@@ -305,13 +305,10 @@ class ProductController extends Controller
                     
                     $gallery->image = $filename . '.webp';
         
-                    $gallery->save();
-                } else {
-                    $gallery = new ProductGallery();
-                    $gallery->product_id = $update->id;        
-                    $gallery->image = $file;
-                    $gallery->save();
+                } else {       
+                    $gallery->image = $file;  
                 }
+                $gallery->save();
             }
         }
 
