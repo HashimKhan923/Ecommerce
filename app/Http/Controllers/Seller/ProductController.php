@@ -292,12 +292,12 @@ class ProductController extends Controller
 
         // $request->merge(['photos' => $photoArray]);
 
-        if ($request->photoArray) {
+        if ($request->photos) {
 
 
 
 
-            $images = $request->file('photoArray');
+            $images = $request->file('photos');
 
             foreach ($images as $image) {
                 $gallery = ProductGallery::where('id', $image->image_id)->first();
