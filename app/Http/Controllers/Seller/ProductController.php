@@ -297,7 +297,7 @@ class ProductController extends Controller
 
 
 
-            $images = $request->file('photos');
+            $images = $request->photos;
 
             foreach ($images as $image) {
                 $gallery = ProductGallery::where('id', $image->image_id)->first();
