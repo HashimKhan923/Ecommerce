@@ -293,22 +293,30 @@ class ProductController extends Controller
 
         if ($request->photos) {
 
-            foreach ($request->file('photos') as $image) {
 
-            $gallery = new ProductGallery();
 
-            $gallery->product_id = $update->id;
-        
-            $filename = date('YmdHis') . $image->getClientOriginalName();
 
-            $compressedImage = Image::make($image->getRealPath());
+            $images = $request->file('photos');
+
+            foreach ($images as $image) {
+                $gallery = ProductGallery::where('id', $image->image_id)->first();
             
-            $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                if ($gallery) {
+                    $gallery->order = $image->order;
+                } else {
+                    $gallery = new ProductGallery();
+                    $gallery->product_id = $update->id;
+                    $gallery->order = $image->order;
             
-            $gallery->image = $filename . '.webp';
-        
-            $gallery->save();
+                    $filename = date('YmdHis') . $image->getClientOriginalName();
+                    $compressedImage = Image::make($image->getRealPath());
+                    $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                    $gallery->image = $filename . '.webp';
+                }
+            
+                $gallery->save();
             }
+            
 
 
             
