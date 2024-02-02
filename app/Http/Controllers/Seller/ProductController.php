@@ -293,34 +293,26 @@ class ProductController extends Controller
         // $request->merge(['photos' => $photoArray]);
 
         if ($request->photos) {
-
-
-
-
             $images = $request->photos;
-
+        
             foreach ($images as $image) {
-                $gallery = ProductGallery::where('id', $image->image_id)->first();
-            
+                $gallery = ProductGallery::where('id', $image['image_id'])->first();
+        
                 if ($gallery) {
-                    $gallery->order = $image->order;
+                    $gallery->order = $image['order'];
                 } else {
                     $gallery = new ProductGallery();
                     $gallery->product_id = $update->id;
-                    $gallery->order = $image->order;
-            
-                    $filename = date('YmdHis') . $image->getClientOriginalName();
-                    $compressedImage = Image::make($image->getRealPath());
+                    $gallery->order = $image['order'];
+        
+                    $filename = date('YmdHis') . $image['file']->getClientOriginalName();
+                    $compressedImage = Image::make($image['file']->getRealPath());
                     $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                     $gallery->image = $filename . '.webp';
                 }
-            
+        
                 $gallery->save();
             }
-            
-
-
-            
         }
 
         if ($request->varients != null) {
