@@ -296,11 +296,14 @@ class ProductController extends Controller
             $images = $request->photos;
         
             foreach ($images as $image) {
-                $gallery = ProductGallery::where('id', $image['image_id'])->first();
-        
-                if ($gallery) {
+
+                if (isset($image['image_id']))
+                {
+                    $gallery = ProductGallery::where('id', $image['image_id'])->first();
                     $gallery->order = $image['order'];
-                } else {
+                }
+                else
+                {
                     $gallery = new ProductGallery();
                     $gallery->product_id = $update->id;
                     $gallery->order = $image['order'];
@@ -310,9 +313,12 @@ class ProductController extends Controller
                     $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                     $gallery->image = $filename . '.webp';
                 }
+
         
                 $gallery->save();
-            }
+
+
+            
         }
 
         if ($request->varients != null) {
