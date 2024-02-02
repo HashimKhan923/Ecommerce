@@ -401,8 +401,15 @@ class ProductController extends Controller
             $discount->discount_type = $request->discount_type;
             $discount->save();
 
-
-
+        }
+        else
+        {
+            $check_discount = Discount::where('product_id',$update->id)->first();
+            
+            if($check_discount)
+            {
+                $check_discount->delete();
+            }
         }
 
         if($request->stock != null)
