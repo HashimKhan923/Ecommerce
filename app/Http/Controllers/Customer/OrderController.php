@@ -76,7 +76,8 @@ public function create(Request $request)
             if ($VarientStock) {
                 $VarientStock->stock = $VarientStock->stock - $orderProduct['quantity'];
                 $VarientStock->save();
-            } else {
+            } 
+            if($stock) {
                 $stock->stock = $stock->stock - $orderProduct['quantity'];
                 $stock->save();
             }
