@@ -290,6 +290,7 @@ class ProductController extends Controller
         $update->sku = $request->sku;
         $update->save();
 
+        $request->merge(['photos' => $photoArray]);
 
         if ($request->photos) {
 
