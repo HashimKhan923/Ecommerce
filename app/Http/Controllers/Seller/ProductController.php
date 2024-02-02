@@ -495,6 +495,7 @@ class ProductController extends Controller
 
         $response = ['status'=>true,"message" => "Product updated Successfully!"];
         return response($response, 200);
+    }
 
     }
 
