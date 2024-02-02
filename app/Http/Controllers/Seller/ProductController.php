@@ -290,14 +290,14 @@ class ProductController extends Controller
         $update->sku = $request->sku;
         $update->save();
 
-        $request->merge(['photos' => $photoArray]);
+        // $request->merge(['photos' => $photoArray]);
 
-        if ($request->photos) {
-
-
+        if ($request->photoArray) {
 
 
-            $images = $request->file('photos');
+
+
+            $images = $request->file('photoArray');
 
             foreach ($images as $image) {
                 $gallery = ProductGallery::where('id', $image->image_id)->first();
