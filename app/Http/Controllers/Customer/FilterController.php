@@ -13,7 +13,7 @@ class FilterController extends Controller
     $searchTerms = explode(' ', $request->searchValue);
     if($request->category_id != null)
     {
-        $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        $data = Product::with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('name', 'LIKE', '%'.$request->searchValue.'%')
             ->where('category_id', $request->category_id)
             ->where('published', 1)
@@ -22,7 +22,7 @@ class FilterController extends Controller
     }
     else
     {
-        $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+        $data = Product::with('user', 'category', 'brand','shop','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
             ->where(function ($query) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
                     $query->where('name', 'LIKE', '%' . $term . '%', 'or');
@@ -38,7 +38,7 @@ class FilterController extends Controller
 
    public function target_search(Request $request)
 {
-    $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+    $data = Product::with('user', 'category', 'brand','shop','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
         ->whereJsonContains('start_year', $request->year)
         ->where('brand_id', $request->brand_id)
         ->where('model_id', $request->model_id)
@@ -81,7 +81,7 @@ class FilterController extends Controller
 
 
     
-        $data = $query->with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->get();
+        $data = $query->with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->get();
     
         return response()->json(['data'=>$data]);
     }
