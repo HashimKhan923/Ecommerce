@@ -12,6 +12,7 @@ use App\Models\Brand;
 use App\Models\Payout;
 use App\Models\SellerGuideVideo;
 use App\Models\SellerFandQ;
+use App\Models\Shop;
 
 
 
