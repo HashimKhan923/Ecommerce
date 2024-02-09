@@ -18,4 +18,14 @@ class Shop extends Model
     {
         return $this->hasMany(Product::class,'shop_id');
     }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class,'seller_id','seller_id');
+    }
+
+    public function payout()
+    {
+        return $this->hasMany(Payout::class,'seller_id','seller_id');
+    }
 }

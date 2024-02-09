@@ -38,4 +38,10 @@ class DashboardController extends Controller
 
         return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo]);
     }
+
+    public function searchByshop($shop_id)
+    {
+        $Shops = Shop::with('product','order','payout')->where('id',$shop_id)->get();
+
+    }
 }
