@@ -94,6 +94,12 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function updateAverageRating()
+    {
+        $averageRating = $this->reviews()->avg('rating');
+        $this->update(['average_rating' => $averageRating]);
+    }
+
     
 
 

@@ -9,6 +9,19 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($review) {
+            $review->product->updateAverageRating();
+        });
+
+        static::deleted(function ($review) {
+            $review->product->updateAverageRating();
+        });
+    }
+
 
     public function product() {
         return $this->belongsTo(Product::class);
