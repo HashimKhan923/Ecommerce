@@ -26,8 +26,27 @@ class HomeController extends Controller
         //     $package->delete();
         // }
 
-        $Products = Product::with('user','category','brand','model','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
-
+        //$Products = Product::with('user','category','brand','model','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
+		//$Productss = Product::with('user','category','brand','model','stock',['product_gallery'=>function($query){return $query->orderByAsc('order');}],'discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
+$Products = Product::with([
+    'user',
+    'category',
+    'brand',
+    'model',
+    'stock',
+    'product_gallery' => function($query) {
+        $query->orderBy('order', 'asc'); // Use orderBy instead of orderByAsc
+    },
+    'discount',
+    'tax',
+    'shipping',
+    'deal.deal_product',
+    'wholesale',
+    'shop',
+    'reviews.user',
+    'product_varient'
+])->get();
+		
         $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
         ->orderBy('num_of_sale', 'desc')

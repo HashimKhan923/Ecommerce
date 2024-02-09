@@ -8,46 +8,47 @@ use App\Models\Product;
 
 class FilterController extends Controller
 {
-    public function search(Request $request)
+   public function search(Request $request)
+{
+    $searchTerms = explode(' ', $request->searchValue);
+    if($request->category_id != null)
     {
-        $searchTerms = explode(' ', $request->searchValue);
-        if($request->category_id != null)
-        {
-            $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        $data = Product::with('user','category','brand','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('name', 'LIKE', '%'.$request->searchValue.'%')
-            ->where('category_id',$request->category_id)
-            ->where('published',1)
+            ->where('category_id', $request->category_id)
+            ->where('published', 1)
+            ->orderByRaw('featured DESC')
             ->get();
-        }
-        else
-        {
-            $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+    }
+    else
+    {
+        $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
             ->where(function ($query) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
                     $query->where('name', 'LIKE', '%' . $term . '%', 'or');
                 }
-            })->where('published',1)
+            })
+            ->where('published', 1)
+            ->orderByRaw('featured DESC')
             ->get();
-        
-        }
-
-        return response()->json(['data'=>$data]);
-
-
     }
 
-    public function target_search(Request $request)
-    {
-        
-        $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
-        ->whereJsonContains('start_year',$request->year)
+    return response()->json(['data' => $data]);
+}
+
+   public function target_search(Request $request)
+{
+    $data = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+        ->whereJsonContains('start_year', $request->year)
         ->where('brand_id', $request->brand_id)
         ->where('model_id', $request->model_id)
-        ->where('published',1)
+        ->where('published', 1)
+        ->orderByRaw('featured DESC')
         ->get();
 
-        return response()->json(['data'=>$data]);
-    }
+    return response()->json(['data' => $data]);
+}
+
 
     public function multiSearch(Request $request)
     {
