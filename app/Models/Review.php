@@ -9,6 +9,9 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['product_id', 'user_id', 'comment', 'rating','average_rating'];
+
+
     protected static function boot()
     {
         parent::boot();
