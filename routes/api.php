@@ -797,6 +797,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => 'f&qs/'], function() {
                 Route::controller(App\Http\Controllers\Customer\FandQController::class)->group(function () {
                     Route::get('show','index');
+                    Route::get('seller','index2');
                 });
             });  
 
