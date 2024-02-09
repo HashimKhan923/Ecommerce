@@ -12,6 +12,9 @@ class Product extends Model
         'tags' => 'array',
     ];
 
+    protected $fillable = ['average_rating'];
+
+
 
 
     
