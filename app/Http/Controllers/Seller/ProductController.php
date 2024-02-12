@@ -254,75 +254,115 @@ class ProductController extends Controller
         $existingProduct = Product::find($id);
 
         if ($existingProduct) {
-            $newProduct = new Product();    
-            $attributes = Arr::except($existingProduct->toArray(), ['id']);    
-            $newProduct->fill($attributes);
-            $newProduct->save();
+            $new = new Product();
+            $new->name = $existingProduct->name;
+            $new->added_by = 'seller';
+            $new->user_id = $existingProduct->user_id;
+            $new->category_id = $existingProduct->category_id;
+            $new->height = $existingProduct->height;
+            $new->weight = $existingProduct->weight;
+            $new->lenght = $existingProduct->lenght;
+            $new->start_year = $existingProduct->year;
+            $new->make = $existingProduct->make;
+            $new->unit = $existingProduct->unit;
+            $new->sku = $existingProduct->sku;
+            $new->bar_code = $existingProduct->bar_code;
+            $new->condition = $existingProduct->condition;
+            $new->brand_id = $existingProduct->brand_id;
+            $new->model_id = $existingProduct->model_id;
+            $new->shop_id = $existingProduct->shop_id;
+            $new->deal_id = $existingProduct->deal_id;
+            $new->tags = $existingProduct->tags;
+            $new->description = $existingProduct->description;
+            $new->price = $existingProduct->price;
+            $new->shipping = $existingProduct->shipping;
+            $new->featured = $existingProduct->featured;
+            $new->published = $existingProduct->published;
+            $new->is_tax = $existingProduct->is_tax;
+            $new->meta_title = $existingProduct->meta_title;
+            $new->meta_description = $existingProduct->meta_description;
+            $new->slug = $existingProduct->slug;
+            $new->save();
         }
 
-        $ProductGallery = ProductGallery::where('product_id',$newProduct->id)->get();
+        $ProductGallery = ProductGallery::where('product_id',$id)->get();
 
         if ($ProductGallery) {
             foreach($ProductGallery as $item)
             {
-                $newGallery = new ProductGallery();
-                $attributes = Arr::except($item->toArray(), ['id']);    
-                $newGallery->fill($attributes);
-                $newGallery->save();
+                $gallery = new ProductGallery();
+                $gallery->product_id = $item->product_id;
+                $gallery->order = $item->order;
+                $gallery->image = $item->image;
+                $gallery->save();
             }
         } 
 
-        $ProductVarient = ProductVarient::where('product_id',$newProduct->id)->get();
+        $ProductVarient = ProductVarient::where('product_id',$id)->get();
 
         if ($ProductVarient) {
             foreach($ProductVarient as $item)
             {
-                $newVarient = new ProductVarient();
-                $attributes = Arr::except($item->toArray(), ['id']);    
-                $newVarient->fill($attributes);
-                $newVarient->save();
+                $varient = new ProductVarient();
+                $varient->product_id = $item->product_id;
+                $varient->color = $item->color;
+                $varient->size = $item->size;
+                $varient->bolt_pattern = $item->bolt_pattern;
+                $varient->price = $item->varient_price;
+                $varient->discount_price = $item->varient_discount_price;
+                $varient->sku = $item->varient_sku;
+                $varient->stock = $item->varient_stock;
+                $varient->save();
             }
         } 
 
-        $Discount = Discount::where('product_id',$newProduct->id)->get();
+        $Discount = Discount::where('product_id',$id)->first();
 
         if ($Discount) {
 
-                $newDiscount = new Discount();
-                $attributes = Arr::except($Discount->toArray(), ['id']);    
-                $newDiscount->fill($attributes);
-                $newDiscount->save();
+            $discount = new Discount();
+            $discount->product_id = $Discount->product_id;
+            $discount->discount = $Discount->discount;
+            $discount->discount_start_date = $Discount->discount_start_date;
+            $discount->discount_end_date = $Discount->discount_end_date;
+            $discount->discount_type = $Discount->discount_type;
+            $discount->save();
         } 
 
-        $Stock = Stock::where('product_id',$newProduct->id)->get();
+        $Stock = Stock::where('product_id',$id)->first();
 
         if ($Stock) {
 
-                $newStock = new Stock();
-                $attributes = Arr::except($Stock->toArray(), ['id']);    
-                $newStock->fill($attributes);
-                $newStock->save();
+            $stock = new Stock();
+            $stock->product_id = $Stock->product_id;
+            $stock->stock = $Stock->stock;
+            $stock->min_stock = $Stock->min_stock;
+            $stock->save();
         } 
 
-        $DealProduct = DealProduct::where('product_id',$newProduct->id)->get();
+        $DealProduct = DealProduct::where('product_id',$id)->first();
 
         if ($DealProduct) {
 
-                $newDealProduct = new DealProduct();
-                $attributes = Arr::except($DealProduct->toArray(), ['id']); 
-                $newDealProduct->fill($attributes);
-                $newDealProduct->save();
+            $deal = new DealProduct();
+            $deal->deal_id = $DealProduct->deal_id;
+            $deal->product_id = $DealProduct->product_id;
+            $deal->discount = $DealProduct->deal_discount;
+            $deal->discount_type = $DealProduct->deal_discount_type;
+            $deal->save();
         } 
 
 
-        $Shipping = Shipping::where('product_id',$newProduct->id)->get();
+        $Shipping = Shipping::where('product_id',$newProduct->id)->first();
 
         if ($Shipping) {
 
-                $newShipping = new Shipping();
-                $attributes = Arr::except($Shipping->toArray(), ['id']); 
-                $newShipping->fill($attributes);
-                $newShipping->save();
+            $shipping = new Shipping();
+            $shipping->product_id = $Shipping->product_id;
+            $shipping->shipping_cost = $Shipping->shipping_cost;
+            $shipping->is_qty_multiply = $Shipping->is_qty_multiply;
+            $shipping->est_shipping_days = $Shipping->est_shipping_days;
+            $shipping->save();
         } 
     }
 
