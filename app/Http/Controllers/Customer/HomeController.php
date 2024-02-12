@@ -71,5 +71,11 @@ $Products = Product::with([
         return response()->json(['Products'=>$Products,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
     }
 
+
+    public function load_more_products()
+    {
+        
+    }
+
     
 }
