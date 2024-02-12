@@ -45,12 +45,12 @@ $Products = Product::with([
     'shop',
     'reviews.user',
     'product_varient'
-])->get();
+])->where('published',1)->get();
 		
         $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
         ->orderBy('num_of_sale', 'desc')
-        ->get();
+        ->where('published',1)->get();
 
         $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
@@ -58,7 +58,7 @@ $Products = Product::with([
         ->select('products.*', DB::raw('AVG(reviews.rating) as avg_rating'))
         ->groupBy('products.id')
         ->orderByDesc('avg_rating')
-        ->get();
+        ->where('published',1)->get();
 
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
