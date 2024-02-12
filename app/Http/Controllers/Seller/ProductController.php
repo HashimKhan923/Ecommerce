@@ -78,6 +78,7 @@ class ProductController extends Controller
         $new->tags = $request->tags;
         $new->description = $request->description;
         $new->price = $request->price;
+        $new->cost_price = $request->cost_price;
         $new->shipping = $request->shipping;
         $new->featured = $request->featured;
         $new->published = $request->published;
@@ -275,6 +276,7 @@ class ProductController extends Controller
             $new->tags = $existingProduct->tags;
             $new->description = $existingProduct->description;
             $new->price = $existingProduct->price;
+            $new->cost_price = $existingProduct->cost_price;
             $new->shipping = $existingProduct->shipping;
             $new->featured = 0;
             $new->published = 0;
@@ -393,6 +395,7 @@ class ProductController extends Controller
         $update->tags = $request->tags;
         $update->description = $request->description;
         $update->price = $request->price;
+        $update->cost_price = $request->cost_price;
         $update->shop_id = $request->shop_id;
         $update->shipping = $request->shipping;
         $update->featured = $request->featured;
