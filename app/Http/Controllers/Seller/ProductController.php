@@ -353,7 +353,7 @@ class ProductController extends Controller
         } 
 
 
-        $Shipping = Shipping::where('product_id',$newProduct->id)->first();
+        $Shipping = Shipping::where('product_id',$id)->first();
 
         if ($Shipping) {
 
