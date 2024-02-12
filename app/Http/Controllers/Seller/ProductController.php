@@ -107,25 +107,19 @@ class ProductController extends Controller
         $order = 0;
 
         if ($request->photos) {
-            foreach ($request->photos as $image) {
+            foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
                 $gallery->product_id = $new->id;
                 $gallery->order = $order++;
-                if($image instanceof \Illuminate\Http\UploadedFile)
-                {
-                    $filename = date('YmdHis') . $image->getClientOriginalName();
-
-                    $compressedImage = Image::make($image->getRealPath());
-                    
-                    $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
-                    
-                    $gallery->image = $filename . '.webp';
-                }
-                else
-                {
-                    $gallery->image = $file;
-                }
             
+                $filename = date('YmdHis') . $image->getClientOriginalName();
+
+                $compressedImage = Image::make($image->getRealPath());
+                
+                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                
+                $gallery->image = $filename . '.webp';
+                
                 $gallery->save();
             }
             
@@ -252,6 +246,76 @@ class ProductController extends Controller
         
         
 
+    }
+
+    public function sell_similar($id)
+    {
+        $existingProduct = Product::find($id);
+
+        if ($existingProduct) {
+            $newProduct = new Product();        
+            $newProduct->fill($existingProduct->except(['id'])->toArray());
+            $newProduct->save();
+        }
+
+        $ProductGallery = ProductGallery::where('product_id',$newProduct->id)->get();
+
+        if ($ProductGallery) {
+            foreach($ProductGallery as $item)
+            {
+                $newGallery = new ProductGallery();
+                $newGallery->fill($item->except(['id'])->toArray());
+                $newGallery->save();
+            }
+        } 
+
+        $ProductVarient = ProductVarient::where('product_id',$newProduct->id)->get();
+
+        if ($ProductVarient) {
+            foreach($ProductVarient as $item)
+            {
+                $newVarient = new ProductVarient();
+                $newVarient->fill($item->except(['id'])->toArray());
+                $newVarient->save();
+            }
+        } 
+
+        $Discount = Discount::where('product_id',$newProduct->id)->get();
+
+        if ($Discount) {
+
+                $newDiscount = new Discount();
+                $newDiscount->fill($Discount->except(['id'])->toArray());
+                $newDiscount->save();
+        } 
+
+        $Stock = Stock::where('product_id',$newProduct->id)->get();
+
+        if ($Stock) {
+
+                $newStock = new Stock();
+                $newStock->fill($Stock->except(['id'])->toArray());
+                $newStock->save();
+        } 
+
+        $DealProduct = DealProduct::where('product_id',$newProduct->id)->get();
+
+        if ($DealProduct) {
+
+                $newDealProduct = new DealProduct();
+                $newDealProduct->fill($DealProduct->except(['id'])->toArray());
+                $newDealProduct->save();
+        } 
+
+
+        $Shipping = Shipping::where('product_id',$newProduct->id)->get();
+
+        if ($Shipping) {
+
+                $newShipping = new Shipping();
+                $newShipping->fill($Shipping->except(['id'])->toArray());
+                $newShipping->save();
+        } 
     }
 
 

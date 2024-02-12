@@ -502,6 +502,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
                     Route::get('show/{id}','index');
                     Route::post('create','create');
+                    Route::get('sell_similar/{id}','sell_similar');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
