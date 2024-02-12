@@ -276,8 +276,8 @@ class ProductController extends Controller
             $new->description = $existingProduct->description;
             $new->price = $existingProduct->price;
             $new->shipping = $existingProduct->shipping;
-            $new->featured = $existingProduct->featured;
-            $new->published = $existingProduct->published;
+            $new->featured = 0;
+            $new->published = 0;
             $new->is_tax = $existingProduct->is_tax;
             $new->meta_title = $existingProduct->meta_title;
             $new->meta_description = $existingProduct->meta_description;
