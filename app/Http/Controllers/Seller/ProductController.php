@@ -421,7 +421,7 @@ class ProductController extends Controller
         else
         {
             $check_discount = Discount::where('product_id',$update->id)->first();
-            
+
             if($check_discount)
             {
                 $check_discount->delete();
@@ -529,7 +529,9 @@ class ProductController extends Controller
         $gallery = ProductGallery::where('product_id',$id)->get();
         foreach($gallery as $item)
         {
-            if($item->image)
+            $checkCount = ProductGallery::where('image',$item->image)->count();
+
+            if($checkCount < 2)
             {
                 unlink(public_path('ProductGallery/'.$item->image));
             }
@@ -538,7 +540,9 @@ class ProductController extends Controller
         $varients = ProductVarient::where('product_id',$id)->get();
         foreach($varients as $item)
         {
-            if($item->image)
+            $checkCount = ProductVarient::where('image',$item->image)->count();
+
+            if($checkCount < 2)
             {
                 unlink(public_path('ProductVarient/'.$item->image));
             }
@@ -568,7 +572,10 @@ class ProductController extends Controller
             $gallery = ProductGallery::where('product_id',$item->id)->get();
             foreach($gallery as $item1)
             {
-                if($item1->image)
+                
+                $checkCount = ProductGallery::where('image',$item1->image)->count();
+
+                if($checkCount < 2)
                 {
                     unlink(public_path('ProductGallery/'.$item1->image));
                 }
@@ -577,7 +584,9 @@ class ProductController extends Controller
             $varients = ProductVarient::where('product_id',$item->id)->get();
             foreach($varients as $item2)
             {
-                if($item2->image)
+                $checkCount = ProductVarient::where('image',$item2->image)->count();
+
+                if($checkCount < 2)
                 {
                     unlink(public_path('ProductVarient/'.$item2->image));
                 }
@@ -670,7 +679,9 @@ class ProductController extends Controller
     {
       $file = ProductGallery::find($id);
 
-        if($file->image)
+        $checkCount = ProductGallery::where('image',$file->image)->count();
+
+        if($checkCount < 2)
         {
             unlink(public_path('ProductGallery/'.$file->image));
         }
