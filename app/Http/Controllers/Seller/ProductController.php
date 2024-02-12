@@ -262,7 +262,7 @@ class ProductController extends Controller
             $new->height = $existingProduct->height;
             $new->weight = $existingProduct->weight;
             $new->lenght = $existingProduct->lenght;
-            $new->start_year = $existingProduct->year;
+            $new->start_year = $existingProduct->start_year;
             $new->make = $existingProduct->make;
             $new->unit = $existingProduct->unit;
             $new->sku = $existingProduct->sku;
@@ -308,10 +308,10 @@ class ProductController extends Controller
                 $varient->color = $item->color;
                 $varient->size = $item->size;
                 $varient->bolt_pattern = $item->bolt_pattern;
-                $varient->price = $item->varient_price;
-                $varient->discount_price = $item->varient_discount_price;
-                $varient->sku = $item->varient_sku;
-                $varient->stock = $item->varient_stock;
+                $varient->price = $item->price;
+                $varient->discount_price = $item->discount_price;
+                $varient->sku = $item->sku;
+                $varient->stock = $item->stock;
                 $varient->save();
             }
         } 
@@ -347,8 +347,8 @@ class ProductController extends Controller
             $deal = new DealProduct();
             $deal->deal_id = $DealProduct->deal_id;
             $deal->product_id = $new->id;
-            $deal->discount = $DealProduct->deal_discount;
-            $deal->discount_type = $DealProduct->deal_discount_type;
+            $deal->discount = $DealProduct->discount;
+            $deal->discount_type = $DealProduct->discount_type;
             $deal->save();
         } 
 
