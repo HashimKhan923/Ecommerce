@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
@@ -253,8 +254,9 @@ class ProductController extends Controller
         $existingProduct = Product::find($id);
 
         if ($existingProduct) {
-            $newProduct = new Product();        
-            $newProduct->fill($existingProduct->except(['id'])->toArray());
+            $newProduct = new Product();    
+            $attributes = Arr::except($existingProduct->toArray(), ['id']);    
+            $newProduct->fill($attributes);
             $newProduct->save();
         }
 
@@ -264,7 +266,8 @@ class ProductController extends Controller
             foreach($ProductGallery as $item)
             {
                 $newGallery = new ProductGallery();
-                $newGallery->fill($item->except(['id'])->toArray());
+                $attributes = Arr::except($item->toArray(), ['id']);    
+                $newGallery->fill($attributes);
                 $newGallery->save();
             }
         } 
@@ -275,7 +278,8 @@ class ProductController extends Controller
             foreach($ProductVarient as $item)
             {
                 $newVarient = new ProductVarient();
-                $newVarient->fill($item->except(['id'])->toArray());
+                $attributes = Arr::except($item->toArray(), ['id']);    
+                $newVarient->fill($attributes);
                 $newVarient->save();
             }
         } 
@@ -285,7 +289,8 @@ class ProductController extends Controller
         if ($Discount) {
 
                 $newDiscount = new Discount();
-                $newDiscount->fill($Discount->except(['id'])->toArray());
+                $attributes = Arr::except($Discount->toArray(), ['id']);    
+                $newDiscount->fill($attributes);
                 $newDiscount->save();
         } 
 
@@ -294,7 +299,8 @@ class ProductController extends Controller
         if ($Stock) {
 
                 $newStock = new Stock();
-                $newStock->fill($Stock->except(['id'])->toArray());
+                $attributes = Arr::except($Stock->toArray(), ['id']);    
+                $newStock->fill($attributes);
                 $newStock->save();
         } 
 
@@ -303,7 +309,8 @@ class ProductController extends Controller
         if ($DealProduct) {
 
                 $newDealProduct = new DealProduct();
-                $newDealProduct->fill($DealProduct->except(['id'])->toArray());
+                $attributes = Arr::except($DealProduct->toArray(), ['id']); 
+                $newDealProduct->fill($attributes);
                 $newDealProduct->save();
         } 
 
@@ -313,7 +320,8 @@ class ProductController extends Controller
         if ($Shipping) {
 
                 $newShipping = new Shipping();
-                $newShipping->fill($Shipping->except(['id'])->toArray());
+                $attributes = Arr::except($Shipping->toArray(), ['id']); 
+                $newShipping->fill($attributes);
                 $newShipping->save();
         } 
     }
