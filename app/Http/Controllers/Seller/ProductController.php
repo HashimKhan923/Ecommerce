@@ -364,6 +364,9 @@ class ProductController extends Controller
             $shipping->est_shipping_days = $Shipping->est_shipping_days;
             $shipping->save();
         } 
+
+        $response = ['status'=>true,"message" => "Similar Product Created Successfully!"];
+        return response($response, 200);
     }
 
 
