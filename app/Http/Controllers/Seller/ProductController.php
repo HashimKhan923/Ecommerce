@@ -291,7 +291,7 @@ class ProductController extends Controller
             foreach($ProductGallery as $item)
             {
                 $gallery = new ProductGallery();
-                $gallery->product_id = $item->product_id;
+                $gallery->product_id = $new->id;
                 $gallery->order = $item->order;
                 $gallery->image = $item->image;
                 $gallery->save();
@@ -304,7 +304,7 @@ class ProductController extends Controller
             foreach($ProductVarient as $item)
             {
                 $varient = new ProductVarient();
-                $varient->product_id = $item->product_id;
+                $varient->product_id = $new->id;
                 $varient->color = $item->color;
                 $varient->size = $item->size;
                 $varient->bolt_pattern = $item->bolt_pattern;
@@ -321,7 +321,7 @@ class ProductController extends Controller
         if ($Discount) {
 
             $discount = new Discount();
-            $discount->product_id = $Discount->product_id;
+            $discount->product_id = $new->id;
             $discount->discount = $Discount->discount;
             $discount->discount_start_date = $Discount->discount_start_date;
             $discount->discount_end_date = $Discount->discount_end_date;
@@ -334,7 +334,7 @@ class ProductController extends Controller
         if ($Stock) {
 
             $stock = new Stock();
-            $stock->product_id = $Stock->product_id;
+            $stock->product_id = $new->id;
             $stock->stock = $Stock->stock;
             $stock->min_stock = $Stock->min_stock;
             $stock->save();
@@ -346,7 +346,7 @@ class ProductController extends Controller
 
             $deal = new DealProduct();
             $deal->deal_id = $DealProduct->deal_id;
-            $deal->product_id = $DealProduct->product_id;
+            $deal->product_id = $new->id;
             $deal->discount = $DealProduct->deal_discount;
             $deal->discount_type = $DealProduct->deal_discount_type;
             $deal->save();
@@ -358,7 +358,7 @@ class ProductController extends Controller
         if ($Shipping) {
 
             $shipping = new Shipping();
-            $shipping->product_id = $Shipping->product_id;
+            $shipping->product_id = $new->id;
             $shipping->shipping_cost = $Shipping->shipping_cost;
             $shipping->is_qty_multiply = $Shipping->is_qty_multiply;
             $shipping->est_shipping_days = $Shipping->est_shipping_days;
