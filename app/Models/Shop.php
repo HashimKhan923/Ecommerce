@@ -21,7 +21,7 @@ class Shop extends Model
 
     public function order()
     {
-        return $this->hasMany(Order::class,'seller_id','seller_id');
+        return $this->hasMany(Order::class,'shop_id');
     }
 
     public function payout()
