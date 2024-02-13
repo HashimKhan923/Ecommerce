@@ -45,7 +45,7 @@ $Products = Product::with([
     'shop',
     'reviews.user',
     'product_varient'
-])->where('published',1)->orderBy('id', 'desc')->take(18)->get();
+])->where('published',1)->orderBy('id', 'desc')->take(24)->get();
 		
         $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
