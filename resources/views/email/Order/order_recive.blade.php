@@ -71,7 +71,7 @@
 </div>
         <hr>
         <div class="content">
-        <p>Hi khan,</p>
+        <p>Hi {{$buyer_name}},</p>
         <p> Thank you for placing your order. We're currently preparing it for shipment.</p>
         <p> Due to high demand, please allow 3-5 business days for preparation and shipping. </p>
 
