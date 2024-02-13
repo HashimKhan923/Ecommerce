@@ -638,6 +638,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/home'], function() {
             Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
                 Route::get('','index');
+                Route::get('load_more_products/{$length}','load_more_products');
             });
         });
 

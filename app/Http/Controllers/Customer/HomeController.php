@@ -67,8 +67,28 @@ $Products = Product::with([
     }
 
 
-    public function load_more_products()
+    public function load_more_products($length)
     {
+        $Products = Product::with([
+            'user',
+            'category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'wholesale',
+            'shop',
+            'reviews.user',
+            'product_varient'
+        ])->where('published',1)->skip($length)->take(12)->get();
+
+        return response()->json(['Products'=>$Products]);
 
     }
 
