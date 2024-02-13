@@ -36,19 +36,19 @@ public function create(Request $request)
     
     $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
     
-    $productsByVendor = $products->groupBy('user_id');
+    $productsByShop = $products->groupBy('shop_id');
     
-    foreach ($productsByVendor as $vendorId => $vendorProducts) {
-        $vendorTotalAmount = $vendorProducts->sum(function ($product) use ($request) {
+    foreach ($productsByShop as $shopId => $shopProducts) {
+        $vendorTotalAmount = $shopProducts->sum(function ($product) use ($request) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
             return $orderProduct['product_price'] * $orderProduct['quantity'];
         });
     
         $newOrder = new Order();
         $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
-        $newOrder->number_of_products = count($vendorProducts);
+        $newOrder->number_of_products = count($shopProducts);
         $newOrder->customer_id = $request->customer_id;
-        $newOrder->seller_id = $vendorId;
+        $newOrder->shop_id = $shopId;
         $newOrder->amount = $vendorTotalAmount; 
         $newOrder->information = $request->information;
         $newOrder->stripe_payment_id = $request->payment_id;
@@ -57,7 +57,7 @@ public function create(Request $request)
         $newOrder->refund = $request->refund;
         $newOrder->save();
     
-        foreach ($vendorProducts as $product) {
+        foreach ($shopProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
     
             $newOrderDetail = new OrderDetail();
