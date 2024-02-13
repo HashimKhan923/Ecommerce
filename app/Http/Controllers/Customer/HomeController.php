@@ -54,11 +54,11 @@ $Products = Product::with([
 
         $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->orderBy('average_rating', 'desc')
-        ->where('published',1)->take(10)->get();
+        ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
 
         $FeaturedProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('featured',1)
-        ->where('published',1)->take(10)->get();
+        ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
 
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
