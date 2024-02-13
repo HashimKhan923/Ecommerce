@@ -45,7 +45,7 @@ $Products = Product::with([
     'shop',
     'reviews.user',
     'product_varient'
-])->where('published',1)->take(18)->get();
+])->where('published',1)->orderBy('id', 'desc')->take(18)->get();
 		
         $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
@@ -56,6 +56,10 @@ $Products = Product::with([
         ->orderBy('average_rating', 'desc')
         ->where('published',1)->take(10)->get();
 
+        $FeaturedProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
+        ->where('featured',1)
+        ->where('published',1)->take(10)->get();
+
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
@@ -63,7 +67,7 @@ $Products = Product::with([
         $States = State::all();
         $Shops = Shop::with('seller','product.shop','product.product_gallery','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax')->get();
 
-        return response()->json(['Products'=>$Products,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
+        return response()->json(['Products'=>$Products,'FeaturedProducts'=>$FeaturedProducts,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
     }
 
 
