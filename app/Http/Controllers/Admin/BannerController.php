@@ -28,6 +28,16 @@ class BannerController extends Controller
             $file->move(public_path('Banner'),$filename);
             $new->image = $filename;
         }
+
+        $new->mobile_link = $request->mobile_link;
+
+        if($request->file('mobile_image'))
+        {
+            $file= $request->mobile_image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Banner'),$filename);
+            $new->mobile_image = $filename;
+        }
         $new->save();
 
         $response = ['status'=>true,"message" => "Banner Added Successfully!"];
@@ -52,6 +62,22 @@ class BannerController extends Controller
             $file->move(public_path('Banner'),$filename);
             $update->image = $filename;
         }
+
+        $update->mobile_link = $request->mobile_link;
+
+        if($request->file('mobile_image'))
+        {
+
+            if($update->mobile_image)
+            {
+                unlink(public_path('Banner/'.$update->mobile_image));
+            }
+
+            $file= $request->mobile_image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Banner'),$filename);
+            $update->mobile_image = $filename;
+        }
         
         $update->save();
 
@@ -66,6 +92,10 @@ class BannerController extends Controller
         if($file->image)
         {
             unlink(public_path('Banner/'.$file->image));
+        }
+        if($file->mobile_image)
+        {
+            unlink(public_path('Banner/'.$file->mobile_image));
         }
 
       $file->delete();
@@ -83,6 +113,11 @@ class BannerController extends Controller
             if($item->image)
             {
                 unlink(public_path('Banner/'.$item->image));
+            }
+
+            if($item->mobile_image)
+            {
+                unlink(public_path('Banner/'.$item->mobile_image));
             }
 
             $item->delete();
