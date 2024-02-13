@@ -39,7 +39,10 @@ public function create(Request $request)
     $productsByShop = $products->groupBy('shop_id');
     
     foreach ($productsByShop as $shopId => $shopProducts) {
-        $vendorTotalAmount = $shopProducts->sum(function ($product) use ($request) {
+
+        $vendorId = $shopProducts->first()->vendor_id;
+
+        $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
             return $orderProduct['product_price'] * $orderProduct['quantity'];
         });
@@ -49,7 +52,8 @@ public function create(Request $request)
         $newOrder->number_of_products = count($shopProducts);
         $newOrder->customer_id = $request->customer_id;
         $newOrder->shop_id = $shopId;
-        $newOrder->amount = $vendorTotalAmount; 
+        $newOrder->sellers_id = $vendorId;
+        $newOrder->amount = $shopTotalAmount; 
         $newOrder->information = $request->information;
         $newOrder->stripe_payment_id = $request->payment_id;
         $newOrder->payment_method = $request->payment_method;
