@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('_banners', function (Blueprint $table) {
+        Schema::table('banners', function (Blueprint $table) {
             $table->text('mobile_link')->nullable();
             $table->string('mobile_order')->nullable();
             $table->text('mobile_image')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('_banners', function (Blueprint $table) {
+        Schema::table('banners', function (Blueprint $table) {
             //
         });
     }
