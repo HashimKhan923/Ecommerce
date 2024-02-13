@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-    $table->dropForeign(['user_id']);
+    $table->dropForeign(['seller_id']);
 
-    $table->renameColumn('user_id', 'shop_id');
+    $table->renameColumn('seller_id', 'shop_id');
 
     $table->foreign('shop_id')->references('id')->on('shops')
           ->onDelete('cascade')
