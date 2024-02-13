@@ -40,7 +40,7 @@ public function create(Request $request)
     
     foreach ($productsByShop as $shopId => $shopProducts) {
 
-        $vendorId = $shopProducts->first()->vendor_id;
+        $vendorId = $shopProducts->first()->user_id;
 
         $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();

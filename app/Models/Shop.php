@@ -11,7 +11,7 @@ class Shop extends Model
 
     public function seller()
     {
-        return $this->belongsTo(User::class,'seller_id');
+        return $this->belongsTo(User::class,'sellers_id');
     }
 
     public function product()
@@ -24,8 +24,8 @@ class Shop extends Model
         return $this->hasMany(Order::class,'shop_id');
     }
 
-    public function payout()
-    {
-        return $this->hasMany(Payout::class,'seller_id','seller_id');
-    }
+    // public function payout()
+    // {
+    //     return $this->hasMany(Payout::class,'seller_id','seller_id');
+    // }
 }
