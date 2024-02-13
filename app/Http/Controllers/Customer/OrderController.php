@@ -114,7 +114,7 @@ public function create(Request $request)
         'email.Order.order_recive',
         [
             'buyer_name' => $user->name,
-            'productsByVendor' => $productsByVendor,
+            'productsByVendor' => $productsByShop,
             'request' => $request
         ],
         function ($message) use ($user) {
