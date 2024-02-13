@@ -35,7 +35,7 @@ $Products = Product::with([
     'model',
     'stock',
     'product_gallery' => function($query) {
-        $query->orderBy('order', 'asc'); // Use orderBy instead of orderByAsc
+        $query->orderBy('order', 'asc');
     },
     'discount',
     'tax',
@@ -45,16 +45,16 @@ $Products = Product::with([
     'shop',
     'reviews.user',
     'product_varient'
-])->where('published',1)->get();
+])->where('published',1)->take(18)->get();
 		
         $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->where('published', 1)
         ->orderBy('num_of_sale', 'desc')
-        ->where('published',1)->get();
+        ->where('published',1)->take(10)->get();
 
         $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
         ->orderBy('average_rating', 'desc')
-        ->where('published',1)->get();
+        ->where('published',1)->take(10)->get();
 
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
