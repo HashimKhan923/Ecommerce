@@ -102,6 +102,22 @@ class HomeBannerController extends Controller
             $new->wishlist_banner = $filename;
         }
 
+        if($request->file('hot_deal')){
+
+            $file= $request->hot_deal;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->hot_deal = $filename;
+        }
+
+        if($request->file('all_product')){
+
+            $file= $request->all_product;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $new->all_product = $filename;
+        }
+
         $new->save();
 
         
@@ -230,6 +246,32 @@ class HomeBannerController extends Controller
             $update->wishlist_banner = $filename;
         }
 
+        if($request->file('hot_deal')){
+
+            if($update->hot_deal)
+            {
+                unlink(public_path('HomeBanner/'.$update->hot_deal));
+            }
+
+            $file= $request->hot_deal;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->hot_deal = $filename;
+        }
+
+        if($request->file('all_product')){
+
+            if($update->all_product)
+            {
+                unlink(public_path('HomeBanner/'.$update->all_product));
+            }
+
+            $file= $request->all_product;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('HomeBanner'),$filename);
+            $update->all_product = $filename;
+        }
+
         $update->save();
 
         
@@ -284,6 +326,16 @@ class HomeBannerController extends Controller
         if($file->wishlist_banner)
         {
             unlink(public_path('HomeBanner/'.$file->wishlist_banner));
+        }
+
+        if($file->hot_deal)
+        {
+            unlink(public_path('HomeBanner/'.$file->hot_deal));
+        }
+
+        if($file->all_product)
+        {
+            unlink(public_path('HomeBanner/'.$file->all_product));
         }
 
         $file->delete();

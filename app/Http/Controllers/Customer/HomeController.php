@@ -53,11 +53,7 @@ $Products = Product::with([
         ->where('published',1)->get();
 
         $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
-        ->where('published', 1)
-        ->leftJoin('reviews', 'products.id', '=', 'reviews.product_id')
-        ->select('products.*', DB::raw('AVG(reviews.rating) as avg_rating'))
-        ->groupBy('products.id')
-        ->orderByDesc('avg_rating')
+        ->orderBy('average_rating', 'desc')
         ->where('published',1)->get();
 
         $Categories = Category::where('is_active',1)->get();
