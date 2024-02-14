@@ -63,11 +63,10 @@ $Products = Product::with([
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
-        $HomeBanners = HomeBanner::first();
         $States = State::all();
         $Shops = Shop::with('seller','product.shop','product.product_gallery','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax')->get();
 
-        return response()->json(['Products'=>$Products,'FeaturedProducts'=>$FeaturedProducts,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'HomeBanners'=>$HomeBanners,'States'=>$States,'Shops'=>$Shops]);
+        return response()->json(['Products'=>$Products,'FeaturedProducts'=>$FeaturedProducts,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'States'=>$States,'Shops'=>$Shops]);
     }
 
 
