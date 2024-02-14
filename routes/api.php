@@ -141,12 +141,11 @@ Route::group(['middleware' => ['auth:api']], function(){
             
                                                     ///Home Banner \\\
 
-            Route::group(['prefix' => '/admin/homebanner/'], function() {
-                Route::controller(App\Http\Controllers\Admin\HomeBannerController::class)->group(function () {
+            Route::group(['prefix' => '/admin/allbanners/'], function() {
+                Route::controller(App\Http\Controllers\Admin\AllBannerController::class)->group(function () {
                     Route::get('show','index');
                     Route::post('create','create');
                     Route::post('update','update');
-                    Route::get('delete','delete');
                 });
             });
 

@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Brand;
 use App\Models\SubscribeUser;
 use App\Models\Banner;
-use App\Models\HomeBanner;
+use App\Models\AllBanner;
 use App\Models\State;
 use App\Models\Shop;
 use DB;

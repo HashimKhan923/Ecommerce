@@ -28,7 +28,7 @@ class OrderController extends Controller
     {
         $order = Order::where('id',$request->id)->first();
         $user = User::where('id',$order->customer_id)->first();
-        $shop = Shop::where('seller_id',$order->seller_id)->first();
+        $shop = Shop::where('seller_id',$order->sellers_id)->first();
 
         if($request->delivery_status == 'Delivered')
         {
