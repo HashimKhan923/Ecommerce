@@ -90,7 +90,7 @@ $Products = Product::with([
             'shop',
             'reviews.user',
             'product_varient'
-        ])->where('published',1)->skip($length)->take(12)->get();
+        ])->where('published',1)->orderBy('id', 'desc')->skip($length)->take(12)->get();
 
         return response()->json(['Products'=>$Products]);
 
