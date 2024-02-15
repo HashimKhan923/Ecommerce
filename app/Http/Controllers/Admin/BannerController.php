@@ -23,20 +23,30 @@ class BannerController extends Controller
 
         if($request->file('image'))
         {
-            $file= $request->image;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Banner'),$filename);
-            $new->image = $filename;
+            $image = $request->image;
+
+            $filename = date('YmdHis') . $image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
+            
+            $new->image = $filename . '.webp';
         }
 
         $new->mobile_link = $request->mobile_link;
 
         if($request->file('mobile_image'))
         {
-            $file= $request->mobile_image;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Banner'),$filename);
-            $new->mobile_image = $filename;
+            $image = $request->mobile_image;
+
+            $filename = date('YmdHis') . $image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
+            
+            $new->mobile_image = $filename . '.webp';
         }
         $new->save();
 
@@ -57,10 +67,15 @@ class BannerController extends Controller
                 unlink(public_path('Banner/'.$update->image));
             }
 
-            $file= $request->image;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Banner'),$filename);
-            $update->image = $filename;
+            $image = $request->image;
+
+            $filename = date('YmdHis') . $image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
+            
+            $update->image = $filename . '.webp';
         }
 
         $update->mobile_link = $request->mobile_link;
@@ -73,10 +88,15 @@ class BannerController extends Controller
                 unlink(public_path('Banner/'.$update->mobile_image));
             }
 
-            $file= $request->mobile_image;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Banner'),$filename);
-            $update->mobile_image = $filename;
+            $image = $request->mobile_image;
+
+            $filename = date('YmdHis') . $image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
+            
+            $update->mobile_image = $filename . '.webp';
         }
         
         $update->save();

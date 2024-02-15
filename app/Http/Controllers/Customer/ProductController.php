@@ -13,20 +13,37 @@ use App\Models\ProductRating;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal','wholesale','shop','reviews','product_varient')->where('published',1)->where('approved',1)->get();
-        $Categories = Category::where('is_active',1)->get();
-        $Barnds = Brand::where('is_active',1)->get();
+    // public function index()
+    // {
+    //     $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal','wholesale','shop','reviews','product_varient')->where('published',1)->where('approved',1)->get();
+    //     $Categories = Category::where('is_active',1)->get();
+    //     $Barnds = Brand::where('is_active',1)->get();
 
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands]);
+    //     return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands]);
 
-    }
+    // }
 
     public function detail($id)
     {
-        $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal','wholesale','shop','reviews','product_varient')->where('id',$id)->first();
+        $Products = Product::with([
+            'user',
+            'category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'wholesale',
+            'shop',
+            'reviews.user',
+            'product_varient'
+        ])->first();
     }
 
     public function comment(Request $request)

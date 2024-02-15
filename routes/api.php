@@ -637,9 +637,50 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/home'], function() {
             Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
                 Route::get('','index');
-                Route::get('load_more_products/{$length}','load_more_products');
+                Route::get('load_more/{$length}','load_more');
             });
         });
+
+
+                                            /// CategoryProducts \\\
+
+        Route::group(['prefix' => '/category_products'], function() {
+            Route::controller(App\Http\Controllers\Customer\CategoryProductController::class)->group(function () {
+                Route::get('show/{$category_id}','index');
+                Route::get('load_more/{$category_id}/{$length}','load_more');
+            });
+        });
+
+                                            /// BrandProducts \\\
+
+        Route::group(['prefix' => '/brand_products'], function() {
+            Route::controller(App\Http\Controllers\Customer\BrandProductController::class)->group(function () {
+                Route::get('show/{$brand_id}','index');
+                Route::get('load_more/{$brand_id}/{$length}','load_more');
+            });
+        });
+
+
+                                                    /// ModelProducts \\\
+
+        Route::group(['prefix' => '/model_products'], function() {
+            Route::controller(App\Http\Controllers\Customer\ModelProductController::class)->group(function () {
+                Route::get('show/{$model_id}','index');
+                Route::get('load_more/{$model_id}/{$length}','load_more');
+            });
+        });
+
+
+                                                            /// ShopProducts \\\
+
+        Route::group(['prefix' => '/shop_products'], function() {
+            Route::controller(App\Http\Controllers\Customer\ShopProductController::class)->group(function () {
+                Route::get('show/{$shop_id}','index');
+                Route::get('load_more/{$shop_id}/{$length}','load_more');
+            });
+        });
+                                                            
+        
 
 
                                                /// Product \\\

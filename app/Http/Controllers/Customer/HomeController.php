@@ -47,16 +47,25 @@ $Products = Product::with([
     'product_varient'
 ])->where('published',1)->orderBy('id', 'desc')->take(24)->get();
 		
-        $TopSelling = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
+        $TopSelling = Product::with(['user', 'category', 'brand', 'model', 'stock',
+        'product_gallery' => function($query) {
+            $query->orderBy('order', 'asc');
+        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
         ->where('published', 1)
         ->orderBy('num_of_sale', 'desc')
         ->where('published',1)->take(10)->get();
 
-        $TrendingProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
+        $TrendingProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
+        'product_gallery' => function($query) {
+            $query->orderBy('order', 'asc');
+        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
         ->orderBy('average_rating', 'desc')
         ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
 
-        $FeaturedProducts = Product::with('user', 'category', 'brand', 'model', 'stock', 'product_gallery', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient')
+        $FeaturedProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
+        'product_gallery' => function($query) {
+            $query->orderBy('order', 'asc');
+        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
         ->where('featured',1)
         ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
 
@@ -71,7 +80,7 @@ $Products = Product::with([
     }
 
 
-    public function load_more_products($length)
+    public function load_more($length)
     {
         $Products = Product::with([
             'user',
