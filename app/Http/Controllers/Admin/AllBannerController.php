@@ -28,12 +28,22 @@ class AllBannerController extends Controller
             $image = $request->image;
 
             $filename = date('YmdHis') . $image->getClientOriginalName();
+            $fileExtension = $image->getClientOriginalExtension();
+
+            if ($fileExtension !== 'svg')
+            {
 
             $compressedImage = Image::make($image->getRealPath());
             
             $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
             
             $new->image = $filename . '.webp';
+            }
+            else
+            {
+                $image->move(public_path('AllBanners'), $filename);
+                $new->image = $filename;
+            }
             
             
         }
@@ -46,12 +56,22 @@ class AllBannerController extends Controller
             $mobile_image = $request->mobile_image;
 
             $filename = date('YmdHis') . $mobile_image->getClientOriginalName();
+            $fileExtension = $mobile_image->getClientOriginalExtension();
+
+            if ($fileExtension !== 'svg')
+            {
 
             $compressedImage = Image::make($mobile_image->getRealPath());
             
             $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
             
             $new->mobile_image = $filename . '.webp';
+            }
+            else
+            {
+                $mobile_image->move(public_path('AllBanners'), $filename);
+                $new->mobile_image = $filename;
+            }
             
             
         }
@@ -74,12 +94,22 @@ class AllBannerController extends Controller
             $image = $request->image;
 
             $filename = date('YmdHis') . $image->getClientOriginalName();
+            $fileExtension = $image->getClientOriginalExtension();
+
+            if ($fileExtension !== 'svg')
+            {
 
             $compressedImage = Image::make($image->getRealPath());
             
             $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
             
             $update->image = $filename . '.webp';
+            }
+            else
+            {
+                $image->move(public_path('AllBanners'), $filename);
+                $update->image = $filename;
+            }
             
             
         }
@@ -92,12 +122,22 @@ class AllBannerController extends Controller
             $mobile_image = $request->mobile_image;
 
             $filename = date('YmdHis') . $mobile_image->getClientOriginalName();
+            $fileExtension = $mobile_image->getClientOriginalExtension();
 
-            $compressedImage = Image::make($mobile_image->getRealPath());
+            if ($fileExtension !== 'svg')
+            {
+
+            $compressedImage = Image::make($image->getRealPath());
             
             $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
             
             $update->mobile_image = $filename . '.webp';
+            }
+            else
+            {
+                $mobile_image->move(public_path('AllBanners'), $filename);
+                $update->mobile_image = $filename;
+            }
             
             
         }
