@@ -43,7 +43,7 @@ class ProductController extends Controller
             'shop',
             'reviews.user',
             'product_varient'
-        ])->first();
+        ])->where('id',$id)->first();
 
 
         return response()->json(['data'=>$data]);
