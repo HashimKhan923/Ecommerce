@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     public function detail($id)
     {
-        $Products = Product::with([
+        $data = Product::with([
             'user',
             'category',
             'brand',
@@ -44,6 +44,12 @@ class ProductController extends Controller
             'reviews.user',
             'product_varient'
         ])->first();
+
+
+        return response()->json(['data'=>$data]);
+
+
+
     }
 
     public function comment(Request $request)
