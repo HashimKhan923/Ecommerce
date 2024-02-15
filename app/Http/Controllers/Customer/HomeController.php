@@ -80,7 +80,7 @@ $Products = Product::with([
     }
 
 
-    public function load_more()
+    public function load_more($l)
     {
         $Products = Product::with([
             'user',
@@ -99,7 +99,7 @@ $Products = Product::with([
             'shop',
             'reviews.user',
             'product_varient'
-        ])->where('published',1)->orderBy('id', 'desc')->skip(24)->take(12)->get();
+        ])->where('published',1)->orderBy('id', 'desc')->skip($l)->take(12)->get();
 
         return response()->json(['Products'=>$Products]);
 
