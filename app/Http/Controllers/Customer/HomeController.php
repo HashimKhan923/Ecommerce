@@ -80,7 +80,7 @@ $Products = Product::with([
     }
 
 
-    public function load_more($l)
+    public function load_more($length)
     {
         $Products = Product::with([
             'user',
