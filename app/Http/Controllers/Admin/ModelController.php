@@ -40,6 +40,14 @@ class ModelController extends Controller
             $file->move(public_path('Model'),$filename);
             $new->logo = $filename;
         }
+
+        if($request->file('banner')){
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Model'),$filename);
+            $new->banner = $filename;
+        }
         $new->slug = $request->slug;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
@@ -69,6 +77,19 @@ class ModelController extends Controller
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('Model'),$filename);
             $update->logo = $filename;
+        }
+
+        if($request->file('banner')){
+
+            if($update->banner)
+            {
+                unlink(public_path('Model/'.$update->banner));
+            }
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Model'),$filename);
+            $update->banner = $filename;
         }
         $update->slug = $request->slug;
         $update->meta_title = $request->meta_title;

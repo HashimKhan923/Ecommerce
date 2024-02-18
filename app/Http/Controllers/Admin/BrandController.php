@@ -41,6 +41,14 @@ class BrandController extends Controller
             $file->move(public_path('Brand'),$filename);
             $new->logo = $filename;
         }
+
+        if($request->file('banner')){
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Brand'),$filename);
+            $new->banner = $filename;
+        }
         $new->slug = $request->slug;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
@@ -70,6 +78,19 @@ class BrandController extends Controller
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('Brand'),$filename);
             $update->logo = $filename;
+        }
+
+        if($request->file('banner')){
+
+            if(public_path('Brand/'.$update->banner))
+            {
+                unlink(public_path('Brand/'.$update->banner));
+            }
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Brand'),$filename);
+            $update->banner = $filename;
         }
         $update->slug = $request->slug;
         $update->meta_title = $request->meta_title;
