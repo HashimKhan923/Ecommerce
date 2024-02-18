@@ -81,10 +81,10 @@ class ModelController extends Controller
 
         if($request->file('banner')){
 
-            if($update->banner)
-            {
-                unlink(public_path('Model/'.$update->banner));
-            }
+            // if($update->banner)
+            // {
+            //     unlink(public_path('Model/'.$update->banner));
+            // }
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
