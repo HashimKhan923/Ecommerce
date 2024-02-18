@@ -27,7 +27,7 @@ class BannerController extends Controller
         {
             $image = $request->image;
 
-            $filename = date('YmdHis') . $image->getClientOriginalName();
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
 
             $compressedImage = Image::make($image->getRealPath());
             
@@ -42,7 +42,7 @@ class BannerController extends Controller
         {
             $image = $request->mobile_image;
 
-            $filename = date('YmdHis') . $image->getClientOriginalName();
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
 
             $compressedImage = Image::make($image->getRealPath());
             
@@ -71,7 +71,7 @@ class BannerController extends Controller
 
             $image = $request->image;
 
-            $filename = date('YmdHis') . $image->getClientOriginalName();
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
 
             $compressedImage = Image::make($image->getRealPath());
             
@@ -92,7 +92,7 @@ class BannerController extends Controller
 
             $image = $request->mobile_image;
 
-            $filename = date('YmdHis') . $image->getClientOriginalName();
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
 
             $compressedImage = Image::make($image->getRealPath());
             
