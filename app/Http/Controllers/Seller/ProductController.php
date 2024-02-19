@@ -15,6 +15,8 @@ use App\Models\ProductVarient;
 use App\Models\DealProduct;
 use App\Models\ProductGallery;
 use App\Models\Color;
+use App\Models\ProductListingPayment;
+use App\Models\User;
 use Carbon\Carbon;
 use Validator;
 use Intervention\Image\Facades\Image;
