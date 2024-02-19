@@ -11,6 +11,7 @@ use App\Models\Stock;
 use App\Models\Shop;
 use App\Models\OrderDetail;
 use App\Models\FeaturedProductOrder;
+use App\Models\MyCustomer;
 use Illuminate\Support\Str;
 use Mail;
 use App\Models\User;
@@ -60,7 +61,17 @@ public function create(Request $request)
         $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
         $newOrder->save();
-    
+
+        $check_customer = MyCustomer::where('seller_id',$vendorId)->where('customer_id',$request->customer_id)->first();
+
+        if(!$check_customer)
+        {
+            $my_customer = new MyCustomer();
+            $my_customer->seller_id = $vendorId;
+            $my_customer->customer_id = $request->customer_id;
+            $my_customer->save();
+        }
+
         foreach ($shopProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
     

@@ -20,6 +20,8 @@ class CouponController extends Controller
     {
         $new = new Coupon();
         $new->creator_id = $request->creator_id;
+        $new->shop_id = $request->shop_id;
+        $new->product_id = $request->product_id;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;
@@ -35,6 +37,8 @@ class CouponController extends Controller
     public function update(Request $request)
     {
         $update = Coupon::where('id',$request->id)->first();
+        $new->shop_id = $request->shop_id;
+        $new->product_id = $request->product_id;
         $update->name = $request->name;
         $update->code = $request->code;
         $update->discount = $request->discount;
@@ -52,6 +56,24 @@ class CouponController extends Controller
         Coupon::find($id)->delete();
 
         $response = ['status'=>true,"message" => "Coupon Deleted Successfully!"];
+        return response($response, 200);
+    }
+
+    public function status($id)
+    {
+        $status = Coupon::find($id);
+
+        if($status->status == 1)
+        {
+            $status->status = 0;
+        }
+        else
+        {
+            $status->status = 1;
+        }
+        $status->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
     }
 }

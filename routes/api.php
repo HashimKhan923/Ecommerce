@@ -568,6 +568,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show/{seller_id}','index');
                     Route::post('create','create');
                     Route::post('update','update');
+                    Route::get('status/{id}','status');
                     Route::get('delete/{id}','delete');
                 });
             });
@@ -604,6 +605,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                         Route::controller(App\Http\Controllers\Seller\RefundController::class)->group(function () {
                             Route::get('show/{seller_id}','index');
                             Route::get('is_approved/{refund_id}','is_approved');
+                        });
+                    });
+
+                                                            // MyCustomers
+                
+                    Route::group(['prefix' => '/seller/customers/'], function() {
+                        Route::controller(App\Http\Controllers\Seller\MyCustomerController::class)->group(function () {
+                            Route::get('show/{seller_id}','index');
+        
                         });
                     });
 

@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Coupon extends Model
+class MyCustomer extends Model
 {
-    protected $casts = [
-        'shop_id' => 'array',
-        'product_id' => 'array',
-    ];
-
     use HasFactory;
 }
