@@ -230,6 +230,29 @@ class ProductController extends Controller
             }
         }
 
+
+        $sellerT = User::where('id',$request->user_id)->first();
+        $userRegistrationDate = $sellerT->created_at;
+
+        if ($userRegistrationDate->diffInMonths(now()) > 3) {
+            $SellerCheck = ProductListingPayment::where('seller_id',$request->user_id)->where('payment_status','unpaid')->first();
+            if(!$SellerCheck)
+            {
+                $newListing = new ProductListingPayment();
+                $newListing->seller_id = $request->user_id;
+                $newListing->listing_count = 1;
+                $newListing->listing_amount = 0.20;
+                $newListing->save();
+            }
+            else
+            {
+                $SellerCheck->listing_count = $SellerCheck->listing_count + 1;
+                $SellerCheck->listing_amount = $SellerCheck->listing_amount + 0.20;
+                $SellerCheck->save();
+            }
+
+        } 
+
         // $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
         // $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
         // $dedect->save();
