@@ -35,6 +35,7 @@ class CustomerQueryController extends Controller
                     'ProductName'=>$ProductName->name,
                     'ProductImage'=>$ProductImage->image,
                     'ShopName'=>$Shop->name,
+                    'ShopImage'=>$Shop->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'YourQuery'=>$request->your_query,
