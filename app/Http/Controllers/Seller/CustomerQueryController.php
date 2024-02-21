@@ -44,7 +44,7 @@ class CustomerQueryController extends Controller
                 function ($message) use ($Customer) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($Customer->email);
-                    $message->subject('Query reply');
+                    $message->subject('Message Reply');
                 });
         }
         else
@@ -63,7 +63,7 @@ class CustomerQueryController extends Controller
                 function ($message) use ($Seller) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($Customer->email);
-                    $message->subject('Query reply');
+                    $message->subject('Message Reply');
                 });
         }
 
