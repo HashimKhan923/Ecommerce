@@ -35,7 +35,7 @@ class CustomerQueryController extends Controller
                     'ProductName'=>$ProductName->name,
                     'ProductImage'=>$ProductImage->image,
                     'ShopName'=>$Shop->name,
-                    'ShopImage'=>$Shop->logo,
+                    'ShopImage'=>$Shop->banner,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'YourQuery'=>$request->your_query,
@@ -55,7 +55,7 @@ class CustomerQueryController extends Controller
                 'email.customer_to_seller_query_with_shop',
                 [
                     'ShopName'=>$Shop->name,
-                    'ShopImage'=>$Shop->logo,
+                    'ShopImage'=>$Shop->banner,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'YourQuery'=>$request->your_query,
