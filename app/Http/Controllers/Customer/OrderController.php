@@ -62,15 +62,20 @@ public function create(Request $request)
         $newOrder->refund = $request->refund;
         $newOrder->save();
 
-        $check_customer = MyCustomer::where('seller_id',$vendorId)->where('customer_id',$request->customer_id)->first();
+        $my_customer = MyCustomer::where('seller_id',$vendorId)->where('customer_id',$request->customer_id)->first();
 
-        if(!$check_customer)
+        if(!$my_customer)
         {
             $my_customer = new MyCustomer();
             $my_customer->seller_id = $vendorId;
             $my_customer->customer_id = $request->customer_id;
-            $my_customer->save();
+            $my_customer->sale = $shopTotalAmount;
         }
+        else
+        {
+            $my_customer->sale = $my_customer->sale + $shopTotalAmount;
+        }
+        $my_customer->save();
 
         foreach ($shopProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
