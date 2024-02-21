@@ -409,6 +409,9 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
+
+        return $request;
+
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
         $update->added_by = 'seller';
@@ -643,6 +646,7 @@ class ProductController extends Controller
 
         if($request->shipping_type != null)
         {
+
             $shipping = Shipping::where('product_id',$update->id)->first();
 
             if($shipping == null)
