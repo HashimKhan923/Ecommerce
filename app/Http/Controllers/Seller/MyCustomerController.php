@@ -10,7 +10,7 @@ class MyCustomerController extends Controller
 {
     public function index($seller_id)
     {
-      $data = MyCustomer::where('seller_id',$seller_id)->get();
+      $data = MyCustomer::with('customer')->where('seller_id',$seller_id)->get();
 
       return response()->json(['data'=>$data]);
     }
