@@ -621,7 +621,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                                 // Customer Query
                                     
                     Route::group(['prefix' => '/seller/customers_query/'], function() {
-                        Route::controller(App\Http\Controllers\Seller\CustomerQueryontroller::class)->group(function () {
+                        Route::controller(App\Http\Controllers\Seller\CustomerQueryController::class)->group(function () {
                             Route::get('show/{seller_id}','index');
                             Route::post('reply');
                         });
