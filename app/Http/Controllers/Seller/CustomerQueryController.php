@@ -37,6 +37,7 @@ class CustomerQueryController extends Controller
                     'ShopName'=>$Shop->name,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
+                    'YourQuery'=>$request->your_query,
                     'Msg'=>$request->message,
                     
                 ], 
@@ -56,6 +57,7 @@ class CustomerQueryController extends Controller
                     'ShopImage'=>$Shop->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
+                    'YourQuery'=>$request->your_query,
                     'Msg'=>$request->message,
                     
                 ], 

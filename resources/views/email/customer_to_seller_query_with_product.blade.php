@@ -81,9 +81,10 @@
   <h4><strong>Product : </strong>{{$ProductName}}</h4>
   <h3><strong>Shop : </strong>{{$ShopName}}</h3>
 </div>
-<hr>
 
-<p>{{$Msg}}</p>
+<p><strong>Your Message: {{$YourQuery}}</strong></p>
+
+<p> <strong>Reply: </strong> {{$Msg}} </p>
 
 
 <hr>

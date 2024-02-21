@@ -80,9 +80,11 @@
   <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="150" alt="Product Image">
   <h4>{{$ShopName}}</h4>
 </div>
-<hr>
 
-<p> {{$Msg}} </p>
+
+<p><strong>Your Message: {{$YourQuery}}</strong></p>
+
+<p> <strong>Reply: </strong> {{$Msg}} </p>
 
 
 <hr>
