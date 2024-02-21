@@ -73,10 +73,8 @@
 </div>
         <hr>
         <div class="content">
-        <p class="font-size-18">Hi, Mr. {{$Seller->name}}</p>
-
-        <p>The following customer has sent a query about a shop:</p>
-        <hr>
+        <p class="font-size-18">Hi, Mr. {{$Customer->name}}</p>
+<hr>
 
         <div>
   <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="150" alt="Product Image">
@@ -84,19 +82,12 @@
 </div>
 <hr>
 
-<p><h3>Customer Information:</h3></p>
-<p><strong>Name:</strong> {{$Customer->name}}</p>
-<p><strong>Email:</strong> {{$Customer->email}}</p>
-<p><strong>Query:</strong> {{$Msg}} </p>
+<p> {{$Msg}} </p>
 
 
 <hr>
 
 
-<p>Please respond to the customer's query as soon as possible.</p>
-
-<h4>Thank you</h4>
-        <hr />
         <p class="font-size-14">Regards, <br />Dragon Auto Mart</p>
         </div>
     </div>
