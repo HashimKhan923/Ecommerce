@@ -15,7 +15,7 @@ class CustomerQueryController extends Controller
 {
     public function index($seller_id)
     {
-        $data = SellerContact::where('seller_id',$seller_id)->get();
+        $data = SellerContact::with('product','shop','seller','customer')->where('seller_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
