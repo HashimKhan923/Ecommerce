@@ -82,7 +82,7 @@
   <h3><strong>Shop : </strong>{{$ShopName}}</h3>
 </div>
 
-<p><strong>Your Message: {{$YourQuery}}</strong></p>
+<p><strong>Your Message:</strong> {{$YourQuery}}</p>
 
 <p> <strong>Reply: </strong> {{$Msg}} </p>
 
