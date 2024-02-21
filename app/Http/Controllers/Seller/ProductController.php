@@ -643,8 +643,6 @@ class ProductController extends Controller
 
         if($request->shipping_type != null)
         {
-            $response = ['status'=>true,"message" => "inside!"];
-            return response($response, 200);
             $shipping = Shipping::where('product_id',$update->id)->first();
 
             if($shipping == null)
