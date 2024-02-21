@@ -644,7 +644,7 @@ class ProductController extends Controller
         }
         
 
-        if($request->shipping_type != null)
+        if($request->shipping_type)
         {
 
             $shipping = Shipping::where('product_id',$update->id)->first();
