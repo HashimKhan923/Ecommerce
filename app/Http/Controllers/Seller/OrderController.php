@@ -28,6 +28,7 @@ class OrderController extends Controller
     {
         $order = Order::where('id',$request->id)->first();
         $user = User::where('id',$order->customer_id)->first();
+        $seller = User::where('id',$order->sellers_id)->first();
         $shop = Shop::where('seller_id',$order->sellers_id)->first();
 
         if($request->delivery_status == 'Delivered')
@@ -69,21 +70,33 @@ class OrderController extends Controller
             $NewPayout->date = Carbon::now();
             $NewPayout->seller_id = $order->sellers_id;
             $NewPayout->order_id = $order->id;
+            
             $orderAmountInCents = $order->amount * 100; 
-            $percentageDeduction = $orderAmountInCents * 0.07; 
-            $fixedDeduction = 30; 
-            $adjustedAmountInCents = $orderAmountInCents - $percentageDeduction - $fixedDeduction;
+            
+           
+            $commissionRate = 0.05; 
+            if ($seller->created_at < Carbon::now()->subMonths(3)) {
+                $commissionRate = 0; 
+            }
+            
+            $percentageDeduction = $orderAmountInCents * 0.04; 
+            $fixedDeduction = 40; 
+            $totalDeduction = $percentageDeduction + $fixedDeduction;
+            
+            $totalDeduction += $orderAmountInCents * $commissionRate;
+            
+            $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
-
-            $is_featuredOrders = FeaturedProductOrder::where('order_id',$order->id)->first();
+            
+            $is_featuredOrders = FeaturedProductOrder::where('order_id', $order->id)->first();
             $featuredAmount = 0;
-            if($is_featuredOrders)
-            {
+            if ($is_featuredOrders) {
                 $featuredAmount = $is_featuredOrders->payment;
             }
-
+            
             $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount;
             $NewPayout->save();
+            
 
 
             $notification = new Notification();
