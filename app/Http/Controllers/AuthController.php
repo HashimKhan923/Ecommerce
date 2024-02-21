@@ -201,7 +201,7 @@ class AuthController extends Controller
         }
         else
         {
-            $redirectUrl = "https://dragonautomart.com/?jsonMessage=" . urlencode($jsonMessage);
+            $redirectUrl = "https://dragonautomart.com/emailverification/?jsonMessage=" . urlencode($jsonMessage);
 
         }
         

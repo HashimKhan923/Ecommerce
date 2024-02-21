@@ -77,7 +77,7 @@
         <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever have any questions, concerns, or suggestions,</p> 
         <p>don't hesitate to contact us at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
         <p>Click on the following button to complete your email verification procedures:</p>
-        <a href="https://api.dragonautomart.com/api/verification/{{$token}}" class="btn btn-primary verification-link">Verify Email</a>
+        <a href="https://api.dragonautomart.com/api/verification/{{$token}}" class="btn btn-primary">Verify Email</a>
         <br><br><br>
         <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
