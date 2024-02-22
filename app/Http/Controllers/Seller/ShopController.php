@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Product;
+use App\Models\SellerPolicy;
 
 
 class ShopController extends Controller
 {
     public function index($seller_id)
     {
-        $data = Shop::where('seller_id',$seller_id)->get();
+        $data = Shop::with('shop_policy')->where('seller_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
@@ -39,6 +40,16 @@ class ShopController extends Controller
             $shop->banner = $filename;
         }
         $shop->save();
+
+        $policy = new SellerPolicy();
+        $policy->shop_id = $shop->id;
+        $policy->store_policy = $request->store_policy;
+        $policy->return_policy = $request->return_policy;
+        $policy->about = $request->about;
+        $policy->save();
+
+
+
 
 
         $response = ['status'=>true,"message" => "Created Successfully!"];
@@ -81,6 +92,13 @@ class ShopController extends Controller
         }
 
         $update->save();
+
+
+        $policy = SellerPolicy::where('shop_id',$update->id)->first();
+        $policy->store_policy = $request->store_policy;
+        $policy->return_policy = $request->return_policy;
+        $policy->about = $request->about;
+        $policy->save();
 
         $response = ['status'=>true,"message" => "Updated Successfully!"];
         return response($response, 200);

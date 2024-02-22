@@ -24,6 +24,11 @@ class Shop extends Model
         return $this->hasMany(Order::class,'shop_id');
     }
 
+    public function shop_policy()
+    {
+        return $this->hasOne(ShopPolicy::class,'shop_id');
+    }
+
     // public function payout()
     // {
     //     return $this->hasMany(Payout::class,'seller_id','seller_id');
