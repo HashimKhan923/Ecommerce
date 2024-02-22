@@ -51,7 +51,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://dashboard.dragonautomart.com/assets/authlogo-9138a1c6.png" width="200" alt="Company Logo" class="logo">
+        <img src="https://api.dragonautomart.com/emailLogo.png" width="200" alt="Company Logo" class="logo">
         <h2>Your Order is Completed</h2>
         <p>Dear {{$buyer_name}},</p>
         <br>
