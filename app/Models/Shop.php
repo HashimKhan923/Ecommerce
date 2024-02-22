@@ -26,7 +26,7 @@ class Shop extends Model
 
     public function shop_policy()
     {
-        return $this->hasOne(ShopPolicy::class,'shop_id');
+        return $this->hasOne(SellerPolicy::class,'shop_id');
     }
 
     // public function payout()
