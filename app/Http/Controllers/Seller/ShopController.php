@@ -95,6 +95,11 @@ class ShopController extends Controller
 
 
         $policy = SellerPolicy::where('shop_id',$update->id)->first();
+        if($policy)
+        {
+            $policy = new SellerPolicy();
+            $policy->shop_id = $update->id;
+        }
         $policy->store_policy = $request->store_policy;
         $policy->return_policy = $request->return_policy;
         $policy->about = $request->about;
