@@ -77,4 +77,12 @@ class CustomerQueryController extends Controller
         return response()->json(['message'=>'sent successfully!',200]);
 
     }
+
+    public function multi_delete(Request $request)
+    {
+        SellerContact::whereIn('id',$request->ids)->delete();
+        
+        $response = ['status'=>true,"message" => "Quires Deleted Successfully!"];
+        return response($response, 200);
+    }
 }

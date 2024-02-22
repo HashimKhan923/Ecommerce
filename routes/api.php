@@ -624,6 +624,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                         Route::controller(App\Http\Controllers\Seller\CustomerQueryController::class)->group(function () {
                             Route::get('show/{seller_id}','index');
                             Route::post('reply','reply');
+                            Route::post('multi_delete','multi_delete');
                         });
                     });
 
