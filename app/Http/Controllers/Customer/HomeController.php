@@ -60,7 +60,7 @@ $Products = Product::with([
             $query->orderBy('order', 'asc');
         }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
         ->orderBy('average_rating', 'desc')
-        ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
+        ->where('published',1)->take(10)->get();
 
         $FeaturedProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
         'product_gallery' => function($query) {
@@ -100,6 +100,81 @@ $Products = Product::with([
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('id', 'desc')->skip($length)->take(24)->get();
+
+        return response()->json(['Products'=>$Products]);
+
+    }
+
+    public function load_more_top_selling($length)
+    {
+        $Products = Product::with([
+            'user',
+            'category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'wholesale',
+            'shop',
+            'reviews.user',
+            'product_varient'
+        ])->where('published',1)->orderBy('num_of_sale', 'desc')->skip($length)->take(24)->get();
+
+        return response()->json(['Products'=>$Products]);
+
+    }
+
+    public function load_more_trending($length)
+    {
+        $Products = Product::with([
+            'user',
+            'category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'wholesale',
+            'shop',
+            'reviews.user',
+            'product_varient'
+        ])->where('published',1)->orderBy('average_rating', 'desc')->skip($length)->take(24)->get();
+
+        return response()->json(['Products'=>$Products]);
+
+    }
+
+    public function load_more_featured($length)
+    {
+        $Products = Product::with([
+            'user',
+            'category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'wholesale',
+            'shop',
+            'reviews.user',
+            'product_varient'
+        ])->where('published',1)->where('featured',1)->orderBy('id', 'desc')->skip($length)->take(24)->get();
 
         return response()->json(['Products'=>$Products]);
 
