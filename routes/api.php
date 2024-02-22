@@ -463,6 +463,16 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                /// Website FeedBack \\\
+
+        Route::group(['prefix' => 'admin/website_feedback'], function() {
+            Route::controller(App\Http\Controllers\Admin\WebsiteFeedBackController::class)->group(function () {
+                Route::get('show','index');
+            });
+        }); 
+
+
+
 
 
 
@@ -896,4 +906,12 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::controller(App\Http\Controllers\Customer\SellerContactController::class)->group(function () {
                         Route::post('send','send');
                     });
-                });  
+                });
+                
+                                                        /// Website FeedBack \\\
+
+                Route::group(['prefix' => 'website_feedback'], function() {
+                    Route::controller(App\Http\Controllers\Customer\WebsiteFeedBackController::class)->group(function () {
+                        Route::post('send','create');
+                    });
+                }); 

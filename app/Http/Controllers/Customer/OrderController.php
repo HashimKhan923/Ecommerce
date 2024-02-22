@@ -112,6 +112,7 @@ public function create(Request $request)
                 $new = new FeaturedProductOrder();
                 $new->order_id = $newOrder->id;
                 $new->product_id = $product->id;
+                $new->seller_id = $vendorId;
                 $new->quantity = $orderProduct['quantity'];
                 $new->payment = $total;
                 $new->save();
