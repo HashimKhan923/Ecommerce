@@ -86,7 +86,7 @@ class ProductController extends Controller
         $new->published = $request->published;
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
-        $new->meta_description = $request->meta_description;
+        $new->video = $request->video;
         // if($request->file('meta_img'))
         // {
         //     $file= $request->meta_img;
@@ -317,7 +317,7 @@ class ProductController extends Controller
             $new->published = 0;
             $new->is_tax = $existingProduct->is_tax;
             $new->meta_title = $existingProduct->meta_title;
-            $new->meta_description = $existingProduct->meta_description;
+            $new->video = $existingProduct->video;
             $new->slug = $existingProduct->slug;
             $new->save();
         }
@@ -440,7 +440,7 @@ class ProductController extends Controller
         $update->published = $request->published;
         $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
-        $update->meta_description = $request->meta_description;
+        $update->video = $request->video;
         // if($request->file('meta_img'))
         // {
         //     if($update->meta_img)
