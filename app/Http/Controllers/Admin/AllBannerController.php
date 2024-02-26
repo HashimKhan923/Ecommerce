@@ -30,7 +30,7 @@ class AllBannerController extends Controller
             $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $image->getClientOriginalExtension();
 
-            if ($fileExtension !== 'svg')
+            if ($fileExtension !== 'svg' || $fileExtension !== 'gif')
             {
 
             $compressedImage = Image::make($image->getRealPath());
