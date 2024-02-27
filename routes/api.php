@@ -518,6 +518,8 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('is_published/{id}','is_published');
                     Route::post('is_featured','is_featured');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('multi_publish','is_multiple_published');
+                    Route::post('multi_draft','is_multiple_draft');
                     Route::get('gallery_delete/{id}','gallery_delete');
                 });
             });

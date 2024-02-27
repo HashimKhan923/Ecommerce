@@ -798,22 +798,19 @@ class ProductController extends Controller
     public function is_multiple_published(Request $request)
     {
 
-        $is_published = Product::whereIn('id',$request->ids)->get();
-        foreach($is_published as $item)
-        {
-            if($item->published == 0)
-            {
-                $item->published = 1;
-            }
-            else
-            {
-                $item->published = 0;
-            }
+        Product::whereIn('id', $request->ids)->update(['published' => 1]);
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+
+    }
+
+
+    public function is_multiple_draft(Request $request)
+    {
+
+        Product::whereIn('id', $request->ids)->update(['published' => 0]);
     
-            $item->save();
-        }
-
-
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
 
