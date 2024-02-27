@@ -24,7 +24,7 @@ class ShopProductController extends Controller
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('id', 'desc')->where('shop_id',$shop_id)->take(24)->get();

@@ -24,7 +24,7 @@ class ModelProductController extends Controller
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('id', 'desc')->where('model_id',$model_id)->take(24)->get();
@@ -49,7 +49,7 @@ class ModelProductController extends Controller
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('id', 'desc')->where('model_id',$model_id)->skip($length)->take(12)->get();

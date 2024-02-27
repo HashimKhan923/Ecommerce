@@ -42,7 +42,7 @@ $Products = Product::with([
     'shipping',
     'deal.deal_product',
     'wholesale',
-    'shop',
+    'shop.shop_policy',
     'reviews.user',
     'product_varient'
 ])->where('published',1)->orderBy('id', 'desc')->take(24)->get();
@@ -50,7 +50,7 @@ $Products = Product::with([
         $TopSelling = Product::with(['user', 'category', 'brand', 'model', 'stock',
         'product_gallery' => function($query) {
             $query->orderBy('order', 'asc');
-        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
+        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'])
         ->where('published', 1)
         ->orderBy('num_of_sale', 'desc')
         ->where('published',1)->take(10)->get();
@@ -58,14 +58,14 @@ $Products = Product::with([
         $TrendingProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
         'product_gallery' => function($query) {
             $query->orderBy('order', 'asc');
-        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
+        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'])
         ->orderBy('average_rating', 'desc')
         ->where('published',1)->take(10)->get();
 
         $FeaturedProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
         'product_gallery' => function($query) {
             $query->orderBy('order', 'asc');
-        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop', 'reviews.user', 'product_varient'])
+        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'])
         ->where('featured',1)
         ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
 
@@ -96,7 +96,7 @@ $Products = Product::with([
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('id', 'desc')->skip($length)->take(24)->get();
@@ -121,7 +121,7 @@ $Products = Product::with([
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('num_of_sale', 'desc')->skip($length)->take(24)->get();
@@ -146,7 +146,7 @@ $Products = Product::with([
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->orderBy('average_rating', 'desc')->skip($length)->take(24)->get();
@@ -171,7 +171,7 @@ $Products = Product::with([
             'shipping',
             'deal.deal_product',
             'wholesale',
-            'shop',
+            'shop.shop_policy',
             'reviews.user',
             'product_varient'
         ])->where('published',1)->where('featured',1)->orderBy('id', 'desc')->skip($length)->take(24)->get();

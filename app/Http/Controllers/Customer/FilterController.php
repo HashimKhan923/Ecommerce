@@ -13,7 +13,7 @@ class FilterController extends Controller
     // $searchTerms = explode(' ', $request->searchValue);
     // if($request->category_id != null)
     // {
-        $data = Product::with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('name', 'LIKE', '%'.$request->searchValue.'%')
             ->orWhereJsonContains('tags',$request->searchValue)
             // ->where('category_id', $request->category_id)
@@ -40,7 +40,7 @@ class FilterController extends Controller
 
    public function target_search(Request $request)
 {
-    $data = Product::with('user', 'category', 'brand','shop','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+    $data = Product::with('user', 'category', 'brand','shop.shop_policy','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
         ->whereJsonContains('start_year', $request->year)
         ->where('brand_id', $request->brand_id)
         ->where('model_id', $request->model_id)

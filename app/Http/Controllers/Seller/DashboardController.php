@@ -42,7 +42,7 @@ class DashboardController extends Controller
 
     public function searchByshop($shop_id)
     {
-        $Shop = Shop::with('product','order')->where('id',$shop_id)->get();
+        $Shop = Shop::with('product','order','shop_policy')->where('id',$shop_id)->get();
 
         return response()->json(['Shop'=>$Shop]);
 

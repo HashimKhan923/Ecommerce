@@ -40,7 +40,7 @@ class ProductController extends Controller
     'shipping',
     'deal.deal_product',
     'wholesale',
-    'shop',
+    'shop.shop_policy',
     'reviews',
     'product_varient'
 ])->where('user_id', $id)->get();
