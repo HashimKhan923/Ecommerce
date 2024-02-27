@@ -271,7 +271,7 @@ class ProductController extends Controller
 
 
 
-        $response = ['status'=>true,"message" => "Product Added Successfully!"];
+        $response = ['status'=>true,"message" => "Product Added Successfully!",'product_id'=>$new->id];
         return response($response, 200);
 
         // }
