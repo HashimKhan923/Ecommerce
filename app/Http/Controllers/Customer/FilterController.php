@@ -15,6 +15,7 @@ class FilterController extends Controller
     {
         $data = Product::with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('name', 'LIKE', '%'.$request->searchValue.'%')
+            ->orWhereJsonContains('tags', 'LIKE', '%' . $request->searchValue . '%')
             ->where('category_id', $request->category_id)
             ->where('published', 1)
             ->orderByRaw('featured DESC')
@@ -25,7 +26,8 @@ class FilterController extends Controller
         $data = Product::with('user', 'category', 'brand','shop','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
             ->where(function ($query) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
-                    $query->where('name', 'LIKE', '%' . $term . '%', 'or');
+                    $query->where('name', 'LIKE', '%' . $term . '%', 'or')
+                    ->orWhereJsonContains('tags', 'LIKE', '%' . $request->searchValue . '%');
                 }
             })
             ->where('published', 1)
