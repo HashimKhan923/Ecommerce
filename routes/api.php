@@ -469,6 +469,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => 'admin/website_feedback'], function() {
             Route::controller(App\Http\Controllers\Admin\WebsiteFeedBackController::class)->group(function () {
                 Route::get('show','index');
+                Route::post('multi_delete','multi_delete');
             });
         }); 
 

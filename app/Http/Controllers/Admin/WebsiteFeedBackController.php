@@ -14,4 +14,10 @@ class WebsiteFeedBackController extends Controller
 
         return response()->json(['data'=>$data]);
     }
+
+    public function multi_delete(Request $request)
+    {
+        WebsiteFeedback::whereIn('id',$request->ids)->delete();
+    }
+
 }
