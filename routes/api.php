@@ -192,6 +192,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('is_featured/{id}','is_featured');
                     Route::get('is_published/{id}','is_published');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('multi_publish','is_multiple_published');
                 });
             });
 
