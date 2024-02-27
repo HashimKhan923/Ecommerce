@@ -10,6 +10,7 @@ class Product extends Model
     protected $casts = [
         'start_year' => 'array',
         'tags' => 'array',
+        'trim' => 'array',
     ];
 
     protected $fillable = ['average_rating'];

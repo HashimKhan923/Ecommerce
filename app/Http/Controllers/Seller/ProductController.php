@@ -78,6 +78,7 @@ class ProductController extends Controller
         $new->shop_id = $request->shop_id;
         $new->deal_id = $request->deal_id;
         $new->tags = $request->tags;
+        $new->trim = $request->trim;
         $new->description = $request->description;
         $new->price = $request->price;
         $new->cost_price = $request->cost_price;
@@ -431,6 +432,7 @@ class ProductController extends Controller
         $update->model_id = $request->model_id;
         $update->deal_id = $request->deal_id;
         $update->tags = $request->tags;
+        $update->trim = $request->trim;
         $update->description = $request->description;
         $update->price = $request->price;
         $update->cost_price = $request->cost_price;
