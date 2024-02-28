@@ -13,6 +13,7 @@ class WebsiteFeedBackController extends Controller
         $new = new WebsiteFeedback();
         $new->rating = $request->rating;
         $new->feedback = $request->feedback;
+        $new->device_type = $request->device_type;
         $new->save();
 
         $response = ['status' => true, "message" => "Sent Successfully!"];
