@@ -14,6 +14,7 @@ class WebsiteFeedBackController extends Controller
         $new->rating = $request->rating;
         $new->feedback = $request->feedback;
         $new->device_type = $request->device_type;
+        $new->device_name = $request->device_name;
         $new->save();
 
         $response = ['status' => true, "message" => "Sent Successfully!"];
