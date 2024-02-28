@@ -632,6 +632,16 @@ Route::group(['middleware' => ['auth:api']], function(){
                     });
 
 
+                                                                                // Billings
+                
+                    Route::group(['prefix' => '/seller/billing/'], function() {
+                        Route::controller(App\Http\Controllers\Seller\BillingController::class)->group(function () {
+                            Route::get('show/{seller_id}','index');
+        
+                        });
+                    });
+
+
                                                 // Customer Query
                                     
                     Route::group(['prefix' => '/seller/customers_query/'], function() {
