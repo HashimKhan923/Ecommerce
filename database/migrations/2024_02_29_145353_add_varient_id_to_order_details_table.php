@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('order_details', function (Blueprint $table) {
-            $table->renameColumn('varient', 'varient_id');
             $table->bigInteger('varient_id')->unsigned()->nullable();
             $table->foreign('varient_id')->references('id')->on('product_varients')->onDelete('cascade')->onUpdate('cascade');
         });
