@@ -9,7 +9,7 @@ class Order extends Model
 {   
     protected $casts = [
         'information' => 'array',
-
+        'tags'=>'array'
     ];
 
     public function order_detail()
