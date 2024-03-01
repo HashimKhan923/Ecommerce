@@ -127,6 +127,13 @@ class OrderController extends Controller
         return response($response, 200);
     }
 
+    public function update_tags(Request $request)
+    {
+        Order::where('id', $request->id)->update(['tags' => $request->tags]);
+        $response = ['status'=>true,"message" => "tag saved successfully!"];
+        return response($response, 200);
+    }
+
     public function payment_status(Request $request)
     {
         $changeStatus = Order::where('id',$request->id)->first();
