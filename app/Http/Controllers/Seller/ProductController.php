@@ -226,6 +226,7 @@ class ProductController extends Controller
             $shipping->product_id = $new->id;
             $shipping->shipping_cost = $request->shipping_cost;
             $shipping->is_qty_multiply = $request->is_qty_multiply;
+            $shipping->shipping_additional_cost = $request->shipping_additional_cost;
             $shipping->est_shipping_days = $request->est_shipping_days;
             $shipping->save();
         }
@@ -399,6 +400,7 @@ class ProductController extends Controller
             $shipping->product_id = $new->id;
             $shipping->shipping_cost = $Shipping->shipping_cost;
             $shipping->is_qty_multiply = $Shipping->is_qty_multiply;
+            $shipping->shipping_additional_cost = $Shipping->shipping_additional_cost;
             $shipping->est_shipping_days = $Shipping->est_shipping_days;
             $shipping->save();
         } 
@@ -660,6 +662,7 @@ class ProductController extends Controller
                 $shipping->product_id = $update->id;
                 $shipping->shipping_cost = $request->shipping_cost;
                 $shipping->is_qty_multiply = $request->is_qty_multiply;
+                $shipping->shipping_additional_cost = $request->shipping_additional_cost;
                 $shipping->est_shipping_days = $request->est_shipping_days;
                 $shipping->save();
             
