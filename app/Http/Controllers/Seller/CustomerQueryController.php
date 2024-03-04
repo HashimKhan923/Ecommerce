@@ -85,4 +85,20 @@ class CustomerQueryController extends Controller
         $response = ['status'=>true,"message" => "Quires Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function multi_read(Request $request)
+    {
+        SellerContact::whereIn('id',$request->ids)->update(['msg_status'=>'read']);
+        
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
+    public function multi_unread(Request $request)
+    {
+        SellerContact::whereIn('id',$request->ids)->update(['msg_status'=>'unread']);
+        
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
 }

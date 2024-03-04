@@ -650,6 +650,8 @@ Route::group(['middleware' => ['auth:api']], function(){
                             Route::get('show/{seller_id}','index');
                             Route::post('reply','reply');
                             Route::post('multi_delete','multi_delete');
+                            Route::post('multi_read','multi_read');
+                            Route::post('multi_unread','multi_unread');
                         });
                     });
 
