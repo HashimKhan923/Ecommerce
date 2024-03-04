@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('seller_contacts', function (Blueprint $table) {
-            $table->boolean('msg_status')->default('unread')->after('message');
+            $table->string('msg_status')->default('unread')->after('message');
         });
     }
 
