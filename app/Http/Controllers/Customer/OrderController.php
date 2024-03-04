@@ -84,8 +84,9 @@ public function create(Request $request)
             $newOrderDetail->order_id = $newOrder->id;
             $newOrderDetail->product_id = $product->id;
             $newOrderDetail->product_price = $orderProduct['product_price'];
+            $newOrderDetail->shipping_amount = $orderProduct['shipping_amount'];
             $newOrderDetail->quantity = $orderProduct['quantity'];
-            // $newOrderDetail->varient_id = $orderProduct['varient_id'];
+            $newOrderDetail->varient_id = $orderProduct['varient_id'];
             $newOrderDetail->save();
     
             $VarientStock = ProductVarient::where('product_id', $product->id)->first();
