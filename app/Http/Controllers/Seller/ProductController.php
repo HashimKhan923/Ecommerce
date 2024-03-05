@@ -746,18 +746,25 @@ class ProductController extends Controller
 
     public function gallery_delete($id)
     {
-      $file = ProductGallery::find($id);
-
-        // $checkCount = ProductGallery::where('image',$file->image)->count();
-
-        // if($checkCount < 2)
-        // {
-            unlink(public_path('ProductGallery/'.$file->image));
-        // }
-  
+        $file = ProductGallery::find($id);
+    
+        if (!$file) {
+            $response = ['status' => false, "message" => "File not found"];
+            return response($response, 404);
+        }
+    
+        $filePath = public_path('ProductGallery/' . $file->image);
+    
+        if (file_exists($filePath)) {
+            if (!unlink($filePath)) {
+                $response = ['status' => false, "message" => "Failed to delete file"];
+                return response($response, 500);
+            }
+        }
+    
         $file->delete();
-
-        $response = ['status'=>true,"message" => "Deleted Successfully!"];
+    
+        $response = ['status' => true, "message" => "Deleted Successfully!"];
         return response($response, 200);
     }
 }
