@@ -335,6 +335,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
 
 
+                                            /// Seller \\\
+
+                Route::group(['prefix' => '/admin/stores/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\ShopController::class)->group(function () {
+                        Route::get('show','index');
+                    });
+                });
+
+
                                                     /// Report \\\
 
             Route::group(['prefix' => '/admin/report/'], function() {
