@@ -287,127 +287,7 @@ class ProductController extends Controller
 
     }
 
-    public function sell_similar($id)
-    {
-        $existingProduct = Product::find($id);
 
-        if ($existingProduct) {
-            $new = new Product();
-            $new->name = $existingProduct->name;
-            $new->added_by = 'seller';
-            $new->user_id = $existingProduct->user_id;
-            $new->category_id = $existingProduct->category_id;
-            $new->height = $existingProduct->height;
-            $new->weight = $existingProduct->weight;
-            $new->lenght = $existingProduct->lenght;
-            $new->start_year = $existingProduct->start_year;
-            $new->make = $existingProduct->make;
-            $new->unit = $existingProduct->unit;
-            $new->sku = $existingProduct->sku;
-            $new->bar_code = $existingProduct->bar_code;
-            $new->condition = $existingProduct->condition;
-            $new->brand_id = $existingProduct->brand_id;
-            $new->model_id = $existingProduct->model_id;
-            $new->shop_id = $existingProduct->shop_id;
-            $new->deal_id = $existingProduct->deal_id;
-            $new->tags = $existingProduct->tags;
-            $new->description = $existingProduct->description;
-            $new->price = $existingProduct->price;
-            $new->cost_price = $existingProduct->cost_price;
-            $new->shipping = $existingProduct->shipping;
-            $new->featured = 0;
-            $new->published = 0;
-            $new->is_tax = $existingProduct->is_tax;
-            $new->meta_title = $existingProduct->meta_title;
-            $new->video = $existingProduct->video;
-            $new->slug = $existingProduct->slug;
-            $new->save();
-        }
-
-        $ProductGallery = ProductGallery::where('product_id',$id)->get();
-
-        if ($ProductGallery) {
-            foreach($ProductGallery as $item)
-            {
-                $gallery = new ProductGallery();
-                $gallery->product_id = $new->id;
-                $gallery->order = $item->order;
-                $gallery->image = $item->image;
-                $gallery->save();
-            }
-        } 
-
-        $ProductVarient = ProductVarient::where('product_id',$id)->get();
-
-        if ($ProductVarient) {
-            foreach($ProductVarient as $item)
-            {
-                $varient = new ProductVarient();
-                $varient->product_id = $new->id;
-                $varient->color = $item->color;
-                $varient->size = $item->size;
-                $varient->bolt_pattern = $item->bolt_pattern;
-                $varient->price = $item->price;
-                $varient->discount_price = $item->discount_price;
-                $varient->sku = $item->sku;
-                $varient->stock = $item->stock;
-                $varient->save();
-            }
-        } 
-
-        $Discount = Discount::where('product_id',$id)->first();
-
-        if ($Discount) {
-
-            $discount = new Discount();
-            $discount->product_id = $new->id;
-            $discount->discount = $Discount->discount;
-            $discount->discount_start_date = $Discount->discount_start_date;
-            $discount->discount_end_date = $Discount->discount_end_date;
-            $discount->discount_type = $Discount->discount_type;
-            $discount->save();
-        } 
-
-        $Stock = Stock::where('product_id',$id)->first();
-
-        if ($Stock) {
-
-            $stock = new Stock();
-            $stock->product_id = $new->id;
-            $stock->stock = $Stock->stock;
-            $stock->min_stock = $Stock->min_stock;
-            $stock->save();
-        } 
-
-        $DealProduct = DealProduct::where('product_id',$id)->first();
-
-        if ($DealProduct) {
-
-            $deal = new DealProduct();
-            $deal->deal_id = $DealProduct->deal_id;
-            $deal->product_id = $new->id;
-            $deal->discount = $DealProduct->discount;
-            $deal->discount_type = $DealProduct->discount_type;
-            $deal->save();
-        } 
-
-
-        $Shipping = Shipping::where('product_id',$id)->first();
-
-        if ($Shipping) {
-
-            $shipping = new Shipping();
-            $shipping->product_id = $new->id;
-            $shipping->shipping_cost = $Shipping->shipping_cost;
-            $shipping->is_qty_multiply = $Shipping->is_qty_multiply;
-            $shipping->shipping_additional_cost = $Shipping->shipping_additional_cost;
-            $shipping->est_shipping_days = $Shipping->est_shipping_days;
-            $shipping->save();
-        } 
-
-        $response = ['status'=>true,"message" => "Similar Product Created Successfully!"];
-        return response($response, 200);
-    }
 
 
     public function update(Request $request)
@@ -743,10 +623,10 @@ class ProductController extends Controller
                 
                 $checkCount = ProductGallery::where('image',$item1->image)->count();
 
-                if($checkCount < 2)
-                {
+                // if($checkCount < 2)
+                // {
                     unlink(public_path('ProductGallery/'.$item1->image));
-                }
+                // }
             }
             
             $varients = ProductVarient::where('product_id',$item->id)->get();
@@ -754,10 +634,10 @@ class ProductController extends Controller
             {
                 $checkCount = ProductVarient::where('image',$item2->image)->count();
 
-                if($checkCount < 2)
-                {
+                // if($checkCount < 2)
+                // {
                     unlink(public_path('ProductVarient/'.$item2->image));
-                }
+                // }
             }
     
     
