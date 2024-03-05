@@ -8,17 +8,18 @@ use App\Models\SubscribeUser;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Shop;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $Users = User::all();
-
-        $Products = Product::all();
-        $Orders = Order::all();
+        $Users = User::count();
+        $Stores = Shop::count();
+        $Products = Product::count();
+        $Orders = Order::count();
         
 
-        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders]);
+        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores]);
     }
 }
