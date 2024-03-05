@@ -47,6 +47,11 @@ public function create(Request $request)
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
             return $orderProduct['product_price'] * $orderProduct['quantity'];
         });
+
+        $shopTotalShipment = $shopProducts->sum(function ($product) use ($request) {
+            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+            return $orderProduct['shipping_amount'];
+        });
     
         $newOrder = new Order();
         $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
@@ -54,7 +59,7 @@ public function create(Request $request)
         $newOrder->customer_id = $request->customer_id;
         $newOrder->shop_id = $shopId;
         $newOrder->sellers_id = $vendorId;
-        $newOrder->amount = $shopTotalAmount + $orderProduct['shipping_amount']; 
+        $newOrder->amount = $shopTotalAmount + $shopTotalShipment; 
         $newOrder->information = $request->information;
         $newOrder->stripe_payment_id = $request->payment_id;
         $newOrder->payment_method = $request->payment_method;
