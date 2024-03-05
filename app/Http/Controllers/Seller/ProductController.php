@@ -748,12 +748,12 @@ class ProductController extends Controller
     {
       $file = ProductGallery::find($id);
 
-        $checkCount = ProductGallery::where('image',$file->image)->count();
+        // $checkCount = ProductGallery::where('image',$file->image)->count();
 
-        if($checkCount < 2)
-        {
+        // if($checkCount < 2)
+        // {
             unlink(public_path('ProductGallery/'.$file->image));
-        }
+        // }
   
         $file->delete();
 
