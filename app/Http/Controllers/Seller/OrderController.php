@@ -74,9 +74,9 @@ class OrderController extends Controller
             $orderAmountInCents = $order->amount * 100; 
             
            
-            $commissionRate = 0.05; 
+            $commissionRate = 0; 
             if ($seller->created_at < Carbon::now()->subMonths(3)) {
-                $commissionRate = 0; 
+                $commissionRate = 0.05;
             }
             
             $percentageDeduction = $orderAmountInCents * 0.04; 
