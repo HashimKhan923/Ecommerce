@@ -54,7 +54,7 @@ public function create(Request $request)
         $newOrder->customer_id = $request->customer_id;
         $newOrder->shop_id = $shopId;
         $newOrder->sellers_id = $vendorId;
-        $newOrder->amount = $shopTotalAmount; 
+        $newOrder->amount = $shopTotalAmount + $orderProduct['shipping_amount']; 
         $newOrder->information = $request->information;
         $newOrder->stripe_payment_id = $request->payment_id;
         $newOrder->payment_method = $request->payment_method;
