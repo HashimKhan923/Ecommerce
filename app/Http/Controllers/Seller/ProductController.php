@@ -623,10 +623,10 @@ class ProductController extends Controller
                 
                 $checkCount = ProductGallery::where('image',$item1->image)->count();
 
-                // if($checkCount < 2)
-                // {
+                if($checkCount < 2)
+                {
                     unlink(public_path('ProductGallery/'.$item1->image));
-                // }
+                }
             }
             
             $varients = ProductVarient::where('product_id',$item->id)->get();
