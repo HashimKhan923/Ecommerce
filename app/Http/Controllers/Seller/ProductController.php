@@ -69,7 +69,6 @@ class ProductController extends Controller
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->shop_id = $request->shop_id;
-        $new->deal_id = $request->deal_id;
         $new->tags = $request->tags;
         $new->trim = $request->trim;
         $new->description = $request->description;
@@ -170,15 +169,7 @@ class ProductController extends Controller
         }
 
 
-        if($request->deal_id != null)
-        {
-            $deal = new DealProduct();
-            $deal->deal_id = $request->deal_id;
-            $deal->product_id = $new->id;
-            $deal->discount = $request->deal_discount;
-            $deal->discount_type = $request->deal_discount_type;
-            $deal->save();
-        }
+
         
 
         if($request->shipping_type != null)
