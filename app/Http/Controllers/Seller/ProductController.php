@@ -323,6 +323,13 @@ class ProductController extends Controller
                     if($varientData['varient_image'])
                     {
 
+                        $checkCount = ProductVarient::where('image',$varient->image)->count();
+
+                        if($checkCount < 2)
+                        {
+                            unlink(public_path('ProductVarient/'.$varient->image));
+                        }
+
                     $image = $varientData['varient_image'];
 
                     $filename = date('YmdHis') . $image->getClientOriginalName();
@@ -550,10 +557,10 @@ class ProductController extends Controller
             {
                 $checkCount = ProductVarient::where('image',$item2->image)->count();
 
-                // if($checkCount < 2)
-                // {
+                if($checkCount < 2)
+                {
                     unlink(public_path('ProductVarient/'.$item2->image));
-                // }
+                }
             }
     
     
