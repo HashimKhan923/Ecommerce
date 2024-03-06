@@ -87,6 +87,7 @@ class ProductController extends Controller
         $new->published = $request->published;
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
+        $new->meta_discription = $request->meta_description;
         $new->video = $request->video;
         // if($request->file('meta_img'))
         // {
