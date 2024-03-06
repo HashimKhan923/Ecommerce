@@ -305,7 +305,6 @@ class ProductController extends Controller
         $update->condition = $request->condition;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
-        $update->deal_id = $request->deal_id;
         $update->tags = $request->tags;
         $update->trim = $request->trim;
         $update->description = $request->description;
