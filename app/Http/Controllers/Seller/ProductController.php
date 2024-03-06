@@ -52,6 +52,12 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
+
+
+        
+        // $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
+        // if($checkPackage)
+        // {
         $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'seller';
@@ -61,6 +67,7 @@ class ProductController extends Controller
         $new->weight = $request->weight;
         $new->lenght = $request->lenght;
         $new->start_year = $request->year;
+        // $new->end_year = $request->end_year;
         $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
@@ -69,6 +76,7 @@ class ProductController extends Controller
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->shop_id = $request->shop_id;
+        $new->deal_id = $request->deal_id;
         $new->tags = $request->tags;
         $new->trim = $request->trim;
         $new->description = $request->description;
@@ -79,8 +87,25 @@ class ProductController extends Controller
         $new->published = $request->published;
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
-        $new->meta_discription = $request->meta_description;
         $new->video = $request->video;
+        // if($request->file('meta_img'))
+        // {
+        //     $file= $request->meta_img;
+        //     $filename= date('YmdHis').$file->getClientOriginalName();
+        //     $file->move(public_path('ProductMetaImg'),$filename);
+
+        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+        //     ->encode('webp', 70); 
+    
+            
+        //     $compressedFilename = 'compressed_' . $filename;
+        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+    
+        //     unlink(public_path('ProductMetaImg/'.$filename));
+
+
+        //     $new->meta_img = $compressedFilename;
+        // }
         $new->slug = $request->slug;
         $new->save();
 
@@ -130,19 +155,24 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if ($item['varient_image']) 
-                {
-                    $image = $item['varient_image'];
+                // if($item->file('varient_image'))
+                // {
+                //         $file= $item->varient_image;
+                //         $filename= date('YmdHis').$file->getClientOriginalName();
+                //         $file->move(public_path('ProductVarient'),$filename);
 
-                    $filename = date('YmdHis'). '_' . uniqid() . '.' .$image->getClientOriginalName();
-    
-                    $compressedImage = Image::make($image->getRealPath());
-        
-                    $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-        
-                    $varient->image  = $filename . '.webp';
-                    
-                }
+                //         $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                //         ->encode('webp', 70); 
+                
+                        
+                //         $compressedFilename = 'compressed_' . $filename;
+                //         $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                //         unlink(public_path('ProductVarient/'.$filename));
+
+
+                //         $varient->image = $compressedFilename;
+                // }
                 $varient->save();
             }
 
@@ -168,8 +198,26 @@ class ProductController extends Controller
                 $stock->save();
         }
 
+        
+        // if($request->tax != null)
+        // {
+        //     $tax = new Tax();
+        //     $tax->product_id = $new->id;
+        //     $tax->tax = $request->tax;
+        //     $tax->tax_type = $request->tax_type;
+        //     $tax->save();
+        // }
 
 
+        if($request->deal_id != null)
+        {
+            $deal = new DealProduct();
+            $deal->deal_id = $request->deal_id;
+            $deal->product_id = $new->id;
+            $deal->discount = $request->deal_discount;
+            $deal->discount_type = $request->deal_discount_type;
+            $deal->save();
+        }
         
 
         if($request->shipping_type != null)
@@ -219,12 +267,22 @@ class ProductController extends Controller
 
         } 
 
-
+        // $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
+        // $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
+        // $dedect->save();
 
 
 
         $response = ['status'=>true,"message" => "Product Added Successfully!",'product_id'=>$new->id];
         return response($response, 200);
+
+        // }
+        // else
+        // {
+        //     $response = ['status'=>true,"message" => "you dont have any subscription to upload new product. please buy any subscription to upload products!"];
+        //     return response($response, 401);
+        // }
+        
         
 
     }
@@ -234,7 +292,8 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-    
+
+        // return $request;
 
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
@@ -245,9 +304,11 @@ class ProductController extends Controller
         $update->weight = $request->weight;
         $update->lenght = $request->lenght;
         $update->start_year = $request->year;
+        // $update->end_year = $request->end_year;
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
+        $update->bar_code = $request->bar_code;
         $update->condition = $request->condition;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
@@ -263,10 +324,34 @@ class ProductController extends Controller
         $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
         $update->video = $request->video;
+        // if($request->file('meta_img'))
+        // {
+        //     if($update->meta_img)
+        //     {
+        //         unlink(public_path('ProductMetaImg/'.$update->meta_img));
+        //     }
+
+        //     $file= $request->meta_img;
+        //     $filename= date('YmdHis').$file->getClientOriginalName();
+        //     $file->move(public_path('ProductMetaImg'),$filename);
+
+        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
+        //     ->encode('webp', 70); 
+    
+            
+        //     $compressedFilename = 'compressed_' . $filename;
+        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
+    
+        //     unlink(public_path('ProductMetaImg/'.$filename));
+
+
+        //     $update->meta_img = $filename;
+        // }
         $update->slug = $request->slug;
         $update->sku = $request->sku;
         $update->save();
 
+        // $request->merge(['photos' => $photoArray]);
 
         if ($request->photos) {
             $images = $request->photos;
@@ -297,7 +382,7 @@ class ProductController extends Controller
             
         }
 
-        if ($request->varients) {
+        if ($request->varients != null) {
             foreach ($request->varients as $varientData) {
                 $varient = ProductVarient::where('id',$varientData['id'])->first();
         
@@ -309,27 +394,24 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if($varientData['varient_image'])
-                    {
+                    // if($request->file('varient_image'))
+                    // {
+                    //     $file= $varientData['varient_image'];
+                    //     $filename= date('YmdHis').$file->getClientOriginalName();
+                    //     $file->move(public_path('ProductVarient'),$filename);
 
-                        $checkCount = ProductVarient::where('image',$varient->image)->count();
 
-                        if($checkCount < 2)
-                        {
-                            unlink(public_path('ProductVarient/'.$varient->image));
-                        }
+                    //     $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                    //     ->encode('webp', 70); 
+                
+                        
+                    //     $compressedFilename = 'compressed_' . $filename;
+                    //     $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                    //     unlink(public_path('ProductVarient/'.$filename));
 
-                    $image = $varientData['varient_image'];
-
-                    $filename = date('YmdHis') . $image->getClientOriginalName();
-    
-                    $compressedImage = Image::make($image->getRealPath());
-        
-                    $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-        
-                    $varient->image  = $filename . '.webp';
-
-                    }
+                    //     $varient->image = $filename;
+                    // }
                     $varient->save();
                 } else {
                     $varient = new ProductVarient();
@@ -341,19 +423,24 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if($varientData['varient_image'])
-                    {
-                        $image = $varientData['varient_image'];
+                    // if($request->file('varient_image'))
+                    // {
+                    //     $file= $varientData['varient_image'];
+                    //     $filename= date('YmdHis').$file->getClientOriginalName();
+                    //     $file->move(public_path('ProductVarient'),$filename);
 
-                        $filename = date('YmdHis') . $image->getClientOriginalName();
-        
-                        $compressedImage = Image::make($image->getRealPath());
-            
-                        $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-            
-                        $varient->image  = $filename . '.webp';
+                    //     $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                    //     ->encode('webp', 70); 
+                
+                        
+                    //     $compressedFilename = 'compressed_' . $filename;
+                    //     $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                    //     unlink(public_path('ProductVarient/'.$filename));
 
-                    }
+
+                    //     $varient->image = $filename;
+                    // }
                     $varient->save();
                 }
             }
@@ -421,7 +508,23 @@ class ProductController extends Controller
         // }
 
 
+        if($request->deal_id != null)
+        {
+            $deal = DealProduct::where('product_id',$update->id)->first();
 
+            if($deal == null)
+            {
+                $deal = new DealProduct();
+            }
+
+                $deal->deal_id = $request->deal_id;
+                $deal->product_id = $update->id;
+                $deal->discount = $request->deal_discount;
+                $deal->discount_type = $request->deal_discount_type;
+                $deal->save();
+            
+
+        }
         
 
         if($request->shipping_type)
@@ -475,10 +578,10 @@ class ProductController extends Controller
         {
             $checkCount = ProductGallery::where('image',$item->image)->count();
 
-            if($checkCount < 2)
-            {
+            // if($checkCount < 2)
+            // {
                 unlink(public_path('ProductGallery/'.$item->image));
-            }
+            // }
         }
         
         $varients = ProductVarient::where('product_id',$id)->get();
@@ -530,10 +633,10 @@ class ProductController extends Controller
             {
                 $checkCount = ProductVarient::where('image',$item2->image)->count();
 
-                if($checkCount < 2)
-                {
+                // if($checkCount < 2)
+                // {
                     unlink(public_path('ProductVarient/'.$item2->image));
-                }
+                // }
             }
     
     
