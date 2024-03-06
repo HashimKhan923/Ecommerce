@@ -130,11 +130,11 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($item['varient_image'])
+                if (isset($item['variant_image']) && $item['variant_image'] != null) 
                 {
                     $image = $item['varient_image'];
 
-                    $filename = date('YmdHis') . $image->getClientOriginalName();
+                    $filename = date('YmdHis'). '_' . uniqid() . '.' .$image->getClientOriginalName();
     
                     $compressedImage = Image::make($image->getRealPath());
         
