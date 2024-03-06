@@ -155,24 +155,16 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                // if($item->file('varient_image'))
-                // {
-                //         $file= $item->varient_image;
-                //         $filename= date('YmdHis').$file->getClientOriginalName();
-                //         $file->move(public_path('ProductVarient'),$filename);
-
-                //         $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
-                //         ->encode('webp', 70); 
-                
-                        
-                //         $compressedFilename = 'compressed_' . $filename;
-                //         $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
-                
-                //         unlink(public_path('ProductVarient/'.$filename));
-
-
-                //         $varient->image = $compressedFilename;
-                // }
+                if($item['varient_image'])
+                {
+                    $filename = date('YmdHis') . $item['varient_image'];
+    
+                    $compressedImage = Image::make($image->getRealPath());
+        
+                    $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+        
+                    $varient->image = $filename . '.webp';
+                }
                 $varient->save();
             }
 
