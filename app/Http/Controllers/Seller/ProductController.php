@@ -387,14 +387,14 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if($request->file('varient_image'))
+                    if($varientData['varient_image'])
                     {
-                        $file= $varientData['varient_image'];
-                        $filename= date('YmdHis').$file->getClientOriginalName();
-
-
-                        $compressedImage = Image::make($file->getRealPath());
+                        $image = $varientData['varient_image'];
+    
+                        $filename = date('YmdHis') . $image->getClientOriginalName();
         
+                        $compressedImage = Image::make($image->getRealPath());
+            
                         $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
             
                         $varient->image = $filename . '.webp';
@@ -410,14 +410,14 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if($request->file('varient_image'))
+                    if($varientData['varient_image'])
                     {
-                        $file= $varientData['varient_image'];
-                        $filename= date('YmdHis').$file->getClientOriginalName();
-
-
-                        $compressedImage = Image::make($file->getRealPath());
+                        $image = $varientData['varient_image'];
+    
+                        $filename = date('YmdHis') . $image->getClientOriginalName();
         
+                        $compressedImage = Image::make($image->getRealPath());
+            
                         $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
             
                         $varient->image = $filename . '.webp';
