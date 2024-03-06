@@ -248,11 +248,9 @@ class ProductController extends Controller
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
-        $update->bar_code = $request->bar_code;
         $update->condition = $request->condition;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
-        $update->deal_id = $request->deal_id;
         $update->tags = $request->tags;
         $update->trim = $request->trim;
         $update->description = $request->description;
@@ -423,23 +421,7 @@ class ProductController extends Controller
         // }
 
 
-        if($request->deal_id != null)
-        {
-            $deal = DealProduct::where('product_id',$update->id)->first();
 
-            if($deal == null)
-            {
-                $deal = new DealProduct();
-            }
-
-                $deal->deal_id = $request->deal_id;
-                $deal->product_id = $update->id;
-                $deal->discount = $request->deal_discount;
-                $deal->discount_type = $request->deal_discount_type;
-                $deal->save();
-            
-
-        }
         
 
         if($request->shipping_type)
