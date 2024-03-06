@@ -76,6 +76,7 @@ class ProductController extends Controller
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->shop_id = $request->shop_id;
+        $new->deal_id = $request->deal_id;
         $new->tags = $request->tags;
         $new->trim = $request->trim;
         $new->description = $request->description;
@@ -154,18 +155,24 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($item['varient_image'])
-                {
-                    $image = $item['varient_image'];
+                // if($item->file('varient_image'))
+                // {
+                //         $file= $item->varient_image;
+                //         $filename= date('YmdHis').$file->getClientOriginalName();
+                //         $file->move(public_path('ProductVarient'),$filename);
 
-                    $filename = date('YmdHis') . $image->getClientOriginalName();
-    
-                    $compressedImage = Image::make($image->getRealPath());
-        
-                    $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-        
-                    $varient->image = $filename . '.webp';
-                }
+                //         $compressedImage = Image::make(public_path('ProductVarient') . '/' . $filename)
+                //         ->encode('webp', 70); 
+                
+                        
+                //         $compressedFilename = 'compressed_' . $filename;
+                //         $compressedImage->save(public_path('ProductVarient') . '/' . $compressedFilename);
+                
+                //         unlink(public_path('ProductVarient/'.$filename));
+
+
+                //         $varient->image = $compressedFilename;
+                // }
                 $varient->save();
             }
 
@@ -305,6 +312,7 @@ class ProductController extends Controller
         $update->condition = $request->condition;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
+        $update->deal_id = $request->deal_id;
         $update->tags = $request->tags;
         $update->trim = $request->trim;
         $update->description = $request->description;
