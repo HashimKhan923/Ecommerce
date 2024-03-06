@@ -130,7 +130,7 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($item->file('varient_image'))
+                if($item['varient_image'])
                 {
                     $image = $item->varient_image;
 
