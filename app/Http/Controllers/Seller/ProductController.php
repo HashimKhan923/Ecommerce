@@ -130,8 +130,8 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if (isset($item['variant_image']) && $item['variant_image'] != null) 
-                {
+                // if (isset($item['variant_image']) && $item['variant_image'] != null) 
+                // {
                     $image = $item['varient_image'];
 
                     $filename = date('YmdHis'). '_' . uniqid() . '.' .$image->getClientOriginalName();
@@ -142,7 +142,7 @@ class ProductController extends Controller
         
                     $varient->image  = $filename . '.webp';
                     
-                }
+                // }
                 $varient->save();
             }
 
