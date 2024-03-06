@@ -387,18 +387,18 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    // if(isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image']))
-                    // {
-                    //     $image = $varientData['varient_image'];
+                    if($varientData['varient_image'])
+                    {
+                        $image = $varientData['varient_image'];
     
-                    //     $filename = date('YmdHis') . $image->getClientOriginalName();
+                        $filename = date('YmdHis') . $image->getClientOriginalName();
         
-                    //     $compressedImage = Image::make($image->getRealPath());
+                        $compressedImage = Image::make($image->getRealPath());
             
-                    //     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
+                        $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
             
-                    //     $varient->image = $filename . '.webp';
-                    // }
+                        $varient->image = $filename . '.webp';
+                    }
                     $varient->save();
                 } else {
                     $varient = new ProductVarient();
@@ -410,18 +410,18 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    // if(isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image']))
-                    // {
-                    //     $image = $varientData['varient_image'];
+                    if($varientData['varient_image'])
+                    {
+                        $image = $varientData['varient_image'];
     
-                    //     $filename = date('YmdHis') . $image->getClientOriginalName();
+                        $filename = date('YmdHis') . $image->getClientOriginalName();
         
-                    //     $compressedImage = Image::make($image->getRealPath());
+                        $compressedImage = Image::make($image->getRealPath());
             
-                    //     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
+                        $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
             
-                    //     $varient->image = $filename . '.webp';
-                    // }
+                        $varient->image = $filename . '.webp';
+                    }
                     $varient->save();
                 }
             }
