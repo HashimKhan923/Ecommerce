@@ -389,6 +389,14 @@ class ProductController extends Controller
                     $varient->stock = $varientData['varient_stock'];
                     if(is_uploaded_file($varientData['varient_image']))
                     {
+
+                        $checkCount = ProductVarient::where('image',$varient->image)->count();
+
+                        if($checkCount < 2)
+                        {
+                            unlink(public_path('ProductVarient/'.$varient->image));
+                        }
+
                         $image = $varientData['varient_image'];
     
                         $filename = date('YmdHis') . $image->getClientOriginalName();
