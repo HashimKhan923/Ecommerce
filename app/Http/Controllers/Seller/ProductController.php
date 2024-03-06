@@ -76,7 +76,6 @@ class ProductController extends Controller
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->shop_id = $request->shop_id;
-        $new->deal_id = $request->deal_id;
         $new->tags = $request->tags;
         $new->trim = $request->trim;
         $new->description = $request->description;
