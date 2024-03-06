@@ -132,7 +132,7 @@ class ProductController extends Controller
                 $varient->stock = $item['varient_stock'];
                 if($item['varient_image'])
                 {
-                    $image = $item->varient_image;
+                    $image = $item['varient_image'];
 
                     $filename = date('YmdHis') . $image->getClientOriginalName();
     
