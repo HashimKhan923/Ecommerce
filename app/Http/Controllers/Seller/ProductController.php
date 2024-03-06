@@ -76,6 +76,7 @@ class ProductController extends Controller
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->shop_id = $request->shop_id;
+        $new->deal_id = $request->deal_id;
         $new->tags = $request->tags;
         $new->trim = $request->trim;
         $new->description = $request->description;
@@ -156,8 +157,10 @@ class ProductController extends Controller
                 $varient->stock = $item['varient_stock'];
                 if($item['varient_image'])
                 {
-                    $filename = date('YmdHis') . $item['varient_image'];
                     $image = $item['varient_image'];
+
+                    $filename = date('YmdHis') . $image->getClientOriginalName();
+    
                     $compressedImage = Image::make($image->getRealPath());
         
                     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
@@ -303,6 +306,7 @@ class ProductController extends Controller
         $update->condition = $request->condition;
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
+        $update->deal_id = $request->deal_id;
         $update->tags = $request->tags;
         $update->trim = $request->trim;
         $update->description = $request->description;
