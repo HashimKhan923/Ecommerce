@@ -157,7 +157,7 @@ class ProductController extends Controller
                 if($item['varient_image'])
                 {
                     $filename = date('YmdHis') . $item['varient_image'];
-    
+                    $image = $item['varient_image'];
                     $compressedImage = Image::make($image->getRealPath());
         
                     $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
