@@ -297,7 +297,7 @@ class ProductController extends Controller
             
         }
 
-        if ($request->varients != null) {
+        if ($request->varients) {
             foreach ($request->varients as $varientData) {
                 $varient = ProductVarient::where('id',$varientData['id'])->first();
         
