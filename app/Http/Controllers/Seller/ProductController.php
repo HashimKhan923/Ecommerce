@@ -154,7 +154,7 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($item['varient_image'])
+                if(isset($item['varient_image']) && is_uploaded_file($item['varient_image']))
                 {
                     $image = $item['varient_image'];
 
@@ -388,7 +388,7 @@ class ProductController extends Controller
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
                     
-                    if(is_uploaded_file($varientData['varient_image']))
+                    if(isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image']))
                     {
 
                         $checkCount = ProductVarient::where('image',$varient->image)->count();
@@ -419,7 +419,7 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
-                    if(is_uploaded_file($varientData['varient_image']))
+                    if(isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image']))
                     {
                         $image = $varientData['varient_image'];
     
@@ -568,10 +568,10 @@ class ProductController extends Controller
         {
             $checkCount = ProductGallery::where('image',$item->image)->count();
 
-            // if($checkCount < 2)
-            // {
+            if($checkCount < 2)
+            {
                 unlink(public_path('ProductGallery/'.$item->image));
-            // }
+            }
         }
         
         $varients = ProductVarient::where('product_id',$id)->get();
