@@ -387,6 +387,7 @@ class ProductController extends Controller
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
                     $varient->stock = $varientData['varient_stock'];
+                    
                     if(is_uploaded_file($varientData['varient_image']))
                     {
 
