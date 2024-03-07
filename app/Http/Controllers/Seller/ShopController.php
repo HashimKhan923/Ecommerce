@@ -13,7 +13,7 @@ class ShopController extends Controller
 {
     public function index($seller_id)
     {
-        $data = Shop::with('shop_policy')->where('seller_id',$seller_id)->get();
+        $data = Shop::with('shop_policy')->withCount('product')->where('seller_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
