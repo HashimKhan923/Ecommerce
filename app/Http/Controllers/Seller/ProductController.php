@@ -690,6 +690,28 @@ class ProductController extends Controller
 
     }
 
+
+    public function is_multiple_featured(Request $request)
+    {
+
+        Product::whereIn('id', $request->ids)->update(['featured' => 1]);
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+
+    }
+
+
+    public function is_multiple_unfeatured(Request $request)
+    {
+
+        Product::whereIn('id', $request->ids)->update(['featured' => 0]);
+    
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+
+    }
+
     public function view($id)
     {
         $data = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient'
