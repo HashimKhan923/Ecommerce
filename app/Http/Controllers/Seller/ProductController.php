@@ -242,6 +242,8 @@ class ProductController extends Controller
         $userRegistrationDate = $sellerT->created_at;
 
         if ($userRegistrationDate->diffInMonths(now()) > 3) {
+            $response = ['status'=>true,"message" => "working fine",'product_id'=>$new->id];
+            return response($response, 200);
             $SellerCheck = ProductListingPayment::where('seller_id',$request->user_id)->where('payment_status','unpaid')->first();
             if(!$SellerCheck)
             {
