@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('coupons', function (Blueprint $table) {
-            $table->bigInteger('customer_id')->unsigned()->nullable();
-            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('customer_ids')->unsigned()->nullable();
+            $table->foreign('customer_ids')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('brand_id')->unsigned()->nullable();
