@@ -27,7 +27,6 @@ class CouponController extends Controller
         $new->brand_id = $request->brand_id;
         $new->model_id = $request->model_id;
         $new->minimum_purchase_amount = $request->minimum_purchase_amount;
-        $new->model_id = $request->model_id;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;
@@ -50,7 +49,6 @@ class CouponController extends Controller
         $update->brand_id = $request->brand_id;
         $update->model_id = $request->model_id;
         $update->minimum_purchase_amount = $request->minimum_purchase_amount;
-        $update->model_id = $request->model_id;
         $update->name = $request->name;
         $update->code = $request->code;
         $update->discount = $request->discount;
