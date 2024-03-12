@@ -154,7 +154,7 @@ class ProductController extends Controller
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
                 $varient->stock = $item['varient_stock'];
-                if($item['varient_image'])
+                if(is_uploaded_file($item['varient_image']))
                 {
                     $image = $item['varient_image'];
 
@@ -165,6 +165,10 @@ class ProductController extends Controller
                     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
         
                     $varient->image = $filename . '.webp';
+                }
+                else
+                {
+                    $varient->image = $item['varient_image'];
                 }
                 $varient->save();
             }
@@ -624,10 +628,10 @@ class ProductController extends Controller
             {
                 $checkCount = ProductVarient::where('image',$item2->image)->count();
 
-                // if($checkCount < 2)
-                // {
+                if($checkCount < 2)
+                {
                     unlink(public_path('ProductVarient/'.$item2->image));
-                // }
+                }
             }
     
     
