@@ -50,10 +50,9 @@ class DashboardController extends Controller
 
     public function collection($seller_id)
     {
-        $SellerCategories = Product::where('user_id', $seller_id)->with('category')->distinct()->pluck('category_id');
-        $SellerBrands = Product::where('user_id', $seller_id)->with('brand')->distinct()->pluck('brand_id');
-        $SellerModels = Product::where('user_id', $seller_id)->with('model')->distinct()->pluck('model_id');
-
+        $SellerCategories = Product::where('user_id', $seller_id)->with('category')->distinct()->get(['category_id']);
+        $SellerBrands = Product::where('user_id', $seller_id)->with('brand')->distinct()->get(['brand_id']);
+        $SellerModels = Product::where('user_id', $seller_id)->with('model')->distinct()->get(['model_id']);
         return response()->json(['SellerCategories'=>$SellerCategories,'SellerBrands'=>$SellerBrands,'SellerModels'=>$SellerModels]);
 
     }
