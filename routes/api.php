@@ -510,7 +510,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::controller(App\Http\Controllers\Seller\DashboardController::class)->group(function () {
                     Route::get('show/{id}','index');
                     Route::get('shop/{shop_id}','searchByshop');
-
+                    Route::get('collection/{seller_id}','collection');
                 });
             });
 
