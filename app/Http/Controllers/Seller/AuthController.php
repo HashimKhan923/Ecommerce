@@ -154,7 +154,7 @@ class AuthController extends Controller
                 ],
                 'business_profile' => [
                     'name' => $request->shop_name,
-                    'url' => 'https://dragonautomart.com/store/'.$request->shop_name,
+                    'url' => 'https://dragonautomart.com/store',
               
                     // 'url' => 'https://dragonautomart.com/store/'.$shop->id,
                 ],
