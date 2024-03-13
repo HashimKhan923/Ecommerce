@@ -149,7 +149,7 @@ class AuthController extends Controller
                     'transfers' => ['requested' => true],
                 ],
                 'tos_acceptance' => [
-                    'date' => now(),
+                    'date' => strtotime(now()),
                     'ip' => $request->ip(),
                 ],
                 'individual' => [
