@@ -47,25 +47,25 @@ class CouponController extends Controller
 
         }
 
-        if($request->product_id)
+        if($request->category_id)
         {
-            foreach($request->product_id as $product_id)
+            foreach($request->category_id as $category_id)
             {
                 $CouponCategory = new CouponCategory();
                 $CouponCategory->coupon_id = $new->id;
-                $CouponCategory->product_id = $product_id;
+                $CouponCategory->category_id = $category_id;
                 $CouponCategory->save();
             }
 
         }
 
-        if($request->category_id)
+        if($request->product_id)
         {
-            foreach($request->category_id as $category_id)
+            foreach($request->product_id as $product_id)
             {
                 $CouponProduct = new CouponProduct();
                 $CouponProduct->coupon_id = $new->id;
-                $CouponProduct->category_id = $category_id;
+                $CouponProduct->product_id = $product_id;
                 $CouponProduct->save();
             }
 
