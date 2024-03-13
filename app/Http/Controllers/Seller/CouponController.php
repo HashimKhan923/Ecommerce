@@ -26,6 +26,7 @@ class CouponController extends Controller
         $new->shop_id = $request->shop_id;
         $new->minimum_purchase_amount = $request->minimum_purchase_amount;
         $new->minimum_quantity_items = $request->minimum_quantity_items;
+        $new->minimum_quantity_items = $request->minimum_quantity_items;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;

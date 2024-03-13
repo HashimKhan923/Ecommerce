@@ -143,10 +143,11 @@ class AuthController extends Controller
                 'type' => 'custom', 
                 'country' => 'US', 
                 'email' => 'example@example.com',
+                'capabilities' => [
+                    'card_payments' => ['requested' => true],
+                    'transfers' => ['requested' => true],
+                ],
             ]);
-
-            $account->capabilities->transfers = 'active';
-            $account->save();
 
             $bankAccount = $account->external_accounts->create([
                 'external_account' => [
