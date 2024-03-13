@@ -150,7 +150,7 @@ class AuthController extends Controller
                 ],
                 'tos_acceptance' => [
                     'date' => strtotime(now()),
-                    'ip' => '1.1.1.1',
+                    // 'ip' => $request->ip(),
                 ],
                 'business_profile' => [
                     'name' => $request->shop_name,
