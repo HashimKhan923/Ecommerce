@@ -146,6 +146,7 @@ class AuthController extends Controller
                 'business_type' => 'individual',
                 'capabilities' => [
                     'card_payments' => ['requested' => true],
+                    'bank_transfer_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
                 ],
                 'tos_acceptance' => [
