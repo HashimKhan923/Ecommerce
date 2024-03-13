@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use App\Models\CouponCategory;
+use App\Models\CouponCustomer;
+use App\Models\CouponProduct;
 use Carbon\Carbon;
 
 class CouponController extends Controller
@@ -21,11 +24,6 @@ class CouponController extends Controller
         $new = new Coupon();
         $new->creator_id = $request->creator_id;
         $new->shop_id = $request->shop_id;
-        $new->product_id = $request->product_id;
-        $new->customer_id = $request->customer_id;
-        $new->category_id = $request->category_id;
-        $new->brand_id = $request->brand_id;
-        $new->model_id = $request->model_id;
         $new->minimum_purchase_amount = $request->minimum_purchase_amount;
         $new->name = $request->name;
         $new->code = $request->code;
@@ -34,6 +32,42 @@ class CouponController extends Controller
         $new->start_date = Carbon::parse($request->start_date);
         $new->end_date = Carbon::parse($request->end_date);
         $new->save();
+
+        if($request->customer_id)
+        {
+            foreach($request->customer_id as $customer_id)
+            {
+                $CouponCustomer = new CouponCustomer();
+                $CouponCustomer->coupon_id = $new->id;
+                $CouponCustomer->customer_id = $customer_id;
+                $CouponCustomer->save();
+            }
+
+        }
+
+        if($request->product_id)
+        {
+            foreach($request->product_id as $product_id)
+            {
+                $CouponCustomer = new CouponCustomer();
+                $CouponCustomer->coupon_id = $new->id;
+                $CouponCustomer->product_id = $product_id;
+                $CouponCustomer->save();
+            }
+
+        }
+
+        if($request->category_id)
+        {
+            foreach($request->category_id as $category_id)
+            {
+                $CouponCustomer = new CouponCustomer();
+                $CouponCustomer->coupon_id = $new->id;
+                $CouponCustomer->category_id = $category_id;
+                $CouponCustomer->save();
+            }
+
+        }
 
         $response = ['status'=>true,"message" => "Coupon Created Successfully!"];
         return response($response, 200);
