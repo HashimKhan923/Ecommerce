@@ -140,7 +140,7 @@ class AuthController extends Controller
         try {
             
             $account = Account::create([
-                'type' => 'custom', 
+                'type' => 'express', 
                 'country' => 'US', 
                 'email' => $request->email,
                 'business_type' => 'individual',
