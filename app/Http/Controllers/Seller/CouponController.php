@@ -49,10 +49,10 @@ class CouponController extends Controller
         {
             foreach($request->product_id as $product_id)
             {
-                $CouponCustomer = new CouponCustomer();
-                $CouponCustomer->coupon_id = $new->id;
-                $CouponCustomer->product_id = $product_id;
-                $CouponCustomer->save();
+                $CouponCategory = new CouponCategory();
+                $CouponCategory->coupon_id = $new->id;
+                $CouponCategory->product_id = $product_id;
+                $CouponCategory->save();
             }
 
         }
@@ -61,10 +61,10 @@ class CouponController extends Controller
         {
             foreach($request->category_id as $category_id)
             {
-                $CouponCustomer = new CouponCustomer();
-                $CouponCustomer->coupon_id = $new->id;
-                $CouponCustomer->category_id = $category_id;
-                $CouponCustomer->save();
+                $CouponProduct = new CouponProduct();
+                $CouponProduct->coupon_id = $new->id;
+                $CouponProduct->category_id = $category_id;
+                $CouponProduct->save();
             }
 
         }
@@ -77,11 +77,6 @@ class CouponController extends Controller
     {
         $update = Coupon::where('id',$request->id)->first();
         $update->shop_id = $request->shop_id;
-        $update->product_id = $request->product_id;
-        $update->customer_id = $request->customer_id;
-        $update->category_id = $request->category_id;
-        $update->brand_id = $request->brand_id;
-        $update->model_id = $request->model_id;
         $update->minimum_purchase_amount = $request->minimum_purchase_amount;
         $update->name = $request->name;
         $update->code = $request->code;
@@ -90,6 +85,7 @@ class CouponController extends Controller
         $update->start_date = Carbon::parse($request->start_date);
         $update->end_date = Carbon::parse($request->end_date);
         $update->save();
+
 
         $response = ['status'=>true,"message" => "Coupon Updated Successfully!"];
         return response($response, 200);
