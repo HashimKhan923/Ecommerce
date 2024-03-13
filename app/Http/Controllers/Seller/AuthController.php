@@ -160,7 +160,10 @@ class AuthController extends Controller
                 ],
             ]);
 
-            User::where('id', $new->id)->update(['stripe_account_id' => $account->id]);
+            User::where('id', $new->id)->update([
+                'stripe_account_id' => $account->id,
+                'bank_account_id' => $bankAccount->id
+            ]);
 
             // return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
@@ -384,22 +387,25 @@ class AuthController extends Controller
 
 
 
-        $BankDetail = BankDetail::where('seller_id',$update->id)->first();
-        $BankDetail->business_name = $BusineesInformation->business_name;
-        $BankDetail->bank_name = $request->bank_name;
-        $BankDetail->account_title = $request->account_title;
-        $BankDetail->routing_number = $request->routing_number;
-        $BankDetail->account_number = $request->account_number;
-        $BankDetail->save();
-        
+        Stripe::setApiKey(config('services.stripe.secret'));
 
-        $CreditCard = CreditCard::where('seller_id',$update->id)->first();
-        $CreditCard->name_on_card = $request->name_on_card;
-        $CreditCard->cc_number = $request->cc_number;
-        $CreditCard->exp_date = $request->exp_date;
-        $CreditCard->cvv = $request->cvv;
-        $CreditCard->zip_code = $request->card_zip_code;
-        $CreditCard->save();
+        try {
+            $accountId = $request->input('account_id');
+            $account = Account::retrieve($accountId);
+            $account->email = $request->input('email'); 
+            $account->save();
+
+            if ($request->has('bank_account_id')) {
+                $bankAccountId = $request->input('bank_account_id');
+                $bankAccount = $account->external_accounts->retrieve($bankAccountId);
+                $bankAccount->routing_number = $request->input('routing_number'); 
+                $bankAccount->save();
+            }
+
+            return response()->json(['success' => true, 'message' => 'Account updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
     public function passwordChange(Request $request){
