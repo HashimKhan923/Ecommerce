@@ -155,7 +155,7 @@ class AuthController extends Controller
                 'business_profile' => [
                     'name' => $request->shop_name,
                     // replace the request name with shop->id
-                    'url' => 'https://dragonautomart.com/store' . urlencode($request->shop_name) . '/' . $request->shop_name,
+                    'url' => 'https://dragonautomart.com/store',
                     'mcc' => '5533',
                 ],
                 'settings' => [
