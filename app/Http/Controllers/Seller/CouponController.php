@@ -25,6 +25,7 @@ class CouponController extends Controller
         $new->creator_id = $request->creator_id;
         $new->shop_id = $request->shop_id;
         $new->minimum_purchase_amount = $request->minimum_purchase_amount;
+        $new->minimum_quantity_items = $request->minimum_quantity_items;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;
@@ -78,6 +79,7 @@ class CouponController extends Controller
         $update = Coupon::where('id',$request->id)->first();
         $update->shop_id = $request->shop_id;
         $update->minimum_purchase_amount = $request->minimum_purchase_amount;
+        $update->minimum_quantity_items = $request->minimum_quantity_items;
         $update->name = $request->name;
         $update->code = $request->code;
         $update->discount = $request->discount;
