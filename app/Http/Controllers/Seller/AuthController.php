@@ -152,9 +152,26 @@ class AuthController extends Controller
                     'date' => strtotime(now()),
                     'ip' => $request->ip(),
                 ],
+                'business_profile' => [
+                    'name' => $request->shop_name,
+                    'url' => 'https://dragonautomart.com/store/'.$request->shop_name,
+              
+                    // 'url' => 'https://dragonautomart.com/store/'.$shop->id,
+                ],
+                'settings' => [
+                    'payouts' => [
+                        'statement_descriptor'-> $request->shop_name
+                    ]
+                    
+                ],
+                'company' => [
+                    'name' => 'Dragonautomart LLC',
+                    'tax_id' => '000000000',
+                    
+                ],
                 'individual' => [
                     'first_name' => $request->name,
-                    'last_name' => '',
+                    'last_name' => $request->name,
                     'email' => $request->business_email,
                     'phone' => $request->business_phone_number,
                     'dob' => [
