@@ -141,7 +141,7 @@ class AuthController extends Controller
             
             $account = Account::create([
                 'type' => 'express', 
-                'country' => 'US', 
+                'country' => $request->business_country, 
                 'email' => $request->email,
                 'business_type' => 'individual',
                 'capabilities' => [
@@ -171,7 +171,7 @@ class AuthController extends Controller
                     
                 ],
                 'individual' => [
-                    'id_number' => '000000000',
+                    'id_number' => $request->ssn,
                     'first_name' => $request->name,
                     'last_name' => $request->name,
                     'email' => $request->business_email,
@@ -184,10 +184,10 @@ class AuthController extends Controller
                     'ssn_last_4' => '0000',
                     'address' => [
                         'line1' => $request->address1,
-                        'city' => $request->city,
-                        'state' => $request->state,
+                        'city' => $request->business_city,
+                        'state' => $request->business_state,
                         'postal_code' => $request->business_zip_code,
-                        'country' => $request->country,
+                        'country' => $request->business_country,
 
                     ],
                 ],
@@ -196,7 +196,7 @@ class AuthController extends Controller
             $bankAccount = $account->external_accounts->create([
                 'external_account' => [
                     'object' => 'bank_account',
-                    'country' => 'US',
+                    'country' => $request->business_country,
                     'currency' => 'usd',
                     'account_holder_name' => $request->account_title,
                     'account_holder_type' => 'individual',
@@ -213,7 +213,7 @@ class AuthController extends Controller
             // return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
             
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage(), 422]);
         }
 
 
