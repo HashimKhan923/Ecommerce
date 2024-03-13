@@ -150,11 +150,11 @@ class AuthController extends Controller
                 ],
                 'tos_acceptance' => [
                     'date' => strtotime(now()),
-                    // 'ip' => $request->ip(),
+                    'ip' => $request->ip(),
                 ],
                 'business_profile' => [
                     'name' => $request->shop_name,
-                    // 'url' => 'https://dragonautomart.com/store/'.$request->shop_name,
+                    'url' => 'https://dragonautomart.com/store/'.$request->shop_name,
               
                     // 'url' => 'https://dragonautomart.com/store/'.$shop->id,
                 ],
@@ -211,7 +211,7 @@ class AuthController extends Controller
             // return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
             
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e]);
         }
 
 
