@@ -148,6 +148,24 @@ class AuthController extends Controller
                     'card_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
                 ],
+                'individual' => [
+                    'first_name' => $request->name,
+                    'last_name' => '',
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'dob' => [
+                        'day' => 1,
+                        'month' => 1,
+                        'year' => 1990,
+                    ],
+                    'ssn_last_4' => '1234',
+                    'address' => [
+                        'line1' => '123 Main St',
+                        'city' => $request->city,
+                        'state' => $request->state,
+                        'postal_code' => $request->postal_code,
+                    ],
+                ],
             ]);
 
             $bankAccount = $account->external_accounts->create([
