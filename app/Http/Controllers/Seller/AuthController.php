@@ -153,13 +153,12 @@ class AuthController extends Controller
                     'last_name' => '',
                     'email' => $request->business_email,
                     'phone' => $request->business_phone_number,
-                    'account' => $request->account_number,
                     'dob' => [
                         'day' => 1,
                         'month' => 1,
                         'year' => 1990,
                     ],
-                    'ssn_last_4_provided' => true,
+                    'ssn_last_4' => '9999',
                     'address' => [
                         'line1' => $request->address1,
                         'city' => $request->city,
