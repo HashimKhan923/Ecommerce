@@ -140,32 +140,35 @@ class AuthController extends Controller
         try {
             
             $account = Account::create([
-                'type' => 'express', 
+                'type' => 'custom', 
                 'country' => 'US', 
                 'email' => $request->email,
-                'business_type' => 'government_entity',
+                'business_type' => 'individual',
                 'capabilities' => [
                     'card_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
                 ],
-                // 'individual' => [
-                //     'first_name' => $request->name,
-                //     'last_name' => '',
-                //     'email' => $request->business_email,
-                //     'phone' => $request->business_phone_number,
-                //     'dob' => [
-                //         'day' => 1,
-                //         'month' => 1,
-                //         'year' => 1990,
-                //     ],
-                //     'ssn_last_4' => '1234',
-                //     'address' => [
-                //         'line1' => $request->address1,
-                //         'city' => $request->city,
-                //         'state' => $request->state,
-                //         'postal_code' => $request->business_zip_code,
-                //     ],
-                // ],
+                'individual' => [
+                    'first_name' => $request->name,
+                    'last_name' => '',
+                    'email' => $request->business_email,
+                    'phone' => $request->business_phone_number,
+                    'account' => $request->account_number,
+                    'dob' => [
+                        'day' => 1,
+                        'month' => 1,
+                        'year' => 1990,
+                    ],
+                    'ssn_last_4_provided' => true,
+                    'address' => [
+                        'line1' => $request->address1,
+                        'city' => $request->city,
+                        'state' => $request->state,
+                        'postal_code' => $request->business_zip_code,
+                        'country' => $request->country,
+
+                    ],
+                ],
             ]);
 
             $bankAccount = $account->external_accounts->create([
