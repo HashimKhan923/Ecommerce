@@ -143,7 +143,7 @@ class AuthController extends Controller
                 'type' => 'express', 
                 'country' => 'US', 
                 'email' => $request->email,
-                'business_type' => 'company',
+                'business_type' => 'government_entity',
                 'capabilities' => [
                     'card_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
