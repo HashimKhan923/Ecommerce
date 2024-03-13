@@ -148,16 +148,16 @@ class AuthController extends Controller
                     'card_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
                 ],
-                // 'tos_acceptance' => [
-                //     'date' => strtotime(now()),
-                //     'ip' => $request->ip(),
-                // ],
-                // 'business_profile' => [
-                //     'name' => $request->shop_name,
-                //     'url' => 'https://dragonautomart.com/store/'.$request->shop_name,
+                'tos_acceptance' => [
+                    'date' => strtotime(now()),
+                    'ip' => $request->ip(),
+                ],
+                'business_profile' => [
+                    'name' => $request->shop_name,
+                    'url' => 'https://dragonautomart.com/store/'.$request->shop_name,
               
-                //     // 'url' => 'https://dragonautomart.com/store/'.$shop->id,
-                // ],
+                    // 'url' => 'https://dragonautomart.com/store/'.$shop->id,
+                ],
                 // 'settings' => [
                 //     'payouts' => [
                 //         'statement_descriptor'-> $request->shop_name
