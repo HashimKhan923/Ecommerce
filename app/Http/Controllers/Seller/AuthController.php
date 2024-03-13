@@ -170,6 +170,7 @@ class AuthController extends Controller
                     
                 ],
                 'individual' => [
+                    'id_number' => '000000000',
                     'first_name' => $request->name,
                     'last_name' => $request->name,
                     'email' => $request->business_email,
@@ -179,7 +180,7 @@ class AuthController extends Controller
                         'month' => 1,
                         'year' => 1990,
                     ],
-                    'ssn_last_4' => '9999',
+                    'ssn_last_4' => '0000',
                     'address' => [
                         'line1' => $request->address1,
                         'city' => $request->city,
