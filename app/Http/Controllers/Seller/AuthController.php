@@ -148,6 +148,10 @@ class AuthController extends Controller
                     'card_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
                 ],
+                'tos_acceptance' => [
+                    'tos_acceptance.date' => now(),
+                    'tos_acceptance.ip' => $request->ip(),
+                ],
                 'individual' => [
                     'first_name' => $request->name,
                     'last_name' => '',
@@ -182,10 +186,10 @@ class AuthController extends Controller
                 ],
             ]);
 
-            User::where('id', $new->id)->update([
-                'stripe_account_id' => $account->id,
-                'bank_account_id' => $bankAccount->id
-            ]);
+            // User::where('id', $new->id)->update([
+            //     'stripe_account_id' => $account->id,
+            //     'bank_account_id' => $bankAccount->id
+            // ]);
 
             // return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
