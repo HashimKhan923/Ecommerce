@@ -151,8 +151,8 @@ class AuthController extends Controller
                 'individual' => [
                     'first_name' => $request->name,
                     'last_name' => '',
-                    'email' => $request->email,
-                    'phone' => $request->phone,
+                    'email' => $request->business_email,
+                    'phone' => $request->business_phone_number,
                     'dob' => [
                         'day' => 1,
                         'month' => 1,
@@ -160,10 +160,10 @@ class AuthController extends Controller
                     ],
                     'ssn_last_4' => '1234',
                     'address' => [
-                        'line1' => '123 Main St',
+                        'line1' => $request->address1,
                         'city' => $request->city,
                         'state' => $request->state,
-                        'postal_code' => $request->postal_code,
+                        'postal_code' => $request->business_zip_code,
                     ],
                 ],
             ]);
