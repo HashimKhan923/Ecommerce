@@ -22,99 +22,99 @@ class AuthController extends Controller
 {
     public function register (Request $request) {
         
-    //   $check = User::where('email',$request->email)->first();
+      $check = User::where('email',$request->email)->first();
 
-    //     if($check == null)
-    //     {
-    //         $new = new User();
+        if($check == null)
+        {
+            $new = new User();
            
-    //         $new->email = $request->email;
+            $new->email = $request->email;
 
-    //     }
-    //     else
-    //     {
-    //         $new = User::where('email',$request->email)->where('user_type','customer')->first();
+        }
+        else
+        {
+            $new = User::where('email',$request->email)->where('user_type','customer')->first();
 
-    //         if(!$new)
-    //         {
-    //             $response = ['status'=>false,"message" => "This email is already registered as a seller please try diffrent email!"];
-    //             return response($response, 422);
-    //         }
-    //     }
+            if(!$new)
+            {
+                $response = ['status'=>false,"message" => "This email is already registered as a seller please try diffrent email!"];
+                return response($response, 422);
+            }
+        }
         
-    //     $new->name = $request->name; 
-    //     $new->address = $request->address;
-    //     $new->city = $request->city;
-    //     $new->state = $request->state;
-    //     $new->country = $request->country;
-    //     $new->postal_code = $request->postal_code;
-    //     $new->phone = $request->phone;
+        $new->name = $request->name; 
+        $new->address = $request->address;
+        $new->city = $request->city;
+        $new->state = $request->state;
+        $new->country = $request->country;
+        $new->postal_code = $request->postal_code;
+        $new->phone = $request->phone;
         
-    //     $token = uniqid();
-    //     $new->remember_token = $token;
-    //     $new->password = Hash::make($request->password);
-    //     $new->user_type = 'seller';
-    //     $new->is_active = 1;
-    //     $new->save();
+        $token = uniqid();
+        $new->remember_token = $token;
+        $new->password = Hash::make($request->password);
+        $new->user_type = 'seller';
+        $new->is_active = 1;
+        $new->save();
 
-    //     $shop = new Shop();
-    //     $shop->seller_id = $new->id;
-    //     $shop->name = $request->shop_name;
-    //     $shop->address = $request->shop_address;
-    //     if($request->file('logo')){
+        $shop = new Shop();
+        $shop->seller_id = $new->id;
+        $shop->name = $request->shop_name;
+        $shop->address = $request->shop_address;
+        if($request->file('logo')){
 
-    //         $file= $request->logo;
-    //         $filename= date('YmdHis').$file->getClientOriginalName();
-    //         $file->move(public_path('ShopLogo'),$filename);
-    //         $shop->logo = $filename;
-    //     }
+            $file= $request->logo;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShopLogo'),$filename);
+            $shop->logo = $filename;
+        }
 
-    //     if($request->file('banner')){
+        if($request->file('banner')){
 
-    //         $file= $request->banner;
-    //         $filename= date('YmdHis').$file->getClientOriginalName();
-    //         $file->move(public_path('ShopBanner'),$filename);
-    //         $shop->banner = $filename;
-    //     }
-    //     $shop->save();
-
-
-    //     $BusineesInformation = new BusinessInformation();
-    //     $BusineesInformation->seller_id = $new->id;
-    //     $BusineesInformation->business_name = $request->business_name;
-    //     $BusineesInformation->ein_number = $request->ein_number;
-    //     $BusineesInformation->address1 = $request->address1;
-    //     $BusineesInformation->address2 = $request->address2;
-    //     $BusineesInformation->zip_code = $request->business_zip_code;
-    //     $BusineesInformation->country = $request->business_country;
-    //     $BusineesInformation->phone_number = $request->business_phone_number;
-    //     $BusineesInformation->business_email = $request->business_email;
-    //     $BusineesInformation->save();
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShopBanner'),$filename);
+            $shop->banner = $filename;
+        }
+        $shop->save();
 
 
-    //     if($request->selling_platforms)
-    //     {
-    //         foreach($request->selling_platforms as $items)
-    //         {
-    //         $SellingPlatforms = new SellingPlatforms();
-    //         $SellingPlatforms->seller_id = $new->id;
-    //         $SellingPlatforms->name = $items['selling_platform_name'];
-    //         $SellingPlatforms->link = $items['selling_platform_link'];
-    //         $SellingPlatforms->save();
-    //         }
-    //     }    
+        $BusineesInformation = new BusinessInformation();
+        $BusineesInformation->seller_id = $new->id;
+        $BusineesInformation->business_name = $request->business_name;
+        $BusineesInformation->ein_number = $request->ein_number;
+        $BusineesInformation->address1 = $request->address1;
+        $BusineesInformation->address2 = $request->address2;
+        $BusineesInformation->zip_code = $request->business_zip_code;
+        $BusineesInformation->country = $request->business_country;
+        $BusineesInformation->phone_number = $request->business_phone_number;
+        $BusineesInformation->business_email = $request->business_email;
+        $BusineesInformation->save();
 
-    //     if($request->social_platforms)
-    //     {
-    //         foreach($request->social_platforms as $items)
-    //         {
-    //         $SocialPlatforms = new SocialPlatforms();
-    //         $SocialPlatforms->seller_id = $new->id;
-    //         $SocialPlatforms->name = $items['social_platform_name'];
-    //         $SocialPlatforms->link = $items['social_platform_link'];
-    //         $SocialPlatforms->save();
-    //         }
-    //     }    
+
+        if($request->selling_platforms)
+        {
+            foreach($request->selling_platforms as $items)
+            {
+            $SellingPlatforms = new SellingPlatforms();
+            $SellingPlatforms->seller_id = $new->id;
+            $SellingPlatforms->name = $items['selling_platform_name'];
+            $SellingPlatforms->link = $items['selling_platform_link'];
+            $SellingPlatforms->save();
+            }
+        }    
+
+        if($request->social_platforms)
+        {
+            foreach($request->social_platforms as $items)
+            {
+            $SocialPlatforms = new SocialPlatforms();
+            $SocialPlatforms->seller_id = $new->id;
+            $SocialPlatforms->name = $items['social_platform_name'];
+            $SocialPlatforms->link = $items['social_platform_link'];
+            $SocialPlatforms->save();
+            }
+        }    
 
         // $BankDetail = new BankDetail();
         // $BankDetail->seller_id = $new->id;
@@ -205,10 +205,10 @@ class AuthController extends Controller
                 ],
             ]);
 
-            // User::where('id', $new->id)->update([
-            //     'stripe_account_id' => $account->id,
-            //     'bank_account_id' => $bankAccount->id
-            // ]);
+            User::where('id', $new->id)->update([
+                'stripe_account_id' => $account->id,
+                'bank_account_id' => $bankAccount->id
+            ]);
 
             // return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
@@ -217,18 +217,18 @@ class AuthController extends Controller
         }
 
 
-        // Mail::send(
-        //     'email.seller_email_verification',
-        //     [
-        //         'token'=>$token,
-        //         'name'=>$request->name,
-        //     ], 
+        Mail::send(
+            'email.seller_email_verification',
+            [
+                'token'=>$token,
+                'name'=>$request->name,
+            ], 
         
-        // function ($message) use ($request) {
-        //     $message->from('support@dragonautomart.com','Dragon Auto Mart');
-        //     $message->to($request->email);
-        //     $message->subject('Email Verification');
-        // });
+        function ($message) use ($request) {
+            $message->from('support@dragonautomart.com','Dragon Auto Mart');
+            $message->to($request->email);
+            $message->subject('Email Verification');
+        });
 
         if($check == null)
         {
