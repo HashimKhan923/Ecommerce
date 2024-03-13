@@ -160,8 +160,9 @@ class AuthController extends Controller
                 ],
             ]);
 
-            
-            return response()->json(['success' => true, 'account_id' => $account->id]);
+            User::where('id', $new->id)->update(['stripe_account_id' => $account->id]);
+
+            // return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
             
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
