@@ -140,9 +140,10 @@ class AuthController extends Controller
         try {
             
             $account = Account::create([
-                'type' => 'custom', 
+                'type' => 'express', 
                 'country' => 'US', 
-                'email' => 'example@example.com',
+                'email' => $request->email,
+                'business_type' => 'individual',
                 'capabilities' => [
                     'card_payments' => ['requested' => true],
                     'transfers' => ['requested' => true],
