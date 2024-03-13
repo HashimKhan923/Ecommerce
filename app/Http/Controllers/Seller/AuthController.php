@@ -160,15 +160,15 @@ class AuthController extends Controller
                 ],
                 'settings' => [
                     'payouts' => [
-                        'statement_descriptor'-> $request->shop_name
+                        'statement_descriptor'=> $request->shop_name
                     ]
                     
                 ],
-                // 'company' => [
-                //     'name' => 'Dragonautomart LLC',
-                //     'tax_id' => '000000000',
+                'company' => [
+                    'name' => 'Dragonautomart LLC',
+                    'tax_id' => '000000000',
                     
-                // ],
+                ],
                 'individual' => [
                     'first_name' => $request->name,
                     'last_name' => $request->name,
