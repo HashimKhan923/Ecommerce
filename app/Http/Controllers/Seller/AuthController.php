@@ -158,12 +158,12 @@ class AuthController extends Controller
               
                     // 'url' => 'https://dragonautomart.com/store/'.$shop->id,
                 ],
-                // 'settings' => [
-                //     'payouts' => [
-                //         'statement_descriptor'-> $request->shop_name
-                //     ]
+                'settings' => [
+                    'payouts' => [
+                        'statement_descriptor'-> $request->shop_name
+                    ]
                     
-                // ],
+                ],
                 // 'company' => [
                 //     'name' => 'Dragonautomart LLC',
                 //     'tax_id' => '000000000',
@@ -215,18 +215,18 @@ class AuthController extends Controller
         }
 
 
-        Mail::send(
-            'email.seller_email_verification',
-            [
-                'token'=>$token,
-                'name'=>$request->name,
-            ], 
+        // Mail::send(
+        //     'email.seller_email_verification',
+        //     [
+        //         'token'=>$token,
+        //         'name'=>$request->name,
+        //     ], 
         
-        function ($message) use ($request) {
-            $message->from('support@dragonautomart.com','Dragon Auto Mart');
-            $message->to($request->email);
-            $message->subject('Email Verification');
-        });
+        // function ($message) use ($request) {
+        //     $message->from('support@dragonautomart.com','Dragon Auto Mart');
+        //     $message->to($request->email);
+        //     $message->subject('Email Verification');
+        // });
 
         if($check == null)
         {
