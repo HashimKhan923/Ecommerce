@@ -38,7 +38,7 @@ class PayoutController extends Controller
         
         try {
             Transfer::create([
-                'amount' => $request->amount * 100,
+                'amount' => $PaymentStatus->amount * 100,
                 'currency' => 'usd',
                 'destination' => $Seller->stripe_account_id,
             ]);
