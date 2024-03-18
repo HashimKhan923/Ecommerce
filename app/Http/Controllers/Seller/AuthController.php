@@ -140,7 +140,7 @@ class AuthController extends Controller
         try {
             
             $account = Account::create([
-                'type' => 'express', 
+                'type' => 'custom', 
                 'country' => $request->business_country, 
                 'email' => $request->email,
                 'business_type' => 'individual',
@@ -156,7 +156,7 @@ class AuthController extends Controller
                 'business_profile' => [
                     'name' => $request->shop_name,
                     // replace the request name with shop->id
-                    'url' => 'https://dragonautomart.com/store',
+                     'url' => 'https://dragonautomart.com/store/' . $shop->id,
                     'mcc' => '5533',
                 ],
                 'settings' => [
@@ -167,23 +167,24 @@ class AuthController extends Controller
                 ],
                 'company' => [
                     'name' => 'Dragonautomart LLC',
-                    'tax_id' => '000000000',
-                    
+                    'tax_id' => '933028427', 
                 ],
                 'individual' => [
                     'id_number' => $request->ssn,
-                    'first_name' => $request->name,
-                    'last_name' => $request->name,
+                   //'id_number' => '933-02-8427',
+                    'first_name' => $request->business_first_name,
+                    'last_name' => $request->business_last_name,
                     'email' => $request->business_email,
                     'phone' => $request->business_phone_number,
                     'dob' => [
-                        'day' => 1,
-                        'month' => 1,
-                        'year' => 1990,
+                        'day' => $request->business_date,
+                        'month' => $request->business_month,
+                        'year' => $request->business_year,
                     ],
-                    'ssn_last_4' => '0000',
+                    'ssn_last_4' => $request->last_4_ssn,
                     'address' => [
                         'line1' => $request->address1,
+                       'line2' => $request->address2,
                         'city' => $request->business_city,
                         'state' => $request->business_state,
                         'postal_code' => $request->business_zip_code,
@@ -210,10 +211,10 @@ class AuthController extends Controller
                 'bank_account_id' => $bankAccount->id
             ]);
 
-            // return response()->json(['success' => true, 'account_id' => $account->id]);
+             return response()->json(['success' => true, 'account_id' => $account->id]);
         } catch (\Exception $e) {
             
-            return response()->json(['status' => false, 'message' => $e->getMessage(), 422]);
+            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
         }
 
 
