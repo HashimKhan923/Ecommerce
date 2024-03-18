@@ -72,7 +72,7 @@
 <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
 
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table border="0" cellpadding="0" cellspacing="0" width="">
         <tr>
             <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
 
