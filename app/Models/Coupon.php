@@ -16,5 +16,20 @@ class Coupon extends Model
         'model_id' => 'array',
     ];
 
+    public function coupon_customers()
+    {
+        return $this->hasMany(CouponCustomer::class,'coupon_id');
+    }
+
+    public function coupon_categories()
+    {
+        return $this->hasMany(CouponCategory::class,'coupon_id');
+    }
+
+    public function coupon_products()
+    {
+        return $this->hasMany(CouponProduct::class,'coupon_id');
+    }
+
     use HasFactory;
 }
