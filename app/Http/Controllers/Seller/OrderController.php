@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Models\OrderTracking;
 use App\Models\Notification;
 use App\Models\FeaturedProductOrder;
+use App\Models\ProductListingPayment;
 use Mail;
 
 class OrderController extends Controller
@@ -88,14 +89,24 @@ class OrderController extends Controller
             $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
-            $is_featuredOrders = FeaturedProductOrder::where('order_id', $order->id)->first();
-            $featuredAmount = 0;
-            if ($is_featuredOrders) {
-                $featuredAmount = $is_featuredOrders->payment;
-            }
-            
-            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount;
+            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->sum('payment') ?? 0;
+
+            $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+            ->where('payment_status', 'unpaid')
+            ->select('listing_amount')
+            ->first();
+            $listingAmount = $ProductListingPayment ? $ProductListingPayment->listing_amount : 0;      
+
+            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $listingAmount;
             $NewPayout->save();
+
+            $ProductListingPayment->payment_status = 'paid';
+            $ProductListingPayment->save();
+            if($featuredAmount > 0)
+            {
+                FeaturedProductOrder::where('order_id', $order->id)->update(['payment_status'=>'paid']);
+
+            }
             
 
 
