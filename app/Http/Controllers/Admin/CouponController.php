@@ -54,4 +54,14 @@ class CouponController extends Controller
         $response = ['status'=>true,"message" => "Coupon Deleted Successfully!"];
         return response($response, 200);
     }
+
+
+    public function multi_delete(Request $request)
+    {
+        Coupon::whereIn('id',$request->ids)->delete();
+
+
+        $response = ['status'=>true,"message" => "Coupons Deleted Successfully!"];
+        return response($response, 200);
+    }
 }
