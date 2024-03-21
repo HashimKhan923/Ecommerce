@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class CouponCustomer extends Model
 {
     use HasFactory;
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class,'customer_id','id');
+    }
+
 }

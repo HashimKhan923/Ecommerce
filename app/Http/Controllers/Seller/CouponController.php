@@ -14,7 +14,7 @@ class CouponController extends Controller
 {
     public function index($seller_id)
     {
-        $data = Coupon::with('coupon_customers','coupon_categories','coupon_products')->where('creator_id',$seller_id)->get();
+        $data = Coupon::with('coupon_customers.customer','coupon_categories.category','coupon_products.product')->where('creator_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
