@@ -24,13 +24,15 @@ class CouponController extends Controller
         $new = new Coupon();
         $new->creator_id = $request->creator_id;
         $new->shop_id = $request->shop_id;
-        $new->minimum_purchase_amount = $request->minimum_purchase_amount;
-        $new->minimum_quantity_items = $request->minimum_quantity_items;
-        $new->minimum_quantity_items = $request->minimum_quantity_items;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;
         $new->discount_type = $request->discount_type;
+        $new->minimum_purchase_amount = $request->minimum_purchase_amount;
+        $new->minimum_quantity_items = $request->minimum_quantity_items;
+        $new->minimum_quantity_items = $request->minimum_quantity_items;
+        $new->is_amount_order = $request->is_amount_order;
+        $new->is_free_shipping = $request->is_free_shipping;
         $new->start_date = Carbon::parse($request->start_date);
         $new->end_date = Carbon::parse($request->end_date);
         $new->save();
@@ -79,15 +81,59 @@ class CouponController extends Controller
     {
         $update = Coupon::where('id',$request->id)->first();
         $update->shop_id = $request->shop_id;
-        $update->minimum_purchase_amount = $request->minimum_purchase_amount;
-        $update->minimum_quantity_items = $request->minimum_quantity_items;
         $update->name = $request->name;
         $update->code = $request->code;
         $update->discount = $request->discount;
         $update->discount_type = $request->discount_type;
+        $update->minimum_purchase_amount = $request->minimum_purchase_amount;
+        $update->minimum_quantity_items = $request->minimum_quantity_items;
+        $update->minimum_quantity_items = $request->minimum_quantity_items;
+        $update->is_amount_order = $request->is_amount_order;
+        $update->is_free_shipping = $request->is_free_shipping;
         $update->start_date = Carbon::parse($request->start_date);
         $update->end_date = Carbon::parse($request->end_date);
         $update->save();
+
+        if($request->customer_id)
+        {
+            CouponCustomer::where('coupon_Id',$update->id)->delete();
+            foreach($request->customer_id as $customer_id)
+            {
+                $CouponCustomer = new CouponCustomer();
+                $CouponCustomer->coupon_id = $update->id;
+                $CouponCustomer->customer_id = $customer_id;
+                $CouponCustomer->save();
+            }
+
+        }
+
+        if($request->category_id)
+        {
+            CouponCategory::where('coupon_Id',$update->id)->delete();
+
+            foreach($request->category_id as $category_id)
+            {
+                $CouponCategory = new CouponCategory();
+                $CouponCategory->coupon_id = $update->id;
+                $CouponCategory->category_id = $category_id;
+                $CouponCategory->save();
+            }
+
+        }
+
+        if($request->product_id)
+        {
+            CouponProduct::where('coupon_Id',$update->id)->delete();
+
+            foreach($request->product_id as $product_id)
+            {
+                $CouponProduct = new CouponProduct();
+                $CouponProduct->coupon_id = $update->id;
+                $CouponProduct->product_id = $product_id;
+                $CouponProduct->save();
+            }
+
+        }
 
 
         $response = ['status'=>true,"message" => "Coupon Updated Successfully!"];
