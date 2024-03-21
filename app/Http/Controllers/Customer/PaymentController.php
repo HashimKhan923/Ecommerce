@@ -55,7 +55,7 @@ class PaymentController extends Controller
 
         } catch (\Exception $e) {
             // Return a JSON response indicating failure (HTTP status 500)
-            return response()->json(['success' => false, 'message' => 'Payment failed'], 500);
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 

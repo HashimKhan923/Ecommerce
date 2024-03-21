@@ -668,6 +668,16 @@ Route::group(['middleware' => ['auth:api']], function(){
                         });
                     });
 
+
+
+                                                // FedEx
+                
+                    Route::group(['prefix' => '/seller/fedex/rates'], function() {
+                        Route::controller(App\Http\Controllers\Seller\FedexController::class)->group(function () {
+                            Route::post('show','show_rates');
+                        });
+                    });
+
  
 
 
