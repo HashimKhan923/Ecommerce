@@ -11,7 +11,7 @@ class FedexController extends Controller
 {
     public function show_rates(Request $request)
     {
-
+        $url = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
 
         $payload = [
             "requestedShipment" => [
@@ -60,7 +60,7 @@ class FedexController extends Controller
     try {
         $response = $client->post($url, [
             'headers' => [
-                'Authorization' => 'Bearer Your_Auth_Token_Here',
+                'Authorization' => 'Bearer ' . env('FEDEX_KEY'),
                 'X-locale' => 'en_US',
                 'Content-Type' => 'application/json',
             ],
