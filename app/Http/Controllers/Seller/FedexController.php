@@ -60,7 +60,7 @@ class FedexController extends Controller
     try {
         $response = $client->post($url, [
             'headers' => [
-                'Authorization' => 'Bearer ' . env('FEDEX_KEY'),
+                'Authorization' => 'Bearer'.env('FEDEX_KEY'),
                 'X-locale' => 'en_US',
                 'Content-Type' => 'application/json',
             ],
