@@ -11,7 +11,7 @@ class FedexController extends Controller
 {
     public function show_rates(Request $request)
     {
-        $url = 'https://apis-sandbox.fedex.com';
+        $url = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
 
         $payload = [
             "requestedShipment" => [
