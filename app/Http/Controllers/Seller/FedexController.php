@@ -55,15 +55,16 @@ class FedexController extends Controller
         ];
 
 
-    $client = new Client();
+        $client = new Client();
 
-    try {
+        try {
         $response = $client->post($url, [
             'headers' => [
-                'Authorization' => 'Bearer'.env('FEDEX_KEY'),
+                'Authorization' => 'Bearer ' . env('FEDEX_KEY'),
                 'X-locale' => 'en_US',
                 'Content-Type' => 'application/json',
             ],
+            
             'json' => $payload, 
         ]);
 
@@ -71,8 +72,8 @@ class FedexController extends Controller
 
         return response()->json(json_decode($body));
 
-    } catch (\Exception $ex) {
-        return response()->json(['error' => $ex->getMessage()], 500);
-    }
+        } catch (\Exception $ex) {
+            return response()->json(['error' => $ex->getMessage()], 500);
+        }
     }
 }
