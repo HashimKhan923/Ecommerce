@@ -23,7 +23,7 @@ class CouponController extends Controller
         else
         {
             $response = ['status'=>false,"message" => "invalid coupon!"];
-            return response($response, 401);
+            return response($response, 422);
         }
     }
 }
