@@ -12,7 +12,6 @@ class CouponController extends Controller
     public function apply(Request $request)
     {
         $check = Coupon::where('code',$request->code)
-        ->where('creator_id',$request->seller_id)
         ->where('end_date','>',Carbon::now())
         ->first();
 
@@ -23,7 +22,7 @@ class CouponController extends Controller
         }
         else
         {
-            $response = ['status'=>false,"message" => "invalid coupon!"];
+            $response = ['status'=>false,"message" => "invalid coupon!",401];
             return response($response);
         }
     }
