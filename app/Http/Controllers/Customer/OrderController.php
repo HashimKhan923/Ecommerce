@@ -12,6 +12,7 @@ use App\Models\Shop;
 use App\Models\OrderDetail;
 use App\Models\FeaturedProductOrder;
 use App\Models\MyCustomer;
+use App\Models\CouponUser;
 use Illuminate\Support\Str;
 use Mail;
 use App\Models\User;
@@ -66,6 +67,18 @@ public function create(Request $request)
         $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
         $newOrder->save();
+
+
+        if($request->coupon_id)
+        {
+            $CouponUser = new CouponUser();
+            $CouponUser->coupon_id = $request->coupon_id;
+            $CouponUser->user_id = $request->customer_id;
+            $CouponUser->order_id = $newOrder->id;
+            $CouponUser->save();
+        }
+
+
 
         $my_customer = MyCustomer::where('seller_id',$vendorId)->where('customer_id',$request->customer_id)->first();
 
