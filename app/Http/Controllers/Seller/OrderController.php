@@ -89,19 +89,24 @@ class OrderController extends Controller
             $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
-            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->sum('payment') ?? 0;
+            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
 
+
+            $ListingPayment = 0;
             $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
             ->where('payment_status', 'unpaid')
-            ->select('listing_amount')
             ->first();
-            $listingAmount = $ProductListingPayment ? $ProductListingPayment->listing_amount : 0;      
+            if ($ProductListingPayment) {
+                $ProductListingPayment->payment_status = 'paid';
+                $ProductListingPayment->save();
 
-            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $listingAmount;
+                $ListingPayment = $ProductListingPayment->listing_amount;
+            }
+
+            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment;
             $NewPayout->save();
 
-            $ProductListingPayment->payment_status = 'paid';
-            $ProductListingPayment->save();
+
             if($featuredAmount > 0)
             {
                 FeaturedProductOrder::where('order_id', $order->id)->update(['payment_status'=>'paid']);
