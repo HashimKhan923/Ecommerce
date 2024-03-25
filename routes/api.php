@@ -670,13 +670,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
-                                                // FedEx
-                
-                    Route::group(['prefix' => '/seller/fedex/rates'], function() {
-                        Route::controller(App\Http\Controllers\Seller\FedexController::class)->group(function () {
-                            Route::post('show','show_rates');
-                        });
-                    });
+
 
  
 
@@ -714,6 +708,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::get('load_more_featured/{length}','load_more_featured');
             });
         });
+
+
+                                                        // FedEx
+                
+                                                        Route::group(['prefix' => '/seller/fedex/rates'], function() {
+                                                            Route::controller(App\Http\Controllers\Seller\FedexController::class)->group(function () {
+                                                                Route::post('show','show_rates');
+                                                            });
+                                                        });
 
 
                                             /// CategoryProducts \\\
