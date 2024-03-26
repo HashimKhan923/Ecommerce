@@ -164,8 +164,11 @@ public function create(Request $request)
             $message->subject('Order Confirmation');
         }
     );
+
+    $MyOrder = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.product_varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking')->where('id',$newOrder->id)->first();
+
     
-    $response = ['status' => true, "message" => "Order Created Successfully!"];
+    $response = ['status' => true, "message" => "Order Created Successfully!","data"=>$MyOrder];
     return response($response, 200);
 }
 }
