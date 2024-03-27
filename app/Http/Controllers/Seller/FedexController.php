@@ -84,8 +84,10 @@ class FedexController extends Controller
         try {
             $input = $request->input(); 
     
-            $response = Http::asForm()->post('https://apis-sandbox.fedex.com/oauth/token', [
-                'input' => json_encode($input),
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ])->post('https://apis-sandbox.fedex.com/oauth/token', [
+                'input' => $request, // Replace $yourJsonPayload with your actual JSON payload
             ]);
         
             return response()->json(['data' => $response->body()]);
