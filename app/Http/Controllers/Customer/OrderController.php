@@ -171,6 +171,7 @@ public function create(Request $request)
 
     $MyOrders = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.product_varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking')->whereIn('id',$orderIds)->get();
 
+    $orderIds = [];
     
     $response = ['status' => true, "message" => "Order Created Successfully!","data"=>$MyOrders];
     return response($response, 200);
