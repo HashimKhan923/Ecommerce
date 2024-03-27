@@ -672,10 +672,11 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                                 // FedEx
                 
-                            Route::group(['prefix' => '/seller/fedex/rates'], function() {
+                            Route::group(['prefix' => '/seller/fedex/'], function() {
                                 Route::controller(App\Http\Controllers\Seller\FedexController::class)->group(function () {
-                                    Route::post('show','show_rates');
-                
+                                    Route::post('create/token','create_token');
+                                    Route::post('rates','show_rates');
+
                                 });
                             });
 

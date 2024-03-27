@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
+
 
 
 class FedexController extends Controller
@@ -74,6 +76,21 @@ class FedexController extends Controller
 
         } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()], 500);
+        }
+    }
+
+    public function create_token(Request $request)
+    {
+        try {
+            $input = $request->input(); 
+    
+            $response = Http::asForm()->post('https://apis-sandbox.fedex.com/oauth/token', [
+                'input' => json_encode($input),
+            ]);
+        
+            return response()->json(['data' => $response->body()]);
+        } catch (\Exception $ex) {
+            return response()->json([$ex->getMessage()]);
         }
     }
 }
