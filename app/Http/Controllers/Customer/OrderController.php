@@ -39,7 +39,7 @@ public function create(Request $request)
     $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
     
     $productsByShop = $products->groupBy('shop_id');
-    
+    $orderIds = [];
     foreach ($productsByShop as $shopId => $shopProducts) {
 
         $vendorId = $shopProducts->first()->user_id;
@@ -68,6 +68,8 @@ public function create(Request $request)
         $newOrder->refund = $request->refund;
         $newOrder->save();
 
+        $orderIds[] = $newOrder->id;
+
 
         if($request->coupon_id)
         {
@@ -95,6 +97,7 @@ public function create(Request $request)
         }
         $my_customer->save();
 
+        
         foreach ($shopProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
     
@@ -106,6 +109,7 @@ public function create(Request $request)
             $newOrderDetail->quantity = $orderProduct['quantity'];
             $newOrderDetail->varient_id = $orderProduct['varient_id'];
             $newOrderDetail->save();
+
     
             $VarientStock = ProductVarient::where('product_id', $product->id)->first();
             $sale = Product::where('id', $product->id)->first();
@@ -165,9 +169,10 @@ public function create(Request $request)
         }
     );
 
+    $MyOrders = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.product_varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking')->whereIn('id',$orderIds)->get();
 
     
-    $response = ['status' => true, "message" => "Order Created Successfully!","data"=>$productsByShop];
+    $response = ['status' => true, "message" => "Order Created Successfully!","data"=>$MyOrders];
     return response($response, 200);
 }
 }
