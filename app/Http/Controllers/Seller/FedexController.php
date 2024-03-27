@@ -87,11 +87,9 @@ class FedexController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded'
             ])->post('https://apis-sandbox.fedex.com/oauth/token', [
-                'input' => '{
-                    "client_id": "l7e0511d616c0b44aab043ae9e875dc078",
-                    "client_secret": "1ec7e4d988744d6196aa5d1e86acad79",
-                    "grant_type": "client_credentials",
-                }',
+                'client_id' => 'l7e0511d616c0b44aab043ae9e875dc078',
+                'client_secret' => '1ec7e4d988744d6196aa5d1e86acad79',
+                'grant_type' => 'client_credentials'
             ]);
         
             return response()->json(['data' => $response->body()]);
