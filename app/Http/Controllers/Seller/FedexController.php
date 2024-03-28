@@ -36,12 +36,12 @@ class FedexController extends Controller
                             "units" => "LB", // Weight units (e.g., LB for pounds)
                             "value" => 10 // Weight value
                         ],
-                        "dimensions" => [
-                            "length" => 10, // Length of the package
-                            "width" => 8, // Width of the package
-                            "height" => 6, // Height of the package
-                            "units" => "IN" // Dimension units (e.g., IN for inches)
-                        ]
+                        // "dimensions" => [
+                        //     "length" => 10, // Length of the package
+                        //     "width" => 8, // Width of the package
+                        //     "height" => 6, // Height of the package
+                        //     "units" => "IN" // Dimension units (e.g., IN for inches)
+                        // ]
                     ]
                 ],
                 "shippingChargesPayment" => [
@@ -62,7 +62,7 @@ class FedexController extends Controller
         try {
         $response = $client->post($url, [
             'headers' => [
-                'Authorization' => 'Bearer ' . env('FEDEX_KEY'),
+                'Authorization' => 'Bearer',
                 'X-locale' => 'en_US',
                 'Content-Type' => 'application/json',
             ],
