@@ -240,7 +240,7 @@ class AuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         
-        $user = User::with('shop')->where('email', $request->email)->first();
+        $user = User::with('shop','seller_information')->where('email', $request->email)->first();
         if ($user) {
 
          if($user->remember_token == null)
