@@ -88,7 +88,7 @@ class FedexController extends Controller
                 'client_secret' => '1ec7e4d988744d6196aa5d1e86acad79'
             ]);
 
-            $response=json_encode($response->body());
+            $response=json_decode($response->body());
     
             return response()->json(['data' => $response]);
         } catch (\Exception $ex) {
