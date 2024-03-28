@@ -17,44 +17,35 @@ class FedexController extends Controller
         $token = $request->header('Authorization');
 
         $payload = [
+            "accountNumber" => [
+                "value" => "XXXXX7364"
+            ],
             "requestedShipment" => [
                 "shipper" => [
                     "address" => [
-                        "postalCode" => "Y99801",
+                        "postalCode" => "65247", // Ensure postal codes are strings
                         "countryCode" => "US"
                     ]
                 ],
-                "pickupType" => "REGULAR_PICKUP", 
                 "recipient" => [
                     "address" => [
-                        "postalCode" => "99501",
+                        "postalCode" => "75063", // Ensure postal codes are strings
                         "countryCode" => "US"
                     ]
                 ],
-                "packageCount" => 1, // Number of packages
+                "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
+                "rateRequestTypes" => [ // Correct key name for rate request types
+                    "ACCOUNT",
+                    "LIST"
+                ],
                 "requestedPackageLineItems" => [
                     [
                         "weight" => [
-                            "units" => "LB", // Weight units (e.g., LB for pounds)
-                            "value" => 10 // Weight value
-                        ],
-                        // "dimensions" => [
-                        //     "length" => 10, // Length of the package
-                        //     "width" => 8, // Width of the package
-                        //     "height" => 6, // Height of the package
-                        //     "units" => "IN" // Dimension units (e.g., IN for inches)
-                        // ]
+                            "units" => "LB",
+                            "value" => 10
+                        ]
                     ]
-                ],
-                "shippingChargesPayment" => [
-                    "paymentType" => "SENDER" // Payment type (e.g., SENDER, RECIPIENT, THIRD_PARTY)
-                ],
-                "rateRequestTypes" => [
-                    "ACCOUNT", // Account rate request type
-                    "LIST" // List rate request type
-                ],
-                "packageDetail" => "INDIVIDUAL_PACKAGES", // Package detail (e.g., INDIVIDUAL_PACKAGES, PACKAGE_GROUPS)
-                "preferredCurrency" => "USD" 
+                ]
             ]
         ];
 
