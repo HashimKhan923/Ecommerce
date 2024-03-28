@@ -79,10 +79,9 @@ class FedexController extends Controller
         }
     }
 
-    public function create_token(Request $request)
+    public function create_token()
     {
         try {
-            $input = $request->input(); 
     
             $response = Http::post('https://apis-sandbox.fedex.com/oauth/token', [
                 'grant_type' => 'client_credentials',
