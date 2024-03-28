@@ -116,24 +116,24 @@ class AuthController extends Controller
             }
         }    
 
-        // $BankDetail = new BankDetail();
-        // $BankDetail->seller_id = $new->id;
-        // $BankDetail->business_name = $BusineesInformation->business_name;
-        // $BankDetail->bank_name = $request->bank_name;
-        // $BankDetail->account_title = $request->account_title;
-        // $BankDetail->routing_number = $request->routing_number;
-        // $BankDetail->account_number = $request->account_number;
-        // $BankDetail->save();
+        $BankDetail = new BankDetail();
+        $BankDetail->seller_id = $new->id;
+        $BankDetail->business_name = $BusineesInformation->business_name;
+        $BankDetail->bank_name = $request->bank_name;
+        $BankDetail->account_title = $request->account_title;
+        $BankDetail->routing_number = $request->routing_number;
+        $BankDetail->account_number = $request->account_number;
+        $BankDetail->save();
         
 
-        // $CreditCard = new CreditCard();
-        // $CreditCard->seller_id = $new->id;
-        // $CreditCard->name_on_card = $request->name_on_card;
-        // $CreditCard->cc_number = $request->cc_number;
-        // $CreditCard->exp_date = $request->exp_date;
-        // $CreditCard->cvv = $request->cvv;
-        // $CreditCard->zip_code = $request->card_zip_code;
-        // $CreditCard->save();
+        $CreditCard = new CreditCard();
+        $CreditCard->seller_id = $new->id;
+        $CreditCard->name_on_card = $request->name_on_card;
+        $CreditCard->cc_number = $request->cc_number;
+        $CreditCard->exp_date = $request->exp_date;
+        $CreditCard->cvv = $request->cvv;
+        $CreditCard->zip_code = $request->card_zip_code;
+        $CreditCard->save();
 
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -429,6 +429,26 @@ class AuthController extends Controller
             $SocialPlatforms->save();
             }
         }
+
+
+        $BankDetail = BankDetail::where('seller_id',$update->id)->first();
+        $BankDetail->seller_id = $new->id;
+        $BankDetail->business_name = $BusineesInformation->business_name;
+        $BankDetail->bank_name = $request->bank_name;
+        $BankDetail->account_title = $request->account_title;
+        $BankDetail->routing_number = $request->routing_number;
+        $BankDetail->account_number = $request->account_number;
+        $BankDetail->save();
+        
+
+        $CreditCard = CreditCard::where('seller_id',$update->id)->first();
+        $CreditCard->seller_id = $new->id;
+        $CreditCard->name_on_card = $request->name_on_card;
+        $CreditCard->cc_number = $request->cc_number;
+        $CreditCard->exp_date = $request->exp_date;
+        $CreditCard->cvv = $request->cvv;
+        $CreditCard->zip_code = $request->card_zip_code;
+        $CreditCard->save();
 
 
 
