@@ -23,14 +23,14 @@ class FedexController extends Controller
             "requestedShipment" => [
                 "shipper" => [
                     "address" => [
-                        "postalCode" => "65247", // Ensure postal codes are strings
-                        "countryCode" => "US"
+                        "postalCode" => $request->shipper_postalCode, // Ensure postal codes are strings
+                        "countryCode" => $request->shipper_countryCode
                     ]
                 ],
                 "recipient" => [
                     "address" => [
-                        "postalCode" => "75063", // Ensure postal codes are strings
-                        "countryCode" => "US"
+                        "postalCode" => $request->recipient_postalCode, // Ensure postal codes are strings
+                        "countryCode" => $request->recipient_countryCode
                     ]
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
@@ -42,7 +42,7 @@ class FedexController extends Controller
                     [
                         "weight" => [
                             "units" => "LB",
-                            "value" => 10
+                            "value" => $request->weight
                         ]
                     ]
                 ]

@@ -17,7 +17,6 @@ use Hash;
 use Mail;
 use Stripe\Stripe;
 use Stripe\Account;
-use Stripe\ExternalAccount;
 
 class AuthController extends Controller
 {
@@ -117,6 +116,24 @@ class AuthController extends Controller
             }
         }    
 
+        // $BankDetail = new BankDetail();
+        // $BankDetail->seller_id = $new->id;
+        // $BankDetail->business_name = $BusineesInformation->business_name;
+        // $BankDetail->bank_name = $request->bank_name;
+        // $BankDetail->account_title = $request->account_title;
+        // $BankDetail->routing_number = $request->routing_number;
+        // $BankDetail->account_number = $request->account_number;
+        // $BankDetail->save();
+        
+
+        // $CreditCard = new CreditCard();
+        // $CreditCard->seller_id = $new->id;
+        // $CreditCard->name_on_card = $request->name_on_card;
+        // $CreditCard->cc_number = $request->cc_number;
+        // $CreditCard->exp_date = $request->exp_date;
+        // $CreditCard->cvv = $request->cvv;
+        // $CreditCard->zip_code = $request->card_zip_code;
+        // $CreditCard->save();
 
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -241,7 +258,7 @@ class AuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         
-        $user = User::with('shop','seller_information')->where('email', $request->email)->first();
+        $user = User::with('shop')->where('email', $request->email)->first();
         if ($user) {
 
          if($user->remember_token == null)
@@ -416,25 +433,26 @@ class AuthController extends Controller
 
 
 
+        Stripe::setApiKey(config('services.stripe.secret'));
+
         try {
-            $stripeAccountId = $update->stripe_account_id;
-            $bankAccountId = $update->bank_account_id;
-            $bankAccount = ExternalAccount::update(
-                $stripeAccountId, 
-                $bankAccountId, 
-                [
-                    'account_holder_name' => $request->account_title,
-                    'routing_number' => $request->routing_number,
-                    'account_number' => $request->account_number,
-                ]
-            );
-        
-            // Update other vendor information if needed
-            // ...
-        
-            return response()->json(['success' => true, 'message' => 'Vendor information updated successfully']);
+            $accountId = $request->input('account_id');
+            $account = Account::retrieve($accountId);
+            $account->email = $request->input('email'); 
+            $account->save();
+
+            if ($request->has('bank_account_id')) {
+                $bankAccountId = $request->input('bank_account_id');
+                $bankAccount = $account->external_accounts->retrieve($bankAccountId);
+                $bankAccount->account_holder_name = $request->input('account_title');
+                $bankAccount->routing_number = $request->input('routing_number'); 
+                $bankAccount->account_number = $request->input('account_number');
+                $bankAccount->save();
+            }
+
+            return response()->json(['success' => true, 'message' => 'Account updated successfully']);
         } catch (\Exception $e) {
-            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
