@@ -17,6 +17,7 @@ use Hash;
 use Mail;
 use Stripe\Stripe;
 use Stripe\Account;
+use Stripe\ExternalAccount;
 
 class AuthController extends Controller
 {
