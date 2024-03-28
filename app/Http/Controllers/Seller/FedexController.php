@@ -24,6 +24,7 @@ class FedexController extends Controller
                         "countryCode" => "US"
                     ]
                 ],
+                "pickupType" => "REGULAR_PICKUP", 
                 "recipient" => [
                     "address" => [
                         "postalCode" => "99501",
