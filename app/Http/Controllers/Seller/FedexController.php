@@ -17,9 +17,9 @@ class FedexController extends Controller
         $token = $request->header('Authorization');
 
         $payload = [
-            // "accountNumber" => [
-            //     "value" => "XXXXX7364"
-            // ],
+            "accountNumber" => [
+                "value" => "740561073"
+            ],
             "requestedShipment" => [
                 "shipper" => [
                     "address" => [
