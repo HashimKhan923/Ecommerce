@@ -34,7 +34,7 @@ class FedexController extends Controller
                     ]
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
-                "rateRequestTypes" => [ // Correct key name for rate request types
+                "rateRequestType" => [ // Correct key name for rate request types
                     "ACCOUNT",
                     "LIST"
                 ],
