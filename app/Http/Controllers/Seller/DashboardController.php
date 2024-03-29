@@ -13,6 +13,7 @@ use App\Models\Payout;
 use App\Models\SellerGuideVideo;
 use App\Models\SellerFandQ;
 use App\Models\Shop;
+use App\Models\MyCustomer;
 
 
 
@@ -35,9 +36,10 @@ class DashboardController extends Controller
         $Brands = Brand::with('model')->where('is_active',1)->get();
         $SellerFandQ = SellerFandQ::all();
         $SellerGuideVideo = SellerGuideVideo::all();
+        $TotalSale = MyCustomer::where('seller_id',$seller_id)->sum('sale') ?? 0;
 
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo]);
+        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo,'TotalSale'=>$TotalSale]);
     }
 
     public function searchByshop($shop_id)
