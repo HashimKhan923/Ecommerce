@@ -44,12 +44,12 @@ class FedexController extends Controller
                             "units" => "LB",
                             "value" => $request->weight
                         ],
-                        // "dimensions"=>[
-                        //     "length"=>$request->length,
-                        //     "width"=>$request->width,
-                        //     "height"=>$request->height,
-                        //     "units"=>"IN"
-                        // ]
+                        "dimensions"=>[
+                            "length"=>$request->length,
+                            "width"=>$request->width,
+                            "height"=>$request->height,
+                            "units"=>"IN"
+                        ]
 
                     ]
                 ]
