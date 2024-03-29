@@ -466,27 +466,28 @@ class AuthController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-            $accountId = $request->input('stripe_account_id');
-            $account = Account::retrieve($accountId);
-            $account->email = $request->input('business_email'); 
-            $account->save();
-
-            // if ($request->has('bank_account_id')) {
-                $bankAccountId = $request->input('bank_account_id');
-                $bankAccount = $account->external_accounts->retrieve($bankAccountId);
-                $bankAccount->object = 'bank_account';
-                $bankAccount->country = $request->business_country;
-                $bankAccount->currency = 'usd';
-                $bankAccount->account_holder_name = $request->account_title;
-                $bankAccount->account_holder_type = 'individual';
-                $bankAccount->routing_number = $request->routing_number;
-                $bankAccount->account_number = $request->account_number;
-                $bankAccount->save();
-            // }
-
-            return response()->json(['success' => true, 'message' => 'Account updated successfully']);
+            $stripeAccountId = $user->stripe_account_id; 
+            
+            $externalAccount = Account::retrieveExternalAccount(
+                $stripeAccountId,
+                $user->bank_account_id,
+                []
+            );
+        
+            $externalAccount->update([
+                'object' => 'bank_account',
+                'country' => $request->business_country,
+                'currency' => 'usd',
+                'account_holder_name' => $request->account_title,
+                'account_holder_type' => 'individual',
+                'routing_number' => $request->routing_number,
+                'account_number' => $request->account_number,
+            ]);
+        
+            return response()->json(['success' => true, 'message' => 'Bank information updated successfully']);
+        
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
         }
     }
 
