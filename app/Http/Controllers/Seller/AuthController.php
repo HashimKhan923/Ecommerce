@@ -436,7 +436,7 @@ class AuthController extends Controller
 
 
         $BankDetail = BankDetail::where('seller_id',$update->id)->first();
-        $BankDetail->seller_id = $new->id;
+        $BankDetail->seller_id = $update->id;
         $BankDetail->business_name = $BusineesInformation->business_name;
         $BankDetail->bank_name = $request->bank_name;
         $BankDetail->account_title = $request->account_title;
@@ -446,7 +446,7 @@ class AuthController extends Controller
         
 
         $CreditCard = CreditCard::where('seller_id',$update->id)->first();
-        $CreditCard->seller_id = $new->id;
+        $CreditCard->seller_id = $update->id;
         $CreditCard->name_on_card = $request->name_on_card;
         $CreditCard->cc_number = $request->cc_number;
         $CreditCard->exp_date = $request->exp_date;
