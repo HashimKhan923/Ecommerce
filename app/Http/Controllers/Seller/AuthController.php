@@ -466,19 +466,19 @@ class AuthController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-            $accountId = $request->input('account_id');
+            $accountId = $request->input('stripe_account_id');
             $account = Account::retrieve($accountId);
-            $account->email = $request->input('email'); 
+            $account->email = $request->input('business_email'); 
             $account->save();
 
-            if ($request->has('bank_account_id')) {
+            // if ($request->has('bank_account_id')) {
                 $bankAccountId = $request->input('bank_account_id');
                 $bankAccount = $account->external_accounts->retrieve($bankAccountId);
                 $bankAccount->account_holder_name = $request->input('account_title');
                 $bankAccount->routing_number = $request->input('routing_number'); 
                 $bankAccount->account_number = $request->input('account_number');
                 $bankAccount->save();
-            }
+            // }
 
             return response()->json(['success' => true, 'message' => 'Account updated successfully']);
         } catch (\Exception $e) {
