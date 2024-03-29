@@ -452,7 +452,6 @@ class AuthController extends Controller
         {
             $CreditCard = new CreditCard();
         }
-        $CreditCard = CreditCard::where('seller_id',$update->id)->first();
         $CreditCard->seller_id = $update->id;
         $CreditCard->name_on_card = $request->name_on_card;
         $CreditCard->cc_number = $request->cc_number;
