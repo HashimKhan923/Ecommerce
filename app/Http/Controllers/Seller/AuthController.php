@@ -447,7 +447,7 @@ class AuthController extends Controller
         $BankDetail->routing_number = $request->routing_number;
         $BankDetail->account_number = $request->account_number;
         $BankDetail->save();
-        
+        $CreditCard = CreditCard::where('seller_id',$update->id)->first();
         if(!$CreditCard)
         {
             $CreditCard = new CreditCard();
