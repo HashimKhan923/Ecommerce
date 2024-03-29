@@ -397,7 +397,7 @@ class AuthController extends Controller
         $BusineesInformation->save();
         
         
-        if($request->selling_platforms)
+        if($request->selling_platforms != null)
         {
             foreach($request->selling_platforms as $items)
             {
@@ -413,7 +413,7 @@ class AuthController extends Controller
             }
         }
 
-        if($request->social_platforms)
+        if($request->social_platforms != null)
         {
             foreach($request->social_platforms as $items)
             {
