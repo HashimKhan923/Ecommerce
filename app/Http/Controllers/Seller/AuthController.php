@@ -474,9 +474,13 @@ class AuthController extends Controller
             // if ($request->has('bank_account_id')) {
                 $bankAccountId = $request->input('bank_account_id');
                 $bankAccount = $account->external_accounts->retrieve($bankAccountId);
-                $bankAccount->account_holder_name = $request->input('account_title');
-                $bankAccount->routing_number = $request->input('routing_number'); 
-                $bankAccount->account_number = $request->input('account_number');
+                $bankAccount->object = 'bank_account';
+                $bankAccount->country = $request->business_country;
+                $bankAccount->currency = 'usd';
+                $bankAccount->account_holder_name = $request->account_title;
+                $bankAccount->account_holder_type = 'individual';
+                $bankAccount->routing_number = $request->routing_number;
+                $bankAccount->account_number = $request->account_number;
                 $bankAccount->save();
             // }
 
