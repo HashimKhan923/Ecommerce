@@ -401,15 +401,17 @@ class AuthController extends Controller
         {
             foreach($request->selling_platforms as $items)
             {
-            $SellingPlatforms = SellingPlatforms::where('seller_id',$update->id)->first();
-            if(!$SellingPlatforms)
-            {
-                $SellingPlatforms = new SellingPlatforms();
-            }
-            $SellingPlatforms->seller_id = $update->id;
-            $SellingPlatforms->name = $items['selling_platform_name'];
-            $SellingPlatforms->link = $items['selling_platform_link'];
-            $SellingPlatforms->save();
+                if (isset($items['selling_platform_name']) && isset($items['selling_platform_link'])) {
+                    $SellingPlatforms = SellingPlatforms::where('seller_id',$update->id)->first();
+                    if(!$SellingPlatforms)
+                    {
+                        $SellingPlatforms = new SellingPlatforms();
+                    }
+                    $SellingPlatforms->seller_id = $update->id;
+                    $SellingPlatforms->name = $items['selling_platform_name'];
+                    $SellingPlatforms->link = $items['selling_platform_link'];
+                    $SellingPlatforms->save();
+                }
             }
         }
 
@@ -417,16 +419,18 @@ class AuthController extends Controller
         {
             foreach($request->social_platforms as $items)
             {
-            $SocialPlatforms = SocialPlatforms::where('seller_id',$update->id)->first();
-    
-            if(!$SocialPlatforms)
-            {
-                $SocialPlatforms = new SocialPlatforms();
-            }
-            $SocialPlatforms->seller_id = $update->id;
-            $SocialPlatforms->name = $items['social_platform_name'];
-            $SocialPlatforms->link = $items['social_platform_link'];
-            $SocialPlatforms->save();
+                if (isset($items['social_platform_name']) && isset($items['social_platform_link'])) {
+                    $SocialPlatforms = SocialPlatforms::where('seller_id',$update->id)->first();
+            
+                    if(!$SocialPlatforms)
+                    {
+                        $SocialPlatforms = new SocialPlatforms();
+                    }
+                    $SocialPlatforms->seller_id = $update->id;
+                    $SocialPlatforms->name = $items['social_platform_name'];
+                    $SocialPlatforms->link = $items['social_platform_link'];
+                    $SocialPlatforms->save();
+                }
             }
         }
 
