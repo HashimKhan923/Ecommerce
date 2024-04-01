@@ -715,7 +715,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                                             Route::controller(App\Http\Controllers\Seller\FedexController::class)->group(function () {
                                                                 Route::get('create/token','create_token');
                                                                 Route::post('rates','show_rates');
-                            
+                                                                Route::post('shipment/create','create_shipment');
                                                             });
                                                         });
 
