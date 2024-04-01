@@ -152,7 +152,7 @@ class FedexController extends Controller
                 ],
                 "shipDatestamp" => $request->ship_date,
                 "serviceType" => $request->service_type,
-                "packagingType" => "FEDEX_PAK",
+                "packagingType" => "YOUR_PACKAGING",
                 "pickupType" => "USE_SCHEDULED_PICKUP",
                 "blockInsightVisibility" => false,
                 "shippingChargesPayment" => [
