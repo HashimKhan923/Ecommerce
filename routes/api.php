@@ -716,7 +716,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                                                 Route::get('create/token','create_token');
                                                                 Route::post('rates','show_rates');
                                                                 Route::post('shipment/create','create_shipment');
-                                                                Route::put('shipment/cancel','cancel_shipment');
+                                                                Route::post('shipment/cancel','cancel_shipment');
                                                             });
                                                         });
 
