@@ -103,16 +103,16 @@ class FedexController extends Controller
         $url = 'https://apis-sandbox.fedex.com/ship/v1/shipments';
         $token = $request->header('Authorization');
 
-        // $requestedPackageLineItems = [];
+        $requestedPackageLineItems = [];
 
-        // foreach ($request->requestedPackageLineItems as $packageItem) {
-        //     $requestedPackageLineItems[] = [
-        //         "weight" => [
-        //             "value" => $packageItem['weight'],
-        //             "units" => "LB"
-        //         ]
-        //     ];
-        // }
+        foreach ($request->requestedPackageLineItems as $packageItem) {
+            $requestedPackageLineItems[] = [
+                "weight" => [
+                    "value" => $packageItem['weight'],
+                    "units" => "LB"
+                ]
+            ];
+        }
         
         $payload = [
             "labelResponseOptions" => "URL_ONLY",
@@ -162,14 +162,7 @@ class FedexController extends Controller
                     "imageType" => "PDF",
                     "labelStockType" => "PAPER_85X11_TOP_HALF_LABEL"
                 ],
-                "requestedPackageLineItems" => [
-                    [
-                        "weight" => [
-                            "value" => 10,
-                            "units" => "LB"
-                        ]
-                    ]
-                ]
+                "requestedPackageLineItems" => $requestedPackageLineItems
             ],
             "accountNumber" => [
                 "value" => "740561073"
