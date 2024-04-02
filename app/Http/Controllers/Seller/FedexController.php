@@ -193,4 +193,42 @@ class FedexController extends Controller
     }
 
 
+    public function cancel_shipment(Request $request)
+    {
+        $url = 'https://apis-sandbox.fedex.com/ship/v1/shipments/cancel';
+        $token = $request->header('Authorization');
+
+        $payload = [
+            "accountNumber" => [
+                "value" => "740561073"
+            ],
+            "emailShipment"=> "false",
+            "senderCountryCode"=>"US",
+            "deletionControl"=>"DELETE_ALL_PACKAGES",
+            "trackingNumber"=> $request->trackingNumber
+        ];
+
+        
+        $client = new Client();
+
+        try {
+        $response = $client->post($url, [
+            'headers' => [
+                'Authorization' => $token,
+                'X-locale' => 'en_US',
+                'Content-Type' => 'application/json',
+            ],
+            
+            'json' => $payload, 
+        ]);
+        $body = $response->getBody()->getContents();
+
+        return response()->json(json_decode($body));
+
+        } catch (\Exception $ex) {
+            return response()->json(['error' => $ex->getMessage()], 500);
+        }
+    }
+
+
 }
