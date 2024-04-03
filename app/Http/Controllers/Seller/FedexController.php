@@ -34,6 +34,17 @@ class FedexController extends Controller
         $url = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
         $token = $request->header('Authorization');
 
+        $requestedPackageLineItems = [];
+
+        foreach ($request->requestedPackageLineItems as $packageItem) {
+            $requestedPackageLineItems[] = [
+                "weight" => [
+                    "value" => $packageItem['weight'],
+                    "units" => "LB"
+                ]
+            ];
+        }
+
         $payload = [
             "accountNumber" => [
                 "value" => "740561073"
@@ -52,25 +63,12 @@ class FedexController extends Controller
                     ]
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
+                "serviceType"=> "FEDEX_2_DAY",
                 "rateRequestType" => [ 
                     "ACCOUNT",
                     "LIST"
                 ],
-                "requestedPackageLineItems" => [
-                    [
-                        "weight" => [
-                            "units" => "LB",
-                            "value" => $request->weight
-                        ],
-                        "dimensions"=>[
-                            "length"=>$request->length,
-                            "width"=>$request->width,
-                            "height"=>$request->height,
-                            "units"=>"IN"
-                        ]
-
-                    ]
-                ]
+                "requestedPackageLineItems" => $requestedPackageLineItems
             ]
         ];
 
