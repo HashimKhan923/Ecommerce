@@ -63,7 +63,7 @@ class FedexController extends Controller
                     ]
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
-                "serviceType"=> "FEDEX_2_DAY",
+                "serviceType"=> "FEDEX_GROUND",
                 "rateRequestType" => [ 
                     "ACCOUNT",
                     "LIST"
@@ -149,7 +149,7 @@ class FedexController extends Controller
                     ]
                 ],
                 "shipDatestamp" => $request->ship_date,
-                "serviceType" => $request->service_type,
+                "serviceType" => "FEDEX_GROUND",
                 "packagingType" => "YOUR_PACKAGING",
                 "pickupType" => "USE_SCHEDULED_PICKUP",
                 "blockInsightVisibility" => false,
