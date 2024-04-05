@@ -34,26 +34,10 @@ class FedexController extends Controller
         $url = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
         $token = $request->header('Authorization');
 
-
+        
         $requestedPackageLineItems = [];
 
-        if (is_array($request->requestedPackageLineItems)) {
-            foreach ($request->requestedPackageLineItems as $packageItem) {
-                $requestedPackageLineItems[] = [
-                    "weight" => [
-                        "value" => $packageItem['weight'],
-                        "units" => "LB"
-                    ],
-                    "dimensions"=> [
-                        "length"=> $packageItem['length'],
-                        "width"=> $packageItem['width'],
-                        "height"=> $packageItem['height'],
-                        "units"=> "IN"
-                    ]
-                ];
-            }
-        } else {
-            $packageItem = $request->requestedPackageLineItems;
+        foreach ($request->requestedPackageLineItems as $packageItem) {
             $requestedPackageLineItems[] = [
                 "weight" => [
                     "value" => $packageItem['weight'],
@@ -67,7 +51,6 @@ class FedexController extends Controller
                 ]
             ];
         }
-
 
         $payload = [
             "accountNumber" => [
@@ -126,23 +109,7 @@ class FedexController extends Controller
 
         $requestedPackageLineItems = [];
 
-        if (is_array($request->requestedPackageLineItems)) {
-            foreach ($request->requestedPackageLineItems as $packageItem) {
-                $requestedPackageLineItems[] = [
-                    "weight" => [
-                        "value" => $packageItem['weight'],
-                        "units" => "LB"
-                    ],
-                    "dimensions"=> [
-                        "length"=> $packageItem['length'],
-                        "width"=> $packageItem['width'],
-                        "height"=> $packageItem['height'],
-                        "units"=> "IN"
-                    ]
-                ];
-            }
-        } else {
-            $packageItem = $request->requestedPackageLineItems;
+        foreach ($request->requestedPackageLineItems as $packageItem) {
             $requestedPackageLineItems[] = [
                 "weight" => [
                     "value" => $packageItem['weight'],
