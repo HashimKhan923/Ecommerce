@@ -65,6 +65,16 @@ class User extends Authenticatable
         return $this->hasMany(SocialPlatforms::class,'seller_id','id');
     }
 
+    public function FeaturedProduct()
+    {
+        return $this->hasMany(FeaturedProductOrder::class,'seller_id','id');
+    }
+
+    public function ProductListing()
+    {
+        return $this->hasMany(ProductListingPayment::class,'seller_id','id');
+    }
+
     public function BankDetail()
     {
         return $this->hasOne(BankDetail::class,'seller_id','id');

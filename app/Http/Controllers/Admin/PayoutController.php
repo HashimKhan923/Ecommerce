@@ -25,7 +25,11 @@ class PayoutController extends Controller
     {
 
         $PaymentStatus = Payout::where('id',$payout_id)->first();
-        $Seller = User::where('id',$PaymentStatus->seller_id)->first();
+        $Seller = User::with(['FeaturedProduct' => function ($query) {
+            $query->where('payment_status', 'unpaid');
+        }, 'ProductListing' => function ($query) {
+            $query->where('payment_status', 'unpaid');
+        }])->where('id',$PaymentStatus->seller_id)->first();
 
         if($Seller->stripe_account_id == null)
         {

@@ -717,6 +717,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                                                 Route::post('rates','show_rates');
                                                                 Route::post('shipment/create','create_shipment');
                                                                 Route::post('shipment/cancel','cancel_shipment');
+                                                                Route::post('shipping_amount/update','update_shipping_amount');
                                                             });
                                                         });
 

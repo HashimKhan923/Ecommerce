@@ -196,9 +196,7 @@ class FedexController extends Controller
 
         $body = $response->getBody()->getContents();
 
-        $order = Order::where('id',$request->order_id)->first();
-        $order->shipping_amount = $request->shipping_amount;
-        $order->save();
+
 
         return response()->json(json_decode($body));
 
@@ -243,6 +241,17 @@ class FedexController extends Controller
         } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()], 500);
         }
+    }
+
+
+    public function update_shipping_amount(Request $request)
+    {
+        $order = Order::where('id',$request->order_id)->first();
+        $order->shipping_amount = $request->shipping_amount;
+        $order->save();
+
+        return response()->json(['status'=>true]);
+
     }
 
 
