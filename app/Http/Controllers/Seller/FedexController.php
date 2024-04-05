@@ -41,6 +41,12 @@ class FedexController extends Controller
                 "weight" => [
                     "value" => $packageItem['weight'],
                     "units" => "LB"
+                ],
+                "dimensions"=> [
+                    "length"=> $packageItem['length'],
+                    "width"=> $packageItem['width'],
+                    "height"=> $packageItem['height'],
+                    "units"=> "IN"
                 ]
             ];
         }
@@ -107,6 +113,12 @@ class FedexController extends Controller
                 "weight" => [
                     "value" => $packageItem['weight'],
                     "units" => "LB"
+                ],
+                "dimensions"=> [
+                    "length"=> $packageItem['length'],
+                    "width"=> $packageItem['width'],
+                    "height"=> $packageItem['height'],
+                    "units"=> "IN"
                 ]
             ];
         }
