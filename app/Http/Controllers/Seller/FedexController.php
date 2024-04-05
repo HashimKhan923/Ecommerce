@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use App\Models\Order;
 
 
 
@@ -194,6 +195,10 @@ class FedexController extends Controller
         ]);
 
         $body = $response->getBody()->getContents();
+
+        $order = Order::where('id',$request->order_id)->first();
+        $order->shipping_amount = $request->shipping_amount;
+        $order->save();
 
         return response()->json(json_decode($body));
 

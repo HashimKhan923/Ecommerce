@@ -45,6 +45,7 @@ class OrderController extends Controller
             $TrackingOrder->tracking_number = $request->tracking_number;
             $TrackingOrder->courier_name = $request->courier_name;
             $TrackingOrder->courier_link = $request->courier_link;
+
             $TrackingOrder->save();
 
 
@@ -103,7 +104,7 @@ class OrderController extends Controller
                 $ListingPayment = $ProductListingPayment->listing_amount;
             }
 
-            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment;
+            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment - $order->shipping_amount;
             $NewPayout->save();
 
 
