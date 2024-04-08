@@ -632,6 +632,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::group(['prefix' => '/seller/refund/'], function() {
                         Route::controller(App\Http\Controllers\Seller\RefundController::class)->group(function () {
                             Route::get('show/{seller_id}','index');
+                            Route::post('create','create');
                             Route::get('is_approved/{refund_id}','is_approved');
                         });
                     });
