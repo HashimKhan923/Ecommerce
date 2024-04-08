@@ -45,20 +45,7 @@ public function create(Request $request)
         $vendorId = $shopProducts->first()->user_id;
 
         $vendor = User::find($vendorId);
-        Mail::send(
-            'email.Order.order_recive_vendor',
-            [
-                'vendor_name' => $vendor->name,
-                'order_id' => $newOrder->id,
-                'order_details' => $shopProducts,
-                'request' => $request
-            ],
-            function ($message) use ($vendor) {
-                $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                $message->to($vendor->email);
-                $message->subject('New Order Received');
-            }
-        );
+
 
         $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
@@ -83,6 +70,21 @@ public function create(Request $request)
         $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
         $newOrder->save();
+
+        Mail::send(
+            'email.Order.order_recive_vendor',
+            [
+                'vendor_name' => $vendor->name,
+                'order_id' => $newOrder->id,
+                'order_details' => $shopProducts,
+                'request' => $request
+            ],
+            function ($message) use ($vendor) {
+                $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                $message->to($vendor->email);
+                $message->subject('New Order Received');
+            }
+        );
 
         $orderIds[] = $newOrder->id;
 

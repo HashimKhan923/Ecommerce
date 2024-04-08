@@ -71,15 +71,11 @@
 </div>
         <hr>
         <div class="content">
-        <p>Hi {{$buyer_name}},</p>
-        <p> Thank you for placing your order. We're currently preparing it for shipment.</p>
-        <p> Due to high demand, please allow 3-5 business days for preparation and shipping. </p>
-
-        <p>For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. </p>
-
-<p>You'll receive an email with tracking information once your order is shipped.</p>
-
-<p>If you have a shipping address at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.</p>
+        <h2>Dear {{ $vendor_name }},</h2>
+    
+    <p>You have received a new order with the following details:</p>
+    
+    <p><strong>Order ID:</strong> {{ $order_id }}</p>
 
 
         <br><br>
