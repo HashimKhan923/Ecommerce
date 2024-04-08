@@ -102,8 +102,8 @@
                                             </tr>
                                           <?php $total_amount = 0; ?>
 
-                                            @foreach($order_details as $vendorId => $vendorProducts)
-                                            @foreach($vendorProducts as $product)
+                                          @foreach($order_details as $product)
+
                                             <?php
                                             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
 
@@ -130,7 +130,7 @@
                                             <?php $total_amount = $total_amount + $price  ?>
                                         
                             @endforeach
-                            @endforeach    
+                           
 
                                         </table>
 
