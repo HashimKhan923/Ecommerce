@@ -51,7 +51,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://api.dragonautomart.com/emailLogo.png" width="200" alt="Company Logo" class="logo">
+        <img src="{{ asset('emailLogo.png') }}" width="200" alt="Company Logo" class="logo">
         <h2>Your Order is Completed</h2>
         <p>Dear {{$buyer_name}},</p>
         <br>

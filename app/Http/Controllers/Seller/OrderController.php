@@ -27,7 +27,7 @@ class OrderController extends Controller
 
     public function delivery_status(Request $request)
     {
-        $order = Order::where('id',$request->id)->first();
+        $order = Order::with('order_detail.products.product_gallery')->where('id',$request->id)->first();
         $user = User::where('id',$order->customer_id)->first();
         $seller = User::where('id',$order->sellers_id)->first();
         $shop = Shop::where('seller_id',$order->sellers_id)->first();
@@ -136,6 +136,21 @@ class OrderController extends Controller
           $Tracking->delete();
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
+
+
+            Mail::send(
+                'email.Order.order_cancelled',
+                [
+                    'buyer_name' => $user->name,
+                    'shop' => $shop,
+                    'order'=> $order,
+                ],
+                function ($message) use ($user) { 
+                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                    $message->to($user->email);
+                    $message->subject('Order Cancelled');
+                }
+            );
 
 
             

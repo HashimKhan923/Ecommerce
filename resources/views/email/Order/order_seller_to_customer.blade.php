@@ -60,9 +60,9 @@
         <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     <div class="logo">
-        <img src="https://api.dragonautomart.com/emailLogo.png" width="200" class="img-responsive" alt="Company Logo">
+    <img src="{{ asset('emailLogo.png') }}" width="200" alt="Company Logo" class="logo">
         <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
+        <h3>Dragon Auto Mart</h3>
     </div>
     </div>
 </div>
@@ -75,7 +75,7 @@
     
     <p>{{$body}}</p>
     
-    <p><strong>Order ID:</strong> {{ $order->id }}</p>
+  
 
 
         <br><br>
@@ -83,6 +83,10 @@
 
 
 <hr>
+
+<p><strong>Order ID:</strong> {{ $order->id }}</p>
+<p><strong>Shop Name:</strong> {{ $shop->name }}</p>
+
 
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>

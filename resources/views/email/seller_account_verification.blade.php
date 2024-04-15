@@ -61,7 +61,7 @@
         <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     <div class="logo">
-        <img src="https://api.dragonautomart.com/emailLogo.png" width="200" class="img-responsive" alt="Company Logo">
+    <img src="{{ asset('emailLogo.png') }}" width="200" alt="Company Logo" class="logo">
         <div class=" text-left"  style="margin-top:10px">
         <h3>Dragon Auto Mart</h2>
     </div>
