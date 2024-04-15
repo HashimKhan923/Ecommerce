@@ -14,8 +14,8 @@ class EmailController extends Controller
     public function sent(Request $request)
     {
         $Order = Order::with('order_detail.products.product_gallery')->where('id',$request->order_id)->first();
-        $Shop = Shop::where('id',$request->shop_id);
-        $Customer = User::where('id',$request->customer_id);
+        $Shop = Shop::where('id',$request->shop_id)->first();
+        $Customer = User::where('id',$request->customer_id)->first();
 
         Mail::send(
             'email.Order.order_seller_to_customer',
