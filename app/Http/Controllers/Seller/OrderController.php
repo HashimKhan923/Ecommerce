@@ -127,9 +127,17 @@ class OrderController extends Controller
         else
         {
 
-            OrderTracking::where('order_id',$request->id)->delete();
+          $Tracking = OrderTracking::where('order_id',$request->id)->first();
+          $TrackingNumber = '';
+          if($Tracking->shipping_label != null)
+          {
+            $TrackingNumber = $Tracking->tracking_number;
+          }
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
+
+
+            
 
             $notification = new Notification();
             $notification->customer_id = $user->id;
@@ -141,7 +149,7 @@ class OrderController extends Controller
         $order->delivery_status = $request->delivery_status;
         $order->save();
 
-        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        $response = ['status'=>true,"message" => "Status Changed Successfully!",'TrackingNumber'=>$TrackingNumber];
         return response($response, 200);
     }
 
