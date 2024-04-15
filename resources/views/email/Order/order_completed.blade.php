@@ -57,7 +57,7 @@
         <br>
         <p>Thank you for your order from {{$shop->name}}! We wanted to let you know that your order (#{{$order->id}}) was shipped via {{$TrackingOrder->courier_name}}, on {{$date}}.</p>
         <br>
-        <p>Your Order Tracking Number is <b>{{$TrackingOrder->tracking_number}}</b> You can track your package at any time using the button below.</p>
+        <p>Your Order Tracking Number is <b><strong>{{$TrackingOrder->tracking_number}}</strong></b> You can track your package at any time using the button below.</p>
         <br>
         <a href="{{$TrackingOrder->courier_link}}" class="btn btn-info">Track My Order</a>
         <br>
