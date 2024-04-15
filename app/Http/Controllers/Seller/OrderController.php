@@ -133,6 +133,7 @@ class OrderController extends Controller
           {
             $TrackingNumber = $Tracking->tracking_number;
           }
+          $Tracking->delete();
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
 
