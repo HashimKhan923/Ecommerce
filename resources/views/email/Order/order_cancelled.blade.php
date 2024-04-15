@@ -73,7 +73,7 @@
         <div class="content">
         <h2>Hi {{ $buyer_name }},</h2>
     
-        <p>Your Order <strong>#{{ $order->id }}</strong> has been cancelled. We apologize for any inconvenience this may cause.</p>
+        <p>{{$body}}</p>
     
   
 

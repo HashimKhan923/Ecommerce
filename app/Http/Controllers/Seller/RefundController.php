@@ -55,6 +55,7 @@ class RefundController extends Controller
                 'buyer_name' => $Customer->name,
                 'shop' => $Shop,
                 'order'=> $Order,
+                'body'=> $request->reason
             ],
             function ($message) use ($Customer) { 
                 $message->from('support@dragonautomart.com','Dragon Auto Mart');
