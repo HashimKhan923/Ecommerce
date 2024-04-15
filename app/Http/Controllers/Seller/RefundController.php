@@ -42,6 +42,24 @@ class RefundController extends Controller
         $new->seller_approval = 'Approved';
         $new->save();
 
+        $Order = Order::with('order_detail.products.product_gallery')->where('id',$request->order_id)->first();
+        $Shop = Shop::where('id',$request->shop_id)->first();
+        $Customer = User::where('id',$request->customer_id)->first();
+        
+        Mail::send(
+            'email.Order.order_cancelled',
+            [
+                'buyer_name' => $Customer->name,
+                'shop' => $Shop,
+                'order'=> $Order,
+            ],
+            function ($message) use ($Customer) { 
+                $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                $message->to($Customer->email);
+                $message->subject('Order Cancelled');
+            }
+        );
+
         $response = ['status'=>true,'message'=>'Refund request sent successfully!'];
         return response($response,200);
 

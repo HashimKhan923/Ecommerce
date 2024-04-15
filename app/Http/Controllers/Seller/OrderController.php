@@ -138,19 +138,6 @@ class OrderController extends Controller
             OrderStatus::where('order_id',$request->id)->delete();
 
 
-            Mail::send(
-                'email.Order.order_cancelled',
-                [
-                    'buyer_name' => $user->name,
-                    'shop' => $shop,
-                    'order'=> $order,
-                ],
-                function ($message) use ($user) { 
-                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($user->email);
-                    $message->subject('Order Cancelled');
-                }
-            );
 
 
             
