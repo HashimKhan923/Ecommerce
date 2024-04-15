@@ -31,7 +31,7 @@ class OrderController extends Controller
         $user = User::where('id',$order->customer_id)->first();
         $seller = User::where('id',$order->sellers_id)->first();
         $shop = Shop::where('seller_id',$order->sellers_id)->first();
-
+        $TrackingNumber = '';
         if($request->delivery_status == 'Delivered')
         {
 
@@ -128,7 +128,7 @@ class OrderController extends Controller
         {
 
           $Tracking = OrderTracking::where('order_id',$request->id)->first();
-          $TrackingNumber = '';
+          
           if($Tracking->shipping_label != null)
           {
             $TrackingNumber = $Tracking->tracking_number;
