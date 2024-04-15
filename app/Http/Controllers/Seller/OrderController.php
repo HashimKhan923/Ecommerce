@@ -28,6 +28,18 @@ class OrderController extends Controller
     public function delivery_status(Request $request)
     {
         $order = Order::where('id',$request->id)->first();
+        if($request->file('label')){
+
+            if($order->label)
+            {
+                unlink(public_path('ShippingLabel/'.$order->label));
+            }
+
+            $file= $request->label;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('ShippingLabel'),$filename);
+            $order->label = $filename;
+        }
         $user = User::where('id',$order->customer_id)->first();
         $seller = User::where('id',$order->sellers_id)->first();
         $shop = Shop::where('seller_id',$order->sellers_id)->first();
