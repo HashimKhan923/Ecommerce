@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('label')->nullable();
+        Schema::table('order_trackings', function (Blueprint $table) {
+            $table->text('shipping_label')->before('created_at')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('order_trackings', function (Blueprint $table) {
             //
         });
     }
