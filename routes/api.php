@@ -545,6 +545,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+
+                                                    /// Email \\\
+
+                Route::group(['prefix' => '/seller/email/'], function() {
+                Route::controller(App\Http\Controllers\Seller\EmailController::class)->group(function () {
+                    Route::post('sent','sent');
+                });
+            });
+
                                                 /// Shop \\\
 
                 Route::group(['prefix' => '/seller/shop/'], function() {
