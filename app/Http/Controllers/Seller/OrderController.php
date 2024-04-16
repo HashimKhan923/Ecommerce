@@ -104,8 +104,9 @@ class OrderController extends Controller
                 $ProductListingPayment->save();
 
                 $ListingPayment = $ProductListingPayment->listing_amount;
-            }
+            
             $NewPayout->product_listing_id = $ProductListingPayment->id;
+            }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
             $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment - $order->shipping_amount;
