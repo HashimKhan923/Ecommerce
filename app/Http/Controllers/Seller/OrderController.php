@@ -77,17 +77,17 @@ class OrderController extends Controller
             
             $orderAmountInCents = $order->amount * 100; 
             
-           
-            $commissionRate = 0; 
+            $firstCommissionRate = 0.04;
+            $secondCommissionRate = 0; 
             if ($seller->created_at < Carbon::now()->subMonths(3)) {
-                $commissionRate = 0.05;
+                $secondCommissionRate = 0.05;
             }
             
-            $percentageDeduction = $orderAmountInCents * 0.04;
+            $percentageDeduction = $orderAmountInCents * $firstCommissionRate;
             $fixedDeduction = 40;
             $totalDeduction = sprintf("%.2f", $percentageDeduction) + $fixedDeduction;
             
-            $totalDeduction += $orderAmountInCents * sprintf("%.2f", $commissionRate);
+            $totalDeduction += $orderAmountInCents * sprintf("%.2f", $secondCommissionRate);
             
             $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
@@ -107,6 +107,7 @@ class OrderController extends Controller
             }
             $NewPayout->product_listing_id = $ProductListingPayment->id;
             $NewPayout->platform_fee = $adjustedAmountInDollars;
+            $NewPayout->commission = $firstCommissionRate + $secondCommissionRate + $fixedDeduction;
             $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment - $order->shipping_amount;
             $NewPayout->save();
 
