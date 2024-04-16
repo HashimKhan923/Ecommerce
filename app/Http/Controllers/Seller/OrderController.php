@@ -74,9 +74,10 @@ class OrderController extends Controller
             $NewPayout->seller_id = $order->sellers_id;
             $NewPayout->order_id = $order->id;
             
-            $orderAmountInCents = $order->amount * 100;
+            $orderAmountInCents = $order->amount * 100; 
             
-            $commissionRate = 0;
+           
+            $commissionRate = 0; 
             if ($seller->created_at < Carbon::now()->subMonths(3)) {
                 $commissionRate = 0.05;
             }
@@ -88,24 +89,23 @@ class OrderController extends Controller
             $totalDeduction += $orderAmountInCents * sprintf("%.2f", $commissionRate);
             
             $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
+            $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
-            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)
-                ->where('payment_status', 'unpaid')
-                ->sum('payment') ?? 0;
-            
-            $listingPayment = 0;
-            $productListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
-                ->where('payment_status', 'unpaid')
-                ->first();
-            if ($productListingPayment) {
-                $productListingPayment->payment_status = 'paid';
-                $productListingPayment->save();
-            
-                $listingPayment = $productListingPayment->listing_amount;
+            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
+
+
+            $ListingPayment = 0;
+            $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+            ->where('payment_status', 'unpaid')
+            ->first();
+            if ($ProductListingPayment) {
+                $ProductListingPayment->payment_status = 'paid';
+                $ProductListingPayment->save();
+
+                $ListingPayment = $ProductListingPayment->listing_amount;
             }
-            
-            $finalAmount = ($adjustedAmountInCents - $featuredAmount - $listingPayment - $order->shipping_amount) / 100;
-            $NewPayout->amount = sprintf("%.2f", $finalAmount);
+
+            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment - $order->shipping_amount;
             $NewPayout->save();
 
 
