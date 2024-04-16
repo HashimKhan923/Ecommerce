@@ -14,6 +14,11 @@ class Payout extends Model
         return $this->belongsTo(Order::class,'order_id','id');
     }
 
+    public function seller() {
+
+        return $this->belongsTo(User::class,'seller_id','id');
+    }
+
     public function listing_fee()
     {
         return $this->belongsTo(ProductListingPayment::class, 'product_listing_id','id');
