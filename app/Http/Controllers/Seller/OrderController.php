@@ -83,9 +83,9 @@ class OrderController extends Controller
             
             $percentageDeduction = $orderAmountInCents * 0.04;
             $fixedDeduction = 40;
-            $totalDeduction = $percentageDeduction + $fixedDeduction;
+            $totalDeduction = sprintf("%.2f", $percentageDeduction) + $fixedDeduction;
             
-            $totalDeduction += $orderAmountInCents * $commissionRate;
+            $totalDeduction += $orderAmountInCents * sprintf("%.2f", $commissionRate);
             
             $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             
