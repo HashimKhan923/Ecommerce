@@ -20,7 +20,7 @@ class OrderController extends Controller
 {
     public function index($id)
     {
-        $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_detail.products.shop.shop_policy','order_status','order_tracking','order_refund')->where('sellers_id',$id)->get();
+        $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_detail.products.shop.shop_policy','order_status','order_tracking','order_refund','shop')->where('sellers_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }

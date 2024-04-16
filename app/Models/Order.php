@@ -32,5 +32,10 @@ class Order extends Model
         return $this->hasOne(Refund::class,'order_id','id');
     } 
 
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class,'shop_id','id');
+    } 
+
     use HasFactory;
 }
