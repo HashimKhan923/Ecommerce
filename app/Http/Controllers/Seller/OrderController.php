@@ -105,7 +105,7 @@ class OrderController extends Controller
 
                 $ListingPayment = $ProductListingPayment->listing_amount;
             }
-            $NewPayout->product_listing_id = $ProductListingPaymen->id;
+            $NewPayout->product_listing_id = $ProductListingPayment->id;
             $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment - $order->shipping_amount;
             $NewPayout->save();
 

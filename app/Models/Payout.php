@@ -16,7 +16,13 @@ class Payout extends Model
 
     public function listing_fee()
     {
-        return $this->belongsTo(ProductListingPayment::class, 'seller_id', 'seller_id')->where('payment_status', 'paid');
+        return $this->belongsTo(ProductListingPayment::class, 'product_listing_id','id');
     }
+
+    public function featuredProductOrders()
+    {
+        return $this->hasMany(FeaturedProductOrder::class, 'order_id', 'order_id');
+    }
+
     
 }

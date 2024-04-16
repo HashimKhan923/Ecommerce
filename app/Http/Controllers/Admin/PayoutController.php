@@ -14,7 +14,7 @@ class PayoutController extends Controller
 {
     public function index()
     {
-        $data = Payout::with('order.order_detail.products.shop','order.shop')->get();
+        $data = Payout::with('order.order_detail.products.shop','order.shop','listing_fee','featuredProductOrders')->get();
 
         return response()->json(['data'=>$data]);
     }
