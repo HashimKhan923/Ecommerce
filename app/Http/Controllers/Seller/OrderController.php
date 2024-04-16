@@ -74,38 +74,38 @@ class OrderController extends Controller
             $NewPayout->seller_id = $order->sellers_id;
             $NewPayout->order_id = $order->id;
             
-            $orderAmountInCents = $order->amount * 100; 
+            $orderAmountInCents = $order->amount * 100;
             
-           
-            $commissionRate = 0; 
+            $commissionRate = 0;
             if ($seller->created_at < Carbon::now()->subMonths(3)) {
                 $commissionRate = 0.05;
             }
             
-            $percentageDeduction = sprintf("%.2f", $orderAmountInCents) * 0.04; 
-            $fixedDeduction = 40; 
-            $totalDeduction = sprintf("%.2f", $percentageDeduction) + $fixedDeduction;
+            $percentageDeduction = $orderAmountInCents * 0.04;
+            $fixedDeduction = 40;
+            $totalDeduction = $percentageDeduction + $fixedDeduction;
             
-            $totalDeduction += sprintf("%.2f", $orderAmountInCents) * $commissionRate;
+            $totalDeduction += $orderAmountInCents * $commissionRate;
             
-            $adjustedAmountInCents = sprintf("%.2f", $orderAmountInCents) - sprintf("%.2f", $totalDeduction);
-            $adjustedAmountInDollars = sprintf("%.2f", $adjustedAmountInCents) / 100;
+            $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             
-            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
-
-
-            $ListingPayment = 0;
-            $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
-            ->where('payment_status', 'unpaid')
-            ->first();
-            if ($ProductListingPayment) {
-                $ProductListingPayment->payment_status = 'paid';
-                $ProductListingPayment->save();
-
-                $ListingPayment = $ProductListingPayment->listing_amount;
+            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)
+                ->where('payment_status', 'unpaid')
+                ->sum('payment') ?? 0;
+            
+            $listingPayment = 0;
+            $productListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+                ->where('payment_status', 'unpaid')
+                ->first();
+            if ($productListingPayment) {
+                $productListingPayment->payment_status = 'paid';
+                $productListingPayment->save();
+            
+                $listingPayment = $productListingPayment->listing_amount;
             }
-
-            $NewPayout->amount = sprintf("%.2f", $adjustedAmountInDollars) - sprintf("%.2f", $featuredAmount) - sprintf("%.2f", $ListingPayment) - sprintf("%.2f", $order->shipping_amount);
+            
+            $finalAmount = ($adjustedAmountInCents - $featuredAmount - $listingPayment - $order->shipping_amount) / 100;
+            $NewPayout->amount = sprintf("%.2f", $finalAmount);
             $NewPayout->save();
 
 
