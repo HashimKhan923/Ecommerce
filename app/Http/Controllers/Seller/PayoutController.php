@@ -10,7 +10,7 @@ class PayoutController extends Controller
 {
     public function index($id)
     {
-        $data = Payout::with('order.order_detail.products.shop')->where('seller_id',$id)->get();
+        $data = Payout::with('order.order_detail.products.shop','order.shop')->where('seller_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
