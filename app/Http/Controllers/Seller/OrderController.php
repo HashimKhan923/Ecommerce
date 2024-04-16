@@ -82,14 +82,14 @@ class OrderController extends Controller
                 $commissionRate = 0.05;
             }
             
-            $percentageDeduction = $orderAmountInCents * 0.04; 
+            $percentageDeduction = sprintf("%.2f", $orderAmountInCents) * 0.04; 
             $fixedDeduction = 40; 
-            $totalDeduction = $percentageDeduction + $fixedDeduction;
+            $totalDeduction = sprintf("%.2f", $percentageDeduction) + $fixedDeduction;
             
-            $totalDeduction += $orderAmountInCents * $commissionRate;
+            $totalDeduction += sprintf("%.2f", $orderAmountInCents) * $commissionRate;
             
-            $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
-            $adjustedAmountInDollars = $adjustedAmountInCents / 100;
+            $adjustedAmountInCents = sprintf("%.2f", $orderAmountInCents) - sprintf("%.2f", $totalDeduction);
+            $adjustedAmountInDollars = sprintf("%.2f", $adjustedAmountInCents) / 100;
             
             $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
 
@@ -105,7 +105,7 @@ class OrderController extends Controller
                 $ListingPayment = $ProductListingPayment->listing_amount;
             }
 
-            $NewPayout->amount = $adjustedAmountInDollars - $featuredAmount - $ListingPayment - $order->shipping_amount;
+            $NewPayout->amount = sprintf("%.2f", $adjustedAmountInDollars) - sprintf("%.2f", $featuredAmount) - sprintf("%.2f", $ListingPayment) - sprintf("%.2f", $order->shipping_amount);
             $NewPayout->save();
 
 
