@@ -14,6 +14,7 @@ use App\Models\OrderTracking;
 use App\Models\Notification;
 use App\Models\FeaturedProductOrder;
 use App\Models\ProductListingPayment;
+use App\Models\NagativePayoutBalance;
 use Mail;
 
 class OrderController extends Controller
@@ -93,6 +94,7 @@ class OrderController extends Controller
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
             $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
+            $nagativePayoutBalance = NagativePayoutBalance::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
 
 
             $ListingPayment = 0;
@@ -109,13 +111,27 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount);
+            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) - floatval($nagativePayoutBalance);
             $NewPayout->save();
+
+            if($NewPayout->amount < 0)
+            {
+                $NagativePayoutBalance = new NagativePayoutBalance();
+                $NagativePayoutBalance->order_id = $order->id;
+                $NagativePayoutBalance->amount = $NewPayout->amount;
+                $NagativePayoutBalance->save();
+            }
 
 
             if($featuredAmount > 0)
             {
                 FeaturedProductOrder::where('order_id', $order->id)->update(['payment_status'=>'paid']);
+
+            }
+
+            if($nagativePayoutBalance > 0)
+            {
+                NagativePayoutBalance::where('order_id', $order->id)->update(['payment_status'=>'paid']);
 
             }
             
