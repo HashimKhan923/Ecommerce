@@ -99,14 +99,16 @@ class OrderController extends Controller
             $nagativePayoutBalance = NagativePayoutBalance::where('seller_id', $order->sellers_id)
             ->where('payment_status','unpaid')
             ->first();
-
             $NagativeBalance = 0;
             if($nagativePayoutBalance)
             {
+                $nagativePayoutBalance->payment_status = 'paid';
+                $nagativePayoutBalance->save();
+
                 $NagativeBalance =  $nagativePayoutBalance->amount;
             }
 
-            // $nagativePayoutAmount = $nagativePayoutBalance ? $nagativePayoutBalance->amount : 0;
+            
 
 
             $ListingPayment = 0;
@@ -141,11 +143,7 @@ class OrderController extends Controller
 
             }
 
-            if($nagativePayoutBalance)
-            {
-                $nagativePayoutBalance->payment_status = 'paid';
-                $nagativePayoutBalance->save();
-            }
+
             
             
 
