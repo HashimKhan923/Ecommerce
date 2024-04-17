@@ -141,10 +141,10 @@ class OrderController extends Controller
 
             }
 
-            if($NagativeBalance > 0)
+            if($nagativePayoutBalance)
             {
-                NagativePayoutBalance::where('seller_id', $order->sellers_id)->update(['payment_status'=>'paid']);
-
+                $nagativePayoutBalance->payment_status = 'paid';
+                $nagativePayoutBalance->save();
             }
             
             
