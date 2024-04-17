@@ -24,7 +24,7 @@ class Order extends Model
 
     public function nagative_payout_balance()
     {
-        return $this->hasMany(NagativePayoutBalance::class,'seller_id','id');
+        return $this->hasOne(NagativePayoutBalance::class,'seller_id','sellers_id');
     } 
 
     public function order_tracking()
