@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class FeaturedProductOrder extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'payment_status'
+    ];
+
 
     public function product() {
         return $this->belongsTo(Product::class,'product_id','id');
