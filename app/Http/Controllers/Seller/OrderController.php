@@ -109,7 +109,7 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = $adjustedAmountInDollars - $order->shipping_amount - $featuredAmount - $ListingPayment;
+            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount);
             $NewPayout->save();
 
 
@@ -119,7 +119,7 @@ class OrderController extends Controller
 
             }
             
-
+            
 
             $notification = new Notification();
             $notification->customer_id = $user->id;
