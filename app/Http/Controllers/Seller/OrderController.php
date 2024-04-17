@@ -119,7 +119,7 @@ class OrderController extends Controller
 
             }
             
-
+            
 
             $notification = new Notification();
             $notification->customer_id = $user->id;
