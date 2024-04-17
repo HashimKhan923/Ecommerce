@@ -115,7 +115,7 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) - floatval($nagativePayoutBalance->amount);
+            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) + floatval($nagativePayoutBalance->amount);
             $NewPayout->save();
 
             if($NewPayout->amount < 0)
@@ -133,7 +133,7 @@ class OrderController extends Controller
 
             }
 
-            if($nagativePayoutAmount > 0)
+            if($nagativePayoutBalance->amount > 0)
             {
                 NagativePayoutBalance::where('order_id', $order->id)->update(['payment_status'=>'paid']);
 
