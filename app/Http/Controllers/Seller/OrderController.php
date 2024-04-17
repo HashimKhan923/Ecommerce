@@ -148,7 +148,7 @@ class OrderController extends Controller
         {
 
           $Tracking = OrderTracking::where('order_id',$request->id)->first();
-          
+
           if($Tracking->shipping_label != null)
           {
             $TrackingNumber = $Tracking->tracking_number;
@@ -156,6 +156,7 @@ class OrderController extends Controller
           $Tracking->delete();
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
+            Order::where('id',$order->id)->update(['shipping_amount'=> 0]);
 
             $FeaturedProductOrder = FeaturedProductOrder::where('order_id', $order->id)
             ->where('payment_status', 'paid')
