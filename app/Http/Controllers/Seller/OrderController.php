@@ -157,6 +157,43 @@ class OrderController extends Controller
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
 
+            $FeaturedProductOrder = FeaturedProductOrder::where('order_id', $order->id)
+            ->where('payment_status', 'paid')
+            ->latest()
+            ->first();
+
+            if ($FeaturedProductOrder) {
+                
+                $FeaturedProductOrder->update([
+                    'payment_status' => 'unpaid'
+                ]);
+            }
+
+            $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+            ->where('payment_status', 'paid')
+            ->latest()
+            ->first();
+
+            if ($ProductListingPayment) {
+                
+                $ProductListingPayment->update([
+                    'payment_status' => 'unpaid'
+                ]);
+            }
+
+
+            $NagativePayoutBalance = NagativePayoutBalance::where('order_id', $order->id)
+            ->where('payment_status', 'paid')
+            ->latest()
+            ->first();
+
+            if ($NagativePayoutBalance) {
+                
+                $NagativePayoutBalance->update([
+                    'payment_status' => 'unpaid'
+                ]);
+            }
+
 
 
 
