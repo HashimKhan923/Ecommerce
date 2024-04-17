@@ -94,7 +94,7 @@ class OrderController extends Controller
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
             $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
-            $nagativePayoutBalance = NagativePayoutBalance::where('order_id', $order->id)
+            $nagativePayoutBalance = NagativePayoutBalance::where('seller_id', $order->sellers_id)
             ->where('payment_status','unpaid')
             ->first();
 
@@ -121,7 +121,7 @@ class OrderController extends Controller
             if($NewPayout->amount < 0)
             {
                 $NagativePayoutBalance = new NagativePayoutBalance();
-                $NagativePayoutBalance->order_id = $order->id;
+                $NagativePayoutBalance->seller_id = $order->sellers_id;
                 $NagativePayoutBalance->amount = $NewPayout->amount;
                 $NagativePayoutBalance->save();
             }
