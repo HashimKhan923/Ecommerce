@@ -98,7 +98,7 @@ class OrderController extends Controller
             ->where('payment_status','unpaid')
             ->first();
 
-            $nagativePayoutAmount = $nagativePayoutBalance ? $nagativePayoutBalance->amount : 0;
+            // $nagativePayoutAmount = $nagativePayoutBalance ? $nagativePayoutBalance->amount : 0;
 
 
             $ListingPayment = 0;
@@ -115,7 +115,7 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) - floatval($nagativePayoutAmount);
+            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) - floatval($nagativePayoutBalance->amount);
             $NewPayout->save();
 
             if($NewPayout->amount < 0)
