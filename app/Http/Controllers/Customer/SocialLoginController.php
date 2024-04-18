@@ -24,6 +24,7 @@ public function handleProviderCallback($provider)
         'name' => $socialUser->getName(),
         'password' => bcrypt(Str::random(16)),
         'user_type' => 'customer',
+        'user_type' => $request->platform,
         'is_active' => 1,
     ]);
 
