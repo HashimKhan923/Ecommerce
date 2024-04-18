@@ -37,6 +37,8 @@ class AuthController extends Controller
         $new->remember_token = $token;
         $new->password = Hash::make($request->password);
         $new->platform = $request->platform;
+        $new->device_name = $request->device_name;
+        $new->device_type = $request->device_type;
         $new->user_type = 'customer';
         $new->is_active = 1;
         $new->save();
@@ -132,6 +134,8 @@ class AuthController extends Controller
             $new->password = Hash::make(uniqid());
             $new->user_type = 'customer';
             $new->platform = $request->platform;
+            $new->device_name = $request->device_name;
+            $new->device_type = $request->device_type;
             $new->is_active = 1;
             $new->save();
             
