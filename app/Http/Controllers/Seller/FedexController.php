@@ -244,6 +244,45 @@ class FedexController extends Controller
     }
 
 
+    public function track_shipment(Request $request)
+    {
+
+        $url = 'https://apis.fedex.com/track/v1/associatedshipments';
+        $token = $request->header('Authorization');
+
+       $payload = [
+            "masterTrackingNumberInfo"=> [
+              "trackingNumberInfo"=> [
+                "trackingNumber"=> $request->tracking_number
+              ]
+            ],
+            "associatedType"=> "STANDARD_MPS"
+        ];
+
+        $client = new Client();
+
+        try {
+        $response = $client->put($url, [
+            'headers' => [
+                'Authorization' => $token,
+                'X-locale' => 'en_US',
+                'Content-Type' => 'application/json',
+            ],
+            
+            'json' => $payload, 
+        ]);
+        $body = $response->getBody()->getContents();
+
+        return response()->json(json_decode($body));
+
+        } catch (\Exception $ex) {
+            return response()->json(['error' => $ex->getMessage()], 500);
+        }
+
+
+    }
+
+
     public function update_shipping_amount(Request $request)
     {
         $order = Order::where('id',$request->order_id)->first();
