@@ -591,6 +591,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('tags','update_tags');
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('tracking/update','tracking_update');
                 });
              });
 
@@ -718,18 +719,6 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::get('load_more_featured/{length}','load_more_featured');
             });
         });
-
-                                                        // FedEx
-                
-                                                        Route::group(['prefix' => '/seller/fedex/'], function() {
-                                                            Route::controller(App\Http\Controllers\Seller\FedexController::class)->group(function () {
-                                                                Route::get('create/token','create_token');
-                                                                Route::post('rates','show_rates');
-                                                                Route::post('shipment/create','create_shipment');
-                                                                Route::post('shipment/cancel','cancel_shipment');
-                                                                Route::post('shipping_amount/update','update_shipping_amount');
-                                                            });
-                                                        });
 
 
                                             /// CategoryProducts \\\

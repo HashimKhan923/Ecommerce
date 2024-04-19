@@ -224,6 +224,18 @@ class OrderController extends Controller
         return response($response, 200);
     }
 
+    public function tracking_update(Request $request)
+    {
+        OrderTracking::where('order_id',$request->order_id)->update([
+            'tracking_number' => $request->tracking_number,
+            'courier_name' => $request->courier_name,
+            'courier_link' => $request->courier_link
+        ]);
+
+        $response = ['status'=>true,"message" => "updated successfully!"];
+        return response($response, 200);
+    }
+
     public function update_tags(Request $request)
     {
         Order::where('id', $request->id)->update(['tags' => $request->tags]);
