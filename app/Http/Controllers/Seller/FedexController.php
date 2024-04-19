@@ -261,7 +261,7 @@ class FedexController extends Controller
         $client = new Client();
     
         try {
-            $response = $client->put($url, [
+            $response = $client->post($url, [
                 'headers' => [
                     'Authorization' => $token,
                     'X-locale' => 'en_US',
