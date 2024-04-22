@@ -132,6 +132,12 @@ class OrderController extends Controller
 
             $NewPayout->save();
 
+            if($order->shipping_amount < 1)
+            {
+                $response = ['status'=>true,"message" => "shipping_amount is 0"];
+                return response($response, 200);
+            }
+
             if($NewPayout->amount < 0)
             {
                 $NagativePayoutBalance = new NagativePayoutBalance();
