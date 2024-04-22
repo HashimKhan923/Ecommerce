@@ -16,7 +16,7 @@ class FedexController extends Controller
     public function create_token()
     {
         try {
-            $response = Http::asForm()->post('https://apis-sandbox.fedex.com/oauth/token', [
+            $response = Http::asForm()->post('https://apis.fedex.com/oauth/token', [
                 'grant_type' => 'client_credentials',
                 'client_id' => 'l78197839d6016410286b488993d0d9b87',
                 'client_secret' => '399acd0e75624a6a8a8cf0f8fdb6917e'
@@ -38,7 +38,7 @@ class FedexController extends Controller
 
     public function show_rates(Request $request)
     {
-        $url = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
+        $url = 'https://apis.fedex.com/rate/v1/rates/quotes';
         $token = $request->header('Authorization');
 
         
@@ -112,7 +112,7 @@ class FedexController extends Controller
     public function create_shipment(Request $request)
     {
 
-        $url = 'https://apis-sandbox.fedex.com/ship/v1/shipments';
+        $url = 'https://apis.fedex.com/ship/v1/shipments';
         $token = $request->header('Authorization');
 
         $requestedPackageLineItems = [];
@@ -216,7 +216,7 @@ class FedexController extends Controller
 
     public function cancel_shipment(Request $request)
     {
-        $url = 'https://apis-sandbox.fedex.com/ship/v1/shipments/cancel';
+        $url = 'https://apis.fedex.com/ship/v1/shipments/cancel';
         $token = $request->header('Authorization');
 
         $payload = [
@@ -255,7 +255,7 @@ class FedexController extends Controller
 
     public function track_shipment(Request $request)
     {
-        $url = 'https://apis-sandbox.fedex.com/track/v1/associatedshipments';
+        $url = 'https://apis.fedex.com/track/v1/associatedshipments';
         $token = $request->header('Authorization');
     
         $payload = [
