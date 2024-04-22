@@ -96,17 +96,17 @@ class OrderController extends Controller
             $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0.00;
 
 
-            $nagativePayoutBalance = NagativePayoutBalance::where('seller_id', $order->sellers_id)
-            ->where('payment_status','unpaid')
-            ->first();
-            $NagativeBalance = 0;
-            if($nagativePayoutBalance)
-            {
-                $nagativePayoutBalance->payment_status = 'paid';
-                $nagativePayoutBalance->save();
+            // $nagativePayoutBalance = NagativePayoutBalance::where('seller_id', $order->sellers_id)
+            // ->where('payment_status','unpaid')
+            // ->first();
+            // $NagativeBalance = 0;
+            // if($nagativePayoutBalance)
+            // {
+            //     $nagativePayoutBalance->payment_status = 'paid';
+            //     $nagativePayoutBalance->save();
 
-                $NagativeBalance =  $nagativePayoutBalance->amount;
-            }
+            //     $NagativeBalance =  $nagativePayoutBalance->amount;
+            // }
 
             
 
@@ -125,7 +125,7 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) + floatval($NagativeBalance);
+            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount);
 
 
         //    return response()->json(['adjustedAmountInDollars'=>$adjustedAmountInDollars,'featuredAmount'=>$featuredAmount,'ListingPayment'=>$ListingPayment,'shipping_amount'=>$order->shipping_amount,'NagativeBalance'=>$NagativeBalance,'$NewPayout'=>$NewPayout->amount]);
@@ -171,7 +171,7 @@ class OrderController extends Controller
           $Tracking->delete();
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
-            NagativePayoutBalance::where('order_id',$request->id)->delete();
+            // NagativePayoutBalance::where('order_id',$request->id)->delete();
             Order::where('id',$order->id)->update(['shipping_amount'=> 0]);
 
             $FeaturedProductOrder = FeaturedProductOrder::where('order_id', $order->id)
