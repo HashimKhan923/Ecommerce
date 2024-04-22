@@ -138,14 +138,14 @@ class OrderController extends Controller
                 return response($response, 200);
             }
 
-            if($NewPayout->amount < 0)
-            {
-                $NagativePayoutBalance = new NagativePayoutBalance();
-                $NagativePayoutBalance->seller_id = $order->sellers_id;
-                $NagativePayoutBalance->order_id = $order->id;
-                $NagativePayoutBalance->amount = $NewPayout->amount;
-                $NagativePayoutBalance->save();
-            }
+            // if($NewPayout->amount < 0)
+            // {
+            //     $NagativePayoutBalance = new NagativePayoutBalance();
+            //     $NagativePayoutBalance->seller_id = $order->sellers_id;
+            //     $NagativePayoutBalance->order_id = $order->id;
+            //     $NagativePayoutBalance->amount = $NewPayout->amount;
+            //     $NagativePayoutBalance->save();
+            // }
 
 
             if($featuredAmount > 0)
