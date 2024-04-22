@@ -204,17 +204,17 @@ class OrderController extends Controller
             }
 
 
-            $NagativePayoutBalance = NagativePayoutBalance::where('order_id', $order->id)
-            ->where('payment_status', 'paid')
-            ->latest()
-            ->first();
+            // $NagativePayoutBalance = NagativePayoutBalance::where('order_id', $order->id)
+            // ->where('payment_status', 'paid')
+            // ->latest()
+            // ->first();
 
-            if ($NagativePayoutBalance) {
+            // if ($NagativePayoutBalance) {
                 
-                $NagativePayoutBalance->update([
-                    'payment_status' => 'unpaid'
-                ]);
-            }
+            //     $NagativePayoutBalance->update([
+            //         'payment_status' => 'unpaid'
+            //     ]);
+            // }
 
 
 
