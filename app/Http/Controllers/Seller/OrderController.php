@@ -93,7 +93,7 @@ class OrderController extends Controller
             $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
-            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0;
+            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0.00;
 
 
             $nagativePayoutBalance = NagativePayoutBalance::where('seller_id', $order->sellers_id)
@@ -126,6 +126,10 @@ class OrderController extends Controller
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
             $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) + floatval($NagativeBalance);
+
+
+           dd($adjustedAmountInDollars.''.$featuredAmount.''.$ListingPayment.''.$order->shipping_amount.''.$NagativeBalance);
+
             $NewPayout->save();
 
             if($NewPayout->amount < 0)
