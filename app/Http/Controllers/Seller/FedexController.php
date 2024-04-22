@@ -58,7 +58,8 @@ class FedexController extends Controller
 
         $payload = [
             "accountNumber" => [
-                "value" => "664123436"
+                // "value" => "664123436"
+                    "value" => "740561073"
             ],
             "requestedShipment" => [
                 "shipper" => [
@@ -179,7 +180,8 @@ class FedexController extends Controller
                 "requestedPackageLineItems" => $requestedPackageLineItems
             ],
             "accountNumber" => [
-                "value" => "664123436"
+                // "value" => "664123436"
+                "value" => "740561073"
             ]
         ];
 
@@ -216,7 +218,8 @@ class FedexController extends Controller
 
         $payload = [
             "accountNumber" => [
-                "value" => "664123436"
+                // "value" => "664123436"
+                "value" => "740561073"
             ],
             "emailShipment"=> "false",
             "senderCountryCode"=>"US",
