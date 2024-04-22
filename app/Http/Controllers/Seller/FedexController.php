@@ -18,11 +18,14 @@ class FedexController extends Controller
         try {
             $response = Http::asForm()->post('https://apis-sandbox.fedex.com/oauth/token', [
                 'grant_type' => 'client_credentials',
-                // 'client_id' => 'l78197839d6016410286b488993d0d9b87',
-                // 'client_secret' => '399acd0e75624a6a8a8cf0f8fdb6917e'
+                'client_id' => 'l78197839d6016410286b488993d0d9b87',
+                'client_secret' => '399acd0e75624a6a8a8cf0f8fdb6917e'
 
-                'client_id' => 'l7ec54c4fd179145d9a21a0af57ba8a761',
-                'client_secret' => 'a5ca3e3c3ccf49a39ad1dc589f169786'
+
+                // 
+
+                // 'client_id' => 'l7ec54c4fd179145d9a21a0af57ba8a761',
+                // 'client_secret' => 'a5ca3e3c3ccf49a39ad1dc589f169786'
             ]);
 
             $response=json_decode($response->body());
@@ -58,8 +61,8 @@ class FedexController extends Controller
 
         $payload = [
             "accountNumber" => [
-                // "value" => "664123436"
-                    "value" => "740561073"
+                "value" => "664123436"
+                    // "value" => "740561073"
             ],
             "requestedShipment" => [
                 "shipper" => [
@@ -180,8 +183,8 @@ class FedexController extends Controller
                 "requestedPackageLineItems" => $requestedPackageLineItems
             ],
             "accountNumber" => [
-                // "value" => "664123436"
-                "value" => "740561073"
+                "value" => "664123436"
+                // "value" => "740561073"
             ]
         ];
 
@@ -218,8 +221,8 @@ class FedexController extends Controller
 
         $payload = [
             "accountNumber" => [
-                // "value" => "664123436"
-                "value" => "740561073"
+                "value" => "664123436"
+                // "value" => "740561073"
             ],
             "emailShipment"=> "false",
             "senderCountryCode"=>"US",
