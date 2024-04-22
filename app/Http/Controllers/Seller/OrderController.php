@@ -125,7 +125,8 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = floatval($adjustedAmountInDollars - $order->shipping_amount) - floatval($featuredAmount) - floatval($ListingPayment);
+            $nn =  $order->shipping_amount + $featuredAmount + $ListingPayment;
+            $NewPayout->amount = $adjustedAmountInDollars - $nn;
 
 
 
