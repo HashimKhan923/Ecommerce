@@ -178,7 +178,7 @@ class FedexController extends Controller
                 ],
                 "labelSpecification" => [
                     "imageType" => "PDF",
-                    "labelStockType" => "PAPER_85X11_TOP_HALF_LABEL"
+                    "labelStockType" => "PAPER_4X6"
                 ],
                 "requestedPackageLineItems" => $requestedPackageLineItems
             ],
