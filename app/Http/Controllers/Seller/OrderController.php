@@ -125,10 +125,9 @@ class OrderController extends Controller
             }
             $NewPayout->platform_fee = $totalDeduction;
             $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount);
+            $NewPayout->amount = floatval($adjustedAmountInDollars - $order->shipping_amount) - floatval($featuredAmount) - floatval($ListingPayment);
 
 
-        //    return response()->json(['adjustedAmountInDollars'=>$adjustedAmountInDollars,'featuredAmount'=>$featuredAmount,'ListingPayment'=>$ListingPayment,'shipping_amount'=>$order->shipping_amount,'NagativeBalance'=>$NagativeBalance,'$NewPayout'=>$NewPayout->amount]);
 
             $NewPayout->save();
 
