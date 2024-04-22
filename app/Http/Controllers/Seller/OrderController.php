@@ -132,6 +132,7 @@ class OrderController extends Controller
             {
                 $NagativePayoutBalance = new NagativePayoutBalance();
                 $NagativePayoutBalance->seller_id = $order->sellers_id;
+                $NagativePayoutBalance->order_id = $order->id;
                 $NagativePayoutBalance->amount = $NewPayout->amount;
                 $NagativePayoutBalance->save();
             }
@@ -166,6 +167,7 @@ class OrderController extends Controller
           $Tracking->delete();
             Payout::where('order_id',$request->id)->delete();
             OrderStatus::where('order_id',$request->id)->delete();
+            NagativePayoutBalance::where('order_id',$request->id)->delete();
             Order::where('id',$order->id)->update(['shipping_amount'=> 0]);
 
             $FeaturedProductOrder = FeaturedProductOrder::where('order_id', $order->id)
