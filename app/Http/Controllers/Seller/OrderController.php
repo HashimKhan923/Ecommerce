@@ -36,6 +36,9 @@ class OrderController extends Controller
         if($request->delivery_status == 'Delivered')
         {
 
+            $order->shipping_amount = $request->shipping_amount;
+            $order->save();
+
             $OrderStatus = new OrderStatus();
             $OrderStatus->order_id = $request->id;
             $OrderStatus->status = 'deliverd';
