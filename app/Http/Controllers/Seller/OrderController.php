@@ -128,7 +128,7 @@ class OrderController extends Controller
             $NewPayout->amount = floatval($adjustedAmountInDollars) - floatval($featuredAmount) - floatval($ListingPayment) - floatval($order->shipping_amount) + floatval($NagativeBalance);
 
 
-           return response()->json(['adjustedAmountInDollars'=>$adjustedAmountInDollars,'featuredAmount'=>$featuredAmount,'ListingPayment'=>$ListingPayment,'shipping_amount'=>$order->shipping_amount,'NagativeBalance'=>$NagativeBalance,'$NewPayout'=>$NewPayout->amount]);
+        //    return response()->json(['adjustedAmountInDollars'=>$adjustedAmountInDollars,'featuredAmount'=>$featuredAmount,'ListingPayment'=>$ListingPayment,'shipping_amount'=>$order->shipping_amount,'NagativeBalance'=>$NagativeBalance,'$NewPayout'=>$NewPayout->amount]);
 
             $NewPayout->save();
 
