@@ -36,7 +36,7 @@ class UpdatePayoutStatus extends Command
         foreach ($payouts as $payout) {
             $Seller = User::where('id',$payout->seller_id)->first();
             $startDate = Carbon::parse($payout->created_at);
-            $endDate = $startDate->copy()->addWeekdays(5);
+            $endDate = $startDate->copy()->addWeekdays(1);
 
             if (now()->greaterThanOrEqualTo($endDate)) {
 
