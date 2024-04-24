@@ -94,6 +94,7 @@ public function create(Request $request)
             $CouponUser = new CouponUser();
             $CouponUser->coupon_id = $request->coupon_id;
             $CouponUser->user_id = $request->customer_id;
+            $CouponUser->discount = $request->coupon_discount;
             $CouponUser->order_id = $newOrder->id;
             $CouponUser->save();
         }
