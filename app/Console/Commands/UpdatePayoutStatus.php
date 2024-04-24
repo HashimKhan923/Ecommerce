@@ -5,6 +5,11 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Payout;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\BankDetail;
+use Stripe\Stripe;
+use Stripe\Transfer;
+
 class UpdatePayoutStatus extends Command
 {
     /**
