@@ -25,4 +25,52 @@ class USPSController extends Controller
             return response()->json([$ex->getMessage()]);
         }
     }
+
+    public function show_rates(Request $request)
+    {
+
+        $url = 'https://api.usps.com/prices/v3/base-rates/search';
+        $token = $request->header('Authorization');
+
+      $payload = [
+            "originZIPCode"=> $request->shipper_postalCode,
+            "destinationZIPCode"=> $request->recipient_postalCode,
+            "weight"=> $request->weight,
+            "length"=> $request->length,
+            "width"=> $request->width,
+            "height"=> $request->height,
+            "mailClass"=> "PRIORITY_MAIL",
+            "processingCategory"=> "LETTERS",
+            "rateIndicator"=> "3D",
+            "destinationEntryFacilityType"=> "NONE",
+            "priceType"=> "RETAIL",
+            // "mailingDate"=> "2021-07-01",
+            // "accountType"=> "EPS",
+            // "accountNumber"=> "string"
+      ];
+
+
+
+      $client = new Client();
+
+      try {
+      $response = $client->post($url, [
+          'headers' => [
+              'Authorization' => $token,
+              'X-locale' => 'en_US',
+              'Content-Type' => 'application/json',
+          ],
+          
+          'json' => $payload, 
+      ]);
+
+      $body = $response->getBody()->getContents();
+
+      return response()->json(json_decode($body));
+
+      } catch (\Exception $ex) {
+          return response()->json(['error' => $ex->getMessage()], 500);
+      }
+
+    }    
 }

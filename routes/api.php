@@ -980,7 +980,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/seller/usps/'], function() {
             Route::controller(App\Http\Controllers\Seller\USPSController::class)->group(function () {
                 Route::get('create/token','create_token');
-                // Route::post('rates','show_rates');
+                Route::post('rates','show_rates');
                 // Route::post('shipment/create','create_shipment');
                 // Route::post('shipment/cancel','cancel_shipment');
                 // Route::post('shipment/track','track_shipment');
