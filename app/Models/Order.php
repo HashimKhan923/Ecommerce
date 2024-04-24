@@ -42,5 +42,10 @@ class Order extends Model
         return $this->belongsTo(Shop::class,'shop_id','id');
     } 
 
+    public function coupon_user()
+    {
+        return $this->hasMany(CouponUser::class,'order_id','id');
+    } 
+
     use HasFactory;
 }
