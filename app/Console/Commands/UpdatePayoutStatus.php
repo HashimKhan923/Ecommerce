@@ -38,7 +38,7 @@ class UpdatePayoutStatus extends Command
             $startDate = Carbon::parse($payout->created_at);
             // $endDate = $startDate->copy()->addWeekdays(1);
 
-            if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 1 && !$this->isWeekend()) {
+            if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 1 && !$this->isWeekend($startDate)) {
 
                 // if($Seller->stripe_account_id != null)
                 // {
@@ -65,5 +65,15 @@ class UpdatePayoutStatus extends Command
         }
 
         $this->info('Payouts paid successfully.');
+
+        
     }
+
+
+   protected function isWeekend(Carbon $date)
+   {
+
+        return $date->isWeekend();
+
+   }
 }
