@@ -9,6 +9,8 @@ class Payout extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['status'];
+
     public function order() {
 
         return $this->belongsTo(Order::class,'order_id','id');
