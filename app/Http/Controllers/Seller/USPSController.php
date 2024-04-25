@@ -44,9 +44,7 @@ class USPSController extends Controller
             "rateIndicator"=> "3D",
             "destinationEntryFacilityType"=> "NONE",
             "priceType"=> "RETAIL",
-            // "mailingDate"=> "2021-07-01",
-            // "accountType"=> "EPS",
-            // "accountNumber"=> "string"
+
       ];
 
 
