@@ -97,6 +97,8 @@ class CouponController extends Controller
         if($request->customer_id)
         {
             CouponCustomer::where('coupon_Id',$update->id)->delete();
+            CouponCategory::where('coupon_Id',$update->id)->delete();
+            CouponProduct::where('coupon_Id',$update->id)->delete();
             foreach($request->customer_id as $customer_id)
             {
                 $CouponCustomer = new CouponCustomer();
@@ -110,6 +112,8 @@ class CouponController extends Controller
         if($request->category_id)
         {
             CouponCategory::where('coupon_Id',$update->id)->delete();
+            CouponProduct::where('coupon_Id',$update->id)->delete();
+            CouponCustomer::where('coupon_Id',$update->id)->delete();
 
             foreach($request->category_id as $category_id)
             {
@@ -124,6 +128,8 @@ class CouponController extends Controller
         if($request->product_id)
         {
             CouponProduct::where('coupon_Id',$update->id)->delete();
+            CouponCustomer::where('coupon_Id',$update->id)->delete();
+            CouponCategory::where('coupon_Id',$update->id)->delete();
 
             foreach($request->product_id as $product_id)
             {
