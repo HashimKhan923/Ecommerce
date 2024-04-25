@@ -16,10 +16,11 @@ class CouponController extends Controller
         ->where('end_date','>',Carbon::now())
         ->first();
 
-        $check_user = CouponUser::where('coupon_id',$check->id)->where('user_id',$request->user_id)->first();
+        
 
         if($check)
         {
+            $check_user = CouponUser::where('coupon_id',$check->id)->where('user_id',$request->user_id)->first();
             if(!$check_user)
             {
                 $response = ['status'=>true,"message" => "Coupon matched Successfully!","data" => $check];
