@@ -56,12 +56,13 @@ class UpdatePayoutStatus extends Command
                 //         return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
                 //     }
 
-                //     $payout->update(['status' => 'Paid']);
+                    
                 // }
 
 
                 
             }
+            $payout->update(['status' => 'Paid']);
         }
 
         $this->info('Payouts paid successfully.');
