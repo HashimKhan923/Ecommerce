@@ -13,8 +13,9 @@ class FandQController extends Controller
     public function index()
     {
         $data = FandQ::all();
+        $data2 = SellerFandQ::all();
 
-        return response()->json(['data'=>$data]);
+        return response()->json(['data'=>$data,'data2'=>$data2]);
     }
 
     public function index2()
