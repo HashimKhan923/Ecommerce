@@ -40,24 +40,24 @@ class UpdatePayoutStatus extends Command
 
             if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 1 && !$this->isWeekend()) {
 
-                if($Seller->stripe_account_id != null)
-                {
-                    Stripe::setApiKey(config('services.stripe.secret'));
+                // if($Seller->stripe_account_id != null)
+                // {
+                //     Stripe::setApiKey(config('services.stripe.secret'));
 
         
-                    try {
-                        Transfer::create([
-                            'amount' => $payout->amount * 100,
-                            'currency' => 'usd',
-                            'destination' => $Seller->stripe_account_id,
-                        ]);
+                //     try {
+                //         Transfer::create([
+                //             'amount' => $payout->amount * 100,
+                //             'currency' => 'usd',
+                //             'destination' => $Seller->stripe_account_id,
+                //         ]);
 
-                    } catch (\Exception $e) {
-                        return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
-                    }
+                //     } catch (\Exception $e) {
+                //         return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
+                //     }
 
-                    $payout->update(['status' => 'Paid']);
-                }
+                //     $payout->update(['status' => 'Paid']);
+                // }
 
 
                 
