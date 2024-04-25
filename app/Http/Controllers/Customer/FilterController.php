@@ -14,16 +14,28 @@ class FilterController extends Controller
 
     $keywords = explode(' ', $request->searchValue);
 
-$data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
-->where(function ($query) use ($keywords) {
-    foreach ($keywords as $keyword) {
-        $query->where('name', 'LIKE', "%$keyword%")
-              ->orWhere('description', 'LIKE', "%$keyword%")
-              ->orWhereJsonContains('tags',$keywords)
-              ->where('published', 1)
-              ->orderByRaw('featured DESC');
+    $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        ->where('published', 1)
+        ->orderByRaw('featured DESC');
+    
+    // Handle the first keyword separately
+    if (count($keywords) > 0) {
+        $firstKeyword = array_shift($keywords); // Remove the first keyword from the array
+        $data->where(function ($query) use ($firstKeyword) {
+            $query->where('name', 'LIKE', "$firstKeyword%")
+                ->orWhere('description', 'LIKE', "$firstKeyword%");
+        });
     }
-})->get();
+    
+    // Handle the remaining keywords
+    foreach ($keywords as $keyword) {
+        $data->where(function ($query) use ($keyword) {
+            $query->orWhere('name', 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%");
+        });
+    }
+    
+    $results = $data->get();
 
 
         // $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
