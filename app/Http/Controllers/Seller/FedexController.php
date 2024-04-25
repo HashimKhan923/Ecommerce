@@ -191,7 +191,7 @@ class FedexController extends Controller
                     "paymentType" => "SENDER"
                 ],
                 "labelSpecification" => [
-                    "imageType" => "PNG",
+                    "imageType" => "PDF",
                     "labelStockType" => "PAPER_4X6"
                 ],
                 "requestedPackageLineItems" => $requestedPackageLineItems

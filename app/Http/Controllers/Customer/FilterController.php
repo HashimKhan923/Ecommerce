@@ -11,9 +11,12 @@ class FilterController extends Controller
     public function search(Request $request)
     {
 
+      $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        ->where('published', 1)->where('name',$request->searchValue)->first();
 
+        if(!$data)
+        {
         $keywords = explode(' ', $request->searchValue);
-
         $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('published', 1)
             ->where(function ($query) use ($keywords) {
@@ -34,6 +37,7 @@ class FilterController extends Controller
             //     ->where('published', 1)
             //     ->orderByRaw('featured DESC')
             //     ->get();
+        }
 
 
         return response()->json(['data' => $data]);
