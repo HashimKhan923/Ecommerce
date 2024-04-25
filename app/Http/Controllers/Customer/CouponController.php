@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use App\Models\CouponUser;
 use Carbon\Carbon;
 
 class CouponController extends Controller
@@ -15,10 +16,21 @@ class CouponController extends Controller
         ->where('end_date','>',Carbon::now())
         ->first();
 
+        $check_user = CouponUser::where('user_id',$request->user_id)->first();
+
         if($check)
         {
-            $response = ['status'=>true,"message" => "Coupon matched Successfully!","data" => $check];
-            return response($response, 200);
+            if(!$check_user)
+            {
+                $response = ['status'=>true,"message" => "Coupon matched Successfully!","data" => $check];
+                return response($response, 200);
+            }
+            else
+            {
+                $response = ['status'=>false,"message" => "you have already used this coupon!"];
+                return response($response, 422);
+            }
+
         }
         else
         {
