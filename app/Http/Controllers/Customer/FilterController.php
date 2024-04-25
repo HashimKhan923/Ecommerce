@@ -46,7 +46,7 @@ class FilterController extends Controller
         //     ->get();
 
 
-    return response()->json(['data' => $data]);
+    return response()->json(['data' => $results]);
 }
 
    public function target_search(Request $request)
