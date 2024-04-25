@@ -107,6 +107,10 @@ class CouponController extends Controller
             }
 
         }
+        else
+        {
+            CouponCustomer::where('coupon_Id',$update->id)->delete();
+        }
 
         if($request->category_id)
         {

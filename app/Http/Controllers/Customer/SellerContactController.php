@@ -20,6 +20,18 @@ class SellerContactController extends Controller
         $send->message = $request->message;
         $send->save();
 
+        Mail::send(
+            'email.subscriber',
+            [
+                
+            ],
+            function ($message) use ($request) { 
+                $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                $message->to($request->email);
+                $message->subject('Subscription Confirmation');
+            }
+        );
+
 
         return response()->json(['message'=>'query sent successfully!',200]);
     }
