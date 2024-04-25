@@ -47,8 +47,8 @@ class SellerContactController extends Controller
 
                 function ($message) use ($Customer) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($Customer->email);
-                    $message->subject('Message Reply');
+                    $message->to($Seller->email);
+                    $message->subject('Query');
                 });
         }
         else
@@ -66,8 +66,8 @@ class SellerContactController extends Controller
 
                 function ($message) use ($Customer) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($Customer->email);
-                    $message->subject('Message Reply');
+                    $message->to($Seller->email);
+                    $message->subject('Query');
                 });
         }
 
