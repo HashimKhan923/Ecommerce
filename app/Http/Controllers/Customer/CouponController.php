@@ -16,7 +16,7 @@ class CouponController extends Controller
         ->where('end_date','>',Carbon::now())
         ->first();
 
-        $check_user = CouponUser::where('coupon_id',$check->id)->first();
+        $check_user = CouponUser::where('coupon_id',$check->id)->where('user_id',$request->user_id)->first();
 
         if($check)
         {
