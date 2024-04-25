@@ -97,8 +97,7 @@ class CouponController extends Controller
         if($request->customer_id)
         {
             CouponCustomer::where('coupon_Id',$update->id)->delete();
-            CouponCategory::where('coupon_Id',$update->id)->delete();
-            CouponProduct::where('coupon_Id',$update->id)->delete();
+
             foreach($request->customer_id as $customer_id)
             {
                 $CouponCustomer = new CouponCustomer();
