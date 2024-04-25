@@ -16,7 +16,7 @@ class FilterController extends Controller
 
         $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('published', 1)
-            ->where(function ($query) use ($keywords) {
+            ->where(function ($query) use ($keywords,$request) {
                 foreach ($keywords as $keyword) {
                     $query->where('name',$request->searchValue)
                     ->orWhere('name', 'LIKE', "%$keyword%")
