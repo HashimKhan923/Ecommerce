@@ -31,15 +31,7 @@ class OrderController extends Controller
 public function create(Request $request)
 {
 
-    if($request->coupon_id)
-    {
-        $check_user = CouponUser::where('user_id',$request->user_id)->first();
-
-        if($check_user){
-            $response = ['status'=>false,"message" => "you have already used this coupon!"];
-            return response($response, 422);
-        }
-    }   
+  
 
     
 
