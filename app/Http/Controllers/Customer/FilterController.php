@@ -14,16 +14,17 @@ class FilterController extends Controller
 
         $keywords = explode(' ', $request->searchValue);
 
-            $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+            ->where('published', 1)
             ->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     $query->where('name', 'LIKE', "%$keyword%")
-                        ->orWhere('description', 'LIKE', "%$keyword%")
-                        ->orWhereJsonContains('tags',$keywords)
-                        ->where('published', 1)
-                        ->orderByRaw('featured DESC');
+                        ->orWhere('description', 'LIKE', "%$keyword%");
+                        // ->orWhereJsonContains('tags',$keywords);
                 }
-            })->get();
+            })
+            // ->orderByRaw('featured DESC')
+            ->get();
 
 
             // $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
