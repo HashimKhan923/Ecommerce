@@ -17,7 +17,7 @@ class FilterController extends Controller
         if(!$data)
         {
         $keywords = explode(' ', $request->searchValue);
-        $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        $data2 = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
             ->where('published', 1)
             ->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
@@ -37,10 +37,16 @@ class FilterController extends Controller
             //     ->where('published', 1)
             //     ->orderByRaw('featured DESC')
             //     ->get();
+
+            return response()->json(['data' => $data2]);
+        }
+        else
+        {
+            return response()->json(['data' => $data]);
         }
 
 
-        return response()->json(['data' => $data]);
+        
     }
 
     public function target_search(Request $request)
