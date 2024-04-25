@@ -18,7 +18,7 @@ class FilterController extends Controller
             ->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     $query->where('name', 'LIKE', "%$keyword%")
-                        // ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
                         ->orWhereJsonContains('tags',$keywords)
                         ->where('published', 1)
                         ->orderByRaw('featured DESC');
