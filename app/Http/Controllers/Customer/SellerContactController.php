@@ -45,7 +45,7 @@ class SellerContactController extends Controller
                     
                 ], 
 
-                function ($message) use ($Customer) {
+                function ($message) use ($Seller) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($Seller->email);
                     $message->subject('Query');
@@ -64,7 +64,7 @@ class SellerContactController extends Controller
                     
                 ], 
 
-                function ($message) use ($Customer) {
+                function ($message) use ($Seller) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($Seller->email);
                     $message->subject('Query');
