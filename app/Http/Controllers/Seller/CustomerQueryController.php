@@ -30,7 +30,7 @@ class CustomerQueryController extends Controller
         if($ProductName)
         {
             Mail::send(
-                'email.customer_to_seller_query_with_product',
+                'email.seller_to_customer_query_with_product',
                 [
                     'ProductName'=>$ProductName->name,
                     'ProductImage'=>$ProductImage->image,
@@ -52,7 +52,7 @@ class CustomerQueryController extends Controller
         else
         {
             Mail::send(
-                'email.customer_to_seller_query_with_shop',
+                'email.seller_to_customer_query_with_shop',
                 [
                     'ShopName'=>$Shop->name,
                     'ShopImage'=>$Shop->logo,
