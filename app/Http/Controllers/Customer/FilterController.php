@@ -10,30 +10,29 @@ class FilterController extends Controller
 {
    public function search(Request $request)
 {
-    // $searchTerms = explode(' ', $request->searchValue);
-    // if($request->category_id != null)
-    // {
-        $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
-            ->where('name', 'LIKE', '%'.$request->searchValue.'%')
-            ->orWhereJsonContains('tags',$request->searchValue)
-            // ->where('category_id', $request->category_id)
-            ->where('published', 1)
-            ->orderByRaw('featured DESC')
-            ->get();
-    // }
-    // else
-    // {
-    //     $data = Product::with('user', 'category', 'brand','shop','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
-    //         ->where(function ($query) use ($searchTerms) {
-    //             foreach ($searchTerms as $term) {
-    //                 $query->where('name', 'LIKE', '%' . $term . '%', 'or')
-    //                 ->orWhereJsonContains('tags',$request->searchValue);
-    //             }
-    //         })
-    //         ->where('published', 1)
-    //         ->orderByRaw('featured DESC')
-    //         ->get();
-    // }
+
+
+    $keywords = explode(' ', $request->searchValue);
+
+$data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+->where(function ($query) use ($keywords) {
+    foreach ($keywords as $keyword) {
+        $query->where('name', 'LIKE', "%$keyword%")
+              ->orWhere('description', 'LIKE', "%$keyword%")
+              ->orWhereJsonContains('tags',$keywords)
+              ->where('published', 1)
+              ->orderByRaw('featured DESC');
+    }
+})->get();
+
+
+        // $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
+        //     ->where('name', 'LIKE', '%'.$request->searchValue.'%')
+        //     ->orWhereJsonContains('tags',$request->searchValue)
+        //     ->where('published', 1)
+        //     ->orderByRaw('featured DESC')
+        //     ->get();
+
 
     return response()->json(['data' => $data]);
 }
