@@ -12,9 +12,9 @@ class FilterController extends Controller
     {
 
       $data = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
-        ->where('published', 1)->where('name',$request->searchValue)->first();
+        ->where('published', 1)->where('name',$request->searchValue)->get();
 
-        if(!$data)
+        if($data->count() < 1)
         {
         $keywords = explode(' ', $request->searchValue);
         $data2 = Product::with('user','category','brand','shop.shop_policy','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')
