@@ -482,6 +482,14 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         }); 
 
+                                        /// SerchingKeywords \\\
+
+        Route::group(['prefix' => 'admin/searching_keywords'], function() {
+            Route::controller(App\Http\Controllers\Admin\SearchingKeywordController::class)->group(function () {
+                Route::get('show','index');
+            });
+        }); 
+
 
 
 

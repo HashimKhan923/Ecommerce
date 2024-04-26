@@ -13,6 +13,7 @@ use App\Models\OrderDetail;
 use App\Models\FeaturedProductOrder;
 use App\Models\MyCustomer;
 use App\Models\CouponUser;
+use App\Models\OrderTimeline;
 use Illuminate\Support\Str;
 use Mail;
 use App\Models\User;
@@ -82,6 +83,12 @@ public function create(Request $request)
         $newOrder->payment_status = $request->payment_status;
         $newOrder->refund = $request->refund;
         $newOrder->save();
+
+        OrderTimeline::create([
+            'seller_id' => $vendorId,
+            'order_id' => $newOrder->id,
+            'time_line' => 'order created successfully.'
+        ]);
 
         Mail::send(
             'email.Order.order_recive_vendor',
