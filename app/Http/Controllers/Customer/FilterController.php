@@ -48,22 +48,19 @@ class FilterController extends Controller
     $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
         ->where('published', 1)
         ->where(function ($query) use ($keywords,$searchValue) {
-            $query->where('name', 'LIKE', "%$searchValue%")
-            ->orWhere('description', 'LIKE', "%$keyword%");
+            $query->where('name', 'LIKE', "%$searchValue%");
     
             if (count($keywords) > 1) {
                 $query->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
-                        $q->where('name', 'LIKE', "%$keyword%")
-                        ->orWhere('description', 'LIKE', "%$keyword%");
+                        $q->where('name', 'LIKE', "%$keyword%");
                     }
                 });
             }
     
             $query->orWhere(function ($q) use ($keywords) {
                 foreach ($keywords as $keyword) {
-                    $q->where('name', 'LIKE', "%$keyword%")
-                    ->orWhere('description', 'LIKE', "%$keyword%");
+                    $q->where('name', 'LIKE', "%$keyword%");
                 }
             });
         })
