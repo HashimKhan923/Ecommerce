@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_searching_keywords', function (Blueprint $table) {
             $table->id();
+            $table->string('keyword')->nullable();
+            $table->integer('count')->default(0);
             $table->timestamps();
         });
     }
