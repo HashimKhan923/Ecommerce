@@ -12,38 +12,35 @@ class FilterController extends Controller
     {
 
 
-        $searchValue = $request->searchValue;
-        $keywords = explode(' ', $searchValue);
-        
-        $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
-            ->where('published', 1)
-            ->where(function ($query) use ($keywords, $searchValue) {
-                $query->where('name', 'LIKE', "%$searchValue%")
-                    ->orWhere('description', 'LIKE', "%$searchValue%");
-        
-                if (count($keywords) > 1) {
-                    $query->orWhere(function ($q) use ($keywords) {
-                        foreach ($keywords as $keyword) {
-                            $q->where('name', 'LIKE', "%$keyword%")
-                                ->orWhere('description', 'LIKE', "%$keyword%");
-                        }
-                    });
-                }
-        
+    $searchValue = $request->searchValue;
+    $keywords = explode(' ', $searchValue);
+    
+    $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+        ->where('published', 1)
+        ->where(function ($query) use ($keywords,$searchValue) {
+            $query->where('name', 'LIKE', "%$searchValue%");
+    
+            if (count($keywords) > 1) {
                 $query->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
-                        $q->where('name', 'LIKE', "%$keyword%")
-                            ->orWhere('description', 'LIKE', "%$keyword%");
+                        $q->where('name', 'LIKE', "%$keyword%");
                     }
                 });
-            })
-            ->orderByRaw('CASE 
-                                WHEN name LIKE ? OR description LIKE ? THEN 1 
-                                WHEN name LIKE ? THEN 2 
-                                ELSE 3 
-                            END', ["%$searchValue%", "%$searchValue%", "%$keywords[0]%"])
-            // ->orderByRaw('featured DESC')
-            ->get();
+            }
+    
+            $query->orWhere(function ($q) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $q->where('name', 'LIKE', "%$keyword%");
+                }
+            });
+        })
+        ->orderByRaw('CASE 
+                            WHEN name LIKE ? THEN 1 
+                            WHEN name LIKE ? THEN 2 
+                            ELSE 3 
+                        END', ["%$searchValue%", "%$keywords[0]%"])
+        // ->orderByRaw('featured DESC')
+        ->get();
     
 
     return response()->json(['data' => $data]);
