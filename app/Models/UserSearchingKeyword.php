@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserSearchingKeyword extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['keyword','count'];
 }
