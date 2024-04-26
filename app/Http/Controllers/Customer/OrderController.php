@@ -90,6 +90,12 @@ public function create(Request $request)
         OrderTimeline::create([
             'seller_id' => $vendorId,
             'order_id' => $newOrder->id,
+            'time_line' => $newOrder->amount .' USD was captured using a '.$request->payment_method.'.'
+        ]);
+
+        OrderTimeline::create([
+            'seller_id' => $vendorId,
+            'order_id' => $newOrder->id,
             'time_line' => $customer->name .' placed this order on '.$shop->name.' checkout(#'.$newOrder->id.')'
         ]);
 
