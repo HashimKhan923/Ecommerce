@@ -107,13 +107,13 @@ public function create(Request $request)
                 'order_details' => $shopProducts,
                 'request' => $request
             ],
-            function ($message) use ($vendor) {
+            function ($message) use ($vendor,$newOrder,$customer) {
                 $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
                 $message->to($vendor->email);
                 $message->subject('New Order Received');
 
                 OrderTimeline::create([
-                    'seller_id' => $vendorId,
+                    'seller_id' => $vendor->id,
                     'order_id' => $newOrder->id,
                     'time_line' => 'order confirmation email was sent to '.$customer->name.'  ('.$customer->email.').'
                 ]);
