@@ -51,6 +51,7 @@ public function create(Request $request)
         $vendorId = $shopProducts->first()->user_id;
 
         $vendor = User::find($vendorId);
+        $customer = User::find($request->customer_id);
 
 
         $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
@@ -84,10 +85,18 @@ public function create(Request $request)
         $newOrder->refund = $request->refund;
         $newOrder->save();
 
+        $shop = Shop::find($shopId);
+
         OrderTimeline::create([
             'seller_id' => $vendorId,
             'order_id' => $newOrder->id,
-            'time_line' => 'order created successfully.'
+            'time_line' => $customer->name .'placed this order on '.$shop->name.' checkout(#'.$newOrder->id.')'
+        ]);
+
+        OrderTimeline::create([
+            'seller_id' => $vendorId,
+            'order_id' => $newOrder->id,
+            'time_line' => 'Confirmation '.$newOrder->order_code.' was genereated for this order'
         ]);
 
         Mail::send(
@@ -102,7 +111,14 @@ public function create(Request $request)
                 $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
                 $message->to($vendor->email);
                 $message->subject('New Order Received');
+
+                OrderTimeline::create([
+                    'seller_id' => $vendorId,
+                    'order_id' => $newOrder->id,
+                    'time_line' => 'order confirmation email was sent to '.$customer->name.'  ('.$customer->email.').'
+                ]);
             }
+            
         );
 
         $orderIds[] = $newOrder->id;
