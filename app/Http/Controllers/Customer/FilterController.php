@@ -69,6 +69,7 @@ class FilterController extends Controller
                             WHEN name LIKE ? THEN 2 
                             ELSE 3 
                         END', ["%$searchValue%", "%$keywords[0]%"])
+        ->orderByRaw('featured DESC')
         ->get();
     
 
