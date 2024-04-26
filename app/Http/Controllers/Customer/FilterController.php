@@ -73,7 +73,6 @@ $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 
                         WHEN name LIKE ? THEN 2 
                         ELSE 3 
                     END', ["%$searchValue%", "%$keywords[0]%"])
-    ->orderByRaw('featured DESC')
     ->get();
 
     return response()->json(['data' => $data]);
