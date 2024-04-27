@@ -47,5 +47,10 @@ class Order extends Model
         return $this->hasMany(CouponUser::class,'order_id','id');
     } 
 
+    public function order_timeline()
+    {
+        return $this->hasMany(OrderTimeline::class,'order_id','id');
+    } 
+
     use HasFactory;
 }
