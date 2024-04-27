@@ -15,6 +15,7 @@ use App\Models\Notification;
 use App\Models\FeaturedProductOrder;
 use App\Models\ProductListingPayment;
 use App\Models\NagativePayoutBalance;
+use App\Models\OrderTimeline;
 use Mail;
 
 class OrderController extends Controller
@@ -44,6 +45,12 @@ class OrderController extends Controller
             $OrderStatus->status = 'deliverd';
             $OrderStatus->save();
 
+            OrderTimeline::create([
+                'seller_id' => $seller->id,
+                'order_id' => $request->id,
+                'time_line' => 'order status changed to delivered'
+            ]);
+
             $TrackingOrder = new OrderTracking();
             $TrackingOrder->order_id = $order->id;
             $TrackingOrder->tracking_number = $request->tracking_number;
@@ -64,12 +71,18 @@ class OrderController extends Controller
                     'TrackingOrder' => $TrackingOrder,
                     'date' => Carbon::today()->toDateString()
                 ],
-                function ($message) use ($user) { // Add $user variable here
+                function ($message) use ($user) { 
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($user->email);
                     $message->subject('Order Confirmation');
                 }
             );
+
+            OrderTimeline::create([
+                'seller_id' => $seller->id,
+                'order_id' => $request->id,
+                'time_line' => 'order completion email sent to customer'
+            ]);
 
 
             
@@ -134,6 +147,12 @@ class OrderController extends Controller
 
 
             $NewPayout->save();
+
+            OrderTimeline::create([
+                'seller_id' => $seller->id,
+                'order_id' => $request->id,
+                'time_line' => 'Successfully created new payout: $'.$NewPayout->amount.' USD.'
+            ]);
 
 
 
@@ -230,6 +249,12 @@ class OrderController extends Controller
 
         $order->delivery_status = $request->delivery_status;
         $order->save();
+
+        OrderTimeline::create([
+            'seller_id' => $seller->id,
+            'order_id' => $request->id,
+            'time_line' => 'Order cancelled'
+        ]);
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!",'TrackingNumber'=>$TrackingNumber];
         return response($response, 200);
