@@ -59,105 +59,41 @@ class HomeController extends Controller
     }
 
 
+    private function loadMoreProducts($orderBy, $length)
+    {
+        return Product::with([
+            'user', 'category', 'brand', 'model', 'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            }, 'discount', 'tax', 'shipping', 'deal.deal_product',
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)->orderBy($orderBy, 'desc')->skip($length)->take(24)->get();
+    }
+    
     public function load_more($length)
     {
-        $Products = Product::with([
-            'user',
-            'category',
-            'brand',
-            'model',
-            'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount',
-            'tax',
-            'shipping',
-            'deal.deal_product',
-            'wholesale',
-            'shop.shop_policy',
-            'reviews.user',
-            'product_varient'
-        ])->where('published',1)->orderBy('id', 'desc')->skip($length)->take(24)->get();
-
-        return response()->json(['Products'=>$Products]);
-
+        $Products = $this->loadMoreProducts('id', $length);
+        return response()->json(['Products' => $Products]);
     }
-
+    
     public function load_more_top_selling($length)
     {
-        $Products = Product::with([
-            'user',
-            'category',
-            'brand',
-            'model',
-            'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount',
-            'tax',
-            'shipping',
-            'deal.deal_product',
-            'wholesale',
-            'shop.shop_policy',
-            'reviews.user',
-            'product_varient'
-        ])->where('published',1)->orderBy('num_of_sale', 'desc')->skip($length)->take(24)->get();
-
-        return response()->json(['Products'=>$Products]);
-
+        $Products = $this->loadMoreProducts('num_of_sale', $length);
+        return response()->json(['Products' => $Products]);
     }
-
+    
     public function load_more_trending($length)
     {
-        $Products = Product::with([
-            'user',
-            'category',
-            'brand',
-            'model',
-            'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount',
-            'tax',
-            'shipping',
-            'deal.deal_product',
-            'wholesale',
-            'shop.shop_policy',
-            'reviews.user',
-            'product_varient'
-        ])->where('published',1)->orderBy('average_rating', 'desc')->skip($length)->take(24)->get();
-
-        return response()->json(['Products'=>$Products]);
-
+        $Products = $this->loadMoreProducts('average_rating', $length);
+        return response()->json(['Products' => $Products]);
     }
-
+    
     public function load_more_featured($length)
     {
-        $Products = Product::with([
-            'user',
-            'category',
-            'brand',
-            'model',
-            'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount',
-            'tax',
-            'shipping',
-            'deal.deal_product',
-            'wholesale',
-            'shop.shop_policy',
-            'reviews.user',
-            'product_varient'
-        ])->where('published',1)->where('featured',1)->orderBy('id', 'desc')->skip($length)->take(24)->get();
-
-        return response()->json(['Products'=>$Products]);
-
+        $Products = $this->loadMoreProducts('id', $length)->where('featured', 1);
+        return response()->json(['Products' => $Products]);
     }
+    
 
     
 }
