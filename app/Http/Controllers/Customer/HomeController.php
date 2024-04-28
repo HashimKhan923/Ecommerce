@@ -18,65 +18,44 @@ class HomeController extends Controller
 {
     public function index()
     {
-
-        // $package = SubscribeUser::where('end_time', '<=', now())->first();
-
-        // if ($package) {
-        //     Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
-        //     $package->delete();
-        // }
-
-        //$Products = Product::with('user','category','brand','model','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
-		//$Productss = Product::with('user','category','brand','model','stock',['product_gallery'=>function($query){return $query->orderByAsc('order');}],'discount','tax','shipping','deal.deal_product','wholesale','shop','reviews.user','product_varient')->where('published',1)->get();
-$Products = Product::with([
-    'user',
-    'category',
-    'brand',
-    'model',
-    'stock',
-    'product_gallery' => function($query) {
-        $query->orderBy('order', 'asc');
-    },
-    'discount',
-    'tax',
-    'shipping',
-    'deal.deal_product',
-    'wholesale',
-    'shop.shop_policy',
-    'reviews.user',
-    'product_varient'
-])->where('published',1)->orderBy('id', 'desc')->take(24)->get();
-		
-        $TopSelling = Product::with(['user', 'category', 'brand', 'model', 'stock',
-        'product_gallery' => function($query) {
-            $query->orderBy('order', 'asc');
-        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'])
-        ->where('published', 1)
-        ->orderBy('num_of_sale', 'desc')
-        ->where('published',1)->take(10)->get();
-
-        $TrendingProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
-        'product_gallery' => function($query) {
-            $query->orderBy('order', 'asc');
-        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'])
-        ->orderBy('average_rating', 'desc')
-        ->where('published',1)->take(10)->get();
-
-        $FeaturedProducts = Product::with(['user', 'category', 'brand', 'model', 'stock',
-        'product_gallery' => function($query) {
-            $query->orderBy('order', 'asc');
-        }, 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'])
-        ->where('featured',1)
-        ->where('published',1)->orderBy('id', 'desc')->take(10)->get();
-
-        $Categories = Category::where('is_active',1)->get();
-        $Brands = Brand::with('model')->where('is_active',1)->get();
-        $Banners = Banner::where('status',1)->get();
-        $AllBanners = AllBanner::where('status',1)->get();
-        // $States = State::all();
-        $Shops = Shop::with('seller','shop_policy','product.shop','product.product_gallery','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax')->get();
-
-        return response()->json(['Products'=>$Products,'FeaturedProducts'=>$FeaturedProducts,'TopSelling'=>$TopSelling,'TrendingProducts'=>$TrendingProducts,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'AllBanners'=>$AllBanners,'Shops'=>$Shops]);
+        $Products = Product::with([
+            'user', 'category', 'brand', 'model', 'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount', 'tax', 'shipping', 'deal.deal_product',
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)->orderBy('id', 'desc')->take(24);
+    
+        $TopSelling = clone $Products;
+        $TopSelling->orderBy('num_of_sale', 'desc')->take(10);
+    
+        $TrendingProducts = clone $Products;
+        $TrendingProducts->orderBy('average_rating', 'desc')->take(10);
+    
+        $FeaturedProducts = clone $Products;
+        $FeaturedProducts->where('featured', 1)->take(10);
+    
+        $allProducts = $Products->get();
+        $Categories = Category::where('is_active', 1)->get();
+        $Brands = Brand::with('model')->where('is_active', 1)->get();
+        $Banners = Banner::where('status', 1)->get();
+        $AllBanners = AllBanner::where('status', 1)->get();
+        $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
+            'product.category', 'product.brand', 'product.model', 'product.stock',
+            'product.product_varient', 'product.reviews.user', 'product.tax')->get();
+    
+        return response()->json([
+            'Products' => $allProducts,
+            'FeaturedProducts' => $FeaturedProducts->get(),
+            'TopSelling' => $TopSelling->get(),
+            'TrendingProducts' => $TrendingProducts->get(),
+            'Categories' => $Categories,
+            'Brands' => $Brands,
+            'Banners' => $Banners,
+            'AllBanners' => $AllBanners,
+            'Shops' => $Shops
+        ]);
     }
 
 
