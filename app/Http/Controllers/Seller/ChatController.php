@@ -17,10 +17,13 @@ class ChatController extends Controller
     public function groups($seller_id)
     {
         $data = Chat::with('seller', 'customer')
-                    ->select('customer_id') 
-                    ->where('seller_id', $seller_id)
-                    ->groupBy('customer_id')
-                    ->get();
+        ->join(
+            DB::raw('(SELECT customer_id FROM chats WHERE seller_id = ' . $seller_id . ' GROUP BY customer_id) as sub'),
+            'chats.customer_id',
+            '=',
+            'sub.customer_id'
+        )
+        ->get();
     
         return response()->json(['data' => $data]);
     }
