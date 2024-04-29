@@ -26,7 +26,7 @@ class ChatController extends Controller
             '=',
             'sub.seller_id'
         )
-        ->groupBy('chats.seller_id') 
+        ->groupBy('chats.seller_id', 'chats.id',) 
         ->get();
     
         return response()->json(['data' => $data]);
