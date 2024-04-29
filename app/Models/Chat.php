@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     use HasFactory;
+
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class,'seller_id','id');
+    } 
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class,'customer_id','id');
+    } 
 }
