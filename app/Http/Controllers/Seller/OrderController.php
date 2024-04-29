@@ -89,6 +89,7 @@ class OrderController extends Controller
             $NewPayout = new Payout();
             $NewPayout->date = Carbon::now();
             $NewPayout->seller_id = $order->sellers_id;
+            $NewPayout->shop_id = $order->shop_id;
             $NewPayout->order_id = $order->id;
             
             
