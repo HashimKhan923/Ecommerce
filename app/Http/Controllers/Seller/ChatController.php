@@ -10,6 +10,7 @@ use App\Models\Shop;
 use App\Models\ProductGallery;
 use App\Models\User;
 use Mail;
+use DB;
 
 class ChatController extends Controller
 {
