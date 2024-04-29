@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('payouts', function (Blueprint $table) {
             $table->bigInteger('shop_id')->unsigned()->nullable();
-            $table->foreign('shop_id')->references('id')->on('users')->onDelete('shops')->onUpdate('cascade');
+            $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade');
         });
     }
 
