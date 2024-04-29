@@ -82,7 +82,8 @@
   <!-- <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="100" alt="Product Image"> -->
   <h3><strong>Shop : </strong>{{$ShopName}}</h3>
 </div>
-
+<p><strong>Customer Name:</strong>{{$Customer->name}}</p>
+<p><strong>Customer Email:</strong>{{$Customer->email}}</p>
 <p><strong>Message:</strong> {{$Msg}}<p>
 
 

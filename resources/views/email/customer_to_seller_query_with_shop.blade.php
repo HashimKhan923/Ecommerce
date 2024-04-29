@@ -81,7 +81,8 @@
   <h4>{{$ShopName}}</h4>
 </div>
 
-
+<p><strong>Customer Name:</strong>{{$Customer->name}}</p>
+<p><strong>Customer Email:</strong>{{$Customer->email}}</p>
 <p><strong>Message:</strong> {{$Msg}}<p>
 
 
