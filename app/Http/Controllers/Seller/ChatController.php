@@ -16,15 +16,15 @@ class ChatController extends Controller
 
     public function groups($seller_id)
     {
-        $data=Chat::where('seller_id', $seller_id)->groupBy('customer_id')->get();
+        $data=Chat::with('seller','customer')->where('seller_id', $seller_id)->groupBy('customer_id')->get();
 
         return response()->json(['data'=>$data]);
     }
 
     public function index(Request $request)
     {
-        $data=Chat::where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->get();
-        
+        $data=Chat::with('seller','customer')->where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->get();
+
         return response()->json(['data'=>$data]);
     }
 
