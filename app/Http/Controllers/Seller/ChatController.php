@@ -16,9 +16,13 @@ class ChatController extends Controller
 
     public function groups($seller_id)
     {
-        $data=Chat::with('seller','customer')->where('seller_id', $seller_id)->groupBy('customer_id')->get();
-
-        return response()->json(['data'=>$data]);
+        $data = Chat::with('seller', 'customer')
+                    ->select('customer_id') 
+                    ->where('seller_id', $seller_id)
+                    ->groupBy('customer_id')
+                    ->get();
+    
+        return response()->json(['data' => $data]);
     }
 
     public function index(Request $request)
