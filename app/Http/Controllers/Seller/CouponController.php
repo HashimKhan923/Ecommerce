@@ -73,7 +73,7 @@ class CouponController extends Controller
 
         }
 
-        $response = ['status'=>true,"message" => "Coupon Created Successfully!"];
+        $response = ['status'=>true,"message" => "Coupon Created Successfully!",'coupon_id'=>$new->id];
         return response($response, 200);
     }
 

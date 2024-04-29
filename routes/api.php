@@ -689,6 +689,19 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                            // Chat
+                                    
+                    Route::group(['prefix' => '/seller/chat/'], function() {
+                        Route::controller(App\Http\Controllers\Seller\ChatController::class)->group(function () {
+                            Route::get('groups/{seller_id}','groups');
+                            Route::post('show','index');
+                            Route::post('send','send');
+
+                        });
+                    });
+
+
+
                                                                                  /// Order Timeline \\\
 
                 Route::group(['prefix' => '/seller/order/timeline'], function() {
@@ -833,6 +846,19 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::post('create','create');
         });
     });
+
+
+
+                                                // Chat
+                                    
+            Route::group(['prefix' => 'chat/'], function() {
+                Route::controller(App\Http\Controllers\Customer\ChatController::class)->group(function () {
+                    Route::get('groups/{customer_id}','groups');
+                    Route::post('show','index');
+                    Route::post('send','send');
+
+                });
+            });
 
 
                                           /// Wishlist \\\

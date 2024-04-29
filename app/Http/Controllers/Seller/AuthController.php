@@ -463,32 +463,35 @@ class AuthController extends Controller
 
 
 
-        Stripe::setApiKey(config('services.stripe.secret'));
+        // Stripe::setApiKey(config('services.stripe.secret'));
 
-        try {
-            $stripeAccountId = $user->stripe_account_id; 
+        // try {
+        //     $stripeAccountId = $user->stripe_account_id; 
             
-            $externalAccount = Account::retrieveExternalAccount(
-                $stripeAccountId,
-                $user->bank_account_id,
-                []
-            );
+        //     $externalAccount = Account::retrieveExternalAccount(
+        //         $stripeAccountId,
+        //         $user->bank_account_id,
+        //         []
+        //     );
         
-            $externalAccount->update([
-                'object' => 'bank_account',
-                'country' => $request->business_country,
-                'currency' => 'usd',
-                'account_holder_name' => $request->account_title,
-                'account_holder_type' => 'individual',
-                'routing_number' => $request->routing_number,
-                'account_number' => $request->account_number,
-            ]);
+        //     $externalAccount->update([
+        //         'object' => 'bank_account',
+        //         'country' => $request->business_country,
+        //         'currency' => 'usd',
+        //         'account_holder_name' => $request->account_title,
+        //         'account_holder_type' => 'individual',
+        //         'routing_number' => $request->routing_number,
+        //         'account_number' => $request->account_number,
+        //     ]);
         
-            return response()->json(['success' => true, 'message' => 'Bank information updated successfully']);
+        //     return response()->json(['success' => true, 'message' => 'Bank information updated successfully']);
         
-        } catch (\Exception $e) {
-            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json(['status' => 422, 'message' => $e->getMessage()]);
+        // }
+
+        $response = ['status'=>true,"message" => "profile updated successfully!"];
+        return response($response, 200);
     }
 
     public function passwordChange(Request $request){

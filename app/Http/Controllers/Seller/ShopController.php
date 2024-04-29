@@ -52,7 +52,7 @@ class ShopController extends Controller
 
 
 
-        $response = ['status'=>true,"message" => "Created Successfully!"];
+        $response = ['status'=>true,"message" => "Created Successfully!",'store_id'=>$shop->id];
         return response($response, 200);
 
     }
