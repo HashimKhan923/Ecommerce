@@ -21,9 +21,13 @@ class OrderTimelineController extends Controller
 
     public function update(Request $request)
     {
-        OrderTimeline::update([
-            'time_line' => $request->time_line
-        ])->where('id',$request->timeline_id);
+        $orderTimeline = OrderTimeline::find($request->timeline_id);
+
+        if ($orderTimeline) {
+            $orderTimeline->update([
+                'time_line' => $request->time_line
+            ]);
+        }
 
         return response()->json(['message'=>'Timeline updated successfully!']);
     }
