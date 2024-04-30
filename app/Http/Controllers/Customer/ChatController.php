@@ -31,7 +31,7 @@ class ChatController extends Controller
 
 
         $uniqueCountries = Chat::with('seller', 'customer', 'shop')->join(
-            Chat::select('seller_id')->distinct(),
+            Chat::select('seller_id')->distinct()->getQuery(),
             'chats.seller_id',
             '=',
             'subquery.seller_id'
