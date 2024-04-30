@@ -87,7 +87,7 @@ class ChatController extends Controller
 
     public function index(Request $request)
     {
-        $data=Chat::with('seller','customer')->where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->get();
+        $data=Chat::with('shop','seller','customer','product.product_gallery')->where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->where('shop_id',$request->shop_id)->get();
         
         return response()->json(['data'=>$data]);
     }
@@ -98,6 +98,7 @@ class ChatController extends Controller
         $send = new Chat();
         $send->customer_id = $request->customer_id;
         $send->seller_id = $request->seller_id;
+        $send->shop_id = $request->shop_id;
         $send->message = $request->message;
         $send->save();
 
