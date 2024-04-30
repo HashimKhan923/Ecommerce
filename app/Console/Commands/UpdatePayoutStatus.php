@@ -32,42 +32,33 @@ class UpdatePayoutStatus extends Command
     public function handle()
     {
         $payouts = Payout::where('status', 'Un Paid')->get();
-
+    
         foreach ($payouts as $payout) {
-            $Seller = User::where('id',$payout->seller_id)->first();
+            $seller = User::where('id', $payout->seller_id)->first();
             $startDate = Carbon::parse($payout->created_at);
-            // $endDate = $startDate->copy()->addWeekdays(1);
-
-            if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 1 && !$this->isWeekend($startDate)) {
-
-                // if($Seller->stripe_account_id != null)
-                // {
-                //     Stripe::setApiKey(config('services.stripe.secret'));
-
-        
-                //     try {
-                //         Transfer::create([
-                //             'amount' => $payout->amount * 100,
-                //             'currency' => 'usd',
-                //             'destination' => $Seller->stripe_account_id,
-                //         ]);
-
-                //     } catch (\Exception $e) {
-                //         return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
-                //     }
-
-                    
-                // }
-
-
-                
+    
+            if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 5 && !$this->isWeekend($startDate)) {
+    
+                if ($seller->stripe_account_id != null) {
+                    Stripe::setApiKey(config('services.stripe.secret'));
+    
+                    try {
+                        Transfer::create([
+                            'amount' => $payout->amount * 100,
+                            'currency' => 'usd',
+                            'destination' => $seller->stripe_account_id,
+                        ]);
+    
+                        $payout->update(['status' => 'Paid']);
+    
+                    } catch (\Exception $e) {
+                        $this->error($e->getMessage());
+                    }
+                }
             }
-            $payout->update(['status' => 'Paid']);
         }
-
+    
         $this->info('Payouts paid successfully.');
-
-        
     }
 
 
