@@ -46,7 +46,7 @@ class ChatController extends Controller
         $send->reciver_id = $request->reciver_id;
         $send->save();
 
-        // $ProductName = Product::where('id',$request->product_id)->first();
+        $ProductName = Product::where('id',$request->product_id)->first();
         // $Shop = Shop::where('id',$request->shop_id)->first();
         // $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
         $Seller = User::where('id',$request->seller_id)->first();
