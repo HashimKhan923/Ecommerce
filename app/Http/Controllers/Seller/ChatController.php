@@ -46,6 +46,8 @@ class ChatController extends Controller
         $send->reciver_id = $request->reciver_id;
         $send->save();
 
+        $chat = Chat::with('shop')->where('id',$send->id)->first();
+
         $ProductName = Product::where('id',$request->product_id)->first();
         $Shop = Shop::where('id',$request->shop_id)->first();
         $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
@@ -93,6 +95,6 @@ class ChatController extends Controller
         }
 
 
-        return response()->json(['message'=>'message sent successfully!','chat'=>$send,200]);
+        return response()->json(['message'=>'message sent successfully!','chat'=>$chat,200]);
     }
 }
