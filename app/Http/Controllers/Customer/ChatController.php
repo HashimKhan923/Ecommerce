@@ -30,12 +30,16 @@ class ChatController extends Controller
         // ->get();
 
 
-        $uniqueCountries = Chat::with('seller', 'customer', 'shop')->join(
-            Chat::select('seller_id')->distinct()->getQuery(),
+        $data = Chat::with('seller', 'customer', 'shop')
+        ->joinSub(
+            Chat::select('seller_id')->distinct(),
+            'subquery',
             'chats.seller_id',
             '=',
             'subquery.seller_id'
-        )->where('customer_id',$customer_id)->get(['chats.*']);
+        )
+        ->where('customer_id', $customer_id)
+        ->get(['chats.*']);
     
         return response()->json(['data' => $data]);
     }
