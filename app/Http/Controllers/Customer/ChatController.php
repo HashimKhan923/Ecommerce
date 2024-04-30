@@ -30,16 +30,10 @@ class ChatController extends Controller
         // ->get();
 
 
-        $data = Chat::with('seller', 'customer', 'shop')
-        ->joinSub(
-            Chat::select('seller_id')->distinct(),
-            'subquery',
-            'chats.seller_id',
-            '=',
-            'subquery.seller_id'
-        )
+        $data = Chat::select('chats.*')
+        ->distinct('seller_id')
         ->where('customer_id', $customer_id)
-        ->get(['chats.*']);
+        ->get();
     
         return response()->json(['data' => $data]);
     }
