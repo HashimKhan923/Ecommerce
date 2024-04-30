@@ -15,26 +15,8 @@ use DB;
 class ChatController extends Controller
 {
 
-
-    public function groups($customer_id)
+    public function query(Request $request)
     {
-
-        $data = Chat::with('seller.shop')->select('seller_id')->where('customer_id',$customer_id)->distinct()->get();
-
-    
-        return response()->json(['data' => $data]);
-    }
-
-    public function index(Request $request)
-    {
-        $data=Chat::with('seller','customer')->where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->get();
-        
-        return response()->json(['data'=>$data]);
-    }
-
-    public function send(Request $request)
-    {
-
         $send = new Chat();
         $send->product_id = $request->product_id;
         $send->shop_id = $request->shop_id;
@@ -91,5 +73,37 @@ class ChatController extends Controller
 
 
         return response()->json(['message'=>'query sent successfully!',200]);
+    }
+
+
+    public function groups($customer_id)
+    {
+
+        $data = Chat::with('seller.shop')->select('seller_id')->where('customer_id',$customer_id)->distinct()->get();
+
+    
+        return response()->json(['data' => $data]);
+    }
+
+    public function index(Request $request)
+    {
+        $data=Chat::with('seller','customer')->where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->get();
+        
+        return response()->json(['data'=>$data]);
+    }
+
+    public function send(Request $request)
+    {
+
+        $send = new Chat();
+        $send->customer_id = $request->customer_id;
+        $send->seller_id = $request->seller_id;
+        $send->message = $request->message;
+        $send->save();
+
+
+
+
+        return response()->json(['message'=>'message sent successfully!',200]);
     }
 }

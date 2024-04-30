@@ -36,16 +36,16 @@ class ChatController extends Controller
     {
 
         $send = new Chat();
-        $send->product_id = $request->product_id;
-        $send->shop_id = $request->shop_id;
+        // $send->product_id = $request->product_id;
+        // $send->shop_id = $request->shop_id;
         $send->customer_id = $request->customer_id;
         $send->seller_id = $request->seller_id;
         $send->message = $request->message;
         $send->save();
 
-        $ProductName = Product::where('id',$request->product_id)->first();
-        $Shop = Shop::where('id',$request->shop_id)->first();
-        $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
+        // $ProductName = Product::where('id',$request->product_id)->first();
+        // $Shop = Shop::where('id',$request->shop_id)->first();
+        // $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
         $Seller = User::where('id',$request->seller_id)->first();
         $Customer = User::where('id',$request->customer_id)->first();
         if($ProductName)
@@ -53,10 +53,10 @@ class ChatController extends Controller
             Mail::send(
                 'email.seller_to_customer_query_with_product',
                 [
-                    'ProductName'=>$ProductName->name,
-                    'ProductImage'=>$ProductImage->image,
-                    'ShopName'=>$Shop->name,
-                    'ShopImage'=>$Shop->logo,
+                    // 'ProductName'=>$ProductName->name,
+                    // 'ProductImage'=>$ProductImage->image,
+                    // 'ShopName'=>$Shop->name,
+                    // 'ShopImage'=>$Shop->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'Msg'=>$request->message,
@@ -74,8 +74,8 @@ class ChatController extends Controller
             Mail::send(
                 'email.seller_to_customer_query_with_shop',
                 [
-                    'ShopName'=>$Shop->name,
-                    'ShopImage'=>$Shop->logo,
+                    // 'ShopName'=>$Shop->name,
+                    // 'ShopImage'=>$Shop->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'Msg'=>$request->message,

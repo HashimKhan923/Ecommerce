@@ -854,6 +854,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => 'chat/'], function() {
                 Route::controller(App\Http\Controllers\Customer\ChatController::class)->group(function () {
                     Route::get('groups/{customer_id}','groups');
+                    Route::post('query','query');
                     Route::post('show','index');
                     Route::post('send','send');
 

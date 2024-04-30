@@ -76,12 +76,12 @@
 
         <hr>
 
-<div>
+<!-- <div>
   <img src="https://api.dragonautomart.com/ProductGallery/{{$ProductImage}}" width="150" alt="Product Image">
   <h4><strong>Product : </strong>{{$ProductName}}</h4>
   <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="100" alt="Product Image">
   <h3><strong>Shop : </strong>{{$ShopName}}</h3>
-</div>
+</div> -->
 <p><strong>Seller Name:</strong>{{$Seller->name}}</p>
 <p><strong>Seller Email:</strong>{{$Seller->email}}</p>
 
