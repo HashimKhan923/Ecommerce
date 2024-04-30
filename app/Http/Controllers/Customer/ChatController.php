@@ -79,7 +79,7 @@ class ChatController extends Controller
     public function groups($customer_id)
     {
 
-        $data = Chat::with('seller.shop')->select('seller_id')->where('customer_id',$customer_id)->distinct()->get();
+        $data = Chat::with('shop')->select('shop_id')->where('customer_id',$customer_id)->distinct()->get();
 
     
         return response()->json(['data' => $data]);
