@@ -104,6 +104,6 @@ class ChatController extends Controller
 
 
 
-        return response()->json(['message'=>'message sent successfully!',200]);
+        return response()->json(['message'=>'message sent successfully!','chat'=>$send,200]);
     }
 }
