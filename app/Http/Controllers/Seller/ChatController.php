@@ -47,8 +47,8 @@ class ChatController extends Controller
         $send->save();
 
         $ProductName = Product::where('id',$request->product_id)->first();
-        // $Shop = Shop::where('id',$request->shop_id)->first();
-        // $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
+        $Shop = Shop::where('id',$request->shop_id)->first();
+        $ProductImage = ProductGallery::where('product_id',$request->product_id)->first();
         $Seller = User::where('id',$request->seller_id)->first();
         $Customer = User::where('id',$request->customer_id)->first();
         if($ProductName)
@@ -77,8 +77,8 @@ class ChatController extends Controller
             Mail::send(
                 'email.seller_to_customer_query_with_shop',
                 [
-                    // 'ShopName'=>$Shop->name,
-                    // 'ShopImage'=>$Shop->logo,
+                    'ShopName'=>$Shop->name,
+                    'ShopImage'=>$Shop->logo,
                     'Customer'=>$Customer,
                     'Seller'=>$Seller,
                     'Msg'=>$request->message,
