@@ -17,30 +17,11 @@ class ChatController extends Controller
 
     public function groups($seller_id)
     {
-        // $data = Chat::with('seller', 'customer', 'shop')
-        // ->select('chats.*') 
-        // ->join(
-        //     DB::raw('(SELECT customer_id FROM chats WHERE seller_id = ' . $seller_id . ' GROUP BY customer_id) as sub'),
-        //     'chats.customer_id',
-        //     '=',
-        //     'sub.customer_id'
-        // )
-        // ->groupBy('chats.customer_id') 
-        // ->get();
+        $data = Chat::with('seller.shop')->select('customer_id')->where('seller_id',$seller_id)->distinct()->get();
 
-        $data = Chat::with('seller', 'customer', 'shop')
-        ->joinSub(
-            Chat::select('customer_id')->distinct(),
-            'subquery',
-            'chats.customer_id',
-            '=',
-            'subquery.customer_id'
-        )
-        ->where('seller_id', $seller_id)
-        ->get(['chats.*']);
     
+        return response()->json(['data' => $data]);    
     
-        return response()->json(['data' => $data]);
     }
 
     public function index(Request $request)
