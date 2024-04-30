@@ -85,7 +85,7 @@
 <p><strong>Seller Name:</strong>{{$Seller->name}}</p>
 <p><strong>Seller Email:</strong>{{$Seller->email}}</p>
 
-<p><strong>Your Message:</strong> {{$YourQuery}}</p>
+<!-- <p><strong>Your Message:</strong> {{$YourQuery}}</p> -->
 
 <p> <strong>Reply: </strong> {{$Msg}} </p>
 
