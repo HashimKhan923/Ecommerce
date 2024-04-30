@@ -82,7 +82,6 @@
 </div> -->
 
 
-<!-- <p><strong>Your Message:</strong> {{$YourQuery}}</p> -->
 
 <p> <strong>Reply: </strong> {{$Msg}} </p>
 
