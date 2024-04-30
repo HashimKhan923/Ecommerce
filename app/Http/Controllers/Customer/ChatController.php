@@ -23,6 +23,8 @@ class ChatController extends Controller
         $send->customer_id = $request->customer_id;
         $send->seller_id = $request->seller_id;
         $send->message = $request->message;
+        $send->sender_id = $request->sender_id;
+        $send->reciver_id = $request->reciver_id;
         $send->save();
 
         $ProductName = Product::where('id',$request->product_id)->first();
@@ -100,6 +102,8 @@ class ChatController extends Controller
         $send->seller_id = $request->seller_id;
         $send->shop_id = $request->shop_id;
         $send->message = $request->message;
+        $send->sender_id = $request->sender_id;
+        $send->reciver_id = $request->reciver_id;
         $send->save();
 
 

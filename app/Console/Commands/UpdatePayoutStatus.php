@@ -37,25 +37,25 @@ class UpdatePayoutStatus extends Command
             $seller = User::where('id', $payout->seller_id)->first();
             $startDate = Carbon::parse($payout->created_at);
     
-            if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 5 && !$this->isWeekend($startDate)) {
+            // if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 5 && !$this->isWeekend($startDate)) {
     
-                if ($seller->stripe_account_id != null) {
-                    Stripe::setApiKey(config('services.stripe.secret'));
+            //     if ($seller->stripe_account_id != null) {
+            //         Stripe::setApiKey(config('services.stripe.secret'));
     
-                    try {
-                        Transfer::create([
-                            'amount' => $payout->amount * 100,
-                            'currency' => 'usd',
-                            'destination' => $seller->stripe_account_id,
-                        ]);
+            //         try {
+            //             Transfer::create([
+            //                 'amount' => $payout->amount * 100,
+            //                 'currency' => 'usd',
+            //                 'destination' => $seller->stripe_account_id,
+            //             ]);
     
-                        $payout->update(['status' => 'Paid']);
+            //             $payout->update(['status' => 'Paid']);
     
-                    } catch (\Exception $e) {
-                        $this->error($e->getMessage());
-                    }
-                }
-            }
+            //         } catch (\Exception $e) {
+            //             $this->error($e->getMessage());
+            //         }
+            //     }
+            // }
         }
     
         $this->info('Payouts paid successfully.');
