@@ -68,9 +68,9 @@ class ChatController extends Controller
                     
                 ], 
 
-                function ($message) use ($Seller) {
+                function ($message) use ($Customer) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($Seller->email);
+                    $message->to($Customer->email);
                     $message->subject('Message');
                 });
         }
