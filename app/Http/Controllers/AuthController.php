@@ -129,7 +129,9 @@ class AuthController extends Controller
             $save = $user->save();
             if($save)
             {
-                return response(['status' => true, 'message' => 'Success']);
+                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+
+                return response(['status' => true, 'message' => 'Success','token' => $token,'user'=>$user]);
             }
             else
             {
