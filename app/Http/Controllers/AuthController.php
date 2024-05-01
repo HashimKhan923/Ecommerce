@@ -73,7 +73,8 @@ class AuthController extends Controller
             return response(['status' => false, 'message' => 'Email does not exist']);
         }        
         else{
-            $token = uniqid();
+            $token = substr(uniqid(), 0, 6);
+
             $query->remember_token = $token;
             $query->save();
             Mail::send(
