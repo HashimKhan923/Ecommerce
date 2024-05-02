@@ -34,7 +34,7 @@ class HomeController extends Controller
                 $subQuery->where('stock', '>', 0);
             });
         })
-        ->orderBy('id', 'desc')
+        ->orderBy('id', 'desc') 
         ->take(24)
         ->get();
     
