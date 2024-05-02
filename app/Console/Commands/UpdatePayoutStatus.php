@@ -32,7 +32,7 @@ class UpdatePayoutStatus extends Command
     public function handle()
     {
 
-        $threeDaysAgo = Carbon::now()->subDays(3);
+        $threeDaysAgo = Carbon::now()->subDays(5);
 
         $payouts = Payout::where('created_at', '<=', $threeDaysAgo)
                         ->where('status', '!=', 'Paid')
@@ -42,24 +42,24 @@ class UpdatePayoutStatus extends Command
                         foreach ($payouts as $payout) {
                             $Seller = User::where('id',$payout->seller_id)->first();
 
-                            // if($Seller->stripe_account_id != null)
-                                        // {
-                                        //     Stripe::setApiKey(config('services.stripe.secret'));
+                            if($Seller->stripe_account_id != null)
+                                        {
+                                            Stripe::setApiKey(config('services.stripe.secret'));
 
                                 
-                                        //     try {
-                                        //         Transfer::create([
-                                        //             'amount' => $payout->amount * 100,
-                                        //             'currency' => 'usd',
-                                        //             'destination' => $Seller->stripe_account_id,
-                                        //         ]);
+                                            try {
+                                                Transfer::create([
+                                                    'amount' => $payout->amount * 100,
+                                                    'currency' => 'usd',
+                                                    'destination' => $Seller->stripe_account_id,
+                                                ]);
 
-                                        //     } catch (\Exception $e) {
-                                        //         return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
-                                        //     }
+                                            } catch (\Exception $e) {
+                                                return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
+                                            }
 
                                             
-                            // }
+                            }
 
                             $payout->status = 'Paid';
                             $payout->save();
