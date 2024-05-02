@@ -24,13 +24,13 @@ class HomeController extends Controller
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal.deal_product',
-            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_variant'
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->where('published', 1)
         ->where(function($query) {
             $query->whereHas('stock', function($subQuery) {
                 $subQuery->where('stock', '>', 0);
             })
-            ->orWhereHas('product_variant', function($subQuery) {
+            ->orWhereHas('product_varient', function($subQuery) {
                 $subQuery->where('stock', '>', 0);
             });
         })
