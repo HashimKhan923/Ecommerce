@@ -33,5 +33,7 @@ class CouponUpdate extends Command
             Coupon::where('end_date', '<=', now())->update(['status' => 0]);
 
         }
+
+        $this->info('Payouts paid successfully.');
     }
 }
