@@ -24,8 +24,19 @@ class HomeController extends Controller
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal.deal_product',
-            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy('id', 'desc')->take(24);
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_variant'
+        ])->where('published', 1)
+        ->where(function($query) {
+            $query->whereHas('stock', function($subQuery) {
+                $subQuery->where('stock', '>', 0);
+            })
+            ->orWhereHas('product_variant', function($subQuery) {
+                $subQuery->where('stock', '>', 0);
+            });
+        })
+        ->orderBy('id', 'desc')
+        ->take(24)
+        ->get();
     
         $TopSelling = clone $Products;
         $TopSelling->orderBy('num_of_sale', 'desc')->take(10);
