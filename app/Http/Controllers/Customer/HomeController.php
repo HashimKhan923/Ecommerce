@@ -19,12 +19,22 @@ class HomeController extends Controller
     public function index()
     {
         $Products = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 
+            'category', 
+            'brand', 
+            'model', 
+            'stock', // Assuming this is a relationship that checks stock availability
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
-            'discount', 'tax', 'shipping', 'deal.deal_product',
-            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+            'discount', 
+            'tax', 
+            'shipping', 
+            'deal.deal_product',
+            'wholesale', 
+            'shop.shop_policy', 
+            'reviews.user', 
+            'product_varient'
         ])
         ->where('published', 1)
         ->whereHas('stock', function ($query) {
