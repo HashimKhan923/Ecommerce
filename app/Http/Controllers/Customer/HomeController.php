@@ -25,9 +25,7 @@ class HomeController extends Controller
             },
             'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy('id', 'desc')->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->take(24);
+        ])->where('published', 1)->orderBy('id', 'desc')->take(24);
     
         $TopSelling = clone $Products;
         $TopSelling->orderBy('num_of_sale', 'desc')->take(10);
