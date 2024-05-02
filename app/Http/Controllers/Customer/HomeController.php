@@ -18,14 +18,29 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $Products = Product::with([
+        $query = Product::with([
             'user', 'category', 'brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy('id', 'desc')->take(24);
+        ])->where('published', 1)
+        ->where(function($query) {
+            $query->whereHas('stock', function($subQuery) {
+                $subQuery->where('stock', '>', 0);
+            })
+            ->orWhereHas('product_varient', function($subQuery) {
+                $subQuery->where('stock', '>', 0);
+            });
+        })
+        ->orderBy('id', 'desc');
+        
+        // Output the SQL to see if the query is constructed correctly
+        dd($query->toSql());
+        
+        // Fetch the results
+        $Products = $query->take(24)->get();
     
         $TopSelling = clone $Products;
         $TopSelling->orderBy('num_of_sale', 'desc')->take(10);
