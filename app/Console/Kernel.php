@@ -7,6 +7,12 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
+
+    protected $commands = [
+        Commands\UpdatePayoutStatus::class,
+    ];
+
     /**
      * Define the application's command schedule.
      */
@@ -14,8 +20,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('payout:update')->weekly();
+        $schedule->command('payout:update')->daily();
     }
+
+
+    
 
     /**
      * Register the commands for the application.

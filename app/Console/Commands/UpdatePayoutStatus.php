@@ -31,41 +31,44 @@ class UpdatePayoutStatus extends Command
      */
     public function handle()
     {
-        $payouts = Payout::where('status', 'Un Paid')->get();
-    
-        foreach ($payouts as $payout) {
-            $seller = User::where('id', $payout->seller_id)->first();
-            $startDate = Carbon::parse($payout->created_at);
-    
-            if (Carbon::parse($payout->created_at)->diffInDays(now()) >= 5 && !$this->isWeekend($startDate)) {
-    
-                // if ($seller->stripe_account_id != null) {
-                //     Stripe::setApiKey(config('services.stripe.secret'));
-    
-                //     try {
-                //         Transfer::create([
-                //             'amount' => $payout->amount * 100,
-                //             'currency' => 'usd',
-                //             'destination' => $seller->stripe_account_id,
-                //         ]);
-    
-                        $payout->update(['status' => 'Paid']);
-    
-                //     } catch (\Exception $e) {
-                //         $this->error($e->getMessage());
-                //     }
-                // }
-            }
-        }
-    
+
+        $threeDaysAgo = Carbon::now()->subDays(3);
+
+        $payouts = Payout::where('created_at', '<=', $threeDaysAgo)
+                        ->where('status', '!=', 'Paid')
+                        ->get();
+
+
+                        foreach ($payouts as $payout) {
+                            $Seller = User::where('id',$payout->seller_id)->first();
+
+                            // if($Seller->stripe_account_id != null)
+                                        // {
+                                        //     Stripe::setApiKey(config('services.stripe.secret'));
+
+                                
+                                        //     try {
+                                        //         Transfer::create([
+                                        //             'amount' => $payout->amount * 100,
+                                        //             'currency' => 'usd',
+                                        //             'destination' => $Seller->stripe_account_id,
+                                        //         ]);
+
+                                        //     } catch (\Exception $e) {
+                                        //         return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
+                                        //     }
+
+                                            
+                            // }
+
+                            $payout->status = 'Paid';
+                            $payout->save();
+                        }                
+
+
         $this->info('Payouts paid successfully.');
+
+        
     }
 
-
-   protected function isWeekend(Carbon $date)
-   {
-
-        return $date->isWeekend();
-
-   }
 }
