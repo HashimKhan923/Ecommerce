@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('payout:update')->daily();
+        $schedule->command('payout:update')->hourly();
     }
 
 
