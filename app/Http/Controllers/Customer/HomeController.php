@@ -25,7 +25,7 @@ class HomeController extends Controller
             },
             'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)
+        ])->where('published', 1)->orderBy('id', 'desc')
         ->where(function($query) {
             $query->whereHas('stock', function($subQuery) {
                 $subQuery->where('stock', '>', 0);
@@ -34,7 +34,7 @@ class HomeController extends Controller
                 $subQuery->where('stock', '>', 0);
             });
         })
-        ->orderBy('id', 'desc') 
+         
         ->take(24)
         ->get();
     
