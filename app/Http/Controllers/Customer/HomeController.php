@@ -19,7 +19,9 @@ class HomeController extends Controller
     public function index()
     {
         $Products = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category', 'brand', 'model', 'stock'=> function($query) {
+                $query->where('stock','>',0);
+            },
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
