@@ -40,7 +40,6 @@ class HomeController extends Controller
         ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->orderBy('id', 'desc') // Moved orderBy before get() method
         ->take(24)
         ->get();
         
