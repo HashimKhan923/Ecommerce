@@ -40,9 +40,10 @@ class HomeController extends Controller
         ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->orderBy('id', 'desc')
+        ->orderBy('id', 'desc') // Moved orderBy to the query builder
         ->take(24)
         ->get();
+        
     
         $TopSelling = clone $Products;
         $TopSelling->orderBy('num_of_sale', 'desc')->take(10);
