@@ -40,7 +40,7 @@ class HomeController extends Controller
     
         $allProducts = $Products->get();
         $Categories = Category::with('product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
-        $brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
