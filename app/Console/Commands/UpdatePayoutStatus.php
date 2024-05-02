@@ -32,9 +32,9 @@ class UpdatePayoutStatus extends Command
     public function handle()
     {
 
-        $threeDaysAgo = Carbon::now()->subDays(5);
+        $DaysAgo = Carbon::now()->subDays(5);
 
-        $payouts = Payout::where('created_at', '<=', $threeDaysAgo)
+        $payouts = Payout::where('created_at', '<=', $DaysAgo)
                         ->where('status', '!=', 'Paid')
                         ->get();
 
