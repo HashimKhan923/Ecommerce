@@ -13,4 +13,9 @@ class MyCustomer extends Model
     {
         return $this->belongsTo(User::class,'customer_id','id');
     } 
+
+    public function subscriber()
+    {
+        return $this->hasOne(Subscriber::class,'customer_id','id');
+    } 
 }
