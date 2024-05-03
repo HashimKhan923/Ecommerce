@@ -12,7 +12,7 @@ class SubscriberController extends Controller
 {
     public function create(Request $request)
     {
-        $check = Subscriber::where('customer_id',$request->customer_id)->first();
+        $check = Subscriber::where('email',$request->email)->first();
         if($check)
         {
             $response = ['status'=>true,"message" => "You have Already Subscribed!"];
@@ -21,7 +21,7 @@ class SubscriberController extends Controller
         else
         {
             $new = new Subscriber();
-            $new->customer_id = $request->customer_id;
+            $new->email = $request->email;
             $new->date = Carbon::now('Asia/Karachi');
             $new->save();
 
