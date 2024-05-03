@@ -16,6 +16,11 @@ class MyCustomer extends Model
 
     public function subscriber()
     {
-        return $this->hasOne(Subscriber::class,'customer_id','id');
-    } 
+        return $this->hasOne(Subscriber::class,'customer_id','customer_id');
+    }
+    
+    public function orders()
+    {
+        return $this->hasMany(Subscriber::class,'customer_id','customer_id');
+    }
 }
