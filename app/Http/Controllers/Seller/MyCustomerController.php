@@ -10,11 +10,13 @@ class MyCustomerController extends Controller
 {
   public function index($seller_id)
   {
-      $data = MyCustomer::with(['customer.time_line' => function ($query) use ($seller_id) {
-          $query->where('seller_id', $seller_id);
-      }, 'orders'])
-      ->where('seller_id', $seller_id)
-      ->get();
+    $data = MyCustomer::with(['customer.time_line' => function ($query) use ($seller_id) {
+      $query->where('seller_id', $seller_id);
+        }, 'orders' => function ($query) use ($seller_id) {
+            $query->where('sellers_id', $seller_id);
+        }])
+        ->where('seller_id', $seller_id)
+    ->get();
   
       return response()->json(['data' => $data]);
 }
