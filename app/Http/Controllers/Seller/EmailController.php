@@ -37,7 +37,7 @@ class EmailController extends Controller
         );
     }
 
-    public function seller_to_customer_query()
+    public function seller_to_customer_query(Request $request)
     {
         $Seller = User::where('id',$request->seller_id)->first();
         $Customer = User::where('id',$request->customer_id)->first();
