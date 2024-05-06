@@ -47,6 +47,7 @@ class OrderController extends Controller
 
             OrderTimeline::create([
                 'seller_id' => $seller->id,
+                'customer_id' => $order->customer_id,
                 'order_id' => $request->id,
                 'time_line' => 'order status changed to delivered'
             ]);
@@ -80,6 +81,7 @@ class OrderController extends Controller
 
             OrderTimeline::create([
                 'seller_id' => $seller->id,
+                'customer_id' => $order->customer_id,
                 'order_id' => $request->id,
                 'time_line' => 'order completion email sent to customer'
             ]);
@@ -151,6 +153,7 @@ class OrderController extends Controller
 
             OrderTimeline::create([
                 'seller_id' => $seller->id,
+                'customer_id' => $order->customer_id,
                 'order_id' => $request->id,
                 'time_line' => 'Successfully created new payout: $'.$NewPayout->amount.' USD.'
             ]);
@@ -253,6 +256,7 @@ class OrderController extends Controller
 
         OrderTimeline::create([
             'seller_id' => $seller->id,
+            'customer_id' => $order->customer_id,
             'order_id' => $request->id,
             'time_line' => 'Order cancelled'
         ]);

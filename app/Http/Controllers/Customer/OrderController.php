@@ -89,18 +89,21 @@ public function create(Request $request)
 
         OrderTimeline::create([
             'seller_id' => $vendorId,
+            'customer_id' => $request->customer_id,
             'order_id' => $newOrder->id,
             'time_line' => $newOrder->amount .' USD was captured using a '.$request->payment_method.'.'
         ]);
 
         OrderTimeline::create([
             'seller_id' => $vendorId,
+            'customer_id' => $request->customer_id,
             'order_id' => $newOrder->id,
             'time_line' => $customer->name .' placed this order on '.$shop->name.' checkout(#'.$newOrder->id.')'
         ]);
 
         OrderTimeline::create([
             'seller_id' => $vendorId,
+            'customer_id' => $request->customer_id,
             'order_id' => $newOrder->id,
             'time_line' => 'Confirmation '.$newOrder->order_code.' was genereated for this order'
         ]);
