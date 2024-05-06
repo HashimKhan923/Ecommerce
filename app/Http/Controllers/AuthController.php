@@ -67,10 +67,9 @@ class AuthController extends Controller
             'email' => 'required|email'
         ]);
         $query = User::where('email',$req->email)->first();
-        // dd($query);
         if($query == null)
         {
-            return response(['status' => false, 'message' => 'Email does not exist']);
+            return response(['status' => false, 'message' => 'Email does not exist',422]);
         }        
         else{
             $token = substr(uniqid(), 0, 6);
@@ -90,7 +89,7 @@ class AuthController extends Controller
                 $message->to($query->email);
                 $message->subject('Forget Password');
             });
-            return response(['status' => true, 'message' => 'Token send to your email']);
+            return response(['status' => true, 'message' => 'Token send to your email',200]);
 
         }
 
@@ -104,10 +103,10 @@ class AuthController extends Controller
         $query = User::where('remember_token',$req->token)->first();
         if($query == null)
         {
-            return response(['status' => false, 'message' => 'Token not match']);
+            return response(['status' => false, 'message' => 'Token not match',422]);
         }
         else{
-            return response(['status' => true, 'message' => 'Token match','token'=>$req->token]);
+            return response(['status' => true, 'message' => 'Token match','token'=>$req->token,200]);
         }
 
     }
@@ -121,7 +120,7 @@ class AuthController extends Controller
         $user = User::where('remember_token','=',$req->token)->first();  
         if($user == null)
         {
-            return response(['status' => false, 'message' => 'Token not match']);
+            return response(['status' => false, 'message' => 'Token not match',422]);
         }
         else
         {
@@ -132,11 +131,11 @@ class AuthController extends Controller
             {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
 
-                return response(['status' => true, 'message' => 'Success','token' => $token,'user'=>$user]);
+                return response(['status' => true, 'message' => 'Success','token' => $token,'user'=>$user,200]);
             }
             else
             {
-                return response(['status' => false, 'message' => 'Failed']);
+                return response(['status' => false, 'message' => 'Failed',422]);
             }
         }
 
@@ -194,7 +193,7 @@ class AuthController extends Controller
       {
         $check->remember_token = null;
         $check->save();
-        $response = ['status' => true, "message" => "Email Verified Successfully!"];
+        $response = ['status' => true, "message" => "Email Verified Successfully!",200];
         $jsonMessage = json_encode($response);
         if($check->user_type == 'seller')
         {
@@ -213,7 +212,7 @@ class AuthController extends Controller
       }
       else
       {
-        $response = ['status' => true, "message" => "something went wrong!"];
+        $response = ['status' => true, "message" => "something went wrong!",422];
         $jsonMessage = json_encode($response);
         $redirectUrl = "https://dragonautomart.com/?jsonMessage=" . urlencode($jsonMessage);
         
