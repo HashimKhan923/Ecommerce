@@ -12,11 +12,11 @@ class MyCustomerController extends Controller
   {
       $data = MyCustomer::with(['customer.time_line' => function ($query) use ($seller_id) {
           $query->where('seller_id', $seller_id);
-      }, ])
+      }, 'orders'])
       ->where('seller_id', $seller_id)
       ->get();
   
       return response()->json(['data' => $data]);
-  }
+}
 
 }
