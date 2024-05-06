@@ -76,10 +76,7 @@
         <p class="font-size-18">Hi, Mr. {{$Customer->name}}</p>
         <hr>
 
-        <!-- <div>
-        <img src="{{ asset('emailLogo.png') }}" width="200" alt="Company Logo" class="logo">
-  <h4>{{$ShopName}}</h4>
-</div> -->
+
 
 
 <p> <strong>Seller Name: </strong> {{$Seller->name}} </p>
