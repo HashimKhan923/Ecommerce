@@ -731,7 +731,8 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::get('/customer/profile/view/{id}', 'App\Http\Controllers\Customer\AuthController@profile_view');
         Route::post('/customer/profile/update', 'App\Http\Controllers\Customer\AuthController@profile_update');
         Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
-        Route::get('/customer/profile/check', 'App\Http\Controllers\Customer\AuthController@usercheck'); 
+        Route::get('/customer/profile/check', 'App\Http\Controllers\Customer\AuthController@usercheck');
+        Route::get('/customer/profile/delete/{id}', 'App\Http\Controllers\Customer\AuthController@delete'); 
         Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
 
 
