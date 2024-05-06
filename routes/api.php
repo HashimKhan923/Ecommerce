@@ -559,6 +559,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => '/seller/email/'], function() {
                 Route::controller(App\Http\Controllers\Seller\EmailController::class)->group(function () {
                     Route::post('sent','sent');
+                    Route::post('query','seller_to_customer_query');
                 });
             });
 

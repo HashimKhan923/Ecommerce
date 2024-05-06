@@ -36,4 +36,25 @@ class EmailController extends Controller
             }
         );
     }
+
+    public function seller_to_customer_query()
+    {
+        $Seller = User::where('id',$request->seller_id)->first();
+        $Customer = User::where('id',$request->customer_id)->first();
+
+        Mail::send(
+        'email.seller_to_customer_query',
+        [
+            'Customer'=>$Customer,
+            'Seller'=>$Seller,
+            'Msg'=>$request->message,
+            
+        ], 
+
+        function ($message) use ($Customer,$Seller) {
+            $message->from($Seller->email);
+            $message->to($Customer->email);
+            $message->subject('Message');
+        });
+    }
 }
