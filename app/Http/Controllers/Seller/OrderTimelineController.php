@@ -12,6 +12,7 @@ class OrderTimelineController extends Controller
     {
         OrderTimeline::create([
             'seller_id' => $request->seller_id,
+            'customer_id' => $request->customer_id,
             'order_id' => $request->order_id,
             'time_line' => $request->time_line
         ]);
