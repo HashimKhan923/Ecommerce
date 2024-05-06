@@ -81,7 +81,6 @@
 
 <p> <strong>Seller Name: </strong> {{$Seller->name}} </p>
 <p> <strong>Seller Email: </strong> {{$Seller->email}} </p>
-<hr>
 <p> <strong>Message: </strong> {{$Msg}} </p>
 
 
