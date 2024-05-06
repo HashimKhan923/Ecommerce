@@ -8,10 +8,15 @@ use App\Models\MyCustomer;
 
 class MyCustomerController extends Controller
 {
-    public function index($seller_id)
-    {
-      $data = MyCustomer::with('customer','orders')->where('seller_id',$seller_id)->get();
+  public function index($seller_id)
+  {
+      $data = MyCustomer::with(['customer.time_line' => function ($query) use ($seller_id) {
+          $query->where('seller_id', $seller_id);
+      }, 'orders'])
+      ->where('seller_id', $seller_id)
+      ->get();
+  
+      return response()->json(['data' => $data]);
+  }
 
-      return response()->json(['data'=>$data]);
-    }
 }
