@@ -21,7 +21,8 @@ class MyCustomer extends Model
     
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'orders', 'customer_id', 'customer_id');
+        return $this->belongsToMany(Order::class, 'orders', 'customer_id', 'customer_id')
+                    ->withPivot('customer_id as pivot_customer_id');
     }
     
 }
