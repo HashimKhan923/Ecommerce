@@ -240,4 +240,12 @@ class AuthController extends Controller
         }
 
     }
+
+    public function delete($id)
+    {
+        User::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "Account Deleted Successfully!"];
+        return response($response, 200);
+    }
 }
