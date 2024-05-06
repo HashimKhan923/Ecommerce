@@ -52,9 +52,13 @@ class EmailController extends Controller
         ], 
 
         function ($message) use ($Customer,$Seller) {
-            $message->from($Seller->email);
+            $message->from('support@dragonautomart.com','Dragon Auto Mart');
             $message->to($Customer->email);
-            $message->subject('Message');
+            if($request->seller_email)
+            {
+                $message->cc($request->seller_email);
+            }
+            $message->subject($request->subject);
         });
     }
 }
