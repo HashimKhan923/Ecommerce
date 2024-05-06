@@ -51,7 +51,7 @@ class EmailController extends Controller
             
         ], 
 
-        function ($message) use ($Customer,$Seller) {
+        function ($message) use ($Customer,$request) {
             $message->from('support@dragonautomart.com','Dragon Auto Mart');
             $message->to($Customer->email);
             if($request->seller_email)
