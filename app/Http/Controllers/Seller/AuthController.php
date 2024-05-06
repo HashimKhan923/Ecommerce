@@ -162,6 +162,9 @@ class AuthController extends Controller
                 'settings' => [
                     'payouts' => [
                         'statement_descriptor'=> $request->shop_name
+                    ],
+                    'payments' => [
+                        'statement_descriptor'=> $request->shop_name
                     ]
                     
                 ],
