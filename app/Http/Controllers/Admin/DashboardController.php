@@ -18,6 +18,6 @@ class DashboardController extends Controller
         $Stores = Shop::count();
         $Products = Product::count();
         $Orders = Order::count();
-        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$St]);
+        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores]);
     }
 }
