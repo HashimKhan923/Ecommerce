@@ -13,6 +13,7 @@ use App\Models\OrderDetail;
 use App\Models\FeaturedProductOrder;
 use App\Models\MyCustomer;
 use App\Models\CouponUser;
+use App\Models\Coupon;
 use App\Models\OrderTimeline;
 use Illuminate\Support\Str;
 use Mail;
@@ -135,6 +136,8 @@ public function create(Request $request)
 
         if($request->coupon_id)
         {
+            Coupon::where('id', $request->coupon_id)->increment('used');
+
             $CouponUser = new CouponUser();
             $CouponUser->coupon_id = $request->coupon_id;
             $CouponUser->user_id = $request->customer_id;
