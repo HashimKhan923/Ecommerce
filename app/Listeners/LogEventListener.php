@@ -22,7 +22,7 @@ class LogEventListener
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(MessageLogged $event): void
     {
         if ($event->level === 'error') {
             $error = $event->message;
