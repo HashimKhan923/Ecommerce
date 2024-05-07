@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $Users = User::all();
+        // $Users = User::all();
         $Stores = Shop::count();
         $Products = Product::count();
         $Orders = Order::count();
