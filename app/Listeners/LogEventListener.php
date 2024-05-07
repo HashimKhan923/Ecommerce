@@ -33,7 +33,7 @@ class LogEventListener
                 ],
                 function ($message) {
                     $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('khanhash1994@gmail.com');
                     $message->subject('Error Log Notification');
                 }
             );
