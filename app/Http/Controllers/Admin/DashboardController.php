@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $Users = User::all();
-        $Stores = Shop::count();
+        $Stores = $St; // Intentional error
         $Products = Product::count();
         $Orders = Order::count();
         return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores]);
