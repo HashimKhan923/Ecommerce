@@ -16,6 +16,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        event(new SpecificErrorOccurred('Specific error message'));
         $Users = User::all();
         $Stores = Shop::count();
         $Products = Product::count();

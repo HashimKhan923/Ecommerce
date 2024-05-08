@@ -22,21 +22,11 @@ class LogEventListener
     /**
      * Handle the event.
      */
-    public function handle(MessageLogged $event): void
+    public function handle(SpecificErrorOccurred $event)
     {
-        if ($event->level === 'error') {
-            $error = $event->message;
-            // Send an email notification
-            Mail::send('email.error',
-                [
-                    'error' => $error
-                ],
-                function ($message) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('khanhash1994@gmail.com');
-                    $message->subject('Error Log Notification');
-                }
-            );
-        }
+        Mail::raw($event->errorMessage, function ($message) {
+            $message->to('khanhash1994@gmail.com');
+            $message->subject('Error Notification');
+        });
     }
 }
