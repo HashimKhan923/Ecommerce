@@ -619,7 +619,11 @@ class ProductController extends Controller
 
                 if($checkCount < 2)
                 {
-                    unlink(public_path('ProductGallery/'.$item1->image));
+                    $fileToDelete = public_path('ProductGallery/'.$item1->image);
+
+                        if (file_exists($fileToDelete)) {
+                            unlink($fileToDelete);
+                        } 
                 }
             }
             
@@ -630,7 +634,11 @@ class ProductController extends Controller
 
                 if($checkCount < 2)
                 {
-                    unlink(public_path('ProductVarient/'.$item2->image));
+                    $fileToDelete = public_path('ProductVarient/'.$item2->image);
+
+                    if (file_exists($fileToDelete)) {
+                        unlink($fileToDelete);
+                    } 
                 }
             }
     
@@ -768,7 +776,11 @@ class ProductController extends Controller
 
         if($checkCount < 2)
         {
-            unlink(public_path('ProductGallery/'.$file->image));
+            $fileToDelete = public_path('ProductGallery/'.$file->image);
+
+            if (file_exists($fileToDelete)) {
+                unlink($fileToDelete);
+            } 
         }
   
         $file->delete();
