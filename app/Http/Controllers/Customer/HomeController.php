@@ -45,7 +45,7 @@ class HomeController extends Controller
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
             'product.category', 'product.brand', 'product.model', 'product.stock',
-            'product.product_varient', 'product.reviews.user', 'product.tax')->get();
+            'product.product_varient', 'product.reviews.user', 'product.tax')->where('status',1)->get();
     
         return response()->json([
             'Products' => $allProducts,
