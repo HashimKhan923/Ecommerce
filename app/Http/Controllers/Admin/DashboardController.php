@@ -16,13 +16,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        event(new SpecificErrorOccurred('Specific error message'));
         $Users = User::all();
         $Stores = Shop::count();
         $Products = Product::count();
         $Orders = Order::count();
 
-        Log::error('Intentional error: Stores variable should not be used here');
 
         return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores]);
     }
