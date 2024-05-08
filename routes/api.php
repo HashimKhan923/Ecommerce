@@ -337,7 +337,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                             /// Shop \\\
 
-                Route::group(['prefix' => '/admin/stores/'], function() {
+                Route::group(['prefix' => '/admin/shop/'], function() {
                     Route::controller(App\Http\Controllers\Admin\ShopController::class)->group(function () {
                         Route::get('show','index');
                         Route::get('status/{id}','status');
