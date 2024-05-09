@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Models extends Model
 {
+    protected $casts = [
+        'meta_keywords' => 'array',
+    ];
     use HasFactory;
 }

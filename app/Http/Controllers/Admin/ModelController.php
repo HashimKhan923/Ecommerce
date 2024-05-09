@@ -51,6 +51,7 @@ class ModelController extends Controller
         $new->slug = $request->slug;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
+        $new->meta_keywords = $request->meta_keywords;
         $new->save();
 
         $response = ['status'=>true,"message" => "New Models Added Successfully!"];
@@ -94,6 +95,7 @@ class ModelController extends Controller
         $update->slug = $request->slug;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
+        $update->meta_keywords = $request->meta_keywords;
         $update->save();
 
         $response = ['status'=>true,"message" => "Models Updated Successfully!"];

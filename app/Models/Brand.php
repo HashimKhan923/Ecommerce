@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     use HasFactory;
-
+    protected $casts = [
+        'meta_keywords' => 'array',
+    ];
 
     public function model()
     {

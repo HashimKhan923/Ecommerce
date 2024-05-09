@@ -9,6 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'meta_keywords' => 'array',
+    ];
+
     public function product()
     {
         return $this->hasMany(Product::class,'category_id','id');
