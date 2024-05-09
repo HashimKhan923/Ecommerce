@@ -142,6 +142,7 @@ public function create(Request $request)
             $CouponUser->coupon_id = $request->coupon_id;
             $CouponUser->user_id = $request->customer_id;
             $CouponUser->discount = $request->coupon_discount;
+            $CouponUser->coupon_code = $request->coupon_code;
             $CouponUser->order_id = $newOrder->id;
             $CouponUser->save();
         }
