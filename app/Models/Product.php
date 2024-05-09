@@ -13,7 +13,17 @@ class Product extends Model
         'trim' => 'array',
     ];
 
-    protected $fillable = ['average_rating'];
+    protected $fillable = [
+        'average_rating',
+        'name',
+        'category_id',
+        'brand_id',
+        'model_id',
+        'weight',
+        'sku',
+        'tags',
+        'price'
+    ];
 
 
 

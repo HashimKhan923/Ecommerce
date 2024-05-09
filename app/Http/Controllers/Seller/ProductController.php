@@ -380,6 +380,8 @@ class ProductController extends Controller
             
         }
 
+
+
         if ($request->varients != null) {
             foreach ($request->varients as $varientData) {
                 $varient = ProductVarient::where('id',$varientData['id'])->first();
@@ -562,6 +564,25 @@ class ProductController extends Controller
         return response($response, 200);
     }
 
+
+
+    }
+
+    public function bulk_update(Request $request)
+    {
+        Product::whereIn('id',$request->id)->update(
+            [
+                'name'=> $request->name,
+                'category_id'=> $request->category_id,
+                'brand_id'=> $request->brand_id,
+                'model_id'=> $request->model_id,
+                'weight'=> $request->weight,
+                'sku'=> $request->sku,
+                'tags'=> $request->tags,
+                'price'=> $request->price,
+   
+            ]
+        );
     }
 
     public function delete($id)

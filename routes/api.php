@@ -533,6 +533,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('create','create');
                     // Route::get('sell_similar/{id}','sell_similar');
                     Route::post('update','update');
+                    Route::post('bulk_update','bulk_update');
                     Route::get('delete/{id}','delete');
                     Route::get('is_published/{id}','is_published');
                     Route::post('is_featured','is_featured');
