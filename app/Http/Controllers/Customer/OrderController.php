@@ -166,10 +166,14 @@ public function create(Request $request)
         
         foreach ($shopProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-    
+            $sale = Product::with('product_single_gallery')->where('id', $product->id)->first();
+
             $newOrderDetail = new OrderDetail();
             $newOrderDetail->order_id = $newOrder->id;
             $newOrderDetail->product_id = $product->id;
+            $newOrderDetail->product_name = $sale->name;
+            $newOrderDetail->product_image = $sale->product_single_gallery->image;
+            $newOrderDetail->product_varient = $orderProduct['product_varient'];;
             $newOrderDetail->product_price = $orderProduct['product_price'];
             $newOrderDetail->shipping_amount = $orderProduct['shipping_amount'];
             $newOrderDetail->quantity = $orderProduct['quantity'];
@@ -178,7 +182,7 @@ public function create(Request $request)
 
     
             $VarientStock = ProductVarient::where('product_id', $product->id)->first();
-            $sale = Product::where('id', $product->id)->first();
+            
             $stock = Stock::where('product_id', $product->id)->first();
 
 

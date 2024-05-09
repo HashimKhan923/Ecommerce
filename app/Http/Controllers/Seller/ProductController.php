@@ -770,6 +770,7 @@ class ProductController extends Controller
 
     public function gallery_delete($id)
     {
+        
       $file = ProductGallery::find($id);
 
         $checkCount = ProductGallery::where('image',$file->image)->count();
