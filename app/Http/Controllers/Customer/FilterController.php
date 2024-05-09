@@ -23,6 +23,9 @@ class FilterController extends Controller
     
     $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
         ->where('published', 1)
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })
         ->where(function ($query) use ($keywords,$searchValue) {
             $query->where('name', 'LIKE', "%$searchValue%");
     
