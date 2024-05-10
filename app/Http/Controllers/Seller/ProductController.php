@@ -52,12 +52,6 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-
-
-        
-        // $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
-        // if($checkPackage)
-        // {
         $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'seller';
@@ -67,7 +61,6 @@ class ProductController extends Controller
         $new->weight = $request->weight;
         $new->lenght = $request->lenght;
         $new->start_year = $request->year;
-        // $new->end_year = $request->end_year;
         $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
@@ -87,24 +80,6 @@ class ProductController extends Controller
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
         $new->video = $request->video;
-        // if($request->file('meta_img'))
-        // {
-        //     $file= $request->meta_img;
-        //     $filename= date('YmdHis').$file->getClientOriginalName();
-        //     $file->move(public_path('ProductMetaImg'),$filename);
-
-        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-        //     ->encode('webp', 70); 
-    
-            
-        //     $compressedFilename = 'compressed_' . $filename;
-        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
-    
-        //     unlink(public_path('ProductMetaImg/'.$filename));
-
-
-        //     $new->meta_img = $compressedFilename;
-        // }
         $new->slug = $request->slug;
         $new->save();
 
@@ -195,15 +170,6 @@ class ProductController extends Controller
                 $stock->save();
         }
 
-        
-        // if($request->tax != null)
-        // {
-        //     $tax = new Tax();
-        //     $tax->product_id = $new->id;
-        //     $tax->tax = $request->tax;
-        //     $tax->tax_type = $request->tax_type;
-        //     $tax->save();
-        // }
 
 
         if($request->deal_id != null)
@@ -288,302 +254,344 @@ class ProductController extends Controller
 
 
 
+    // public function update(Request $request)
+    // {
+
+
+    //     $update = Product::where('id',$request->id)->first();
+    //     $update->name = $request->name;
+    //     $update->added_by = 'seller';
+    //     $update->user_id = $request->user_id;
+    //     $update->category_id = $request->category_id;
+    //     $update->height = $request->height;
+    //     $update->weight = $request->weight;
+    //     $update->lenght = $request->lenght;
+    //     $update->start_year = $request->year;
+    //     $update->make = $request->make;
+    //     $update->unit = $request->unit;
+    //     $update->sku = $request->sku;
+    //     $update->bar_code = $request->bar_code;
+    //     $update->condition = $request->condition;
+    //     $update->brand_id = $request->brand_id;
+    //     $update->model_id = $request->model_id;
+    //     $update->tags = $request->tags;
+    //     $update->trim = $request->trim;
+    //     $update->description = $request->description;
+    //     $update->price = $request->price;
+    //     $update->cost_price = $request->cost_price;
+    //     $update->shop_id = $request->shop_id;
+    //     $update->shipping = $request->shipping;
+    //     $update->featured = $request->featured;
+    //     $update->published = $request->published;
+    //     $update->is_tax = $request->is_tax;
+    //     $update->meta_title = $request->meta_title;
+    //     $update->video = $request->video;
+       
+    //     $update->slug = $request->slug;
+    //     $update->sku = $request->sku;
+    //     $update->save();
+
+
+    //     if ($request->photos) {
+    //         $images = $request->photos;
+        
+    //         foreach ($images as $image) {
+
+    //             if (isset($image['image_id']))
+    //             {
+    //                 $gallery = ProductGallery::where('id', $image['image_id'])->first();
+    //                 $gallery->order = $image['order'];
+    //             }
+    //             else
+    //             {
+    //                 $gallery = new ProductGallery();
+    //                 $gallery->product_id = $update->id;
+    //                 $gallery->order = $image['order'];
+        
+    //                 $filename = date('YmdHis') . $image['file']->getClientOriginalName();
+    //                 $compressedImage = Image::make($image['file']->getRealPath());
+    //                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+    //                 $gallery->image = $filename . '.webp';
+    //             }
+
+        
+    //             $gallery->save();
+
+
+            
+    //     }
+
+
+
+    //     if ($request->varients != null) {
+    //         foreach ($request->varients as $varientData) {
+    //             $varient = ProductVarient::where('id',$varientData['id'])->first();
+        
+    //             if ($varient) {
+    //                 $varient->color = $varientData['color'];
+    //                 $varient->size = $varientData['size'];
+    //                 $varient->bolt_pattern = $varientData['bolt_pattern'];
+    //                 $varient->price = $varientData['varient_price'];
+    //                 $varient->discount_price = $varientData['varient_discount_price'];
+    //                 $varient->sku = $varientData['varient_sku'];
+    //                 $varient->stock = $varientData['varient_stock'];
+                    
+    //                 if(is_uploaded_file($varientData['varient_image']))
+    //                 {
+
+    //                     $checkCount = ProductVarient::where('image',$varient->image)->count();
+
+    //                     if($checkCount < 2)
+    //                     {
+    //                         unlink(public_path('ProductVarient/'.$varient->image));
+    //                     }
+
+    //                     $image = $varientData['varient_image'];
+    
+    //                     $filename = date('YmdHis') . $image->getClientOriginalName();
+        
+    //                     $compressedImage = Image::make($image->getRealPath());
+            
+    //                     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
+            
+    //                     $varient->image = $filename . '.webp';
+    //                 }
+    //                 $varient->save();
+    //             } else {
+    //                 $varient = new ProductVarient();
+    //                 $varient->product_id = $update->id;
+    //                 $varient->color = $varientData['color'];
+    //                 $varient->size = $varientData['size'];
+    //                 $varient->bolt_pattern = $varientData['bolt_pattern'];
+    //                 $varient->price = $varientData['varient_price'];
+    //                 $varient->discount_price = $varientData['varient_discount_price'];
+    //                 $varient->sku = $varientData['varient_sku'];
+    //                 $varient->stock = $varientData['varient_stock'];
+    //                 if(is_uploaded_file($varientData['varient_image']))
+    //                 {
+    //                     $image = $varientData['varient_image'];
+    
+    //                     $filename = date('YmdHis') . $image->getClientOriginalName();
+        
+    //                     $compressedImage = Image::make($image->getRealPath());
+            
+    //                     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
+            
+    //                     $varient->image = $filename . '.webp';
+    //                 }
+    //                 $varient->save();
+    //             }
+    //         }
+    //     }
+
+    //     if($request->discount != null)
+    //     {
+    //         $discount = Discount::where('product_id',$update->id)->first();
+
+    //         if($discount == null)
+    //         {
+    //             $discount = new Discount();
+    //         }
+
+    //         $discount->product_id = $update->id;
+    //         $discount->discount = $request->discount;
+    //         $discount->discount_start_date = $request->discount_start_date;
+    //         $discount->discount_end_date = $request->discount_end_date;
+    //         $discount->discount_type = $request->discount_type;
+    //         $discount->save();
+
+    //     }
+    //     else
+    //     {
+    //         $check_discount = Discount::where('product_id',$update->id)->first();
+
+    //         if($check_discount)
+    //         {
+    //             $check_discount->delete();
+    //         }
+    //     }
+
+    //     if($request->stock != null)
+    //     {
+    //         $stock = Stock::where('product_id',$update->id)->first();
+
+    //         if($stock == null)
+    //         {
+    //             $stock = new Stock();
+    //         }
+ 
+    //         $stock->product_id = $update->id;
+    //         $stock->stock = $request->stock;
+    //         $stock->min_stock = $request->min_stock;
+    //         $stock->save();
+
+    //     }
+
+    
+
+    //     if($request->shipping_type)
+    //     {
+
+    //         $shipping = Shipping::where('product_id',$update->id)->first();
+
+    //         if($shipping == null)
+    //         {
+    //             $shipping = new Shipping();
+    //         }
+
+
+    //             $shipping->product_id = $update->id;
+    //             $shipping->shipping_cost = $request->shipping_cost;
+    //             $shipping->is_qty_multiply = $request->is_qty_multiply;
+    //             $shipping->shipping_additional_cost = $request->shipping_additional_cost;
+    //             $shipping->est_shipping_days = $request->est_shipping_days;
+    //             $shipping->save();
+            
+
+    //     }
+
+
+
+    //     $response = ['status'=>true,"message" => "Product updated Successfully!"];
+    //     return response($response, 200);
+    //     }
+
+
+
+    // }
+
     public function update(Request $request)
     {
+        $update = Product::find($request->id);
+        if (!$update) {
+            $response = ['status'=>false, "message" => "Product not found"];
+            return response($response, 404);
+        }
 
-        // return $request;
-
-        $update = Product::where('id',$request->id)->first();
-        $update->name = $request->name;
+        $update->fill($request->except(['id', 'photos', 'varients', 'discount']));
         $update->added_by = 'seller';
-        $update->user_id = $request->user_id;
-        $update->category_id = $request->category_id;
-        $update->height = $request->height;
-        $update->weight = $request->weight;
-        $update->lenght = $request->lenght;
-        $update->start_year = $request->year;
-        // $update->end_year = $request->end_year;
-        $update->make = $request->make;
-        $update->unit = $request->unit;
-        $update->sku = $request->sku;
-        $update->bar_code = $request->bar_code;
-        $update->condition = $request->condition;
-        $update->brand_id = $request->brand_id;
-        $update->model_id = $request->model_id;
-        $update->tags = $request->tags;
-        $update->trim = $request->trim;
-        $update->description = $request->description;
-        $update->price = $request->price;
-        $update->cost_price = $request->cost_price;
-        $update->shop_id = $request->shop_id;
-        $update->shipping = $request->shipping;
-        $update->featured = $request->featured;
-        $update->published = $request->published;
-        $update->is_tax = $request->is_tax;
-        $update->meta_title = $request->meta_title;
-        $update->video = $request->video;
-        // if($request->file('meta_img'))
-        // {
-        //     if($update->meta_img)
-        //     {
-        //         unlink(public_path('ProductMetaImg/'.$update->meta_img));
-        //     }
-
-        //     $file= $request->meta_img;
-        //     $filename= date('YmdHis').$file->getClientOriginalName();
-        //     $file->move(public_path('ProductMetaImg'),$filename);
-
-        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-        //     ->encode('webp', 70); 
-    
-            
-        //     $compressedFilename = 'compressed_' . $filename;
-        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
-    
-        //     unlink(public_path('ProductMetaImg/'.$filename));
-
-
-        //     $update->meta_img = $filename;
-        // }
-        $update->slug = $request->slug;
-        $update->sku = $request->sku;
         $update->save();
 
-        // $request->merge(['photos' => $photoArray]);
-
         if ($request->photos) {
-            $images = $request->photos;
-        
-            foreach ($images as $image) {
-
-                if (isset($image['image_id']))
-                {
-                    $gallery = ProductGallery::where('id', $image['image_id'])->first();
-                    $gallery->order = $image['order'];
-                }
-                else
-                {
-                    $gallery = new ProductGallery();
-                    $gallery->product_id = $update->id;
-                    $gallery->order = $image['order'];
-        
+            foreach ($request->photos as $image) {
+                $gallery = ProductGallery::updateOrCreate(['id' => $image['image_id'] ?? null], [
+                    'product_id' => $update->id,
+                    'order' => $image['order']
+                ]);
+                if (!isset($image['image_id'])) {
                     $filename = date('YmdHis') . $image['file']->getClientOriginalName();
                     $compressedImage = Image::make($image['file']->getRealPath());
                     $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                     $gallery->image = $filename . '.webp';
+                    $gallery->save();
                 }
-
-        
-                $gallery->save();
-
-
-            
+            }
         }
 
-
-
-        if ($request->varients != null) {
+        if ($request->varients) {
             foreach ($request->varients as $varientData) {
-                $varient = ProductVarient::where('id',$varientData['id'])->first();
-        
-                if ($varient) {
-                    $varient->color = $varientData['color'];
-                    $varient->size = $varientData['size'];
-                    $varient->bolt_pattern = $varientData['bolt_pattern'];
-                    $varient->price = $varientData['varient_price'];
-                    $varient->discount_price = $varientData['varient_discount_price'];
-                    $varient->sku = $varientData['varient_sku'];
-                    $varient->stock = $varientData['varient_stock'];
-                    
-                    if(is_uploaded_file($varientData['varient_image']))
-                    {
-
-                        $checkCount = ProductVarient::where('image',$varient->image)->count();
-
-                        if($checkCount < 2)
-                        {
-                            unlink(public_path('ProductVarient/'.$varient->image));
-                        }
-
-                        $image = $varientData['varient_image'];
-    
-                        $filename = date('YmdHis') . $image->getClientOriginalName();
-        
-                        $compressedImage = Image::make($image->getRealPath());
-            
-                        $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-            
-                        $varient->image = $filename . '.webp';
-                    }
-                    $varient->save();
-                } else {
-                    $varient = new ProductVarient();
-                    $varient->product_id = $update->id;
-                    $varient->color = $varientData['color'];
-                    $varient->size = $varientData['size'];
-                    $varient->bolt_pattern = $varientData['bolt_pattern'];
-                    $varient->price = $varientData['varient_price'];
-                    $varient->discount_price = $varientData['varient_discount_price'];
-                    $varient->sku = $varientData['varient_sku'];
-                    $varient->stock = $varientData['varient_stock'];
-                    if(is_uploaded_file($varientData['varient_image']))
-                    {
-                        $image = $varientData['varient_image'];
-    
-                        $filename = date('YmdHis') . $image->getClientOriginalName();
-        
-                        $compressedImage = Image::make($image->getRealPath());
-            
-                        $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-            
-                        $varient->image = $filename . '.webp';
-                    }
+                $varient = ProductVarient::updateOrCreate(['id' => $varientData['id']], [
+                    'product_id' => $update->id,
+                    'color' => $varientData['color'],
+                    'size' => $varientData['size'],
+                    'bolt_pattern' => $varientData['bolt_pattern'],
+                    'price' => $varientData['varient_price'],
+                    'discount_price' => $varientData['varient_discount_price'],
+                    'sku' => $varientData['varient_sku'],
+                    'stock' => $varientData['varient_stock']
+                ]);
+                if (isset($varientData['varient_image'])) {
+                    $image = $varientData['varient_image'];
+                    $filename = date('YmdHis') . $image->getClientOriginalName();
+                    $compressedImage = Image::make($image->getRealPath());
+                    $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
+                    $varient->image = $filename . '.webp';
                     $varient->save();
                 }
             }
         }
 
-        if($request->discount != null)
-        {
-            $discount = Discount::where('product_id',$update->id)->first();
-
-            if($discount == null)
-            {
-                $discount = new Discount();
-            }
-
-            $discount->product_id = $update->id;
-            $discount->discount = $request->discount;
-            $discount->discount_start_date = $request->discount_start_date;
-            $discount->discount_end_date = $request->discount_end_date;
-            $discount->discount_type = $request->discount_type;
-            $discount->save();
-
-        }
-        else
-        {
-            $check_discount = Discount::where('product_id',$update->id)->first();
-
-            if($check_discount)
-            {
-                $check_discount->delete();
-            }
+        if ($request->discount !== null) {
+            Discount::updateOrCreate(['product_id' => $update->id], [
+                'discount' => $request->discount,
+                'discount_start_date' => $request->discount_start_date,
+                'discount_end_date' => $request->discount_end_date,
+                'discount_type' => $request->discount_type
+            ]);
+        } else {
+            Discount::where('product_id', $update->id)->delete();
         }
 
-        if($request->stock != null)
-        {
-            $stock = Stock::where('product_id',$update->id)->first();
+        Stock::updateOrCreate(['product_id' => $update->id], [
+            'stock' => $request->stock,
+            'min_stock' => $request->min_stock
+        ]);
 
-            if($stock == null)
-            {
-                $stock = new Stock();
-            }
- 
-            $stock->product_id = $update->id;
-            $stock->stock = $request->stock;
-            $stock->min_stock = $request->min_stock;
-            $stock->save();
-
+        if ($request->shipping_type) {
+            Shipping::updateOrCreate(['product_id' => $update->id], [
+                'shipping_cost' => $request->shipping_cost,
+                'is_qty_multiply' => $request->is_qty_multiply,
+                'shipping_additional_cost' => $request->shipping_additional_cost,
+                'est_shipping_days' => $request->est_shipping_days
+            ]);
         }
 
-        
-        // if($request->tax != null)
-        // {
-        //     $tax =  Tax::where('product_id',$update->id)->first();
-
-        //     if($tax == null)
-        //     {
-        //         $tax = new Tax();
-        //     }
-
-
-        //         $tax->product_id = $update->id;
-        //         $tax->tax = $request->tax;
-        //         $tax->tax_type = $request->tax_type;
-        //         $tax->save();
-
-        // }
-
-
-        if($request->deal_id != null)
-        {
-            $deal = DealProduct::where('product_id',$update->id)->first();
-
-            if($deal == null)
-            {
-                $deal = new DealProduct();
-            }
-
-                $deal->deal_id = $request->deal_id;
-                $deal->product_id = $update->id;
-                $deal->discount = $request->deal_discount;
-                $deal->discount_type = $request->deal_discount_type;
-                $deal->save();
-            
-
-        }
-        
-
-        if($request->shipping_type)
-        {
-
-            $shipping = Shipping::where('product_id',$update->id)->first();
-
-            if($shipping == null)
-            {
-                $shipping = new Shipping();
-            }
-
-
-                $shipping->product_id = $update->id;
-                $shipping->shipping_cost = $request->shipping_cost;
-                $shipping->is_qty_multiply = $request->is_qty_multiply;
-                $shipping->shipping_additional_cost = $request->shipping_additional_cost;
-                $shipping->est_shipping_days = $request->est_shipping_days;
-                $shipping->save();
-            
-
-        }
-
-        if($request->wholesale_price != null)
-        {
-            WholesaleProduct::where('product_id',$update->id)->delete();
-
-            foreach($request->wholesale_price as $price)
-            {
-                $wholesale = new WholesaleProduct();
-                $wholesale->product_id = $update->id;
-                $wholesale->wholesale_price = $price;
-                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-                $wholesale->save();               
-            }
-        }
-
-        $response = ['status'=>true,"message" => "Product updated Successfully!"];
+        $response = ['status'=>true, "message" => "Product updated Successfully!"];
         return response($response, 200);
-    }
-
-
-
     }
 
     public function bulk_update(Request $request)
     {
-        Product::whereIn('id',$request->id)->update(
-            [
-                'name'=> $request->name,
-                'category_id'=> $request->category_id,
-                'brand_id'=> $request->brand_id,
-                'model_id'=> $request->model_id,
-                'weight'=> $request->weight,
-                'sku'=> $request->sku,
-                'tags'=> $request->tags,
-                'price'=> $request->price,
-   
-            ]
-        );
+        foreach($request->ids as $id)
+        {
+            $update = Product::find($id);
+            if(!$update) continue;
+    
+            $update->update([
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+                'weight' => $request->weight,
+                'make' => $request->make,
+                'brand_id' => $request->brand_id,
+                'model_id' => $request->model_id,
+                'tags' => $request->tags,
+                'price' => $request->price,
+                'cost_price' => $request->cost_price,
+                'shop_id' => $request->shop_id
+            ]);
+    
+            if ($request->varients) {
+                foreach ($request->varients as $varientData) {
+                    ProductVarient::where('id', $varientData['id'])->update([
+                        'price' => $varientData['varient_price'],
+                        'discount_price' => $varientData['varient_discount_price'],
+                        'stock' => $varientData['varient_stock']
+                    ]);
+                }
+            }
+    
+            if($request->stock) {
+                Stock::updateOrCreate(['product_id' => $id], [
+                    'stock' => $request->stock,
+                    'min_stock' => $request->min_stock
+                ]);
+            }
+    
+            if($request->shipping_type) {
+                Shipping::updateOrCreate(['product_id' => $id], [
+                    'shipping_cost' => $request->shipping_cost,
+                    'is_qty_multiply' => $request->is_qty_multiply,
+                    'shipping_additional_cost' => $request->shipping_additional_cost,
+                    'est_shipping_days' => $request->est_shipping_days
+                ]);
+            }
+        }
+    
+        $response = ['status'=>true,"message" => "Products updated Successfully!"];
+        return response($response, 200);
     }
+
+    
 
     public function delete($id)
     {
