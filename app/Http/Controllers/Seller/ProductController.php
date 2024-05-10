@@ -562,11 +562,14 @@ class ProductController extends Controller
     
             if ($request->varients) {
                 foreach ($request->varients as $varientData) {
-                    ProductVarient::where('id', $varientData['id'])->update([
-                        'price' => $varientData['varient_price'],
-                        'discount_price' => $varientData['varient_discount_price'],
-                        'stock' => $varientData['varient_stock']
-                    ]);
+                    $varient = ProductVarient::find($varientData['id']);
+                    if ($varient) {
+                        $varient->update([
+                            'price' => $varientData['varient_price'],
+                            'discount_price' => $varientData['varient_discount_price'],
+                            'stock' => $varientData['varient_stock']
+                        ]);
+                    }
                 }
             }
     
@@ -590,6 +593,7 @@ class ProductController extends Controller
         $response = ['status'=>true,"message" => "Products updated Successfully!"];
         return response($response, 200);
     }
+    
 
     
 
