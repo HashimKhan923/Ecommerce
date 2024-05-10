@@ -31,6 +31,7 @@ class ProductController extends Controller
     'user',
     'category',
     'brand',
+    'model',
     'stock',
     'product_gallery' => function($query) {
         $query->orderBy('order', 'asc');
