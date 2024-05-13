@@ -490,84 +490,51 @@ class ProductController extends Controller
 
     public function bulk_update(Request $request)
     {
-
-
-        foreach($request->ids as $id)
-        {
-            $update = Product::where('id',$id)->first();
-            $update->name = $request->name;
-            $update->category_id = $request->category_id;
-            $update->weight = $request->weight;
-            $update->make = $request->make;
-            $update->brand_id = $request->brand_id;
-            $update->model_id = $request->model_id;
-            $update->tags = $request->tags;
-            $update->price = $request->price;
-            $update->cost_price = $request->cost_price;
-            $update->shop_id = $request->shop_id;
-            $update->save();
+        foreach ($request->products as $productData) {
+            $update = Product::find($productData['id']);
     
+            if ($update) {
+                $update->name = $productData['name'];
+                $update->category_id = $productData['category_id'];
+                $update->weight = $productData['weight'];
+                $update->make = $productData['make'];
+                $update->brand_id = $productData['brand_id'];
+                $update->model_id = $productData['model_id'];
+                $update->tags = $productData['tags'];
+                $update->price = $productData['price'];
+                $update->cost_price = $productData['cost_price'];
+                $update->shop_id = $productData['shop_id'];
+                $update->save();
     
+                if (!empty($productData['product_variants'])) {
+                    foreach ($productData['product_variants'] as $variantData) {
+                        $variant = ProductVariant::find($variantData['id']);
     
-    
-    
-            if ($request->varients != null) {
-                foreach ($request->varients as $varientData) {
-                    $varient = ProductVarient::where('id',$varientData['id'])->first();
-            
-                    if ($varient) {
-                        $varient->price = $varientData['varient_price'];
-                        $varient->discount_price = $varientData['varient_discount_price'];
-                        $varient->stock = $varientData['varient_stock'];
-                        $varient->save();
+                        if ($variant) {
+                            $variant->price = $variantData['price'];
+                            $variant->discount_price = $variantData['discount_price'];
+                            $variant->stock = $variantData['stock'];
+                            $variant->save();
+                        }
                     }
                 }
-            }
     
-    
-    
-            if($request->stock != null)
-            {
-                $stock = Stock::where('product_id',$update->id)->first();
-    
-                if($stock == null)
-                {
-                    $stock = new Stock();
-                }
-     
-                $stock->product_id = $update->id;
-                $stock->stock = $request->stock;
-                $stock->min_stock = $request->min_stock;
+                $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                $stock->stock = $productData['stock'];
+                $stock->min_stock = $productData['min_stock'];
                 $stock->save();
     
-            }
-    
-            
-    
-            
-    
-            if($request->shipping_type)
-            {
-    
-                $shipping = Shipping::where('product_id',$update->id)->first();
-    
-                if($shipping == null)
-                {
-                    $shipping = new Shipping();
-                }
-    
-    
-                    $shipping->product_id = $update->id;
-                    $shipping->shipping_cost = $request->shipping_cost;
-                    $shipping->is_qty_multiply = $request->is_qty_multiply;
-                    $shipping->shipping_additional_cost = $request->shipping_additional_cost;
-                    $shipping->est_shipping_days = $request->est_shipping_days;
+                if (!empty($productData['shipping'])) {
+                    $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                    $shipping->shipping_cost = $productData['shipping']['shipping_cost'];
+                    $shipping->is_qty_multiply = $productData['shipping']['is_qty_multiply'];
+                    $shipping->shipping_additional_cost = $productData['shipping']['shipping_additional_cost'];
+                    $shipping->est_shipping_days = $productData['shipping']['est_shipping_days'];
                     $shipping->save();
-                
-    
+                }
             }
-    
-        }
+        
+    }
        
 
 
