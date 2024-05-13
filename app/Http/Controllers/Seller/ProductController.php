@@ -491,21 +491,7 @@ class ProductController extends Controller
     public function bulk_update(Request $request)
     {
 
-        $request->validate([
-            'ids' => 'required|array',
-            'name' => 'required|string',
-            'category_id' => 'required|int',
-            'weight' => 'required|string',
-            'make' => 'required|string',
-            'brand_id' => 'required|int',
-            'model_id' => 'required|int',
-            'price' => 'required|string',
-            'cost_price' => 'nullable|string',
-            'shop_id' => 'required|int',
-            'varients' => 'nullable|array',
-            'stock' => 'nullable|array',
-            'shipping_type' => 'nullable|string',
-        ]);
+        return $request;
 
         foreach($request->ids as $id)
         {
