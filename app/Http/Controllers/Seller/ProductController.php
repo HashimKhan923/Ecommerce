@@ -525,26 +525,26 @@ class ProductController extends Controller
                 $stock->min_stock = $productData['min_stock'];
                 $stock->save();
 
-                // if(!empty($productData['discount']))
-                // {
-                //     $discount = Discount::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                //     $discount->product_id = $update->id;
-                //     $discount->discount = $productData['discount']['discount'];
-                //     $discount->discount_start_date = $productData['discount']['discount_start_date'];
-                //     $discount->discount_end_date = $productData['discount']['discount_end_date'];
-                //     $discount->discount_type = $productData['discount']['discount_type'];
-                //     $discount->save();
+                if(!empty($productData['discount']))
+                {
+                    $discount = Discount::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                    $discount->product_id = $update->id;
+                    $discount->discount = $productData['discount']['discount'];
+                    $discount->discount_start_date = $productData['discount']['discount_start_date'];
+                    $discount->discount_end_date = $productData['discount']['discount_end_date'];
+                    $discount->discount_type = $productData['discount']['discount_type'];
+                    $discount->save();
         
-                // }
-                // else
-                // {
-                //     $check_discount = Discount::where('product_id',$update->id)->first();
+                }
+                else
+                {
+                    $check_discount = Discount::where('product_id',$update->id)->first();
         
-                //     if($check_discount)
-                //     {
-                //         $check_discount->delete();
-                //     }
-                // }
+                    if($check_discount)
+                    {
+                        $check_discount->delete();
+                    }
+                }
     
                 if (!empty($productData['shipping'])) {
                     $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
