@@ -56,9 +56,7 @@ class ProductController extends Controller
 
 
         
-        // $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
-        // if($checkPackage)
-        // {
+
         $new = new Product();
         $new->name = $request->name;
         $new->added_by = 'seller';
@@ -68,7 +66,6 @@ class ProductController extends Controller
         $new->weight = $request->weight;
         $new->lenght = $request->lenght;
         $new->start_year = $request->year;
-        // $new->end_year = $request->end_year;
         $new->make = $request->make;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
@@ -88,24 +85,6 @@ class ProductController extends Controller
         $new->is_tax = $request->is_tax;
         $new->meta_title = $request->meta_title;
         $new->video = $request->video;
-        // if($request->file('meta_img'))
-        // {
-        //     $file= $request->meta_img;
-        //     $filename= date('YmdHis').$file->getClientOriginalName();
-        //     $file->move(public_path('ProductMetaImg'),$filename);
-
-        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-        //     ->encode('webp', 70); 
-    
-            
-        //     $compressedFilename = 'compressed_' . $filename;
-        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
-    
-        //     unlink(public_path('ProductMetaImg/'.$filename));
-
-
-        //     $new->meta_img = $compressedFilename;
-        // }
         $new->slug = $request->slug;
         $new->save();
 
@@ -196,16 +175,6 @@ class ProductController extends Controller
                 $stock->save();
         }
 
-        
-        // if($request->tax != null)
-        // {
-        //     $tax = new Tax();
-        //     $tax->product_id = $new->id;
-        //     $tax->tax = $request->tax;
-        //     $tax->tax_type = $request->tax_type;
-        //     $tax->save();
-        // }
-
 
         if($request->deal_id != null)
         {
@@ -266,21 +235,14 @@ class ProductController extends Controller
 
         } 
 
-        // $dedect = SubscribeUser::where('user_id',auth()->user()->id)->first();
-        // $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
-        // $dedect->save();
+
 
 
 
         $response = ['status'=>true,"message" => "Product Added Successfully!",'product_id'=>$new->id];
         return response($response, 200);
 
-        // }
-        // else
-        // {
-        //     $response = ['status'=>true,"message" => "you dont have any subscription to upload new product. please buy any subscription to upload products!"];
-        //     return response($response, 401);
-        // }
+
         
         
 
@@ -292,7 +254,6 @@ class ProductController extends Controller
     public function update(Request $request)
     {
 
-        // return $request;
 
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
@@ -303,7 +264,6 @@ class ProductController extends Controller
         $update->weight = $request->weight;
         $update->lenght = $request->lenght;
         $update->start_year = $request->year;
-        // $update->end_year = $request->end_year;
         $update->make = $request->make;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
@@ -323,34 +283,10 @@ class ProductController extends Controller
         $update->is_tax = $request->is_tax;
         $update->meta_title = $request->meta_title;
         $update->video = $request->video;
-        // if($request->file('meta_img'))
-        // {
-        //     if($update->meta_img)
-        //     {
-        //         unlink(public_path('ProductMetaImg/'.$update->meta_img));
-        //     }
-
-        //     $file= $request->meta_img;
-        //     $filename= date('YmdHis').$file->getClientOriginalName();
-        //     $file->move(public_path('ProductMetaImg'),$filename);
-
-        //     $compressedImage = Image::make(public_path('ProductMetaImg') . '/' . $filename)
-        //     ->encode('webp', 70); 
-    
-            
-        //     $compressedFilename = 'compressed_' . $filename;
-        //     $compressedImage->save(public_path('ProductMetaImg') . '/' . $compressedFilename);
-    
-        //     unlink(public_path('ProductMetaImg/'.$filename));
-
-
-        //     $update->meta_img = $filename;
-        // }
         $update->slug = $request->slug;
         $update->sku = $request->sku;
         $update->save();
 
-        // $request->merge(['photos' => $photoArray]);
 
         if ($request->photos) {
             $images = $request->photos;
@@ -488,23 +424,6 @@ class ProductController extends Controller
         }
 
         
-        // if($request->tax != null)
-        // {
-        //     $tax =  Tax::where('product_id',$update->id)->first();
-
-        //     if($tax == null)
-        //     {
-        //         $tax = new Tax();
-        //     }
-
-
-        //         $tax->product_id = $update->id;
-        //         $tax->tax = $request->tax;
-        //         $tax->tax_type = $request->tax_type;
-        //         $tax->save();
-
-        // }
-
 
         if($request->deal_id != null)
         {
@@ -666,10 +585,8 @@ class ProductController extends Controller
         {
             $checkCount = ProductGallery::where('image',$item->image)->count();
 
-            // if($checkCount < 2)
-            // {
+
                 unlink(public_path('ProductGallery/'.$item->image));
-            // }
         }
         
         $varients = ProductVarient::where('product_id',$id)->get();
@@ -829,10 +746,6 @@ class ProductController extends Controller
     public function is_featured(Request $request)
     {
 
-        // $checkPackage = SubscribeUser::where('user_id',$request->user_id)->first();
-
-        // if($checkPackage && $checkPackage->product_upload_limit > 0)
-        // {
 
 
         $is_featured = Product::where('id',$request->product_id)->first();
@@ -846,19 +759,9 @@ class ProductController extends Controller
         }
         $is_featured->save();
 
-        // $dedect = SubscribeUser::where('user_id',$request->user_id)->first();
-        // $dedect->product_upload_limit = $dedect->product_upload_limit - 1;
-        // $dedect->save();
-
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
 
-        // }
-        // else
-        // {
-        //     $response = ['status'=>true,"message" => "you dont have any subscription to feature products. please buy any subscription"];
-        //     return response($response, 401);
-        // }
     }
 
     public function gallery_delete($id)
