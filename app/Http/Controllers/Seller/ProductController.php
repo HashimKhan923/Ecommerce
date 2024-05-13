@@ -500,7 +500,9 @@ class ProductController extends Controller
                 $update->make = $productData['make'];
                 $update->brand_id = $productData['brand_id'];
                 $update->model_id = $productData['model_id'];
-                $update->tags = $productData['tags'];
+                if (isset($productData['tags'])) {
+                    $update->tags = $productData['tags'];
+                }
                 $update->price = $productData['price'];
                 $update->cost_price = $productData['cost_price'];
                 $update->shop_id = $productData['shop_id'];
