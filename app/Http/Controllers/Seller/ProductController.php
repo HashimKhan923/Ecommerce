@@ -491,7 +491,6 @@ class ProductController extends Controller
     public function bulk_update(Request $request)
     {
 
-        return $request;
 
         foreach($request->ids as $id)
         {
