@@ -543,7 +543,7 @@ class ProductController extends Controller
                     }
                 }
     
-                if (!empty($productData['shipping'])) {
+                if (!empty($productData['shipping_cost'])) {
                     $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $shipping->shipping_cost = $productData['shipping_cost'];
                     $shipping->shipping_additional_cost = $productData['shipping_additional_cost'];
