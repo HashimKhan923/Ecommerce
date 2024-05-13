@@ -529,7 +529,7 @@ class ProductController extends Controller
                 {
                     $discount = Discount::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $discount->product_id = $update->id;
-                    $discount->discount = $productData['discount']['discount'];
+                    $discount->discount = $productData['discount'];
                     $discount->discount_start_date = $productData['discount']['discount_start_date'];
                     $discount->discount_end_date = $productData['discount']['discount_end_date'];
                     $discount->discount_type = $productData['discount']['discount_type'];
