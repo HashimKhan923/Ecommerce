@@ -509,7 +509,7 @@ class ProductController extends Controller
     
                 if (!empty($productData['product_variants'])) {
                     foreach ($productData['product_variants'] as $variantData) {
-                        $variant = ProductVariant::find($variantData['id']);
+                        $variant = ProductVarient::find($variantData['id']);
     
                         if ($variant) {
                             $variant->price = $variantData['varient_price'];
