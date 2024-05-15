@@ -85,7 +85,7 @@
 <p><strong>Customer Email:</strong>{{$Customer->email}}</p>
 <p><strong>Message:</strong> {{$Msg}}<p>
 <br>
- <a href="https://seller.dragonautomart.com/seller/messages" class="btn btn-info">reply</a>
+ <a href="https://seller.dragonautomart.com/seller/messages" style="display: inline-block; padding: 10px 20px; background-color: green; color: #fff; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer;">Reply</a>
 
 
 <hr>
