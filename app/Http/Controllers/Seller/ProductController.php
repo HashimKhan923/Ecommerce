@@ -512,7 +512,7 @@ class ProductController extends Controller
                         $variant = ProductVariant::find($variantData['id']);
     
                         if ($variant) {
-                            $variant->price = $variantData['price'];
+                            $variant->price = $variantData['varient_price'];
                             $variant->discount_price = $variantData['discount_price'];
                             $variant->stock = $variantData['stock'];
                             $variant->save();
