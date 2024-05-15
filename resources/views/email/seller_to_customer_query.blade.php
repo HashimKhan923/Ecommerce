@@ -83,6 +83,9 @@
 <p> <strong>Seller Email: </strong> {{$Seller->email}} </p>
 <p> <strong>Message: </strong> {{$Msg}} </p>
 
+<br>
+ <a href="https://dragonautomart.com/messages" class="btn btn-info">reply</a>
+
 
 <hr>
 

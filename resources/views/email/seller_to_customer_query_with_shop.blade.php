@@ -85,6 +85,9 @@
 
 <p> <strong>Reply: </strong> {{$Msg}} </p>
 
+<br>
+ <a href="https://dragonautomart.com/messages" class="btn btn-info">reply</a>
+
 
 <hr>
 
