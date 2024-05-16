@@ -9,6 +9,8 @@ class MyCustomer extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['seller_id','customer_id','sale'];
+
     public function customer()
     {
         return $this->belongsTo(User::class,'customer_id','id');

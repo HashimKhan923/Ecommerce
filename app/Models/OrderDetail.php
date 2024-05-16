@@ -9,6 +9,18 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'product_name',
+        'product_image',
+        'product_varient',
+        'product_price',
+        'shipping_amount',
+        'quantity',
+        'varient_id'
+    ];
+
     protected $casts = [
         'varient' => 'array',
     ];

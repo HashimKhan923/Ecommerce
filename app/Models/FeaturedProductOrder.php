@@ -9,6 +9,12 @@ class FeaturedProductOrder extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'order_id',
+        'product_id',
+        'seller_id',
+        'product_price',
+        'quantity',
+        'payment',
         'payment_status'
     ];
 

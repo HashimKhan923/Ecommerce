@@ -12,6 +12,20 @@ class Order extends Model
         'tags'=>'array'
     ];
 
+    protected $fillable = [
+        'order_code',
+        'number_of_products',
+        'customer_id',
+        'shop_id',
+        'sellers_id',
+        'amount',
+        'information',
+        'stripe_payment_id',
+        'payment_method',
+        'payment_status',
+        'refund',
+    ];
+
     public function order_detail()
     {
         return $this->hasMany(OrderDetail::class,'order_id','id');

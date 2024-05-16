@@ -9,7 +9,7 @@ class Payout extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['status'];
+    protected $fillable = ['date','seller_id','shop_id','order_id','status'];
 
     public function order() {
 

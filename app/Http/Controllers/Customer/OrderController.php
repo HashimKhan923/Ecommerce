@@ -15,6 +15,7 @@ use App\Models\MyCustomer;
 use App\Models\CouponUser;
 use App\Models\Coupon;
 use App\Models\OrderTimeline;
+use App\Models\Notification;
 use Illuminate\Support\Str;
 use Mail;
 use App\Models\User;
@@ -32,11 +33,6 @@ class OrderController extends Controller
 
 public function create(Request $request)
 {
-
-  
-
-    
-
 
     $productIds = [];
     foreach ($request->products as $product) {
@@ -65,26 +61,19 @@ public function create(Request $request)
             return $orderProduct['shipping_amount'];
         });
     
-        $newOrder = new Order();
-        $newOrder->order_code = Str::random(8) . '-' . Str::random(8);
-        $newOrder->number_of_products = count($shopProducts);
-        $newOrder->customer_id = $request->customer_id;
-        $newOrder->shop_id = $shopId;
-        $newOrder->sellers_id = $vendorId;
-        if($request->coupon_id)
-        {
-            $newOrder->amount = $request->amount;
-        }
-        else
-        {
-            $newOrder->amount = $shopTotalAmount + $shopTotalShipment;
-        }
-        $newOrder->information = $request->information;
-        $newOrder->stripe_payment_id = $request->payment_id;
-        $newOrder->payment_method = $request->payment_method;
-        $newOrder->payment_status = $request->payment_status;
-        $newOrder->refund = $request->refund;
-        $newOrder->save();
+        $newOrder = Order::create([
+            'order_code' => Str::random(8) . '-' . Str::random(8),
+            'number_of_products' => count($shopProducts),
+            'customer_id' => $request->customer_id,
+            'shop_id' => $shopId,
+            'sellers_id' => $vendorId,
+            'amount' => $request->coupon_id ? $request->amount : $shopTotalAmount + $shopTotalShipment,
+            'information' => $request->information,
+            'stripe_payment_id' => $request->payment_id,
+            'payment_method' => $request->payment_method,
+            'payment_status' => $request->payment_status,
+            'refund' => $request->refund,
+        ]);
 
         $shop = Shop::find($shopId);
 
@@ -107,6 +96,11 @@ public function create(Request $request)
             'customer_id' => $request->customer_id,
             'order_id' => $newOrder->id,
             'time_line' => 'Confirmation '.$newOrder->order_code.' was genereated for this order'
+        ]);
+
+        Notification::create([
+            'customer_id' => $vendorId,
+            'notification' => 'new order #'.$newOrder->id.'received'
         ]);
 
         Mail::send(
@@ -138,13 +132,14 @@ public function create(Request $request)
         {
             Coupon::where('id', $request->coupon_id)->increment('used');
 
-            $CouponUser = new CouponUser();
-            $CouponUser->coupon_id = $request->coupon_id;
-            $CouponUser->user_id = $request->customer_id;
-            $CouponUser->discount = $request->coupon_discount;
-            $CouponUser->coupon_code = $request->coupon_code;
-            $CouponUser->order_id = $newOrder->id;
-            $CouponUser->save();
+            CouponUser::create([
+                'coupon_id' => $request->coupon_id,
+                'user_id' => $request->customer_id,
+                'discount' => $request->coupon_discount,
+                'coupon_code' => $request->coupon_code,
+                'order_id' => $newOrder->id
+            ]);
+
         }
 
 
@@ -153,33 +148,38 @@ public function create(Request $request)
 
         if(!$my_customer)
         {
-            $my_customer = new MyCustomer();
-            $my_customer->seller_id = $vendorId;
-            $my_customer->customer_id = $request->customer_id;
-            $my_customer->sale = $shopTotalAmount;
+            MyCustomer::create([
+                'seller_id' => $vendorId,
+                'customer_id' => $request->customer_id,
+                'sale' => $shopTotalAmount
+            ]);
+
         }
         else
         {
             $my_customer->sale = $my_customer->sale + $shopTotalAmount;
+            $my_customer->save();
         }
-        $my_customer->save();
+        
 
         
         foreach ($shopProducts as $product) {
             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
             $sale = Product::with('product_single_gallery')->where('id', $product->id)->first();
 
-            $newOrderDetail = new OrderDetail();
-            $newOrderDetail->order_id = $newOrder->id;
-            $newOrderDetail->product_id = $product->id;
-            $newOrderDetail->product_name = $sale->name;
-            $newOrderDetail->product_image = $sale->product_single_gallery->image;
-            $newOrderDetail->product_varient = $orderProduct['product_varient'];;
-            $newOrderDetail->product_price = $orderProduct['product_price'];
-            $newOrderDetail->shipping_amount = $orderProduct['shipping_amount'];
-            $newOrderDetail->quantity = $orderProduct['quantity'];
-            $newOrderDetail->varient_id = $orderProduct['varient_id'];
-            $newOrderDetail->save();
+            OrderDetail::create([
+                'order_id' => $newOrder->id,
+                'product_id' => $product->id,
+                'product_name' => $sale->name,
+                'product_image' => $sale->product_single_gallery->image,
+                'product_varient' => $orderProduct['product_varient'],
+                'product_price' => $orderProduct['product_price'],
+                'shipping_amount' => $orderProduct['shipping_amount'],
+                'quantity' => $orderProduct['quantity'],
+                'varient_id' => $orderProduct['varient_id'],
+            ]);
+
+            
 
     
             $VarientStock = ProductVarient::where('product_id', $product->id)->first();
@@ -203,14 +203,16 @@ public function create(Request $request)
                 $tenPercent = $orderProduct['product_price'] * 0.1;
                 $total = $tenPercent * $orderProduct['quantity'];
 
-                $new = new FeaturedProductOrder();
-                $new->order_id = $newOrder->id;
-                $new->product_id = $product->id;
-                $new->seller_id = $vendorId;
-                $new->product_price = $orderProduct['product_price'];
-                $new->quantity = $orderProduct['quantity'];
-                $new->payment = $total;
-                $new->save();
+                FeaturedProductOrder::create([
+                    'order_id' => $newOrder->id,
+                    'product_id' => $product->id,
+                    'seller_id' => $vendorId,
+                    'product_price' => $orderProduct['product_price'],
+                    'quantity' => $orderProduct['quantity'],
+                    'payment' => $total,
+                ]);
+
+                
 
             }
 

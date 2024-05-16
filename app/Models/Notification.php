@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
+    protected $fillable = ['customer_id','notification'];
+
     use HasFactory;
 }

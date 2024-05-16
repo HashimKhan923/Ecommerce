@@ -40,10 +40,11 @@ class OrderController extends Controller
             $order->shipping_amount = $request->shipping_amount;
             $order->save();
 
-            $OrderStatus = new OrderStatus();
-            $OrderStatus->order_id = $request->id;
-            $OrderStatus->status = 'deliverd';
-            $OrderStatus->save();
+            OrderStatus::create([
+                'order_id' => $request->id,
+                'status' => 'deliverd'
+            ]);
+
 
             OrderTimeline::create([
                 'seller_id' => $seller->id,
@@ -52,14 +53,16 @@ class OrderController extends Controller
                 'time_line' => 'order status changed to delivered'
             ]);
 
-            $TrackingOrder = new OrderTracking();
-            $TrackingOrder->order_id = $order->id;
-            $TrackingOrder->tracking_number = $request->tracking_number;
-            $TrackingOrder->courier_name = $request->courier_name;
-            $TrackingOrder->courier_link = $request->courier_link;
-            $TrackingOrder->shipping_label = $request->shipping_label;
+            OrderTracking::create([
+                'order_id' => $order->id,
+                'tracking_number' => $request->tracking_number,
+                'courier_name' => $request->courier_name,
+                'courier_link' => $request->courier_link,
+                'shipping_label' => $request->shipping_label,
+            ]);
 
-            $TrackingOrder->save();
+
+            
 
 
 
@@ -88,11 +91,13 @@ class OrderController extends Controller
 
 
             
-            $NewPayout = new Payout();
-            $NewPayout->date = Carbon::now();
-            $NewPayout->seller_id = $order->sellers_id;
-            $NewPayout->shop_id = $order->shop_id;
-            $NewPayout->order_id = $order->id;
+            Payout::create([
+                'date' => Carbon::now(),
+                'seller_id' => $order->sellers_id,
+                'shop_id' => $order->shop_id,
+                'order_id' => $order->id,
+            ]);
+
             
             
             $orderAmountInCents = $order->amount * 100; 
@@ -113,21 +118,6 @@ class OrderController extends Controller
             $adjustedAmountInDollars = $adjustedAmountInCents / 100;
             
             $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0.00;
-
-
-            // $nagativePayoutBalance = NagativePayoutBalance::where('seller_id', $order->sellers_id)
-            // ->where('payment_status','unpaid')
-            // ->first();
-            // $NagativeBalance = 0;
-            // if($nagativePayoutBalance)
-            // {
-            //     $nagativePayoutBalance->payment_status = 'paid';
-            //     $nagativePayoutBalance->save();
-
-            //     $NagativeBalance =  $nagativePayoutBalance->amount;
-            // }
-
-            
 
 
             $ListingPayment = 0;
@@ -159,17 +149,6 @@ class OrderController extends Controller
             ]);
 
 
-
-            // if($NewPayout->amount < 0)
-            // {
-            //     $NagativePayoutBalance = new NagativePayoutBalance();
-            //     $NagativePayoutBalance->seller_id = $order->sellers_id;
-            //     $NagativePayoutBalance->order_id = $order->id;
-            //     $NagativePayoutBalance->amount = $NewPayout->amount;
-            //     $NagativePayoutBalance->save();
-            // }
-
-
             if($featuredAmount > 0)
             {
                 FeaturedProductOrder::where('order_id', $order->id)->update(['payment_status'=>'paid']);
@@ -177,13 +156,12 @@ class OrderController extends Controller
             }
 
 
-            
-            
+            Notification::create([
+                'customer_id' => $user->id,
+                'notification' => 'your order #'.$order->id.'has been ready to delivered',
+            ]);
 
-            $notification = new Notification();
-            $notification->customer_id = $user->id;
-            $notification->notification = 'your order #'.$order->id.'has been ready to delivered';
-            $notification->save();
+            
 
 
         }
@@ -227,27 +205,12 @@ class OrderController extends Controller
             }
 
 
-            // $NagativePayoutBalance = NagativePayoutBalance::where('order_id', $order->id)
-            // ->where('payment_status', 'paid')
-            // ->latest()
-            // ->first();
 
-            // if ($NagativePayoutBalance) {
-                
-            //     $NagativePayoutBalance->update([
-            //         'payment_status' => 'unpaid'
-            //     ]);
-            // }
+            Notification::create([
+                'customer_id' => $user->id,
+                'notification' => 'your order #'.$order->id.'has been stoped to deliver due to some miss understanding!'
+            ]);
 
-
-
-
-            
-
-            $notification = new Notification();
-            $notification->customer_id = $user->id;
-            $notification->notification = 'your order #'.$order->id.'has been stoped to deliver due to some miss understanding!';
-            $notification->save();
 
         }
 

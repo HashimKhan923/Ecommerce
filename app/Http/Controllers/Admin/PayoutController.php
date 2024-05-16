@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Payout;
 use App\Models\User;
 use App\Models\BankDetail;
+use App\Models\Notification;
 use Stripe\Stripe;
 use Stripe\Transfer;
 
@@ -48,6 +49,11 @@ class PayoutController extends Controller
 
             $PaymentStatus->status = 'Paid';
             $PaymentStatus->save();
+
+            Notification::create([
+                'customer_id' => $Seller->id,
+                'notification' => 'your payout $'.$PaymentStatus->amount.' has been successfully processed.'
+            ]);
 
 
         return response()->json(['message' => 'Paid Successfully']);
