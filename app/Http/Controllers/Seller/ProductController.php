@@ -535,21 +535,25 @@ class ProductController extends Controller
                     $discount->save();
         
                 }
-                else
-                {
-                    $check_discount = Discount::where('product_id',$update->id)->first();
+                // else
+                // {
+                //     $check_discount = Discount::where('product_id',$update->id)->first();
         
-                    if($check_discount)
-                    {
-                        $check_discount->delete();
-                    }
-                }
+                //     if($check_discount)
+                //     {
+                //         $check_discount->delete();
+                //     }
+                // }
     
                 if (!empty($productData['shipping_cost'])) {
                     $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $shipping->shipping_cost = $productData['shipping_cost'];
+                    if (isset($productData['shipping_additional_cost'])) {
                     $shipping->shipping_additional_cost = $productData['shipping_additional_cost'];
+                    }
+                    if (isset($productData['est_shipping_days'])) {
                     $shipping->est_shipping_days = $productData['est_shipping_days'];
+                    }
                     $shipping->save();
                 }
             }
