@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
 {
+    protected $fillable = ['product_id','stock','min_stock'];
+
     use HasFactory;
 }
