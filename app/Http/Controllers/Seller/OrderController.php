@@ -53,7 +53,7 @@ class OrderController extends Controller
                 'time_line' => 'order status changed to delivered'
             ]);
 
-            OrderTracking::create([
+          $TrackingOrder = OrderTracking::create([
                 'order_id' => $order->id,
                 'tracking_number' => $request->tracking_number,
                 'courier_name' => $request->courier_name,

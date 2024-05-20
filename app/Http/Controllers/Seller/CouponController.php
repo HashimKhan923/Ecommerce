@@ -9,6 +9,7 @@ use App\Models\CouponCategory;
 use App\Models\CouponCustomer;
 use App\Models\CouponProduct;
 use Carbon\Carbon;
+use Mail;
 
 class CouponController extends Controller
 {
@@ -37,6 +38,7 @@ class CouponController extends Controller
         $new->end_date = Carbon::parse($request->end_date);
         $new->save();
 
+
         if($request->customer_id)
         {
             foreach($request->customer_id as $customer_id)
@@ -45,6 +47,21 @@ class CouponController extends Controller
                 $CouponCustomer->coupon_id = $new->id;
                 $CouponCustomer->customer_id = $customer_id;
                 $CouponCustomer->save();
+
+                // Mail::send(
+                //     'email.Coupon.seller_payout',
+                //     [
+                //         'vendor_name' => $Seller->name,
+                //         'amount' => $PaymentStatus->amount,
+                //     ],
+                //     function ($message) use ($Seller, $request) { 
+                //         $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                //         $message->to($Seller->email);
+                //         $message->subject('Payout Notification');
+                //     }
+                // );
+
+
             }
 
         }
