@@ -17,6 +17,7 @@ use Hash;
 use Mail;
 use Stripe\Stripe;
 use Stripe\Account;
+use App\Models\Notification;
 
 class AuthController extends Controller
 {
@@ -236,6 +237,10 @@ class AuthController extends Controller
 
         if($check == null)
         {
+            Notification::create([
+                'notification' => 'New Seller Registered Successfully!'
+            ]);
+
             $response = ['status'=>true,"message" => "we have send the verification email to your provided email, please verify your email so that you may login to your dashboard."];
             return response($response, 200);
         }

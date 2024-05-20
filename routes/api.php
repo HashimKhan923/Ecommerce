@@ -345,151 +345,151 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
 
 
-                                                    /// Report \\\
+                                                            /// Report \\\
 
-            Route::group(['prefix' => '/admin/report/'], function() {
-                Route::controller(App\Http\Controllers\Admin\ReportController::class)->group(function () {
-                    Route::post('admin_product_sale','admin_product_sale');
-                    Route::post('saller_product_sale','saller_product_sale');
-                    Route::post('product_stock','product_stock');
-                    Route::post('product_wishlist','product_wishlist');
-                });
-            });
-
-
-
-                                                    /// Subscriber \\\
-
-        Route::group(['prefix' => '/admin/subscribe/'], function() {
-            Route::controller(App\Http\Controllers\Admin\SubscriberController::class)->group(function () {
-                Route::get('show','index');    
-                Route::get('delete/{id}','delete'); 
-                Route::post('multi_delete','multi_delete'); 
-            });
-        });
+                    Route::group(['prefix' => '/admin/report/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\ReportController::class)->group(function () {
+                            Route::post('admin_product_sale','admin_product_sale');
+                            Route::post('saller_product_sale','saller_product_sale');
+                            Route::post('product_stock','product_stock');
+                            Route::post('product_wishlist','product_wishlist');
+                        });
+                    });
 
 
 
-                                                    /// TermCondition \\\
+                                                                    /// Subscriber \\\
 
-            Route::group(['prefix' => '/admin/term_condition/'], function() {
-                Route::controller(App\Http\Controllers\Admin\TermConditionController::class)->group(function () {
-                    Route::get('show','index');
-                    Route::post('createOrUpdate','createOrUpdate');
-                });
-            });  
-    
-    
-                                                        /// PrivacyPolicy \\\
-    
-            Route::group(['prefix' => '/admin/privacy_policy/'], function() {
-                Route::controller(App\Http\Controllers\Admin\PrivacyPolicyController::class)->group(function () {
-                    Route::get('show','index');
-                    Route::post('createOrUpdate','createOrUpdate');
-                });
-            }); 
+                        Route::group(['prefix' => '/admin/subscribe/'], function() {
+                            Route::controller(App\Http\Controllers\Admin\SubscriberController::class)->group(function () {
+                                Route::get('show','index');    
+                                Route::get('delete/{id}','delete'); 
+                                Route::post('multi_delete','multi_delete'); 
+                            });
+                        });
 
 
-                                                                    /// ReturnPolicy \\\
 
-            Route::group(['prefix' => '/admin/return_policy/'], function() {
-                Route::controller(App\Http\Controllers\Admin\ReturnPolicyController::class)->group(function () {
-                    Route::get('show','index');
-                    Route::post('createOrUpdate','createOrUpdate');
-                });
-            }); 
+                                                            /// TermCondition \\\
+
+                    Route::group(['prefix' => '/admin/term_condition/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\TermConditionController::class)->group(function () {
+                            Route::get('show','index');
+                            Route::post('createOrUpdate','createOrUpdate');
+                        });
+                    });  
             
-                                                                /// Disclaimer \\\
-    
-            Route::group(['prefix' => '/admin/disclaimer/'], function() {
-                Route::controller(App\Http\Controllers\Admin\DisclaimerController::class)->group(function () {
-                    Route::get('show','index');
-                    Route::post('createOrUpdate','createOrUpdate');
+            
+                                                                /// PrivacyPolicy \\\
+            
+                    Route::group(['prefix' => '/admin/privacy_policy/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\PrivacyPolicyController::class)->group(function () {
+                            Route::get('show','index');
+                            Route::post('createOrUpdate','createOrUpdate');
+                        });
+                    }); 
+
+
+                                                                            /// ReturnPolicy \\\
+
+                    Route::group(['prefix' => '/admin/return_policy/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\ReturnPolicyController::class)->group(function () {
+                            Route::get('show','index');
+                            Route::post('createOrUpdate','createOrUpdate');
+                        });
+                    }); 
+                    
+                                                                        /// Disclaimer \\\
+            
+                    Route::group(['prefix' => '/admin/disclaimer/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\DisclaimerController::class)->group(function () {
+                            Route::get('show','index');
+                            Route::post('createOrUpdate','createOrUpdate');
+                        });
+                    });  
+
+
+                                                        /// Contact us \\\
+
+                Route::group(['prefix' => '/admin/contactus'], function() {
+                    Route::controller(App\Http\Controllers\Admin\ContactUsController::class)->group(function () {   
+                        Route::post('show','index');
+                    });
                 });
-            });  
 
 
-                                                /// Contact us \\\
+                                                            /// F&Qs \\\
 
-        Route::group(['prefix' => '/admin/contactus'], function() {
-            Route::controller(App\Http\Controllers\Admin\ContactUsController::class)->group(function () {   
-                Route::post('show','index');
-            });
-        });
-
-
-                                                    /// F&Qs \\\
-
-        Route::group(['prefix' => '/admin/f&qs/'], function() {
-            Route::controller(App\Http\Controllers\Admin\FandQController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-                Route::post('multi_delete','multi_delete');
-            });
-        });
+                Route::group(['prefix' => '/admin/f&qs/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\FandQController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('create','create');
+                        Route::post('update','update');
+                        Route::get('delete/{id}','delete');
+                        Route::post('multi_delete','multi_delete');
+                    });
+                });
 
 
 
 
-                                /// Commission \\\
+                                        /// Commission \\\
 
-        Route::group(['prefix' => '/admin/commission/'], function() {
-            Route::controller(App\Http\Controllers\Admin\CommissionController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('createOrUpdate','createOrUpdate');
-            });
-        });
-
-
-
-
-                                /// Seller F&Qs \\\
-
-        Route::group(['prefix' => '/admin/seller_f&qs/'], function() {
-            Route::controller(App\Http\Controllers\Admin\SellerFandQController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-                Route::post('multi_delete','multi_delete');
-            });
-        });
+                Route::group(['prefix' => '/admin/commission/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\CommissionController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('createOrUpdate','createOrUpdate');
+                    });
+                });
 
 
 
 
-                            /// Seller Guide Videos \\\
+                                        /// Seller F&Qs \\\
 
-        Route::group(['prefix' => '/admin/seller_guide_video/'], function() {
-            Route::controller(App\Http\Controllers\Admin\SellerGuideVideoController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('create','create');
-                Route::post('update','update');
-                Route::get('delete/{id}','delete');
-                Route::post('multi_delete','multi_delete');
-            });
-        });
+                Route::group(['prefix' => '/admin/seller_f&qs/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\SellerFandQController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('create','create');
+                        Route::post('update','update');
+                        Route::get('delete/{id}','delete');
+                        Route::post('multi_delete','multi_delete');
+                    });
+                });
 
 
 
-                                /// Website FeedBack \\\
 
-        Route::group(['prefix' => 'admin/website_feedback'], function() {
-            Route::controller(App\Http\Controllers\Admin\WebsiteFeedBackController::class)->group(function () {
-                Route::get('show','index');
-                Route::post('multi_delete','multi_delete');
-            });
-        }); 
+                                    /// Seller Guide Videos \\\
 
-                                        /// SerchingKeywords \\\
+                Route::group(['prefix' => '/admin/seller_guide_video/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\SellerGuideVideoController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('create','create');
+                        Route::post('update','update');
+                        Route::get('delete/{id}','delete');
+                        Route::post('multi_delete','multi_delete');
+                    });
+                });
 
-        Route::group(['prefix' => 'admin/searching_keywords'], function() {
-            Route::controller(App\Http\Controllers\Admin\SearchingKeywordController::class)->group(function () {
-                Route::get('show','index');
-            });
-        }); 
+
+
+                                        /// Website FeedBack \\\
+
+                Route::group(['prefix' => 'admin/website_feedback'], function() {
+                    Route::controller(App\Http\Controllers\Admin\WebsiteFeedBackController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('multi_delete','multi_delete');
+                    });
+                }); 
+
+                                                /// SerchingKeywords \\\
+
+                Route::group(['prefix' => 'admin/searching_keywords'], function() {
+                    Route::controller(App\Http\Controllers\Admin\SearchingKeywordController::class)->group(function () {
+                        Route::get('show','index');
+                    });
+                }); 
 
 
 

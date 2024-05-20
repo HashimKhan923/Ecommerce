@@ -49,7 +49,9 @@ class ShopController extends Controller
         $policy->save();
 
 
-
+        Notification::create([
+            'notification' => 'New Shop Created Successfully!'
+        ]);
 
 
         $response = ['status'=>true,"message" => "Created Successfully!",'store_id'=>$shop->id];
@@ -60,7 +62,6 @@ class ShopController extends Controller
     public function update(Request $request)
     {
         $update = Shop::where('id',$request->id)->first();
-
         $update->name = $request->name;
         $update->address = $request->address;
 
