@@ -91,7 +91,7 @@ class OrderController extends Controller
 
 
             
-            Payout::create([
+          $NewPayout = Payout::create([
                 'date' => Carbon::now(),
                 'seller_id' => $order->sellers_id,
                 'shop_id' => $order->shop_id,
