@@ -14,6 +14,7 @@ use App\Models\SellerGuideVideo;
 use App\Models\SellerFandQ;
 use App\Models\Shop;
 use App\Models\MyCustomer;
+use App\Models\Notification;
 
 
 
@@ -21,12 +22,7 @@ class DashboardController extends Controller
 {
     public function index($id)
     {
-        // $package = SubscribeUser::where('end_time', '<=', now())->first();
 
-        // if ($package) {
-        //     Product::where('user_id', $package->user_id)->where('featured', 1)->update(['featured' => 0]);
-        //     $package->delete();
-        // }
 
         $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
         $Products = Product::where('user_id',$id)->get();
@@ -37,9 +33,10 @@ class DashboardController extends Controller
         $SellerFandQ = SellerFandQ::all();
         $SellerGuideVideo = SellerGuideVideo::all();
         $TotalSale = MyCustomer::where('seller_id',$id)->sum('sale') ?? 0;
+        $Notifications = Notification::where('customer_id',$id)->get();
 
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo,'TotalSale'=>$TotalSale]);
+        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo,'TotalSale'=>$TotalSale,'Notifications'=>$Notifications]);
     }
 
     public function searchByshop($shop_id)
