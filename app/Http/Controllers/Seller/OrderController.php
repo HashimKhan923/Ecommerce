@@ -204,6 +204,13 @@ class OrderController extends Controller
                 ]);
             }
 
+            OrderTimeline::create([
+                'seller_id' => $seller->id,
+                'customer_id' => $order->customer_id,
+                'order_id' => $request->id,
+                'time_line' => 'Order cancelled'
+            ]);
+
 
 
             Notification::create([
@@ -217,12 +224,7 @@ class OrderController extends Controller
         $order->delivery_status = $request->delivery_status;
         $order->save();
 
-        OrderTimeline::create([
-            'seller_id' => $seller->id,
-            'customer_id' => $order->customer_id,
-            'order_id' => $request->id,
-            'time_line' => 'Order cancelled'
-        ]);
+
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!",'TrackingNumber'=>$TrackingNumber];
         return response($response, 200);
