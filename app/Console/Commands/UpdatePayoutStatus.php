@@ -7,8 +7,10 @@ use App\Models\Payout;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\BankDetail;
+use App\Models\Notification;
 use Stripe\Stripe;
 use Stripe\Transfer;
+use Mail;
 
 class UpdatePayoutStatus extends Command
 {
@@ -63,6 +65,24 @@ class UpdatePayoutStatus extends Command
 
                             $payout->status = 'Paid';
                             $payout->save();
+
+                            Notification::create([
+                                'customer_id' => $Seller->id,
+                                'notification' => 'your payout $'.$PaymentStatus->amount.' has been successfully processed.'
+                            ]);
+
+                            Mail::send(
+                                'email.Payout.seller_payout',
+                                [
+                                    'vendor_name' => $Seller->name,
+                                    'amount' => $PaymentStatus->amount,
+                                ],
+                                function ($message) use ($Seller, $request) { 
+                                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                                    $message->to($Seller->email);
+                                    $message->subject('Payout Notification');
+                                }
+                            );
                         }                
 
 
