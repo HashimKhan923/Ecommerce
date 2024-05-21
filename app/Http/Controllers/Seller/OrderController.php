@@ -215,7 +215,7 @@ class OrderController extends Controller
 
             Notification::create([
                 'customer_id' => $user->id,
-                'notification' => 'your order #'.$order->id.'has been stoped to deliver due to some miss understanding!'
+                'notification' => 'your order #'.$order->id.'has been cancelled'
             ]);
 
 
