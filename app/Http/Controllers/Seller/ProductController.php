@@ -537,8 +537,12 @@ class ProductController extends Controller
                 }
     
                 $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                if (isset($productData['stock'])) {
                 $stock->stock = $productData['stock'];
+                }
+                if (isset($productData['min_stock'])) {
                 $stock->min_stock = $productData['min_stock'];
+                }
                 $stock->save();
 
                 if(!empty($productData['discount']))
