@@ -33,7 +33,8 @@ class Chat extends Model
 
     public function my_customer()
     {
-        return $this->belongsTo(MyCustomer::class, 'customer_id', 'customer_id')
-                    ->where('my_customers.seller_id', $this->seller_id);
+        return MyCustomer::where('customer_id', $this->customer_id)
+                         ->where('seller_id', $this->seller_id)
+                         ->first();
     }
 }
