@@ -29,4 +29,11 @@ class Chat extends Model
     {
         return $this->belongsTo(Product::class,'product_id','id');
     } 
+
+    public function my_customer()
+    {
+        return $this->hasManyThrough(MyCustomer::class, 'Chat', 'customer_id', 'customer_id')
+                    ->where('my_customers.seller_id', '=', $this->seller_id)
+                    ->whereColumn('chats.customer_id', '=', 'my_customers.customer_id');
+    }
 }
