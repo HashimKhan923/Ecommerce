@@ -34,10 +34,7 @@ class OrderController extends Controller
 public function create(Request $request)
 {
 
-    $productIds = [];
-    foreach ($request->products as $product) {
-        $productIds[] = $product['product_id'];
-    }
+    $productIds = collect($request->products)->pluck('product_id')->toArray();
     
     $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
     
@@ -51,14 +48,13 @@ public function create(Request $request)
         $customer = User::find($request->customer_id);
 
 
+        // Calculating shop total amount and total shipment
         $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
-            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-            return $orderProduct['product_price'] * $orderProduct['quantity'];
+            return collect($request->products)->where('product_id', $product->id)->sum('product_price') * collect($request->products)->where('product_id', $product->id)->sum('quantity');
         });
 
         $shopTotalShipment = $shopProducts->sum(function ($product) use ($request) {
-            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-            return $orderProduct['shipping_amount'];
+            return collect($request->products)->where('product_id', $product->id)->sum('shipping_amount');
         });
     
         $newOrder = Order::create([
