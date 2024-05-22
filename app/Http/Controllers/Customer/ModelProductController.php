@@ -18,7 +18,11 @@ class ModelProductController extends Controller
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->where('published', 1)
         ->where('model_id', $model_id)
-        ->orderBy('id', 'desc');
+        ->orderBy('id', 'desc')->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        });
     
         if ($length !== null) {
             $query->skip($length)->take(12);
