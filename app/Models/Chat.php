@@ -31,9 +31,9 @@ class Chat extends Model
         return $this->belongsTo(Product::class,'product_id','id');
     } 
 
-    public function my_customer()
+    public function myCustomer()
     {
-        return $this->hasOne(MyCustomer::class, 'seller_id', 'seller_id')
-                    ->whereColumn('my_customers.customer_id', 'chats.customer_id');
+        return $this->belongsTo(MyCustomer::class, 'customer_id', 'customer_id')
+                    ->where('my_customers.seller_id', $this->seller_id);
     }
 }
