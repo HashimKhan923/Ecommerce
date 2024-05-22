@@ -501,14 +501,24 @@ class ProductController extends Controller
                 if (isset($productData['weight'])) {
                 $update->weight = $productData['weight'];
                 }
+                if (isset($productData['make'])) {
                 $update->make = $productData['make'];
+                }
+                if (isset($productData['brand_id'])) {
                 $update->brand_id = $productData['brand_id'];
+                }
+                if (isset($productData['model_id'])) {
                 $update->model_id = $productData['model_id'];
+                }
                 if (isset($productData['tags'])) {
                     $update->tags = $productData['tags'];
                 }
+                if (isset($productData['price'])) {
                 $update->price = $productData['price'];
+                }
+                if (isset($productData['weight'])) {
                 $update->shop_id = $productData['shop_id'];
+                }
                 $update->save();
     
                 if (!empty($productData['product_variants'])) {
