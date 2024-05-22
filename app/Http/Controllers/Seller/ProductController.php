@@ -490,99 +490,81 @@ class ProductController extends Controller
 
     public function bulk_update(Request $request)
     {
+        $errors = [];
         foreach ($request->products as $productData) {
-            $update = Product::find($productData['id']);
+            try {
+                $update = Product::find($productData['id']);
     
-            if ($update) {
-                $update->name = $productData['name'];
-                if (isset($productData['category_id'])) {
-                $update->category_id = $productData['category_id'];
-                }
-                if (isset($productData['weight'])) {
-                $update->weight = $productData['weight'];
-                }
-                if (isset($productData['make'])) {
-                $update->make = $productData['make'];
-                }
-                if (isset($productData['brand_id'])) {
-                $update->brand_id = $productData['brand_id'];
-                }
-                if (isset($productData['model_id'])) {
-                $update->model_id = $productData['model_id'];
-                }
-                if (isset($productData['tags'])) {
-                    $update->tags = $productData['tags'];
-                }
-                if (isset($productData['price'])) {
-                $update->price = $productData['price'];
-                }
-                if (isset($productData['weight'])) {
-                $update->shop_id = $productData['shop_id'];
-                }
-                $update->save();
+                if ($update) {
+                    $update->name = $productData['name'];
+                    $update->category_id = $productData['category_id'];
+                    $update->weight = $productData['weight'];
+                    $update->make = $productData['make'];
+                    $update->brand_id = $productData['brand_id'];
+                    $update->model_id = $productData['model_id'];
+                    if (isset($productData['tags'])) {
+                        $update->tags = $productData['tags'];
+                    }
+                    $update->price = $productData['price'];
+                    $update->shop_id = $productData['shop_id'];
+                    $update->save();
     
-                if (!empty($productData['product_variants'])) {
-                    foreach ($productData['product_variants'] as $variantData) {
-                        $variant = ProductVarient::find($variantData['id']);
+                    if (!empty($productData['product_variants'])) {
+                        foreach ($productData['product_variants'] as $variantData) {
+                            $variant = ProductVarient::find($variantData['id']);
     
-                        if ($variant) {
-                            $variant->price = $variantData['varient_price'];
-                            if (isset($productData['varient_discount_price'])) {
-                            $variant->discount_price = $variantData['varient_discount_price'];
+                            if ($variant) {
+                                $variant->price = $variantData['varient_price'] ?? null;
+                                if (isset($variantData['varient_discount_price'])) {
+                                    $variant->discount_price = $variantData['varient_discount_price'];
+                                }
+                                $variant->stock = $variantData['varient_stock'] ?? null;
+                                $variant->save();
                             }
-                            $variant->stock = $variantData['varient_stock'];
-                            $variant->save();
                         }
                     }
-                }
     
-                $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                if (isset($productData['stock'])) {
-                $stock->stock = $productData['stock'];
-                }
-                if (isset($productData['min_stock'])) {
-                $stock->min_stock = $productData['min_stock'];
-                }
-                $stock->save();
-
-                if(!empty($productData['discount']))
-                {
-                    $discount = Discount::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                    $discount->product_id = $update->id;
-                    $discount->discount = $productData['discount'];
-                    $discount->save();
-        
-                }
-                // else
-                // {
-                //     $check_discount = Discount::where('product_id',$update->id)->first();
-        
-                //     if($check_discount)
-                //     {
-                //         $check_discount->delete();
-                //     }
-                // }
+                    $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                    $stock->stock = $productData['stock'];
+                    $stock->min_stock = $productData['min_stock'];
+                    $stock->save();
     
-                if (!empty($productData['shipping_cost'])) {
-                    $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                    $shipping->shipping_cost = $productData['shipping_cost'];
-                    if (isset($productData['shipping_additional_cost'])) {
-                    $shipping->shipping_additional_cost = $productData['shipping_additional_cost'];
+                    if (!empty($productData['discount'])) {
+                        $discount = Discount::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                        $discount->product_id = $update->id;
+                        $discount->discount = $productData['discount'];
+                        $discount->save();
                     }
-                    if (isset($productData['est_shipping_days'])) {
-                    $shipping->est_shipping_days = $productData['est_shipping_days'];
+    
+                    if (!empty($productData['shipping_cost'])) {
+                        $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                        $shipping->shipping_cost = $productData['shipping_cost'] ?? null;
+                        if (isset($productData['shipping_additional_cost'])) {
+                            $shipping->shipping_additional_cost = $productData['shipping_additional_cost'];
+                        }
+                        if (isset($productData['est_shipping_days'])) {
+                            $shipping->est_shipping_days = $productData['est_shipping_days'];
+                        }
+                        $shipping->save();
                     }
-                    $shipping->save();
                 }
+            } catch (\Exception $e) {
+                // Collect the error with product ID for returning in JSON response
+                $errors[] = [
+                    'product_id' => $productData['id'] ?? 'Unknown',
+                    'error' => $e->getMessage()
+                ];
             }
-        
+        }
+    
+        if (!empty($errors)) {
+            return response()->json(['errors' => $errors], 400);
+        }
+    
+        return response()->json(['message' => 'Products updated successfully'], 200);
     }
+    
        
-
-
-        $response = ['status'=>true,"message" => "Products updated Successfully!"];
-        return response($response, 200);
-    }
 
     
 
