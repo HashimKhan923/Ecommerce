@@ -96,7 +96,7 @@ public function create(Request $request)
 
         Notification::create([
             'customer_id' => $vendorId,
-            'notification' => 'new order #'.$newOrder->id. 'received'
+            'notification' => 'new order #'.$newOrder->id.' received'
         ]);
 
         Mail::send(
