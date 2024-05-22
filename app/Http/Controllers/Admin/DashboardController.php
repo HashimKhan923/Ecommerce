@@ -25,7 +25,6 @@ class DashboardController extends Controller
         $Notifications = Notification::where('customer_id',null)->get();
 
 
-
         return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores,'Notifications'=>$Notifications]);
     }
 }

@@ -495,8 +495,12 @@ class ProductController extends Controller
     
             if ($update) {
                 $update->name = $productData['name'];
+                if (isset($productData['category_id'])) {
                 $update->category_id = $productData['category_id'];
+                }
+                if (isset($productData['weight'])) {
                 $update->weight = $productData['weight'];
+                }
                 $update->make = $productData['make'];
                 $update->brand_id = $productData['brand_id'];
                 $update->model_id = $productData['model_id'];
