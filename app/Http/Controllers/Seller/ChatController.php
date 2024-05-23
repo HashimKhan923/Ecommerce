@@ -33,11 +33,13 @@ class ChatController extends Controller
         ->where('status','unread')
         ->update(['status' => 'read']);
 
-    $data = Chat::with('seller', 'customer', 'shop', 'product.product_gallery','my_customer')
-                ->where('seller_id', $request->seller_id)
-                ->where('customer_id', $request->customer_id)
-                ->where('shop_id', $request->shop_id)
-                ->get();
+        $data = Chat::with(['seller', 'customer', 'shop', 'product.product_gallery', 'my_customer' => function($query) use ($request) {
+            $query->where('seller_id', $request->seller_id);
+        }])
+        ->where('seller_id', $request->seller_id)
+        ->where('customer_id', $request->customer_id)
+        ->where('shop_id', $request->shop_id)
+        ->get();
     
         return response()->json(['data' => $data]);
     }
