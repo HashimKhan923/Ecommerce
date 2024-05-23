@@ -40,7 +40,7 @@ class ChatController extends Controller
             'product.product_gallery', 
             'my_customer' => function($query) use ($request) {
                 $query->where('seller_id', $request->seller_id)
-                      ->with(['customer.time_line', 'order']);
+                      ->with(['customer.time_line', 'orders']);
             }
         ])
         ->where('seller_id', $request->seller_id)
