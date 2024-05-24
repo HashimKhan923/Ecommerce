@@ -22,6 +22,8 @@ use Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+
 
 class ProductController extends Controller
 {
@@ -88,13 +90,13 @@ class ProductController extends Controller
         $new->slug = $request->slug;
         $new->save();
 
-        $order = 0;
+        if (isset($request['photos'])) {
 
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
                 $gallery->product_id = $new->id;
-                $gallery->order = $order++;
+                $gallery->order = 1;
+
+                $image = file_get_contents($request['photos']);
     
                 $filename = date('YmdHis') . $image->getClientOriginalName();
     
@@ -105,20 +107,8 @@ class ProductController extends Controller
                 $gallery->image = $filename . '.webp';
     
                 $gallery->save();
-            }
-        }
-    
-        elseif ($request->filled('photos')) {
-            $photoNames = $request->photos;
-            foreach ($photoNames as $photoName) {
-                $gallery = new ProductGallery();
-                $gallery->product_id = $new->id;
-                $gallery->order = $order++;
-                $gallery->image = $photoName;
-                $gallery->save();
-            }
-        }
 
+        }
         
         if($request->varients != null)
         {
@@ -246,6 +236,53 @@ class ProductController extends Controller
         
         
 
+    }
+
+
+
+    public function bulk_create(Request $request)
+    {
+        foreach ($request->products as $productData) 
+        {
+            $new = new Product();
+            $new->name = $productData['name'];
+            $new->added_by = 'seller';
+            $new->user_id = $productData['user_id'];
+            $new->sku = $request->productData['sku'];
+            $new->description = $request->productData['description'];
+            $new->price = $request->productData['price'];
+            $new->slug = $request->productData['slug'];
+            $new->save();
+
+            if(isset($productData['photos']))
+            {
+                                        // Download the image content
+                        $response = Http::get($productData['photos']);
+
+                        // Ensure the request was successful
+                        if ($response->successful())
+                        {
+                            // Get the image content
+                            $compressedImage = $response->body();
+
+                            // Create an Intervention Image instance from the downloaded content
+                            $image = Image::make($compressedImage);
+
+                            $filename = date('YmdHis') . '_' . (string) Str::uuid();
+
+
+                            $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+
+                            $gallery = new ProductGallery();
+                            $gallery->product_id = $new->id;
+                            $gallery->order = 1;
+                            $gallery->image = $filename . '.webp';
+                            $gallery->save();
+
+
+                        }
+            }
+         }
     }
 
 
