@@ -258,7 +258,10 @@ class ProductController extends Controller
             {
                                         // Download the image content
                         $response = Http::get($productData['photos']);
-
+                        
+                        $gallery = new ProductGallery();
+                        $gallery->product_id = $new->id;
+                        $gallery->order = 1;
                         // Ensure the request was successful
                         if ($response->successful())
                         {
@@ -273,14 +276,13 @@ class ProductController extends Controller
 
                             $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
 
-                            $gallery = new ProductGallery();
-                            $gallery->product_id = $new->id;
-                            $gallery->order = 1;
                             $gallery->image = $filename . '.webp';
-                            $gallery->save();
+                            
 
 
                         }
+
+                        $gallery->save();
             }
          }
     }
