@@ -248,27 +248,26 @@ class ProductController extends Controller
             $new->name = $productData['name'];
             $new->added_by = 'seller';
             $new->user_id = $productData['user_id'];
+            $new->shop_id = $productData['shop_id'];
             $new->sku = $request->productData['sku'];
             $new->description = $request->productData['description'];
             $new->price = $request->productData['price'];
             $new->slug = $request->productData['slug'];
+            $new->make = $request->productData['make'];
+            $new->condition = $request->productData['condition'];
             $new->save();
 
             if(isset($productData['photos']))
             {
-                                        // Download the image content
                         $response = Http::get($productData['photos']);
                         
                         $gallery = new ProductGallery();
                         $gallery->product_id = $new->id;
                         $gallery->order = 1;
-                        // Ensure the request was successful
                         if ($response->successful())
                         {
-                            // Get the image content
                             $compressedImage = $response->body();
 
-                            // Create an Intervention Image instance from the downloaded content
                             $image = Image::make($compressedImage);
 
                             $filename = date('YmdHis') . '_' . (string) Str::uuid();
