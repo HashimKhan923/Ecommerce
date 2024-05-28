@@ -273,41 +273,82 @@ class ProductController extends Controller
                 $new->slug = $productData['slug'] ?? null;
                 $new->save();
 
-                // $photos = [
-                //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
-                //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
-                // ];
-                // if (!empty($photos)) {
+    
+                // if (isset($productData['photos']) && is_array($productData['photos'])) {
                 //     $order = 1;
-                //     foreach ($photos as $photoUrl) {
-                        
-                        $response = Http::get('https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg');
+                //     foreach ($productData['photos'] as $photoUrl) {
+                    
+                //         $response = Http::get($photoUrl);
                 
-                        if ($response->successful()) {
-                            try {
-                                $imageContent = $response->body();
-                                $image = Image::make($imageContent);
+                //         if ($response->successful()) {
+                //             try {
+                //                 $imageContent = $response->body();
+                //                 $image = Image::make($imageContent);
                                 
-                                $filename = date('YmdHis') . '_' . (string) Str::uuid();
-                                $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
-                                $image->encode('webp')->save($imagePath);
+                //                 $filename = date('YmdHis') . '_' . (string) Str::uuid();
+                //                 $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
+                //                 $image->encode('webp')->save($imagePath);
                 
-                                $gallery = new ProductGallery();
-                                $gallery->product_id = $new->id;
-                                $gallery->order = 1;
-                                $gallery->image = $filename . '.webp';
-                                $gallery->save();
+                //                 $gallery = new ProductGallery();
+                //                 $gallery->product_id = $new->id;
+                //                 $gallery->order = $order;
+                //                 $gallery->image = $filename . '.webp';
+                //                 $gallery->save();
                 
-                            } catch (Exception $e) {
-                                // Log the error or handle it as needed
-                                Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
-                            }
-                        } else {
-                            // Log the error or handle it as needed
-                            Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
-                        }
+                //                 $order++;
+                //             } catch (Exception $e) {
+                //                 // Log the error or handle it as needed
+                //                 Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                //             }
+                //         } else {
+                //             // Log the error or handle it as needed
+                //             Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
+                //         }
                 //     }
                 // }
+
+                $photos = [
+                    'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
+                    'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
+                ];
+                
+                if (!empty($photos)) {
+                    $order = 1;
+                    foreach ($photos as $photoUrl) {
+                        try {
+                            Log::info('Fetching image from URL: ' . $photoUrl);
+                            $response = Http::get($photoUrl);
+                            
+                            if ($response->successful()) {
+                                try {
+                                    $imageContent = $response->body();
+                                    $image = Image::make($imageContent);
+                                    
+                                    $filename = date('YmdHis') . '_' . (string) Str::uuid();
+                                    $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
+                                    $image->encode('webp')->save($imagePath);
+                
+                                    $gallery = new ProductGallery();
+                                    $gallery->product_id = $new->id;
+                                    $gallery->order = $order;
+                                    $gallery->image = $filename . '.webp';
+                                    $gallery->save();
+                
+                                    Log::info('Successfully processed and saved image: ' . $filename . '.webp');
+                                    $order++;
+                                } catch (Exception $e) {
+                                    Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                                }
+                            } else {
+                                Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
+                            }
+                        } catch (Exception $e) {
+                            Log::error('HTTP request failed for URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                        }
+                    }
+                } else {
+                    Log::info('No photos found.');
+                }
                 
     
                 if (!empty($productData['varients'])) {
