@@ -273,10 +273,13 @@ class ProductController extends Controller
                 $new->slug = $productData['slug'] ?? null;
                 $new->save();
 
-    
-                if (isset($productData['photos']) && is_array($productData['photos'])) {
+                $photos = [
+                    'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
+                    'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
+                ];
+                if (!empty($photos)) {
                     $order = 1;
-                    foreach ($productData['photos'] as $photoUrl) {
+                    foreach ($photos as $photoUrl) {
                     
                         $response = Http::get($photoUrl);
                 
