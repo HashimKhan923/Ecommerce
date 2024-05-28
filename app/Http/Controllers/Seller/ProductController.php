@@ -19,7 +19,7 @@ use App\Models\ProductListingPayment;
 use App\Models\User;
 use Carbon\Carbon;
 use Validator;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Facades\Image as ImageFacade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -98,7 +98,7 @@ class ProductController extends Controller
     
                 $filename = date('YmdHis') . $image->getClientOriginalName();
     
-                $compressedImage = Image::make($image->getRealPath());
+                $compressedImage = ImageFacade::make($image->getRealPath());
     
                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
     
@@ -128,7 +128,7 @@ class ProductController extends Controller
 
                     $filename = date('YmdHis') . $image->getClientOriginalName();
     
-                    $compressedImage = Image::make($image->getRealPath());
+                    $compressedImage = ImageFacade::make($image->getRealPath());
         
                     $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
         
@@ -274,40 +274,92 @@ class ProductController extends Controller
                 $new->save();
 
     
-                if (isset($productData['photos']) && is_array($productData['photos'])) {
-                    $order = 1;
-                    foreach ($productData['photos'] as $photoUrl) {
-                        $response = Http::get($photoUrl);
+                // if (isset($productData['photos']) && is_array($productData['photos'])) {
+                //     $order = 1;
+                //     foreach ($productData['photos'] as $photoUrl) {
+                //         $response = Http::get($photoUrl);
                 
-                        if ($response->successful()) {
-                            try {
-                                $imageContent = $response->json();
+                //         if ($response->successful()) {
+                //             try {
                                 
-                                // Check if the JSON response contains image data directly
-                                if (is_string($imageContent)) {
-                                    // Assume it's Base64-encoded image data
-                                    $image = Image::make(base64_decode($imageContent));
-                                } elseif (isset($imageContent['url'])) {
-                                    // Assume it's a URL pointing to the image
-                                    $imageUrl = $imageContent['url'];
-                                    $imageResponse = Http::get($imageUrl);
-                        
-                                    if ($imageResponse->successful()) {
-                                        $image = Image::make($imageResponse->body());
-                                    } else {
-                                        throw new Exception('Failed to fetch image from URL: ' . $imageUrl);
-                                    }
-                                } else {
-                                    throw new Exception('Invalid image data format in JSON response.');
-                                }
-                        
-                                // Further processing and saving the image...
-                            } catch (Exception $e) {
-                                Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
-                            }
-                        }
+                //                 $image = $response->body();
+                //                 // $image = Image::make($imageContent);
+                                
+                //                 $filename = date('YmdHis') . '_' . (string) Str::uuid();
+                //                 $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
+                //                 $image->encode('webp')->save($imagePath);
+                
+                //                 $gallery = new ProductGallery();
+                //                 $gallery->product_id = $new->id;
+                //                 $gallery->order = $order;
+                //                 $gallery->image = $filename . '.webp';
+                //                 $gallery->save();
+                
+                //                 $order++;
+                //             } catch (Exception $e) {
+                //                 // Log the error or handle it as needed
+                //                 Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                //             }
+                //         } else {
+                //             // Log the error or handle it as needed
+                //             Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
+                //         }
+                //     }
+                // }
+
+                // Array of image URLs
+        $photos = [
+            'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
+            'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
+        ];
+
+        $imageNames = [];
+
+        try {
+            foreach ($photos as $url) {
+                // Download the image content
+                $response = Http::get($url);
+
+                // Ensure the request was successful
+                if ($response->successful()) {
+                    // Get the image content
+                    $imageContent = $response->body();
+
+                    // Create an Intervention Image instance from the downloaded content
+                    $image = ImageFacade::make($imageContent);
+
+                    // Generate a unique filename with a UUID and the current timestamp
+                    $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+
+                    // Ensure the ProductGallery directory exists
+                    if (!File::exists(public_path('ProductGallery'))) {
+                        File::makeDirectory(public_path('ProductGallery'), 0755, true);
                     }
+
+                    // Save the image in WebP format to the specified path
+                    $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
+
+                    // Save the image name to the database
+                                $gallery = new ProductGallery();
+                                $gallery->product_id = $new->id;
+                                $gallery->order = $order;
+                                $gallery->image = $filename . '.webp';
+                                $gallery->save();
+
+                    // Store the image filename
+                    $imageNames[] = $filename;
+                } else {
+                    return response()->json(['message' => 'Failed to download one or more images'], 500);
                 }
+            }
+
+            // Return the image filenames as a response
+            return response()->json(['message' => 'Images downloaded and saved successfully', 'images' => $imageNames], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
+    
+    
                 
     
                 if (!empty($productData['varients'])) {
@@ -468,7 +520,7 @@ class ProductController extends Controller
                     $gallery->order = $image['order'];
         
                     $filename = date('YmdHis') . $image['file']->getClientOriginalName();
-                    $compressedImage = Image::make($image['file']->getRealPath());
+                    $compressedImage = ImageFacade::make($image['file']->getRealPath());
                     $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                     $gallery->image = $filename . '.webp';
                 }
@@ -509,7 +561,7 @@ class ProductController extends Controller
     
                         $filename = date('YmdHis') . $image->getClientOriginalName();
         
-                        $compressedImage = Image::make($image->getRealPath());
+                        $compressedImage = ImageFacade::make($image->getRealPath());
             
                         $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
             
@@ -532,7 +584,7 @@ class ProductController extends Controller
     
                         $filename = date('YmdHis') . $image->getClientOriginalName();
         
-                        $compressedImage = Image::make($image->getRealPath());
+                        $compressedImage = ImageFacade::make($image->getRealPath());
             
                         $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
             
