@@ -356,8 +356,8 @@ class ProductController extends Controller
                 }
             }
 
-            // Return the image filenames as a response
-            return response()->json(['message' => 'Images downloaded and saved successfully', 'images' => $imageNames], 200);
+            // // Return the image filenames as a response
+            // return response()->json(['message' => 'Images downloaded and saved successfully', 'images' => $imageNames], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
