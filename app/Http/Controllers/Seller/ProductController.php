@@ -243,7 +243,6 @@ class ProductController extends Controller
         if (is_array($request->products)) {
             $responses = [];
 
-            return $request->products;
     
             foreach ($request->products as $productData) {
             
@@ -671,7 +670,6 @@ class ProductController extends Controller
 
     public function bulk_update(Request $request)
     {
-        return $request->products;
 
         foreach ($request->products as $productData) {
             $update = Product::find($productData['id']);
