@@ -280,7 +280,7 @@ class ProductController extends Controller
                 if (!empty($photos)) {
                     $order = 1;
                     foreach ($photos as $photoUrl) {
-                    
+                        return $photoUrl;
                         $response = Http::get($photoUrl);
                 
                         if ($response->successful()) {
