@@ -275,6 +275,45 @@ class ProductController extends Controller
                 $new->slug = $productData['slug'] ?? null;
                 $new->save();
 
+    
+                // if (isset($productData['photos']) && is_array($productData['photos'])) {
+                //     $order = 1;
+                //     foreach ($productData['photos'] as $photoUrl) {
+                //         $response = Http::get($photoUrl);
+                
+                //         if ($response->successful()) {
+                //             try {
+                                
+                //                 $image = $response->body();
+                //                 // $image = Image::make($imageContent);
+                                
+                //                 $filename = date('YmdHis') . '_' . (string) Str::uuid();
+                //                 $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
+                //                 $image->encode('webp')->save($imagePath);
+                
+                //                 $gallery = new ProductGallery();
+                //                 $gallery->product_id = $new->id;
+                //                 $gallery->order = $order;
+                //                 $gallery->image = $filename . '.webp';
+                //                 $gallery->save();
+                
+                //                 $order++;
+                //             } catch (Exception $e) {
+                //                 // Log the error or handle it as needed
+                //                 Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                //             }
+                //         } else {
+                //             // Log the error or handle it as needed
+                //             Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
+                //         }
+                //     }
+                // }
+
+                // Array of image URLs
+        // $photos = [
+        //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
+        //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
+        // ];
 
         $imageNames = [];
 
@@ -317,6 +356,8 @@ class ProductController extends Controller
                 }
             }
 
+            // // Return the image filenames as a response
+            // return response()->json(['message' => 'Images downloaded and saved successfully', 'images' => $imageNames], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
