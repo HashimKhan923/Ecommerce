@@ -281,28 +281,30 @@ class ProductController extends Controller
                 
                         if ($response->successful()) {
                             try {
-
                                 $imageContent = $response->json();
-                                $image = Image::make($imageContent);
                                 
-                                $filename = date('YmdHis') . '_' . (string) Str::uuid();
-                                $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
-                                $image->encode('webp')->save($imagePath);
-                
-                                $gallery = new ProductGallery();
-                                $gallery->product_id = $new->id;
-                                $gallery->order = $order;
-                                $gallery->image = $filename . '.webp';
-                                $gallery->save();
-                
-                                $order++;
+                                // Check if the JSON response contains image data directly
+                                if (is_string($imageContent)) {
+                                    // Assume it's Base64-encoded image data
+                                    $image = Image::make(base64_decode($imageContent));
+                                } elseif (isset($imageContent['url'])) {
+                                    // Assume it's a URL pointing to the image
+                                    $imageUrl = $imageContent['url'];
+                                    $imageResponse = Http::get($imageUrl);
+                        
+                                    if ($imageResponse->successful()) {
+                                        $image = Image::make($imageResponse->body());
+                                    } else {
+                                        throw new Exception('Failed to fetch image from URL: ' . $imageUrl);
+                                    }
+                                } else {
+                                    throw new Exception('Invalid image data format in JSON response.');
+                                }
+                        
+                                // Further processing and saving the image...
                             } catch (Exception $e) {
-                                // Log the error or handle it as needed
                                 Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
                             }
-                        } else {
-                            // Log the error or handle it as needed
-                            Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
                         }
                     }
                 }
