@@ -319,6 +319,7 @@ class ProductController extends Controller
 
         try {
             foreach ($photos as $url) {
+                $order = 1;
                 // Download the image content
                 $response = Http::get($url);
 
@@ -344,7 +345,7 @@ class ProductController extends Controller
                     // Save the image name to the database
                                 $gallery = new ProductGallery();
                                 $gallery->product_id = $new->id;
-                                $gallery->order = $order;
+                                $gallery->order = $order++;
                                 $gallery->image = $filename . '.webp';
                                 $gallery->save();
 
