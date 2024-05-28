@@ -361,9 +361,10 @@ class ProductController extends Controller
                 }
     
                 if (!empty($productData['stock'])) {
+                    return $productData['stock'];
                     $stock = new Stock();
                     $stock->product_id = $new->id;
-                    $stock->stock = $productData['stock'];
+                    $stock->stock = $productData['stock'] ?? 0;
                     $stock->min_stock = $productData['min_stock'] ?? 0;
                     $stock->save();
                 }
