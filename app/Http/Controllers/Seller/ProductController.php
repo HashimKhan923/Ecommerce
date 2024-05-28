@@ -19,12 +19,14 @@ use App\Models\ProductListingPayment;
 use App\Models\User;
 use Carbon\Carbon;
 use Validator;
+use File;
 use Intervention\Image\Facades\Image as ImageFacade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 
 class ProductController extends Controller
