@@ -294,11 +294,10 @@ class ProductController extends Controller
                 
                                 $gallery = new ProductGallery();
                                 $gallery->product_id = $new->id;
-                                $gallery->order = $order;
+                                $gallery->order = 1;
                                 $gallery->image = $filename . '.webp';
                                 $gallery->save();
                 
-                                $order++;
                             } catch (Exception $e) {
                                 // Log the error or handle it as needed
                                 Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
