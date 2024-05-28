@@ -360,7 +360,7 @@ class ProductController extends Controller
                     $discount->save();
                 }
     
-                if (!empty($productData['stock'])) {
+                if ($productData['stock']) {
                     return $productData['stock'];
                     $stock = new Stock();
                     $stock->product_id = $new->id;
