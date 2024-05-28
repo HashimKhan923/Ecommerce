@@ -364,7 +364,6 @@ class ProductController extends Controller
                 }
     
                 if ($productData['stock']) {
-                    return $productData['stock'];
                     $stock = new Stock();
                     $stock->product_id = $new->id;
                     $stock->stock = $productData['stock'] ?? 0;
@@ -672,6 +671,8 @@ class ProductController extends Controller
 
     public function bulk_update(Request $request)
     {
+        return $request->products;
+
         foreach ($request->products as $productData) {
             $update = Product::find($productData['id']);
     
