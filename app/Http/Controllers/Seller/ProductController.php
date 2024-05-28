@@ -256,10 +256,12 @@ class ProductController extends Controller
             $new->make = $request->productData['make'];
             $new->condition = $request->productData['condition'];
             $new->save();
-
+            
             if(isset($productData['photos']))
             {
-                        $response = Http::get($productData['photos']);
+                foreach($productData['photos'] as $galleryData)           
+
+                        $response = Http::get($galleryData['photos']);
                         
                         $gallery = new ProductGallery();
                         $gallery->product_id = $new->id;
