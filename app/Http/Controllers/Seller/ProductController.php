@@ -242,8 +242,11 @@ class ProductController extends Controller
     {
         if (is_array($request->products)) {
             $responses = [];
+
+            return $request->products;
     
             foreach ($request->products as $productData) {
+            
                 $new = new Product();
                 $new->name = $productData['name'] ?? null;
                 $new->added_by = 'seller';
