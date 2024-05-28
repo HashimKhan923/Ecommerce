@@ -271,20 +271,39 @@ class ProductController extends Controller
                 $new->slug = $productData['slug'] ?? null;
                 $new->save();
 
-                $order = 0;
     
-                if (isset($productData['photos'])) {
-                    $gallery = new ProductGallery();
-                    $gallery->product_id = $new->id;
-                    $gallery->order = $order++;
-    
-                    $image = file_get_contents($productData['photos']);
-                    $filename = date('YmdHis') . $image->getClientOriginalName();
-                    $compressedImage = Image::make($image->getRealPath());
-                    $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
-                    $gallery->image = $filename . '.webp';
-                    $gallery->save();
+                if (isset($productData['photos']) && is_array($productData['photos'])) {
+                    $order = 1;
+                    foreach ($productData['photos'] as $photoUrl) {
+                        $response = Http::get($photoUrl);
+                
+                        if ($response->successful()) {
+                            try {
+                                $imageContent = $response->body();
+                                $image = Image::make($imageContent);
+                                
+                                $filename = date('YmdHis') . '_' . (string) Str::uuid();
+                                $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
+                                $image->encode('webp')->save($imagePath);
+                
+                                $gallery = new ProductGallery();
+                                $gallery->product_id = $new->id;
+                                $gallery->order = $order;
+                                $gallery->image = $filename . '.webp';
+                                $gallery->save();
+                
+                                $order++;
+                            } catch (Exception $e) {
+                                // Log the error or handle it as needed
+                                Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                            }
+                        } else {
+                            // Log the error or handle it as needed
+                            Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
+                        }
+                    }
                 }
+                
     
                 if (!empty($productData['varients'])) {
                     foreach ($productData['varients'] as $item) {
