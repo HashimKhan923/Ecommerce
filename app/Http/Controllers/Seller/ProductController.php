@@ -276,14 +276,55 @@ class ProductController extends Controller
                 $new->save();
 
     
-                if (isset($productData['photos']) && is_array($productData['photos'])) {
-                    $order = 1;
-                    foreach ($productData['photos'] as $photoUrl) {
-                        $response = Http::get($photoUrl);
+                // if (isset($productData['photos']) && is_array($productData['photos'])) {
+                //     $order = 1;
+                //     foreach ($productData['photos'] as $photoUrl) {
+                //         $response = Http::get($photoUrl);
                 
-                        if ($response->successful()) {
-                            try {
+                //         if ($response->successful()) {
+                //             try {
                                 
+                //                 $image = $response->body();
+                //                 // $image = Image::make($imageContent);
+                                
+                //                 $filename = date('YmdHis') . '_' . (string) Str::uuid();
+                //                 $imagePath = public_path('ProductGallery') . '/' . $filename . '.webp';
+                //                 $image->encode('webp')->save($imagePath);
+                
+                //                 $gallery = new ProductGallery();
+                //                 $gallery->product_id = $new->id;
+                //                 $gallery->order = $order;
+                //                 $gallery->image = $filename . '.webp';
+                //                 $gallery->save();
+                
+                //                 $order++;
+                //             } catch (Exception $e) {
+                //                 // Log the error or handle it as needed
+                //                 Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
+                //             }
+                //         } else {
+                //             // Log the error or handle it as needed
+                //             Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
+                //         }
+                //     }
+                // }
+
+                // Array of image URLs
+        // $photos = [
+        //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
+        //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
+        // ];
+
+        $imageNames = [];
+
+        try {
+            foreach ($productData['photos'] as $url) {
+                $order = 1;
+                // Download the image content
+                $response = Http::get($url);
+
+                // Ensure the request was successful
+                if ($response->successful()) {
                     // Get the image content
                     $imageContent = $response->body();
 
@@ -293,10 +334,10 @@ class ProductController extends Controller
                     // Generate a unique filename with a UUID and the current timestamp
                     $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
 
-                    // // Ensure the ProductGallery directory exists
-                    // if (!File::exists(public_path('ProductGallery'))) {
-                    //     File::makeDirectory(public_path('ProductGallery'), 0755, true);
-                    // }
+                    // Ensure the ProductGallery directory exists
+                    if (!File::exists(public_path('ProductGallery'))) {
+                        File::makeDirectory(public_path('ProductGallery'), 0755, true);
+                    }
 
                     // Save the image in WebP format to the specified path
                     $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
@@ -310,69 +351,16 @@ class ProductController extends Controller
 
                     // Store the image filename
                     $imageNames[] = $filename;
-                            } catch (Exception $e) {
-                                // Log the error or handle it as needed
-                                Log::error('Failed to process image from URL: ' . $photoUrl, ['error' => $e->getMessage()]);
-                            }
-                        } else {
-                            // Log the error or handle it as needed
-                            Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
-                        }
-                    }
+                } else {
+                    return response()->json(['message' => 'Failed to download one or more images'], 500);
                 }
+            }
 
-                // Array of image URLs
-        // $photos = [
-        //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
-        //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
-        // ];
-
-        // $imageNames = [];
-
-        // try {
-        //     foreach ($photos as $url) {
-        //         $order = 1;
-        //         // Download the image content
-        //         $response = Http::get($url);
-
-        //         // Ensure the request was successful
-        //         if ($response->successful()) {
-        //             // Get the image content
-        //             $imageContent = $response->body();
-
-        //             // Create an Intervention Image instance from the downloaded content
-        //             $image = ImageFacade::make($imageContent);
-
-        //             // Generate a unique filename with a UUID and the current timestamp
-        //             $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
-
-        //             // Ensure the ProductGallery directory exists
-        //             if (!File::exists(public_path('ProductGallery'))) {
-        //                 File::makeDirectory(public_path('ProductGallery'), 0755, true);
-        //             }
-
-        //             // Save the image in WebP format to the specified path
-        //             $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
-
-        //             // Save the image name to the database
-        //                         $gallery = new ProductGallery();
-        //                         $gallery->product_id = $new->id;
-        //                         $gallery->order = $order++;
-        //                         $gallery->image = $filename . '.webp';
-        //                         $gallery->save();
-
-        //             // Store the image filename
-        //             $imageNames[] = $filename;
-        //         } else {
-        //             return response()->json(['message' => 'Failed to download one or more images'], 500);
-        //         }
-        //     }
-
-        //     // Return the image filenames as a response
-        //     return response()->json(['message' => 'Images downloaded and saved successfully', 'images' => $imageNames], 200);
-        // } catch (\Exception $e) {
-        //     return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
-        // }
+            // Return the image filenames as a response
+            return response()->json(['message' => 'Images downloaded and saved successfully', 'images' => $imageNames], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
     
     
                 
