@@ -241,40 +241,42 @@ class ProductController extends Controller
     
             foreach ($request->products as $productData) {
                 $new = new Product();
-                $new->name = $productData['name'];
+                $new->name = $productData['name'] ?? null;
                 $new->added_by = 'seller';
                 $new->user_id = $productData['user_id'];
-                $new->category_id = $productData['category_id'];
-                $new->height = $productData['height'];
-                $new->weight = $productData['weight'];
-                $new->lenght = $productData['lenght'];
-                $new->start_year = $productData['year'];
-                $new->make = $productData['make'];
-                $new->unit = $productData['unit'];
-                $new->sku = $productData['sku'];
-                $new->bar_code = $productData['bar_code'];
-                $new->condition = $productData['condition'];
-                $new->brand_id = $productData['brand_id'];
-                $new->model_id = $productData['model_id'];
-                $new->shop_id = $productData['shop_id'];
-                $new->tags = $productData['tags'];
-                $new->trim = $productData['trim'];
-                $new->description = $productData['description'];
-                $new->price = $productData['price'];
-                $new->cost_price = $productData['cost_price'];
-                $new->shipping = $productData['shipping'];
-                $new->featured = $productData['featured'];
-                $new->published = $productData['published'];
-                $new->is_tax = $productData['is_tax'];
-                $new->meta_title = $productData['meta_title'];
-                $new->video = $productData['video'];
-                $new->slug = $productData['slug'];
+                $new->category_id = $productData['category_id'] ?? null;
+                $new->height = $productData['height'] ?? 0;
+                $new->weight = $productData['weight'] ?? 0;
+                $new->lenght = $productData['lenght'] ?? 0;
+                $new->start_year = $productData['year'] ?? date('Y');
+                $new->make = $productData['make'] ?? null;
+                $new->unit = $productData['unit'] ?? null;
+                $new->sku = $productData['sku'] ?? null;
+                $new->bar_code = $productData['bar_code'] ?? null;
+                $new->condition = $productData['condition'] ?? null;
+                $new->brand_id = $productData['brand_id'] ?? null;
+                $new->model_id = $productData['model_id'] ?? null;
+                $new->shop_id = $productData['shop_id'] ?? null;
+                $new->tags = $productData['tags'] ?? '';
+                $new->trim = $productData['trim'] ?? '';
+                $new->description = $productData['description'] ?? null;
+                $new->price = $productData['price'] ?? 0.0;
+                $new->cost_price = $productData['cost_price'] ?? 0.0;
+                $new->shipping = $productData['shipping'] ?? 0.0;
+                $new->featured = $productData['featured'] ?? false;
+                $new->published = $productData['published'] ?? false;
+                $new->is_tax = $productData['is_tax'] ?? false;
+                $new->meta_title = $productData['meta_title'] ?? null;
+                $new->video = $productData['video'] ?? null;
+                $new->slug = $productData['slug'] ?? null;
                 $new->save();
+
+                $order = 0;
     
                 if (isset($productData['photos'])) {
                     $gallery = new ProductGallery();
                     $gallery->product_id = $new->id;
-                    $gallery->order = 1;
+                    $gallery->order = $order++;
     
                     $image = file_get_contents($productData['photos']);
                     $filename = date('YmdHis') . $image->getClientOriginalName();
@@ -288,13 +290,13 @@ class ProductController extends Controller
                     foreach ($productData['varients'] as $item) {
                         $varient = new ProductVarient();
                         $varient->product_id = $new->id;
-                        $varient->color = $item['color'];
-                        $varient->size = $item['size'];
-                        $varient->bolt_pattern = $item['bolt_pattern'];
-                        $varient->price = $item['varient_price'];
-                        $varient->discount_price = $item['varient_discount_price'];
-                        $varient->sku = $item['varient_sku'];
-                        $varient->stock = $item['varient_stock'];
+                        $varient->color = $item['color'] ?? null;
+                        $varient->size = $item['size'] ?? null;
+                        $varient->bolt_pattern = $item['bolt_pattern'] ?? null;
+                        $varient->price = $item['varient_price'] ?? 0.0;
+                        $varient->discount_price = $item['varient_discount_price'] ?? 0.0;
+                        $varient->sku = $item['varient_sku'] ?? null;
+                        $varient->stock = $item['varient_stock'] ?? 0;
     
                         if (is_uploaded_file($item['varient_image'])) {
                             $image = $item['varient_image'];
@@ -303,7 +305,7 @@ class ProductController extends Controller
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
                             $varient->image = $filename . '.webp';
                         } else {
-                            $varient->image = $item['varient_image'];
+                            $varient->image = $item['varient_image'] ?? null;
                         }
                         $varient->save();
                     }
@@ -312,37 +314,37 @@ class ProductController extends Controller
                 if (!empty($productData['discount'])) {
                     $discount = new Discount();
                     $discount->product_id = $new->id;
-                    $discount->discount = $productData['discount'];
-                    $discount->discount_start_date = $productData['discount_start_date'];
-                    $discount->discount_end_date = $productData['discount_end_date'];
-                    $discount->discount_type = $productData['discount_type'];
+                    $discount->discount = $productData['discount'] ?? 0.0;
+                    $discount->discount_start_date = $productData['discount_start_date'] ?? null;
+                    $discount->discount_end_date = $productData['discount_end_date'] ?? null;
+                    $discount->discount_type = $productData['discount_type'] ?? null;
                     $discount->save();
                 }
     
                 if (!empty($productData['stock'])) {
                     $stock = new Stock();
                     $stock->product_id = $new->id;
-                    $stock->stock = $productData['stock'];
-                    $stock->min_stock = $productData['min_stock'];
+                    $stock->stock = $productData['stock'] ?? 0;
+                    $stock->min_stock = $productData['min_stock'] ?? 0;
                     $stock->save();
                 }
     
                 if (!empty($productData['deal_id'])) {
                     $deal = new DealProduct();
-                    $deal->deal_id = $productData['deal_id'];
+                    $deal->deal_id = $productData['deal_id'] ?? 0;
                     $deal->product_id = $new->id;
-                    $deal->discount = $productData['deal_discount'];
-                    $deal->discount_type = $productData['deal_discount_type'];
+                    $deal->discount = $productData['deal_discount'] ?? 0.0;
+                    $deal->discount_type = $productData['deal_discount_type'] ?? null;
                     $deal->save();
                 }
     
                 if (!empty($productData['shipping_type'])) {
                     $shipping = new Shipping();
                     $shipping->product_id = $new->id;
-                    $shipping->shipping_cost = $productData['shipping_cost'];
-                    $shipping->is_qty_multiply = $productData['is_qty_multiply'];
-                    $shipping->shipping_additional_cost = $productData['shipping_additional_cost'];
-                    $shipping->est_shipping_days = $productData['est_shipping_days'];
+                    $shipping->shipping_cost = $productData['shipping_cost'] ?? 0.0;
+                    $shipping->is_qty_multiply = $productData['is_qty_multiply'] ?? false;
+                    $shipping->shipping_additional_cost = $productData['shipping_additional_cost'] ?? 0.0;
+                    $shipping->est_shipping_days = $productData['est_shipping_days'] ?? 0;
                     $shipping->save();
                 }
     
@@ -350,9 +352,9 @@ class ProductController extends Controller
                     foreach ($productData['wholesale_price'] as $price) {
                         $wholesale = new WholesaleProduct();
                         $wholesale->product_id = $new->id;
-                        $wholesale->wholesale_price = $price;
-                        $wholesale->wholesale_min_qty = $productData['wholesale_min_qty'];
-                        $wholesale->wholesale_max_qty = $productData['wholesale_max_qty'];
+                        $wholesale->wholesale_price = $price ?? 0.0;
+                        $wholesale->wholesale_min_qty = $productData['wholesale_min_qty'] ?? 0;
+                        $wholesale->wholesale_max_qty = $productData['wholesale_max_qty'] ?? 0;
                         $wholesale->save();
                     }
                 }
@@ -383,6 +385,7 @@ class ProductController extends Controller
     
         return response(['status' => false, "message" => "Invalid request format!"], 400);
     }
+    
 
 
 
