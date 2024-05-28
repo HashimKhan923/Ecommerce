@@ -273,15 +273,15 @@ class ProductController extends Controller
                 $new->slug = $productData['slug'] ?? null;
                 $new->save();
 
-                $photos = [
-                    'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
-                    'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
-                ];
-                if (!empty($photos)) {
-                    $order = 1;
-                    foreach ($photos as $photoUrl) {
-                        return $photoUrl;
-                        $response = Http::get($photoUrl);
+                // $photos = [
+                //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg',
+                //     'https://www.invokeconcepts.com/wp-content/uploads/2022/04/A1000CC8-ECC1-4842-80B5-E7F51BB7B14A.jpg'
+                // ];
+                // if (!empty($photos)) {
+                //     $order = 1;
+                //     foreach ($photos as $photoUrl) {
+                        
+                        $response = Http::get('https://www.invokeconcepts.com/wp-content/uploads/2022/04/E8A391B2-7568-4572-B059-C34EC40D9B49.jpg');
                 
                         if ($response->successful()) {
                             try {
@@ -307,8 +307,8 @@ class ProductController extends Controller
                             // Log the error or handle it as needed
                             Log::error('Failed to fetch image from URL: ' . $photoUrl, ['status' => $response->status()]);
                         }
-                    }
-                }
+                //     }
+                // }
                 
     
                 if (!empty($productData['varients'])) {
