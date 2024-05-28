@@ -277,7 +277,7 @@ class ProductController extends Controller
                 if (isset($productData['photos']) && is_array($productData['photos'])) {
                     $order = 1;
                     foreach ($productData['photos'] as $photoUrl) {
-                        return $photoUrl;
+                    
                         $response = Http::get($photoUrl);
                 
                         if ($response->successful()) {
