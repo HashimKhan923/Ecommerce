@@ -49,7 +49,7 @@ class CouponController extends Controller
                 $CouponCustomer->save();
 
                 // Mail::send(
-                //     'email.Coupon.seller_payout',
+                //     'email.Coupon.customers',
                 //     [
                 //         'vendor_name' => $Seller->name,
                 //         'amount' => $PaymentStatus->amount,
@@ -87,7 +87,6 @@ class CouponController extends Controller
                 $CouponProduct->product_id = $product_id;
                 $CouponProduct->save();
             }
-
         }
 
         $response = ['status'=>true,"message" => "Coupon Created Successfully!",'coupon_id'=>$new->id];

@@ -120,6 +120,7 @@ class ProductController extends Controller
                 $varient->color = $item['color'];
                 $varient->size = $item['size'];
                 $varient->bolt_pattern = $item['bolt_pattern'];
+                $varient->others = $item['others'];
                 $varient->price = $item['varient_price'];
                 $varient->discount_price = $item['varient_discount_price'];
                 $varient->sku = $item['varient_sku'];
@@ -334,6 +335,7 @@ class ProductController extends Controller
                         $varient->color = $item['color'] ?? null;
                         $varient->size = $item['size'] ?? null;
                         $varient->bolt_pattern = $item['bolt_pattern'] ?? null;
+                        $varient->others = $item['others'] ?? null;
                         $varient->price = $item['varient_price'] ?? 0.0;
                         $varient->discount_price = $item['varient_discount_price'] ?? 0.0;
                         $varient->sku = $item['varient_sku'] ?? null;
@@ -507,6 +509,7 @@ class ProductController extends Controller
                     $varient->color = $varientData['color'];
                     $varient->size = $varientData['size'];
                     $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->others = $varientData['others'];
                     $varient->price = $varientData['varient_price'];
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
@@ -539,6 +542,7 @@ class ProductController extends Controller
                     $varient->color = $varientData['color'];
                     $varient->size = $varientData['size'];
                     $varient->bolt_pattern = $varientData['bolt_pattern'];
+                    $varient->others = $varientData['others'];
                     $varient->price = $varientData['varient_price'];
                     $varient->discount_price = $varientData['varient_discount_price'];
                     $varient->sku = $varientData['varient_sku'];
