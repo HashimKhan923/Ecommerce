@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Model;
 use App\Models\Payout;
 use App\Models\SellerGuideVideo;
 use App\Models\SellerFandQ;
@@ -30,13 +31,14 @@ class DashboardController extends Controller
         $Payouts = Payout::where('seller_id',$id)->get();
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
+        $Models = Model::where('is_active',1)->get();
         $SellerFandQ = SellerFandQ::all();
         $SellerGuideVideo = SellerGuideVideo::all();
         $TotalSale = MyCustomer::where('seller_id',$id)->sum('sale') ?? 0;
         $Notifications = Notification::where('customer_id',$id)->get();
 
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo,'TotalSale'=>$TotalSale,'Notifications'=>$Notifications]);
+        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'Models'=>$Models,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo,'TotalSale'=>$TotalSale,'Notifications'=>$Notifications]);
     }
 
     public function searchByshop($shop_id)
