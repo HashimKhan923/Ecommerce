@@ -12,6 +12,7 @@ use App\Models\Banner;
 use App\Models\AllBanner;
 use App\Models\State;
 use App\Models\Shop;
+use App\Models\Models;
 use DB;
 
 class HomeController extends Controller
@@ -44,6 +45,7 @@ class HomeController extends Controller
         $Categories = Category::with('product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
+        $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
             'product.category', 'product.brand', 'product.model', 'product.stock',
@@ -56,6 +58,7 @@ class HomeController extends Controller
             'TrendingProducts' => $TrendingProducts->get(),
             'Categories' => $Categories,
             'Brands' => $Brands,
+            'Models' => $Models,
             'Banners' => $Banners,
             'AllBanners' => $AllBanners,
             'Shops' => $Shops
