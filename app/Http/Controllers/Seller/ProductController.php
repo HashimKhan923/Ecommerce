@@ -337,16 +337,34 @@ class ProductController extends Controller
                         $varient->discount_price = $item['varient_discount_price'] ?? 0.0;
                         $varient->sku = $item['varient_sku'] ?? null;
                         $varient->stock = $item['varient_stock'] ?? 0;
-    
-                        if (is_uploaded_file($item['varient_image'])) {
-                            $image = $item['varient_image'];
-                            $filename = date('YmdHis') . $image->getClientOriginalName();
-                            $compressedImage = Image::make($image->getRealPath());
-                            $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename . '.webp');
-                            $varient->image = $filename . '.webp';
+                            if(isset($item['varient_image']))
+                            {
+                                // Download the image content
+                            $response = Http::get($item['varient_image']);
+
+                            // Ensure the request was successful
+                            if ($response->successful()) {
+                                // Get the image content
+                                $imageContent = $response->body();
+
+                                // Create an Intervention Image instance from the downloaded content
+                                $image = ImageFacade::make($imageContent);
+
+                                // Generate a unique filename with a UUID and the current timestamp
+                                $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+
+                                // Ensure the ProductGallery directory exists
+                                if (!File::exists(public_path('ProductVarient'))) {
+                                    File::makeDirectory(public_path('ProductVarient'), 0755, true);
+                                }
+
+                                // Save the image in WebP format to the specified path
+                                $image->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
                         } else {
-                            $varient->image = $item['varient_image'] ?? null;
+                            return response()->json(['message' => 'Failed to download one or more images'], 500);
                         }
+                            }
+                            
                         $varient->save();
                     }
                 }
