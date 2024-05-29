@@ -90,24 +90,21 @@ class ProductController extends Controller
         $new->slug = $request->slug;
         $new->save();
 
-        if (isset($request['photos'])) {
-
+        if ($request->photos) {
+            foreach ($request->file('photos') as $image) {
                 $gallery = new ProductGallery();
-                $gallery->product_id = $new->id;
-                $gallery->order = 1;
+                $gallery->product_id = $new->id;   
 
-                $image = file_get_contents($request['photos']);
-    
                 $filename = date('YmdHis') . $image->getClientOriginalName();
-    
-                $compressedImage = ImageFacade::make($image->getRealPath());
-    
-                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
-    
-                $gallery->image = $filename . '.webp';
-    
-                $gallery->save();
 
+                $compressedImage = ImageFacade::make($image->getRealPath());
+                
+                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                
+                $gallery->image = $filename . '.webp';
+                
+                $gallery->save();
+            }
         }
         
         if($request->varients != null)
