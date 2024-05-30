@@ -278,53 +278,53 @@ class ProductController extends Controller
 
         $imageNames = [];
 
-        // try {
-        //     if(isset($productData['photos']))
-        //     {
-        //         foreach ($productData['photos'] as $url) {
-        //             $order = 1;
-        //             // Download the image content
-        //             $response = Http::get($url);
+        try {
+            if(isset($productData['photos']))
+            {
+                foreach ($productData['photos'] as $url) {
+                    $order = 1;
+                    // Download the image content
+                    $response = Http::get($url);
     
-        //             // Ensure the request was successful
-        //             if ($response->successful()) {
-        //                 // Get the image content
-        //                 $imageContent = $response->body();
+                    // Ensure the request was successful
+                    if ($response->successful()) {
+                        // Get the image content
+                        $imageContent = $response->body();
     
-        //                 // Create an Intervention Image instance from the downloaded content
-        //                 $image = ImageFacade::make($imageContent);
+                        // Create an Intervention Image instance from the downloaded content
+                        $image = ImageFacade::make($imageContent);
     
-        //                 // Generate a unique filename with a UUID and the current timestamp
-        //                 $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+                        // Generate a unique filename with a UUID and the current timestamp
+                        $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
     
-        //                 // Ensure the ProductGallery directory exists
-        //                 if (!File::exists(public_path('ProductGallery'))) {
-        //                     File::makeDirectory(public_path('ProductGallery'), 0755, true);
-        //                 }
+                        // Ensure the ProductGallery directory exists
+                        if (!File::exists(public_path('ProductGallery'))) {
+                            File::makeDirectory(public_path('ProductGallery'), 0755, true);
+                        }
     
-        //                 // Save the image in WebP format to the specified path
-        //                 $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
+                        // Save the image in WebP format to the specified path
+                        $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
     
-        //                 // Save the image name to the database
-        //                             $gallery = new ProductGallery();
-        //                             $gallery->product_id = $new->id;
-        //                             $gallery->order = $order++;
-        //                             $gallery->image = $filename;
-        //                             $gallery->save();
+                        // Save the image name to the database
+                                    $gallery = new ProductGallery();
+                                    $gallery->product_id = $new->id;
+                                    $gallery->order = $order++;
+                                    $gallery->image = $filename;
+                                    $gallery->save();
     
-        //                 // Store the image filename
-        //                 $imageNames[] = $filename;
-        //             } else {
-        //                 return response()->json(['message' => 'Failed to download one or more images'], 500);
-        //             }
-        //         }
-        //     }
+                        // Store the image filename
+                        $imageNames[] = $filename;
+                    } else {
+                        return response()->json(['message' => 'Failed to download one or more images'], 500);
+                    }
+                }
+            }
 
 
 
-        // } catch (\Exception $e) {
-        //     return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        }
     
     
                 
