@@ -74,7 +74,11 @@ class HomeController extends Controller
                 $query->orderBy('order', 'asc');
             }, 'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy($orderBy, 'desc')->skip($length)->take(24)->get();
+        ])->where('published', 1)->orderBy($orderBy, 'desc')->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->skip($length)->take(24)->get();
     }
     
     public function load_more($length)

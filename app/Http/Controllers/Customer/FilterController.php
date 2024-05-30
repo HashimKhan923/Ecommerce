@@ -25,6 +25,8 @@ class FilterController extends Controller
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
+        })->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
         })
         ->where(function ($query) use ($keywords,$searchValue) {
             $query->where('name', 'LIKE', "%$searchValue%");
@@ -63,6 +65,11 @@ class FilterController extends Controller
             ->where('brand_id', $request->brand_id)
             ->where('model_id', $request->model_id)
             ->where('published', 1)
+            ->whereHas('shop', function ($query) {
+                $query->where('status', 1);
+            })->whereHas('stock', function ($query) {
+                $query->where('stock', '>', 0);
+            })
             ->orderByRaw('featured DESC')
             ->get();
 
@@ -101,7 +108,11 @@ class FilterController extends Controller
 
 
     
-        $data = $query->with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->get();
+        $data = $query->with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->get();
     
         return response()->json(['data'=>$data]);
     }
