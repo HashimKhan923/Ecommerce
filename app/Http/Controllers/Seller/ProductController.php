@@ -364,11 +364,12 @@ class ProductController extends Controller
 
                                 // Save the image in WebP format to the specified path
                                 $image->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
+                                $varient->image = $filename;
                         } else {
                             return response()->json(['message' => 'Failed to download one or more images'], 500);
                         }
                             }
-                        $varient->image = $filename;
+                        
                         $varient->save();
                     }
                 }
