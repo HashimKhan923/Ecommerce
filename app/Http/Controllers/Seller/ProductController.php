@@ -368,7 +368,7 @@ class ProductController extends Controller
                             return response()->json(['message' => 'Failed to download one or more images'], 500);
                         }
                             }
-                            
+                        $varient->image = $filename;
                         $varient->save();
                     }
                 }
