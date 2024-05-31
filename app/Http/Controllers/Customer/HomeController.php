@@ -34,16 +34,12 @@ class HomeController extends Controller
     
         $TopSelling = clone $Products;
         $TopSelling->orderBy('num_of_sale', 'desc')
-        ->take(50) // Take a larger subset first
-        ->get()
-        ->shuffle() // Shuffle the collection
+        ->inRandomOrder()
         ->take(10);
     
         $TrendingProducts = clone $Products;
         $TrendingProducts->orderBy('average_rating', 'desc')
-        ->take(50) // Take a larger subset first
-        ->get()
-        ->shuffle() // Shuffle the collection
+        ->inRandomOrder()
         ->take(10);
     
         $FeaturedProducts = clone $Products;
