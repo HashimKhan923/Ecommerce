@@ -39,12 +39,27 @@ class HomeController extends Controller
             },
             'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->inRandomOrder()->orderBy('num_of_sale', 'desc')
+        ])->where('published', 1)->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->inRandomOrder()->orderBy('num_of_sale', 'desc')
         ->take(10);
 
     
-        $TrendingProducts = clone $Products;
-        $TrendingProducts->inRandomOrder()->orderBy('average_rating', 'desc')
+        
+        $TrendingProducts = Product::with([
+            'user', 'category', 'brand', 'model', 'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount', 'tax', 'shipping', 'deal.deal_product',
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->inRandomOrder()->orderBy('average_rating', 'desc')
         ->take(10);
     
         $FeaturedProducts = clone $Products;
