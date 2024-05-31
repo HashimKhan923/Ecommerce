@@ -36,15 +36,15 @@ class HomeController extends Controller
         $TopSelling = Product::orderBy('num_of_sale', 'desc') // First, order by sales
                     ->take(50) // Take more than you need to ensure randomness, e.g., top 50
                     ->inRandomOrder() // Then, randomize the order
-                    ->take(10) // Finally, take the top 10 from the randomized list
-                    ->get();
+                    ->take(10); // Finally, take the top 10 from the randomized list
+                    
     
         $TrendingProducts = clone $Products;
         $TrendingProducts->orderBy('average_rating', 'desc')
         ->take(50) // Take more than you need to ensure randomness, e.g., top 50
         ->inRandomOrder() // Then, randomize the order
-        ->take(10) // Finally, take the top 10 from the randomized list
-        ->get();
+        ->take(10); // Finally, take the top 10 from the randomized list
+        
     
         $FeaturedProducts = clone $Products;
         $FeaturedProducts->where('featured', 1)->take(10);
