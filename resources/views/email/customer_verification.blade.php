@@ -82,10 +82,6 @@
         <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
     </div>
-    <div class="footer">
-        <p>If you did not sign up for [Company Name], please ignore this email.</p>
-        <p>[Company Name] | Address | Phone Number</p>
-    </div>
 </body>
 
 </html>

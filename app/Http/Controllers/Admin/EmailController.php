@@ -8,11 +8,15 @@ use App\Models\User;
 
 class EmailController extends Controller
 {
+
     public function sent(Request $request)
     {
-        foreach($request->ids as $seller_id)
+        $seller = User::where('user_type','seller')->get();
+
+        foreach($seller as $seller_id)
         {
-            $Seller = User::where('id',$seller_id)->first();
+            $Seller = User::where('id',$seller_id->id)->first();
+            
             Mail::send(
                 'email.admin.to_seller',
                 [

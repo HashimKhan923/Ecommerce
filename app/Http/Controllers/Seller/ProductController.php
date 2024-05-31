@@ -779,13 +779,20 @@ class ProductController extends Controller
                     }
                     $shipping->save();
                 }
-            }
+        }
         
     }
-       
 
 
-        $response = ['status'=>true,"message" => "Products updated Successfully!"];
+
+        $Products = Product::with([
+            'user', 'category', 'brand', 'model', 'stock',
+            'product_gallery','discount', 'tax', 'shipping', 'deal.deal_product',
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('id',$request->ids)->get();
+
+
+        $response = ['status'=>true,"message" => "Products updated Successfully!",'Products'=>$Products];
         return response($response, 200);
     }
 

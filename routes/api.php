@@ -356,6 +356,14 @@ Route::group(['middleware' => ['auth:api']], function(){
                         });
                     });
 
+                                                                        /// Email \\\
+
+                Route::group(['prefix' => '/admin/email/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\EmailController::class)->group(function () {
+                        Route::post('sent','sent');
+                    });
+                });
+
 
 
                                                                     /// Subscriber \\\
