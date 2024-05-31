@@ -19,7 +19,7 @@ class EmailController extends Controller
             $Seller = User::where('id',$seller_id->id)->first();
             
             Mail::send(
-                'email.admin.to_seller',
+                'email.admin.to_sellers',
                 [
                     'seller_name' => $Seller->name,
                     'body' => $request->message
