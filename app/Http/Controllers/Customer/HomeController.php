@@ -33,10 +33,10 @@ class HomeController extends Controller
 })->take(24);
     
         $TopSelling = clone $Products;
-        $TopSelling->take(50)->inRandomOrder()->take(10)->get();
+        $TopSelling->orderBy('num_of_sale', 'desc')->take(10);
     
         $TrendingProducts = clone $Products;
-        $TrendingProducts->take(50)->inRandomOrder()->take(10)->get();
+        $TrendingProducts->orderBy('average_rating', 'desc')->take(10);
     
         $FeaturedProducts = clone $Products;
         $FeaturedProducts->where('featured', 1)->take(10);
@@ -54,8 +54,8 @@ class HomeController extends Controller
         return response()->json([
             'Products' => $allProducts,
             'FeaturedProducts' => $FeaturedProducts->get(),
-            'TopSelling' => $TopSelling->get(),
-            'TrendingProducts' => $TrendingProducts->get(),
+            'TopSelling' => $TopSelling,
+            'TrendingProducts' => $TrendingProducts,
             'Categories' => $Categories,
             'Brands' => $Brands,
             'Models' => $Models,
