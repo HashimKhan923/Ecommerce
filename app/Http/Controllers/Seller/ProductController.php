@@ -742,10 +742,10 @@ class ProductController extends Controller
                 }
     
                 $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                if (isset($productData['stock'])) {
+                if (isset($productData['stock']) || $productData['stock'] == 0) {
                     $stock->stock = $productData['stock'];
                 }
-                if (isset($productData['min_stock'])) {
+                if (isset($productData['min_stock']) || $productData['stock'] == 0) {
                     $stock->min_stock = $productData['min_stock'];
                 }
                 $stock->save();
@@ -768,10 +768,10 @@ class ProductController extends Controller
                 //     }
                 // }
     
-                if (!empty($productData['shipping_cost'])) {
+                if (!empty($productData['shipping_cost']) || $productData['shipping_cost'] == 0) {
                     $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $shipping->shipping_cost = $productData['shipping_cost'];
-                    if (isset($productData['shipping_additional_cost'])) {
+                    if (isset($productData['shipping_additional_cost']) || $productData['shipping_additional_cost'] == 0 ) {
                     $shipping->shipping_additional_cost = $productData['shipping_additional_cost'];
                     }
                     if (isset($productData['est_shipping_days'])) {
