@@ -789,7 +789,7 @@ class ProductController extends Controller
             'user', 'category', 'brand', 'model', 'stock',
             'product_gallery','discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('id',$request->ids)->get();
+        ])->whereIn('id',$request->ids)->get();
 
 
         $response = ['status'=>true,"message" => "Products updated Successfully!",'Products'=>$Products];
