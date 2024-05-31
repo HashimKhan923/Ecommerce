@@ -32,11 +32,20 @@ class HomeController extends Controller
     $query->where('status', 1);
 })->take(24);
     
-        $TopSelling = clone $Products;
+        $TopSelling = Product::with([
+            'user', 'category', 'brand', 'model', 'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount', 'tax', 'shipping', 'deal.deal_product',
+            'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)->inRandomOrder()->orderBy('num_of_sale', 'desc')
+        ->take(10);
 
     
         $TrendingProducts = clone $Products;
-
+        $TrendingProducts->inRandomOrder()->orderBy('average_rating', 'desc')
+        ->take(10);
     
         $FeaturedProducts = clone $Products;
         $FeaturedProducts->where('featured', 1)->take(10);
