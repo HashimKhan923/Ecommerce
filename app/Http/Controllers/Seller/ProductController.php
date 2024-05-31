@@ -785,15 +785,22 @@ class ProductController extends Controller
 
 
 
+
+
+
+        $response = ['status'=>true,"message" => "Products updated Successfully!"];
+        return response($response, 200);
+    }
+
+    public function updated_data(Request $request)
+    {
         $Products = Product::with([
             'user', 'category', 'brand', 'model', 'stock',
             'product_gallery','discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->whereIn('id',$request->ids)->get();
 
-
-        $response = ['status'=>true,"message" => "Products updated Successfully!",'Products'=>$Products];
-        return response($response, 200);
+        return response()->json(['data'=>$Products]);
     }
 
     

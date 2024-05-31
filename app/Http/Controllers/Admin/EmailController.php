@@ -24,7 +24,7 @@ class EmailController extends Controller
                     'seller_name' => $Seller->name,
                     'body' => $request->message
                 ],
-                function ($message) use ($Customer, $request) { 
+                function ($message) use ($Seller, $request) { 
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                     $message->to($Seller->email);
                     $message->subject($request->subject);
