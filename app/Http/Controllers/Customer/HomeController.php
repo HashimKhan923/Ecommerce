@@ -33,10 +33,18 @@ class HomeController extends Controller
 })->take(24);
     
         $TopSelling = clone $Products;
-        $TopSelling->orderBy('num_of_sale', 'desc')->where('category_id',7)->take(10);
+        $TopSelling->orderBy('num_of_sale', 'desc')
+        ->take(50) // Take a larger subset first
+        ->get()
+        ->shuffle() // Shuffle the collection
+        ->take(10);
     
         $TrendingProducts = clone $Products;
-        $TrendingProducts->orderBy('average_rating', 'desc')->take(10);
+        $TrendingProducts->orderBy('average_rating', 'desc')
+        ->take(50) // Take a larger subset first
+        ->get()
+        ->shuffle() // Shuffle the collection
+        ->take(10);
     
         $FeaturedProducts = clone $Products;
         $FeaturedProducts->where('featured', 1)->take(10);
