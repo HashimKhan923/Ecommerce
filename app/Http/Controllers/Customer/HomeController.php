@@ -30,7 +30,7 @@ class HomeController extends Controller
     $query->where('stock', '>', 0);
 })->whereHas('shop', function ($query) {
     $query->where('status', 1);
-})->take(24);
+})->take(24)->shuffle();
     
         $TopSelling = clone $Products;
         $TopSelling->orderBy('num_of_sale', 'desc')
