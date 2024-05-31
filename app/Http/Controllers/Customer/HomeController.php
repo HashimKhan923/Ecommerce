@@ -33,11 +33,11 @@ class HomeController extends Controller
 })->take(24);
     
         $TopSelling = clone $Products;
-        $TopSelling->inRandomOrder()->orderBy('num_of_sale', 'desc')
+        $TopSelling->inRandomOrder()
         ->take(10);
     
         $TrendingProducts = clone $Products;
-        $TrendingProducts->inRandomOrder()->orderBy('average_rating', 'desc')
+        $TrendingProducts->inRandomOrder()
         ->take(10);
     
         $FeaturedProducts = clone $Products;
