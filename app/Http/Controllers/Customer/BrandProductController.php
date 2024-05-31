@@ -30,7 +30,7 @@ class BrandProductController extends Controller
             $query->take(24);
         }
     
-        return $query->get();
+        return $query->orderByRaw('featured DESC')->get();
     }
     
     public function index($brand_id)

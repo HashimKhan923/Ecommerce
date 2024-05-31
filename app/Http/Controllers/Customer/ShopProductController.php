@@ -53,6 +53,7 @@ class ShopProductController extends Controller
             })
             ->orderBy('id', 'desc')
             ->take(24)
+            ->orderByRaw('featured DESC')
             ->get();
 
         return $this->formatResponse($data);
