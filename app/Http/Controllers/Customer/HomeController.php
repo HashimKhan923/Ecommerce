@@ -66,10 +66,10 @@ class HomeController extends Controller
         $FeaturedProducts->where('featured', 1)->take(10);
     
         $allProducts = $Products->get();
-        $Categories = Category::with('product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
-        $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Categories = Category::with('product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->orderBy('name', 'asc')->get();
+        $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->orderBy('name', 'asc')->get();
         $Banners = Banner::where('status', 1)->get();
-        $Models = Models::where('is_active',1)->get();
+        $Models = Models::where('is_active',1)->orderBy('name', 'asc')->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
             'product.category', 'product.brand', 'product.model', 'product.stock',
