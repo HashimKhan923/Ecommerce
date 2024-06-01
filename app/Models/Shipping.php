@@ -9,5 +9,5 @@ class Shipping extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id'];
+    protected $fillable = ['product_id','shipping_additional_cost','shipping_cost','est_shipping_days'];
 }
