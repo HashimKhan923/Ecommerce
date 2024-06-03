@@ -742,11 +742,10 @@ class ProductController extends Controller
                         if ($variant) {
                             
                             $variant->price = $variantData['varient_price'];
-                            if (isset($productData['varient_discount_price'])) {
+                            if (isset($variantData['varient_discount_price'])) {
                             $variant->discount_price = $variantData['varient_discount_price'];
                             }
-                            return $variantData['varient_stock'];
-                            if (($productData['varient_stock'])) {
+                            if (isset($variantData['varient_stock'])) {
                                 
                             $variant->stock = $variantData['varient_stock'];
                             }
