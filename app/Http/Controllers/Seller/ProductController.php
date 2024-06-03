@@ -701,7 +701,7 @@ class ProductController extends Controller
        
 
         foreach ($request->products as $productData) {
-            dd($productData['stock']);
+            $productData['stock'] = 5; 
             $update = Product::find($productData['id']);
     
             if ($update) {
