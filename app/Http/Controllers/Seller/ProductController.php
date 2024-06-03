@@ -754,11 +754,11 @@ class ProductController extends Controller
                     }
                 }
     
-                $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
+                $stock = Stock::where('product_id', $productData['id'])->firstOrNew(['product_id' => $productData['id']]);
                 try{
-                    if (isset($productData['stock']) || $productData['stock'] == 0) {
+                    // if ($productData['stock'] || $productData['stock'] == 0) {
                         $stock->stock = $productData['stock'];
-                    }
+                    // }
                 }
                 catch(\Exception $e)
                 {
