@@ -749,24 +749,12 @@ class ProductController extends Controller
                 }
     
                 $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                // try{
-                    if (isset($productData['stock']) || $productData['stock'] == 0) {
-                        $stock->stock = $productData['stock'];
-                    }
+                if (!empty($productData['stock']) || $productData['stock'] == 0) {
+                    $stock->stock = $productData['stock'];
+                }
+                // if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
+                //     $stock->min_stock = $productData['min_stock'];
                 // }
-                // catch(Exception $e)
-                // {
-                //     return response()->json(['product_id'=>$productData['id']]);
-                // }
-            //     try{
-            //     if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
-            //         $stock->min_stock = $productData['min_stock'];
-            //     }
-            // }   
-            //     catch(Exception $e)
-            //     {
-            //         return response()->json(['product_id'=>$productData['id']]);
-            //     }
                 $stock->save();
 
                 if(!empty($productData['discount']))
