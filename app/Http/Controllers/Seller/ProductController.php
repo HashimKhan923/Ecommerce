@@ -802,7 +802,7 @@ class ProductController extends Controller
     public function updated_data(Request $request)
     {
         $Products = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category.sub_category', 'brand.model', 'model', 'stock',
             'product_gallery','discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->whereIn('id',$request->ids)->get();
