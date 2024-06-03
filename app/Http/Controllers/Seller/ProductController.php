@@ -758,7 +758,7 @@ class ProductController extends Controller
                 }
                 catch(\Exception $e)
                 {
-                    return response()->json(['error'=>$e,'product_id'=>$productData['id'],'stock'=>$productData['stock']]);
+                    return response()->json(['error'=>$e,'product_id'=>$productData['id']]);
                 }
 
                 $stock->save();
