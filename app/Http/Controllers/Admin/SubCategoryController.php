@@ -113,18 +113,18 @@ class SubCategoryController extends Controller
 
         if($file->banner)
         {
-            unlink(public_path('CategoryBanner/'.$file->banner));
+            unlink(public_path('SubCategoryBanner/'.$file->banner));
         }
 
         if($file->icon)
         {
-            unlink(public_path('CategoryIcon/'.$file->icon));
+            unlink(public_path('SubCategoryIcon/'.$file->icon));
         }
 
 
       $file->delete();
 
-        $response = ['status'=>true,"message" => "Category Deleted Successfully!"];
+        $response = ['status'=>true,"message" => "Sub-Category Deleted Successfully!"];
         return response($response, 200);
     }
 
