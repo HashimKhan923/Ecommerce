@@ -792,6 +792,16 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         });
 
+
+                                            /// SubCategoryProducts \\\
+
+        Route::group(['prefix' => '/sub_category_products'], function() {
+            Route::controller(App\Http\Controllers\Customer\SubCategoryProductController::class)->group(function () {
+                Route::get('show/{sub_category_id}','index');
+                Route::get('load_more/{sub_category_id}/{length}','load_more');
+            });
+        });
+
                                             /// BrandProducts \\\
 
         Route::group(['prefix' => '/brand_products'], function() {

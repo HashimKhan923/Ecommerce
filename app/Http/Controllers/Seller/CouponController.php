@@ -48,18 +48,18 @@ class CouponController extends Controller
                 $CouponCustomer->customer_id = $customer_id;
                 $CouponCustomer->save();
 
-                // Mail::send(
-                //     'email.Coupon.customers',
-                //     [
-                //         'vendor_name' => $Seller->name,
-                //         'amount' => $PaymentStatus->amount,
-                //     ],
-                //     function ($message) use ($Seller, $request) { 
-                //         $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                //         $message->to($Seller->email);
-                //         $message->subject('Payout Notification');
-                //     }
-                // );
+                Mail::send(
+                    'email.Coupon.customers',
+                    [
+                        'vendor_name' => $Seller->name,
+                        'amount' => $PaymentStatus->amount,
+                    ],
+                    function ($message) use ($Seller, $request) { 
+                        $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                        $message->to($Seller->email);
+                        $message->subject('Payout Notification');
+                    }
+                );
 
 
             }
