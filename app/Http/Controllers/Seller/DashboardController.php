@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
         $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
         $Products = Product::where('user_id',$id)->get();
-        $Orders = Order::with('order_refund','sub_category')->where('sellers_id',$id)->get();
+        $Orders = Order::with('order_refund')->where('sellers_id',$id)->get();
         $Payouts = Payout::where('seller_id',$id)->get();
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::with('model')->where('is_active',1)->get();
