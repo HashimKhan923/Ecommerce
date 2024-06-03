@@ -756,9 +756,9 @@ class ProductController extends Controller
     
                 $stock = Stock::where('product_id', $productData['id'])->firstOrNew(['product_id' => $productData['id']]);
                 try{
-                    // if ($productData['stock'] || $productData['stock'] == 0) {
+                    if (isset($productData['stock']) || $productData['stock'] == 0) {
                         $stock->stock = $productData['stock'];
-                    // }
+                    }
                 }
                 catch(\Exception $e)
                 {
