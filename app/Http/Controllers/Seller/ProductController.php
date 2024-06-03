@@ -752,9 +752,9 @@ class ProductController extends Controller
                 if (isset($productData['stock'])) {
                     $stock->stock = $productData['stock'];
                 }
-                if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
-                    $stock->min_stock = $productData['min_stock'];
-                }
+                // if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
+                //     $stock->min_stock = $productData['min_stock'];
+                // }
                 $stock->save();
 
                 if(!empty($productData['discount']))
