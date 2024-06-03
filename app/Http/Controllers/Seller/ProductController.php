@@ -735,11 +735,12 @@ class ProductController extends Controller
                 $update->save();
     
                 if (isset($productData['product_variants'])) {
-                    return 'working';
+                    
                     foreach ($productData['product_variants'] as $variantData) {
                         $variant = ProductVarient::find($variantData['id']);
     
                         if ($variant) {
+                            return 'working';
                             $variant->price = $variantData['varient_price'];
                             if (isset($productData['varient_discount_price'])) {
                             $variant->discount_price = $variantData['varient_discount_price'];
