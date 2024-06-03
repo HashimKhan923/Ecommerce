@@ -734,22 +734,22 @@ class ProductController extends Controller
                 }
                 $update->save();
     
-                if (!empty($productData['product_variants'])) {
-                    foreach ($productData['product_variants'] as $variantData) {
-                        $variant = ProductVarient::find($variantData['id']);
+                // if (!empty($productData['product_variants'])) {
+                //     foreach ($productData['product_variants'] as $variantData) {
+                //         $variant = ProductVarient::find($variantData['id']);
     
-                        if ($variant) {
-                            $variant->price = $variantData['varient_price'];
-                            if (isset($productData['varient_discount_price'])) {
-                            $variant->discount_price = $variantData['varient_discount_price'];
-                            }
-                            if (isset($productData['varient_stock'])) {
-                            $variant->stock = $variantData['varient_stock'];
-                            }
-                            $variant->save();
-                        }
-                    }
-                }
+                //         if ($variant) {
+                //             $variant->price = $variantData['varient_price'];
+                //             if (isset($productData['varient_discount_price'])) {
+                //             $variant->discount_price = $variantData['varient_discount_price'];
+                //             }
+                //             if (isset($productData['varient_stock'])) {
+                //             $variant->stock = $variantData['varient_stock'];
+                //             }
+                //             $variant->save();
+                //         }
+                //     }
+                // }
     
                 $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                 try{
