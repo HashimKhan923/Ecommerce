@@ -757,7 +757,7 @@ class ProductController extends Controller
                 // }
                 $stock->save();
 
-                if(!empty($productData['discount']))
+                if(isset($productData['discount']))
                 {
                     $discount = Discount::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $discount->product_id = $update->id;
@@ -775,7 +775,7 @@ class ProductController extends Controller
                 //     }
                 // }
     
-                if (!empty($productData['shipping_cost']) || $productData['shipping_cost'] == 0) {
+                if (isset($productData['shipping_cost']) || $productData['shipping_cost'] == 0) {
                     $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $shipping->shipping_cost = $productData['shipping_cost'];
                     if (isset($productData['shipping_additional_cost']) || $productData['shipping_additional_cost'] == 0 ) {
