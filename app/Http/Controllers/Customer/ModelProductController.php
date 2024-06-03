@@ -11,7 +11,7 @@ class ModelProductController extends Controller
     private function getProductsByModel($model_id, $length = null)
     {
         $query = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             }, 'discount', 'tax', 'shipping', 'deal.deal_product',

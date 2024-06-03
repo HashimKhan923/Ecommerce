@@ -26,7 +26,7 @@ class OrderController extends Controller
 
     public function index($id)
     {
-        $MyOrders = Order::with('order_detail.products.shop','order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking','coupon_user.coupon')->where('customer_id',$id)->get();
+        $MyOrders = Order::with('order_detail.products.shop','order_detail.products.product_gallery','order_detail.products.category','order_detail.products.sub_category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking','coupon_user.coupon')->where('customer_id',$id)->get();
 
         return response()->json(['MyOrders'=>$MyOrders]);
     }

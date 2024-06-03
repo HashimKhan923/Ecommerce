@@ -36,6 +36,7 @@ class ProductController extends Controller
        $Products = Product::with([
     'user',
     'category',
+    'sub_category',
     'brand',
     'model',
     'stock',
@@ -64,6 +65,7 @@ class ProductController extends Controller
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
         $new->category_id = $request->category_id;
+        $new->sub_category_id = $request->sub_category_id;
         $new->height = $request->height;
         $new->weight = $request->weight;
         $new->lenght = $request->lenght;
@@ -249,6 +251,7 @@ class ProductController extends Controller
                 $new->added_by = 'seller';
                 $new->user_id = $productData['user_id'];
                 $new->category_id = $productData['category_id'] ?? null;
+                $new->sub_category_id = $productData['sub_category_id'] ?? null;
                 $new->height = $productData['height'] ?? 0;
                 $new->weight = $productData['weight'] ?? 0;
                 $new->lenght = $productData['lenght'] ?? 0;
@@ -462,6 +465,7 @@ class ProductController extends Controller
         $update->added_by = 'seller';
         $update->user_id = $request->user_id;
         $update->category_id = $request->category_id;
+        $update->sub_category_id = $request->sub_category_id;
         $update->height = $request->height;
         $update->weight = $request->weight;
         $update->lenght = $request->lenght;
@@ -702,6 +706,9 @@ class ProductController extends Controller
                 $update->name = $productData['name'];
                 if (isset($productData['category_id'])) {
                     $update->category_id = $productData['category_id'];
+                }
+                if (isset($productData['sub_category_id'])) {
+                    $update->sub_category_id = $productData['sub_category_id'];
                 }
                 if (isset($productData['weight'])) {
                     $update->weight = $productData['weight'];

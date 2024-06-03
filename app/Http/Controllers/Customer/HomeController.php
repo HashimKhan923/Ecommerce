@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function index()
     {
         $Products = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -33,7 +33,7 @@ class HomeController extends Controller
 })->take(24);
     
         $TopSelling = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -49,7 +49,7 @@ class HomeController extends Controller
     
         
         $TrendingProducts = Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -66,13 +66,13 @@ class HomeController extends Controller
         $FeaturedProducts->where('featured', 1)->take(10);
     
         $allProducts = $Products->get();
-        $Categories = Category::with('product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Categories = Category::with('product','sub_category')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
-            'product.category', 'product.brand', 'product.model', 'product.stock',
+            'product.category','product.sub_category','product.brand', 'product.model', 'product.stock',
             'product.product_varient', 'product.reviews.user', 'product.tax')->where('status',1)->get();
     
         return response()->json([
@@ -93,7 +93,7 @@ class HomeController extends Controller
     private function loadMoreProducts($orderBy, $length)
     {
         return Product::with([
-            'user', 'category', 'brand', 'model', 'stock',
+            'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             }, 'discount', 'tax', 'shipping', 'deal.deal_product',
