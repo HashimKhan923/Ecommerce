@@ -735,6 +735,7 @@ class ProductController extends Controller
                 $update->save();
     
                 if (isset($productData['product_variants'])) {
+                    return 'working';
                     foreach ($productData['product_variants'] as $variantData) {
                         $variant = ProductVarient::find($variantData['id']);
     
