@@ -698,9 +698,10 @@ class ProductController extends Controller
 
     public function bulk_update(Request $request)
     {
-        return $request->stock;
+       
 
         foreach ($request->products as $productData) {
+            return $productData['stock'];
             $update = Product::find($productData['id']);
     
             if ($update) {
