@@ -13,16 +13,14 @@ class Product extends Model
         'trim' => 'array',
     ];
 
+
+
     protected $fillable = [
-        'average_rating',
-        'name',
-        'category_id',
-        'brand_id',
-        'model_id',
-        'weight',
-        'sku',
-        'tags',
-        'price'
+        'name', 'added_by', 'user_id', 'category_id', 'sub_category_id', 'height', 
+        'weight', 'lenght', 'start_year', 'make', 'unit', 'sku', 'bar_code', 
+        'condition', 'brand_id', 'model_id', 'shop_id', 'tags', 'trim', 
+        'description', 'price', 'cost_price','average_rating','shipping', 'featured', 
+        'published', 'is_tax', 'meta_title', 'video', 'slug'
     ];
 
 
