@@ -60,37 +60,37 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        $new = Product::create([
-            'name' => $request->name,
-            'added_by' => 'seller',
-            'user_id' => $request->user_id,
-            'category_id' => $request->category_id,
-            'sub_category_id' => $request->sub_category_id,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            'lenght' => $request->lenght,
-            'start_year' => $request->year,
-            'make' => $request->make,
-            'unit' => $request->unit,
-            'sku' => $request->sku,
-            'bar_code' => $request->bar_code,
-            'condition' => $request->condition,
-            'brand_id' => $request->brand_id,
-            'model_id' => $request->model_id,
-            'shop_id' => $request->shop_id,
-            'tags' => $request->tags,
-            'trim' => $request->trim,
-            'description' => $request->description,
-            'price' => $request->price,
-            'cost_price' => $request->cost_price,
-            'shipping' => $request->shipping,
-            'featured' => $request->featured,
-            'published' => $request->published,
-            'is_tax' => $request->is_tax,
-            'meta_title' => $request->meta_title,
-            'video' => $request->video,
-            'slug' => $request->slug
-        ]);
+    $new = Product::create([
+        'name' => $request->name,
+        'added_by' => 'seller',
+        'user_id' => $request->user_id,
+        'category_id' => $request->category_id,
+        'sub_category_id' => $request->sub_category_id,
+        'height' => $request->height,
+        'weight' => $request->weight,
+        'lenght' => $request->lenght,
+        'start_year' => $request->year,
+        'make' => $request->make,
+        'unit' => $request->unit,
+        'sku' => $request->sku,
+        'bar_code' => $request->bar_code,
+        'condition' => $request->condition,
+        'brand_id' => $request->brand_id,
+        'model_id' => $request->model_id,
+        'shop_id' => $request->shop_id,
+        'tags' => $request->tags,
+        'trim' => $request->trim,
+        'description' => $request->description,
+        'price' => $request->price,
+        'cost_price' => $request->cost_price,
+        'shipping' => $request->shipping,
+        'featured' => $request->featured,
+        'published' => $request->published,
+        'is_tax' => $request->is_tax,
+        'meta_title' => $request->meta_title,
+        'video' => $request->video,
+        'slug' => $request->slug
+    ]);
 
         if ($request->photos) {
             foreach ($request->file('photos') as $image) {
@@ -742,19 +742,21 @@ class ProductController extends Controller
                             if (isset($productData['varient_discount_price'])) {
                             $variant->discount_price = $variantData['varient_discount_price'];
                             }
+                            if (isset($productData['varient_stock'])) {
                             $variant->stock = $variantData['varient_stock'];
+                            }
                             $variant->save();
                         }
                     }
                 }
     
                 $stock = Stock::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
-                if (!empty($productData['stock'])) {
+                if (isset($productData['stock']) || $productData['stock'] == 0) {
                     $stock->stock = $productData['stock'];
                 }
-                // if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
-                //     $stock->min_stock = $productData['min_stock'];
-                // }
+                if (isset($productData['min_stock']) || $productData['stock'] == 0) {
+                    $stock->min_stock = $productData['min_stock'];
+                }
                 $stock->save();
 
                 if(!empty($productData['discount']))
@@ -775,7 +777,7 @@ class ProductController extends Controller
                 //     }
                 // }
     
-                if (!empty($productData['shipping_cost'])) {
+                if (!empty($productData['shipping_cost']) || $productData['shipping_cost'] == 0) {
                     $shipping = Shipping::where('product_id', $update->id)->firstOrNew(['product_id' => $update->id]);
                     $shipping->shipping_cost = $productData['shipping_cost'];
                     if (isset($productData['shipping_additional_cost']) || $productData['shipping_additional_cost'] == 0 ) {
