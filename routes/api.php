@@ -86,6 +86,19 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
 
 
+                                 /// SubCategory \\\
+
+            Route::group(['prefix' => '/admin/sub_category/'], function() {
+                Route::controller(App\Http\Controllers\Admin\SubCategoryController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
+                });
+            });
+
+
                                                     /// Brand \\\
 
             Route::group(['prefix' => '/admin/brand/'], function() {

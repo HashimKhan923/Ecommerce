@@ -203,25 +203,25 @@ class ProductController extends Controller
         $sellerT = User::where('id',$request->user_id)->first();
         $userRegistrationDate = $sellerT->created_at;
 
-        if ($sellerT->created_at < Carbon::now()->subMonths(3)) {
+        // if ($sellerT->created_at < Carbon::now()->subMonths(3)) {
 
-            $SellerCheck = ProductListingPayment::where('seller_id',$request->user_id)->where('payment_status','unpaid')->first();
-            if(!$SellerCheck)
-            {
-                $newListing = new ProductListingPayment();
-                $newListing->seller_id = $request->user_id;
-                $newListing->listing_count = 1;
-                $newListing->listing_amount = 0.20;
-                $newListing->save();
-            }
-            else
-            {
-                $SellerCheck->listing_count = $SellerCheck->listing_count + 1;
-                $SellerCheck->listing_amount = $SellerCheck->listing_amount + 0.20;
-                $SellerCheck->save();
-            }
+        //     $SellerCheck = ProductListingPayment::where('seller_id',$request->user_id)->where('payment_status','unpaid')->first();
+        //     if(!$SellerCheck)
+        //     {
+        //         $newListing = new ProductListingPayment();
+        //         $newListing->seller_id = $request->user_id;
+        //         $newListing->listing_count = 1;
+        //         $newListing->listing_amount = 0.20;
+        //         $newListing->save();
+        //     }
+        //     else
+        //     {
+        //         $SellerCheck->listing_count = $SellerCheck->listing_count + 1;
+        //         $SellerCheck->listing_amount = $SellerCheck->listing_amount + 0.20;
+        //         $SellerCheck->save();
+        //     }
 
-        } 
+        // } 
 
 
 
@@ -422,23 +422,23 @@ class ProductController extends Controller
                     }
                 }
     
-                $sellerT = User::where('id', $productData['user_id'])->first();
-                $userRegistrationDate = $sellerT->created_at;
+                // $sellerT = User::where('id', $productData['user_id'])->first();
+                // $userRegistrationDate = $sellerT->created_at;
     
-                if ($sellerT->created_at < Carbon::now()->subMonths(3)) {
-                    $SellerCheck = ProductListingPayment::where('seller_id', $productData['user_id'])->where('payment_status', 'unpaid')->first();
-                    if (!$SellerCheck) {
-                        $newListing = new ProductListingPayment();
-                        $newListing->seller_id = $productData['user_id'];
-                        $newListing->listing_count = 1;
-                        $newListing->listing_amount = 0.20;
-                        $newListing->save();
-                    } else {
-                        $SellerCheck->listing_count += 1;
-                        $SellerCheck->listing_amount += 0.20;
-                        $SellerCheck->save();
-                    }
-                }
+                // if ($sellerT->created_at < Carbon::now()->subMonths(3)) {
+                //     $SellerCheck = ProductListingPayment::where('seller_id', $productData['user_id'])->where('payment_status', 'unpaid')->first();
+                //     if (!$SellerCheck) {
+                //         $newListing = new ProductListingPayment();
+                //         $newListing->seller_id = $productData['user_id'];
+                //         $newListing->listing_count = 1;
+                //         $newListing->listing_amount = 0.20;
+                //         $newListing->save();
+                //     } else {
+                //         $SellerCheck->listing_count += 1;
+                //         $SellerCheck->listing_amount += 0.20;
+                //         $SellerCheck->save();
+                //     }
+                // }
     
                 $responses[] = ['status' => true, "message" => "Product Added Successfully!", 'product_id' => $new->id];
             }
