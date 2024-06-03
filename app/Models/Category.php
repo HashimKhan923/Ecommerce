@@ -13,6 +13,11 @@ class Category extends Model
         'meta_keywords' => 'array',
     ];
 
+    public function sub_category()
+    {
+        return $this->hasMany(SubCategory::class,'category_id','id');
+    }
+
     public function product()
     {
         return $this->hasMany(Product::class,'category_id','id');

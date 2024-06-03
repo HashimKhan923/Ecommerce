@@ -13,6 +13,7 @@ class ShopProductController extends Controller
         return [
             'user',
             'category',
+            'sub_category',
             'brand',
             'model',
             'stock' => function($query) {
