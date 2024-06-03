@@ -758,15 +758,15 @@ class ProductController extends Controller
                 {
                     return response()->json(['product_id'=>$productData['id']]);
                 }
-                try{
-                if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
-                    $stock->min_stock = $productData['min_stock'];
-                }
-            }   
-                catch(Exception $e)
-                {
-                    return response()->json(['product_id'=>$productData['id']]);
-                }
+            //     try{
+            //     if (isset($productData['min_stock']) || $productData['min_stock'] == 0) {
+            //         $stock->min_stock = $productData['min_stock'];
+            //     }
+            // }   
+            //     catch(Exception $e)
+            //     {
+            //         return response()->json(['product_id'=>$productData['id']]);
+            //     }
                 $stock->save();
 
                 if(!empty($productData['discount']))
