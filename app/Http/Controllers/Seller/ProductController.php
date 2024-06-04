@@ -407,8 +407,12 @@ class ProductController extends Controller
         ]);
         
         $productData['added_by'] = 'seller';
-        $productData['start_year'] = $productData['year'];
-        unset($productData['year']);
+        if(isset($productData['year']))
+        {
+            $productData['start_year'] = $productData['year'];
+            unset($productData['year']);
+        }
+
     
         $product->update($productData);
     
