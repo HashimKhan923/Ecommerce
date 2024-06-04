@@ -405,7 +405,7 @@ class ProductController extends Controller
             'lenght', 'year', 'make', 'unit', 'sku', 'bar_code', 'condition', 
             'brand_id', 'model_id', 'tags', 'trim', 'description', 'price', 
             'cost_price', 'shop_id', 'shipping', 'featured', 'published', 'is_tax',
-            'meta_title','meta_discription','video', 'slug'
+            'meta_title','video', 'slug'
         ]);
         
         $productData['added_by'] = 'seller';
@@ -414,6 +414,9 @@ class ProductController extends Controller
             $productData['start_year'] = $productData['year'];
             unset($productData['year']);
         }
+
+        $productData['meta_discription'] = $productData['meta_description'];
+        unset($productData['meta_description']);
 
     
         $product->update($productData);
