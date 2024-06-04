@@ -468,7 +468,7 @@ class ProductController extends Controller
                             $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
                             $compressedImage = ImageFacade::make($image->getRealPath());
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
-                            $varientDataFormatted['image'] = $filename . '.webp';
+                            $varientDataFormatted['image'] = $filename;
                         }
                         $varient->update($varientDataFormatted);
                     } else {
@@ -477,7 +477,7 @@ class ProductController extends Controller
                             $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
                             $compressedImage = ImageFacade::make($image->getRealPath());
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
-                            $varientDataFormatted['image'] = $filename . '.webp';
+                            $varientDataFormatted['image'] = $filename;
                         }
                         $varientDataFormatted['product_id'] = $product->id;
                         ProductVarient::create($varientDataFormatted);
