@@ -458,8 +458,8 @@ class ProductController extends Controller
                             }
     
                             $image = $varientData['varient_image'];
-                            $filename = date('YmdHis') . $image->getClientOriginalName();
-                            $compressedImage = ImageFacade::make($image->getRealPath());
+                            $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+                            $compressedImage = ImageFacade::make($image['file']->getRealPath());
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
                             $varientDataFormatted['image'] = $filename . '.webp';
                         }
@@ -467,8 +467,8 @@ class ProductController extends Controller
                     } else {
                         if (isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image'])) {
                             $image = $varientData['varient_image'];
-                            $filename = date('YmdHis') . $image->getClientOriginalName();
-                            $compressedImage = ImageFacade::make($image->getRealPath());
+                            $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+                            $compressedImage = ImageFacade::make($image['file']->getRealPath());
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
                             $varientDataFormatted['image'] = $filename . '.webp';
                         }
@@ -548,7 +548,7 @@ class ProductController extends Controller
             return response()->json(['status' => false, 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
 
-        
+
     }
 
 
