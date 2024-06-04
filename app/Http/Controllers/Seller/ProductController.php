@@ -453,12 +453,15 @@ class ProductController extends Controller
                     if ($varient) {
                         if (isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image'])) {
                             $checkCount = ProductVarient::where('image', $varient->image)->count();
-                            if($checkCount != 0)
-                            {
+
                                 if ($checkCount < 2) {
-                                    unlink(public_path('ProductVarient/' . $varient->image));
+                                    $fileToDelete = public_path('ProductVarient/'.$varient->image);
+
+                                    if (file_exists($fileToDelete)) {
+                                        unlink($fileToDelete);
+                                    } 
                                 }
-                            }
+                            
 
     
                             $image = $varientData['varient_image'];
