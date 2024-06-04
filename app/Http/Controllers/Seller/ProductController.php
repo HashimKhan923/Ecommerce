@@ -475,7 +475,7 @@ class ProductController extends Controller
                         if (isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image'])) {
                             $image = $varientData['varient_image'];
                             $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
-                            $compressedImage = ImageFacade::make($image['file']->getRealPath());
+                            $compressedImage = ImageFacade::make($image->getRealPath());
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
                             $varientDataFormatted['image'] = $filename . '.webp';
                         }
