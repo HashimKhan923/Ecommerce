@@ -92,15 +92,23 @@ class ProductController extends Controller
         'slug' => $request->slug
     ]);
 
-    if ($request->hasFile('photos')) {
-        foreach ($request->file('photos') as $image) {
-            $filename = date('YmdHis') . $image->getClientOriginalName();
-            $compressedImage = ImageFacade::make($image->getRealPath());
-            $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+    if ($request->photos) {
+        foreach ($request->photos as $image) {
+            $filename = null;
+            if (is_uploaded_file($image)) {
+                $filename = date('YmdHis') . $image->getClientOriginalName();
+                $compressedImage = ImageFacade::make($image->getRealPath());
+                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+            }
+            else
+            {
+                $filename = $image;
+            }
+
             
             ProductGallery::create([
                 'product_id' => $new->id,
-                'image' => $filename . '.webp'
+                'image' => $filename
             ]);
         }
     }
