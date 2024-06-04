@@ -219,208 +219,165 @@ class ProductController extends Controller
     {
         if (is_array($request->products)) {
             $responses = [];
-
     
             foreach ($request->products as $productData) {
-            
-                $new = new Product();
-                $new->name = $productData['name'] ?? null;
-                $new->added_by = 'seller';
-                $new->user_id = $productData['user_id'];
-                $new->category_id = $productData['category_id'] ?? null;
-                $new->sub_category_id = $productData['sub_category_id'] ?? null;
-                $new->height = $productData['height'] ?? 0;
-                $new->weight = $productData['weight'] ?? 0;
-                $new->lenght = $productData['lenght'] ?? 0;
-                $new->start_year = $productData['year'] ?? date('Y');
-                $new->make = $productData['make'] ?? null;
-                $new->unit = $productData['unit'] ?? null;
-                $new->sku = $productData['sku'] ?? null;
-                $new->bar_code = $productData['bar_code'] ?? null;
-                $new->condition = $productData['condition'] ?? null;
-                $new->brand_id = $productData['brand_id'] ?? null;
-                $new->model_id = $productData['model_id'] ?? null;
-                $new->shop_id = $productData['shop_id'] ?? null;
-                $new->tags = $productData['tags'] ?? '';
-                $new->trim = $productData['trim'] ?? '';
-                $new->description = $productData['description'] ?? null;
-                $new->price = $productData['price'] ?? 0.0;
-                $new->cost_price = $productData['cost_price'] ?? 0.0;
-                $new->shipping = $productData['shipping'] ?? 0.0;
-                $new->featured = $productData['featured'] ?? false;
-                $new->published = $productData['published'] ?? false;
-                $new->is_tax = $productData['is_tax'] ?? false;
-                $new->meta_title = $productData['meta_title'] ?? null;
-                $new->video = $productData['video'] ?? null;
-                $new->slug = $productData['slug'] ?? null;
-                $new->save();
-
-
-        $imageNames = [];
-
-        try {
-            if(isset($productData['photos']))
-            {
-                foreach ($productData['photos'] as $url) {
-                    $order = 1;
-                    // Download the image content
-                    $response = Http::get($url);
+                $new = Product::create([
+                    'name' => $productData['name'] ?? null,
+                    'added_by' => 'seller',
+                    'user_id' => $productData['user_id'],
+                    'category_id' => $productData['category_id'] ?? null,
+                    'sub_category_id' => $productData['sub_category_id'] ?? null,
+                    'height' => $productData['height'] ?? 0,
+                    'weight' => $productData['weight'] ?? 0,
+                    'lenght' => $productData['lenght'] ?? 0,
+                    'start_year' => $productData['year'] ?? date('Y'),
+                    'make' => $productData['make'] ?? null,
+                    'unit' => $productData['unit'] ?? null,
+                    'sku' => $productData['sku'] ?? null,
+                    'bar_code' => $productData['bar_code'] ?? null,
+                    'condition' => $productData['condition'] ?? null,
+                    'brand_id' => $productData['brand_id'] ?? null,
+                    'model_id' => $productData['model_id'] ?? null,
+                    'shop_id' => $productData['shop_id'] ?? null,
+                    'tags' => $productData['tags'] ?? '',
+                    'trim' => $productData['trim'] ?? '',
+                    'description' => $productData['description'] ?? null,
+                    'price' => $productData['price'] ?? 0.0,
+                    'cost_price' => $productData['cost_price'] ?? 0.0,
+                    'shipping' => $productData['shipping'] ?? 0.0,
+                    'featured' => $productData['featured'] ?? false,
+                    'published' => $productData['published'] ?? false,
+                    'is_tax' => $productData['is_tax'] ?? false,
+                    'meta_title' => $productData['meta_title'] ?? null,
+                    'video' => $productData['video'] ?? null,
+                    'slug' => $productData['slug'] ?? null
+                ]);
     
-                    // Ensure the request was successful
-                    if ($response->successful()) {
-                        // Get the image content
-                        $imageContent = $response->body();
+                try {
+                    // Handle photo uploads
+                    if (isset($productData['photos'])) {
+                        $order = 1;
+                        foreach ($productData['photos'] as $url) {
+                            $response = Http::get($url);
     
-                        // Create an Intervention Image instance from the downloaded content
-                        $image = ImageFacade::make($imageContent);
-    
-                        // Generate a unique filename with a UUID and the current timestamp
-                        $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
-    
-                        // Ensure the ProductGallery directory exists
-                        if (!File::exists(public_path('ProductGallery'))) {
-                            File::makeDirectory(public_path('ProductGallery'), 0755, true);
-                        }
-    
-                        // Save the image in WebP format to the specified path
-                        $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
-    
-                        // Save the image name to the database
-                                    $gallery = new ProductGallery();
-                                    $gallery->product_id = $new->id;
-                                    $gallery->order = $order++;
-                                    $gallery->image = $filename;
-                                    $gallery->save();
-    
-                        // Store the image filename
-                        $imageNames[] = $filename;
-                    } else {
-                        return response()->json(['message' => 'Failed to download one or more images'], 500);
-                    }
-                }
-            }
-
-
-
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
-        }
-    
-    
-                
-    
-                if (!empty($productData['varients'])) {
-                    foreach ($productData['varients'] as $item) {
-                        $varient = new ProductVarient();
-                        $varient->product_id = $new->id;
-                        $varient->color = $item['color'] ?? null;
-                        $varient->size = $item['size'] ?? null;
-                        $varient->bolt_pattern = $item['bolt_pattern'] ?? null;
-                        $varient->others = $item['others'] ?? null;
-                        $varient->price = $item['varient_price'] ?? 0.0;
-                        $varient->discount_price = $item['varient_discount_price'] ?? 0.0;
-                        $varient->sku = $item['varient_sku'] ?? null;
-                        $varient->stock = $item['varient_stock'] ?? 0;
-                            if(isset($item['varient_image']))
-                            {
-                                // Download the image content
-                            $response = Http::get($item['varient_image']);
-
-                            // Ensure the request was successful
                             if ($response->successful()) {
-                                // Get the image content
                                 $imageContent = $response->body();
-
-                                // Create an Intervention Image instance from the downloaded content
                                 $image = ImageFacade::make($imageContent);
-
-                                // Generate a unique filename with a UUID and the current timestamp
                                 $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
-
-                                // Ensure the ProductGallery directory exists
-                                if (!File::exists(public_path('ProductVarient'))) {
-                                    File::makeDirectory(public_path('ProductVarient'), 0755, true);
+    
+                                if (!File::exists(public_path('ProductGallery'))) {
+                                    File::makeDirectory(public_path('ProductGallery'), 0755, true);
                                 }
-
-                                // Save the image in WebP format to the specified path
-                                $image->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
-                                $varient->image = $filename;
-                        } else {
-                            return response()->json(['message' => 'Failed to download one or more images'], 500);
-                        }
+    
+                                $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
+    
+                                ProductGallery::create([
+                                    'product_id' => $new->id,
+                                    'order' => $order++,
+                                    'image' => $filename
+                                ]);
+                            } else {
+                                return response()->json(['message' => 'Failed to download one or more images'], 500);
                             }
-                        
-                        $varient->save();
+                        }
                     }
-                }
     
-                if (!empty($productData['discount'])) {
-                    $discount = new Discount();
-                    $discount->product_id = $new->id;
-                    $discount->discount = $productData['discount'] ?? 0.0;
-                    $discount->discount_start_date = $productData['discount_start_date'] ?? null;
-                    $discount->discount_end_date = $productData['discount_end_date'] ?? null;
-                    $discount->discount_type = $productData['discount_type'] ?? null;
-                    $discount->save();
-                }
+                    // Handle variants
+                    if (!empty($productData['varients'])) {
+                        foreach ($productData['varients'] as $item) {
+                            $imagePath = null;
     
-                if (!empty($productData['stock']) || $productData['stock'] == 0) {
-                    $stock = new Stock();
-                    $stock->product_id = $new->id;
-                    $stock->stock = $productData['stock'] ?? 0;
-                    $stock->min_stock = $productData['min_stock'] ?? 0;
-                    $stock->save();
-                }
+                            if (isset($item['varient_image'])) {
+                                $response = Http::get($item['varient_image']);
     
-                if (!empty($productData['deal_id'])) {
-                    $deal = new DealProduct();
-                    $deal->deal_id = $productData['deal_id'] ?? 0;
-                    $deal->product_id = $new->id;
-                    $deal->discount = $productData['deal_discount'] ?? 0.0;
-                    $deal->discount_type = $productData['deal_discount_type'] ?? null;
-                    $deal->save();
-                }
+                                if ($response->successful()) {
+                                    $imageContent = $response->body();
+                                    $image = ImageFacade::make($imageContent);
+                                    $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
     
-                if (!empty($productData['shipping_type'])) {
-                    $shipping = new Shipping();
-                    $shipping->product_id = $new->id;
-                    $shipping->shipping_cost = $productData['shipping_cost'] ?? 0.0;
-                    $shipping->is_qty_multiply = $productData['is_qty_multiply'] ?? false;
-                    $shipping->shipping_additional_cost = $productData['shipping_additional_cost'] ?? 0.0;
-                    $shipping->est_shipping_days = $productData['est_shipping_days'] ?? 0;
-                    $shipping->save();
-                }
+                                    if (!File::exists(public_path('ProductVarient'))) {
+                                        File::makeDirectory(public_path('ProductVarient'), 0755, true);
+                                    }
     
-                if (!empty($productData['wholesale_price'])) {
-                    foreach ($productData['wholesale_price'] as $price) {
-                        $wholesale = new WholesaleProduct();
-                        $wholesale->product_id = $new->id;
-                        $wholesale->wholesale_price = $price ?? 0.0;
-                        $wholesale->wholesale_min_qty = $productData['wholesale_min_qty'] ?? 0;
-                        $wholesale->wholesale_max_qty = $productData['wholesale_max_qty'] ?? 0;
-                        $wholesale->save();
+                                    $image->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
+                                    $imagePath = $filename;
+                                } else {
+                                    return response()->json(['message' => 'Failed to download one or more images'], 500);
+                                }
+                            }
+    
+                            ProductVarient::create([
+                                'product_id' => $new->id,
+                                'color' => $item['color'] ?? null,
+                                'size' => $item['size'] ?? null,
+                                'bolt_pattern' => $item['bolt_pattern'] ?? null,
+                                'others' => $item['others'] ?? null,
+                                'price' => $item['varient_price'] ?? 0.0,
+                                'discount_price' => $item['varient_discount_price'] ?? 0.0,
+                                'sku' => $item['varient_sku'] ?? null,
+                                'stock' => $item['varient_stock'] ?? 0,
+                                'image' => $imagePath
+                            ]);
+                        }
                     }
+    
+                    // Handle discount
+                    if (!empty($productData['discount'])) {
+                        Discount::create([
+                            'product_id' => $new->id,
+                            'discount' => $productData['discount'] ?? 0.0,
+                            'discount_start_date' => $productData['discount_start_date'] ?? null,
+                            'discount_end_date' => $productData['discount_end_date'] ?? null,
+                            'discount_type' => $productData['discount_type'] ?? null
+                        ]);
+                    }
+    
+                    // Handle stock
+                    if (!empty($productData['stock']) || $productData['stock'] == 0) {
+                        Stock::create([
+                            'product_id' => $new->id,
+                            'stock' => $productData['stock'] ?? 0,
+                            'min_stock' => $productData['min_stock'] ?? 0
+                        ]);
+                    }
+    
+                    // Handle deals
+                    if (!empty($productData['deal_id'])) {
+                        DealProduct::create([
+                            'deal_id' => $productData['deal_id'] ?? 0,
+                            'product_id' => $new->id,
+                            'discount' => $productData['deal_discount'] ?? 0.0,
+                            'discount_type' => $productData['deal_discount_type'] ?? null
+                        ]);
+                    }
+    
+                    // Handle shipping
+                    if (!empty($productData['shipping_type'])) {
+                        Shipping::create([
+                            'product_id' => $new->id,
+                            'shipping_cost' => $productData['shipping_cost'] ?? 0.0,
+                            'is_qty_multiply' => $productData['is_qty_multiply'] ?? false,
+                            'shipping_additional_cost' => $productData['shipping_additional_cost'] ?? 0.0,
+                            'est_shipping_days' => $productData['est_shipping_days'] ?? 0
+                        ]);
+                    }
+    
+                    // Handle wholesale prices
+                    if (!empty($productData['wholesale_price'])) {
+                        foreach ($productData['wholesale_price'] as $price) {
+                            WholesaleProduct::create([
+                                'product_id' => $new->id,
+                                'wholesale_price' => $price ?? 0.0,
+                                'wholesale_min_qty' => $productData['wholesale_min_qty'] ?? 0,
+                                'wholesale_max_qty' => $productData['wholesale_max_qty'] ?? 0
+                            ]);
+                        }
+                    }
+    
+                    $responses[] = ['status' => true, "message" => "Product Added Successfully!", 'product_id' => $new->id];
+                } catch (\Exception $e) {
+                    return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
                 }
-    
-                // $sellerT = User::where('id', $productData['user_id'])->first();
-                // $userRegistrationDate = $sellerT->created_at;
-    
-                // if ($sellerT->created_at < Carbon::now()->subMonths(3)) {
-                //     $SellerCheck = ProductListingPayment::where('seller_id', $productData['user_id'])->where('payment_status', 'unpaid')->first();
-                //     if (!$SellerCheck) {
-                //         $newListing = new ProductListingPayment();
-                //         $newListing->seller_id = $productData['user_id'];
-                //         $newListing->listing_count = 1;
-                //         $newListing->listing_amount = 0.20;
-                //         $newListing->save();
-                //     } else {
-                //         $SellerCheck->listing_count += 1;
-                //         $SellerCheck->listing_amount += 0.20;
-                //         $SellerCheck->save();
-                //     }
-                // }
-    
-                $responses[] = ['status' => true, "message" => "Product Added Successfully!", 'product_id' => $new->id];
             }
     
             return response(['status' => true, 'messages' => $responses], 200);
