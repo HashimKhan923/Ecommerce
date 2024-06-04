@@ -88,7 +88,7 @@ class ProductController extends Controller
         'published' => $request->published,
         'is_tax' => $request->is_tax,
         'meta_title' => $request->meta_title,
-        'meta_description' => $request->meta_description,
+        'meta_discription' => $request->meta_description,
         'video' => $request->video,
         'slug' => $request->slug
     ]);
@@ -250,6 +250,7 @@ class ProductController extends Controller
                     'published' => $productData['published'] ?? false,
                     'is_tax' => $productData['is_tax'] ?? false,
                     'meta_title' => $productData['meta_title'] ?? null,
+                    'meta_discription' => $productData['meta_description'] ?? null,
                     'video' => $productData['video'] ?? null,
                     'slug' => $productData['slug'] ?? null
                 ]);
@@ -404,7 +405,7 @@ class ProductController extends Controller
             'lenght', 'year', 'make', 'unit', 'sku', 'bar_code', 'condition', 
             'brand_id', 'model_id', 'tags', 'trim', 'description', 'price', 
             'cost_price', 'shop_id', 'shipping', 'featured', 'published', 'is_tax',
-            'meta_title','meta_description','video', 'slug'
+            'meta_title','meta_discription','video', 'slug'
         ]);
         
         $productData['added_by'] = 'seller';
