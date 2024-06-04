@@ -9,5 +9,16 @@ class Shipping extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id','shipping_additional_cost','shipping_cost','est_shipping_days'];
+    protected $fillable = [
+        'product_id',
+        'shipping_cost',
+        'is_qty_multiply',
+        'shipping_additional_cost',
+        'est_shipping_days',
+    ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

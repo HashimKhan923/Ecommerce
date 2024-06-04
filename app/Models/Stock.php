@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
 {
-    protected $fillable = ['product_id','stock','min_stock'];
+    protected $fillable = [
+        'product_id',
+        'stock',
+        'min_stock',
+    ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
     use HasFactory;
 }
