@@ -403,7 +403,7 @@ class ProductController extends Controller
             'lenght', 'year', 'make', 'unit', 'sku', 'bar_code', 'condition', 
             'brand_id', 'model_id', 'tags', 'trim', 'description', 'price', 
             'cost_price', 'shop_id', 'shipping', 'featured', 'published', 'is_tax',
-            'meta_title','meta_description','tags','video', 'slug'
+            'meta_title','meta_description','video', 'slug'
         ]);
         
         $productData['added_by'] = 'seller';
