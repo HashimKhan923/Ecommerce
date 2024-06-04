@@ -99,6 +99,7 @@ class ProductController extends Controller
                 $filename = date('YmdHis') . $image->getClientOriginalName();
                 $compressedImage = ImageFacade::make($image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                $filename = $filename . '.webp';
             }
             else
             {
