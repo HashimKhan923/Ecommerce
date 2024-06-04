@@ -88,6 +88,7 @@ class ProductController extends Controller
         'published' => $request->published,
         'is_tax' => $request->is_tax,
         'meta_title' => $request->meta_title,
+        'meta_description' => $request->meta_description,
         'video' => $request->video,
         'slug' => $request->slug
     ]);
