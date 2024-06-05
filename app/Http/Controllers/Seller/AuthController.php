@@ -398,8 +398,10 @@ class AuthController extends Controller
         $BusineesInformation->ein_number = $request->ein_number;
         $BusineesInformation->address1 = $request->address1;
         $BusineesInformation->address2 = $request->address2;
-        $BusineesInformation->zip_code = $request->business_zip_code;
         $BusineesInformation->country = $request->business_country;
+        $BusineesInformation->city = $request->business_city;
+        $BusineesInformation->state = $request->business_state;
+        $BusineesInformation->zip_code = $request->business_zip_code;
         $BusineesInformation->phone_number = $request->business_phone_number;
         $BusineesInformation->business_email = $request->business_email;
         $BusineesInformation->save();
