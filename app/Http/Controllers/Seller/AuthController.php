@@ -471,32 +471,35 @@ class AuthController extends Controller
 
 
 
-        // Stripe::setApiKey(config('services.stripe.secret'));
+// Update Stripe account
+Stripe::setApiKey(config('services.stripe.secret'));
 
-        // try {
-        //     $stripeAccountId = $user->stripe_account_id; 
-            
-        //     $externalAccount = Account::retrieveExternalAccount(
-        //         $stripeAccountId,
-        //         $user->bank_account_id,
-        //         []
-        //     );
-        
-        //     $externalAccount->update([
-        //         'object' => 'bank_account',
-        //         'country' => $request->business_country,
-        //         'currency' => 'usd',
-        //         'account_holder_name' => $request->account_title,
-        //         'account_holder_type' => 'individual',
-        //         'routing_number' => $request->routing_number,
-        //         'account_number' => $request->account_number,
-        //     ]);
-        
-        //     return response()->json(['success' => true, 'message' => 'Bank information updated successfully']);
-        
-        // } catch (\Exception $e) {
-        //     return response()->json(['status' => 422, 'message' => $e->getMessage()]);
-        // }
+try {
+    $account = Account::retrieve($update->stripe_account_id);
+    $account->email = $request->email;
+    $account->individual->first_name = $request->business_first_name;
+    $account->individual->last_name = $request->business_last_name;
+    $account->individual->id_number = $request->ssn;
+    $account->individual->dob->day = $request->business_date;
+    $account->individual->dob->month = $request->business_month;
+    $account->individual->dob->year = $request->business_year;
+    $account->individual->ssn_last_4 = $request->last_4_ssn;
+    $account->individual->address->line1 = $request->address1;
+    $account->individual->address->line2 = $request->address2;
+    $account->individual->address->city = $request->business_city;
+    $account->individual->address->state = $request->business_state;
+    $account->individual->address->postal_code = $request->business_zip_code;
+    $account->individual->address->country = $request->business_country;
+    $account->save();
+
+    $bankAccount = $account->external_accounts->retrieve($seller->bank_account_id);
+    $bankAccount->account_holder_name = $request->account_title;
+    $bankAccount->routing_number = $request->routing_number;
+    $bankAccount->account_number = $request->account_number;
+    $bankAccount->save();
+} catch (\Exception $e) {
+    return response()->json(['status' => 422, 'message' => $e->getMessage()]);
+}
 
         $response = ['status'=>true,"message" => "profile updated successfully!"];
         return response($response, 200);
