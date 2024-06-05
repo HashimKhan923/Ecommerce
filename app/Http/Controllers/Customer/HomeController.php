@@ -82,8 +82,7 @@ class HomeController extends Controller
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
             })
-            ->orderBy('id', 'desc')
-            ->take(24);
+            ->orderBy('id', 'desc');
         }])->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
