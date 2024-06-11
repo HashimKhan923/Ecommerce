@@ -72,33 +72,21 @@
 </div>
         <hr>
         <div class="content">
-            <b>Hi [Customer's Name],</b>
-
-                <p>We're excited to offer you an exclusive [Discount]% off on your next purchase!</p>
-
-                <p>Your Coupon Code: [COUPONCODE]</p>
-
-                <p>How to Redeem:</p>
-                <ol>
-                    <li>Visit [Website URL].</li>
-                    <li>Add your favorite items to the cart.</li>
-                    <li>Enter [COUPONCODE] at checkout.</li>
-                    <li>Enjoy your savings!</li>
-                </ol>
-                
-                
-                
-                
-                <p>Hurry! This offer is valid until [Expiry Date].</p>
-
-                <p>Thank you for being a valued customer. If you have any questions, feel free to contact us.</p>
-
-                <p>Happy shopping!</p>
-
-                <p>Best regards,</p>
-                <p>[Your Company Name]</p>
-                <p>[Contact Information]</p>
-                <p>[Website URL]</p>
+        <h1>New Coupon Just for You!</h1>
+    <p>Dear Customer,</p>
+    <p>We are excited to offer you a special coupon. Here are the details:</p>
+    <ul>
+        <li>Coupon Name: {{ $coupon->name }}</li>
+        <li>Coupon Code: {{ $coupon->code }}</li>
+        <li>Discount: {{ $coupon->discount }} {{ $coupon->discount_type }}</li>
+        <li>Minimum Purchase Amount: {{ $coupon->minimum_purchase_amount }}</li>
+        <li>Minimum Quantity of Items: {{ $coupon->minimum_quantity_items }}</li>
+        <li>Free Shipping: {{ $coupon->is_free_shipping ? 'Yes' : 'No' }}</li>
+        <li>Valid From: {{ $coupon->start_date->format('Y-m-d') }}</li>
+        <li>Valid Until: {{ $coupon->end_date->format('Y-m-d') }}</li>
+    </ul>
+    <p>Shop Name: {{ $shop_name }}</p>
+    <p>Use this coupon on our category-specific items. Don't miss out!</p>
 
         </div>
     </div>

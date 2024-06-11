@@ -119,43 +119,38 @@
             
 
             <div class="shop_logo">
-    <img src="{{ asset('emailLogo.png') }}" alt="Company Logo">
-    <h4 style="color: #4CAF50;">Your Store Name</h4>
+    <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" alt="Company Logo">
+    <h2 style="color: #4CAF50;">{{$shop->name}}</h2>
 </div>
 
 <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on the following products:</p>
             
             <!-- Product Section Start -->
+            @foreach($products as $product)
             <div class="product">
-                <img src="https://via.placeholder.com/100" alt="Product Image">
+                <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
                 <div class="product-details">
-                    <h5>Product Name 1</h5>
-                    <p><strong>Discount:</strong> 20% off</p>
+                    <h5>{{$product->name}}</h5>
+                    <p><strong>Discount:</strong>@if($coupon->discount_type == 'percentage') { {{$coupon->discount}}% }else{ {{'$'.$coupon->discount}} } off</p>
                 </div>
             </div>
-
-            <div class="product">
-                <img src="https://via.placeholder.com/100" alt="Product Image">
-                <div class="product-details">
-                    <h5>Product Name 2</h5>
-                    <p><strong>Discount:</strong> 25% off</p>
-                </div>
-            </div>
+            @endforeach
             <!-- Product Section End -->
 
             <!-- Coupon Details Section Start -->
             <div class="coupon-details">
                 <h2>Your Coupon Details</h2>
                 <p>Use the coupon code below at checkout to avail your discount:</p>
-                <div class="coupon-code">DISCOUNT2024</div>
-                <p><strong>Validity:</strong> Until June 30, 2024</p>
+                <div class="coupon-code">{{$coupon->code}}</div>
+                <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('Y-m-d') }}</p>
                 <p><strong>Terms and Conditions:</strong> Applicable on select products only.</p>
             </div>
             <!-- Coupon Details Section End -->
         </div>
         <div class="footer">
-            <p>&copy; 2024 Dragon Auto Mart. All rights reserved.</p>
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p><a href="#">Unsubscribe</a></p>
         </div>
     </div>
 </body>

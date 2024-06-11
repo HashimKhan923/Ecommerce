@@ -8,6 +8,9 @@ use App\Models\Coupon;
 use App\Models\CouponCategory;
 use App\Models\CouponCustomer;
 use App\Models\CouponProduct;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Shop;
 use Carbon\Carbon;
 use Mail;
 
@@ -31,67 +34,90 @@ class CouponController extends Controller
         $new->discount_type = $request->discount_type;
         $new->minimum_purchase_amount = $request->minimum_purchase_amount;
         $new->minimum_quantity_items = $request->minimum_quantity_items;
-        $new->minimum_quantity_items = $request->minimum_quantity_items;
         $new->is_amount_order = $request->is_amount_order;
         $new->is_free_shipping = $request->is_free_shipping;
         $new->start_date = Carbon::parse($request->start_date);
         $new->end_date = Carbon::parse($request->end_date);
         $new->save();
+        
+        $shop = Shop::find($request->shop_id);
 
-
-        if($request->customer_id)
-        {
-            foreach($request->customer_id as $customer_id)
-            {
-                $CouponCustomer = new CouponCustomer();
-                $CouponCustomer->coupon_id = $new->id;
-                $CouponCustomer->customer_id = $customer_id;
-                $CouponCustomer->save();
-
-                Mail::send(
-                    'email.Coupon.customers',
-                    [
-                        'vendor_name' => $Seller->name,
-                        'amount' => $PaymentStatus->amount,
-                    ],
-                    function ($message) use ($Seller, $request) { 
-                        $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                        $message->to($Seller->email);
-                        $message->subject('Payout Notification');
-                    }
-                );
-
-
-            }
-
-        }
-
-        if($request->category_id)
-        {
-            foreach($request->category_id as $category_id)
-            {
+        $emailView = '';
+        $emailData = [
+            'coupon' => $new,
+            'shop' => $shop,
+        ];
+    
+        if ($request->category_id) {
+            $emailView = 'email.Coupon.category';
+            $categories = Category::whereIn('id', $request->category_id)->get();
+            $emailData['categories'] = $categories;
+            foreach ($request->category_id as $category_id) {
                 $CouponCategory = new CouponCategory();
                 $CouponCategory->coupon_id = $new->id;
                 $CouponCategory->category_id = $category_id;
                 $CouponCategory->save();
             }
-
         }
-
-        if($request->product_id)
-        {
-            foreach($request->product_id as $product_id)
-            {
+    
+        if ($request->product_id) {
+            $emailView = 'email.Coupon.product';
+            $products = Product::with('product_single_gallery')->whereIn('id', $request->product_id)->get();
+            $emailData['products'] = $products;
+            foreach ($request->product_id as $product_id) {
                 $CouponProduct = new CouponProduct();
                 $CouponProduct->coupon_id = $new->id;
                 $CouponProduct->product_id = $product_id;
                 $CouponProduct->save();
             }
         }
+    
+        if ($new->is_amount_order) {
+            $emailView = 'email.Coupon.amount_order';
+        }
+    
+        if ($new->is_free_shipping) {
+            $emailView = 'email.Coupon.free_shipping';
+        }
+    
+        if ($request->customer_id) {
+            foreach ($request->customer_id as $customer_id) {
+                $CouponCustomer = new CouponCustomer();
+                $CouponCustomer->coupon_id = $new->id;
+                $CouponCustomer->customer_id = $customer_id;
+                $CouponCustomer->save();
+            }
+        }
+    
+        if ($request->customer_id) {
+            foreach ($request->customer_id as $customer_id) {
+                $customer = User::find($customer_id);
+                Mail::send($emailView, $emailData, function ($message) use ($customer) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to($customer->email);
+                    $message->subject('New Coupon Available for You!');
+                });
+            }
+        }
+        else
+        {
+            $MyCustomers = MyCustomer::where('seller_id',$request->creator_id)->get();
+            foreach ($MyCustomers as $customer) {
+                $customer = MyCustomer::find($customer->customer_id)->first();
+                Mail::send($emailView, $emailData, function ($message) use ($customer) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to($customer->email);
+                    $message->subject('New Coupon Available for You!');
+                });
+            }
 
-        $response = ['status'=>true,"message" => "Coupon Created Successfully!",'coupon_id'=>$new->id];
+        }
+    
+        $response = ['status' => true, 'message' => 'Coupon Created Successfully!', 'coupon_id' => $new->id];
         return response($response, 200);
     }
+    
+    
 
     public function update(Request $request)
     {
