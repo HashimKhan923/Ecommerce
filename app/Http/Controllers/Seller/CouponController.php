@@ -11,6 +11,7 @@ use App\Models\CouponProduct;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\MyCustomer;
 use Carbon\Carbon;
 use Mail;
 
