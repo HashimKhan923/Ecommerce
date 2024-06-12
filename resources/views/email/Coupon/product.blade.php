@@ -118,10 +118,10 @@
         <div class="content">
             
 
-            <div class="shop_logo">
+            <!-- <div class="shop_logo">
     <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" alt="Company Logo">
     <h2 style="color: #4CAF50;">{{$shop->name}}</h2>
-</div>
+</div> -->
 
 <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on the following products:</p>
