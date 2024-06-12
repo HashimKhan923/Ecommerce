@@ -126,17 +126,24 @@
 <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on the following products:</p>
             
-            <!-- Product Section Start -->
-            @foreach($products as $product)
-            <div class="product">
-                <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
-                <div class="product-details">
-                    <h5>{{$product->name}}</h5>
-                    <p><strong>Discount:</strong>@if($coupon->discount_type == 'percentage') { {{$coupon->discount}}% }else{ {{'$'.$coupon->discount}} } off</p>
-                </div>
-            </div>
-            @endforeach
-            <!-- Product Section End -->
+<!-- Product Section Start -->
+@foreach($products as $product)
+<div class="product">
+    <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
+    <div class="product-details">
+        <h5>{{$product->name}}</h5>
+        <p><strong>Discount:</strong>
+            @if($coupon->discount_type == 'percentage')
+                {{$coupon->discount}}%
+            @else
+                ${{$coupon->discount}}
+            @endif
+            off
+        </p>
+    </div>
+</div>
+@endforeach
+<!-- Product Section End -->
 
             <!-- Coupon Details Section Start -->
             <div class="coupon-details">
