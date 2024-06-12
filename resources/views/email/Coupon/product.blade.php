@@ -121,11 +121,21 @@
 
 
 <p>Dear Valued Customer,</p>
-            <p>We are excited to offer you an exclusive discount on the following products:</p>
+<p>We are excited to offer you an exclusive discount on the following products:</p>
+
+            <!-- Coupon Details Section Start -->
+            <div class="coupon-details">
+                <h2>Your Coupon Details</h2>
+                <p>Use the coupon code below at checkout to avail your discount:</p>
+                <div class="coupon-code">{{$coupon->code}}</div>
+                <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('Y-m-d') }}</p>
+                <p><strong>Terms and Conditions:</strong> Applicable on select products only.</p>
+            </div>
+            <!-- Coupon Details Section End -->
             
 <!-- Product Section Start -->
 @foreach($products as $product)
-    <a href="https://dragonautomart.com/product/{{$product->id}}" class="product">
+    <div class="product">
     <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
     <div class="product-details">
         <h5>{{$product->name}}</h5>
@@ -137,20 +147,13 @@
             @endif
             off
         </p>
+        <a href="https://dragonautomart.com/product/{{$product->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
     </div>
-    </a>
+    </div>
 @endforeach
 <!-- Product Section End -->
 
-            <!-- Coupon Details Section Start -->
-            <div class="coupon-details">
-                <h2>Your Coupon Details</h2>
-                <p>Use the coupon code below at checkout to avail your discount:</p>
-                <div class="coupon-code">{{$coupon->code}}</div>
-                <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('Y-m-d') }}</p>
-                <p><strong>Terms and Conditions:</strong> Applicable on select products only.</p>
-            </div>
-            <!-- Coupon Details Section End -->
+
         </div>
         <div class="footer">
             <p>&copy; 2023 Dragon Auto Mart. All rights reserved.</p>
