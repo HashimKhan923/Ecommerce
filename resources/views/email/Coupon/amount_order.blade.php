@@ -94,10 +94,12 @@
 <body>
     <div class="email-container">
         <!-- Logo Section Start -->
-
+        <div class="logo">
+            <img src="{{ asset('emailLogo.png') }}" alt="Company Logo">
+        </div>
         <!-- Logo Section End -->
         <div class="header">
-            <h1>Special Discount Just for You!</h1>
+            <h1>🎉 Special Discount Just for You! 🎉</h1>
         </div>
         <div class="content">
             <p>Dear Valued Customer,</p>
