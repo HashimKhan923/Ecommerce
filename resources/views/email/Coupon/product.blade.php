@@ -118,7 +118,10 @@
         <div class="content">
             
 
-
+            <div class="shop_logo">
+    <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" alt="Company Logo">
+    <h2 style="color: #4CAF50;">{{$shop->name}}</h2>
+</div>
 
 <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on the following products:</p>
@@ -153,8 +156,7 @@
             <!-- Coupon Details Section End -->
         </div>
         <div class="footer">
-            <p>&copy; 2024 Your Company. All rights reserved.</p>
-            <p><a href="#">Unsubscribe</a></p>
+            <p>&copy; 2023 Dragon Auto Mart. All rights reserved.</p>
         </div>
     </div>
 </body>
