@@ -130,6 +130,7 @@
                 <h2>Your Coupon Details</h2>
                 <p>Use the coupon code below at checkout to avail your discount:</p>
                 <div class="coupon-code">{{$coupon->code}}</div>
+                
                 @if($coupon->minimum_purchase_amount)
                 <p><strong>Minimum Order Amount:</strong> ${{$coupon->minimum_purchase_amount}}</p>
                 @elseif($coupon->minimum_quantity_items)
@@ -165,7 +166,7 @@
 
         </div>
         <div class="footer">
-            <p>&copy; 2023 Dragon Auto Mart. All rights reserved.</p>
+            <p>&copy; 2024 Dragon Auto Mart. All rights reserved.</p>
         </div>
     </div>
 </body>
