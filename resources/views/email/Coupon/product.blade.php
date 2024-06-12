@@ -153,14 +153,15 @@
                         <h5>{{$product->name}}</h5>
                         <p>
                             <span class="original-price">${{$product->price}}</span> 
-                            <span class="discounted-price">
-                                @if($coupon->discount_type == 'percentage')
-                                    ${{ number_format($product->price * (1 - $coupon->discount / 100), 2) }}
-                                @else
-                                    ${{ number_format($product->price - $coupon->discount, 2) }}
-                                @endif
-                            </span>
                         </p>
+                            <p><strong>Discount:</strong>
+                                @if($coupon->discount_type == 'percentage')
+                                    {{$coupon->discount}}%
+                                @else
+                                    ${{$coupon->discount}}
+                                @endif
+                                off
+                            </p>
                         <a href="https://dragonautomart.com/product/{{$product->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
                     </div>
                 </div>
