@@ -130,7 +130,14 @@
                 <h2>Your Coupon Details</h2>
                 <p>Use the coupon code below at checkout to avail your discount:</p>
                 <div class="coupon-code">{{$coupon->code}}</div>
-                <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('Y-m-d') }}</p>
+                @if($coupon->minimum_purchase_amount)
+                <p><strong>Minimum Order Amount:</strong> ${{$coupon->minimum_purchase_amount}}</p>
+                @elseif($coupon->minimum_quantity_items)
+                <p><strong>Minimum Items qty:</strong> ${{$coupon->minimum_quantity_items}}</p>
+                @else
+
+                @endif
+                <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('jS F Y') }}</p>
                 <p><strong>Terms and Conditions:</strong> Applicable on select products only.</p>
             </div>
             <!-- Coupon Details Section End -->
