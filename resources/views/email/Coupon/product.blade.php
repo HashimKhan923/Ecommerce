@@ -152,12 +152,12 @@
                     <div class="product-details">
                         <h5>{{$product->name}}</h5>
                         <p>
-                            <span class="original-price">${{$product->original_price}}</span> 
+                            <span class="original-price">${{$product->price}}</span> 
                             <span class="discounted-price">
                                 @if($coupon->discount_type == 'percentage')
-                                    ${{ number_format($product->original_price * (1 - $coupon->discount / 100), 2) }}
+                                    ${{ number_format($product->price * (1 - $coupon->discount / 100), 2) }}
                                 @else
-                                    ${{ number_format($product->original_price - $coupon->discount, 2) }}
+                                    ${{ number_format($product->price - $coupon->discount, 2) }}
                                 @endif
                             </span>
                         </p>
