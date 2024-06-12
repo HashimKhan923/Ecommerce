@@ -151,7 +151,7 @@
                     <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
                     <div class="product-details">
                         <h5>{{$product->name}}</h5>
-                        <p>
+                        <p>{{$product->price}}
                             <span class="original-price">${{$product->price}}</span> 
                         </p>
                             <p><strong>Discount:</strong>
