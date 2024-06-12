@@ -6,7 +6,7 @@
     <title>Exclusive Discount Just for You!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -77,6 +77,14 @@
         .product-details h5 {
             color: #4CAF50;
         }
+        .original-price {
+            text-decoration: line-through;
+            color: red;
+        }
+        .discounted-price {
+            color: green;
+            font-weight: bold;
+        }
         .coupon-details {
             background-color: #f9f9f9;
             padding: 20px;
@@ -118,51 +126,46 @@
             <h1>🎉 Special Discount Just for You! 🎉</h1>
         </div>
         <div class="content">
-            
-
-
-
-<p>Dear Valued Customer,</p>
-<p>We are excited to offer you an exclusive discount on the following products:</p>
+            <p>Dear Valued Customer,</p>
+            <p>We are excited to offer you an exclusive discount on the following products:</p>
 
             <!-- Coupon Details Section Start -->
             <div class="coupon-details">
                 <h2>Your Coupon Details</h2>
                 <p>Use the coupon code below at checkout to avail your discount:</p>
                 <div class="coupon-code">{{$coupon->code}}</div>
-
                 @if($coupon->minimum_purchase_amount)
                 <p><strong>Required Minimum Order Amount:</strong> ${{$coupon->minimum_purchase_amount}}</p>
                 @elseif($coupon->minimum_quantity_items)
                 <p><strong>Required Minimum Items qty:</strong> {{$coupon->minimum_quantity_items}}</p>
                 @else
-
                 @endif
                 <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('jS F Y') }}</p>
                 <p><strong>Terms and Conditions:</strong> Applicable on select products only.</p>
             </div>
             <!-- Coupon Details Section End -->
             
-<!-- Product Section Start -->
-@foreach($products as $product)
-    <div class="product">
-    <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
-    <div class="product-details">
-        <h5>{{$product->name}}</h5>
-        <p><strong>Discount:</strong>
-            @if($coupon->discount_type == 'percentage')
-                {{$coupon->discount}}%
-            @else
-                ${{$coupon->discount}}
-            @endif
-            off
-        </p>
-        <a href="https://dragonautomart.com/product/{{$product->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
-    </div>
-    </div>
-@endforeach
-<!-- Product Section End -->
-
+            <!-- Product Section Start -->
+            @foreach($products as $product)
+                <div class="product">
+                    <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
+                    <div class="product-details">
+                        <h5>{{$product->name}}</h5>
+                        <p>
+                            <span class="original-price">${{$product->original_price}}</span> 
+                            <span class="discounted-price">
+                                @if($coupon->discount_type == 'percentage')
+                                    ${{ number_format($product->original_price * (1 - $coupon->discount / 100), 2) }}
+                                @else
+                                    ${{ number_format($product->original_price - $coupon->discount, 2) }}
+                                @endif
+                            </span>
+                        </p>
+                        <a href="https://dragonautomart.com/product/{{$product->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
+                    </div>
+                </div>
+            @endforeach
+            <!-- Product Section End -->
 
         </div>
         <div class="footer">
