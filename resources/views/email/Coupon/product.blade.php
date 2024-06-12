@@ -125,8 +125,7 @@
             
 <!-- Product Section Start -->
 @foreach($products as $product)
-<div class="product">
-    <a href="https://dragonautomart.com/product/{{$product->id}}">
+    <a href="https://dragonautomart.com/product/{{$product->id}}" class="product">
     <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
     <div class="product-details">
         <h5>{{$product->name}}</h5>
@@ -140,7 +139,6 @@
         </p>
     </div>
     </a>
-</div>
 @endforeach
 <!-- Product Section End -->
 
