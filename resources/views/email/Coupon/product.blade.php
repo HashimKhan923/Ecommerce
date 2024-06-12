@@ -146,7 +146,8 @@
             <!-- Coupon Details Section End -->
             
             <!-- Product Section Start -->
-            @foreach($products as $product)
+            {{$products}}
+            <!-- @foreach($products as $product)
                 <div class="product">
                     <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
                     <div class="product-details">
@@ -165,7 +166,7 @@
                         <a href="https://dragonautomart.com/product/{{$product->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
                     </div>
                 </div>
-            @endforeach
+            @endforeach -->
             <!-- Product Section End -->
 
         </div>
