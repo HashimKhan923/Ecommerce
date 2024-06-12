@@ -119,9 +119,9 @@
                     off your total order amount.
                 </p>
                 @if($coupon->minimum_purchase_amount)
-                <p><strong>Minimum Order Amount:</strong> ${{$coupon->minimum_purchase_amount}}</p>
+                <p><strong>Required Minimum Order Amount:</strong> ${{$coupon->minimum_purchase_amount}}</p>
                 @elseif($coupon->minimum_quantity_items)
-                <p><strong>Minimum Items qty:</strong> {{$coupon->minimum_quantity_items}}</p>
+                <p><strong>Required Minimum Items qty:</strong> {{$coupon->minimum_quantity_items}}</p>
                 @else
 
                 @endif
