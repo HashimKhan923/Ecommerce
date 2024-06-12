@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\Brand;
 use App\Models\SubscribeUser;
 use App\Models\Banner;
@@ -86,6 +87,7 @@ class HomeController extends Controller
         }])->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
+        $SubCategories = SubCategory::where('status', 1)->get();
         $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
@@ -98,6 +100,7 @@ class HomeController extends Controller
             'TopSelling' => $TopSelling->get(),
             'TrendingProducts' => $TrendingProducts->get(),
             'Categories' => $Categories,
+            'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
             'Models' => $Models,
             'Banners' => $Banners,
