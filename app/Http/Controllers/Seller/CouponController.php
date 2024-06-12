@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\MyCustomer;
+use App\Models\User;
 use Carbon\Carbon;
 use Mail;
 
