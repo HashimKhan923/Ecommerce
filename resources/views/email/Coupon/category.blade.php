@@ -146,7 +146,7 @@
                         @endif
                         off
                     </p>
-                    <a href="https://dragonautomart.com/{{$category->name}}/{{$category->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
+                    <a href="https://dragonautomart.com/category/{{$category->name}}/{{$category->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
                 </div>
                 </div>
         @endforeach
