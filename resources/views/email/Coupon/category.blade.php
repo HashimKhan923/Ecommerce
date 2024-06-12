@@ -1,96 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Email Verification</title>
+    <title>Exclusive Discount Just for You!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
-
-        .container {
+        .email-container {
             max-width: 600px;
-            margin: 30px auto;
+            margin: 20px auto;
             background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .logo {
+            text-align: center;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f4f4f4;
         }
-
         .logo img {
-            max-width: 100%;
-            height: auto;
+            max-width: 250px;
         }
-
-        .company-name {
-            text-align: right;
-            margin-top: 10px;
+        .shop_logo {
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-
+        .shop_logo img {
+            max-width: 150px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+        }
         .content {
+            padding: 20px;
+        }
+        .store-details {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .store-details h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        .category {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        .category h5 {
+            color: #4CAF50;
+        }
+        .coupon-details {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
             margin-top: 20px;
         }
-
-        .verification-link {
-            display: inline-block;
+        .coupon-details h2 {
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+        .coupon-code {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #4CAF50;
+            color: white;
             padding: 10px 20px;
-            background-color: #007bff;
-            color: #ffffff;
-            text-decoration: none;
             border-radius: 5px;
         }
-
         .footer {
-            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
             text-align: center;
-            color: #888888;
+            padding: 10px;
+        }
+        .footer a {
+            color: white;
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <div class="logo">
-    <img src="{{ asset('emailLogo.png') }}" width="200" alt="Company Logo" class="logo">
-        <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
-    </div>
-    </div>
-</div>
-
-
-</div>
-        <hr>
+    <div class="email-container">
+        <!-- Logo Section Start -->
+        <div class="logo">
+            <img src="{{ asset('emailLogo.png') }}" alt="Company Logo">
+        </div>
+        <!-- Logo Section End -->
+        <div class="header">
+            <h1>🎉 Special Discount Just for You! 🎉</h1>
+        </div>
         <div class="content">
-        <h1>New Coupon Just for You!</h1>
-    <p>Dear Customer,</p>
-    <p>We are excited to offer you a special coupon. Here are the details:</p>
-    <ul>
-        <li>Coupon Name: {{ $coupon->name }}</li>
-        <li>Coupon Code: {{ $coupon->code }}</li>
-        <li>Discount: {{ $coupon->discount }} {{ $coupon->discount_type }}</li>
-        <li>Minimum Purchase Amount: {{ $coupon->minimum_purchase_amount }}</li>
-        <li>Minimum Quantity of Items: {{ $coupon->minimum_quantity_items }}</li>
-        <li>Free Shipping: {{ $coupon->is_free_shipping ? 'Yes' : 'No' }}</li>
-        <li>Valid From: {{ $coupon->start_date->format('Y-m-d') }}</li>
-        <li>Valid Until: {{ $coupon->end_date->format('Y-m-d') }}</li>
-    </ul>
-    <p>Shop Name: {{ $shop_name }}</p>
-    <p>Use this coupon on our category-specific items. Don't miss out!</p>
+            <p>Dear Valued Customer,</p>
+            <p>We are excited to offer you an exclusive discount on the following categories:</p>
+
+            <!-- Coupon Details Section Start -->
+            <div class="coupon-details">
+                <h2>Your Coupon Details</h2>
+                <p>Use the coupon code below at checkout to avail your discount:</p>
+                <div class="coupon-code">{{$coupon->code}}</div>
+
+                @if($coupon->minimum_purchase_amount)
+                <p><strong>Required Minimum Order Amount:</strong> ${{$coupon->minimum_purchase_amount}}</p>
+                @elseif($coupon->minimum_quantity_items)
+                <p><strong>Required Minimum Items qty:</strong> {{$coupon->minimum_quantity_items}}</p>
+                @else
+                @endif
+                <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('jS F Y') }}</p>
+                <p><strong>Terms and Conditions:</strong> Applicable on select categories only.</p>
+            </div>
+            <!-- Coupon Details Section End -->
+
+            <!-- Category Section Start -->
+            @foreach($categories as $category)
+                <div class="product">
+                <img src="https://api.dragonautomart.com/CategoryIcon/{{$category->icon}}" alt="Product Image">
+                <div class="product-details">
+                    <h5>{{$category->name}}</h5>
+                    <p><strong>Discount:</strong>
+                        @if($coupon->discount_type == 'percentage')
+                            {{$coupon->discount}}%
+                        @else
+                            ${{$coupon->discount}}
+                        @endif
+                        off
+                    </p>
+                    <a href="https://dragonautomart.com/{{$category->name}}/{{$category->id}}" class="btn btn-danger btn-sm">Add To Cart</a>
+                </div>
+                </div>
+        @endforeach
+            <!-- Category Section End -->
 
         </div>
+        <div class="footer">
+            <p>&copy; 2024 Dragon Auto Mart. All rights reserved.</p>
+        </div>
     </div>
-
 </body>
-
 </html>
