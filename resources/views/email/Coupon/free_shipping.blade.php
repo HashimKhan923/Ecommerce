@@ -70,6 +70,24 @@
         .footer a {
             color: white;
         }
+        .store-details .store-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .store-details .store-info img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+        .store-details .store-info h4 {
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        .store-details .store-info a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
