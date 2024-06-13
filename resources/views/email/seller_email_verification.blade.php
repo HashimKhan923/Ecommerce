@@ -72,7 +72,7 @@
 </div>
         <hr>
         <div class="content">
-        <p class="font-size-18">Hi, Mr. {{$name}}</p>
+        <p class="font-size-18">Hello, Mr. {{$name}}</p>
 
         <p>Welcome to Dragon Auto Mart! We're absolutely thrilled to have you join us on this exciting journey.</p>
             <p>We're excited to let you know that your first 6-month subscription is completely free and on us. It's our way of showing appreciation for your decision to be a part of our community.</p>

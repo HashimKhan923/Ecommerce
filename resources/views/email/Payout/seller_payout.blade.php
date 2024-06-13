@@ -72,7 +72,7 @@
 </div>
         <hr>
         <div class="content">
-        <p class="font-size-18">Hi, Mr. {{$vendor_name}}</p>
+        <p class="font-size-18">Hello, Mr. {{$vendor_name}}</p>
 
         <p class="card-text">We are pleased to inform you that a payout of {{$amount}} has been processed.</p>
                     <p class="card-text">The funds will be transferred to your account within 3 to 5 business days.</p>

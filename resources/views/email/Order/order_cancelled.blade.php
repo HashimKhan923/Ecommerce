@@ -71,7 +71,7 @@
 </div>
         <hr>
         <div class="content">
-        <h2>Hi {{ $buyer_name }},</h2>
+        <h2>Hello {{ $buyer_name }},</h2>
     
         <p>{{$body}}</p>
     

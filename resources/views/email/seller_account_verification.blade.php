@@ -72,7 +72,7 @@
 </div>
         <hr>
         <div class="content">
-        <p class="font-size-18">Hi, Mr. {{$name}}</p>
+        <p class="font-size-18">Hello, Mr. {{$name}}</p>
 
         <p class="card-text">We are pleased to inform you that your account on our platform has been verified and activated by our admin team.</p>
                     <p class="card-text">You can now start using your account to list your products, manage orders, and access all the features of our platform.</p>

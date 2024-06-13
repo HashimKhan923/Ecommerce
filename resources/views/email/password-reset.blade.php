@@ -72,7 +72,7 @@
 </div>
         <hr>
         <div class="content">
-        <p class="font-size-18">Hi, Mr. {{$name}}</p>
+        <p class="font-size-18">Hello, Mr. {{$name}}</p>
 
         <p>Use the following OTP to complete your Reset Password procedures:</p>
         <h2 class="otp-box">{{ $token }}</h2>

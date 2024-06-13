@@ -73,7 +73,7 @@
 </div>
         <hr>
         <div class="content">
-        <p class="font-size-18">Hi, Mr. {{$Seller->name}}</p>
+        <p class="font-size-18">Hello, Mr. {{$Seller->name}}</p>
 <hr>
 
         <div>
