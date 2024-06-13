@@ -30,12 +30,12 @@
         .logo img {
             max-width: 250px;
         }
-        .shop_logo {
+        .shop-logo {
             text-align: center;
             padding: 20px;
             background-color: #f4f4f4;
         }
-        .shop_logo img {
+        .shop-logo img {
             max-width: 150px;
         }
         .header {
@@ -89,6 +89,24 @@
         .footer a {
             color: white;
         }
+        .store-details .store-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .store-details .store-info img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+        .store-details .store-info h4 {
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        .store-details .store-info a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -102,13 +120,17 @@
             <h1>🎉 Special Discount Just for You! 🎉</h1>
         </div>
         <div class="content">
-        <div class="shop_logo">
-            <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" width="150px" alt="Company Logo">
-            <h4 style="color: #4CAF50;">{{$shop->logo}}</h4>
-            <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
-        </div>
+            <div class="shop-logo">
+                <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" width="150px" alt="Shop Logo">
+            </div>
+            <div class="store-details">
+                <div class="store-info">
+                    <h4>{{$shop->name}}</h4>
+                    <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
+                </div>
+            </div>
             <p>Dear Valued Customer,</p>
-            <p>We are excited to offer you an exclusive discount on your next order:</p>
+            <p>We are excited to offer you an exclusive discount on your next order at <strong>{{$shop->name}}</strong>:</p>
 
             <!-- Coupon Details Section Start -->
             <div class="coupon-details">
@@ -131,7 +153,7 @@
 
                 @endif
                 <p><strong>Validity:</strong> Until {{ $coupon->end_date->format('jS F Y') }}</p>
-                <p><strong>Terms and Conditions:</strong> Applicable on your total order amount only.</p>
+                <p><strong>Terms and Conditions:</strong> Applicable only on orders from <strong>{{$shop->name}}</strong>.</p>
             </div>
             <!-- Coupon Details Section End -->
 
