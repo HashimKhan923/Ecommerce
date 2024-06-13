@@ -109,9 +109,12 @@ class ProductController extends Controller
                 
                 // Set the filename with the new extension
                 $filename = $filename . '.webp';
-            } else {
-                // The image is not an uploaded file
+            } else if (is_string($image)) {
+                // It's a string, use it directly
                 $filename = $image;
+            } else {
+                // It's neither a valid file object nor a string, skip it
+                continue;
             }
             
             // Create a new ProductGallery entry
