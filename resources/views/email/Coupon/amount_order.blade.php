@@ -123,12 +123,12 @@
             <div class="shop-logo">
                 <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" width="150px" alt="Shop Logo">
             </div>
-            <div class="store-details">
-                <div class="store-info">
+            <!-- <div class="store-details">
+                <div class="store-info"> -->
                     <h2>{{$shop->name}}</h4>
                     <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
             <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on your next order at <strong>{{$shop->name}}</strong>:</p>
 
