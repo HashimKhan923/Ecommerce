@@ -94,6 +94,7 @@ class ProductController extends Controller
     ]);
 
     if ($request->photos) {
+        return $request->photos;
         foreach ($request->photos as $image) {
             $filename = null;
             if ($image instanceof \Illuminate\Http\UploadedFile && $image->isValid()) {
