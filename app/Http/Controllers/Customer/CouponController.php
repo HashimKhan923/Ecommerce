@@ -14,6 +14,7 @@ class CouponController extends Controller
     {
         $check = Coupon::with('creator','shop','coupon_customers.customer','coupon_categories.category','coupon_products.product.product_gallery')->where('code',$request->code)
         ->where('end_date','>',Carbon::now())
+        ->where('status',1)
         ->first();
 
         
