@@ -107,14 +107,10 @@
         }
         .store-info h1 {
             margin: 0;
-            font-size: 24px;
             color: #4CAF50;
         }
         .store-info a {
-            text-decoration: none;
             color: #4CAF50;
-            font-weight: bold;
-            font-size: 16px;
         }
 
     </style>
