@@ -114,9 +114,18 @@
             max-width: 150px;
             margin-bottom: 10px;
         }
-        .store-details .store-info h1 {
+        .store-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .store-info h1 {
+            margin: 0;
             color: #4CAF50;
-            margin-bottom: 5px;
+        }
+        .store-info a {
+            color: #4CAF50;
         }
 
     </style>
@@ -138,8 +147,7 @@
             </div>
             <div class="store-details">
                 <div class="store-info">
-                    <h1>{{$shop->name}}</h1>
-                    <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
+                    <h1><a href="https://dragonautomart.com/store/{{$shop->id}}">{{$shop->name}}</a></h1>
                 </div>
             </div>
             
