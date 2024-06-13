@@ -83,8 +83,17 @@
             <h1>🎉 Enjoy Free Shipping! 🎉</h1>
         </div>
         <div class="content">
+        <div class="shop-logo">
+                <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" width="150px" alt="Shop Logo">
+            </div>
+            <div class="store-details">
+                <div class="store-info">
+                    <h1>{{$shop->name}}</h4>
+                    <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
+                </div>
+            </div>
             <p>Dear Valued Customer,</p>
-            <p>We are excited to offer you an exclusive free shipping on your next order:</p>
+            <p>We are excited to offer you an exclusive free shipping on your next order at <strong>{{$shop->name}}</strong>:</p>
 
             <!-- Coupon Details Section Start -->
             <div class="coupon-details">
