@@ -98,7 +98,7 @@
             max-width: 150px;
             margin-bottom: 10px;
         }
-        .store-details .store-info h4 {
+        /* .store-details .store-info h4 {
             color: #4CAF50;
             margin-bottom: 5px;
         }
@@ -106,7 +106,7 @@
             text-decoration: none;
             color: #4CAF50;
             font-weight: bold;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -125,7 +125,7 @@
             </div>
             <div class="store-details">
                 <div class="store-info">
-                    <h4>{{$shop->name}}</h4>
+                    <h2>{{$shop->name}}</h4>
                     <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
                 </div>
             </div>
