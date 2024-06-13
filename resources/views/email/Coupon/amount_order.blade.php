@@ -135,8 +135,7 @@
             </div>
             <div class="store-details">
                 <div class="store-info">
-                    <h1>{{$shop->name}}</h1>
-                    <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
+                    <h1><a href="https://dragonautomart.com/store/{{$shop->id}}">{{$shop->name}}</a></h1>
                 </div>
             </div>
             <p>Dear Valued Customer,</p>
