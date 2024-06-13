@@ -60,7 +60,7 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        // return $request->photos;
+        return $request->all();
 
     $new = Product::create([
         'name' => $request->name,
