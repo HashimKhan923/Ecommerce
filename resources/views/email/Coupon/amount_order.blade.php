@@ -98,9 +98,23 @@
             max-width: 150px;
             margin-bottom: 10px;
         }
-        .store-details .store-info h4 {
+
+        .store-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .store-info h1 {
+            margin: 0;
+            font-size: 24px;
             color: #4CAF50;
-            margin-bottom: 5px;
+        }
+        .store-info a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 16px;
         }
 
     </style>
