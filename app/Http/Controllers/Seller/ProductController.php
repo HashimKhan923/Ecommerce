@@ -105,7 +105,6 @@ class ProductController extends Controller
             else
             {
                 $filename = $image;
-                $filename = $filename . '.webp';
             }
 
             
