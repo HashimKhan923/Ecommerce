@@ -30,12 +30,12 @@
         .logo img {
             max-width: 250px;
         }
-        .shop_logo {
+        .shop-logo {
             text-align: center;
             padding: 20px;
             background-color: #f4f4f4;
         }
-        .shop_logo img {
+        .shop-logo img {
             max-width: 150px;
         }
         .header {
