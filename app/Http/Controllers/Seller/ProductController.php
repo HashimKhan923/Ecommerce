@@ -96,18 +96,22 @@ class ProductController extends Controller
     if ($request->photos) {
         foreach ($request->photos as $image) {
             $filename = null;
-            if (is_uploaded_file($image)) {
+            if ($image instanceof \Illuminate\Http\UploadedFile && $image->isValid()) {
+                // Generate a unique filename
                 $filename = date('YmdHis') . $image->getClientOriginalName();
+                
+                // Compress and save the image
                 $compressedImage = ImageFacade::make($image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                
+                // Set the filename with the new extension
                 $filename = $filename . '.webp';
-            }
-            else
-            {
+            } else {
+                // The image is not an uploaded file
                 $filename = $image;
             }
-
             
+            // Create a new ProductGallery entry
             ProductGallery::create([
                 'product_id' => $new->id,
                 'image' => $filename
