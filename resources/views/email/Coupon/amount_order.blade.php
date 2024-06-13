@@ -94,11 +94,11 @@
             flex-direction: column;
             align-items: center;
         }
-        /* .store-details .store-info img {
+        .store-details .store-info img {
             max-width: 150px;
             margin-bottom: 10px;
-        } */
-        /* .store-details .store-info h4 {
+        }
+        .store-details .store-info h4 {
             color: #4CAF50;
             margin-bottom: 5px;
         }
@@ -106,7 +106,7 @@
             text-decoration: none;
             color: #4CAF50;
             font-weight: bold;
-        } */
+        }
     </style>
 </head>
 <body>
@@ -123,12 +123,12 @@
             <div class="shop-logo">
                 <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" width="150px" alt="Shop Logo">
             </div>
-            <!-- <div class="store-details">
-                <div class="store-info"> -->
-                    <h2>{{$shop->name}}</h4>
+            <div class="store-details">
+                <div class="store-info">
+                    <h1>{{$shop->name}}</h4>
                     <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
-                <!-- </div>
-            </div> -->
+                </div>
+            </div>
             <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on your next order at <strong>{{$shop->name}}</strong>:</p>
 
