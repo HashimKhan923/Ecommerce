@@ -102,11 +102,7 @@
             color: #4CAF50;
             margin-bottom: 5px;
         }
-        .store-details .store-info a {
-            text-decoration: none;
-            color: #4CAF50;
-            font-weight: bold;
-        }
+
     </style>
 </head>
 <body>
@@ -125,7 +121,7 @@
             </div>
             <div class="store-details">
                 <div class="store-info">
-                    <h1>{{$shop->name}}</h4>
+                    <h1>{{$shop->name}}</h1>
                     <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
                 </div>
             </div>
