@@ -47,7 +47,7 @@ class CouponController extends Controller
         $emailView = '';
         $emailData = [
             'coupon' => $new,
-            // 'shop' => $shop,
+            'shop' => $shop,
         ];
     
         if ($request->category_id) {

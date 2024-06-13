@@ -95,13 +95,18 @@
     <div class="email-container">
         <!-- Logo Section Start -->
         <div class="logo">
-            <img src="{{ asset('NewEmailLogo.png') }}" alt="Company Logo">
+            <img src="{{ asset('NewEmailLogo.png') }}" alt="Company Logo" width="250px">
         </div>
         <!-- Logo Section End -->
         <div class="header">
             <h1>🎉 Special Discount Just for You! 🎉</h1>
         </div>
         <div class="content">
+        <div class="shop_logo">
+            <img src="https://api.dragonautomart.com/ShopLogo/{{$shop->logo}}" width="150px" alt="Company Logo">
+            <h4 style="color: #4CAF50;">{{$shop->logo}}</h4>
+            <a href="https://dragonautomart.com/store/{{$shop->id}}">Visit Store</a>
+        </div>
             <p>Dear Valued Customer,</p>
             <p>We are excited to offer you an exclusive discount on your next order:</p>
 
