@@ -60,7 +60,7 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        return $request->all();
+        // return $request->photos;
 
     $new = Product::create([
         'name' => $request->name,
@@ -95,11 +95,20 @@ class ProductController extends Controller
         'slug' => $request->slug
     ]);
 
+    if($request->string_images)
+    {
+        foreach($request->string_images as $image)
+        {
+            ProductGallery::create([
+                'product_id' => $new->id,
+                'image' => $image
+            ]);
+        }
+    }
+
     if ($request->photos) {
        
         foreach ($request->photos as $image) {
-            $filename = null;
-            if ($image instanceof \Illuminate\Http\UploadedFile && $image->isValid()) {
                 // Generate a unique filename
                 $filename = date('YmdHis') . $image->getClientOriginalName();
                 
@@ -109,14 +118,7 @@ class ProductController extends Controller
                 
                 // Set the filename with the new extension
                 $filename = $filename . '.webp';
-            } else if (is_string($image)) {
-                // It's a string, use it directly
-                $filename = $image;
-            } else {
-                // It's neither a valid file object nor a string, skip it
-                continue;
-            }
-            
+
             // Create a new ProductGallery entry
             ProductGallery::create([
                 'product_id' => $new->id,
@@ -124,6 +126,8 @@ class ProductController extends Controller
             ]);
         }
     }
+
+
         
     if ($request->varients != null) {
         foreach ($request->varients as $item) {
