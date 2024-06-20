@@ -118,7 +118,7 @@ class ProductController extends Controller
                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                 
                 // Set the filename with the new extension
-                $filename = $filename . '.webp';
+                $filename = $filename;
 
             // Create a new ProductGallery entry
             ProductGallery::create([
