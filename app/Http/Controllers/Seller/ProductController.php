@@ -101,7 +101,8 @@ class ProductController extends Controller
         {
             ProductGallery::create([
                 'product_id' => $new->id,
-                'image' => $image
+                'image' => $image['file'],
+                'order' => $image['order']
             ]);
         }
     }
@@ -113,7 +114,7 @@ class ProductController extends Controller
                 $filename = date('YmdHis') . $image->getClientOriginalName();
                 
                 // Compress and save the image
-                $compressedImage = ImageFacade::make($image->getRealPath());
+                $compressedImage =ImageFacade::make($image['file']->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
                 
                 // Set the filename with the new extension
@@ -122,7 +123,8 @@ class ProductController extends Controller
             // Create a new ProductGallery entry
             ProductGallery::create([
                 'product_id' => $new->id,
-                'image' => $filename
+                'image' => $filename,
+                'order' => $image['order'],
             ]);
         }
     }
