@@ -111,7 +111,7 @@ class ProductController extends Controller
        
         foreach ($request->photos as $image) {
                 // Generate a unique filename
-                $filename = date('YmdHis') . $image->getClientOriginalName();
+                $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
                 
                 // Compress and save the image
                 $compressedImage =ImageFacade::make($image['file']->getRealPath());
