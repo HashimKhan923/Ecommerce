@@ -108,7 +108,7 @@ class AuthController extends Controller
                 {
                     if (Hash::check($request->password, $user->password)) {
         
-                            $token = $user->createToke('Laravel Password Grant Client')->accessToken;
+                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                             $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
                             return response($response, 200);
         
