@@ -13,53 +13,73 @@ use File;
 class AuthController extends Controller
 {
     public function register (Request $request) {
-        
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            "email" => "required|email|unique:users,email",
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails())
+        try{
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                "email" => "required|email|unique:users,email",
+                'password' => 'required|string|min:6',
+            ]);
+            if ($validator->fails())
+            {
+                return response(['errors'=>$validator->errors()->all()], 422);
+            }
+            
+            $new = new User();
+            $new->name = $request->name;
+            $new->email = $request->email;
+            $new->address = $request->address;
+            $new->city = $request->city;
+            $new->state = $request->state;
+            $new->country = $request->country;
+            $new->postal_code = $request->postal_code;
+            $new->phone = $request->phone;
+            $token = uniqid();
+            $new->remember_token = $token;
+            $new->password = Hash::make($request->password);
+            $new->platform = $request->platform;
+            $new->device_name = $request->device_name;
+            $new->device_type = $request->device_type;
+            $new->user_type = 'customer';
+            $new->is_active = 1;
+            $new->save();
+    
+            Mail::send(
+                'email.customer_verification',
+                [
+                    'token'=>$token,
+                    'name'=>$new->name,
+                    //'last_name'=>$query->last_name
+                ], 
+            
+            function ($message) use ($new) {
+                $message->from('support@dragonautomar.com','Dragon Auto Mart');
+                $message->to($new->email);
+                $message->subject('Email Verification');
+            });
+            
+    
+            $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
+            return response($response, 200);
+
+        }
+        catch(Exception $e)
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $this->exception->getMessage(),
+                    'exceptionFile' => $this->exception->getFile(),
+                    'exceptionLine' => $this->exception->getLine(),
+                ],
+                function ($message) use ($user) {
+                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                    $message->to($user->email);
+                    $message->subject('Dragon Exception');
+                }
+            );
         }
         
-        $new = new User();
-        $new->name = $request->name;
-        $new->email = $request->email;
-        $new->address = $request->address;
-        $new->city = $request->city;
-        $new->state = $request->state;
-        $new->country = $request->country;
-        $new->postal_code = $request->postal_code;
-        $new->phone = $request->phone;
-        $token = uniqid();
-        $new->remember_token = $token;
-        $new->password = Hash::make($request->password);
-        $new->platform = $request->platform;
-        $new->device_name = $request->device_name;
-        $new->device_type = $request->device_type;
-        $new->user_type = 'customer';
-        $new->is_active = 1;
-        $new->save();
-
-        Mail::send(
-            'email.customer_verification',
-            [
-                'token'=>$token,
-                'name'=>$new->name,
-                //'last_name'=>$query->last_name
-            ], 
-        
-        function ($message) use ($new) {
-            $message->from('support@dragonautomart.com','Dragon Auto Mart');
-            $message->to($new->email);
-            $message->subject('Email Verification');
-        });
-        
-
-        $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
-        return response($response, 200);
     }
 
 
