@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
 use Hash;
-use Mail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Exception;
 use File;
 
 class AuthController extends Controller
