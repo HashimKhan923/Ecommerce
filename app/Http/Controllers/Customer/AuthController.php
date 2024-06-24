@@ -41,6 +41,7 @@ class AuthController extends Controller
             $new->platform = $request->platform;
             $new->device_name = $request->device_name;
             $new->device_type = $request->device_type;
+            $new->location = $request->location;
             $new->user_type = 'customer';
             $new->is_active = 1;
             $new->save();
