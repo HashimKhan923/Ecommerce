@@ -28,10 +28,10 @@ class HomeController extends Controller
             'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->where('published', 1)->orderBy('id', 'desc')->whereHas('stock', function ($query) {
-    $query->where('stock', '>', 0);
-})->whereHas('shop', function ($query) {
-    $query->where('status', 1);
-})->take(24);
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->take(24);
     
         $TopSelling = Product::with([
             'user', 'category','sub_category','brand', 'model', 'stock',
