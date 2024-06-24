@@ -99,7 +99,7 @@ class AuthController extends Controller
                 return response(['errors'=>$validator->errors()->all()], 422);
             }
             
-            $user = User::where('email', $request->emai)->first();
+            $user = User::where('email', $request->email)->first();
             if ($user) {
     
             if($user->remember_token == null)
@@ -108,7 +108,7 @@ class AuthController extends Controller
                 {
                     if (Hash::check($request->password, $user->password)) {
         
-                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                            $token = $user->createToke('Laravel Password Grant Client')->accessToken;
                             $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
                             return response($response, 200);
         
