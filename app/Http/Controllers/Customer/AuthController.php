@@ -46,7 +46,7 @@ class AuthController extends Controller
             $new->save();
     
             Mail::send(
-                'email.customer_verificatio',
+                'email.customer_verification',
                 [
                     'token' => $token,
                     'name' => $new->name,
