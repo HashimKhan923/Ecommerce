@@ -106,7 +106,7 @@ appear in your account.
 
                                             <tr>
                                                 <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                <img src="https://api.dragonautomart.com/ProductGallery/<?php echo $item->products->product_single_gallery->image; ?>" width="100px" alt="">
+                                                <img src="{{'https://api.dragonautomart.com/ProductGallery/' . $item->products->product_single_gallery->image}}" width="100px" alt="">
                                                 </td>
                                                 <td  style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                 {{$item->products->name}}
