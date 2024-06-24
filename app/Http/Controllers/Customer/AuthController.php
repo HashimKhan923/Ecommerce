@@ -87,54 +87,83 @@ class AuthController extends Controller
 
 
     public function login(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
-        }
-        
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
 
-        if($user->remember_token == null)
-        {   
-            if($user->is_active == 1)
+        try
+        {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|string|min:6',
+            ]);
+            if ($validator->fails())
             {
-                if (Hash::check($request->password, $user->password)) {
+                return response(['errors'=>$validator->errors()->all()], 422);
+            }
+            
+            $user = User::where('email', $request->emai)->first();
+            if ($user) {
     
-                        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-                        return response($response, 200);
-    
-                    
-                } else {
-                    $response = ['status'=>false,"message" => "Password mismatch"];
+            if($user->remember_token == null)
+            {   
+                if($user->is_active == 1)
+                {
+                    if (Hash::check($request->password, $user->password)) {
+        
+                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                            $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                            return response($response, 200);
+        
+                        
+                    } else {
+                        $response = ['status'=>false,"message" => "Password mismatch"];
+                        return response($response, 422);
+                    }
+        
+                }
+                else
+                {
+                    $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
                     return response($response, 422);
                 }
-    
-            }
+            } 
             else
             {
-                $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+    
+    
+                $response = ['status'=>false,"message" =>'your email is not verified. we have sent a verification link to your email while registration!'];
+                return response($response, 422);
+            }  
+    
+    
+            } else {
+                $response = ['status'=>false,"message" =>'User does not exist'];
                 return response($response, 422);
             }
-        } 
-        else
-        {
+        }catch (Exception $e) {
+        // Send error email
+        Mail::send(
+            'email.exception',
+            [
+                'exceptionMessage' => $e->getMessage(),
+                'exceptionFile' => $e->getFile(),
+                'exceptionLine' => $e->getLine(),
+            ],
+            function ($message) {
+                $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                $message->to('support@dragonautomart.com'); // Send to support email
+                $message->subject('Dragon Exception');
+            }
+        );
+
+        // Log the exception
+        Log::error('Registration error', ['exception' => $e]);
+
+        // Return a response
+        return response(['error' => 'Something went wrong, please try again later.'], 500);
+    }
+        
 
 
-            $response = ['status'=>false,"message" =>'your email is not verified. we have sent a verification link to your email while registration!'];
-            return response($response, 422);
-        }  
-
-
-        } else {
-            $response = ['status'=>false,"message" =>'User does not exist'];
-            return response($response, 422);
-        }
+        
     }
 
 
