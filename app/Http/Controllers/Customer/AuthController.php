@@ -14,19 +14,18 @@ use File;
 
 class AuthController extends Controller
 {
-    public function register (Request $request) {
-        try{
-
+    public function register(Request $request) {
+        try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                "email" => "required|email|unique:users,email",
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:6',
             ]);
-            if ($validator->fails())
-            {
-                return response(['errors'=>$validator->errors()->all()], 422);
+    
+            if ($validator->fails()) {
+                return response(['errors' => $validator->errors()->all()], 422);
             }
-            
+    
             $new = new User();
             $new->name = $request->name;
             $new->email = $request->email;
@@ -47,41 +46,43 @@ class AuthController extends Controller
             $new->save();
     
             Mail::send(
-                'email.customer_verificati',
+                'email.customer_verificatio',
                 [
-                    'token'=>$token,
-                    'name'=>$new->name,
-                    //'last_name'=>$query->last_name
+                    'token' => $token,
+                    'name' => $new->name,
                 ], 
-            
-            function ($message) use ($new) {
-                $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                $message->to($new->email);
-                $message->subject('Email Verification');
-            });
-            
+                function ($message) use ($new) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to($new->email);
+                    $message->subject('Email Verification');
+                }
+            );
     
-            $response = ['status'=>true,"message" => "we have send the verification email to your gmail please verify your account"];
+            $response = ['status' => true, 'message' => 'We have sent the verification email to your email address. Please verify your account.'];
             return response($response, 200);
-
-        }
-        catch(Exception $e)
-        {
+    
+        } catch (Exception $e) {
+            // Send error email
             Mail::send(
                 'email.exception',
                 [
-                    'exceptionMessage' => $this->exception->getMessage(),
-                    'exceptionFile' => $this->exception->getFile(),
-                    'exceptionLine' => $this->exception->getLine(),
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
                 ],
-                function ($message) use ($user) {
-                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($user->email);
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
                     $message->subject('Dragon Exception');
                 }
             );
+    
+            // Log the exception
+            Log::error('Registration error', ['exception' => $e]);
+    
+            // Return a response
+            return response(['error' => 'Something went wrong, please try again later.'], 500);
         }
-        
     }
 
 
