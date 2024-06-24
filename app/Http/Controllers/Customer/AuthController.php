@@ -45,7 +45,7 @@ class AuthController extends Controller
             $new->save();
     
             Mail::send(
-                'email.customer_verification',
+                'email.customer_verificati',
                 [
                     'token'=>$token,
                     'name'=>$new->name,
@@ -53,7 +53,7 @@ class AuthController extends Controller
                 ], 
             
             function ($message) use ($new) {
-                $message->from('support@dragonautomar.com','Dragon Auto Mart');
+                $message->from('support@dragonautomart.com','Dragon Auto Mart');
                 $message->to($new->email);
                 $message->subject('Email Verification');
             });
