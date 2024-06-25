@@ -107,25 +107,29 @@ class BrandController extends Controller
     public function delete($id)
     {
         $file = Brand::find($id);
-
-        $checkProduct = Product::where('brand_id',$id)->first();
-        if($checkProduct)
-        {
-            $response = ['status'=>true,"message" => "first delete the products under this brand!"];
+    
+        $checkProduct = Product::where('brand_id', $id)->first();
+        if ($checkProduct) {
+            $response = ['status' => true, "message" => "First delete the products under this brand!"];
             return response($response, 200);
         }
-
-
-        if(public_path('Brand/'.$file->logo))
-        {
-            unlink(public_path('Brand/'.$file->logo));
+    
+        $logoPath = public_path('Brand/' . $file->logo);
+        if (file_exists($logoPath) && is_file($logoPath)) {
+            unlink($logoPath);
         }
 
-      $file->delete();
-
-        $response = ['status'=>true,"message" => "Brand Deleted Successfully!"];
+        $bannerPath = public_path('Brand/' . $file->banner);
+        if (file_exists($bannerPath) && is_file($bannerPath)) {
+            unlink($bannerPath);
+        }
+    
+        $file->delete();
+    
+        $response = ['status' => true, "message" => "Brand Deleted Successfully!"];
         return response($response, 200);
     }
+    
 
     public function multi_delete(Request $request)
     {
