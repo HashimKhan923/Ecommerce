@@ -61,7 +61,7 @@ class SellerController extends Controller
 
     public function delete($id)
     {
-        $seller = Seller::find($id);
+        $seller = User::find($id);
     
         if (!$seller) {
             $response = ['status' => false, 'message' => 'Seller not found!'];
@@ -110,7 +110,7 @@ class SellerController extends Controller
         $deletedSellers = [];
     
         foreach ($sellerIds as $id) {
-            $seller = Seller::find($id);
+            $seller = User::find($id);
     
             if (!$seller) {
                 $errors[] = ['id' => $id, 'message' => 'Seller not found!'];
