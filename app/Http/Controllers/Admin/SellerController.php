@@ -70,7 +70,7 @@ class SellerController extends Controller
         }
     
         // Check for products under this seller
-        $checkProduct = Product::where('seller_id', $id)->first();
+        $checkProduct = Product::where('user_id', $id)->first();
         if ($checkProduct) {
             $response = ['status' => false, 'message' => 'First delete the products under this seller!'];
             return response($response, 200);
@@ -119,7 +119,7 @@ class SellerController extends Controller
             }
     
             // Check for products under this seller
-            $checkProduct = Product::where('seller_id', $id)->first();
+            $checkProduct = Product::where('user_id', $id)->first();
             if ($checkProduct) {
                 $errors[] = ['id' => $id, 'message' => 'First delete the products under this seller!'];
                 continue;
