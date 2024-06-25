@@ -220,19 +220,19 @@ class AuthController extends Controller
             
 
 
-            Mail::send(
-                'email.exception',
-                [
-                    'exceptionMessage' => $e->getMessage(),
-                    'exceptionFile' => $e->getFile(),
-                    'exceptionLine' => $e->getLine(),
-                ],
-                function ($message) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('support@dragonautomart.com'); // Send to support email
-                    $message->subject('Dragon Exception');
-                }
-            );
+            // Mail::send(
+            //     'email.exception',
+            //     [
+            //         'exceptionMessage' => $e->getMessage(),
+            //         'exceptionFile' => $e->getFile(),
+            //         'exceptionLine' => $e->getLine(),
+            //     ],
+            //     function ($message) {
+            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+            //         $message->to('support@dragonautomart.com'); // Send to support email
+            //         $message->subject('Dragon Exception');
+            //     }
+            // );
 
             $response = ['status'=>false,"message" => $e->getMessage()];
             return response($response, 422);
