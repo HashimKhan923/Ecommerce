@@ -234,7 +234,8 @@ class AuthController extends Controller
                 }
             );
 
-            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
+            $response = ['status'=>false,"message" => $e->getMessage()];
+            return response($response, 422);
         }
 
 
