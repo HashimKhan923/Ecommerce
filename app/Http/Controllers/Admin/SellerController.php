@@ -151,6 +151,7 @@ class SellerController extends Controller
 
     public function strip_account_delete($stripe_id)
     {
+        Stripe::setApiKey(config('services.stripe.secret'));
         try {
             $account = Account::retrieve($stripe_id);
             $account->delete();
