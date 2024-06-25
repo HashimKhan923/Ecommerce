@@ -57,6 +57,10 @@ class AuthController extends Controller
                 $new->password = Hash::make($request->password);
                 $new->user_type = 'seller';
                 $new->is_active = 1;
+                $new->platform = $request->platform;
+                $new->device_name = $request->device_name;
+                $new->device_type = $request->device_type;
+                $new->location = $request->location;
                 $new->save();
                 
 
