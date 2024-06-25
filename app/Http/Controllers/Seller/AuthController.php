@@ -268,8 +268,10 @@ class AuthController extends Controller
             //         $message->subject('Dragon Exception');
             //     }
             // );
-
-            User::find($new->id)->delete();
+            if($new)
+            {
+                User::find($new->id)->delete();
+            }    
 
             $response = ['status'=>false,"message" => $e->getMessage()];
             return response($response, 422);

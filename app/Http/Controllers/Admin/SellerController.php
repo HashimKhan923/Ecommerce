@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Mail;
+use Stripe\Stripe;
+use Stripe\Account;
 class SellerController extends Controller
 {
     public function index()
@@ -56,24 +58,93 @@ class SellerController extends Controller
         return response($response, 200);
     }
 
+
     public function delete($id)
     {
-        User::find($id)->delete();
-
-        $response = ['status'=>true,"message" => "Customer Deleted Successfully!"];
+        $seller = Seller::find($id);
+    
+        if (!$seller) {
+            $response = ['status' => false, 'message' => 'Seller not found!'];
+            return response($response, 404);
+        }
+    
+        // Check for products under this seller
+        $checkProduct = Product::where('seller_id', $id)->first();
+        if ($checkProduct) {
+            $response = ['status' => false, 'message' => 'First delete the products under this seller!'];
+            return response($response, 200);
+        }
+    
+        Stripe::setApiKey(config('services.stripe.secret'));
+    
+        // Delete the Stripe account if it exists
+        if ($seller->stripe_account_id) {
+            try {
+                $account = Account::retrieve($seller->stripe_account_id);
+                $account->delete();
+            } catch (\Exception $e) {
+                $response = ['status' => false, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
+                return response($response, 500);
+            }
+        }
+    
+        $seller->delete();
+    
+        $response = ['status' => true, 'message' => 'Seller and Stripe account deleted successfully!'];
         return response($response, 200);
     }
 
 
     public function multi_delete(Request $request)
     {
-        User::whereIn('id',$request->ids)->delete();
-
- 
-
-        
-
-        $response = ['status'=>true,"message" => "Sellers Deleted Successfully!"];
+        $sellerIds = $request->ids;
+    
+        if (!is_array($sellerIds) || empty($sellerIds)) {
+            $response = ['status' => false, 'message' => 'No seller IDs provided!'];
+            return response($response, 400);
+        }
+    
+        Stripe::setApiKey(config('services.stripe.secret'));
+    
+        $errors = [];
+        $deletedSellers = [];
+    
+        foreach ($sellerIds as $id) {
+            $seller = Seller::find($id);
+    
+            if (!$seller) {
+                $errors[] = ['id' => $id, 'message' => 'Seller not found!'];
+                continue;
+            }
+    
+            // Check for products under this seller
+            $checkProduct = Product::where('seller_id', $id)->first();
+            if ($checkProduct) {
+                $errors[] = ['id' => $id, 'message' => 'First delete the products under this seller!'];
+                continue;
+            }
+    
+            // Delete the Stripe account if it exists
+            if ($seller->stripe_account_id) {
+                try {
+                    $account = Account::retrieve($seller->stripe_account_id);
+                    $account->delete();
+                } catch (\Exception $e) {
+                    $errors[] = ['id' => $id, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
+                    continue;
+                }
+            }
+    
+            $seller->delete();
+            $deletedSellers[] = $id;
+        }
+    
+        $response = [
+            'status' => true,
+            'message' => 'Sellers processed successfully!',
+            'deleted' => $deletedSellers,
+            'errors' => $errors
+        ];
         return response($response, 200);
     }
 }
