@@ -21,43 +21,67 @@ class ModelController extends Controller
 
     public function create(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-            "name" => "unique:models,name",
+            'models' => 'required|array'
         ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
+    
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()], 422);
         }
-
-        $new = new Models();
-        $new->brand_id = $request->brand_id;
-        $new->name = $request->name;
-        if($request->file('logo')){
-
-            $file= $request->logo;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Model'),$filename);
-            $new->logo = $filename;
+    
+        $errors = [];
+    
+        foreach ($request->models as $modelData) {
+            $modelValidator = Validator::make($modelData, [
+                'name' => 'required|unique:models,name',
+                'brand_id' => 'required|integer',
+                // 'slug' => 'required|string',
+                'logo' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'banner' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                // 'meta_title' => 'nullable|string',
+                // 'meta_description' => 'nullable|string',
+                // 'meta_keywords' => 'nullable|string',
+            ]);
+    
+            if ($modelValidator->fails()) {
+                $errors[] = $modelValidator->errors()->all();
+                continue;
+            }
+    
+            // Create and save the model
+            $new = new Models();
+            $new->brand_id = $modelData['brand_id'];
+            $new->name = $modelData['name'];
+            
+            if (isset($modelData['logo']) && $modelData['logo']) {
+                $file = $modelData['logo'];
+                $filename = date('YmdHis') . $file->getClientOriginalName();
+                $file->move(public_path('Model'), $filename);
+                $new->logo = $filename;
+            }
+    
+            if (isset($modelData['banner']) && $modelData['banner']) {
+                $file = $modelData['banner'];
+                $filename = date('YmdHis') . $file->getClientOriginalName();
+                $file->move(public_path('Model'), $filename);
+                $new->banner = $filename;
+            }
+    
+            // $new->slug = $modelData['slug'];
+            // $new->meta_title = $modelData['meta_title'];
+            // $new->meta_description = $modelData['meta_description'];
+            // $new->meta_keywords = $modelData['meta_keywords'];
+            $new->save();
         }
-
-        if($request->file('banner')){
-
-            $file= $request->banner;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Model'),$filename);
-            $new->banner = $filename;
+    
+        if (!empty($errors)) {
+            return response(['errors' => $errors], 422);
         }
-        $new->slug = $request->slug;
-        $new->meta_title = $request->meta_title;
-        $new->meta_description = $request->meta_description;
-        $new->meta_keywords = $request->meta_keywords;
-        $new->save();
-
-        $response = ['status'=>true,"message" => "New Models Added Successfully!"];
+    
+        $response = ['status' => true, "message" => "New Models Added Successfully!"];
         return response($response, 200);
-
     }
+    
 
     public function update(Request $request)
     {
