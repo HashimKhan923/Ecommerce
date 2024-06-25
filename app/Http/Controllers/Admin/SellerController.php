@@ -149,20 +149,20 @@ class SellerController extends Controller
         return response($response, 200);
     }
 
-    public function strip_account_delete($stripe_id)
-    {
-        Stripe::setApiKey(config('services.stripe.secret'));
-        try {
-            $account = Account::retrieve($stripe_id);
-            $account->delete();
+    // public function strip_account_delete($stripe_id)
+    // {
+    //     Stripe::setApiKey(config('services.stripe.secret'));
+    //     try {
+    //         $account = Account::retrieve($stripe_id);
+    //         $account->delete();
 
-            $response = ['status' => true, 'message' => 'Stripe account deleted successfully!'];
-            return response($response, 200);
-        } catch (\Exception $e) {
-            $response = ['status' => false, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
-            return response($response, 500);            
-        }
+    //         $response = ['status' => true, 'message' => 'Stripe account deleted successfully!'];
+    //         return response($response, 200);
+    //     } catch (\Exception $e) {
+    //         $response = ['status' => false, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
+    //         return response($response, 500);            
+    //     }
 
 
-    }
+    // }
 }
