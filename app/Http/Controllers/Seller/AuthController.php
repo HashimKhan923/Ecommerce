@@ -22,203 +22,235 @@ use App\Models\Notification;
 class AuthController extends Controller
 {
     public function register (Request $request) {
-        try {
-      $check = User::where('email',$request->email)->first();
+    try 
+    {
+            $check = User::where('email',$request->email)->first();
 
-        if($check == null)
-        {
-            $new = new User();
-           
-            $new->email = $request->email;
+                if($check == null)
+                {
+                    $new = new User();
+                
+                    $new->email = $request->email;
 
-        }
-        else
-        {
-            $new = User::where('email',$request->email)->where('user_type','customer')->first();
+                }
+                else
+                {
+                    $new = User::where('email',$request->email)->where('user_type','customer')->first();
 
-            if(!$new)
-            {
-                $response = ['status'=>false,"message" => "This email is already registered as a seller please try diffrent email!"];
-                return response($response, 422);
-            }
-        }
-        
-        $new->name = $request->name; 
-        $new->address = $request->address;
-        $new->city = $request->city;
-        $new->state = $request->state;
-        $new->country = $request->country;
-        $new->postal_code = $request->postal_code;
-        $new->phone = $request->phone;
-        
-        $token = uniqid();
-        $new->remember_token = $token;
-        $new->password = Hash::make($request->password);
-        $new->user_type = 'seller';
-        $new->is_active = 1;
-        
+                    if(!$new)
+                    {
+                        $response = ['status'=>false,"message" => "This email is already registered as a seller please try diffrent email!"];
+                        return response($response, 422);
+                    }
+                }
+                
+                $new->name = $request->name; 
+                $new->address = $request->address;
+                $new->city = $request->city;
+                $new->state = $request->state;
+                $new->country = $request->country;
+                $new->postal_code = $request->postal_code;
+                $new->phone = $request->phone;
+                
+                $token = uniqid();
+                $new->remember_token = $token;
+                $new->password = Hash::make($request->password);
+                $new->user_type = 'seller';
+                $new->is_active = 1;
+                
 
-        $shop = new Shop();
-        $shop->seller_id = $new->id;
-        $shop->name = $request->shop_name;
-        $shop->address = $request->shop_address;
-        if($request->file('logo')){
+                $shop = new Shop();
+                $shop->seller_id = $new->id;
+                $shop->name = $request->shop_name;
+                $shop->address = $request->shop_address;
+                if($request->file('logo')){
 
-            $file= $request->logo;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('ShopLogo'),$filename);
-            $shop->logo = $filename;
-        }
+                    $file= $request->logo;
+                    $filename= date('YmdHis').$file->getClientOriginalName();
+                    $file->move(public_path('ShopLogo'),$filename);
+                    $shop->logo = $filename;
+                }
 
-        if($request->file('banner')){
+                if($request->file('banner')){
 
-            $file= $request->banner;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('ShopBanner'),$filename);
-            $shop->banner = $filename;
-        }
-        $shop->save();
-
-
-        $BusineesInformation = new BusinessInformation();
-        $BusineesInformation->seller_id = $new->id;
-        $BusineesInformation->business_name = $request->business_name;
-        $BusineesInformation->ein_number = $request->ein_number;
-        $BusineesInformation->address1 = $request->address1;
-        $BusineesInformation->address2 = $request->address2;
-        $BusineesInformation->zip_code = $request->business_zip_code;
-        $BusineesInformation->country = $request->business_country;
-        $BusineesInformation->phone_number = $request->business_phone_number;
-        $BusineesInformation->business_email = $request->business_email;
-        $BusineesInformation->save();
+                    $file= $request->banner;
+                    $filename= date('YmdHis').$file->getClientOriginalName();
+                    $file->move(public_path('ShopBanner'),$filename);
+                    $shop->banner = $filename;
+                }
+                $shop->save();
 
 
-        if($request->selling_platforms)
-        {
-            foreach($request->selling_platforms as $items)
-            {
-            $SellingPlatforms = new SellingPlatforms();
-            $SellingPlatforms->seller_id = $new->id;
-            $SellingPlatforms->name = $items['selling_platform_name'];
-            $SellingPlatforms->link = $items['selling_platform_link'];
-            $SellingPlatforms->save();
-            }
-        }    
+                $BusineesInformation = new BusinessInformation();
+                $BusineesInformation->seller_id = $new->id;
+                $BusineesInformation->business_name = $request->business_name;
+                $BusineesInformation->ein_number = $request->ein_number;
+                $BusineesInformation->address1 = $request->address1;
+                $BusineesInformation->address2 = $request->address2;
+                $BusineesInformation->zip_code = $request->business_zip_code;
+                $BusineesInformation->country = $request->business_country;
+                $BusineesInformation->phone_number = $request->business_phone_number;
+                $BusineesInformation->business_email = $request->business_email;
+                $BusineesInformation->save();
 
-        if($request->social_platforms)
-        {
-            foreach($request->social_platforms as $items)
-            {
-            $SocialPlatforms = new SocialPlatforms();
-            $SocialPlatforms->seller_id = $new->id;
-            $SocialPlatforms->name = $items['social_platform_name'];
-            $SocialPlatforms->link = $items['social_platform_link'];
-            $SocialPlatforms->save();
-            }
-        }    
 
-        $BankDetail = new BankDetail();
-        $BankDetail->seller_id = $new->id;
-        $BankDetail->business_name = $BusineesInformation->business_name;
-        $BankDetail->bank_name = $request->bank_name;
-        $BankDetail->account_title = $request->account_title;
-        $BankDetail->routing_number = $request->routing_number;
-        $BankDetail->account_number = $request->account_number;
-        $BankDetail->save();
-        
+                if($request->selling_platforms)
+                {
+                    foreach($request->selling_platforms as $items)
+                    {
+                    $SellingPlatforms = new SellingPlatforms();
+                    $SellingPlatforms->seller_id = $new->id;
+                    $SellingPlatforms->name = $items['selling_platform_name'];
+                    $SellingPlatforms->link = $items['selling_platform_link'];
+                    $SellingPlatforms->save();
+                    }
+                }    
 
-        $CreditCard = new CreditCard();
-        $CreditCard->seller_id = $new->id;
-        $CreditCard->name_on_card = $request->name_on_card;
-        $CreditCard->cc_number = $request->cc_number;
-        $CreditCard->exp_date = $request->exp_date;
-        $CreditCard->cvv = $request->cvv;
-        $CreditCard->zip_code = $request->card_zip_code;
-        $CreditCard->save();
+                if($request->social_platforms)
+                {
+                    foreach($request->social_platforms as $items)
+                    {
+                    $SocialPlatforms = new SocialPlatforms();
+                    $SocialPlatforms->seller_id = $new->id;
+                    $SocialPlatforms->name = $items['social_platform_name'];
+                    $SocialPlatforms->link = $items['social_platform_link'];
+                    $SocialPlatforms->save();
+                    }
+                }    
 
-        Stripe::setApiKey(config('services.stripe.secret'));
+                $BankDetail = new BankDetail();
+                $BankDetail->seller_id = $new->id;
+                $BankDetail->business_name = $BusineesInformation->business_name;
+                $BankDetail->bank_name = $request->bank_name;
+                $BankDetail->account_title = $request->account_title;
+                $BankDetail->routing_number = $request->routing_number;
+                $BankDetail->account_number = $request->account_number;
+                $BankDetail->save();
+                
 
-       
+                $CreditCard = new CreditCard();
+                $CreditCard->seller_id = $new->id;
+                $CreditCard->name_on_card = $request->name_on_card;
+                $CreditCard->cc_number = $request->cc_number;
+                $CreditCard->exp_date = $request->exp_date;
+                $CreditCard->cvv = $request->cvv;
+                $CreditCard->zip_code = $request->card_zip_code;
+                $CreditCard->save();
+
+                Stripe::setApiKey(config('services.stripe.secret'));
+
             
-            $account = Account::create([
-                'type' => 'custom', 
-                'country' => $request->business_country, 
-                'email' => $request->email,
-                'business_type' => 'individual',
-                'capabilities' => [
-                    'card_payments' => ['requested' => true],
-                    'bank_transfer_payments' => ['requested' => true],
-                    'transfers' => ['requested' => true],
-                ],
-                'tos_acceptance' => [
-                    'date' => strtotime(now()),
-                    'ip' => $request->ip(),
-                ],
-                'business_profile' => [
-                    'name' => $request->shop_name,
-                    // replace the request name with shop->id
-                     'url' => 'https://dragonautomart.com/store/' . $shop->id,
-                    'mcc' => '5533',
-                ],
-                'settings' => [
-                    'payouts' => [
-                        'statement_descriptor'=> $request->shop_name
-                    ],
-                    'payments' => [
-                        'statement_descriptor'=> $request->shop_name
-                    ]
                     
-                ],
-                'company' => [
-                    'name' => 'Dragonautomart LLC',
-                    'tax_id' => '933028427', 
-                ],
-                'individual' => [
-                    'id_number' => $request->ssn,
-                   //'id_number' => '933-02-8427',
-                    'first_name' => $request->business_first_name,
-                    'last_name' => $request->business_last_name,
-                    'email' => $request->business_email,
-                    'phone' => $request->business_phone_number,
-                    'dob' => [
-                        'day' => $request->business_date,
-                        'month' => $request->business_month,
-                        'year' => $request->business_year,
-                    ],
-                    'ssn_last_4' => $request->last_4_ssn,
-                    'address' => [
-                        'line1' => $request->address1,
-                       'line2' => $request->address2,
-                        'city' => $request->business_city,
-                        'state' => $request->business_state,
-                        'postal_code' => $request->business_zip_code,
-                        'country' => $request->business_country,
+                    $account = Account::create([
+                        'type' => 'custom', 
+                        'country' => $request->business_country, 
+                        'email' => $request->email,
+                        'business_type' => 'individual',
+                        'capabilities' => [
+                            'card_payments' => ['requested' => true],
+                            'bank_transfer_payments' => ['requested' => true],
+                            'transfers' => ['requested' => true],
+                        ],
+                        'tos_acceptance' => [
+                            'date' => strtotime(now()),
+                            'ip' => $request->ip(),
+                        ],
+                        'business_profile' => [
+                            'name' => $request->shop_name,
+                            // replace the request name with shop->id
+                            'url' => 'https://dragonautomart.com/store/' . $shop->id,
+                            'mcc' => '5533',
+                        ],
+                        'settings' => [
+                            'payouts' => [
+                                'statement_descriptor'=> $request->shop_name
+                            ],
+                            'payments' => [
+                                'statement_descriptor'=> $request->shop_name
+                            ]
+                            
+                        ],
+                        'company' => [
+                            'name' => 'Dragonautomart LLC',
+                            'tax_id' => '933028427', 
+                        ],
+                        'individual' => [
+                            'id_number' => $request->ssn,
+                        //'id_number' => '933-02-8427',
+                            'first_name' => $request->business_first_name,
+                            'last_name' => $request->business_last_name,
+                            'email' => $request->business_email,
+                            'phone' => $request->business_phone_number,
+                            'dob' => [
+                                'day' => $request->business_date,
+                                'month' => $request->business_month,
+                                'year' => $request->business_year,
+                            ],
+                            'ssn_last_4' => $request->last_4_ssn,
+                            'address' => [
+                                'line1' => $request->address1,
+                            'line2' => $request->address2,
+                                'city' => $request->business_city,
+                                'state' => $request->business_state,
+                                'postal_code' => $request->business_zip_code,
+                                'country' => $request->business_country,
 
-                    ],
-                ],
-            ]);
+                            ],
+                        ],
+                    ]);
 
-            $bankAccount = $account->external_accounts->create([
-                'external_account' => [
-                    'object' => 'bank_account',
-                    'country' => $request->business_country,
-                    'currency' => 'usd',
-                    'account_holder_name' => $request->account_title,
-                    'account_holder_type' => 'individual',
-                    'routing_number' => $request->routing_number, 
-                    'account_number' => $request->account_number,
-                ],
-            ]);
+                    $bankAccount = $account->external_accounts->create([
+                        'external_account' => [
+                            'object' => 'bank_account',
+                            'country' => $request->business_country,
+                            'currency' => 'usd',
+                            'account_holder_name' => $request->account_title,
+                            'account_holder_type' => 'individual',
+                            'routing_number' => $request->routing_number, 
+                            'account_number' => $request->account_number,
+                        ],
+                    ]);
 
-            $new->save();
+                    $new->save();
 
-            User::where('id', $new->id)->update([
-                'stripe_account_id' => $account->id,
-                'bank_account_id' => $bankAccount->id
-            ]);
+                    User::where('id', $new->id)->update([
+                        'stripe_account_id' => $account->id,
+                        'bank_account_id' => $bankAccount->id
+                    ]);
 
-             return response()->json(['success' => true, 'account_id' => $account->id]);
-        } catch (\Exception $e) {
+                    //  return response()->json(['success' => true, 'account_id' => $account->id]);
+
+
+                    Mail::send(
+                        'email.seller_email_verification',
+                        [
+                            'token'=>$token,
+                            'name'=>$request->name,
+                        ], 
+                    
+                    function ($message) use ($request) {
+                        $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                        $message->to($request->email);
+                        $message->subject('Email Verification');
+                    });
+            
+                    if($check == null)
+                    {
+                        Notification::create([
+                            'notification' => 'New Seller Registered Successfully!'
+                        ]);
+            
+                        $response = ['status'=>true,"message" => "we have send the verification email to your provided email, please verify your email so that you may login to your dashboard."];
+                        return response($response, 200);
+                    }
+                    else
+                    {
+                        $response = ['status'=>true,"message" => "your registration as a seller successfully completed!"];
+                        return response($response, 200);
+                    }
+        }
+        catch (\Exception $e)
+        {
             
 
 
@@ -241,33 +273,7 @@ class AuthController extends Controller
         }
 
 
-        Mail::send(
-            'email.seller_email_verification',
-            [
-                'token'=>$token,
-                'name'=>$request->name,
-            ], 
         
-        function ($message) use ($request) {
-            $message->from('support@dragonautomart.com','Dragon Auto Mart');
-            $message->to($request->email);
-            $message->subject('Email Verification');
-        });
-
-        if($check == null)
-        {
-            Notification::create([
-                'notification' => 'New Seller Registered Successfully!'
-            ]);
-
-            $response = ['status'=>true,"message" => "we have send the verification email to your provided email, please verify your email so that you may login to your dashboard."];
-            return response($response, 200);
-        }
-        else
-        {
-            $response = ['status'=>true,"message" => "your registration as a seller successfully completed!"];
-            return response($response, 200);
-        }
 
 
         
