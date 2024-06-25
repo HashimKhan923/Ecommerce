@@ -272,6 +272,13 @@ class AuthController extends Controller
             //         $message->subject('Dragon Exception');
             //     }
             // );
+            if($account->id)
+            {
+                $account = Account::retrieve($account->id);
+                $account->delete();
+            }
+
+
             if($new)
             {
                 User::find($new->id)->delete();
