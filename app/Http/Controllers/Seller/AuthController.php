@@ -56,7 +56,7 @@ class AuthController extends Controller
         $new->password = Hash::make($request->password);
         $new->user_type = 'seller';
         $new->is_active = 1;
-        $new->save();
+        
 
         $shop = new Shop();
         $shop->seller_id = $new->id;
@@ -209,6 +209,8 @@ class AuthController extends Controller
                     'account_number' => $request->account_number,
                 ],
             ]);
+
+            $new->save();
 
             User::where('id', $new->id)->update([
                 'stripe_account_id' => $account->id,
