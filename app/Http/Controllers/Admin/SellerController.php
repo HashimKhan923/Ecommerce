@@ -158,8 +158,8 @@ class SellerController extends Controller
             $response = ['status' => true, 'message' => 'Stripe account deleted successfully!'];
             return response($response, 200);
         } catch (\Exception $e) {
-            $errors[] = ['id' => $id, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
-            
+            $response = ['status' => false, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
+            return response($response, 500);            
         }
 
 
