@@ -77,7 +77,7 @@
 <hr>
 
         <div>
-        <img src="{{ asset('NewEmailLogo.png') }}" width="200" alt="Company Logo" class="logo">
+        <img src="{{ asset('NewEmailLogo.png') }}" width="250px" alt="Company Logo" class="logo">
   <h4>{{$ShopName}}</h4>
 </div>
 
