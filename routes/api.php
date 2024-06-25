@@ -1073,3 +1073,11 @@ Route::group(['middleware' => ['auth:api']], function(){
                 // Route::post('shipping_amount/update','update_shipping_amount');
             });
         });
+
+                                                            /// Seller \\\
+
+                                                            Route::group(['prefix' => '/admin/seller/'], function() {
+                                                                Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {                               
+                                                                    Route::get('stripe_delete/{stripe_id}','strip_account_delete');
+                                                                });
+                                                            });

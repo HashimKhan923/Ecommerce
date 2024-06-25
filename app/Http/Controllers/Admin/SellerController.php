@@ -148,4 +148,13 @@ class SellerController extends Controller
         ];
         return response($response, 200);
     }
+
+    public function strip_account_delete($stripe_id)
+    {
+        $account = Account::retrieve($seller->stripe_account_id);
+        $account->delete();
+
+        $response = ['status' => true, 'message' => 'Stripe account deleted successfully!'];
+        return response($response, 200);
+    }
 }
