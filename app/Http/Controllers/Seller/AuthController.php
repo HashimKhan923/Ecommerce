@@ -57,6 +57,7 @@ class AuthController extends Controller
                 $new->password = Hash::make($request->password);
                 $new->user_type = 'seller';
                 $new->is_active = 1;
+                $new->save();
                 
 
                 $shop = new Shop();
@@ -211,7 +212,7 @@ class AuthController extends Controller
                         ],
                     ]);
 
-                    $new->save();
+                    
 
                     User::where('id', $new->id)->update([
                         'stripe_account_id' => $account->id,
@@ -267,6 +268,8 @@ class AuthController extends Controller
             //         $message->subject('Dragon Exception');
             //     }
             // );
+
+            User::find($new->id)->delete();
 
             $response = ['status'=>false,"message" => $e->getMessage()];
             return response($response, 422);
