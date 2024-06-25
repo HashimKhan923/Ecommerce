@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use App\Models\Order;
+use Mail;
 
 
 
@@ -36,6 +37,21 @@ class FedexController extends Controller
     
             return response()->json(['token' => $token,'trackingToken' => $trackingToken]);
         } catch (\Exception $ex) {
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
             return response()->json([$ex->getMessage()]);
         }
     }
@@ -109,6 +125,21 @@ class FedexController extends Controller
         return response()->json(json_decode($body));
 
         } catch (\Exception $ex) {
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
             return response()->json(['error' => $ex->getMessage()], 500);
         }
     }
@@ -213,6 +244,21 @@ class FedexController extends Controller
         return response()->json(json_decode($body));
 
         } catch (\Exception $ex) {
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
             return response()->json(['error' => $ex->getMessage()], 500);
         }
     }
@@ -251,6 +297,22 @@ class FedexController extends Controller
         return response()->json(json_decode($body));
 
         } catch (\Exception $ex) {
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
+
             return response()->json(['error' => $ex->getMessage()], 500);
         }
     }
@@ -285,6 +347,22 @@ class FedexController extends Controller
     
             return response()->json(json_decode($body));
         } catch (\Exception $ex) {
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
+
             return response()->json(['error' => $ex->getMessage()], 500);
         }
     }

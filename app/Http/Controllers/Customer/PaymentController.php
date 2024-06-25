@@ -9,7 +9,7 @@ use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\PaymentIntent;
-
+use Illuminate\Support\Facades\Mail;
 use PayPal\Api\Amount;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
@@ -54,6 +54,19 @@ class PaymentController extends Controller
 
 
         } catch (\Exception $e) {
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
             // Return a JSON response indicating failure (HTTP status 500)
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
@@ -102,6 +115,21 @@ class PaymentController extends Controller
             ]);
 
         } catch (\Exception $e) {
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
             // Return a JSON response indicating failure (HTTP status 500)
             return response()->json(['success' => false, 'message' => 'Payment failed'], 500);
         }

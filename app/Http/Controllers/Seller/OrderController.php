@@ -28,206 +28,231 @@ class OrderController extends Controller
     }
 
     public function delivery_status(Request $request)
-    {
-        $order = Order::with('order_detail.products.product_gallery')->where('id',$request->id)->first();
-        $user = User::where('id',$order->customer_id)->first();
-        $seller = User::where('id',$order->sellers_id)->first();
-        $shop = Shop::where('seller_id',$order->sellers_id)->first();
-        $TrackingNumber = '';
-        if($request->delivery_status == 'Delivered')
+    {   
+        try
         {
 
-            $order->shipping_amount = $request->shipping_amount;
-            $order->save();
-
-            OrderStatus::create([
-                'order_id' => $request->id,
-                'status' => 'deliverd'
-            ]);
-
-
-            OrderTimeline::create([
-                'seller_id' => $seller->id,
-                'customer_id' => $order->customer_id,
-                'order_id' => $request->id,
-                'time_line' => 'order status changed to delivered'
-            ]);
-
-          $TrackingOrder = OrderTracking::create([
-                'order_id' => $order->id,
-                'tracking_number' => $request->tracking_number,
-                'courier_name' => $request->courier_name,
-                'courier_link' => $request->courier_link,
-                'shipping_label' => $request->shipping_label,
-            ]);
-
-
-            
-
-
-
-            Mail::send(
-                'email.Order.order_completed',
-                [
-                    'buyer_name' => $user->name,
-                    'shop' => $shop,
-                    'order'=> $order,
-                    'TrackingOrder' => $TrackingOrder,
-                    'date' => Carbon::today()->toDateString()
-                ],
-                function ($message) use ($user) { 
-                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($user->email);
-                    $message->subject('Order Confirmation');
-                }
-            );
-
-            OrderTimeline::create([
-                'seller_id' => $seller->id,
-                'customer_id' => $order->customer_id,
-                'order_id' => $request->id,
-                'time_line' => 'order completion email sent to customer'
-            ]);
-
-
-            
-          $NewPayout = Payout::create([
-                'date' => Carbon::now(),
-                'seller_id' => $order->sellers_id,
-                'shop_id' => $order->shop_id,
-                'order_id' => $order->id,
-            ]);
-
-            
-            
-            $orderAmountInCents = $order->amount * 100; 
-            
-            $firstCommissionRate = 0.04;
-            $secondCommissionRate = 0; 
-            if ($seller->created_at < Carbon::now()->subMonths(3)) {
-                $secondCommissionRate = 0.05;
-            }
-            
-            $percentageDeduction = $orderAmountInCents * $firstCommissionRate;
-            $fixedDeduction = 40;
-            $totalDeduction = sprintf("%.2f", $percentageDeduction) + $fixedDeduction;
-            
-            $totalDeduction += $orderAmountInCents * sprintf("%.2f", $secondCommissionRate);
-            
-            $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
-            $adjustedAmountInDollars = $adjustedAmountInCents / 100;
-            
-            $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0.00;
-
-
-            $ListingPayment = 0;
-            $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
-            ->where('payment_status', 'unpaid')
-            ->first();
-            if ($ProductListingPayment) {
-                $ProductListingPayment->payment_status = 'paid';
-                $ProductListingPayment->save();
-
-                $ListingPayment = $ProductListingPayment->listing_amount;
-            
-            $NewPayout->product_listing_id = $ProductListingPayment->id;
-            }
-            $NewPayout->platform_fee = $totalDeduction;
-            $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
-            $nn =  $order->shipping_amount + $featuredAmount + $ListingPayment;
-            $NewPayout->amount = $adjustedAmountInDollars - $nn;
-
-
-
-            $NewPayout->save();
-
-            OrderTimeline::create([
-                'seller_id' => $seller->id,
-                'customer_id' => $order->customer_id,
-                'order_id' => $request->id,
-                'time_line' => 'Successfully created new payout: $'.$NewPayout->amount.' USD.'
-            ]);
-
-
-            if($featuredAmount > 0)
+            $order = Order::with('order_detail.products.product_gallery')->where('id',$request->id)->first();
+            $user = User::where('id',$order->customer_id)->first();
+            $seller = User::where('id',$order->sellers_id)->first();
+            $shop = Shop::where('seller_id',$order->sellers_id)->first();
+            $TrackingNumber = '';
+            if($request->delivery_status == 'Delivered')
             {
-                FeaturedProductOrder::where('order_id', $order->id)->update(['payment_status'=>'paid']);
-
-            }
-
-
-            Notification::create([
-                'customer_id' => $user->id,
-                'notification' => 'your order #'.$order->id.'has been ready to delivered',
-            ]);
-
-            
-
-
-        }
-        else
-        {
-
-          $Tracking = OrderTracking::where('order_id',$request->id)->first();
-
-          if($Tracking->shipping_label != null)
-          {
-            $TrackingNumber = $Tracking->tracking_number;
-          }
-          $Tracking->delete();
-            Payout::where('order_id',$request->id)->delete();
-            OrderStatus::where('order_id',$request->id)->delete();
-            // NagativePayoutBalance::where('order_id',$request->id)->delete();
-            Order::where('id',$order->id)->update(['shipping_amount'=> 0]);
-
-            $FeaturedProductOrder = FeaturedProductOrder::where('order_id', $order->id)
-            ->where('payment_status', 'paid')
-            ->latest()
-            ->first();
-
-            if ($FeaturedProductOrder) {
-                
-                $FeaturedProductOrder->update([
-                    'payment_status' => 'unpaid'
+    
+                $order->shipping_amount = $request->shipping_amount;
+                $order->save();
+    
+                OrderStatus::create([
+                    'order_id' => $request->id,
+                    'status' => 'deliverd'
                 ]);
-            }
-
-            $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
-            ->where('payment_status', 'paid')
-            ->latest()
-            ->first();
-
-            if ($ProductListingPayment) {
-                
-                $ProductListingPayment->update([
-                    'payment_status' => 'unpaid'
+    
+    
+                OrderTimeline::create([
+                    'seller_id' => $seller->id,
+                    'customer_id' => $order->customer_id,
+                    'order_id' => $request->id,
+                    'time_line' => 'order status changed to delivered'
                 ]);
+    
+              $TrackingOrder = OrderTracking::create([
+                    'order_id' => $order->id,
+                    'tracking_number' => $request->tracking_number,
+                    'courier_name' => $request->courier_name,
+                    'courier_link' => $request->courier_link,
+                    'shipping_label' => $request->shipping_label,
+                ]);
+    
+    
+                
+    
+    
+    
+                Mail::send(
+                    'email.Order.order_completed',
+                    [
+                        'buyer_name' => $user->name,
+                        'shop' => $shop,
+                        'order'=> $order,
+                        'TrackingOrder' => $TrackingOrder,
+                        'date' => Carbon::today()->toDateString()
+                    ],
+                    function ($message) use ($user) { 
+                        $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                        $message->to($user->email);
+                        $message->subject('Order Confirmation');
+                    }
+                );
+    
+                OrderTimeline::create([
+                    'seller_id' => $seller->id,
+                    'customer_id' => $order->customer_id,
+                    'order_id' => $request->id,
+                    'time_line' => 'order completion email sent to customer'
+                ]);
+    
+    
+                
+              $NewPayout = Payout::create([
+                    'date' => Carbon::now(),
+                    'seller_id' => $order->sellers_id,
+                    'shop_id' => $order->shop_id,
+                    'order_id' => $order->id,
+                ]);
+    
+                
+                
+                $orderAmountInCents = $order->amount * 100; 
+                
+                $firstCommissionRate = 0.04;
+                $secondCommissionRate = 0; 
+                if ($seller->created_at < Carbon::now()->subMonths(3)) {
+                    $secondCommissionRate = 0.05;
+                }
+                
+                $percentageDeduction = $orderAmountInCents * $firstCommissionRate;
+                $fixedDeduction = 40;
+                $totalDeduction = sprintf("%.2f", $percentageDeduction) + $fixedDeduction;
+                
+                $totalDeduction += $orderAmountInCents * sprintf("%.2f", $secondCommissionRate);
+                
+                $adjustedAmountInCents = $orderAmountInCents - $totalDeduction;
+                $adjustedAmountInDollars = $adjustedAmountInCents / 100;
+                
+                $featuredAmount = FeaturedProductOrder::where('order_id', $order->id)->where('payment_status','unpaid')->sum('payment') ?? 0.00;
+    
+    
+                $ListingPayment = 0;
+                $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+                ->where('payment_status', 'unpaid')
+                ->first();
+                if ($ProductListingPayment) {
+                    $ProductListingPayment->payment_status = 'paid';
+                    $ProductListingPayment->save();
+    
+                    $ListingPayment = $ProductListingPayment->listing_amount;
+                
+                $NewPayout->product_listing_id = $ProductListingPayment->id;
+                }
+                $NewPayout->platform_fee = $totalDeduction;
+                $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
+                $nn =  $order->shipping_amount + $featuredAmount + $ListingPayment;
+                $NewPayout->amount = $adjustedAmountInDollars - $nn;
+    
+    
+    
+                $NewPayout->save();
+    
+                OrderTimeline::create([
+                    'seller_id' => $seller->id,
+                    'customer_id' => $order->customer_id,
+                    'order_id' => $request->id,
+                    'time_line' => 'Successfully created new payout: $'.$NewPayout->amount.' USD.'
+                ]);
+    
+    
+                if($featuredAmount > 0)
+                {
+                    FeaturedProductOrder::where('order_id', $order->id)->update(['payment_status'=>'paid']);
+    
+                }
+    
+    
+                Notification::create([
+                    'customer_id' => $user->id,
+                    'notification' => 'your order #'.$order->id.'has been ready to delivered',
+                ]);
+    
+                
+    
+    
             }
+            else
+            {
+    
+              $Tracking = OrderTracking::where('order_id',$request->id)->first();
+    
+              if($Tracking->shipping_label != null)
+              {
+                $TrackingNumber = $Tracking->tracking_number;
+              }
+              $Tracking->delete();
+                Payout::where('order_id',$request->id)->delete();
+                OrderStatus::where('order_id',$request->id)->delete();
+                // NagativePayoutBalance::where('order_id',$request->id)->delete();
+                Order::where('id',$order->id)->update(['shipping_amount'=> 0]);
+    
+                $FeaturedProductOrder = FeaturedProductOrder::where('order_id', $order->id)
+                ->where('payment_status', 'paid')
+                ->latest()
+                ->first();
+    
+                if ($FeaturedProductOrder) {
+                    
+                    $FeaturedProductOrder->update([
+                        'payment_status' => 'unpaid'
+                    ]);
+                }
+    
+                $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+                ->where('payment_status', 'paid')
+                ->latest()
+                ->first();
+    
+                if ($ProductListingPayment) {
+                    
+                    $ProductListingPayment->update([
+                        'payment_status' => 'unpaid'
+                    ]);
+                }
+    
+                OrderTimeline::create([
+                    'seller_id' => $seller->id,
+                    'customer_id' => $order->customer_id,
+                    'order_id' => $request->id,
+                    'time_line' => 'Order cancelled'
+                ]);
+    
+    
+    
+                Notification::create([
+                    'customer_id' => $user->id,
+                    'notification' => 'your order #'.$order->id.'has been cancelled'
+                ]);
+    
+    
+            }
+    
+            $order->delivery_status = $request->delivery_status;
+            $order->save();
+    
+    
+    
+            $response = ['status'=>true,"message" => "Status Changed Successfully!",'TrackingNumber'=>$TrackingNumber];
+            return response($response, 200);
 
-            OrderTimeline::create([
-                'seller_id' => $seller->id,
-                'customer_id' => $order->customer_id,
-                'order_id' => $request->id,
-                'time_line' => 'Order cancelled'
-            ]);
+    
+    } catch (\Exception $ex) {
 
+        Mail::send(
+            'email.exception',
+            [
+                'exceptionMessage' => $e->getMessage(),
+                'exceptionFile' => $e->getFile(),
+                'exceptionLine' => $e->getLine(),
+            ],
+            function ($message) {
+                $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                $message->to('support@dragonautomart.com'); // Send to support email
+                $message->subject('Dragon Exception');
+            }
+        );
 
+        return response()->json(['error' => $ex->getMessage()], 500);
+    }
 
-            Notification::create([
-                'customer_id' => $user->id,
-                'notification' => 'your order #'.$order->id.'has been cancelled'
-            ]);
-
-
-        }
-
-        $order->delivery_status = $request->delivery_status;
-        $order->save();
-
-
-
-        $response = ['status'=>true,"message" => "Status Changed Successfully!",'TrackingNumber'=>$TrackingNumber];
-        return response($response, 200);
+ 
     }
 
     public function tracking_update(Request $request)
