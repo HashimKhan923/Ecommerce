@@ -109,14 +109,14 @@ class CategoryController extends Controller
             return response($response, 200);
         }
 
-        if($file->banner)
-        {
-            unlink(public_path('CategoryBanner/'.$file->banner));
+        $bannerPath = public_path('CategoryBanner/' . $file->banner);
+        if (file_exists($bannerPath) && is_file($bannerPath)) {
+            unlink($bannerPath);
         }
 
-        if($file->icon)
-        {
-            unlink(public_path('CategoryIcon/'.$file->icon));
+        $iconPath = public_path('CategoryIcon/' . $file->icon);
+        if (file_exists($iconPath) && is_file($iconPath)) {
+            unlink($iconPath);
         }
 
 
