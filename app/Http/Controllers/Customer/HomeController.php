@@ -67,24 +67,26 @@ class HomeController extends Controller
         $FeaturedProducts->where('featured', 1)->take(10);
     
         $allProducts = $Products->get();
-        $Categories = Category::with(['sub_category','product' => function ($query) {
-            $query->with([
-                'user', 'category', 'sub_category', 'brand', 'model', 'stock',
-                'product_gallery' => function($query) {
-                    $query->orderBy('order', 'asc');
-                },
-                'discount', 'tax', 'shipping', 'deal.deal_product',
-                'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-            ])
-            ->where('published', 1)
-            ->whereHas('stock', function ($query) {
-                $query->where('stock', '>', 0);
-            })
-            ->whereHas('shop', function ($query) {
-                $query->where('status', 1);
-            })
-            ->orderBy('id', 'desc');
-        }])->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Categories = Category::with(['sub_category'
+        // ,'product' => function ($query) {
+        //     $query->with([
+        //         'user', 'category', 'sub_category', 'brand', 'model', 'stock',
+        //         'product_gallery' => function($query) {
+        //             $query->orderBy('order', 'asc');
+        //         },
+        //         'discount', 'tax', 'shipping', 'deal.deal_product',
+        //         'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        //     ])
+        //     ->where('published', 1)
+        //     ->whereHas('stock', function ($query) {
+        //         $query->where('stock', '>', 0);
+        //     })
+        //     ->whereHas('shop', function ($query) {
+        //         $query->where('status', 1);
+        //     })
+        //     ->orderBy('id', 'desc');
+        // }
+        ])->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
