@@ -11,42 +11,115 @@ use Mail;
 class AuthController extends Controller
 {
     public function login(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails())
+
+        try
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
-        }
-        
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
 
-            if($user->is_active == 1)
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|string|min:6',
+            ]);
+            if ($validator->fails())
             {
-            if (Hash::check($request->password, $user->password)) {
+                return response(['errors'=>$validator->errors()->all()], 422);
+            }
+            
+            $user = User::with('shop','seller_information')->where('email', $request->email)->first();
+            if ($user) {
+    
+             if($user->remember_token == null)
+             {
+                if($user->is_active == 1)
+                {
+                    if (Hash::check($request->password, $user->password)) {
+        
+                        if($user->user_type == 'seller')
+                        {
+                            if($user->is_verify != 1)
+                            {
 
-                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                    $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-                    return response($response, 200);
+
+                                $response = ['status'=>false,"message" => "Your account is not verify by admin"];
+                                return response($response, 422);
+
+
+                            }
+    
+                        }
+
+
+                        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                        return response($response, 200);
+
+        
+        
+                        
+                    } else {
+                        $response = ['status'=>false,"message" => "Password is incorrect!"];
+                        return response($response, 422);
+                    }
+        
+                }
+                else
+                {
+                    $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+                    return response($response, 422);
+                }
+             } 
+             else
+             {
+                // $token = uniqid();
+                // $user->remember_token = $token;
+                // $user->save();
+    
+                // Mail::send(
+                //     'email.seller_verification',
+                //     [
+                //         'token'=>$token,
+                //         'name'=>$user->name,
+                //         //'last_name'=>$query->last_name
+                //     ], 
                 
-
+                // function ($message) use ($user) {
+                //     $message->from(env('MAIL_USERNAME'));
+                //     $message->to($user->email);
+                //     $message->subject('Email Verification');
+                // });
+    
+    
+                $response = ['status'=>false,"message" =>'your email is not verified. we have sent a verification link to your email while registration!'];
+                return response($response, 422);
+             }
+    
+    
             } else {
-                $response = ['status'=>false,"message" => "Password mismatch"];
+                $response = ['status'=>false,"message" =>'User does not exist'];
                 return response($response, 422);
             }
 
         }
-        else
-        {
-            $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
-            return response($response, 422);
+        catch (\Exception $e) {
+            
+
+
+            Mail::send(
+                'email.exception',
+                [
+                    'exceptionMessage' => $e->getMessage(),
+                    'exceptionFile' => $e->getFile(),
+                    'exceptionLine' => $e->getLine(),
+                ],
+                function ($message) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->subject('Dragon Exception');
+                }
+            );
+
+            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
         }
-        } else {
-            $response = ['status'=>false,"message" =>'User does not exist'];
-            return response($response, 422);
-        }
+        
     }
 
     public function logout ($id) {

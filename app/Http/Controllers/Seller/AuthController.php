@@ -361,9 +361,9 @@ class AuthController extends Controller
              } 
              else
              {
-                $token = uniqid();
-                $user->remember_token = $token;
-                $user->save();
+                // $token = uniqid();
+                // $user->remember_token = $token;
+                // $user->save();
     
                 // Mail::send(
                 //     'email.seller_verification',
@@ -466,14 +466,16 @@ class AuthController extends Controller
 
 
         $BusineesInformation = BusinessInformation::where('seller_id',$update->id)->first();
+        $BusineesInformation->first_name = $request->business_first_name;
+        $BusineesInformation->last_name = $request->business_last_name;
         $BusineesInformation->business_name = $request->business_name;
         $BusineesInformation->ein_number = $request->ein_number;
         $BusineesInformation->address1 = $request->address1;
         $BusineesInformation->address2 = $request->address2;
-        $BusineesInformation->country = $request->business_country;
-        $BusineesInformation->city = $request->business_city;
-        $BusineesInformation->state = $request->business_state;
         $BusineesInformation->zip_code = $request->business_zip_code;
+        $BusineesInformation->country = $request->business_country;
+        $BusineesInformation->state = $request->business_state;
+        $BusineesInformation->city = $request->business_city;
         $BusineesInformation->phone_number = $request->business_phone_number;
         $BusineesInformation->business_email = $request->business_email;
         $BusineesInformation->save();
