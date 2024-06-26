@@ -66,12 +66,18 @@ class HomeController extends Controller
         $FeaturedProducts = clone $Products;
         $FeaturedProducts->where('featured', 1)->take(10);
     
-        $allProducts = $Products->get();
-        $Categories = Category::with(['sub_category'
-        ,'product' => function ($query) {
-            $query->with([
+        $allProducts = $Products->get();$Categories = Category::with(['sub_category'])
+        ->withCount('product')
+        ->where('is_active', 1)
+        ->orderByDesc('product_count')
+        ->get();
+    
+    // Fetch products for each category separately
+    $Categories->each(function ($category) {
+        $category->setRelation('product', $category->product()
+            ->with([
                 'user', 'category', 'sub_category', 'brand', 'model', 'stock',
-                'product_gallery' => function($query) {
+                'product_gallery' => function ($query) {
                     $query->orderBy('order', 'asc');
                 },
                 'discount', 'tax', 'shipping', 'deal.deal_product',
@@ -85,9 +91,9 @@ class HomeController extends Controller
                 $query->where('status', 1);
             })
             ->orderBy('id', 'desc')
-            ->take(10);
-        }
-        ])->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+            ->take(10)
+            ->get());
+    });
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
