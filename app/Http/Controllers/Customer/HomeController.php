@@ -66,7 +66,8 @@ class HomeController extends Controller
         $FeaturedProducts = clone $Products;
         $FeaturedProducts->where('featured', 1)->take(10);
     
-        $allProducts = $Products->get();$Categories = Category::with(['sub_category'])
+        $allProducts = $Products->get();
+        $Categories = Category::with(['sub_category'])
         ->withCount('product')
         ->where('is_active', 1)
         ->orderByDesc('product_count')
@@ -90,7 +91,7 @@ class HomeController extends Controller
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
             })
-            ->orderBy('id', 'desc')
+            ->orderByRaw('featured DESC')
             ->take(10)
             ->get());
     });
