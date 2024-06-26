@@ -143,10 +143,14 @@ class BrandController extends Controller
                 $response = ['status'=>true,"message" => "first delete the products under '$item->name' brand!"];
                 return response($response, 200);
             }
-            if($item->logo)
-            {
-
-                unlink(public_path('Brand/'.$file->logo));
+            $logoPath = public_path('Brand/' . $item->logo);
+            if (item_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
+            }
+    
+            $bannerPath = public_path('Brand/' . $file->banner);
+            if (file_exists($bannerPath) && is_file($bannerPath)) {
+                unlink($bannerPath);
             }
 
             $item->delete();
