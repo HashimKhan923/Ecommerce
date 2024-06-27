@@ -36,7 +36,7 @@ class FedexController extends Controller
             $trackingToken=json_decode($trackingToken->body());
     
             return response()->json(['token' => $token,'trackingToken' => $trackingToken]);
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
 
             Mail::send(
                 'email.exception',
@@ -52,7 +52,7 @@ class FedexController extends Controller
                 }
             );
 
-            return response()->json([$ex->getMessage()]);
+            return response()->json([$e->getMessage()]);
         }
     }
 
@@ -140,7 +140,7 @@ class FedexController extends Controller
                 }
             );
 
-            return response()->json(['error' => $ex->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -259,7 +259,7 @@ class FedexController extends Controller
                 }
             );
 
-            return response()->json(['error' => $ex->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -313,7 +313,7 @@ class FedexController extends Controller
             );
 
 
-            return response()->json(['error' => $ex->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -363,7 +363,7 @@ class FedexController extends Controller
             );
 
 
-            return response()->json(['error' => $ex->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
