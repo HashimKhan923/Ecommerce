@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function login(Request $request) {
 
-        return 12;
+        return 'dsdnksdnkwnd';
 
         try
         {
