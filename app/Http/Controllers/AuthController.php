@@ -12,6 +12,8 @@ class AuthController extends Controller
 {
     public function login(Request $request) {
 
+        return 12;
+
         try
         {
 
@@ -49,7 +51,6 @@ class AuthController extends Controller
 
 
                         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                        $user = User::with('shop','seller_information')->where('id',$use->id)->first();
                         $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
                         return response($response, 200);
 
