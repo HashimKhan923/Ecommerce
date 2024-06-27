@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //common routes start
 
-Route::post('/login', '\App\Http\Controllers\AuthController@login');
+Route::post('/user/login', '\App\Http\Controllers\AuthController@login');
 Route::post('/forgetPassword', '\App\Http\Controllers\AuthController@forgetpassword');
 Route::post('/checktoken', '\App\Http\Controllers\AuthController@token_check');
 Route::post('/resetPassword', '\App\Http\Controllers\AuthController@reset_password');
