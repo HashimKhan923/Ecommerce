@@ -124,7 +124,7 @@ class FedexController extends Controller
 
         return response()->json(json_decode($body));
 
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
 
             Mail::send(
                 'email.exception',
@@ -243,7 +243,7 @@ class FedexController extends Controller
 
         return response()->json(json_decode($body));
 
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
 
             Mail::send(
                 'email.exception',
@@ -296,7 +296,7 @@ class FedexController extends Controller
 
         return response()->json(json_decode($body));
 
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
 
             Mail::send(
                 'email.exception',
@@ -346,7 +346,7 @@ class FedexController extends Controller
             $body = $response->getBody()->getContents();
     
             return response()->json(json_decode($body));
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
 
             Mail::send(
                 'email.exception',
