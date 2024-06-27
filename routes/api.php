@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //common routes start
 
-Route::post('/user/login', '\App\Http\Controllers\AuthController@login');
+Route::post('/login', '\App\Http\Controllers\AuthController@login');
 Route::post('/forgetPassword', '\App\Http\Controllers\AuthController@forgetpassword');
 Route::post('/checktoken', '\App\Http\Controllers\AuthController@token_check');
 Route::post('/resetPassword', '\App\Http\Controllers\AuthController@reset_password');
@@ -34,15 +34,15 @@ Route::get('/logout/{id}', 'App\Http\Controllers\AuthController@logout');
 // common routes ends
 
 /// admin Register
-Route::post('/admin/login', '\App\Http\Controllers\Admin\AuthController@login');
+// Route::post('/admin/login', '\App\Http\Controllers\Admin\AuthController@login');
 Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@register');
 
 /// seller Register
-Route::post('/seller/login', '\App\Http\Controllers\Seller\AuthController@login');
+// Route::post('/seller/login', '\App\Http\Controllers\Seller\AuthController@login');
 Route::post('/seller/register', 'App\Http\Controllers\Seller\AuthController@register');
 
 /// customer Register
-Route::post('/login', '\App\Http\Controllers\Customer\AuthController@login');
+// Route::post('/login', '\App\Http\Controllers\Customer\AuthController@login');
 Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@register');
 
 
