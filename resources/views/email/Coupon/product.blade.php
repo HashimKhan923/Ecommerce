@@ -178,7 +178,8 @@
 <!-- Product Section Start -->
 @foreach($products as $product)
     <div class="product">
-    <img src="https://api.dragonautomart.com/ProductGallery/{{$product->product_single_gallery->image}}" alt="Product Image">
+    <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $product->product_single_gallery->image }}" >
+
     <div class="product-details">
         <h5>{{$product->name}}</h5>
         <p><strong>Discount:</strong>

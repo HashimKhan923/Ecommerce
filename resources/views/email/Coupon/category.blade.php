@@ -166,7 +166,7 @@
             <!-- Category Section Start -->
             @foreach($categories as $category)
                 <div class="product">
-                <img src="https://api.dragonautomart.com/CategoryIcon/{{$category->icon}}" alt="Product Image">
+                <img src="{{ 'https://api.dragonautomart.com/CategoryIcon/' . $category->icon }}" alt="Product Image">
                 <div class="product-details">
                     <h5>{{$category->name}}</h5>
                     <p><strong>Discount:</strong>

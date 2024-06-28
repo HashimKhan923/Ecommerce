@@ -111,7 +111,7 @@
 
                                                 <tr>
                                                     <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                    <img src="{{ https://api.dragonautomart.com/ProductGallery/ . $detail->products->product_gallery->first()->image }}" width="100px" alt="{{ $detail->products->name }}">
+                                                    <img src="{{'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}" width="100px" alt="{{ $detail->products->name }}">
                                                     </td>
                                                     <td  style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                                     {{ $detail->products->name }}
