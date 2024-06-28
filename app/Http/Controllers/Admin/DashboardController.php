@@ -17,7 +17,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $Users = User::all();
+        $Users = User::with('order.order_timeline')->get();
         $Stores = Shop::count();
         $Products = Product::count();
         $Orders = Order::count();

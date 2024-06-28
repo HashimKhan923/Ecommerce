@@ -85,6 +85,11 @@ class User extends Authenticatable
         return $this->hasOne(CreditCard::class,'seller_id','id');
     }
 
+    public function order()
+    {
+        return $this->hasMany(Order::class,'customer_id','id');
+    }
+
     public function time_line()
     {
         return $this->hasMany(OrderTimeline::class,'customer_id','id');
