@@ -90,6 +90,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class,'customer_id','id');
     }
 
+    public function seller_order()
+    {
+        return $this->hasMany(Order::class,'sellers_id','id');
+    }
+
     public function time_line()
     {
         return $this->hasMany(OrderTimeline::class,'customer_id','id');
