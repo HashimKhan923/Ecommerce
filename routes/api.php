@@ -242,10 +242,23 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('seller_orders/{id}','seller_orders');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
+                    Route::post('tags','update_tags');
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
                 });
             });
+
+
+                                         /// Order Timeline \\\
+
+                    Route::group(['prefix' => '/admin/order/timeline'], function() {
+                    Route::controller(App\Http\Controllers\Seller\OrderTimelineController::class)->group(function () {
+                        Route::post('create','create');
+                        Route::post('update','update');
+                        Route::get('delete/{id}','delete');
+    
+                    });
+                });
 
                                                 /// Coupon \\\
 
