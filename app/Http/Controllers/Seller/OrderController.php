@@ -233,7 +233,7 @@ class OrderController extends Controller
             return response($response, 200);
 
     
-    } catch (\Exception $ex) {
+    } catch (\Exception $e) {
 
         Mail::send(
             'email.exception',
@@ -249,7 +249,7 @@ class OrderController extends Controller
             }
         );
 
-        return response()->json(['error' => $ex->getMessage()], 500);
+        return response()->json(['error' => $e->getMessage()], 500);
     }
 
  
