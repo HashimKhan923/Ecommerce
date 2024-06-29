@@ -645,6 +645,13 @@ class ProductController extends Controller
                         ['discount' => $productData['discount']]
                     );
                 }
+                else
+                {
+                    Discount::updateOrCreate(
+                        ['product_id' => $product->id],
+                        ['discount' => null]
+                    );
+                }
 
                 // Update shipping
                 if (isset($productData['shipping_cost']) || $productData['shipping_cost'] === 0) {
