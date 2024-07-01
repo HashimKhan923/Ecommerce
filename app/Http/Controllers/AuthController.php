@@ -48,9 +48,18 @@ class AuthController extends Controller
     
                         }
 
+                        if($user->user_type == 'staff')
+                        {
+                            $staff = User::where('id',$user->id)->first();
+                            $user = User::where('id',$user->seller_id)->first();
+                            
+                        }
+
+                        $staff = '';
+
 
                         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user,'staff'=>$staff];
                         return response($response, 200);
 
         
