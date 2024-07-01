@@ -70,6 +70,7 @@ class ProductController extends Controller
         'sub_category_id' => $request->sub_category_id,
         'height' => $request->height,
         'weight' => $request->weight,
+        'width' => $request->width,
         'lenght' => $request->lenght,
         'start_year' => $request->year,
         'make' => $request->make,
@@ -247,6 +248,7 @@ class ProductController extends Controller
                     'height' => $productData['height'] ?? 0,
                     'weight' => $productData['weight'] ?? 0,
                     'lenght' => $productData['lenght'] ?? 0,
+                    'width' => $productData['width'] ?? 0,
                     'start_year' => $productData['year'] ?? date('Y'),
                     'make' => $productData['make'] ?? null,
                     'unit' => $productData['unit'] ?? null,
@@ -418,7 +420,7 @@ class ProductController extends Controller
     
         $productData = $request->only([
             'name', 'user_id', 'category_id', 'sub_category_id', 'height', 'weight',
-            'lenght', 'year', 'make', 'unit', 'sku', 'bar_code', 'condition', 
+            'lenght','width','year', 'make', 'unit', 'sku', 'bar_code', 'condition', 
             'brand_id', 'model_id', 'tags', 'trim', 'description', 'price', 
             'cost_price', 'shop_id', 'shipping', 'featured', 'published', 'is_tax',
             'meta_title','meta_description','video', 'slug'
@@ -594,8 +596,8 @@ class ProductController extends Controller
             if ($product) {
                 $productFields = array_filter($productData, function($key) {
                     return in_array($key, [
-                        'name', 'category_id', 'sub_category_id', 'weight', 
-                        'make', 'brand_id', 'model_id', 'tags', 'price', 'shop_id'
+                        'name', 'category_id', 'sub_category_id', 'height', 'weight',
+                        'lenght','width','make', 'brand_id', 'model_id', 'tags', 'price', 'shop_id'
                     ]);
                 }, ARRAY_FILTER_USE_KEY);
                 

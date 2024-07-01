@@ -17,7 +17,7 @@ class Product extends Model
 
     protected $fillable = [
         'name', 'added_by', 'user_id', 'category_id', 'sub_category_id', 'height', 
-        'weight', 'lenght', 'start_year', 'make', 'unit', 'sku', 'bar_code', 
+        'weight','width','lenght', 'start_year', 'make', 'unit', 'sku', 'bar_code', 
         'condition', 'brand_id', 'model_id', 'shop_id', 'tags', 'trim', 
         'description', 'price', 'cost_price','average_rating','shipping', 'featured', 
         'published', 'is_tax', 'meta_title','meta_description','video', 'slug'
