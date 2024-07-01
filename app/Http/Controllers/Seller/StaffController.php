@@ -55,7 +55,7 @@ class StaffController extends Controller
                 }
             );
     
-            $response = ['status' => true, 'message' => 'Staff Created Successfully.'];
+            $response = ['status' => true, 'message' => 'Staff Created Successfully.','staff_id'=>$new->id];
             return response($response, 200);
     
         } catch (Exception $e) {
