@@ -762,11 +762,11 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                     Route::group(['prefix' => '/seller/staff'], function() {
                     Route::controller(App\Http\Controllers\Seller\StaffController::class)->group(function () {
-                        Route::post('show/{seller_id}','index');
+                        Route::get('show/{seller_id}','index');
                         Route::post('create','create');
                         Route::post('update','update');
                         Route::get('delete/{id}','delete');
-                        Route::get('status/{id}','status');
+                        Route::get('status/{id}','is_active');
     
                     });
                 });
