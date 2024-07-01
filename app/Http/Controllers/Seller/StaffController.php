@@ -86,15 +86,7 @@ class StaffController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-        ]);
 
-        if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
-        }
 
         $new = User::where('id',$request->id)->first();
         $new->permissions = $request->permissions;
