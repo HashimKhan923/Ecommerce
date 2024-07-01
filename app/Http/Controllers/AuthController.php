@@ -40,7 +40,7 @@ class AuthController extends Controller
                             {
 
 
-                                $response = ['status'=>false,"message" => "Your account is not verify by admin"];
+                                $response = ['status'=>false,"message" => "Your account has not been verified by the admin"];
                                 return response($response, 422);
 
 
@@ -75,7 +75,7 @@ class AuthController extends Controller
                 }
                 else
                 {
-                    $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+                    $response = ['status'=>false,"message" =>'Your account has been blocked by the admin!'];
                     return response($response, 422);
                 }
              } 
@@ -100,7 +100,7 @@ class AuthController extends Controller
                 // });
     
     
-                $response = ['status'=>false,"message" =>'your email is not verified. we have sent a verification link to your email while registration!'];
+                $response = ['status'=>false,"message" =>'Your email is not verified. We have sent a verification link to your email during registration.'];
                 return response($response, 422);
              }
     
@@ -256,12 +256,12 @@ class AuthController extends Controller
                 $response = ['status'=>true,"message" => "Password Changed Successfully"];
                 return response($response, 200);
             }else{
-                $response = ['status'=>true,"message" => "new password can not be the old password!"];
+                $response = ['status'=>true,"message" => "Your new password cannot be the same as your old password."];
                 return response($response, 422);
             }
  
         }else{
-            $response = ['status'=>true,"message" => "old password does not matched"];
+            $response = ['status'=>true,"message" => "Old password does not match."];
             return response($response, 422);
         }
 
