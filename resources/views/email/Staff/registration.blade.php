@@ -80,7 +80,7 @@
             <li>Email: {{$email}}</li>
             <li>Password: {{$password}}</li>
         </ul>
-        <p>Visit <a href="https://seller.dragonautomart.com/login">https://seller.dragonautomart.com/login</a>and enter your credentials</p>
+        <p>Visit <a href="https://seller.dragonautomart.com/login">https://seller.dragonautomart.com/login </a>and enter your credentials</p>
         
 
         <br><br>
