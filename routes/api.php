@@ -46,6 +46,9 @@ Route::post('/seller/register', 'App\Http\Controllers\Seller\AuthController@regi
 Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@register');
 
 
+
+
+
 Route::group(['middleware' => ['auth:api']], function(){
 
 
@@ -749,6 +752,21 @@ Route::group(['middleware' => ['auth:api']], function(){
                         Route::post('create','create');
                         Route::post('update','update');
                         Route::get('delete/{id}','delete');
+    
+                    });
+                });
+
+
+
+                             /// Staff \\\
+
+                    Route::group(['prefix' => '/seller/staff'], function() {
+                    Route::controller(App\Http\Controllers\Seller\StaffController::class)->group(function () {
+                        Route::post('show/{seller_id}','index');
+                        Route::post('create','create');
+                        Route::post('update','update');
+                        Route::get('delete/{id}','delete');
+                        Route::get('status/{id}','status');
     
                     });
                 });
