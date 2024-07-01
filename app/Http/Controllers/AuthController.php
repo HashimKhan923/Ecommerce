@@ -48,6 +48,8 @@ class AuthController extends Controller
     
                         }
 
+                        $staff = '';
+
                         if($user->user_type == 'staff')
                         {
                             $staff = User::where('id',$user->id)->first();
@@ -55,7 +57,7 @@ class AuthController extends Controller
                             
                         }
 
-                        $staff = '';
+                        
 
 
                         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
