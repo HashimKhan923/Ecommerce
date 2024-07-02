@@ -47,7 +47,7 @@ class ProductController extends Controller
             'model',
             'stock',
             'product_gallery' => function($query) {
-                $query->orderBy('order', 'desc');
+                $query->orderBy('order', 'asc');
             },
             'discount',
             'tax',
