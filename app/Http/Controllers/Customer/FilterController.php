@@ -20,7 +20,7 @@ class FilterController extends Controller
         $searchValue = $request->searchValue;
 
 
-        $keywords = explode(' ', $searchValue);
+        $keywords = $searchValue;
         
         $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
             ->where('published', 1)
