@@ -11,11 +11,13 @@ class FilterController extends Controller
 {
     public function search(Request $request)
     {
+
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
         
         $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
+
         $keywords = explode(' ', $searchValue);
         
         $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
@@ -50,16 +52,17 @@ class FilterController extends Controller
                 });
             })
             ->orderByRaw('CASE 
-                                WHEN name = ? THEN 1 
-                                WHEN description = ? THEN 2 
-                                WHEN name LIKE ? THEN 3 
-                                WHEN description LIKE ? THEN 4 
-                                ELSE 5 
-                            END, featured DESC', 
-                        [$searchValue, $searchValue, "%$keywords[0]%", "%$keywords[0]%"])
+                                WHEN name LIKE ? THEN 1 
+                                WHEN name LIKE ? THEN 2 
+                                ELSE 3 
+                            END', ["%$searchValue%", "%$keywords[0]%"])
+            ->orderByRaw('featured DESC')
             ->get();
+        
     
-        return response()->json(['data' => $data]);
+
+    return response()->json(['data' => $data]);
+        
     }
 
     public function target_search(Request $request)
