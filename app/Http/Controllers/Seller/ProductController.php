@@ -33,28 +33,42 @@ class ProductController extends Controller
 {
     public function index($id)
     {
-       $Products = Product::with([
-    'user',
-    'category',
-    'sub_category',
-    'brand',
-    'model',
-    'stock',
-    'product_gallery' => function($query) {
-        $query->orderBy('order', 'asc');
-    },
-    'discount',
-    'tax',
-    'shipping',
-    'deal.deal_product',
-    'wholesale',
-    'shop.shop_policy',
-    'reviews',
-    'product_varient'
-])->where('user_id', $id)->get();
-
-
-        return response()->json(['Products'=>$Products]);
+        $products = $this->loadMoreProducts($id, 0, 50);
+        return response()->json(['Products' => $products]);
+    }
+    
+    private function loadMoreProducts($userId, $start, $length)
+    {
+        return Product::with([
+            'user',
+            'category',
+            'sub_category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'wholesale',
+            'shop.shop_policy',
+            'reviews',
+            'product_varient'
+        ])->where('user_id', $userId)->skip($start)->take($length)->get();
+    }
+    
+    public function load_more($userId, $start, $length)
+    {
+        // Ensure start is not negative
+        if ($start < 0) {
+            $start = 0;
+        }
+    
+        $products = $this->loadMoreProducts($userId, $start, $length);
+        return response()->json(['Products' => $products]);
     }
 
     public function create(Request $request)

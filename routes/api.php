@@ -567,6 +567,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/seller/product/'], function() {
                 Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
                     Route::get('show/{id}','index');
+                    Route::get('load_more/{user_id}/{start}/{length}');
                     Route::post('create','create');
                     Route::post('bulk_create','bulk_create');
                     // Route::get('sell_similar/{id}','sell_similar');
