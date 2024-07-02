@@ -16,7 +16,7 @@ class FilterController extends Controller
         $Keyword->count++;
         $Keyword->save();
         
-        $searchValue = $request->searchValue;
+        $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
 
         $keywords = explode(' ', $searchValue);
         
