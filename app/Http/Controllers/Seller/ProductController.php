@@ -57,7 +57,7 @@ class ProductController extends Controller
             'shop.shop_policy',
             'reviews',
             'product_varient'
-        ])->where('user_id', $userId)->skip($start)->take($length)->get();
+        ])->where('user_id', $userId)->orderBy('id', 'desc')->skip($start)->take($length)->get();
     }
     
     public function load_more($userId, $start, $length)
