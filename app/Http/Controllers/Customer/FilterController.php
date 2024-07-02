@@ -16,11 +16,11 @@ class FilterController extends Controller
         $Keyword->count++;
         $Keyword->save();
         
-        // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
+        $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
         $searchValue = $request->searchValue;
 
 
-        $keywords = $searchValue;
+        $keywords = explode(' ', $searchValue);
         
         $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
             ->where('published', 1)
