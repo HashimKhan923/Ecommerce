@@ -22,7 +22,7 @@ class FilterController extends Controller
         
         $data = Product::with(['user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function($query) {
             $query->orderBy('order', 'asc');
-        }, 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale'])
+        }, 'product_varient', 'discount', 'tax', 'shipping'])
             ->where('published', 1)
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
@@ -69,7 +69,9 @@ class FilterController extends Controller
 
     public function target_search(Request $request)
     {
-        $data = Product::with('user', 'category', 'brand','shop.shop_policy','model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+        $data = Product::with(['user', 'category', 'brand','shop.shop_policy','model', 'stock', 'product_gallery'=> function($query) {
+            $query->orderBy('order', 'asc');
+        }, 'product_varient', 'discount', 'tax', 'shipping'])
             ->whereJsonContains('start_year', $request->year)
             ->where('brand_id', $request->brand_id)
             ->where('model_id', $request->model_id)
