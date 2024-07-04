@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Email Verification</title>
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
