@@ -20,7 +20,9 @@ class FilterController extends Controller
 
         $keywords = explode(' ', $searchValue);
         
-        $data = Product::with('user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery', 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale')
+        $data = Product::with(['user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function($query) {
+            $query->orderBy('order', 'asc');
+        }, 'product_varient', 'discount', 'tax', 'shipping', 'deal.deal_product', 'wholesale'])
             ->where('published', 1)
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
