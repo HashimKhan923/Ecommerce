@@ -119,7 +119,7 @@
     <div class="email-container">
         <!-- Logo Section Start -->
         <div class="logo">
-            <img src="{{ asset('EmailLogo.png') }}" alt="Company Logo" width="250px">
+            <img src="{{ asset('emailLogo.png') }}" alt="Company Logo" width="250px">
         </div>
         <!-- Logo Section End -->
         <div class="header">
