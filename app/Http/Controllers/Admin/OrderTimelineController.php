@@ -12,9 +12,7 @@ class OrderTimelineController extends Controller
     public function create(Request $request)
     {
         OrderTimeline::create([
-            'seller_id' => $request->admin_id,
-            'customer_id' => $request->customer_id,
-            'order_id' => $request->order_id,
+            'customer_id' => $request->user_id,
             'time_line' => $request->time_line
         ]);
 
