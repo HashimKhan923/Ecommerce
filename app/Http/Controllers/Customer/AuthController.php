@@ -171,6 +171,7 @@ class AuthController extends Controller
 
     public function social_login(Request $request)
     {
+        return $request;
         $check_user = User::where('email',$request->email)->first();
 
         if($check_user)
