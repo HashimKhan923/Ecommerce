@@ -10,7 +10,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $Customers = User::with('order.order_timeline')->where('user_type','customer')->get();
+        $Customers = User::with('time_line','order.order_timeline')->where('user_type','customer')->get();
 
         return response()->json(["Customers"=>$Customers]);
     }
