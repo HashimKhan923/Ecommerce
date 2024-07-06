@@ -54,7 +54,7 @@ class User extends Authenticatable
 
     public function shop()
     {
-        return $this->hasOne(Shop::class,'seller_id','id');
+        return $this->hasMany(Shop::class,'seller_id','id');
     }
 
     public function SellingPlatforms()
@@ -110,5 +110,10 @@ class User extends Authenticatable
     public function stafs()
     {
         return $this->hasMany(User::class, 'seller_id');
+    }
+
+    public function my_customers()
+    {
+        return $this->hasMany(MyCustomer::class, 'seller_id');
     }
 }
