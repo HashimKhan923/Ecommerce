@@ -23,7 +23,15 @@ class FilterController extends Controller
         $productIds = $searchResults->pluck('id');
 
         // Eager load 'user' relationship for the products found
-        $data = Product::with('user')->whereIn('id', $productIds)->get();
+        $data = Product::with(['user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            }, 'product_varient', 'discount', 'tax', 'shipping'])
+                ->where('published', 1)
+                ->whereHas('shop', function ($query) {
+                    $query->where('status', 1);
+                })->whereHas('stock', function ($query) {
+                    $query->where('stock', '>', 0);
+                })->whereIn('id', $productIds)->get();
 
 
         
