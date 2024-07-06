@@ -16,7 +16,15 @@ class FilterController extends Controller
         $Keyword->count++;
         $Keyword->save();
 
-        $data = Product::search($request->searchValue)->with('user')->get();
+                // Perform the search with Scout
+        $searchResults = Product::search($request->searchValue)->get();
+
+        // Retrieve IDs of the search results to eager load relationships
+        $productIds = $searchResults->pluck('id');
+
+        // Eager load 'user' relationship for the products found
+        $data = Product::with('user')->whereIn('id', $productIds)->get();
+
 
         
         // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
