@@ -16,7 +16,7 @@ class FilterController extends Controller
         $Keyword->count++;
         $Keyword->save();
 
-        // $data = Product::search($request->searchValue)->get();
+        $data = Product::search($request->searchValue)->get();
 
         
         // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
