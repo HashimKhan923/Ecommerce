@@ -48,7 +48,7 @@
 </head>
 <body>
     <div class="container">
-    <img src="{{ url('emailLogo.png') }}" width="250px" alt="Company Logo" class="logo">
+    <img src="https://api.dragonautomart.com/emailLogo.png" width="250px" alt="Company Logo" class="logo">
         <h2>Order Confirmation</h2>
         <p>Dear {{$buyer_name}},</p>
         <br>

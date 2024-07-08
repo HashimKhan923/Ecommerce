@@ -99,7 +99,7 @@
     <div class="email-container">
         <!-- Logo Section Start -->
         <div class="logo">
-            <img src="{{ url('emailLogo.png') }}" alt="Company Logo">
+            <img src="https://api.dragonautomart.com/emailLogo.png" alt="Company Logo">
         </div>
         <!-- Logo Section End -->
         <div class="header">

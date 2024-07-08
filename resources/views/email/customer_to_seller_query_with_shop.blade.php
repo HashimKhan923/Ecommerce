@@ -77,7 +77,7 @@
 <hr>
 
         <div>
-        <img src="{{ url('emailLogo.png') }}" width="250px" alt="Company Logo" class="logo">
+        <img src="https://api.dragonautomart.com/emailLogo.png" width="250px" alt="Company Logo" class="logo">
   <h4>{{$ShopName}}</h4>
 </div>
 
