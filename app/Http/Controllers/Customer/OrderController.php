@@ -43,6 +43,7 @@ class OrderController extends Controller
             
             $productsByShop = $products->groupBy('shop_id');
             $orderIds = [];
+            $TotalShippingAmount = 0.00;
             foreach ($productsByShop as $shopId => $shopProducts) {
         
                 $vendorId = $shopProducts->first()->user_id;
@@ -59,6 +60,8 @@ class OrderController extends Controller
                 $shopTotalShipment = $shopProducts->sum(function ($product) use ($request) {
                     return collect($request->products)->where('product_id', $product->id)->sum('shipping_amount');
                 });
+
+                $TotalShippingAmount += $shopTotalShipment;
             
                 $newOrder = Order::create([
                     'order_code' => Str::random(8) . '-' . Str::random(8),
@@ -232,6 +235,7 @@ class OrderController extends Controller
                 [
                     'buyer_name' => $user->name,
                     'productsByVendor' => $productsByShop,
+                    'TotalShippingAmount' => $TotalShippingAmount,
                     'request' => $request
                 ],
                 function ($message) use ($user) {

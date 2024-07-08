@@ -109,7 +109,7 @@
     <div class="email-container">
         <!-- Logo Section Start -->
         <div class="logo">
-            <img src="{{ asset('emailLogo.png') }}" alt="Company Logo">
+            <img src="{{ url('emailLogo.png') }}" alt="Company Logo">
         </div>
         <!-- Logo Section End -->
         <div class="header">
@@ -119,7 +119,7 @@
             
 
             <div class="shop_logo">
-    <img src="{{ asset('emailLogo.png') }}" alt="Company Logo">
+    <img src="{{ url('emailLogo.png') }}" alt="Company Logo">
     <h4 style="color: #4CAF50;">Your Store Name</h4>
 </div>
 

@@ -60,7 +60,7 @@
         <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     <div class="logo">
-    <img src="{{ asset('emailLogo.png') }}" width="250px" alt="Company Logo" class="logo">
+    <img src="{{ url('emailLogo.png') }}" width="250px" alt="Company Logo" class="logo">
         <div class=" text-left"  style="margin-top:10px">
         <h3>Dragon Auto Mart</h2>
     </div>
@@ -137,8 +137,16 @@
                             @endforeach    
 
                                         </table>
-
+                                        
                                         <table cellspacing="" cellpadding="0" border="0" width="100%">
+                                            <tr>
+                                                <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                                                    Shipment
+                                                </td>
+                                                <td width="25%" align="right" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                                                ${{$TotalShippingAmount}}
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
                                                     TOTAL
