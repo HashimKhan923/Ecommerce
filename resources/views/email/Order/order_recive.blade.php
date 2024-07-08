@@ -72,14 +72,11 @@
         <hr>
         <div class="content">
         <p>Hi {{$buyer_name}},</p>
-        <p> Thank you for placing your order. We're currently preparing it for shipment.</p>
-        <p> Due to high demand, please allow 3-5 business days for preparation and shipping. </p>
-
-        <p>For pre-order products, kindly allow 24-48 hours after the restock date mentioned in the product description for preparation. </p>
-
-<p>You'll receive an email with tracking information once your order is shipped.</p>
-
-<p>If you have a shipping address at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.</p>
+        <p>Thank you for placing your order. We are currently preparing it for shipment.</p>
+<p>Please allow 3-5 business days for processing and shipping due to high demand.</p>
+<p>For pre-order products, please allow 24-48 hours after the restock date mentioned in the product description for preparation.</p>
+<p>You will receive an email with tracking information once your order has been shipped.</p>
+<p>If your shipping address is at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.</p>
 
 
         <br><br>
