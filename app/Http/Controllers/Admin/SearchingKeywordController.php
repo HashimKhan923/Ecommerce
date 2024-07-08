@@ -15,4 +15,11 @@ class SearchingKeywordController extends Controller
 
        return response()->json(['data'=>$data]);
     }
+
+    public function multi_delete(Request $request)
+    {
+        UserSearchingKeyword::whereIn('id',$request->ids)->delete();
+
+        return response()->json(['message'=>'Deleted Successfully!']);
+    }
 }

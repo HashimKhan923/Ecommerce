@@ -525,6 +525,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => 'admin/searching_keywords'], function() {
                     Route::controller(App\Http\Controllers\Admin\SearchingKeywordController::class)->group(function () {
                         Route::get('show','index');
+                        Route::post('multi_delete','multi_delete');
                     });
                 }); 
 
