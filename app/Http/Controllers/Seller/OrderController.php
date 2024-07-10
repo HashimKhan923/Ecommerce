@@ -284,6 +284,11 @@ class OrderController extends Controller
         return response($response, 200);
     }
 
+    public function order_view($seller_id)
+    {
+        Order::where('sellers_id', $seller_id)->update(['view_status' => 1]);
+    }
+
     public function delete($id)
     {
         Order::find($id)->delete();

@@ -24,6 +24,7 @@ class Order extends Model
         'payment_method',
         'payment_status',
         'refund',
+        'view_status'
     ];
 
     public function order_detail()
