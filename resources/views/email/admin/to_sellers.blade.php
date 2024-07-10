@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Email Verification</title>
     <style>
         body {
@@ -26,13 +23,11 @@
         }
 
         .logo img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-        }
-
-        .company-name {
-            text-align: right;
-            margin-top: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
         }
 
         .content {
@@ -58,21 +53,12 @@
 
 <body>
     <div class="container">
-        <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <div class="logo">
-    <img src="https://api.dragonautomart.com/emailLogo.png" width="200" alt="Company Logo" class="logo">
-        <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
-    </div>
-    </div>
-</div>
+        <div class="logo">
+            <img src="{{'gmail_banner.png'}}" alt="Company Logo">
+        </div>
 
-
-</div>
-        <hr>
         <div class="content">
-        <p class="font-size-18">Hello, Mr. {{$seller_name}}</p>
+        <p class="font-size-18">Hello, {{$seller_name}}</p>
 
         <p>{{$body}}</p>
         <br><br><br>

@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Email Verification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,13 +22,11 @@
         }
 
         .logo img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-        }
-
-        .company-name {
-            text-align: right;
-            margin-top: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
         }
 
         .content {
@@ -57,32 +52,26 @@
 
 <body>
     <div class="container">
-        <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <div class="logo">
-    <img src="https://api.dragonautomart.com/emailLogo.png" width="250px" alt="Company Logo" class="logo">
-        <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
-    </div>
-    </div>
-</div>
+        <div class="logo">
+            <img src="https://api.dragonautomart.com/gmail_banner.png" alt="Company Logo">
+        </div>
 
-
-</div>
-        <hr>
         <div class="content">
-        <p class="font-size-18">Hello, Mr. {{$name}}</p>
+            <p class="font-size-18">Hello,. {{ $name }}</p>
 
-        <p class="card-text">We are pleased to inform you that your account on our platform has been verified and activated by our admin team.</p>
-                    <p class="card-text">You can now start using your account to list your products, manage orders, and access all the features of our platform.</p>
-                    <p class="card-text">If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
-                    <p class="card-text">Thank you for choosing our platform for your selling needs!</p>
+            <p class="card-text">We are pleased to inform you that your account on our platform has been verified and
+                activated by our admin team.</p>
+            <p class="card-text">You can now start using your account to list your products, manage orders, and access
+                all the features of our platform.</p>
+            <p class="card-text">If you have any questions or need assistance, please don't hesitate to contact our
+                support team.</p>
+            <p class="card-text">Thank you for choosing our platform for your selling needs!</p>
 
-                    <a href="https://seller.dragonautomart.com/">Click here to visit your Seller Dashboard</a>
+            <a href="https://seller.dragonautomart.com/">Click here to visit your Seller Dashboard</a>
 
 
-        <br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
+            <br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
     </div>
 

@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,13 +22,11 @@
         }
 
         .logo img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-        }
-
-        .company-name {
-            text-align: right;
-            margin-top: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
         }
 
         .content {
@@ -57,115 +52,125 @@
 
 <body>
     <div class="container">
-        <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <div class="logo">
-    <img src="https://api.dragonautomart.com/emailLogo.png" width="250px" alt="Company Logo" class="logo">
-        <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
-    </div>
-    </div>
-</div>
+        <div class="logo">
+            <img src="https://api.dragonautomart.com/gmail_banner.png" alt="Company Logo">
+        </div>
 
-
-</div>
-        <hr>
         <div class="content">
-        <p>Hi {{$buyer_name}},</p>
-        <p>Thank you for placing your order. We are currently preparing it for shipment.</p>
-<p>Please allow 3-5 business days for processing and shipping due to high demand.</p>
-<p>For pre-order products, please allow 24-48 hours after the restock date mentioned in the product description for preparation.</p>
-<p>You will receive an email with tracking information once your order has been shipped.</p>
-<p>If your shipping address is at an apartment complex or condo, your order will be sent to the nearest FedEx location. We appreciate your understanding and patience.</p>
+            <p>Hi {{ $buyer_name }},</p>
+            <p>Thank you for placing your order. We are currently preparing it for shipment.</p>
+            <p>Please allow 3-5 business days for processing and shipping due to high demand.</p>
+            <p>For pre-order products, please allow 24-48 hours after the restock date mentioned in the product
+                description for preparation.</p>
+            <p>You will receive an email with tracking information once your order has been shipped.</p>
+            <p>If your shipping address is at an apartment complex or condo, your order will be sent to the nearest
+                FedEx location. We appreciate your understanding and patience.</p>
 
 
-        <br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+            <br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
 
 
-<hr>
+            <hr>
 
-        <table cellspacing="0" cellpadding="0" border="0" width="100%">
-                                            <tr>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Product
-                                                </td>
-                                                <td width="40%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Name
-                                                </td>
-                                                <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Quantity
-                                                </td>
+            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                    <td width="40%" align="left" bgcolor="#eeeeee"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                        Product
+                    </td>
+                    <td width="40%" align="left" bgcolor="#eeeeee"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                        Name
+                    </td>
+                    <td width="20%" align="left" bgcolor="#eeeeee"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                        Quantity
+                    </td>
 
-                                                <td width="20%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                    Price
-                                                </td>
-                                            </tr>
-                                            
-
-                                            @foreach($productsByVendor as $vendorId => $vendorProducts)
-                                            @foreach($vendorProducts as $product)
-                                            <?php
-                                            $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-
-                                            $price = $orderProduct['product_price'] * $orderProduct['quantity'];
-
-                                            ?>
-
-                                            <tr>
-                                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}" width="100px" alt="">
-                                                </td>
-                                                <td  style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {{$product->name}}
-
-                                                </td>
-                                                <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                {{ $orderProduct['quantity'] }}
-                                                </td>
-                                                <td width="20%" align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                ${{$price}}
-                                                </td>
-                                            </tr>
+                    <td width="20%" align="left" bgcolor="#eeeeee"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                        Price
+                    </td>
+                </tr>
 
 
-                                        
-                            @endforeach
-                            @endforeach    
+                @foreach ($productsByVendor as $vendorId => $vendorProducts)
+                    @foreach ($vendorProducts as $product)
+                        <?php
+                        $orderProduct = collect($request->products)
+                            ->where('product_id', $product->id)
+                            ->first();
+                        
+                        $price = $orderProduct['product_price'] * $orderProduct['quantity'];
+                        
+                        ?>
 
-                                        </table>
-                                        
-                                        <table cellspacing="" cellpadding="0" border="0" width="100%">
-                                            @if($TotalShippingAmount)
-                                            <tr>
-                                                <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    Shipment
-                                                </td>
-                                                <td width="25%" align="right" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                ${{$TotalShippingAmount}}
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            <tr>
-                                                <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    TOTAL
-                                                </td>
-                                                <td width="25%" align="right" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                ${{$request->amount}}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <br>
+                        <tr>
+                            <td
+                                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
+                                    width="100px" alt="">
+                            </td>
+                            <td
+                                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                {{ $product->name }}
 
-                                        <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
-                                                <tr>
-                                                    <td align="left" valign="top" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-                                                        <p style="font-weight: 800;">Delivery Address</p>
-                                                        <p>{{$request->information[0]}},<br>{{$request->information[1]}},<br>{{$request->information[2]}}, {{$request->information[3]}}, {{$request->information[5]}},<br>{{$request->information[4]}},<br>{{$request->information[6]}},<br>{{$request->information[7]}}</p>
+                            </td>
+                            <td align="center"
+                                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                {{ $orderProduct['quantity'] }}
+                            </td>
+                            <td width="20%" align="center"
+                                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                ${{ $price }}
+                            </td>
+                        </tr>
+                    @endforeach
+                @endforeach
 
-                                                    </td>
-                                                </tr>
-                                            </table>
+            </table>
+
+            <table cellspacing="" cellpadding="0" border="0" width="100%">
+                @if ($TotalShippingAmount)
+                    <tr>
+                        <td width="75%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            Shipment
+                        </td>
+                        <td width="25%" align="right"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            ${{ $TotalShippingAmount }}
+                        </td>
+                    </tr>
+                @endif
+                <tr>
+                    <td width="75%" align="left"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                        TOTAL
+                    </td>
+                    <td width="25%" align="right"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                        ${{ $request->amount }}
+                    </td>
+                </tr>
+            </table>
+            <br>
+
+            <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%"
+                style="max-width:300px;">
+                <tr>
+                    <td align="left" valign="top"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
+                        <p style="font-weight: 800;">Delivery Address</p>
+                        <p>{{ $request->information[0] }},<br>{{ $request->information[1] }},<br>{{ $request->information[2] }},
+                            {{ $request->information[3] }},
+                            {{ $request->information[5] }},<br>{{ $request->information[4] }},<br>{{ $request->information[6] }},<br>{{ $request->information[7] }}
+                        </p>
+
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 

@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Email Verification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,13 +22,11 @@
         }
 
         .logo img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-        }
-
-        .company-name {
-            text-align: right;
-            margin-top: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
         }
 
         .content {
@@ -57,28 +52,22 @@
 
 <body>
     <div class="container">
-        <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <div class="logo">
-    <img src="https://api.dragonautomart.com/emailLogo.png" width="250px" alt="Company Logo" class="logo">
-        <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
-    </div>
-    </div>
-</div>
+        <div class="logo">
+            <img src="https://api.dragonautomart.com/gmail_banner.png" alt="Company Logo">
+        </div>
 
-
-</div>
-        <hr>
         <div class="content">
-        <p class="font-size-18">Hello, Mr. {{$name}}</p>
+            <p class="font-size-18">Hello,. {{ $name }}</p>
 
-        <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever have any questions, concerns, or suggestions,</p> 
-        <p>don't hesitate to contact us at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
-        <p>Click on the following button to complete your email verification procedures:</p>
-        <a href="https://api.dragonautomart.com/api/verification/{{$token}}" class="btn btn-primary">Verify Email</a>
-        <br><br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
+            <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever
+                have any questions, concerns, or suggestions,</p>
+            <p>don't hesitate to contact us at <a
+                    href="mailto:support@dragonautomart.com">support@dragonautomart.com</a>.</p>
+            <p>Click on the following button to complete your email verification procedures:</p>
+            <a href="https://api.dragonautomart.com/api/verification/{{ $token }}" class="btn btn-primary">Verify
+                Email</a>
+            <br><br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
     </div>
 </body>

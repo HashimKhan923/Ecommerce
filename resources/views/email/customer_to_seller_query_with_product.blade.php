@@ -4,10 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Email Verification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,13 +22,11 @@
         }
 
         .logo img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-        }
-
-        .company-name {
-            text-align: right;
-            margin-top: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
         }
 
         .content {
@@ -58,44 +52,38 @@
 
 <body>
     <div class="container">
-        <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    <div class="logo">
-    <img src="https://api.dragonautomart.com/emailLogo.png" width="250px" alt="Company Logo" class="logo">
-        <div class=" text-left"  style="margin-top:10px">
-        <h3>Dragon Auto Mart</h2>
-    </div>
-    </div>
-</div>
+        <div class="logo">
+            <img src="https://api.dragonautomart.com/gmail_banner.png" alt="Company Logo">
+        </div>
 
-
-</div>
-        <hr>
         <div class="content">
-        <p class="font-size-18">Hello, Mr. {{$Seller->name}}</p>
+            <p class="font-size-18">Hello,. {{ $Seller->name }}</p>
 
-        <hr>
+            <hr>
 
-<div>
-  <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $ProductImage }}" width="150px" alt="">
+            <div>
+                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $ProductImage }}" width="150px"
+                    alt="">
 
-  <h4><strong>Product : </strong>{{$ProductName}}</h4>
-  <!-- <img src="https://api.dragonautomart.com/ShopLogo/{{$ShopImage}}" width="100" alt="Product Image"> -->
-  <h3><strong>Shop : </strong>{{$ShopName}}</h3>
-</div>
-<p><strong>Customer Name:</strong>{{$Customer->name}}</p>
-<p><strong>Customer Email:</strong>{{$Customer->email}}</p>
-<p><strong>Message:</strong> {{$Msg}}<p>
-    <br>
- <a href="https://seller.dragonautomart.com/seller/messages" style="display: inline-block; padding: 10px 20px; background-color: green; color: #fff; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer;">Reply</a>   
+                <h4><strong>Product : </strong>{{ $ProductName }}</h4>
+                <!-- <img src="https://api.dragonautomart.com/ShopLogo/{{ $ShopImage }}" width="100" alt="Product Image"> -->
+                <h3><strong>Shop : </strong>{{ $ShopName }}</h3>
+            </div>
+            <p><strong>Customer Name:</strong>{{ $Customer->name }}</p>
+            <p><strong>Customer Email:</strong>{{ $Customer->email }}</p>
+            <p><strong>Message:</strong> {{ $Msg }}
+            <p>
+                <br>
+                <a href="https://seller.dragonautomart.com/seller/messages"
+                    style="display: inline-block; padding: 10px 20px; background-color: green; color: #fff; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer;">Reply</a>
 
 
-<hr>
+                <hr>
 
 
 
-        <br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
+                <br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
     </div>
 

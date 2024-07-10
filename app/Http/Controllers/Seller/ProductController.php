@@ -649,10 +649,8 @@ class ProductController extends Controller
                 }
                 else
                 {
-                    Discount::updateOrCreate(
-                        ['product_id' => $product->id],
-                        ['discount' => null]
-                    );
+                    Discount::where('product_id', $product->id)->delete();
+                    
                 }
 
                 // Update shipping
