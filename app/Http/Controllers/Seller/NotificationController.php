@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Notification;
 
+
 class NotificationController extends Controller
 {
-    public function index($customer_id)
+    public function index($seller_id)
     {
-        $data = Notification::where('customer_id',$customer_id)->get();
+        $data = Notification::where('customer_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
@@ -22,8 +23,8 @@ class NotificationController extends Controller
         return response()->json(['messsage'=>'deleted successfully']);
     }
 
-    public function view($user_id)
+    public function view($seller_id)
     {
-        Notification::where('customer_id',$user_id)->update(['view_status'=>1]);
+        Notification::where('customer_id',$seller_id)->update(['view_status'=>1]);
     }
 }

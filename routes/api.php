@@ -510,6 +510,17 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
 
 
+                                                            /// Notification \\\
+
+            Route::group(['prefix' => '/admin/notifications/'], function() {
+                Route::controller(App\Http\Controllers\Seller\NotificationController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::get('delete/{notification_id}','delete');
+                    Route::get('view','view');
+                });
+            });
+
+
 
                                         /// Website FeedBack \\\
 
@@ -745,6 +756,17 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                         });
                     });
+
+
+                                            /// Notification \\\
+
+            Route::group(['prefix' => '/seller/notifications/'], function() {
+                Route::controller(App\Http\Controllers\Seller\NotificationController::class)->group(function () {
+                    Route::get('show/{customer_id}','index');
+                    Route::get('delete/{notification_id}','delete');
+                    Route::get('view/{customer_id}','view');
+                });
+            });  
 
 
 
@@ -1060,6 +1082,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::controller(App\Http\Controllers\Customer\NotificationController::class)->group(function () {
                     Route::get('show/{customer_id}','index');
                     Route::get('delete/{notification_id}','delete');
+                    Route::get('view/{customer_id}','view');
                 });
             });  
 
