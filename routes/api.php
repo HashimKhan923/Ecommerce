@@ -247,7 +247,6 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('payment_status','payment_status');
                     Route::post('tags','update_tags');
                     Route::get('delete/{id}','delete');
-                    Route::get('view','order_view');
                     Route::post('multi_delete','multi_delete');
                 });
             });
@@ -644,7 +643,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('payment_status','payment_status');
                     Route::post('tags','update_tags');
                     Route::get('delete/{id}','delete');
-                    Route::get('view/{seller_id}','order_view');
+                    Route::get('view/{order_id}','order_view');
                     Route::post('multi_delete','multi_delete');
                     Route::post('tracking/update','tracking_update');
                 });
