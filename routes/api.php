@@ -807,15 +807,15 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                     /// Home \\\
 
-        Route::group(['prefix' => '/home'], function() {
-            Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
-                Route::get('','index');
-                Route::get('load_more/{length}','load_more');
-                Route::get('load_more_top_selling/{length}','load_more_top_selling');
-                Route::get('load_more_trending/{length}','load_more_trending');
-                Route::get('load_more_featured/{length}','load_more_featured');
-            });
-        });
+        // Route::group(['prefix' => '/home'], function() {
+        //     Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
+        //         Route::get('','index');
+        //         Route::get('load_more/{length}','load_more');
+        //         Route::get('load_more_top_selling/{length}','load_more_top_selling');
+        //         Route::get('load_more_trending/{length}','load_more_trending');
+        //         Route::get('load_more_featured/{length}','load_more_featured');
+        //     });
+        // });
 
 
                                             /// CategoryProducts \\\
