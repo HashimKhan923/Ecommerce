@@ -53,7 +53,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://devapi.dragonautomart.com/gmail_banner.png" alt="Company Logo">
+            <img src="https://api.dragonautomart.com/gmail_banner.png" alt="Company Logo">
         </div>
 
         <div class="content">
