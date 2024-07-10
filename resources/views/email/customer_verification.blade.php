@@ -57,7 +57,7 @@
         </div>
 
         <div class="content">
-            <p class="font-size-18">Hello,. {{ $name }}</p>
+            <p class="font-size-18">Hello, {{ $name }}</p>
 
             <p>Welcome to Dragon Auto Mart! We're excited to have you on board for this incredible journey. If you ever
                 have any questions, concerns, or suggestions,</p>

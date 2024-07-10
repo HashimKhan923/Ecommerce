@@ -57,7 +57,7 @@
         </div>
 
         <div class="content">
-            <p class="font-size-18">Hello,. {{ $Seller->name }}</p>
+            <p class="font-size-18">Hello, {{ $Seller->name }}</p>
 
             <hr>
 

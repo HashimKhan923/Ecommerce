@@ -58,7 +58,7 @@
         </div>
 
         <div class="content">
-            <p class="font-size-18">Hello,. {{ $vendor_name }}</p>
+            <p class="font-size-18">Hello, {{ $vendor_name }}</p>
 
             <p class="card-text">We are pleased to inform you that a payout of {{ $amount }} has been processed.
             </p>

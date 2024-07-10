@@ -58,7 +58,7 @@
         </div>
 
         <div class="content">
-            <p class="font-size-18">Hello,. {{ $name }}</p>
+            <p class="font-size-18">Hello, {{ $name }}</p>
 
             <p>Welcome to Dragon Auto Mart! We're absolutely thrilled to have you join us on this exciting journey.</p>
             <p>We're excited to let you know that your first 6-month subscription is completely free and on us. It's our

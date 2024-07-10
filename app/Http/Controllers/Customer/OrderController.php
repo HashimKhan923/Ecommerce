@@ -111,6 +111,7 @@ class OrderController extends Controller
                         'vendor_name' => $vendor->name,
                         'order_id' => $newOrder->id,
                         'order_details' => $shopProducts,
+                        'shipping_charges' => $shopTotalShipment,
                         'request' => $request
                     ],
                     function ($message) use ($vendor,$newOrder,$customer) {

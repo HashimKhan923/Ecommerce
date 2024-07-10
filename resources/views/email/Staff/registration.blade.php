@@ -59,7 +59,7 @@
         </div>
 
         <div class="content">
-            <p class="font-size-18">Hello,. {{ $name }}</p>
+            <p class="font-size-18">Hello, {{ $name }}</p>
 
             <p>Your account has been successfully created. Below you will find your login credentials to access our
                 system:</p>
