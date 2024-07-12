@@ -15,24 +15,7 @@ class FilterController extends Controller
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
-/////////////////////////////////////////////////////////////////////////////////
-        //         // Perform the search with Scout
-        // $searchResults = Product::search($request->searchValue)->get();
 
-        // // Retrieve IDs of the search results to eager load relationships
-        // $productIds = $searchResults->pluck('id');
-
-        // // Eager load 'user' relationship for the products found
-        // $data = Product::with(['user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function($query) {
-        //         $query->orderBy('order', 'asc');
-        //     }, 'product_varient', 'discount', 'tax', 'shipping'])
-        //         ->where('published', 1)
-        //         ->whereHas('shop', function ($query) {
-        //             $query->where('status', 1);
-        //         })->whereHas('stock', function ($query) {
-        //             $query->where('stock', '>', 0);
-        //         })->whereIn('id', $productIds)->get();
-///////////////////////////////////////////////////////////////////////
 
         
 // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
