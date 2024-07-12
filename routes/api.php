@@ -513,7 +513,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                                             /// Notification \\\
 
             Route::group(['prefix' => '/admin/notifications/'], function() {
-                Route::controller(App\Http\Controllers\Seller\NotificationController::class)->group(function () {
+                Route::controller(App\Http\Controllers\Admin\NotificationController::class)->group(function () {
                     Route::get('show','index');
                     Route::get('delete/{notification_id}','delete');
                     Route::get('view','view');
