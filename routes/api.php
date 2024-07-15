@@ -697,7 +697,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                         Route::get('show/{id}','index');
                         Route::post('create','create');
                         Route::get('delete/{id}','delete');
-            
+                        Route::post('stripe/connect','create_stripe_connect_account');
                     });
                 });
 
