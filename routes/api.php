@@ -517,6 +517,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show','index');
                     Route::get('delete/{notification_id}','delete');
                     Route::get('view','view');
+                    Route::post('multi_delete','multi_delete');
                 });
             });
 
@@ -765,6 +766,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show/{customer_id}','index');
                     Route::get('delete/{notification_id}','delete');
                     Route::get('view/{customer_id}','view');
+                    Route::post('multi_delete','multi_delete');
                 });
             });  
 
@@ -1083,6 +1085,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show/{customer_id}','index');
                     Route::get('delete/{notification_id}','delete');
                     Route::get('view/{customer_id}','view');
+                    Route::post('multi_delete','multi_delete');
                 });
             });  
 

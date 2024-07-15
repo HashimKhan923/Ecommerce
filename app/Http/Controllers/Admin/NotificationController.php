@@ -22,6 +22,13 @@ class NotificationController extends Controller
         return response()->json(['messsage'=>'deleted successfully']);
     }
 
+    public function multi_delete(Request $request)
+    {
+        Notification::whereIn('id',$request->ids)->delete();
+
+        return response()->json(['messsage'=>'deleted successfully']);
+    }
+
     public function view()
     {
         Notification::where('customer_id',NULL)->update(['view_status'=>1]);
