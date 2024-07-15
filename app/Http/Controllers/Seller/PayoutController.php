@@ -76,12 +76,12 @@ class PayoutController extends Controller
                         'individual' => [
                             'id_number' => $request->ssn,
                         //'id_number' => '933-02-8427',
-                            'first_name' => $request->business_first_name,
-                            'last_name' => $request->business_last_name,
-                            'email' => $request->business_email,
-                            'phone' => $request->business_phone_number,
+                            'first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'email' => $request->email,
+                            'phone' => $request->phone_number,
                             'dob' => [
-                                'day' => $request->business_date,
+                                'day' => $request->date,
                                 'month' => $request->business_month,
                                 'year' => $request->business_year,
                             ],

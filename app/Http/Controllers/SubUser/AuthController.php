@@ -14,27 +14,25 @@ class AuthController extends Controller
     public function register(Request $request) {
         try {
 
-            User::where('email',$request->email)->where('user_type','customer')->delete();
-
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:6',
-            ]);
-    
-            if ($validator->fails()) {
-                return response(['errors' => $validator->errors()->all()], 422);
+            $user = User::where('email',$request->email)->first();
+            if($user)
+            {
+                $user->seller_id = $request->seller_id;
+                $user->permissions = $request->permissions;
+                $user->password = Hash::make($request->password);
             }
-    
-            $new = new User();
-            $new->name = $request->name;
-            $new->email = $request->email;
-            $new->password = Hash::make($request->password);
-            $new->user_type = 'staff';
-            $new->seller_id = $request->seller_id;
-            $new->permissions = $request->permissions;
-            $new->is_active = 1;
-            $new->save();
+            else
+            {
+                $user = new User();
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+                $user->user_type = 'customer';
+                $user->seller_id = $request->seller_id;
+                $user->permissions = $request->permissions;
+                $user->is_active = 1;
+            }
+            $user->save();
     
             Mail::send(
                 'email.Staff.registration',
