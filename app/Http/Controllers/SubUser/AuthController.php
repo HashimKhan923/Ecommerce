@@ -20,6 +20,7 @@ class AuthController extends Controller
                 $user->seller_id = $request->seller_id;
                 $user->permissions = $request->permissions;
                 $user->password = Hash::make($request->password);
+                $user->user_type = 'staff';
             }
             else
             {
@@ -27,7 +28,7 @@ class AuthController extends Controller
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->password = Hash::make($request->password);
-                $user->user_type = 'customer';
+                $user->user_type = 'staff';
                 $user->seller_id = $request->seller_id;
                 $user->permissions = $request->permissions;
                 $user->is_active = 1;
