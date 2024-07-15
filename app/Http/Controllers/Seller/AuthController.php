@@ -452,17 +452,17 @@ class AuthController extends Controller
         $update->phone = $request->phone;
         $update->save();
             
-        // $shop = Shop::where('seller_id',$update->id)->first();
-        // $shop->name = $request->shop_name;
-        // $shop->address = $request->shop_address;
-        // if($request->file('logo'))
-        // {
-        //         $file= $request->logo;
-        //         $filename= date('YmdHis').$file->getClientOriginalName();
-        //         $file->storeAs('public', $filename);
-        //         $shop->logo = $filename;
-        // }
-        // $shop->save();
+        $shop = Shop::where('seller_id',$update->id)->first();
+        $shop->name = $request->shop_name;
+        $shop->address = $request->shop_address;
+        if($request->file('logo'))
+        {
+                $file= $request->logo;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $shop->logo = $filename;
+        }
+        $shop->save();
 
 
         // $BusineesInformation = BusinessInformation::where('seller_id',$update->id)->first();
