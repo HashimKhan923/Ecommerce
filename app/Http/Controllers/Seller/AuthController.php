@@ -86,21 +86,21 @@ class AuthController extends Controller
                 $shop->save();
 
 
-                $BusineesInformation = new BusinessInformation();
-                $BusineesInformation->seller_id = $new->id;
-                $BusineesInformation->first_name = $request->business_first_name;
-                $BusineesInformation->last_name = $request->business_last_name;
-                $BusineesInformation->business_name = $request->business_name;
-                $BusineesInformation->ein_number = $request->ein_number;
-                $BusineesInformation->address1 = $request->address1;
-                $BusineesInformation->address2 = $request->address2;
-                $BusineesInformation->zip_code = $request->business_zip_code;
-                $BusineesInformation->country = $request->business_country;
-                $BusineesInformation->state = $request->business_state;
-                $BusineesInformation->city = $request->business_city;
-                $BusineesInformation->phone_number = $request->business_phone_number;
-                $BusineesInformation->business_email = $request->business_email;
-                $BusineesInformation->save();
+                // $BusineesInformation = new BusinessInformation();
+                // $BusineesInformation->seller_id = $new->id;
+                // $BusineesInformation->first_name = $request->business_first_name;
+                // $BusineesInformation->last_name = $request->business_last_name;
+                // $BusineesInformation->business_name = $request->business_name;
+                // $BusineesInformation->ein_number = $request->ein_number;
+                // $BusineesInformation->address1 = $request->address1;
+                // $BusineesInformation->address2 = $request->address2;
+                // $BusineesInformation->zip_code = $request->business_zip_code;
+                // $BusineesInformation->country = $request->business_country;
+                // $BusineesInformation->state = $request->business_state;
+                // $BusineesInformation->city = $request->business_city;
+                // $BusineesInformation->phone_number = $request->business_phone_number;
+                // $BusineesInformation->business_email = $request->business_email;
+                // $BusineesInformation->save();
 
 
                 if($request->selling_platforms)
@@ -127,105 +127,105 @@ class AuthController extends Controller
                     }
                 }    
 
-                $BankDetail = new BankDetail();
-                $BankDetail->seller_id = $new->id;
-                $BankDetail->business_name = $BusineesInformation->business_name;
-                $BankDetail->bank_name = $request->bank_name;
-                $BankDetail->account_title = $request->account_title;
-                $BankDetail->routing_number = $request->routing_number;
-                $BankDetail->account_number = $request->account_number;
-                $BankDetail->save();
+                // $BankDetail = new BankDetail();
+                // $BankDetail->seller_id = $new->id;
+                // $BankDetail->business_name = $BusineesInformation->business_name;
+                // $BankDetail->bank_name = $request->bank_name;
+                // $BankDetail->account_title = $request->account_title;
+                // $BankDetail->routing_number = $request->routing_number;
+                // $BankDetail->account_number = $request->account_number;
+                // $BankDetail->save();
                 
 
-                $CreditCard = new CreditCard();
-                $CreditCard->seller_id = $new->id;
-                $CreditCard->name_on_card = $request->name_on_card;
-                $CreditCard->cc_number = $request->cc_number;
-                $CreditCard->exp_date = $request->exp_date;
-                $CreditCard->cvv = $request->cvv;
-                $CreditCard->zip_code = $request->card_zip_code;
-                $CreditCard->save();
+                // $CreditCard = new CreditCard();
+                // $CreditCard->seller_id = $new->id;
+                // $CreditCard->name_on_card = $request->name_on_card;
+                // $CreditCard->cc_number = $request->cc_number;
+                // $CreditCard->exp_date = $request->exp_date;
+                // $CreditCard->cvv = $request->cvv;
+                // $CreditCard->zip_code = $request->card_zip_code;
+                // $CreditCard->save();
 
-                Stripe::setApiKey(config('services.stripe.secret'));
+                // Stripe::setApiKey(config('services.stripe.secret'));
 
             
                     
-                    $account = Account::create([
-                        'type' => 'custom', 
-                        'country' => $request->business_country, 
-                        'email' => $request->email,
-                        'business_type' => 'individual',
-                        'capabilities' => [
-                            'card_payments' => ['requested' => true],
-                            'bank_transfer_payments' => ['requested' => true],
-                            'transfers' => ['requested' => true],
-                        ],
-                        'tos_acceptance' => [
-                            'date' => strtotime(now()),
-                            'ip' => $request->ip(),
-                        ],
-                        'business_profile' => [
-                            'name' => $request->shop_name,
-                            // replace the request name with shop->id
-                            'url' => 'https://dragonautomart.com/store/' . $shop->id,
-                            'mcc' => '5533',
-                        ],
-                        'settings' => [
-                            'payouts' => [
-                                'statement_descriptor'=> $request->shop_name
-                            ],
-                            'payments' => [
-                                'statement_descriptor'=> $request->shop_name
-                            ]
+                //     $account = Account::create([
+                //         'type' => 'custom', 
+                //         'country' => $request->business_country, 
+                //         'email' => $request->email,
+                //         'business_type' => 'individual',
+                //         'capabilities' => [
+                //             'card_payments' => ['requested' => true],
+                //             'bank_transfer_payments' => ['requested' => true],
+                //             'transfers' => ['requested' => true],
+                //         ],
+                //         'tos_acceptance' => [
+                //             'date' => strtotime(now()),
+                //             'ip' => $request->ip(),
+                //         ],
+                //         'business_profile' => [
+                //             'name' => $request->shop_name,
+                //             // replace the request name with shop->id
+                //             'url' => 'https://dragonautomart.com/store/' . $shop->id,
+                //             'mcc' => '5533',
+                //         ],
+                //         'settings' => [
+                //             'payouts' => [
+                //                 'statement_descriptor'=> $request->shop_name
+                //             ],
+                //             'payments' => [
+                //                 'statement_descriptor'=> $request->shop_name
+                //             ]
                             
-                        ],
-                        'company' => [
-                            'name' => 'Dragonautomart LLC',
-                            'tax_id' => '933028427', 
-                        ],
-                        'individual' => [
-                            'id_number' => $request->ssn,
-                        //'id_number' => '933-02-8427',
-                            'first_name' => $request->business_first_name,
-                            'last_name' => $request->business_last_name,
-                            'email' => $request->business_email,
-                            'phone' => $request->business_phone_number,
-                            'dob' => [
-                                'day' => $request->business_date,
-                                'month' => $request->business_month,
-                                'year' => $request->business_year,
-                            ],
-                            'ssn_last_4' => $request->last_4_ssn,
-                            'address' => [
-                                'line1' => $request->address1,
-                            'line2' => $request->address2,
-                                'city' => $request->business_city,
-                                'state' => $request->business_state,
-                                'postal_code' => $request->business_zip_code,
-                                'country' => $request->business_country,
+                //         ],
+                //         'company' => [
+                //             'name' => 'Dragonautomart LLC',
+                //             'tax_id' => '933028427', 
+                //         ],
+                //         'individual' => [
+                //             'id_number' => $request->ssn,
+                //         //'id_number' => '933-02-8427',
+                //             'first_name' => $request->business_first_name,
+                //             'last_name' => $request->business_last_name,
+                //             'email' => $request->business_email,
+                //             'phone' => $request->business_phone_number,
+                //             'dob' => [
+                //                 'day' => $request->business_date,
+                //                 'month' => $request->business_month,
+                //                 'year' => $request->business_year,
+                //             ],
+                //             'ssn_last_4' => $request->last_4_ssn,
+                //             'address' => [
+                //                 'line1' => $request->address1,
+                //             'line2' => $request->address2,
+                //                 'city' => $request->business_city,
+                //                 'state' => $request->business_state,
+                //                 'postal_code' => $request->business_zip_code,
+                //                 'country' => $request->business_country,
 
-                            ],
-                        ],
-                    ]);
+                //             ],
+                //         ],
+                //     ]);
 
-                    $bankAccount = $account->external_accounts->create([
-                        'external_account' => [
-                            'object' => 'bank_account',
-                            'country' => $request->business_country,
-                            'currency' => 'usd',
-                            'account_holder_name' => $request->account_title,
-                            'account_holder_type' => 'individual',
-                            'routing_number' => $request->routing_number, 
-                            'account_number' => $request->account_number,
-                        ],
-                    ]);
+                //     $bankAccount = $account->external_accounts->create([
+                //         'external_account' => [
+                //             'object' => 'bank_account',
+                //             'country' => $request->business_country,
+                //             'currency' => 'usd',
+                //             'account_holder_name' => $request->account_title,
+                //             'account_holder_type' => 'individual',
+                //             'routing_number' => $request->routing_number, 
+                //             'account_number' => $request->account_number,
+                //         ],
+                //     ]);
 
                     
 
-                    User::where('id', $new->id)->update([
-                        'stripe_account_id' => $account->id,
-                        'bank_account_id' => $bankAccount->id
-                    ]);
+                //     User::where('id', $new->id)->update([
+                //         'stripe_account_id' => $account->id,
+                //         'bank_account_id' => $bankAccount->id
+                //     ]);
 
                     //  return response()->json(['success' => true, 'account_id' => $account->id]);
 
@@ -465,20 +465,20 @@ class AuthController extends Controller
         // $shop->save();
 
 
-        $BusineesInformation = BusinessInformation::where('seller_id',$update->id)->first();
-        $BusineesInformation->first_name = $request->business_first_name;
-        $BusineesInformation->last_name = $request->business_last_name;
-        $BusineesInformation->business_name = $request->business_name;
-        $BusineesInformation->ein_number = $request->ein_number;
-        $BusineesInformation->address1 = $request->address1;
-        $BusineesInformation->address2 = $request->address2;
-        $BusineesInformation->zip_code = $request->business_zip_code;
-        $BusineesInformation->country = $request->business_country;
-        $BusineesInformation->state = $request->business_state;
-        $BusineesInformation->city = $request->business_city;
-        $BusineesInformation->phone_number = $request->business_phone_number;
-        $BusineesInformation->business_email = $request->business_email;
-        $BusineesInformation->save();
+        // $BusineesInformation = BusinessInformation::where('seller_id',$update->id)->first();
+        // $BusineesInformation->first_name = $request->business_first_name;
+        // $BusineesInformation->last_name = $request->business_last_name;
+        // $BusineesInformation->business_name = $request->business_name;
+        // $BusineesInformation->ein_number = $request->ein_number;
+        // $BusineesInformation->address1 = $request->address1;
+        // $BusineesInformation->address2 = $request->address2;
+        // $BusineesInformation->zip_code = $request->business_zip_code;
+        // $BusineesInformation->country = $request->business_country;
+        // $BusineesInformation->state = $request->business_state;
+        // $BusineesInformation->city = $request->business_city;
+        // $BusineesInformation->phone_number = $request->business_phone_number;
+        // $BusineesInformation->business_email = $request->business_email;
+        // $BusineesInformation->save();
         
         
         if($request->selling_platforms != null)
@@ -519,63 +519,63 @@ class AuthController extends Controller
         }
 
 
-        $BankDetail = BankDetail::where('seller_id',$update->id)->first();
-        if(!$BankDetail)
-        {
-            $BankDetail = new BankDetail();
-        }
-        $BankDetail->seller_id = $update->id;
-        $BankDetail->business_name = $BusineesInformation->business_name;
-        $BankDetail->bank_name = $request->bank_name;
-        $BankDetail->account_title = $request->account_title;
-        $BankDetail->routing_number = $request->routing_number;
-        $BankDetail->account_number = $request->account_number;
-        $BankDetail->save();
-        $CreditCard = CreditCard::where('seller_id',$update->id)->first();
-        if(!$CreditCard)
-        {
-            $CreditCard = new CreditCard();
-        }
-        $CreditCard->seller_id = $update->id;
-        $CreditCard->name_on_card = $request->name_on_card;
-        $CreditCard->cc_number = $request->cc_number;
-        $CreditCard->exp_date = $request->exp_date;
-        $CreditCard->cvv = $request->cvv;
-        $CreditCard->zip_code = $request->card_zip_code;
-        $CreditCard->save();
+//         $BankDetail = BankDetail::where('seller_id',$update->id)->first();
+//         if(!$BankDetail)
+//         {
+//             $BankDetail = new BankDetail();
+//         }
+//         $BankDetail->seller_id = $update->id;
+//         $BankDetail->business_name = $BusineesInformation->business_name;
+//         $BankDetail->bank_name = $request->bank_name;
+//         $BankDetail->account_title = $request->account_title;
+//         $BankDetail->routing_number = $request->routing_number;
+//         $BankDetail->account_number = $request->account_number;
+//         $BankDetail->save();
+//         $CreditCard = CreditCard::where('seller_id',$update->id)->first();
+//         if(!$CreditCard)
+//         {
+//             $CreditCard = new CreditCard();
+//         }
+//         $CreditCard->seller_id = $update->id;
+//         $CreditCard->name_on_card = $request->name_on_card;
+//         $CreditCard->cc_number = $request->cc_number;
+//         $CreditCard->exp_date = $request->exp_date;
+//         $CreditCard->cvv = $request->cvv;
+//         $CreditCard->zip_code = $request->card_zip_code;
+//         $CreditCard->save();
 
 
 
 
-// Update Stripe account
-Stripe::setApiKey(config('services.stripe.secret'));
+// // Update Stripe account
+// Stripe::setApiKey(config('services.stripe.secret'));
 
-try {
-    $account = Account::retrieve($update->stripe_account_id);
-    $account->email = $request->email;
-    $account->individual->first_name = $request->business_first_name;
-    $account->individual->last_name = $request->business_last_name;
-    $account->individual->id_number = $request->ssn;
-    $account->individual->dob->day = $request->business_date;
-    $account->individual->dob->month = $request->business_month;
-    $account->individual->dob->year = $request->business_year;
-    $account->individual->ssn_last_4 = $request->last_4_ssn;
-    $account->individual->address->line1 = $request->address1;
-    $account->individual->address->line2 = $request->address2;
-    $account->individual->address->city = $request->business_city;
-    $account->individual->address->state = $request->business_state;
-    $account->individual->address->postal_code = $request->business_zip_code;
-    $account->individual->address->country = $request->business_country;
-    $account->save();
+// try {
+//     $account = Account::retrieve($update->stripe_account_id);
+//     $account->email = $request->email;
+//     $account->individual->first_name = $request->business_first_name;
+//     $account->individual->last_name = $request->business_last_name;
+//     $account->individual->id_number = $request->ssn;
+//     $account->individual->dob->day = $request->business_date;
+//     $account->individual->dob->month = $request->business_month;
+//     $account->individual->dob->year = $request->business_year;
+//     $account->individual->ssn_last_4 = $request->last_4_ssn;
+//     $account->individual->address->line1 = $request->address1;
+//     $account->individual->address->line2 = $request->address2;
+//     $account->individual->address->city = $request->business_city;
+//     $account->individual->address->state = $request->business_state;
+//     $account->individual->address->postal_code = $request->business_zip_code;
+//     $account->individual->address->country = $request->business_country;
+//     $account->save();
 
-    $bankAccount = $account->external_accounts->retrieve($seller->bank_account_id);
-    $bankAccount->account_holder_name = $request->account_title;
-    $bankAccount->routing_number = $request->routing_number;
-    $bankAccount->account_number = $request->account_number;
-    $bankAccount->save();
-} catch (\Exception $e) {
-    return response()->json(['status' => 422, 'message' => $e->getMessage()]);
-}
+//     $bankAccount = $account->external_accounts->retrieve($seller->bank_account_id);
+//     $bankAccount->account_holder_name = $request->account_title;
+//     $bankAccount->routing_number = $request->routing_number;
+//     $bankAccount->account_number = $request->account_number;
+//     $bankAccount->save();
+// } catch (\Exception $e) {
+//     return response()->json(['status' => 422, 'message' => $e->getMessage()]);
+// }
 
         $response = ['status'=>true,"message" => "profile updated successfully!"];
         return response($response, 200);
