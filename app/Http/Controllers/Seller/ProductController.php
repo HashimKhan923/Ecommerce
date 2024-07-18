@@ -675,7 +675,9 @@ class ProductController extends Controller
     {
         $Products = Product::with([
             'user', 'category.sub_category', 'brand.model', 'model', 'stock',
-            'product_gallery','discount', 'tax', 'shipping', 'deal.deal_product',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },'discount', 'tax', 'shipping', 'deal.deal_product',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->whereIn('id',$request->ids)->get();
 
