@@ -83,6 +83,7 @@ $data = Product::with([
             ->whereJsonContains('start_year', $request->year)
             ->where('brand_id', $request->brand_id)
             ->where('model_id', $request->model_id)
+            ->where('sub_category_id', $request->sub_category_id)
             ->where('published', 1)
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
