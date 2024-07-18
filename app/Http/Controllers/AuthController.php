@@ -34,19 +34,19 @@ class AuthController extends Controller
                 {
                     if (Hash::check($request->password, $user->password)) {
         
-                        if($user->user_type == 'seller')
-                        {
-                            if($user->is_verify != 1)
-                            {
+                        // if($user->user_type == 'seller')
+                        // {
+                        //     if($user->is_verify != 1)
+                        //     {
 
 
-                                $response = ['status'=>false,"message" => "Your account has not been verified by the admin"];
-                                return response($response, 422);
+                        //         $response = ['status'=>false,"message" => "Your account has not been verified by the admin"];
+                        //         return response($response, 422);
 
 
-                            }
+                        //     }
     
-                        }
+                        // }
 
                         $staff = '';
 

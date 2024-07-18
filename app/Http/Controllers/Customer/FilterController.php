@@ -77,24 +77,50 @@ $data = Product::with([
 
     public function target_search(Request $request)
     {
-        $data = Product::with(['user', 'category', 'brand','shop.shop_policy','model', 'stock', 'product_gallery'=> function($query) {
-            $query->orderBy('order', 'asc');
-        }, 'product_varient', 'discount', 'tax', 'shipping'])
-            ->whereJsonContains('start_year', $request->year)
-            ->where('brand_id', $request->brand_id)
-            ->where('model_id', $request->model_id)
-            ->where('sub_category_id', $request->sub_category_id)
-            ->where('published', 1)
-            ->whereHas('shop', function ($query) {
-                $query->where('status', 1);
-            })->whereHas('stock', function ($query) {
-                $query->where('stock', '>', 0);
-            })
-            ->orderByRaw('featured DESC')
-            ->get();
-
+        $query = Product::with([
+            'user', 
+            'category', 
+            'brand',
+            'shop.shop_policy',
+            'model', 
+            'stock', 
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            }, 
+            'product_varient', 
+            'discount', 
+            'tax', 
+            'shipping'
+        ])
+        ->where('published', 1)
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })
+        ->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        });
+    
+        if ($request->has('year')) {
+            $query->whereJsonContains('start_year', $request->year);
+        }
+    
+        if ($request->has('brand_id')) {
+            $query->where('brand_id', $request->brand_id);
+        }
+    
+        if ($request->has('model_id')) {
+            $query->where('model_id', $request->model_id);
+        }
+    
+        if ($request->has('sub_category_id')) {
+            $query->where('sub_category_id', $request->sub_category_id);
+        }
+    
+        $data = $query->orderByRaw('featured DESC')->get();
+    
         return response()->json(['data' => $data]);
     }
+    
 
 
     public function multiSearch(Request $request)
