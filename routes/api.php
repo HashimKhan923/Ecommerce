@@ -293,8 +293,8 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show','index');
                     Route::get('approved','approved_refunds');
                     Route::get('rejected','rejected_refunds');
-                    Route::post('stripe_refund','stripe_refund');
-                    Route::post('paypal_refund','paypal_refund');
+                    // Route::post('stripe_refund','stripe_refund');
+                    // Route::post('paypal_refund','paypal_refund');
 
                 });
             });
@@ -710,6 +710,8 @@ Route::group(['middleware' => ['auth:api']], function(){
                             Route::get('show/{seller_id}','index');
                             Route::post('create','create');
                             Route::get('is_approved/{refund_id}','is_approved');
+                            Route::post('stripe_refund','stripe_refund');
+                            Route::post('paypal_refund','paypal_refund');
                         });
                     });
 

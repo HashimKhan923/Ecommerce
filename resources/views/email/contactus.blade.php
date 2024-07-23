@@ -66,7 +66,7 @@
             <p><strong>Message:</strong> {{ $message1 }}</p>
             <br>
 
-            <p>Regards,<br />Dragon Auto Mart Website</p>
+            <p>Regards,<br />Dragon Auto Mart</p>
         </div>
     </div>
 
