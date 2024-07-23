@@ -128,12 +128,12 @@ class RefundController extends Controller
 
         Notification::create([
             'customer_id' => $user->id,
-            'notification' => 'your order #'.$Order->id.' refund request has been fulfilled by admin and you will recive your amount in 5 to 10 working days.',
+            'notification' => 'your order #'.$Order->id.' refund request has been fulfilled and you will recive your amount in 5 to 10 working days.',
         ]);
 
         Notification::create([
             'customer_id' => $Order->sellers_id,
-            'notification' => 'your order #'.$Order->id.' refund request has been fulfilled by admin.'
+            'notification' => 'your order #'.$Order->id.' refund request has been fulfilled.'
         ]);
         
 
@@ -203,12 +203,12 @@ class RefundController extends Controller
             // Create notifications
             Notification::create([
                 'customer_id' => $user->id,
-                'notification' => 'Your order #' . $Order->id . ' refund request has been fulfilled by admin and you will receive your amount in 5 to 10 working days.',
+                'notification' => 'Your order #' . $Order->id . ' refund request has been fulfilled and you will receive your amount in 5 to 10 working days.',
             ]);
     
             Notification::create([
                 'customer_id' => $Order->sellers_id,
-                'notification' => 'Order #' . $Order->id . ' refund request has been fulfilled by admin.'
+                'notification' => 'Order #' . $Order->id . ' refund request has been fulfilled.'
             ]);
     
             // Send email notification
