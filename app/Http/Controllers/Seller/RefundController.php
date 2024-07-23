@@ -18,6 +18,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Refund as PaypalRefund;
 use PayPal\Api\Sale;
 use PayPal\Exception\PayPalException;
+use PayPal\Api\Amount;
 
 class RefundController extends Controller
 {
@@ -158,70 +159,74 @@ class RefundController extends Controller
 
     public function paypal_refund(Request $request)
     {
-
-            $apiContext = new ApiContext(
-                new OAuthTokenCredential(
-                    config('services.paypal.client_id'),
-                    config('services.paypal.secret')
-                )
-            );
-        
-            try {
-                $saleId = $request->payment_intent_id; // You need to get the sale ID from your previous transaction
-        
-                $refund = new PaypalRefund();
-                $refund->setAmount([
-                    'total' => $request->amount,
-                    'currency' => 'USD', // Set the currency according to your transaction
-                ]);
-        
-                $refund->setSaleId($saleId);
-        
-                // Perform the refund
-                $refundResult = $refund->refund($apiContext);
-
-
-
-        $change = Refund::where('id',$request->id)->first();
-        $change->refund_status = $request->refund_status;
-        $change->save();
-
-
-        Payout::where('order_id',$change->order_id)->delete();
-
-        $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
-        $user = User::where('id',$Order->customer_id)->first();
-
-        Notification::create([
-            'customer_id' => $user->id,
-            'notification' => 'your #'.$Order->id.' refund request has been fulfield by admin and you will recive your amount in 5 to 10 working days.',
-        ]);
-
-        Notification::create([
-            'customer_id' => $Order->sellers_id,
-            'notification' => '#'.$Order->id.' refund request has been fulfield by admin.'
-        ]);
-
-
-        Mail::send(
-            'email.Order.order_refund',
-            [
-                'buyer_name' => $user->name,
-                'order' => $Order,
-                // 'last_name' => $query->last_name
-            ],
-            function ($message) use ($user) {
-                $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                $message->to($user->email);
-                $message->subject('Order Refund');
-            }
+        $apiContext = new ApiContext(
+            new OAuthTokenCredential(
+                config('services.paypal.client_id'),
+                config('services.paypal.secret')
+            )
         );
-
+    
+        try {
+            $saleId = $request->payment_intent_id; // You need to get the sale ID from your previous transaction
+    
+            // Create a new refund amount object
+            $amount = new Amount();
+            $amount->setTotal($request->amount);
+            $amount->setCurrency('USD'); // Set the currency according to your transaction
+    
+            // Create a new refund object
+            $refund = new PaypalRefund();
+            $refund->setAmount($amount);
+    
+            // Get the sale object by sale ID
+            $sale = new Sale();
+            $sale->setId($saleId);
+    
+            // Perform the refund
+            $refundResult = $sale->refund($refund, $apiContext);
+    
+            // Update the refund status in the database
+            $change = Refund::where('id', $request->id)->first();
+            $change->refund_status = $request->refund_status;
+            $change->save();
+    
+            // Delete related payout
+            Payout::where('order_id', $change->order_id)->delete();
+    
+            // Get the order details
+            $Order = Order::with('order_detail.products.product_single_gallery')->where('id', $change->order_id)->first();
+            $user = User::where('id', $Order->customer_id)->first();
+    
+            // Create notifications
+            Notification::create([
+                'customer_id' => $user->id,
+                'notification' => 'Your order #' . $Order->id . ' refund request has been fulfilled by admin and you will receive your amount in 5 to 10 working days.',
+            ]);
+    
+            Notification::create([
+                'customer_id' => $Order->sellers_id,
+                'notification' => 'Order #' . $Order->id . ' refund request has been fulfilled by admin.'
+            ]);
+    
+            // Send email notification
+            Mail::send(
+                'email.Order.order_refund',
+                [
+                    'buyer_name' => $user->name,
+                    'order' => $Order,
+                ],
+                function ($message) use ($user) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to($user->email);
+                    $message->subject('Order Refund');
+                }
+            );
+    
             return response()->json(['success' => true, 'message' => 'Refund processed successfully']);
-
+    
         } catch (\Exception $e) {
             // Handle refund failure
-            return response()->json(['success' => false, 'message' => 'refund failed', 'error' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'Refund failed', 'error' => $e->getMessage()], 500);
         }
     }
 }
