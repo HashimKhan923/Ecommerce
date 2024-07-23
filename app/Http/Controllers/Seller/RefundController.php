@@ -162,10 +162,12 @@ class RefundController extends Controller
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
                 config('services.paypal.client_id'),
-                config('services.paypal.secret'),
-                config('services.paypal.mode')
+                config('services.paypal.secret')
             )
         );
+        $apiContext->setConfig([
+            'mode' => config('services.paypal.mode'),
+        ]);
     
         try {
             $saleId = $request->payment_intent_id; // You need to get the sale ID from your previous transaction
