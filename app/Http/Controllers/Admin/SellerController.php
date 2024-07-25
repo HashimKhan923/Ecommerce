@@ -13,7 +13,7 @@ class SellerController extends Controller
 {
     public function index()
     {
-        $Sellers = User::with('my_customers.customer','time_line','seller_order.order_timeline','seller_order.order_refund','stafs','shop.shop_policy','seller_information','SellingPlatforms','SocialPlatforms','BankDetail','CreditCard')->withCount('products')->where('user_type','seller')->get();
+        $Sellers = User::with('my_customers.customer','products','time_line','seller_order.order_timeline','seller_order.order_refund','stafs','shop.shop_policy','seller_information','SellingPlatforms','SocialPlatforms','BankDetail','CreditCard')->withCount('products')->where('user_type','seller')->get();
 
         return response()->json(["Sellers"=>$Sellers]);
     }
