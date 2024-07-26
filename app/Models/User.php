@@ -104,7 +104,7 @@ class User extends Authenticatable
 
     public function seller_time_line()
     {
-        return $this->hasMany(OrderTimeline::class,'seller_id','id');
+        return $this->hasMany(OrderTimeline::class,'seller_id','id')->where('customer_id',null)->where('order_id',null);
     }
 
     public function staf()
