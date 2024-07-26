@@ -102,6 +102,11 @@ class User extends Authenticatable
         return $this->hasMany(OrderTimeline::class,'customer_id','id');
     }
 
+    public function seller_time_line()
+    {
+        return $this->hasMany(OrderTimeline::class,'seller_id','id');
+    }
+
     public function staf()
     {
         return $this->belongsTo(User::class, 'seller_id');

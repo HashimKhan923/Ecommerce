@@ -14,7 +14,7 @@ class SellerController extends Controller
     public function index()
     {
         // $Sellers = User::with('my_customers.customer','time_line','seller_order.order_timeline','seller_order.order_refund','stafs','shop.shop_policy','shop.product','seller_information','SellingPlatforms','SocialPlatforms','BankDetail','CreditCard')->where('user_type','seller')->get();
-        $Sellers = User::with(['my_customers.customer', 'time_line', 'seller_order.order_timeline', 'seller_order.order_refund', 'stafs', 'shop' => function($query) {
+        $Sellers = User::with(['my_customers.customer', 'seller_time_line', 'seller_order.order_timeline', 'seller_order.order_refund', 'stafs', 'shop' => function($query) {
             $query->withCount('product');
         }, 'seller_information', 'SellingPlatforms', 'SocialPlatforms', 'BankDetail', 'CreditCard'])
         ->where('user_type', 'seller')
