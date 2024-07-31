@@ -67,5 +67,10 @@ class Order extends Model
         return $this->hasMany(OrderTimeline::class,'order_id','id');
     } 
 
+    public function payout()
+    {
+        return $this->hasMany(Payout::class,'order_id','id');
+    } 
+
     use HasFactory;
 }
