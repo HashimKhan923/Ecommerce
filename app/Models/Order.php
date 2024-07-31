@@ -69,7 +69,7 @@ class Order extends Model
 
     public function payout()
     {
-        return $this->hasMany(Payout::class,'order_id','id');
+        return $this->hasOne(Payout::class,'order_id','id');
     } 
 
     use HasFactory;
