@@ -60,9 +60,9 @@ class PayoutController extends Controller
                             'ip' => $request->ip(),
                         ],
                         'business_profile' => [
-                            'name' => $request->shop_name,
+                            'name' => $request->business_name,
                             // replace the request name with shop->id
-                            'url' => 'https://dragonautomart.com/store/' . $shop->id,
+                            'url' => 'https://dragonautomart.com/store/' . $request->shop_id,
                             'mcc' => '5533',
                         ],
                         'settings' => [
@@ -115,7 +115,7 @@ class PayoutController extends Controller
                     ]);
 
                     
-                    User::where('id', $new->id)->update([
+                    User::where('id', $request->seller_id)->update([
                         'stripe_account_id' => $account->id,
                         'bank_account_id' => $bankAccount->id
                     ]);
