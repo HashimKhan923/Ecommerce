@@ -61,8 +61,8 @@ class HomeController extends Controller
         })->inRandomOrder()->orderBy('average_rating', 'desc')
         ->take(10);
     
-        $FeaturedProducts = clone $Products;
-        $FeaturedProducts->where('featured', 1)->inRandomOrder()->take(10);
+       
+        $FeaturedProducts = $Products->where('featured', 1)->inRandomOrder()->take(10)->get();
     
         $allProducts = $Products->get();
         $Categories = Category::with(['sub_category'])
