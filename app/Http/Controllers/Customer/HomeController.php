@@ -62,7 +62,7 @@ class HomeController extends Controller
         ->take(10);
     
         $FeaturedProducts = clone $Products;
-        $FeaturedProducts->where('featured', 1)->take(10);
+        $FeaturedProducts->where('featured', 1)->inRandomOrder();
     
         $allProducts = $Products->get();
         $Categories = Category::with(['sub_category'])
