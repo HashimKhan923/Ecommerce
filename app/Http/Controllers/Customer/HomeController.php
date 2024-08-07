@@ -95,6 +95,7 @@ class HomeController extends Controller
     // });
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
+        $States = State::where('status', 1)->get();
         $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
         $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
@@ -113,7 +114,8 @@ class HomeController extends Controller
             'Models' => $Models,
             'Banners' => $Banners,
             'AllBanners' => $AllBanners,
-            'Shops' => $Shops
+            'Shops' => $Shops,
+            'States' => $States
         ]);
     }
 
