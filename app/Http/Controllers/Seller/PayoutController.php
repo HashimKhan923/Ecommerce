@@ -68,10 +68,10 @@ class PayoutController extends Controller
                         ],
                         'settings' => [
                             'payouts' => [
-                                'statement_descriptor'=> $request->shop_name
+                                'statement_descriptor'=> $request->business_name
                             ],
                             'payments' => [
-                                'statement_descriptor'=> $request->shop_name
+                                'statement_descriptor'=> $request->business_name
                             ]
                             
                         ],
