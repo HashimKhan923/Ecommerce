@@ -9,7 +9,8 @@ class Order extends Model
 {   
     protected $casts = [
         'information' => 'array',
-        'tags'=>'array'
+        'tags'=>'array',
+        'tax'=>'array'
     ];
 
     protected $fillable = [

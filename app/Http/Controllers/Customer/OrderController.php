@@ -70,6 +70,7 @@ class OrderController extends Controller
                     'shop_id' => $shopId,
                     'sellers_id' => $vendorId,
                     'amount' => $request->coupon_id ? $request->amount : $shopTotalAmount + $shopTotalShipment,
+                    'tax'=> $request->tax,
                     'information' => $request->information,
                     'stripe_payment_id' => $request->payment_id,
                     'payment_method' => $request->payment_method,
