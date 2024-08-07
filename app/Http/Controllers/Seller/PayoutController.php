@@ -43,6 +43,7 @@ class PayoutController extends Controller
 
     public function create_stripe_connect_account(Request $request)
     {
+        $account = null;
         try{
         Stripe::setApiKey(config('services.stripe.secret'));
             $account = Account::create([
@@ -127,17 +128,12 @@ class PayoutController extends Controller
                 {
                     
         
-                    if($account->id)
-                    {
+                    if ($account && $account->id) {
                         $account = Account::retrieve($account->id);
                         $account->delete();
                     }
         
         
-                    if($new)
-                    {
-                        User::find($new->id)->delete();
-                    }    
         
                     $response = ['status'=>false,"message" => $e->getMessage()];
                     return response($response, 422);
