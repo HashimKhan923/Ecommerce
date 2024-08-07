@@ -38,6 +38,25 @@ class StateController extends Controller
         return response($response, 200);
     }
 
+    public function changeStatus($id)
+    {
+        $status = State::where('id',$id)->first();
+
+        if($status->status == 1)
+        {
+            $status->status = 0;
+        }
+        else
+        {
+            $status->status = 1;
+        }
+        $status->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+
+    }
+
     public function delete($id)
     {
         State::find($id)->delete();

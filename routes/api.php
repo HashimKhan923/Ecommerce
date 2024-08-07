@@ -282,6 +282,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('create','create');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
+                    Route::get('status/{id}','changeStatus');
                     Route::post('multi_delete','multi_delete');
                 });
             });
@@ -1136,10 +1137,10 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         });
 
-                                                            /// Seller \\\
+                    /// Seller \\\
 
-                                                            Route::group(['prefix' => '/admin/seller/'], function() {
-                                                                Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {                               
-                                                                    Route::get('stripe_delete/{stripe_id}','strip_account_delete');
-                                                                });
-                                                            });
+                    Route::group(['prefix' => '/admin/seller/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {                               
+                            Route::get('stripe_delete/{stripe_id}','strip_account_delete');
+                        });
+                    });
