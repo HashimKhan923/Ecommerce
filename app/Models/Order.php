@@ -10,7 +10,9 @@ class Order extends Model
     protected $casts = [
         'information' => 'array',
         'tags'=>'array',
-        'tax'=>'array'
+        'tax'=>'array',
+        'signature'=>'array',
+        'insurance'=>'array'
     ];
 
     protected $fillable = [
@@ -25,6 +27,8 @@ class Order extends Model
         'payment_method',
         'payment_status',
         'refund',
+        'signature',
+        'insurance',
         'tax',
         'view_status'
     ];

@@ -71,6 +71,8 @@ class OrderController extends Controller
                     'sellers_id' => $vendorId,
                     'amount' => $request->coupon_id ? $request->amount : $shopTotalAmount + $shopTotalShipment,
                     'tax'=> $request->tax,
+                    'signature'=> $request->signature,
+                    'insurance'=> $request->insurance,
                     'information' => $request->information,
                     'stripe_payment_id' => $request->payment_id,
                     'payment_method' => $request->payment_method,
