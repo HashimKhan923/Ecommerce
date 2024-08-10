@@ -19,10 +19,10 @@ class FilterController extends Controller
         $keywords = explode(' ', $searchValue);
     
         $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
-            }, 
+            },
             'product_varient', 'discount', 'tax', 'shipping'
         ])
         ->where('published', 1)
@@ -32,58 +32,34 @@ class FilterController extends Controller
         ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->where(function ($query) use ($keywords, $searchValue) {
-            // Search for both keywords together
+        ->where(function ($query) use ($searchValue, $keywords) {
+            // Prioritize results where the full search value (both keywords together) appears
             $query->where('name', 'LIKE', "%$searchValue%")
-                // Prioritize products that contain both keywords in any order
+                // Prioritize results where all keywords appear in any order
                 ->orWhere(function ($q) use ($keywords) {
-                    $q->where(function ($subQuery) use ($keywords) {
-                        foreach ($keywords as $keyword) {
-                            $subQuery->where('name', 'LIKE', "%$keyword%");
-                        }
-                    });
+                    foreach ($keywords as $keyword) {
+                        $q->where('name', 'LIKE', "%$keyword%");
+                    }
                 })
-                // Prioritize products that contain at least one keyword
+                // Add products where either keyword appears
                 ->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
                         $q->orWhere('name', 'LIKE', "%$keyword%");
                     }
                 });
-    
-            // Apply similar logic for the description field
-            $query->orWhere('description', 'LIKE', "%$searchValue%")
-                ->orWhere(function ($q) use ($keywords) {
-                    $q->where(function ($subQuery) use ($keywords) {
-                        foreach ($keywords as $keyword) {
-                            $subQuery->where('description', 'LIKE', "%$keyword%");
-                        }
-                    });
-                })
-                ->orWhere(function ($q) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $q->orWhere('description', 'LIKE', "%$keyword%");
-                    }
-                });
-    
-            // Search in tags (assuming tags is a JSON field)
-            $query->orWhere(function ($q) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $q->orWhereJsonContains('tags', $keyword);
-                }
-            });
         })
-        // Prioritize results based on the keyword appearance
+        // Order the results by the appearance of both keywords together, then separately
         ->orderByRaw('CASE 
-                        WHEN name = ? THEN 1 
+                        WHEN name LIKE ? THEN 1 
                         WHEN name LIKE ? THEN 2 
-                        WHEN name LIKE ? THEN 3 
-                        ELSE 4 
-                    END', [$searchValue, "%$searchValue%", "%$keywords[0]%"])
-        // ->orderBy('featured', 'DESC')
+                        ELSE 3 
+                    END', ["%$searchValue%", "%$keywords[0]%$keywords[1]%"])
+        ->orderBy('featured', 'DESC')
         ->get();
     
         return response()->json(['data' => $data]);
     }
+    
     
 
     public function target_search(Request $request)
