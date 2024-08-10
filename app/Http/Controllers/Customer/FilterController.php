@@ -79,7 +79,7 @@ class FilterController extends Controller
                         WHEN name LIKE ? THEN 3 
                         ELSE 4 
                     END', [$searchValue, "%$searchValue%", "%$keywords[0]%"])
-        ->orderBy('featured', 'DESC')
+        // ->orderBy('featured', 'DESC')
         ->get();
     
         return response()->json(['data' => $data]);
