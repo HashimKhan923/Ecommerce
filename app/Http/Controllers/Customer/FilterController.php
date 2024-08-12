@@ -47,11 +47,13 @@ class FilterController extends Controller
             }
     
             // Check for any single keyword matching
-            $query->orWhere(function ($q) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $q->orWhere('name', 'LIKE', "%$keyword%");
-                }
-            });
+            if (count($keywords) > 1) {
+                $query->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhere('name', 'LIKE', "%$keyword%");
+                    }
+                });
+            }
         })
         ->orderByRaw('CASE 
                         WHEN name LIKE ? THEN 1 
