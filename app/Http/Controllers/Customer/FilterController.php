@@ -33,29 +33,23 @@ class FilterController extends Controller
         ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->where(function ($query) use ($keywords, $searchValue) {
-            // Search in name and description
-            $query->where('name', 'LIKE', "%$searchValue%")
-                ->orWhere('description', 'LIKE', "%$searchValue%")
-                ->orWhere(function ($q) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $q->orWhere('name', 'LIKE', "%$keyword%")
-                          ->orWhere('description', 'LIKE', "%$keyword%");
-                    }
-                });
+        ->where('name', 'LIKE', "%$searchValue%")
+        ->orWhere('description', 'LIKE', "%$searchValue%")
+        ->orWhere(function ($q) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $q->orWhere('name', 'LIKE', "%$keyword%")
+                  ->orWhere('description', 'LIKE', "%$keyword%");
+            }
+        })->
     
             // Search in tags (assuming tags is a JSON field)
-            $query->orWhere(function ($q) use ($keywords) {
+            orWhere(function ($q) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     $q->orWhereJsonContains('tags', $keyword);
                 }
-            });
-        })
-        ->orderByRaw('CASE 
-                            WHEN name = ? THEN 1 
-                            WHEN name LIKE ? THEN 2 
-                            ELSE 3 
-                        END', [$searchValue, "%$searchValue%","%$keywords[0]%$keywords[1]%"])
+            })
+        
+
         ->orderBy('featured', 'DESC')
         ->get();
     
