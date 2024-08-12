@@ -11,69 +11,57 @@ class FilterController extends Controller
 {
     public function search(Request $request)
     {
-
+        // Save the search keyword and increment the count
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
-
-
-        
-        // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
-
+    
+        // Extract keywords from search value
         $searchValue = $request->searchValue;
-
-
         $keywords = explode(' ', $searchValue);
-
+    
+        // Prepare the product query
         $data = Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             }, 'product_varient', 'discount', 'tax', 'shipping'
         ])
-            ->where('published', 1)
-            ->whereHas('shop', function ($query) {
-                $query->where('status', 1);
-            })->whereHas('stock', function ($query) {
-                $query->where('stock', '>', 0);
-            })
-            ->where(function ($query) use ($keywords, $searchValue) {
-                // Search in name
-                $query->where('name', 'LIKE', "%$searchValue%")
-                    ->orWhere(function ($q) use ($keywords) {
-                        foreach ($keywords as $keyword) {
-                            $q->orWhere('name', 'LIKE', "%$keyword%");
-                        }
-                    });
-
-                // Search in description
-                $query->orWhere('description', 'LIKE', "%$searchValue%")
-                    ->orWhere(function ($q) use ($keywords) {
-                        foreach ($keywords as $keyword) {
-                            $q->orWhere('description', 'LIKE', "%$keyword%");
-                        }
-                    });
-
-                // Search in tags (assuming tags is a JSON field)
-                $query->orWhere(function ($q) use ($keywords) {
+        ->where('published', 1)
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })
+        ->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })
+        ->where(function ($query) use ($keywords, $searchValue) {
+            // Search in name and description
+            $query->where('name', 'LIKE', "%$searchValue%")
+                ->orWhere('description', 'LIKE', "%$searchValue%")
+                ->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
-                        $q->orWhereJsonContains('tags', $keyword);
+                        $q->orWhere('name', 'LIKE', "%$keyword%")
+                          ->orWhere('description', 'LIKE', "%$keyword%");
                     }
                 });
-            })
-            ->orderByRaw('CASE 
-                                WHEN name = ? THEN 1 
-                                WHEN name LIKE ? THEN 2 
-                                WHEN name LIKE ? THEN 3 
-                                ELSE 4 
-                            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"])
-            ->orderBy('featured', 'DESC')
-            ->get();
-                
-            
-
-            return response()->json(['data' => $data]);
-        
+    
+            // Search in tags (assuming tags is a JSON field)
+            $query->orWhere(function ($q) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $q->orWhereJsonContains('tags', $keyword);
+                }
+            });
+        })
+        ->orderByRaw('CASE 
+                            WHEN name = ? THEN 1 
+                            WHEN name LIKE ? THEN 2 
+                            ELSE 3 
+                        END', [$searchValue, "%$searchValue%"])
+        ->orderBy('featured', 'DESC')
+        ->get();
+    
+        return response()->json(['data' => $data]);
     }
+    
 
     
     
