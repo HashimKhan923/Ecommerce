@@ -65,19 +65,19 @@ class Handler extends ExceptionHandler
     protected function sendErrorEmail(Throwable $e)
     {
         try {
-            Mail::send(
-                'email.exception',
-                [
-                    'exceptionMessage' => $e->getMessage(),
-                    'exceptionFile' => $e->getFile(),
-                    'exceptionLine' => $e->getLine(),
-                ],
-                function ($message) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('support@dragonautomart.com'); // Send to support email
-                    $message->subject('Dragon Exception');
-                }
-            );
+            // Mail::send(
+            //     'email.exception',
+            //     [
+            //         'exceptionMessage' => $e->getMessage(),
+            //         'exceptionFile' => $e->getFile(),
+            //         'exceptionLine' => $e->getLine(),
+            //     ],
+            //     function ($message) {
+            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+            //         $message->to('support@dragonautomart.com'); // Send to support email
+            //         $message->subject('Dragon Exception');
+            //     }
+            // );
         } catch (Throwable $mailException) {
             // Log the exception if the email sending fails
             // Here you might want to log the $mailException to a different log

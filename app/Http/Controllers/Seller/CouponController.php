@@ -106,11 +106,15 @@ class CouponController extends Controller
             $MyCustomers = MyCustomer::where('seller_id',$request->creator_id)->get();
             foreach ($MyCustomers as $customer) {
                 $customer = MyCustomer::find($customer->customer_id)->first();
-                Mail::send($emailView, $emailData, function ($message) use ($customer) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to($customer->email);
-                    $message->subject('New Coupon Available for You!');
-                });
+                if($customer)
+                {
+                    Mail::send($emailView, $emailData, function ($message) use ($customer) {
+                        $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                        $message->to($customer->customer->email);
+                        $message->subject('New Coupon Available for You!');
+                    });
+                }
+
             }
 
         }
