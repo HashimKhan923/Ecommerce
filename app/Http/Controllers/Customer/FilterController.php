@@ -34,7 +34,7 @@ class FilterController extends Controller
         })
         ->where(function ($query) use ($searchValue, $keywords) {
             // Prioritize results where the full search value (both keywords together) appears
-            $query->where('name', 'LIKE', "%$keywords%")
+            $query->where('name', 'LIKE', "%$searchValue%")
                 // Prioritize results where all keywords appear in any order
                 ->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
