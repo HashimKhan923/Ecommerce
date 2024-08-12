@@ -65,7 +65,7 @@ class FilterController extends Controller
                                 WHEN name LIKE ? THEN 2 
                                 WHEN name LIKE ? THEN 3 
                                 ELSE 4 
-                            END', [$searchValue, "%$searchValue%", "%$keywords[0]%"])
+                            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"])
             ->orderBy('featured', 'DESC')
             ->get();
                 
