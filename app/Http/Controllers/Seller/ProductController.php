@@ -305,26 +305,26 @@ class ProductController extends Controller
                     // Handle variants
                     if (!empty($productData['varients'])) {
                         foreach ($productData['varients'] as $item) {
-                            $imagePath = null;
+                            // $imagePath = null;
     
-                            if (isset($item['varient_image'])) {
-                                $response = Http::get($item['varient_image']);
+                            // if (isset($item['varient_image'])) {
+                            //     $response = Http::get($item['varient_image']);
     
-                                if ($response->successful()) {
-                                    $imageContent = $response->body();
-                                    $image = ImageFacade::make($imageContent);
-                                    $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+                            //     if ($response->successful()) {
+                            //         $imageContent = $response->body();
+                            //         $image = ImageFacade::make($imageContent);
+                            //         $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
     
-                                    if (!File::exists(public_path('ProductVarient'))) {
-                                        File::makeDirectory(public_path('ProductVarient'), 0755, true);
-                                    }
+                            //         if (!File::exists(public_path('ProductVarient'))) {
+                            //             File::makeDirectory(public_path('ProductVarient'), 0755, true);
+                            //         }
     
-                                    $image->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
-                                    $imagePath = $filename;
-                                } else {
-                                    return response()->json(['message' => 'Failed to download one or more images'], 500);
-                                }
-                            }
+                            //         $image->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
+                            //         $imagePath = $filename;
+                            //     } else {
+                            //         return response()->json(['message' => 'Failed to download one or more images'], 500);
+                            //     }
+                            // }
     
                             ProductVarient::create([
                                 'product_id' => $new->id,
@@ -336,7 +336,7 @@ class ProductController extends Controller
                                 'discount_price' => $item['varient_discount_price'] ?? 0.0,
                                 'sku' => $item['varient_sku'] ?? null,
                                 'stock' => $item['varient_stock'] ?? 0,
-                                'image' => $imagePath
+                                'image' => $item['varient_image'] ?? null
                             ]);
                         }
                     }
