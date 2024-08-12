@@ -77,6 +77,7 @@ class ProductController extends Controller
         'unit' => $request->unit,
         'sku' => $request->sku,
         'bar_code' => $request->bar_code,
+        'warranty' => $request->warranty,
         'condition' => $request->condition,
         'brand_id' => $request->brand_id,
         'model_id' => $request->model_id,
@@ -421,7 +422,7 @@ class ProductController extends Controller
         $productData = $request->only([
             'name', 'user_id', 'category_id', 'sub_category_id', 'height', 'weight',
             'lenght','width','year', 'make', 'unit', 'sku', 'bar_code', 'condition', 
-            'brand_id', 'model_id', 'tags', 'trim', 'description', 'price', 
+            'brand_id', 'model_id', 'tags', 'trim','warranty','description', 'price', 
             'cost_price', 'shop_id', 'shipping', 'featured', 'published', 'is_tax',
             'meta_title','meta_description','video', 'slug'
         ]);
