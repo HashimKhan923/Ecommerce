@@ -34,24 +34,25 @@ class FilterController extends Controller
             $query->where('stock', '>', 0);
         })
         ->where(function ($query) use ($searchValue, $keywords) {
-            // Prioritize results where the full search value appears
+            // Check for full search value
             $query->where('name', 'LIKE', "%$searchValue%");
     
-            // Search for results where all keywords appear in any order
-            $query->orWhere(function ($q) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $q->where('name', 'LIKE', "%$keyword%");
-                }
-            });
+            // Check for all keywords appearing in any order
+            if (count($keywords) > 1) {
+                $query->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->where('name', 'LIKE', "%$keyword%");
+                    }
+                });
+            }
     
-            // Search for results where at least one keyword appears
+            // Check for any single keyword matching
             $query->orWhere(function ($q) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     $q->orWhere('name', 'LIKE', "%$keyword%");
                 }
             });
         })
-        // Order the results by the appearance of both keywords together, then separately
         ->orderByRaw('CASE 
                         WHEN name LIKE ? THEN 1 
                         WHEN name LIKE ? THEN 2 
@@ -62,6 +63,7 @@ class FilterController extends Controller
     
         return response()->json(['data' => $data]);
     }
+    
     
     
     
