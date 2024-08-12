@@ -11,7 +11,6 @@ class FilterController extends Controller
 {
     public function search(Request $request)
     {
-        // Track the search keyword
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
@@ -34,23 +33,22 @@ class FilterController extends Controller
             $query->where('stock', '>', 0);
         })
         ->where(function ($query) use ($searchValue, $keywords) {
-            // Check for full search value
-            // $query->where('name', 'LIKE', "%$searchValue%");
-    
-            // Check for all keywords appearing in any order (if there are multiple keywords)
-            if (count($keywords) > 1) {
-                $query->orWhere(function ($q) use ($keywords) {
+            // Prioritize results where the full search value (both keywords together) appears
+            $query->where('name', 'LIKE', "%$searchValue%")
+                // Prioritize results where all keywords appear in any order
+                ->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
                         $q->where('name', 'LIKE', "%$keyword%");
                     }
+                })
+                // Add products where either keyword appears
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhere('name', 'LIKE', "%$keyword%");
+                    }
                 });
-            }
-    
-            // Check for any single keyword matching (this should always be included)
-            foreach ($keywords as $keyword) {
-                $query->orWhere('name', 'LIKE', "%$keyword%");
-            }
         })
+        // Order the results by the appearance of both keywords together, then separately
         ->orderByRaw('CASE 
                         WHEN name LIKE ? THEN 1 
                         WHEN name LIKE ? THEN 2 
@@ -61,6 +59,7 @@ class FilterController extends Controller
     
         return response()->json(['data' => $data]);
     }
+    
     
     
     
