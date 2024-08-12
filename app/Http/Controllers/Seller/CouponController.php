@@ -105,7 +105,7 @@ class CouponController extends Controller
         {
             $MyCustomers = MyCustomer::where('seller_id',$request->creator_id)->get();
             foreach ($MyCustomers as $customer) {
-                $customer = MyCustomer::find($customer->customer_id);
+                $customer = MyCustomer::where('customer_id',$customer->customer_id)->first();
                 if($customer)
                 {
                     Mail::send($emailView, $emailData, function ($message) use ($customer) {
