@@ -278,27 +278,27 @@ class ProductController extends Controller
                     if (isset($productData['photos'])) {
                         $order = 1;
                         foreach ($productData['photos'] as $url) {
-                            $response = Http::get($url);
+                            // $response = Http::get($url);
     
-                            if ($response->successful()) {
-                                $imageContent = $response->body();
-                                $image = ImageFacade::make($imageContent);
-                                $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
+                            // if ($response->successful()) {
+                            //     $imageContent = $response->body();
+                            //     $image = ImageFacade::make($imageContent);
+                            //     $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
     
-                                if (!File::exists(public_path('ProductGallery'))) {
-                                    File::makeDirectory(public_path('ProductGallery'), 0755, true);
-                                }
+                            //     if (!File::exists(public_path('ProductGallery'))) {
+                            //         File::makeDirectory(public_path('ProductGallery'), 0755, true);
+                            //     }
     
-                                $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
+                            //     $image->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
     
                                 ProductGallery::create([
                                     'product_id' => $new->id,
                                     'order' => $order++,
-                                    'image' => $filename
+                                    'image' => $url
                                 ]);
-                            } else {
-                                return response()->json(['message' => 'Failed to download one or more images'], 500);
-                            }
+                            // } else {
+                            //     return response()->json(['message' => 'Failed to download one or more images'], 500);
+                            // }
                         }
                     }
     
