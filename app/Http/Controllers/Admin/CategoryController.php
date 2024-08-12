@@ -66,9 +66,9 @@ class CategoryController extends Controller
         $update->name = $request->name;
         if($request->file('banner')){
 
-            if(public_path('CategoryBanner/'.$update->banner))
-            {
-                unlink(public_path('CategoryBanner/'.$update->banner));
+            $bannerPath = public_path('CategoryBanner/' . $update->banner);
+            if (file_exists($bannerPath) && is_file($bannerPath)) {
+                unlink($bannerPath);
             }
 
             $file= $request->banner;
@@ -78,9 +78,9 @@ class CategoryController extends Controller
         }
         if($request->file('icon')){
 
-            if(public_path('CategoryIcon/'.$update->icon))
-            {
-                unlink(public_path('CategoryIcon/'.$update->icon));
+            $iconPath = public_path('CategoryIcon/' . $update->icon);
+            if (file_exists($iconPath) && is_file($iconPath)) {
+                unlink($iconPath);
             }
 
             $file= $request->icon;
