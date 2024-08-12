@@ -13,8 +13,8 @@ class AuthController extends Controller
     public function login(Request $request) {
 
 
-        try
-        {
+        // try
+        // {
 
             $validator = Validator::make($request->all(), [
                 'email' => 'required|string|email|max:255',
@@ -110,27 +110,27 @@ class AuthController extends Controller
                 return response($response, 422);
             }
 
-        }
-        catch (\Exception $e) {
+        // }
+        // catch (\Exception $e) {
             
 
 
-            Mail::send(
-                'email.exception',
-                [
-                    'exceptionMessage' => $e->getMessage(),
-                    'exceptionFile' => $e->getFile(),
-                    'exceptionLine' => $e->getLine(),
-                ],
-                function ($message) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('support@dragonautomart.com'); // Send to support email
-                    $message->subject('Dragon Exception');
-                }
-            );
+        //     Mail::send(
+        //         'email.exception',
+        //         [
+        //             'exceptionMessage' => $e->getMessage(),
+        //             'exceptionFile' => $e->getFile(),
+        //             'exceptionLine' => $e->getLine(),
+        //         ],
+        //         function ($message) {
+        //             $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+        //             $message->to('support@dragonautomart.com'); // Send to support email
+        //             $message->subject('Dragon Exception');
+        //         }
+        //     );
 
-            return response()->json(['status' => 422, 'message' => $e->getMessage()]);
-        }
+        //     return response()->json(['status' => 422, 'message' => $e->getMessage()]);
+        // }
         
     }
 
