@@ -35,7 +35,7 @@ class FilterController extends Controller
         })
         ->where(function ($query) use ($searchValue, $keywords) {
             // Check for full search value
-            $query->where('name', 'LIKE', "%$searchValue%");
+            // $query->where('name', 'LIKE', "%$searchValue%");
     
             // Check for all keywords appearing in any order (if there are multiple keywords)
             if (count($keywords) > 1) {
