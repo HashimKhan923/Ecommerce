@@ -11,48 +11,70 @@ class FilterController extends Controller
 {
     public function search(Request $request)
     {
-        // Track the search keyword
+
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
-    
+
+
+        
+        // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
+
         $searchValue = $request->searchValue;
+
+
         $keywords = explode(' ', $searchValue);
-    
+
         $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
-            'product_gallery' => function ($query) {
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
-            },
-            'product_varient', 'discount', 'tax', 'shipping'
+            }, 'product_varient', 'discount', 'tax', 'shipping'
         ])
-        ->where('published', 1)
-        ->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })
-        ->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })
-        ->where(function ($query) use ($searchValue, $keywords) {
-            // Check for full search value (e.g., "Honda Light")
-            $query->where('name', 'LIKE', "%$searchValue%");
-    
-            // Check for individual keywords (e.g., "Honda" or "Light")
-            foreach ($keywords as $keyword) {
-                $query->orWhere('name', 'LIKE', "%$keyword%");
-            }
-        })
-        ->orderByRaw('CASE 
-                        WHEN name LIKE ? THEN 1 
-                        WHEN name LIKE ? THEN 2 
-                        ELSE 3 
-                    END', ["%$searchValue%", "%$keywords[0]%$keywords[1]%"])
-        ->orderBy('featured', 'DESC')
-        ->get();
-    
-        return response()->json(['data' => $data]);
+            ->where('published', 1)
+            ->whereHas('shop', function ($query) {
+                $query->where('status', 1);
+            })->whereHas('stock', function ($query) {
+                $query->where('stock', '>', 0);
+            })
+            ->where(function ($query) use ($keywords, $searchValue) {
+                // Search in name
+                $query->where('name', 'LIKE', "%$searchValue%")
+                    ->orWhere(function ($q) use ($keywords) {
+                        foreach ($keywords as $keyword) {
+                            $q->orWhere('name', 'LIKE', "%$keyword%");
+                        }
+                    });
+
+                // Search in description
+                $query->orWhere('description', 'LIKE', "%$searchValue%")
+                    ->orWhere(function ($q) use ($keywords) {
+                        foreach ($keywords as $keyword) {
+                            $q->orWhere('description', 'LIKE', "%$keyword%");
+                        }
+                    });
+
+                // Search in tags (assuming tags is a JSON field)
+                $query->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhereJsonContains('tags', $keyword);
+                    }
+                });
+            })
+            ->orderByRaw('CASE 
+                                WHEN name = ? THEN 1 
+                                WHEN name LIKE ? THEN 2 
+                                WHEN name LIKE ? THEN 3 
+                                ELSE 4 
+                            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"])
+            ->orderBy('featured', 'DESC')
+            ->get();
+                
+            
+
+            return response()->json(['data' => $data]);
+        
     }
-    
+
     
     
     
