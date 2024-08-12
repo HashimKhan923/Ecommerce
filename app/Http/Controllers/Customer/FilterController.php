@@ -37,7 +37,7 @@ class FilterController extends Controller
             // Check for full search value
             $query->where('name', 'LIKE', "%$searchValue%");
     
-            // Check for all keywords appearing in any order
+            // Check for all keywords appearing in any order (if there are multiple keywords)
             if (count($keywords) > 1) {
                 $query->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
@@ -46,13 +46,9 @@ class FilterController extends Controller
                 });
             }
     
-            // Check for any single keyword matching
-            if (count($keywords) > 1) {
-                $query->orWhere(function ($q) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $q->orWhere('name', 'LIKE', "%$keyword%");
-                    }
-                });
+            // Check for any single keyword matching (this should always be included)
+            foreach ($keywords as $keyword) {
+                $query->orWhere('name', 'LIKE', "%$keyword%");
             }
         })
         ->orderByRaw('CASE 
@@ -65,6 +61,7 @@ class FilterController extends Controller
     
         return response()->json(['data' => $data]);
     }
+    
     
     
     
