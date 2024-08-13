@@ -250,7 +250,7 @@ class ProductController extends Controller
                     'weight' => $productData['weight'] ?? 0,
                     'lenght' => $productData['lenght'] ?? 0,
                     'width' => $productData['width'] ?? 0,
-                    'start_year' => isset($productData['year']) ? json_encode($productData['year']) : json_encode([date('Y')]),
+                    'start_year' => $productData['year'] ?? null,
                     'make' => $productData['make'] ?? null,
                     'unit' => $productData['unit'] ?? null,
                     'sku' => $productData['sku'] ?? null,
