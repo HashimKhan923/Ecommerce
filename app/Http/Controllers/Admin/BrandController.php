@@ -70,10 +70,12 @@ class BrandController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            if(public_path('Brand/'.$update->logo))
-            {
-                unlink(public_path('Brand/'.$update->logo));
+            $logoPath = public_path('Brand/' . $update->logo);
+            if (file_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
             }
+    
+
 
             $file= $request->logo;
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -83,10 +85,10 @@ class BrandController extends Controller
 
         if($request->file('banner')){
 
-            // if(public_path('Brand/'.$update->banner))
-            // {
-            //     unlink(public_path('Brand/'.$update->banner));
-            // }
+            $bannerPath = public_path('Brand/' . $update->banner);
+            if (file_exists($bannerPath) && is_file($bannerPath)) {
+                unlink($bannerPath);
+            }
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();

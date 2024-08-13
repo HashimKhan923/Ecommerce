@@ -93,9 +93,9 @@ class ModelController extends Controller
         $update->name = $request->name;
         if($request->file('logo')){
 
-            if($update->logo)
-            {
-                unlink(public_path('Model/'.$update->logo));
+            $logoPath = public_path('Model/' . $update->logo);
+            if (file_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
             }
 
             $file= $request->logo;
@@ -106,10 +106,10 @@ class ModelController extends Controller
 
         if($request->file('banner')){
 
-            // if($update->banner)
-            // {
-            //     unlink(public_path('Model/'.$update->banner));
-            // }
+            $bannerPath = public_path('Model/' . $update->banner);
+            if (file_exists($bannerPath) && is_file($bannerPath)) {
+                unlink($bannerPath);
+            }
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -138,10 +138,17 @@ class ModelController extends Controller
             return response($response, 200);
         }
 
-        if($file->logo)
-        {
-            unlink(public_path('Model/'.$file->logo));
+        $logoPath = public_path('Model/' . $file->logo);
+        if (file_exists($logoPath) && is_file($logoPath)) {
+            unlink($logoPath);
         }
+
+        $bannerPath = public_path('Model/' . $file->banner);
+        if (file_exists($bannerPath) && is_file($bannerPath)) {
+            unlink($bannerPath);
+        }
+
+
 
       $file->delete();
 
@@ -163,9 +170,14 @@ class ModelController extends Controller
                 return response($response, 200);
             }
 
-            if($item->logo)
-            {
-                unlink(public_path('Model/'.$item->logo));
+            $logoPath = public_path('Model/' . $item->logo);
+            if (file_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
+            }
+    
+            $bannerPath = public_path('Model/' . $item->banner);
+            if (file_exists($bannerPath) && is_file($bannerPath)) {
+                unlink($bannerPath);
             }
 
             $item->delete();
