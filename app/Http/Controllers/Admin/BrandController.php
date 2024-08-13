@@ -63,9 +63,6 @@ class BrandController extends Controller
     public function update(Request $request)
     {
 
-
-
-
         $update = Brand::where('id',$request->id)->first();
         $update->name = $request->name;
         if($request->file('logo')){
