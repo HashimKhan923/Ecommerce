@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\ProductGallery;
+use App\Models\ProductVarient;
 use Mail;
 use Stripe\Stripe;
 use Stripe\Account;
@@ -74,10 +76,41 @@ class SellerController extends Controller
         }
     
         // Check for products under this seller
-        $checkProduct = Product::where('user_id', $id)->first();
-        if ($checkProduct) {
-            $response = ['status' => false, 'message' => 'First delete the products under this seller!'];
-            return response($response, 200);
+        $Product = Product::where('user_id', $id)->get();
+
+        if ($Product) {
+            foreach($Product as $product)
+            {
+                $ProductGallery=ProductGallery::where('product_id',$product->id)->get();
+                if($ProductGallery)
+                {
+                    foreach($ProductGallery as $product_gallery)
+                    {
+                        $fileToDelete = public_path('ProductGallery/'.$product_gallery->image);
+
+                        if (file_exists($fileToDelete)) {
+                            unlink($fileToDelete);
+                        } 
+                    }
+                }
+
+
+                $ProductVarient=ProductVarient::where('product_id',$product->id)->get();
+                if($ProductVarient)
+                {
+                    foreach($ProductVarient as $product_varient)
+                    {
+                        $fileToDelete = public_path('ProductVarient/'.$product_varient->image);
+
+                        if (file_exists($fileToDelete)) {
+                            unlink($fileToDelete);
+                        } 
+                    }
+                }
+
+            }
+            // $response = ['status' => false, 'message' => 'First delete the products under this seller!'];
+            // return response($response, 200);
         }
     
         Stripe::setApiKey(config('services.stripe.secret'));
