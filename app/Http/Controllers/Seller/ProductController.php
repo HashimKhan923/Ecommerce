@@ -445,11 +445,18 @@ class ProductController extends Controller
             {
                 foreach($request->string_images as $image)
                 {
+                    if (isset($image['image_id'])) {
+                        $gallery = ProductGallery::find($image['image_id']);
+                        if ($gallery) {
+                            $gallery->update(['order' => $image['order']]);
+                        }
+                    } else {
                     ProductGallery::create([
                         'product_id' => $product->id,
                         'image' => $image['file'],
                         'order' => $image['order']
                     ]);
+                    }
                 }
             }
 
