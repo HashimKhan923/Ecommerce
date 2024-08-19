@@ -440,6 +440,20 @@ class ProductController extends Controller
         $product->update($productData);
     
         try {
+
+            if($request->string_images)
+            {
+                foreach($request->string_images as $image)
+                {
+                    ProductGallery::create([
+                        'product_id' => $product->id,
+                        'image' => $image['file'],
+                        'order' => $image['order']
+                    ]);
+                }
+            }
+
+
             // Update product images
             if ($request->photos) {
                 foreach ($request->photos as $image) {

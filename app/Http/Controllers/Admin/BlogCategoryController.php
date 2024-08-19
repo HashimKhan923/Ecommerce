@@ -17,10 +17,10 @@ class BlogCategoryController extends Controller
 
     public function create(Request $request)
     {
-        $new = new BlogCategory();
-        $new->name = $request->name;
-        $new->slug = $request->slug;
-        $new->save();
+        BlogCategory::create([
+            'name' => $request->name,
+        ]);
+
 
         $response = ['status'=>true,"message" => "Blog Category Created Successfully!"];
         return response($response, 200);
@@ -28,10 +28,9 @@ class BlogCategoryController extends Controller
 
     public function update(Request $request)
     {
-        $update = BlogCategory::where('id',$request->id)->first();
-        $update->name = $request->name;
-        $update->slug = $request->slug;
-        $update->save();
+        BlogCategory::where('id',$request->id)->update([
+            'name' => $request->name
+        ]);
 
         $response = ['status'=>true,"message" => "Blog Category Updated Successfully!"];
         return response($response, 200);
