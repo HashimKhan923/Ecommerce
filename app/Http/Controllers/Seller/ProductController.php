@@ -518,6 +518,10 @@ class ProductController extends Controller
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
                             $varientDataFormatted['image'] = $filename;
                         }
+                        else
+                        {
+                            $varientDataFormatted['image'] = $varientData['varient_image'];
+                        }
                         $varient->update($varientDataFormatted);
                     } else {
                         if (isset($varientData['varient_image']) && is_uploaded_file($varientData['varient_image'])) {
@@ -526,6 +530,10 @@ class ProductController extends Controller
                             $compressedImage = ImageFacade::make($image->getRealPath());
                             $compressedImage->encode('webp')->save(public_path('ProductVarient') . '/' . $filename);
                             $varientDataFormatted['image'] = $filename;
+                        }
+                        else
+                        {
+                            $varientDataFormatted['image'] = $varientData['varient_image'];
                         }
                         $varientDataFormatted['product_id'] = $product->id;
                         ProductVarient::create($varientDataFormatted);
