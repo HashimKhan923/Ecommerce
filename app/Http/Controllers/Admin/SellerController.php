@@ -71,120 +71,89 @@ class SellerController extends Controller
         $seller = User::find($id);
     
         if (!$seller) {
-            $response = ['status' => false, 'message' => 'Seller not found!'];
-            return response($response, 404);
+            return response(['status' => false, 'message' => 'Seller not found!'], 404);
         }
     
         // Check for products under this seller
-        $Product = Product::where('user_id', $id)->get();
-
-        if ($Product) {
-            foreach($Product as $product)
-            {
-                $ProductGallery=ProductGallery::where('product_id',$product->id)->get();
-                if($ProductGallery)
-                {
-                    foreach($ProductGallery as $product_gallery)
-                    {
-                        $fileToDelete = public_path('ProductGallery/'.$product_gallery->image);
-
-                        if (file_exists($fileToDelete)) {
-                            unlink($fileToDelete);
-                        } 
-                    }
-                }
-
-
-                $ProductVarient=ProductVarient::where('product_id',$product->id)->get();
-                if($ProductVarient)
-                {
-                    foreach($ProductVarient as $product_varient)
-                    {
-                        $fileToDelete = public_path('ProductVarient/'.$product_varient->image);
-
-                        if (file_exists($fileToDelete)) {
-                            unlink($fileToDelete);
-                        } 
-                    }
-                }
-
-            }
-            // $response = ['status' => false, 'message' => 'First delete the products under this seller!'];
-            // return response($response, 200);
-        }
+        $products = Product::where('user_id', $id)->get();
     
-        Stripe::setApiKey(config('services.stripe.secret'));
+        if ($products->isNotEmpty()) {
+            foreach ($products as $product) {
+                $this->deleteProductRelatedImages($product->id, 'ProductGallery', 'ProductGallery');
+                $this->deleteProductRelatedImages($product->id, 'ProductVarient', 'ProductVarient');
+            }
+        }
     
         // Delete the Stripe account if it exists
         if ($seller->stripe_account_id) {
+            Stripe::setApiKey(config('services.stripe.secret'));
+    
             try {
                 $account = Account::retrieve($seller->stripe_account_id);
                 $account->delete();
             } catch (\Exception $e) {
-                $response = ['status' => false, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
-                return response($response, 500);
+                return response(['status' => false, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()], 500);
             }
         }
     
         $seller->delete();
     
-        $response = ['status' => true, 'message' => 'Seller and Stripe account deleted successfully!'];
-        return response($response, 200);
+        return response(['status' => true, 'message' => 'Seller and Stripe account deleted successfully!'], 200);
     }
-
 
     public function multi_delete(Request $request)
     {
         $sellerIds = $request->ids;
-    
-        if (!is_array($sellerIds) || empty($sellerIds)) {
-            $response = ['status' => false, 'message' => 'No seller IDs provided!'];
-            return response($response, 400);
-        }
-    
-        Stripe::setApiKey(config('services.stripe.secret'));
-    
-        $errors = [];
-        $deletedSellers = [];
-    
         foreach ($sellerIds as $id) {
             $seller = User::find($id);
-    
+
             if (!$seller) {
-                $errors[] = ['id' => $id, 'message' => 'Seller not found!'];
-                continue;
+                continue; // Skip this user if not found
             }
-    
+
             // Check for products under this seller
-            $checkProduct = Product::where('user_id', $id)->first();
-            if ($checkProduct) {
-                $errors[] = ['id' => $id, 'message' => 'First delete the products under this seller!'];
-                continue;
+            $products = Product::where('user_id', $id)->get();
+
+            if ($products->isNotEmpty()) {
+                foreach ($products as $product) {
+                    $this->deleteProductRelatedImages($product->id, 'ProductGallery', 'ProductGallery');
+                    $this->deleteProductRelatedImages($product->id, 'ProductVarient', 'ProductVarient');
+                }
             }
-    
+
             // Delete the Stripe account if it exists
             if ($seller->stripe_account_id) {
+                Stripe::setApiKey(config('services.stripe.secret'));
+
                 try {
                     $account = Account::retrieve($seller->stripe_account_id);
                     $account->delete();
                 } catch (\Exception $e) {
-                    $errors[] = ['id' => $id, 'message' => 'Error deleting Stripe account: ' . $e->getMessage()];
+                    // Log the error but continue deleting other users
+                    \Log::error("Error deleting Stripe account for user ID {$id}: " . $e->getMessage());
                     continue;
                 }
             }
-    
+
             $seller->delete();
-            $deletedSellers[] = $id;
         }
-    
-        $response = [
-            'status' => true,
-            'message' => 'Sellers processed successfully!',
-            'deleted' => $deletedSellers,
-            'errors' => $errors
-        ];
-        return response($response, 200);
+
+        return response(['status' => true, 'message' => 'Users and their Stripe accounts deleted successfully!'], 200);
     }
+    
+    private function deleteProductRelatedImages($productId, $relatedModel, $folder)
+    {
+        $relatedItems = app("App\\Models\\{$relatedModel}")->where('product_id', $productId)->get();
+    
+        foreach ($relatedItems as $item) {
+            $fileToDelete = public_path("{$folder}/{$item->image}");
+    
+            if (file_exists($fileToDelete)) {
+                unlink($fileToDelete);
+            }
+        }
+    }
+    
 
     public function strip_account_delete($stripe_id)
     {

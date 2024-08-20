@@ -21,56 +21,57 @@ class FilterController extends Controller
         // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
 
         $searchValue = $request->searchValue;
-$keywords = explode(' ', $searchValue);
+        $keywords = explode(' ', $searchValue);
 
-$data = Product::with([
-    'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
-        $query->orderBy('order', 'asc');
-    }, 'product_varient', 'discount', 'tax', 'shipping'
-])
-->where('published', 1)
-->whereHas('shop', function ($query) {
-    $query->where('status', 1);
-})->whereHas('stock', function ($query) {
-    $query->where('stock', '>', 0);
-})
-->where(function ($query) use ($keywords, $searchValue) {
-    $query->where('name', 'LIKE', "%$searchValue%")
-        ->orWhere(function ($q) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $q->orWhere('name', 'LIKE', "%$keyword%");
-            }
+        $data = Product::with([
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }, 'product_varient', 'discount', 'tax', 'shipping'
+        ])
+        ->where('published', 1)
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
         })
-        ->orWhere('description', 'LIKE', "%$searchValue%")
-        ->orWhere(function ($q) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $q->orWhere('description', 'LIKE', "%$keyword%");
-            }
+        ->where(function ($query) use ($keywords, $searchValue) {
+            $query->where('sku',$searchValue)
+            ->orWhere('name', 'LIKE', "%$searchValue%")
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhere('name', 'LIKE', "%$keyword%");
+                    }
+                })
+                ->orWhere('description', 'LIKE', "%$searchValue%")
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhere('description', 'LIKE', "%$keyword%");
+                    }
+                })
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhereJsonContains('tags', $keyword);
+                    }
+                });
         })
-        ->orWhere(function ($q) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $q->orWhereJsonContains('tags', $keyword);
-            }
-        });
-})
-->when(count($keywords) >= 2, function ($query) use ($searchValue, $keywords) {
-    return $query->orderByRaw('CASE 
-        WHEN name = ? THEN 1 
-        WHEN name LIKE ? THEN 2 
-        WHEN name LIKE ? THEN 3 
-        ELSE 4 
-    END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
-}, function ($query) use ($searchValue) {
-    return $query->orderByRaw('CASE 
-        WHEN name = ? THEN 1 
-        WHEN name LIKE ? THEN 2 
-        ELSE 3 
-    END', [$searchValue, "%$searchValue%"]);
-})
-->orderBy('featured', 'DESC')
-->get();
+        ->when(count($keywords) >= 2, function ($query) use ($searchValue, $keywords) {
+            return $query->orderByRaw('CASE 
+                WHEN name = ? THEN 1 
+                WHEN name LIKE ? THEN 2 
+                WHEN name LIKE ? THEN 3 
+                ELSE 4 
+            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
+        }, function ($query) use ($searchValue) {
+            return $query->orderByRaw('CASE 
+                WHEN name = ? THEN 1 
+                WHEN name LIKE ? THEN 2 
+                ELSE 3 
+            END', [$searchValue, "%$searchValue%"]);
+        })
+        ->orderBy('featured', 'DESC')
+        ->get();
 
-return response()->json(['data' => $data]);
+        return response()->json(['data' => $data]);
         
     }
 
