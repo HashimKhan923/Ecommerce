@@ -76,11 +76,10 @@ class DashboardController extends Controller
         $draftProducts = Product::where('shop_id', $shop_id)->where('published', 0)->count();
 
         // Order Data
-        $orders = Order::where('shop_id', $shop_id)->get();
+        $payouts = Shop::with('product','order.payout','shop_policy')->where('id',$shop_id)->get();
  
 
         // Payout Data
-        $payouts = Shop::with('order.payout')->where('id',$shop_id)->get();
 
 
         return response()->json([
@@ -89,9 +88,6 @@ class DashboardController extends Controller
             'featuredProducts' => $featuredProducts,
             'activeProducts' => $activeProducts,
             'draftProducts' => $draftProducts,
-            
-            // Order Data
-            'orders' => $orders,
             // Payout Data
             'payouts' => $payouts,
 
