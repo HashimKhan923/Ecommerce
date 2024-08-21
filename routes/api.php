@@ -802,6 +802,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
 
 
+                                             /// Help Center \\\
+
+                Route::group(['prefix' => '/seller/helpcenter'], function() {
+                Route::controller(App\Http\Controllers\Seller\HelpCenterController::class)->group(function () {
+                    Route::get('show','index');
+                });
+            });
+
+
 
 
 

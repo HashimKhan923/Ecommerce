@@ -22,23 +22,48 @@ use App\Models\Notification;
 class DashboardController extends Controller
 {
     public function index($id)
-    {
+{
+    // Product Data
+    $totalProducts = Product::where('user_id', $id)->count();
+    $featuredProducts = Product::where('user_id', $id)->where('featured', 1)->count();
+    $activeProducts = Product::where('user_id', $id)->where('published', 1)->count();
+    $draftProducts = Product::where('user_id', $id)->where('published', 0)->count();
 
+    // Order Data
+    $totalOrders = Order::where('sellers_id', $id)->count();
+    $fulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->count();
+    $unfulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Pending')->count();
+    $refundedOrders = Order::where('sellers_id', $id)->whereHas('order_refund')->count();
+    $totalSales = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->sum('total_amount'); 
 
-        $SubscribeUser = SubscribeUser::where('user_id',$id)->first();
-        $Products = Product::where('user_id',$id)->get();
-        $Orders = Order::with('order_refund')->where('sellers_id',$id)->get();
-        $Payouts = Payout::where('seller_id',$id)->get();
-        $Categories = Category::where('is_active',1)->get();
-        $Brands = Brand::with('model')->where('is_active',1)->get();
-        $SellerFandQ = SellerFandQ::all();
-        $SellerGuideVideo = SellerGuideVideo::all();
-        $TotalSale = MyCustomer::where('seller_id',$id)->sum('sale') ?? 0;
-        $Notifications = Notification::where('customer_id',$id)->get();
+    // Payout Data
+    $totalPayouts = Payout::where('seller_id', $id)->count();
+    $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
+    $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
+    $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
 
+    return response()->json([
+        // Product Data
+        'totalProducts' => $totalProducts,
+        'featuredProducts' => $featuredProducts,
+        'activeProducts' => $activeProducts,
+        'draftProducts' => $draftProducts,
+        
+        // Order Data
+        'totalOrders' => $totalOrders,
+        'fulfilledOrders' => $fulfilledOrders,
+        'unfulfilledOrders' => $unfulfilledOrders,
+        'refundedOrders' => $refundedOrders,
+        'totalSales' => $totalSales,
+        
+        // Payout Data
+        'totalPayouts' => $totalPayouts,
+        'paidPayouts' => $paidPayouts,
+        'unpaidPayouts' => $unpaidPayouts,
+        'totalPayoutAmount' => $totalPayoutAmount
+    ]);
+}
 
-        return response()->json(['SubscribeUser'=>$SubscribeUser,'Products'=>$Products,'Orders'=>$Orders,'Payouts'=>$Payouts,'Categories'=>$Categories,'Brands'=>$Brands,'SellerFandQ'=>$SellerFandQ,'SellerGuideVideo'=>$SellerGuideVideo,'TotalSale'=>$TotalSale,'Notifications'=>$Notifications]);
-    }
 
     public function searchByshop($shop_id)
     {
