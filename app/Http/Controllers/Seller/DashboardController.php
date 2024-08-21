@@ -77,18 +77,11 @@ class DashboardController extends Controller
 
         // Order Data
         $orders = Order::where('shop_id', $shop_id)->get();
-        $totalOrders = Order::where('shop_id', $shop_id)->count();
-        $fulfilledOrders = Order::where('shop_id', $shop_id)->where('delivery_status', 'Delivered')->count();
-        $unfulfilledOrders = Order::where('shop_id', $shop_id)->where('delivery_status', 'Pending')->count();
-        $refundedOrders = Order::where('shop_id', $shop_id)->whereHas('order_refund')->count();
-        $totalSales = Order::where('shop_id', $shop_id)->where('delivery_status', 'Delivered')->sum('amount'); 
+ 
 
         // Payout Data
         $payouts = Shop::with('order.payout')->where('id',$shop_id)->get();
-        $totalPayouts = Payout::where('seller_id', $id)->count();
-        $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
-        $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
-        $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
+
 
         return response()->json([
             // Product Data
@@ -99,18 +92,9 @@ class DashboardController extends Controller
             
             // Order Data
             'orders' => $orders,
-            'totalOrders' => $totalOrders,
-            'fulfilledOrders' => $fulfilledOrders,
-            'unfulfilledOrders' => $unfulfilledOrders,
-            'refundedOrders' => $refundedOrders,
-            'totalSales' => $totalSales,
-            
             // Payout Data
             'payouts' => $payouts,
-            'totalPayouts' => $totalPayouts,
-            'paidPayouts' => $paidPayouts,
-            'unpaidPayouts' => $unpaidPayouts,
-            'totalPayoutAmount' => $totalPayoutAmount
+
         ]);
 
     }
