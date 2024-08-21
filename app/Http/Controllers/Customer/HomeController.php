@@ -99,9 +99,7 @@ class HomeController extends Controller
         $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
         $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
-        $Shops = Shop::with('seller', 'shop_policy', 'product.shop', 'product.product_gallery',
-            'product.category','product.sub_category','product.brand', 'product.model', 'product.stock',
-            'product.product_varient', 'product.reviews.user', 'product.tax')->where('status',1)->get();
+        $Shops = Shop::with('seller', 'shop_policy')->where('status',1)->get();
     
         return response()->json([
             'Products' => $allProducts,
