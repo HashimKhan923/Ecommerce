@@ -76,7 +76,7 @@ class DashboardController extends Controller
         $draftProducts = Product::where('shop_id', $shop_id)->where('published', 0)->count();
 
         // Order Data
-        $payouts = Shop::with('product','order.payout','shop_policy')->where('id',$shop_id)->get();
+        $orders = Shop::with('order.payout')->where('id',$shop_id)->get();
  
 
         // Payout Data
@@ -89,7 +89,7 @@ class DashboardController extends Controller
             'activeProducts' => $activeProducts,
             'draftProducts' => $draftProducts,
             // Payout Data
-            'payouts' => $payouts,
+            'orders' => $orders,
 
         ]);
 
