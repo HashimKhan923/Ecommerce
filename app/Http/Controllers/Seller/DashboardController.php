@@ -22,54 +22,96 @@ use App\Models\Notification;
 class DashboardController extends Controller
 {
     public function index($id)
-{
-    // Product Data
-    $totalProducts = Product::where('user_id', $id)->count();
-    $featuredProducts = Product::where('user_id', $id)->where('featured', 1)->count();
-    $activeProducts = Product::where('user_id', $id)->where('published', 1)->count();
-    $draftProducts = Product::where('user_id', $id)->where('published', 0)->count();
-
-    // Order Data
-    $totalOrders = Order::where('sellers_id', $id)->count();
-    $fulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->count();
-    $unfulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Pending')->count();
-    $refundedOrders = Order::where('sellers_id', $id)->whereHas('order_refund')->count();
-    $totalSales = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->sum('amount'); 
-
-    // Payout Data
-    $totalPayouts = Payout::where('seller_id', $id)->count();
-    $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
-    $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
-    $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
-
-    return response()->json([
+    {
         // Product Data
-        'totalProducts' => $totalProducts,
-        'featuredProducts' => $featuredProducts,
-        'activeProducts' => $activeProducts,
-        'draftProducts' => $draftProducts,
-        
+        $totalProducts = Product::where('user_id', $id)->count();
+        $featuredProducts = Product::where('user_id', $id)->where('featured', 1)->count();
+        $activeProducts = Product::where('user_id', $id)->where('published', 1)->count();
+        $draftProducts = Product::where('user_id', $id)->where('published', 0)->count();
+
         // Order Data
-        'totalOrders' => $totalOrders,
-        'fulfilledOrders' => $fulfilledOrders,
-        'unfulfilledOrders' => $unfulfilledOrders,
-        'refundedOrders' => $refundedOrders,
-        'totalSales' => $totalSales,
-        
+        $orders = Order::where('sellers_id', $id)->get();
+        $totalOrders = Order::where('sellers_id', $id)->count();
+        $fulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->count();
+        $unfulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Pending')->count();
+        $refundedOrders = Order::where('sellers_id', $id)->whereHas('order_refund')->count();
+        $totalSales = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->sum('amount'); 
+
         // Payout Data
-        'totalPayouts' => $totalPayouts,
-        'paidPayouts' => $paidPayouts,
-        'unpaidPayouts' => $unpaidPayouts,
-        'totalPayoutAmount' => $totalPayoutAmount
-    ]);
-}
+        $totalPayouts = Payout::where('seller_id', $id)->count();
+        $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
+        $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
+        $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
+
+        return response()->json([
+            // Product Data
+            'totalProducts' => $totalProducts,
+            'featuredProducts' => $featuredProducts,
+            'activeProducts' => $activeProducts,
+            'draftProducts' => $draftProducts,
+            
+            // Order Data
+            'orders' => $orders,
+            'totalOrders' => $totalOrders,
+            'fulfilledOrders' => $fulfilledOrders,
+            'unfulfilledOrders' => $unfulfilledOrders,
+            'refundedOrders' => $refundedOrders,
+            'totalSales' => $totalSales,
+            
+            // Payout Data
+            'totalPayouts' => $totalPayouts,
+            'paidPayouts' => $paidPayouts,
+            'unpaidPayouts' => $unpaidPayouts,
+            'totalPayoutAmount' => $totalPayoutAmount
+        ]);
+    }
 
 
     public function searchByshop($shop_id)
     {
-        $Shop = Shop::with('product','order.payout','shop_policy')->where('id',$shop_id)->get();
+        // Product Data
+        $totalProducts = Product::where('shop_id', $shop_id)->count();
+        $featuredProducts = Product::where('shop_id', $shop_id)->where('featured', 1)->count();
+        $activeProducts = Product::where('shop_id', $shop_id)->where('published', 1)->count();
+        $draftProducts = Product::where('shop_id', $shop_id)->where('published', 0)->count();
 
-        return response()->json(['Shop'=>$Shop]);
+        // Order Data
+        $orders = Order::where('shop_id', $shop_id)->get();
+        $totalOrders = Order::where('shop_id', $shop_id)->count();
+        $fulfilledOrders = Order::where('shop_id', $shop_id)->where('delivery_status', 'Delivered')->count();
+        $unfulfilledOrders = Order::where('shop_id', $shop_id)->where('delivery_status', 'Pending')->count();
+        $refundedOrders = Order::where('shop_id', $shop_id)->whereHas('order_refund')->count();
+        $totalSales = Order::where('shop_id', $shop_id)->where('delivery_status', 'Delivered')->sum('amount'); 
+
+        // Payout Data
+        $payouts = Shop::with('order.payout')->where('id',$shop_id)->get();
+        $totalPayouts = Payout::where('seller_id', $id)->count();
+        $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
+        $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
+        $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
+
+        return response()->json([
+            // Product Data
+            'totalProducts' => $totalProducts,
+            'featuredProducts' => $featuredProducts,
+            'activeProducts' => $activeProducts,
+            'draftProducts' => $draftProducts,
+            
+            // Order Data
+            'orders' => $orders,
+            'totalOrders' => $totalOrders,
+            'fulfilledOrders' => $fulfilledOrders,
+            'unfulfilledOrders' => $unfulfilledOrders,
+            'refundedOrders' => $refundedOrders,
+            'totalSales' => $totalSales,
+            
+            // Payout Data
+            'payouts' => $payouts,
+            'totalPayouts' => $totalPayouts,
+            'paidPayouts' => $paidPayouts,
+            'unpaidPayouts' => $unpaidPayouts,
+            'totalPayoutAmount' => $totalPayoutAmount
+        ]);
 
     }
 
