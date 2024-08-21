@@ -34,7 +34,7 @@ class DashboardController extends Controller
     $fulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->count();
     $unfulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Pending')->count();
     $refundedOrders = Order::where('sellers_id', $id)->whereHas('order_refund')->count();
-    $totalSales = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->sum('total_amount'); 
+    $totalSales = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->sum('amount'); 
 
     // Payout Data
     $totalPayouts = Payout::where('seller_id', $id)->count();
