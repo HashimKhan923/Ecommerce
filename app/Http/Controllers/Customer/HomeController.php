@@ -71,28 +71,7 @@ class HomeController extends Controller
         ->orderByDesc('product_count')
         ->get();
     
-    // Fetch products for each category separately
-    // $Categories->each(function ($category) {
-    //     $category->setRelation('product', $category->product()
-    //         ->with([
-    //             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
-    //             'product_gallery' => function ($query) {
-    //                 $query->orderBy('order', 'asc');
-    //             },
-    //             'discount', 'tax', 'shipping', 'deal.deal_product',
-    //             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
-    //         ])
-    //         ->where('published', 1)
-    //         ->whereHas('stock', function ($query) {
-    //             $query->where('stock', '>', 0);
-    //         })
-    //         ->whereHas('shop', function ($query) {
-    //             $query->where('status', 1);
-    //         })
-    //         ->orderByRaw('featured DESC')
-    //         ->take(10)
-    //         ->get());
-    // });
+
         $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $States = State::where('status', 1)->get();
