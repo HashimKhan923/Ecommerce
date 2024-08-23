@@ -49,7 +49,7 @@ Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@
 
 
 
-Route::group(['middleware' => ['auth:api']], function(){
+// Route::group(['middleware' => ['auth:api']], function(){
 
 
 
@@ -549,7 +549,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         });
 
-        Route::middleware(['seller'])->group(function () {
+        // Route::middleware(['seller'])->group(function () {
 
 
 
@@ -816,10 +816,10 @@ Route::group(['middleware' => ['auth:api']], function(){
  
 
 
-        });
+        // });
 
 
-}); 
+// }); 
 
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
