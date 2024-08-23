@@ -579,8 +579,8 @@ Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@
 
             Route::group(['prefix' => '/seller/product/'], function() {
                 Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
-                    Route::get('show/{user_id}','index');
-                    Route::get('load_more/{user_id}/{start}/{length}','load_more');
+                    Route::get('show/{user_id}/{shop_id?}/{status?}/{isFeatured?}','index');
+                    Route::get('load_more/{user_id}/{start}/{length}/{shop_id?}/{status?}/{isFeatured?}','load_more');
                     Route::post('create','create');
                     Route::post('bulk_create','bulk_create');
                     // Route::get('sell_similar/{id}','sell_similar');

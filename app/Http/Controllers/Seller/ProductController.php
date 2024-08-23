@@ -31,15 +31,15 @@ use Exception;
 
 class ProductController extends Controller
 {
-    public function index($user_id)
+    public function index($user_id, $shop_id = null, $status = null, $isFeatured = null)
     {
-        $products = $this->loadMoreProducts($id, 0, 50);
+        $products = $this->loadMoreProducts($user_id, $shop_id, 0, 50, $status, $isFeatured);
         return response()->json(['Products' => $products]);
     }
     
-    private function loadMoreProducts($userId, $start, $length)
+    private function loadMoreProducts($userId, $shopId = null, $start, $length, $status = null, $isFeatured = null)
     {
-        return Product::with([
+        $query = Product::with([
             'user',
             'category',
             'sub_category',
@@ -57,23 +57,40 @@ class ProductController extends Controller
             'shop.shop_policy',
             'reviews',
             'product_varient'
-        ])->where('user_id', $userId)
-          ->orderBy('id', 'desc')
-          ->skip($start)
-          ->take($length)
-          ->get();
+        ])->where('user_id', $userId);
+    
+        // Apply shop filter if shop_id is provided
+        if ($shopId) {
+            $query->where('shop_id', $shopId);
+        }
+    
+        // Filter by active/deactive status
+        if (!is_null($status)) {
+            $query->where('published', $status);  // Assuming 'status' is the column name
+        }
+    
+        // Filter by featured products
+        if (!is_null($isFeatured)) {
+            $query->where('featured', $isFeatured);  // Assuming 'is_featured' is the column name
+        }
+    
+        return $query->orderBy('id', 'desc')
+                     ->skip($start)
+                     ->take($length)
+                     ->get();
     }
     
-    public function load_more($userId, $start, $length)
+    public function load_more($userId, $shopId = null, $start, $length, $status = null, $isFeatured = null)
     {
         // Ensure start is not negative
         if ($start < 0) {
             $start = 0;
         }
     
-        $products = $this->loadMoreProducts($userId, $start, $length);
+        $products = $this->loadMoreProducts($userId, $shopId, $start, $length, $status, $isFeatured);
         return response()->json(['Products' => $products]);
     }
+    
 
     public function create(Request $request)
     {
