@@ -81,7 +81,7 @@ class ProductController extends Controller
                      ->get();
     }
     
-    public function load_more($userId, $shopId, $start, $length, $status, $isFeatured)
+    public function load_more($userId, $start, $length, $shopId = null, $status = null, $isFeatured = null)
     {
         // Ensure start is not negative
         if ($start < 0) {
