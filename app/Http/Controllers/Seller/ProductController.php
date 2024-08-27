@@ -60,27 +60,26 @@ class ProductController extends Controller
             'product_varient'
         ])->where('user_id', $userId);
     
-        // Apply shop filter if shop_id is provided
-        if ($shopId != 0) {
-            $query->where('shop_id', $shopId);
-        }
-    
-        // Filter by active/deactive status
-        if ($status != 10) {
-            $query->where('published', $status);  // Assuming 'status' is the column name
-        }
-    
-        // Filter by featured products
-        if ($isFeatured != 10) {
-            $query->where('featured', $isFeatured);  // Assuming 'is_featured' is the column name
-        }
-
-        // Filter by searchValue
         if ($searchValue != 0) {
             $query->where('id',$searchValue)
             ->orWhere('name', 'LIKE', "%$searchValue%")
             ->orWhere('sku',$searchValue);
         }
+        
+        if ($shopId != 0) {
+            $query->where('shop_id', $shopId);
+        }
+    
+       
+        if ($status != 10) {
+            $query->where('published', $status); 
+        }
+    
+       
+        if ($isFeatured != 10) {
+            $query->where('featured', $isFeatured);  
+        }
+
     
         return $query->orderBy('id', 'desc')
                      ->skip($start)
@@ -90,7 +89,7 @@ class ProductController extends Controller
     
     public function load_more($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
     {
-        // Ensure start is not negative
+        
         if ($start < 0) {
             $start = 0;
         }
