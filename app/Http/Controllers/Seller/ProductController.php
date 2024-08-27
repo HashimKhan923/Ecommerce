@@ -38,7 +38,7 @@ class ProductController extends Controller
     }
 
     
-    private function loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured)
+    private function loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
     {
         $query = Product::with([
             'user',
@@ -74,6 +74,11 @@ class ProductController extends Controller
         if ($isFeatured != 10) {
             $query->where('featured', $isFeatured);  // Assuming 'is_featured' is the column name
         }
+
+        // Filter by searchValue
+        if ($searchValue != 0) {
+            $query->where('name', 'LIKE', "%$searchValue%");  
+        }
     
         return $query->orderBy('id', 'desc')
                      ->skip($start)
@@ -81,14 +86,14 @@ class ProductController extends Controller
                      ->get();
     }
     
-    public function load_more($userId, $start, $length, $shopId, $status, $isFeatured)
+    public function load_more($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
     {
         // Ensure start is not negative
         if ($start < 0) {
             $start = 0;
         }
     
-        $products = $this->loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured);
+        $products = $this->loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue);
         return response()->json(['Products' => $products]);
     }
 
