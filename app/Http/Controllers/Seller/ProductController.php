@@ -77,7 +77,9 @@ class ProductController extends Controller
 
         // Filter by searchValue
         if ($searchValue != 0) {
-            $query->where('name', 'LIKE', "%$searchValue%");  
+            $query->where('id',$searchValue)
+            ->orWhere('name', 'LIKE', "%$searchValue%")
+            ->orWhere('sku',$searchValue);
         }
     
         return $query->orderBy('id', 'desc')
