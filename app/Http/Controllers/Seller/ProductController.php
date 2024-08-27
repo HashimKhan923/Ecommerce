@@ -61,7 +61,7 @@ class ProductController extends Controller
         ])->where('user_id', $userId);
     
         // Apply shop filter if shop_id is provided
-        if ($shopId) {
+        if (!is_null($shopId)) {
             $query->where('shop_id', $shopId);
         }
     
