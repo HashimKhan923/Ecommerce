@@ -109,7 +109,7 @@ class ProductController extends Controller
             'shipping',
             'deal.deal_product',
             'product_varient'
-        ])->where('id', $product_id);
+        ])->where('id', $product_id)->first();
 
         return response()->json(['data' => $data]);
     }
