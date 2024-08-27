@@ -36,6 +36,7 @@ class ProductController extends Controller
         $products = $this->loadMoreProducts($user_id, $shop_id, 0, 50, $status, $isFeatured);
         return response()->json(['Products' => $products]);
     }
+
     
     private function loadMoreProducts($userId, $shopId = null, $start, $length, $status = null, $isFeatured = null)
     {
@@ -89,6 +90,28 @@ class ProductController extends Controller
     
         $products = $this->loadMoreProducts($userId, $shopId, $start, $length, $status, $isFeatured);
         return response()->json(['Products' => $products]);
+    }
+
+    public function detail($product_id)
+    {
+        $data = Product::with([
+            'user',
+            'category',
+            'sub_category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal.deal_product',
+            'product_varient'
+        ])->where('id', $product_id);
+
+        return response()->json(['data' => $data]);
     }
     
 
