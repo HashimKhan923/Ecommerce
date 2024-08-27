@@ -65,7 +65,7 @@ class ProductController extends Controller
             ->orWhere('name', 'LIKE', "%$searchValue%")
             ->orWhere('sku',$searchValue);
         }
-        
+
         if ($shopId != 0) {
             $query->where('shop_id', $shopId);
         }
@@ -89,6 +89,7 @@ class ProductController extends Controller
     
     public function load_more($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
     {
+        return $shopId;
         
         if ($start < 0) {
             $start = 0;
