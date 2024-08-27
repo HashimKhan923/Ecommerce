@@ -38,7 +38,7 @@ class ProductController extends Controller
     }
 
     
-    private function loadMoreProducts($userId, $start, $length, $shopId = null, $status = null, $isFeatured = null)
+    private function loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured)
     {
         $query = Product::with([
             'user',
@@ -81,7 +81,7 @@ class ProductController extends Controller
                      ->get();
     }
     
-    public function load_more($userId, $start, $length, $shopId = null, $status = null, $isFeatured = null)
+    public function load_more($userId, $start, $length, $shopId, $status, $isFeatured)
     {
         // Ensure start is not negative
         if ($start < 0) {
