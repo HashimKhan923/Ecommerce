@@ -40,6 +40,7 @@ class ProductController extends Controller
     
     private function loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
     {
+        return $shopId;
         $query = Product::with([
             'user',
             'category',
@@ -89,7 +90,7 @@ class ProductController extends Controller
     
     public function load_more($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
     {
-        return $shopId;
+        
         
         if ($start < 0) {
             $start = 0;
