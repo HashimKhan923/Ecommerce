@@ -61,17 +61,17 @@ class ProductController extends Controller
         ])->where('user_id', $userId);
     
         // Apply shop filter if shop_id is provided
-        if (!is_null($shopId)) {
+        if ($shopId != 0) {
             $query->where('shop_id', $shopId);
         }
     
         // Filter by active/deactive status
-        if (!is_null($status)) {
+        if ($status != 10) {
             $query->where('published', $status);  // Assuming 'status' is the column name
         }
     
         // Filter by featured products
-        if (!is_null($isFeatured)) {
+        if ($isFeatured != 10) {
             $query->where('featured', $isFeatured);  // Assuming 'is_featured' is the column name
         }
     
