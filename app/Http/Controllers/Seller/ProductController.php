@@ -38,7 +38,7 @@ class ProductController extends Controller
     }
 
     
-    private function loadMoreProducts($userId, $shopId = null, $start, $length, $status = null, $isFeatured = null)
+    private function loadMoreProducts($userId, $start, $length, $shopId = null, $status = null, $isFeatured = null)
     {
         $query = Product::with([
             'user',
@@ -88,7 +88,7 @@ class ProductController extends Controller
             $start = 0;
         }
     
-        $products = $this->loadMoreProducts($userId, $shopId, $start, $length, $status, $isFeatured);
+        $products = $this->loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured);
         return response()->json(['Products' => $products]);
     }
 
