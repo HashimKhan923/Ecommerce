@@ -705,7 +705,7 @@ class ProductController extends Controller
     public function bulk_update(Request $request)
     {
 
-     
+       
 
         foreach ($request->products as $productData) {
 
@@ -714,7 +714,7 @@ class ProductController extends Controller
                     "unique:products,sku," . $product['id'],
                 ],
             ], [
-                'sku.unique' => "The SKU already taken for product ID {$product['id']}."
+                'sku.unique' => "The SKU :input is already taken for product ID {$product['id']}."
             ]);
         
             if ($validator->fails()) {
@@ -801,7 +801,6 @@ class ProductController extends Controller
                 }
             }
         }
-
 
 
             return response()->json(['status' => true, "message" => "Products updated successfully!"], 200);
