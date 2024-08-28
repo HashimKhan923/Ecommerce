@@ -709,7 +709,7 @@ class ProductController extends Controller
 
         foreach ($request->products as $productData) {
 
-            $validator = Validator::make($product, [
+            $validator = Validator::make($productData, [
                 "sku" => "unique:products,sku," . $productData['id'],
             ]);
         
