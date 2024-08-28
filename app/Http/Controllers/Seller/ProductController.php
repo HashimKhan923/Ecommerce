@@ -709,12 +709,12 @@ class ProductController extends Controller
 
         foreach ($request->products as $productData) {
 
-            $validator = Validator::make($product, [
+            $validator = Validator::make($productData, [
                 "sku" => [
-                    "unique:products,sku," . $product['id'],
+                    "unique:products,sku," . $productData['id'],
                 ],
             ], [
-                'sku.unique' => "The SKU :input is already taken for product ID {$product['id']}."
+                'sku.unique' => "The SKU :input is already taken for product ID {$productData['id']}."
             ]);
         
             if ($validator->fails()) {
