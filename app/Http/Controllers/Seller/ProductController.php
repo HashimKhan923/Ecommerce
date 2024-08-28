@@ -129,7 +129,13 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        // return $request->photos;
+        $validator = Validator::make($request->all(), [
+            "sku" => "unique:products,sku",
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
 
     $new = Product::create([
         'name' => $request->name,
@@ -482,6 +488,15 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            "sku" => "unique:products,sku," . $request->id,
+        ]);
+        
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()], 422);
+        }
+
         $product = Product::find($request->id);
         
         if (!$product) {
@@ -695,7 +710,7 @@ class ProductController extends Controller
             if ($product) {
                 $productFields = array_filter($productData, function($key) {
                     return in_array($key, [
-                        'name', 'category_id', 'sub_category_id', 'height', 'weight',
+                        'name', 'category_id', 'sub_category_id','sku','height', 'weight',
                         'lenght','width','make', 'brand_id', 'model_id', 'tags', 'price', 'shop_id'
                     ]);
                 }, ARRAY_FILTER_USE_KEY);
@@ -720,6 +735,11 @@ class ProductController extends Controller
                             if (isset($variantFields['varient_discount_price'])) {
                                 $variantFields['discount_price'] = $variantFields['varient_discount_price'];
                                 unset($variantFields['varient_discount_price']);
+                            }
+
+                            if (isset($variantFields['varient_sku'])) {
+                                $variantFields['sku'] = $variantFields['varient_sku'];
+                                unset($variantFields['varient_sku']);
                             }
 
                             if (isset($variantFields['varient_stock'])) {
