@@ -705,16 +705,20 @@ class ProductController extends Controller
     public function bulk_update(Request $request)
     {
 
-        $errors = [];
+     
 
         foreach ($request->products as $productData) {
 
-            $validator = Validator::make($productData, [
-                "sku" => "unique:products,sku," . $productData['id'],
+            $validator = Validator::make($product, [
+                "sku" => [
+                    "unique:products,sku," . $product['id'],
+                ],
+            ], [
+                'sku.unique' => "The SKU already taken for product ID {$product['id']}."
             ]);
         
             if ($validator->fails()) {
-                $errors[$productData['id']] = $validator->errors()->all();
+                return response(['errors'=>$validator->errors()->all()], 422);
             }
 
             $product = Product::find($productData['id']);
@@ -798,9 +802,7 @@ class ProductController extends Controller
             }
         }
 
-        if (!empty($errors)) {
-            return response(['errors' => $errors], 422);
-        }
+
 
             return response()->json(['status' => true, "message" => "Products updated successfully!"], 200);
     }
