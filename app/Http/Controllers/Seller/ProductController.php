@@ -118,6 +118,7 @@ class ProductController extends Controller
             'discount',
             'tax',
             'shipping',
+            'shop',
             'deal.deal_product',
             'product_varient'
         ])->where('id', $product_id)->first();
