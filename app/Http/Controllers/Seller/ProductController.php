@@ -129,6 +129,7 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+        $lastId = Product::max('id');
 
         $validator = Validator::make($request->all(), [
             "sku" => "unique:products,sku",
@@ -151,7 +152,7 @@ class ProductController extends Controller
         'start_year' => $request->year,
         'make' => $request->make,
         'unit' => $request->unit,
-        'sku' => $request->sku,
+        'sku' => $request->sku . '-' . ($lastId + 1),
         'bar_code' => $request->bar_code,
         'warranty' => $request->warranty,
         'condition' => $request->condition,
@@ -312,10 +313,12 @@ class ProductController extends Controller
 
     public function bulk_create(Request $request)
     {
+        $lastId = Product::max('id');
         if (is_array($request->products)) {
             $responses = [];
     
             foreach ($request->products as $productData) {
+                $lastId++;
                 $new = Product::create([
                     'name' => $productData['name'] ?? null,
                     'added_by' => 'seller',
@@ -329,7 +332,7 @@ class ProductController extends Controller
                     'start_year' => $productData['year'] ?? null,
                     'make' => $productData['make'] ?? null,
                     'unit' => $productData['unit'] ?? null,
-                    'sku' => $productData['sku'] ?? null,
+                    'sku' => $productData['sku'] . '-' . ($lastId + 1) ?? null,
                     'bar_code' => $productData['bar_code'] ?? null,
                     'condition' => $productData['condition'] ?? null,
                     'brand_id' => $productData['brand_id'] ?? null,

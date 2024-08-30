@@ -20,30 +20,10 @@ class BlogController extends Controller
     {
         $new = new Blog();
         $new->blogcat_id = $request->blogcat_id;
+        $new->user_id = $request->user_id;
         $new->title = $request->title;
-        $new->slug = $request->slug;
-        $new->short_description = $request->short_description;
         $new->description = $request->description;
-        if($request->file('banner')){
-
-            $file= $request->banner;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Blog'),$filename);
-            $new->banner = $filename;
-        }
-
-        $new->meta_title = $request->meta_title;
-
-        if($request->file('meta_img')){
-
-            $file= $request->meta_img;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('BlogMetaImage'),$filename);
-            $new->meta_img = $filename;
-        }
-
-        $new->meta_description = $request->meta_description;
-        $new->meta_keywords = $request->meta_keywords;
+        $new->content = $request->content;
         $new->save();
 
         $response = ['status'=>true,"message" => "Blog Created Successfully!"];
@@ -54,40 +34,10 @@ class BlogController extends Controller
     {
         $update = Blog::where('id',$request->id)->first();
         $update->blogcat_id = $request->blogcat_id;
+        $update->user_id = $request->user_id;
         $update->title = $request->title;
-        $update->slug = $request->slug;
-        $update->short_description = $request->short_description;
         $update->description = $request->description;
-        if($request->file('banner')){
-
-            if($update->banner)
-            {
-                unlink(public_path('Blog/'.$update->banner));
-            }
-
-            $file= $request->banner;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Blog'),$filename);
-            $update->banner = $filename;
-        }
-
-        $update->meta_title = $request->meta_title;
-
-        if($request->file('meta_img')){
-
-
-            if($update->meta_img)
-            {
-                unlink(public_path('BlogMetaImage/'.$update->meta_img));
-            }
-
-            $file= $request->meta_img;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('BlogMetaImage'),$filename);
-            $update->meta_img = $filename;
-        }
-        $update->meta_description = $request->meta_description;
-        $update->meta_keywords = $request->meta_keywords;
+        $update->content = $request->content;
         $update->save();
 
         $response = ['status'=>true,"message" => "Blog Updated Successfully!"];
@@ -96,19 +46,7 @@ class BlogController extends Controller
 
     public function delete($id)
     {
-      $file = Blog::find($id);
-
-      if($file->banner)
-      {
-          unlink(public_path('Blog/'.$file->banner));
-      }
-
-      if($file->meta_img)
-      {
-          unlink(public_path('BlogMetaImage/'.$file->meta_img));
-      }
-
-        $file->delete();
+      Blog::find($id)->delete();
         
 
         $response = ['status'=>true,"message" => "Blog Deleted Successfully!"];
@@ -118,24 +56,7 @@ class BlogController extends Controller
 
     public function multi_delete(Request $request)
     {
-        $data = Blog::whereIn('id',$request->ids)->get();
-
-        foreach($data as $item)
-        {
-            if($item->banner)
-            {
-                unlink(public_path('Blog/'.$item->banner));
-            }
-      
-            if($item->meta_img)
-            {
-                unlink(public_path('BlogMetaImage/'.$item->meta_img));
-            }
-
-            $item->delete();
-        }
-
-       
+        $data = Blog::whereIn('id',$request->ids)->delete();
 
         $response = ['status'=>true,"message" => "Blogs Deleted Successfully!"];
         return response($response, 200);
