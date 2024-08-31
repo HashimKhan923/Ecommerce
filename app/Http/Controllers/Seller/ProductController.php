@@ -152,7 +152,6 @@ class ProductController extends Controller
         'start_year' => $request->year,
         'make' => $request->make,
         'unit' => $request->unit,
-        'sku' => $request->sku . '-' . ($lastId + 1),
         'bar_code' => $request->bar_code,
         'warranty' => $request->warranty,
         'condition' => $request->condition,
@@ -172,6 +171,10 @@ class ProductController extends Controller
         'meta_discription' => $request->meta_description,
         'video' => $request->video,
         'slug' => $request->slug
+    ]);
+
+    $new->update([
+        'sku' => $request->sku . '-' . $new->id
     ]);
 
     if($request->string_images)
