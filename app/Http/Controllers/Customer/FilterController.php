@@ -18,7 +18,7 @@ class FilterController extends Controller
 
         $keywords = explode(' ', $request->searchValue);
 
-        $products = Product::with([
+        $data = Product::with([
                 'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                     $query->orderBy('order', 'asc');
                 }, 'product_varient', 'discount', 'tax', 'shipping'
