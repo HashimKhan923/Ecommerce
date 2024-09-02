@@ -60,7 +60,7 @@ class FilterController extends Controller
                 WHEN name LIKE ? THEN 2 
                 WHEN name LIKE ? THEN 3 
                 ELSE 4 
-            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%$keywords[2]%"]);
+            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
         }, function ($query) use ($searchValue) {
             return $query->orderByRaw('CASE 
                 WHEN name = ? THEN 1 
