@@ -11,18 +11,13 @@ class FilterController extends Controller
 {
     public function search(Request $request)
     {
-
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
-
-
-        
-        // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
-
+    
         $searchValue = $request->searchValue;
         $keywords = explode(' ', $searchValue);
-
+    
         $data = Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
@@ -31,12 +26,13 @@ class FilterController extends Controller
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->whereHas('stock', function ($query) {
+        })
+        ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
         ->where(function ($query) use ($keywords, $searchValue) {
-            $query->where('sku',$searchValue)
-            ->orWhere('name', 'LIKE', "%$searchValue%")
+            $query->where('sku', $searchValue)
+                ->orWhere('name', 'LIKE', "%$searchValue%")
                 ->orWhere(function ($q) use ($keywords) {
                     foreach ($keywords as $keyword) {
                         $q->orWhere('name', 'LIKE', "%$keyword%");
@@ -54,25 +50,22 @@ class FilterController extends Controller
                     }
                 });
         })
-        ->when(count($keywords) >= 2, function ($query) use ($searchValue, $keywords) {
-            return $query->orderByRaw('CASE 
-                WHEN name = ? THEN 1 
-                WHEN name LIKE ? THEN 2 
-                WHEN name LIKE ? THEN 3 
-                ELSE 4 
-            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
-        }, function ($query) use ($searchValue) {
-            return $query->orderByRaw('CASE 
-                WHEN name = ? THEN 1 
-                WHEN name LIKE ? THEN 2 
-                ELSE 3 
-            END', [$searchValue, "%$searchValue%"]);
-        })
-        ->orderBy('featured', 'DESC')
+        ->orderByRaw('
+            CASE 
+                WHEN name = ? THEN 1
+                WHEN name LIKE ? THEN 2
+                ELSE 3
+            END
+        ', [$searchValue, "%$searchValue%"])
+        ->orderByRaw('featured DESC, 
+            CASE 
+                WHEN ? LIKE CONCAT("%", name, "%") THEN 1
+                ELSE 2
+            END
+        ', [$searchValue])
         ->get();
-
+    
         return response()->json(['data' => $data]);
-        
     }
 
     
