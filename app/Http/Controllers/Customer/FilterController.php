@@ -19,19 +19,19 @@ class FilterController extends Controller
         $keywords = explode(' ', $request->searchValue);
         
         $data = Product::with([
-                'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                }, 'product_varient', 'discount', 'tax', 'shipping'
-            ])
-            ->where(function ($query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->where(function ($query) use ($keyword) {
-                        $query->where('name', 'LIKE', '%' . $keyword . '%')
-                              ->orWhere('description', 'LIKE', '%' . $keyword . '%');
-                    });
-                }
-            })
-            ->get();
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }, 'product_varient', 'discount', 'tax', 'shipping'
+        ])
+        ->where(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->where(function ($query) use ($keyword) {
+                    $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                          ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%']);
+                });
+            }
+        })
+        ->get();
 
 
         
