@@ -15,9 +15,9 @@ class FilterController extends Controller
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
         $Keyword->count++;
         $Keyword->save();
-
+        
         $keywords = explode(' ', $request->searchValue);
-
+        
         $data = Product::with([
                 'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                     $query->orderBy('order', 'asc');
@@ -25,8 +25,10 @@ class FilterController extends Controller
             ])
             ->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
-                    $query->where('name', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('description', 'LIKE', '%' . $keyword . '%');
+                    $query->where(function ($query) use ($keyword) {
+                        $query->where('name', 'LIKE', '%' . $keyword . '%')
+                              ->orWhere('description', 'LIKE', '%' . $keyword . '%');
+                    });
                 }
             })
             ->get();
