@@ -34,7 +34,7 @@ class SubscriberController extends Controller
 
     public function sendEmail(Request $request)
     {
-        $details = $request->only('title', 'body');
+        $details = $request->only('body');
 
         // Fetch all users
         $users = Subscriber::all();
