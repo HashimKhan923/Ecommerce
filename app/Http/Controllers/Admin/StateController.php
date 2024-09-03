@@ -21,6 +21,7 @@ class StateController extends Controller
         $new = new State();
         $new->name = $request->name;
         $new->tax = $request->tax;
+        $new->code = $request->code;
         $new->save();
 
         $response = ['status'=>true,"message" => "New State Added Successfully!"];
@@ -32,6 +33,7 @@ class StateController extends Controller
         $update = State::where('id',$request->id)->first();
         $update->name = $request->name;
         $update->tax = $request->tax;
+        $update->code = $request->code;
         $update->save();
 
         $response = ['status'=>true,"message" => "State Updated Successfully!"];
