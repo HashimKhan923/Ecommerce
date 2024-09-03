@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\UserNotificationMail;
+use App\Mail\SubscribersNotificationMa;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,6 +25,6 @@ class SendEmailJob implements ShouldQueue
 
     public function handle()
     {
-        Mail::to($this->user->email)->send(new UserNotificationMail($this->details));
+        Mail::to($this->user->email)->send(new SubscribersNotificationMa($this->details));
     }
 }
