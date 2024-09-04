@@ -401,6 +401,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                         Route::group(['prefix' => '/admin/subscribe/'], function() {
                             Route::controller(App\Http\Controllers\Admin\SubscriberController::class)->group(function () {
                                 Route::get('show','index');  
+                                Route::post('create','bulk_create');  
                                 Route::post('send/email','sendEmail');  
                                 Route::get('delete/{id}','delete'); 
                                 Route::post('multi_delete','multi_delete'); 

@@ -16,6 +16,16 @@ class SubscriberController extends Controller
         return response()->json(['data'=>$data]);
     }
 
+    public function bulk_create(Request $request)
+    {
+        foreach($request->email as $email)
+        {
+            Subscriber::create([
+                'email' => $email
+            ]);
+        }
+    }
+
     public function delete($id)
     {
         Subscriber::find($id)->delete();
