@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,15 +34,6 @@
             margin-top: 20px;
         }
 
-        .verification-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
         .footer {
             margin-top: 20px;
             text-align: center;
@@ -60,10 +49,13 @@
         </div>
 
         <div class="content">
-        {{ $details['body'] }}
+            {!! $details['body'] !!}
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Dragon Auto Mart. All rights reserved.</p>
         </div>
     </div>
-
 </body>
 
 </html>
