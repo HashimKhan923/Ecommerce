@@ -72,7 +72,7 @@ class HomeController extends Controller
         ->get();
     
 
-        $Brands = Brand::with('model', 'product')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Brands = Brand::with('model')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $States = State::where('status', 1)->get();
         $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
