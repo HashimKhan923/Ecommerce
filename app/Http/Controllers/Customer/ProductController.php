@@ -29,6 +29,7 @@ class ProductController extends Controller
         $data = Product::with([
             'user',
             'category',
+            'sub_category',
             'brand',
             'model',
             'stock',
