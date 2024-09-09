@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
-use App\Models\AllBanner;
 use App\Jobs\SendEmailJob;
 
 class SubscriberController extends Controller
 {
     public function index()
     {
-        $data = AllBanner::all();
+        
+        $data = Subscriber::all();
+
         return response()->json(['data'=>$data]);
     }
 
