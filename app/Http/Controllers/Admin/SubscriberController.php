@@ -12,7 +12,7 @@ class SubscriberController extends Controller
     public function index()
     {
         $data = Subscriber::all();
-        dd($data); // Debugging step: dump and die the $data
+        return $data; // Just return the data to see if the error still happens
     }
 
     public function bulk_create(Request $request)
