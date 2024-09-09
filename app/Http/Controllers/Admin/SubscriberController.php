@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Jobs\SendEmailJob;
+use DB;
 
 class SubscriberController extends Controller
 {
