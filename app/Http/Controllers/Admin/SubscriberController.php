@@ -11,6 +11,7 @@ class SubscriberController extends Controller
 {
     public function index()
     {
+        return "all good";
         $data = Subscriber::all();
 
         return response()->json(['data'=>$data]);
