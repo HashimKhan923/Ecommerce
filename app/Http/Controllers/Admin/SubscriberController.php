@@ -13,7 +13,7 @@ class SubscriberController extends Controller
     public function index()
     {
         
-        $data = DB::table('subscribers')->get();
+        $data = Subscriber::all();
 
         return response()->json(['data' => $data]);
     }
