@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
+use App\Models\Banner;
 use App\Jobs\SendEmailJob;
 
 class SubscriberController extends Controller
 {
     public function index()
     {
-        $data = Subscriber::all();
-        return $data; // Just return the data to see if the error still happens
+        $data = Banner::all();
+        return response()->json(['data'=>$data]);
     }
 
     public function bulk_create(Request $request)
