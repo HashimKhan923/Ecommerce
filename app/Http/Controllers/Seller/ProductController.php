@@ -130,9 +130,9 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            "sku" => "unique:products,sku",
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     "sku" => "unique:products,sku",
+        // ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
@@ -498,9 +498,9 @@ class ProductController extends Controller
     public function update(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            "sku" => "unique:products,sku," . $request->id,
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     "sku" => "unique:products,sku," . $request->id,
+        // ]);
         
         if ($validator->fails()) {
             return response(['errors' => $validator->errors()->all()], 422);
