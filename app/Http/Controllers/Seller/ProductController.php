@@ -133,10 +133,10 @@ class ProductController extends Controller
         // $validator = Validator::make($request->all(), [
         //     "sku" => "unique:products,sku",
         // ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
-        }
+        // if ($validator->fails())
+        // {
+        //     return response(['errors'=>$validator->errors()->all()], 422);
+        // }
 
     $new = Product::create([
         'name' => $request->name,
@@ -502,9 +502,9 @@ class ProductController extends Controller
         //     "sku" => "unique:products,sku," . $request->id,
         // ]);
         
-        if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
-        }
+        // if ($validator->fails()) {
+        //     return response(['errors' => $validator->errors()->all()], 422);
+        // }
 
         $product = Product::find($request->id);
         
