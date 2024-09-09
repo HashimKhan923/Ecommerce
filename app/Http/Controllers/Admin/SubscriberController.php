@@ -11,10 +11,8 @@ class SubscriberController extends Controller
 {
     public function index()
     {
-        
         $data = Subscriber::all();
-
-        return response()->json(['data'=>$data]);
+        dd($data); // Debugging step: dump and die the $data
     }
 
     public function bulk_create(Request $request)
