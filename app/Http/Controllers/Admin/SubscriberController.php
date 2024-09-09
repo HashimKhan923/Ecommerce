@@ -12,9 +12,9 @@ class SubscriberController extends Controller
     public function index()
     {
         
-        $data = Subscriber::all();
+        $data = DB::table('subscribers')->get();
 
-        return response()->json(['data'=>$data]);
+        return response()->json(['data' => $data]);
     }
 
     public function bulk_create(Request $request)
