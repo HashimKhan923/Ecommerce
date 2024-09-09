@@ -26,21 +26,24 @@ class FilterController extends Controller
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->whereHas('stock', function ($query) {
+        })
+        ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
         ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
                 $query->where(function ($query) use ($keyword) {
-                    $query->where('sku',$keyword)
+                    $query->where('sku', $keyword)
                           ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
                           ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                          ->orWhereJsonContains('tags', $keyword);
+                          ->orWhereJsonContains('tags', $keyword)
+                          ->orWhereRaw('SOUNDEX(name) = SOUNDEX(?)', [$keyword]); // Fuzzy search for names
                 });
             }
         })
         ->orderBy('featured', 'DESC')
         ->get();
+    
 
 
         
