@@ -34,10 +34,10 @@ class FilterController extends Controller
             foreach ($keywords as $keyword) {
                 $query->where(function ($query) use ($keyword) {
                     $query->where('sku', $keyword)
-                          ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                        ->orWhereRaw('SOUNDEX(name) = SOUNDEX(?)', [$keyword]) // Fuzzy search for names
                           ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                          ->orWhereJsonContains('tags', $keyword)
-                          ->orWhereRaw('SOUNDEX(name) = SOUNDEX(?)', [$keyword]); // Fuzzy search for names
+                          ->orWhereJsonContains('tags', $keyword);
+                          
                 });
             }
         })
