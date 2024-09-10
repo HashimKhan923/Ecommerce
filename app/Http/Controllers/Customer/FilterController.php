@@ -105,48 +105,52 @@ class FilterController extends Controller
 
     public function getSuggestions($query)
     {
-        // Search for products where the name starts with the query (case-insensitive)
-        $products = Product::where('name', 'LIKE', "{$query}%") 
-            ->select('name') // Fetch only the name field to optimize
-            ->take(200)  // Retrieve up to 50 products for more combinations
-            ->get();
+        // Break the query into separate words
+        $keywords = explode(' ', $query);
+    
+        // Fetch products where any part of the name matches the keywords
+        $products = Product::where(function ($q) use ($keywords) {
+            foreach ($keywords as $word) {
+                $q->orWhere('name', 'LIKE', "%{$word}%");
+            }
+        })
+        ->select('name') // Fetch only the name field
+        ->take(50) // Get up to 50 products for more combinations
+        ->get();
     
         $suggestions = [];
     
         // Loop through each product name
         foreach ($products as $product) {
-            // Split product name into words
-            $words = explode(' ', $product->name);
-    
-            // Generate possible combinations of the words
-            for ($i = 0; $i < count($words); $i++) {
-                $phrase = '';
-                for ($j = $i; $j < count($words); $j++) {
-                    // Build phrases word by word
-                    $phrase = $phrase ? $phrase . ' ' . $words[$j] : $words[$j];
-                    
-                    // If the phrase starts with the query, add it to the suggestions
-                    if (stripos($phrase, $query) === 0) {
-                        $suggestions[] = $phrase;
+            $nameWords = explode(' ', $product->name); // Split product name into words
+            
+            // Combine words in the name that match the input query
+            $matches = [];
+            foreach ($nameWords as $nameWord) {
+                foreach ($keywords as $keyword) {
+                    if (stripos($nameWord, $keyword) !== false) {
+                        $matches[] = $nameWord; // Collect matched words
+                        break; // Exit the inner loop when match found
                     }
                 }
+            }
+    
+            // Join matched words into a suggestion
+            if (!empty($matches)) {
+                $suggestions[] = implode(' ', $matches);
             }
         }
     
         // Ensure unique suggestions
         $suggestions = array_unique($suggestions);
     
-        // Sort suggestions by length (optional)
-        usort($suggestions, function($a, $b) {
-            return strlen($a) - strlen($b);
-        });
-    
-        // Limit the suggestions array to top 10
+        // Limit to top 10 suggestions
         $suggestions = array_slice($suggestions, 0, 10);
     
-        // Return the suggestions as a JSON response
+        // Return suggestions as JSON response
         return response()->json($suggestions);
     }
+    
     
     
     
