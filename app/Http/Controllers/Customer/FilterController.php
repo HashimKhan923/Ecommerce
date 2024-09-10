@@ -9,7 +9,7 @@ use App\Models\UserSearchingKeyword;
 
 class FilterController extends Controller
 {
-    public function search($searchValue)
+    public function search($searchValue,$length)
     {
 
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
@@ -40,7 +40,7 @@ class FilterController extends Controller
             }
         })
         ->orderBy('featured', 'DESC')
-        ->get();
+        ->skip($length)->take(24)->get();
 
 
         
@@ -122,7 +122,7 @@ class FilterController extends Controller
     
         // Loop through each product name
         foreach ($products as $product) {
-            $nameWords = explode(' ', $product->name); // Split product name into words
+            $nameWords = explode(' ', $product->name); // Split  product name into words
             
             // Combine words in the name that match the input query
             $matches = [];
@@ -190,6 +190,8 @@ class FilterController extends Controller
         ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         });
+
+
     
         if ($request->has('year')) {
             $query->whereJsonContains('start_year', $request->year);
