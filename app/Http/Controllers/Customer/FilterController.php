@@ -115,7 +115,7 @@ class FilterController extends Controller
             }
         })
         ->select('name') // Fetch only the name field
-        ->take(50) // Get up to 50 products for more combinations
+        ->take(100) // Get up to 50 products for more combinations
         ->get();
     
         $suggestions = [];
