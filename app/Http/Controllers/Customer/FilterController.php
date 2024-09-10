@@ -105,27 +105,25 @@ class FilterController extends Controller
 
     public function getSuggestions($suggestions)
     {
-        
-        
         $products = Product::where('name', 'LIKE', "%{$suggestions}%")
             ->orWhere('description', 'LIKE', "%{$suggestions}%")
             ->take(10) 
             ->get();
-        
+    
         $suggestions1 = [];
         foreach ($products as $product) {
-            $words = explode(' ', $product->name); 
+            $words = explode(' ', $product->name); // Split product name into words
             foreach ($words as $word) {
-                if (stripos($word, $suggestions1) !== false) { 
+                if (stripos($word, $suggestions) !== false) { // Check against user's input
                     $suggestions1[] = $word;
                 }
             }
         }
-
-        
+    
+        // Ensure unique suggestions
         $suggestions1 = array_unique($suggestions1);
-
-        
+    
+        // Return suggestions as JSON
         return response()->json($suggestions1);
     }
 
