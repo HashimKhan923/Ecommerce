@@ -9,14 +9,14 @@ use App\Models\UserSearchingKeyword;
 
 class FilterController extends Controller
 {
-    public function search(Request $request)
+    public function search($searchValue)
     {
 
-        $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $request->searchValue]);
+        $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
         $Keyword->count++;
         $Keyword->save();
         
-        $keywords = explode(' ', $request->searchValue);
+        $keywords = explode(' ', $searchValue);
         
         $data = Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
@@ -100,6 +100,35 @@ class FilterController extends Controller
         return response()->json(['data' => $data]);
         
     }
+
+
+
+    public function getSuggestions($suggestions)
+    {
+        
+        
+        $products = Product::where('name', 'LIKE', "%{$suggestions}%")
+            ->orWhere('description', 'LIKE', "%{$suggestions}%")
+            ->take(10) 
+            ->get();
+        
+        $suggestions1 = [];
+        foreach ($products as $product) {
+            $words = explode(' ', $product->name); 
+            foreach ($words as $word) {
+                if (stripos($word, $suggestions1) !== false) { 
+                    $suggestions1[] = $word;
+                }
+            }
+        }
+
+        
+        $suggestions1 = array_unique($suggestions1);
+
+        
+        return response()->json($suggestions1);
+    }
+
 
     
 
