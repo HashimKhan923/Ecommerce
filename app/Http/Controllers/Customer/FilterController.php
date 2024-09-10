@@ -106,8 +106,9 @@ class FilterController extends Controller
     public function getSuggestions($query)
     {
         // Search for products where the name starts with the query (case-insensitive)
-        $products = Product::where('name', 'LIKE', "{$query}%") // Start with the input
-            ->take(10)  // Limit the results to 10
+        $products = Product::where('name', 'LIKE', "{$query}%") 
+            ->select('name') // Fetch only the name field to optimize
+            ->take(50)  // Retrieve up to 50 products for more combinations
             ->get();
     
         $suggestions = [];
@@ -118,14 +119,16 @@ class FilterController extends Controller
             $words = explode(' ', $product->name);
     
             // Generate possible combinations of the words
-            $phrase = '';
-            foreach ($words as $word) {
-                // Build phrases word by word
-                $phrase = $phrase ? $phrase . ' ' . $word : $word;
-                
-                // If the phrase starts with the query, add it to the suggestions
-                if (stripos($phrase, $query) === 0) { // Ensure it starts with the input
-                    $suggestions[] = $phrase;
+            for ($i = 0; $i < count($words); $i++) {
+                $phrase = '';
+                for ($j = $i; $j < count($words); $j++) {
+                    // Build phrases word by word
+                    $phrase = $phrase ? $phrase . ' ' . $words[$j] : $words[$j];
+                    
+                    // If the phrase starts with the query, add it to the suggestions
+                    if (stripos($phrase, $query) === 0) {
+                        $suggestions[] = $phrase;
+                    }
                 }
             }
         }
@@ -133,12 +136,18 @@ class FilterController extends Controller
         // Ensure unique suggestions
         $suggestions = array_unique($suggestions);
     
+        // Sort suggestions by length (optional)
+        usort($suggestions, function($a, $b) {
+            return strlen($a) - strlen($b);
+        });
+    
         // Limit the suggestions array to top 10
         $suggestions = array_slice($suggestions, 0, 10);
     
         // Return the suggestions as a JSON response
         return response()->json($suggestions);
     }
+    
     
     
 
