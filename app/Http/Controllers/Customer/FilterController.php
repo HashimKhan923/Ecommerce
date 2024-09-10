@@ -108,7 +108,7 @@ class FilterController extends Controller
         // Search for products where the name starts with the query (case-insensitive)
         $products = Product::where('name', 'LIKE', "{$query}%") 
             ->select('name') // Fetch only the name field to optimize
-            ->take(50)  // Retrieve up to 50 products for more combinations
+            ->take(200)  // Retrieve up to 50 products for more combinations
             ->get();
     
         $suggestions = [];
