@@ -105,31 +105,38 @@ class FilterController extends Controller
 
     public function getSuggestions($query)
     {
-        // Search for products where the name or description matches the input query
+        // Search for products where the name or description contains the query
         $products = Product::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('description', 'LIKE', "%{$query}%")
             ->take(10) 
             ->get();
     
         $suggestions = [];
         
-        // Loop through the products and collect the names that match
+        // Loop through each product name
         foreach ($products as $product) {
-            // Get product name
-            $productName = $product->name;
+            // Split product name into words
+            $words = explode(' ', $product->name);
             
-            // If the product name contains the query string, add the product name to the suggestions
-            if (stripos($productName, $query) !== false) {
-                $suggestions[] = $productName;
+            // Generate possible combinations of the words
+            $phrase = '';
+            foreach ($words as $word) {
+                // Build phrases word by word
+                $phrase = $phrase ? $phrase . ' ' . $word : $word;
+                
+                // If the phrase contains the user input, add it to the suggestions
+                if (stripos($phrase, $query) !== false) {
+                    $suggestions[] = $phrase;
+                }
             }
         }
     
-        // Ensure unique suggestions (just in case)
+        // Ensure unique suggestions
         $suggestions = array_unique($suggestions);
     
         // Return the suggestions as a JSON response
         return response()->json($suggestions);
     }
+    
     
 
 
