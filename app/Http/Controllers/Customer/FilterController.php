@@ -110,7 +110,7 @@ class FilterController extends Controller
             ->get();
     
         // Return suggestions as JSON
-        return response()->json($suggestions);
+        return response()->json(['data'=>$suggestions]);
     }
 
 
