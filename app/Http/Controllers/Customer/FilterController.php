@@ -101,6 +101,18 @@ class FilterController extends Controller
         
     }
 
+    public function getSuggestions1($query)
+    {
+        // Fetch keywords that match the query
+        $suggestions = UserSearchingKeyword::where('keyword', 'LIKE', "%{$query}%")
+            ->select('keyword') // Fetch only the keyword field
+            ->take(10) // Limit to 10 suggestions
+            ->get();
+    
+        // Return suggestions as JSON
+        return response()->json($suggestions);
+    }
+
 
 
     public function getSuggestions($query)

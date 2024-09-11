@@ -1027,7 +1027,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::controller(App\Http\Controllers\Customer\FilterController::class)->group(function () {
             Route::get('product_search/{searchValue}/{length}','search');  
             Route::post('target_search','target_search');
-            Route::get('suggestions/{searchValue}','getSuggestions');
+            Route::get('suggestions/{searchValue}','getSuggestions1');
             Route::post('multi_search','multisearch');   
         });
     });
