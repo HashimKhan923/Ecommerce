@@ -41,9 +41,9 @@ class ShopProductController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function index($shop_id)
+    public function index($shop_id, $searchValue = null)
     {
-        $data = Product::with($this->getProductRelations())
+        $query = Product::with($this->getProductRelations())
             ->where('published', 1)
             ->where('shop_id', $shop_id)
             ->whereHas('stock', function ($query) {
@@ -51,18 +51,27 @@ class ShopProductController extends Controller
             })
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
-            })
-            ->orderBy('id', 'desc')
+            });
+    
+        // Check if searchValue is provided
+        if ($searchValue) {
+            $query->where(function ($subQuery) use ($searchValue) {
+                $subQuery->where('name', 'LIKE', "%{$searchValue}%")
+                    ->orWhere('description', 'LIKE', "%{$searchValue}%");
+            });
+        }
+    
+        $data = $query->orderBy('id', 'desc')
             ->take(24)
             ->orderByRaw('featured DESC')
             ->get();
-
+    
         return $this->formatResponse($data);
     }
-
-    public function load_more($shop_id, $length)
+    
+    public function load_more($shop_id, $length, $searchValue = null)
     {
-        $data = Product::with($this->getProductRelations())
+        $query = Product::with($this->getProductRelations())
             ->where('published', 1)
             ->where('shop_id', $shop_id)
             ->whereHas('stock', function ($query) {
@@ -70,12 +79,21 @@ class ShopProductController extends Controller
             })
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
-            })
-            ->orderBy('id', 'desc')
+            });
+    
+        // Check if searchValue is provided
+        if ($searchValue) {
+            $query->where(function ($subQuery) use ($searchValue) {
+                $subQuery->where('name', 'LIKE', "%{$searchValue}%")
+                    ->orWhere('description', 'LIKE', "%{$searchValue}%");
+            });
+        }
+    
+        $data = $query->orderBy('id', 'desc')
             ->skip($length)
             ->take(12)
             ->get();
-
+    
         return $this->formatResponse($data);
     }
 }
