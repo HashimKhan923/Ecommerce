@@ -53,13 +53,21 @@ class ShopProductController extends Controller
                 $query->where('status', 1);
             });
     
-        // Check if searchValue is provided
-        if ($searchValue && !empty($searchValue)) {
-            $query->where(function ($subQuery) use ($searchValue) {
-                $subQuery->where('name', 'LIKE', "%{$searchValue}%")
-                    ->orWhere('description', 'LIKE', "%{$searchValue}%");
-            });
-        }
+            // Apply search logic if a search value is provided
+            if ($searchValue && !empty($searchValue)) {
+                $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+
+                $query->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->where(function ($subQuery) use ($keyword) {
+                            $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                                ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                                ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                                ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                        });
+                    }
+                });
+            }
     
         $data = $query->orderBy('id', 'desc')
             ->take(24)
@@ -81,13 +89,21 @@ class ShopProductController extends Controller
                 $query->where('status', 1);
             });
     
-        // Check if searchValue is provided
-        if ($searchValue && !empty($searchValue)) {
-            $query->where(function ($subQuery) use ($searchValue) {
-                $subQuery->where('name', 'LIKE', "%{$searchValue}%")
-                    ->orWhere('description', 'LIKE', "%{$searchValue}%");
-            });
-        }
+            // Apply search logic if a search value is provided
+            if ($searchValue && !empty($searchValue)) {
+                $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+
+                $query->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->where(function ($subQuery) use ($keyword) {
+                            $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                                ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                                ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                                ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                        });
+                    }
+                });
+            }
     
         $data = $query->orderBy('id', 'desc')
             ->skip($length)
