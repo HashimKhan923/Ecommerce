@@ -54,7 +54,7 @@ class ShopProductController extends Controller
             });
     
         // Check if searchValue is provided
-        if ($searchValue) {
+        if ($searchValue && !empty($searchValue)) {
             $query->where(function ($subQuery) use ($searchValue) {
                 $subQuery->where('name', 'LIKE', "%{$searchValue}%")
                     ->orWhere('description', 'LIKE', "%{$searchValue}%");
@@ -82,7 +82,7 @@ class ShopProductController extends Controller
             });
     
         // Check if searchValue is provided
-        if ($searchValue) {
+        if ($searchValue && !empty($searchValue)) {
             $query->where(function ($subQuery) use ($searchValue) {
                 $subQuery->where('name', 'LIKE', "%{$searchValue}%")
                     ->orWhere('description', 'LIKE', "%{$searchValue}%");
