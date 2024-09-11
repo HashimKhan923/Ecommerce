@@ -69,8 +69,7 @@ class ShopProductController extends Controller
                 });
             }
     
-        $data = $query->orderBy('id', 'desc')
-            ->take(24)
+        $data = $query->take(24)
             ->orderByRaw('featured DESC')
             ->get();
     
@@ -105,7 +104,7 @@ class ShopProductController extends Controller
                 });
             }
     
-        $data = $query->orderBy('id', 'desc')
+        $data = $query->orderByRaw('featured DESC')
             ->skip($length)
             ->take(12)
             ->get();
