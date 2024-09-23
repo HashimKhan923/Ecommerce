@@ -171,4 +171,17 @@ class SubCategoryController extends Controller
         $response = ['status'=>true,"message" => "Sub-Category Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function change_order(Request $request)
+    {
+        $order = 0;
+    
+        foreach($request->order as $sub_cat_order)
+        {
+            $category = SubCategory::find($sub_cat_order['id']);
+            if ($category) {
+                $category->update(['order' => $order++]);
+            }
+        }
+    }
 }

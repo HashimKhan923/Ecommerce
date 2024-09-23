@@ -159,5 +159,18 @@ class CategoryController extends Controller
         return response($response, 200);
     }
 
+    public function change_order(Request $request)
+    {
+        $order = 0;
+    
+        foreach($request->order as $cat_order)
+        {
+            $category = Category::find($cat_order['id']);
+            if ($category) {
+                $category->update(['order' => $order++]);
+            }
+        }
+    }
+
 
 }

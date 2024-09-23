@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('change_order','change_order');
                 });
             });
 
@@ -98,6 +99,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('change_order','change_order');
                 });
             });
 
@@ -111,6 +113,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('change_order','change_order');
                 });
             });
 
@@ -124,6 +127,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                         Route::post('update','update');
                         Route::get('delete/{id}','delete');
                         Route::post('multi_delete','multi_delete');
+                        Route::post('change_order','change_order');
                     });
                 });
 

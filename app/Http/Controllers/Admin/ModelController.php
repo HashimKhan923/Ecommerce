@@ -186,4 +186,17 @@ class ModelController extends Controller
         $response = ['status'=>true,"message" => "Models Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function change_order(Request $request)
+    {
+        $order = 0;
+    
+        foreach($request->order as $model_order)
+        {
+            $model = Models::find($model_order['id']);
+            if ($model) {
+                $model->update(['order' => $order++]);
+            }
+        }
+    }
 }
