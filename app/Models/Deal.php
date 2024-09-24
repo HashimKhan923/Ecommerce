@@ -13,4 +13,9 @@ class Deal extends Model
     {
         return $this->hasMany(DealProduct::class,'deal_id','id');
     } 
+
+    public function deal_shop()
+    {
+        return $this->hasMany(DealShop::class,'deal_id','id');
+    } 
 }

@@ -80,6 +80,10 @@ class HomeController extends Controller
         $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')->where('status',1)->get();
+        $Deals = Deal::with('deal_shop.shop')
+        ->where('discount_start_date', '<=', now())
+        ->where('discount_end_date', '>=', now())
+        ->get();
     
         return response()->json([
             'Products' => $allProducts,

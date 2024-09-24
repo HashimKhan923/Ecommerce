@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Deal;
 use Storage;
 use Carbon\Carbon;
+use App\Models\DealShop;
 
 class DealController extends Controller
 {
     public function index()
     {
-        $data = Deal::with('deal_product')->get();
+        $data = Deal::with('deal_product','deal_shop.shop')->get();
 
         return response()->json(['data'=>$data]);
     }
@@ -39,6 +40,8 @@ class DealController extends Controller
         return response($response, 200);
     }
 
+
+
     public function update(Request $request)
     {
         $update = Deal::where('id',$request->id)->first();;
@@ -47,10 +50,12 @@ class DealController extends Controller
 
         if($request->file('banner')){
 
-            if($update->banner)
-            {
-                unlink(public_path('DealBanner/'.$update->banner));
-            }
+
+            $fileToDelete = public_path('DealBanner/'.$update->banner);
+
+            if (file_exists($fileToDelete)) {
+                unlink($fileToDelete);
+            } 
 
             $file= $request->banner;
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -100,5 +105,26 @@ class DealController extends Controller
         $response = ['status'=>true,"message" => "Deals Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function deal_shop(Request $request)
+    {
+        DealShop::updateOrCreate(
+            ['deal_id' => $request->deal_id, 'shop_id' => $request->shop_id], 
+            ['deal_id' => $request->deal_id, 'shop_id' => $request->shop_id]
+        );
+
+        $response = ['status'=>true,"message" => "Save Successfully!"];
+        return response($response, 200);
+    }
+
+    public function delete_deal_shop($id)
+    {
+        DealShop::find($id)->delete();
+
+        $response = ['status'=>true,"message" => "Deleted Successfully!"];
+        return response($response, 200);
+    }
+
+
     
 }
