@@ -19,6 +19,13 @@ class StaffController extends Controller
         return response()->json(['data'=>$data]);
     }
 
+    public function edit($id)
+    {
+        $data = User::where('id',$id)->first();
+
+        return response()->json(['data'=>$data]);
+    }
+
     public function create(Request $request) {
         try {
             $validator = Validator::make($request->all(), [

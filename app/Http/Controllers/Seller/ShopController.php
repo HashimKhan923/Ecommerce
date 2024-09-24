@@ -18,6 +18,13 @@ class ShopController extends Controller
         return response()->json(['data'=>$data]);
     }
 
+    public function edit($id)
+    {
+        $data = Shop::with('shop_policy')->withCount('product')->where('id',$id)->first();
+
+        return response()->json(['data'=>$data]);
+    }
+
     public function create(Request $request)
     {
         $shop = new Shop();

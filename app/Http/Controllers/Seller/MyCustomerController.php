@@ -19,6 +19,19 @@ class MyCustomerController extends Controller
     ->get();
   
       return response()->json(['data' => $data]);
-}
+  }
+
+  public function detail($id)
+  {
+      $data = MyCustomer::with(['customer.time_line' => function ($query) use ($seller_id) {
+        $query->where('seller_id', $seller_id);
+          }, 'orders' => function ($query) use ($seller_id) {
+              $query->where('sellers_id', $seller_id);
+          }])
+          ->where('id', $id)
+      ->first();
+    
+        return response()->json(['data' => $data]);
+  }
 
 }
