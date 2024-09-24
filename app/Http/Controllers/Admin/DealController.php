@@ -32,8 +32,8 @@ class DealController extends Controller
             $new->banner = $filename;
         }
 
-        $new->discount_start_date = Carbon::parse($request->discount_start_date);
-        $new->discount_end_date = Carbon::parse($request->discount_end_date);
+        $new->discount_start_date = Carbon::createFromFormat('d-m-Y\TH:i', $request->discount_start_date);
+        $new->discount_end_date = Carbon::createFromFormat('d-m-Y\TH:i', $request->discount_end_date);
         $new->save();
 
         $response = ['status'=>true,"message" => "New Deal Added Successfully!"];
