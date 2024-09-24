@@ -732,7 +732,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::group(['prefix' => '/seller/customers/'], function() {
                         Route::controller(App\Http\Controllers\Seller\MyCustomerController::class)->group(function () {
                             Route::get('show/{seller_id}','index');
-                            Route::get('detail/{id}','detail');
+                            Route::get('detail/{id}/{seller_id}','detail');
                         });
                     });
 
