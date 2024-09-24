@@ -31,6 +31,12 @@ use Exception;
 
 class ProductController extends Controller
 {
+
+    public function shop_product($shop_id)
+    {
+        Product::with('product_single_gallery')->select('id','name')->where('shop_id',$shop_id)->get();
+    }
+
     public function index($user_id, $shop_id = null, $status = null, $isFeatured = null)
     {
         $products = $this->loadMoreProducts($user_id, $shop_id, 0, 50, $status, $isFeatured);
