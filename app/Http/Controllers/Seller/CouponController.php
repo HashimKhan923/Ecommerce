@@ -126,9 +126,20 @@ class CouponController extends Controller
 
     public function edit($id)
     {
-        $data = Coupon::with('creator','shop','coupon_customers.customer','coupon_categories.category','coupon_products.product.product_single_gallery')->where('id',$id)->first();
-
-        return response()->json(['data'=>$data]);
+        $data = Coupon::with([
+            'creator',
+            'shop',
+            'coupon_customers.customer',
+            'coupon_categories.category',
+            'coupon_products.product' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'coupon_products.product.product_single_gallery',
+        ])
+        ->where('id', $id)
+        ->first();
+    
+        return response()->json(['data' => $data]);
     }
     
     
