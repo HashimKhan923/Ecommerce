@@ -14,7 +14,7 @@ class BrandController extends Controller
 {
     public function index()
     {
-      $Brands = Brand::with('model')->get();
+      $Brands = Brand::with('model')->orderBy('order', 'asc')->get();
 
       return response()->json(['Brands'=>$Brands]);
     }

@@ -14,7 +14,7 @@ class SubCategoryController extends Controller
 {
     public function index()
     {
-      $SubCategories = SubCategory::with('category')->get();
+      $SubCategories = SubCategory::with('category')->orderBy('order', 'asc')->get();
 
       return response()->json(['SubCategories'=>$SubCategories]);
     }
