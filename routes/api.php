@@ -678,6 +678,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::controller(App\Http\Controllers\Seller\CouponController::class)->group(function () {
                     Route::get('show/{seller_id}','index');
                     Route::post('create','create');
+                    Route::get('edit/{id}','edit');
                     Route::post('update','update');
                     Route::get('status/{id}','status');
                     Route::get('delete/{id}','delete');

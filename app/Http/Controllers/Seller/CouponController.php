@@ -122,6 +122,14 @@ class CouponController extends Controller
         $response = ['status' => true, 'message' => 'Coupon Created Successfully!', 'coupon_id' => $new->id];
         return response($response, 200);
     }
+
+
+    public function edit($id)
+    {
+        $data = Coupon::with('creator','shop','coupon_customers.customer','coupon_categories.category','coupon_products.product.product_single_gallery')->where('id',$id)->first();
+
+        return response()->json(['data'=>$data]);
+    }
     
     
 
