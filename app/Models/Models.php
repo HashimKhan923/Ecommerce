@@ -10,5 +10,7 @@ class Models extends Model
     protected $casts = [
         'meta_keywords' => 'array',
     ];
+
+    protected $fillable = ['order'];
     use HasFactory;
 }

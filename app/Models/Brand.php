@@ -12,6 +12,8 @@ class Brand extends Model
         'meta_keywords' => 'array',
     ];
 
+    protected $fillable = ['order'];
+
     public function model()
     {
         return $this->hasMany(Models::class,'brand_id','id');
