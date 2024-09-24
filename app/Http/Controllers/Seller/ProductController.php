@@ -34,7 +34,8 @@ class ProductController extends Controller
 
     public function shop_product($shop_id)
     {
-        Product::with('product_single_gallery')->select('id','name')->where('shop_id',$shop_id)->get();
+        $products = Product::with('product_single_gallery')->select('id','name')->where('shop_id',$shop_id)->get();
+        return response()->json(['Products' => $products]);
     }
 
     public function index($user_id, $shop_id = null, $status = null, $isFeatured = null)
