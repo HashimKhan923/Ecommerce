@@ -14,6 +14,7 @@ use App\Models\AllBanner;
 use App\Models\State;
 use App\Models\Shop;
 use App\Models\Models;
+use App\Models\Deal;
 use DB;
 
 class HomeController extends Controller
