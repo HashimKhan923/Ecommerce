@@ -375,6 +375,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::controller(App\Http\Controllers\Admin\ShopController::class)->group(function () {
                         Route::get('show','index');
                         Route::get('status/{id}','status');
+                        Route::get('featured/{id}','status');
                     });
                 });
 

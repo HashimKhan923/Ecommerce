@@ -33,4 +33,23 @@ class ShopController extends Controller
        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
        return response($response, 200);
     }
+
+    public function featured($id)
+    {
+       $featured = Shop::where('id',$id)->first();
+
+       if($featured->featured == 1)
+       {
+        $featured->featured = 0;
+       }
+       else
+       {
+        $featured->featured = 1;
+       }
+
+       $featured->save();
+
+       $response = ['status'=>true,"message" => "Changed Successfully!"];
+       return response($response, 200);
+    }
 }
