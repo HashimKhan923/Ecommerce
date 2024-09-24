@@ -13,7 +13,7 @@ class DealController extends Controller
 {
     public function index()
     {
-        $data = Deal::with('deal_product','deal_shop.shop')->get();
+        $data = Deal::with('deal_product')->get();
 
         return response()->json(['data'=>$data]);
     }
