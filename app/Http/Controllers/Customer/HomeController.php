@@ -65,10 +65,11 @@ class HomeController extends Controller
         $FeaturedProducts->where('featured', 1)->take(10);
     
         $allProducts = $Products->get();
-        $Categories = Category::with(['sub_category'])
-        ->withCount('product')
+        $Categories = Category::with(['sub_category' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }])
         ->where('is_active', 1)
-        ->orderByDesc('product_count')
+        ->orderBy('order', 'asc')
         ->get();
     
 

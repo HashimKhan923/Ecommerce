@@ -189,13 +189,11 @@ class ModelController extends Controller
 
     public function change_order(Request $request)
     {
-        $order = 0;
-    
-        foreach($request->order as $model_order)
+        foreach($request->model_order as $index => $model_id) 
         {
-            $model = Models::find($model_order['id']);
+            $model = Models::find($model_id);
             if ($model) {
-                $model->update(['order' => $order++]);
+                $model->update(['order' => $index + 1]);
             }
         }
     }

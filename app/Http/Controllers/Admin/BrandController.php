@@ -163,13 +163,11 @@ class BrandController extends Controller
 
     public function change_order(Request $request)
     {
-        $order = 0;
-    
-        foreach($request->order as $brand_order)
+        foreach($request->brand_order as $index => $brand_id) 
         {
-            $brand = Brand::find($brand_order['id']);
+            $brand = Brand::find($brand_id);
             if ($brand) {
-                $brand->update(['order' => $order++]);
+                $brand->update(['order' => $index + 1]);
             }
         }
     }
