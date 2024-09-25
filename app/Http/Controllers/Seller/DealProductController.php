@@ -8,12 +8,12 @@ use App\Models\Deal;
 class DealProductController extends Controller
 {
 
-    public function index($seller_id)
-    {
-        $dealProduct = Product::with('product_single_gallery','shop')->where('user_id', $seller_id)->where('deal_id',4)->get();
+    // public function index($seller_id)
+    // {
+    //     $dealProduct = Product::with('product_single_gallery','shop')->where('user_id', $seller_id)->where('deal_id',4)->get();
     
-        return response()->json(['data' => $dealProduct]);
-    }
+    //     return response()->json(['data' => $dealProduct]);
+    // }
 
     public function create(Request $request)
     {
