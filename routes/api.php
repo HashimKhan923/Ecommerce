@@ -640,6 +640,18 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+                                    /// Deal Products \\\
+
+                Route::group(['prefix' => '/admin/deal/'], function() {
+                    Route::controller(App\Http\Controllers\Seller\DealProductController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('create','create');
+                        Route::post('update','update');
+                        Route::get('delete/{id}','delete');
+                        Route::post('multi_delete','multi_delete');
+                    });
+                });
+
 
                                                         ///Wholesale Product \\\
 

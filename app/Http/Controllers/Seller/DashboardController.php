@@ -16,6 +16,7 @@ use App\Models\SellerFandQ;
 use App\Models\Shop;
 use App\Models\MyCustomer;
 use App\Models\Notification;
+use App\Models\Deal;
 
 
 
@@ -43,6 +44,10 @@ class DashboardController extends Controller
         $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
         $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
 
+        $Deals = Deal::where('discount_start_date', '<=', now())
+        ->where('discount_end_date', '>=', now())
+        ->get();
+
         return response()->json([
             // Product Data
             'totalProducts' => $totalProducts,
@@ -62,7 +67,9 @@ class DashboardController extends Controller
             'totalPayouts' => $totalPayouts,
             'paidPayouts' => $paidPayouts,
             'unpaidPayouts' => $unpaidPayouts,
-            'totalPayoutAmount' => $totalPayoutAmount
+            'totalPayoutAmount' => $totalPayoutAmount,
+
+            'Deals' => $Deals
         ]);
     }
 
