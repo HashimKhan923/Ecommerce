@@ -31,7 +31,8 @@ class DealController extends Controller
             $file->move(public_path('DealBanner'),$filename);
             $new->banner = $filename;
         }
-
+        $new->discount = $request->discount;
+        $new->discount_type =  $request->discount_type;
         $new->discount_start_date = Carbon::parse($request->discount_start_date);
         $new->discount_end_date =  Carbon::parse($request->discount_end_date);
         $new->save();
@@ -62,7 +63,8 @@ class DealController extends Controller
             $file->move(public_path('DealBanner'),$filename);
             $update->banner = $filename;
         }
-
+        $update->discount = $request->discount;
+        $update->discount_type =  $request->discount_type;
         $update->discount_start_date = Carbon::parse($request->discount_start_date);
         $update->discount_end_date = Carbon::parse($request->discount_end_date);
         $update->save();
