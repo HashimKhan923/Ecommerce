@@ -8,7 +8,7 @@ use App\Models\DealProduct;
 class DealProductController extends Controller
 {
 
-    public function show($seller_id)
+    public function index($seller_id)
     {
         $dealProduct = DealProduct::with(['product' => function($query) use ($seller_id) {
             $query->where('user_id', $seller_id);
