@@ -31,7 +31,7 @@ class HomeController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->where('featured', 1)->take(50);
+        })->where('featured', 1)->inRandomOrder()->take(50)->get();
     
         $DealProducts = Product::with([
             'user', 'category','sub_category','brand', 'model', 'stock',
@@ -44,8 +44,8 @@ class HomeController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->where('deal_id',4)
-        ->take(50);
+        })->inRandomOrder()->where('deal_id',4)
+        ->take(50)->get();
 
     
 
