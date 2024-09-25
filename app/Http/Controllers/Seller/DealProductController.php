@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\DealProduct;
+use App\Models\Deal;
 class DealProductController extends Controller
 {
 
     public function index($seller_id)
     {
-        $dealProduct = DealProduct::with(['product' => function($query) use ($seller_id) {
-            $query->where('user_id', $seller_id);
-        }])->first();
+        $dealProduct = Deal::with('deal_product')->get();
+
+
 
         return response()->json(['data'=>$dealProduct]);
     }
