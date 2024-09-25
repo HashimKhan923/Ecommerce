@@ -10,11 +10,7 @@ class DealProductController extends Controller
 
     public function index($seller_id)
     {
-        $dealProduct = Deal::with(['deal_product.product' => function ($query) use ($seller_id) {
-            $query->where('user_id', $seller_id);
-        },
-        'deal_product.product.product_single_gallery',
-        'deal_product.product.shop'])->get();
+        $dealProduct = Product::with('product_single_gallery','shop')->where('user_id', $seller_id)->where('deal_id',4)->get();
     
         return response()->json(['data' => $dealProduct]);
     }
@@ -22,9 +18,8 @@ class DealProductController extends Controller
     public function create(Request $request)
     {
         foreach ($request->deal_product as $product_id) {
-            DealProduct::updateOrCreate([
-                'deal_id' => 4,  
-                'product_id' => $product_id,  
+            Product::where('id', $product_id)->update([
+                'deal_id' => 4,
             ]);
         }
 
@@ -36,7 +31,9 @@ class DealProductController extends Controller
 
     public function multi_delete(Request $request)
     {
-        Product::whereIn('id',$request->ids)->delete();
+        Product::whereIn('id',$request->ids)->update([
+            'deal_id'=>null
+        ]);
 
         $response = ['status'=>true,"message" => "Products Deleted Successfully!"];
         return response($response, 200);
