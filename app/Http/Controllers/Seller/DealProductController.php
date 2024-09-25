@@ -10,17 +10,17 @@ class DealProductController extends Controller
 
     public function index($seller_id)
     {
-        $dealProduct = Deal::with('deal_product')->get();
-
-
-
-        return response()->json(['data'=>$dealProduct]);
+        $dealProduct = Deal::with(['deal_product.product' => function ($query) use ($seller_id) {
+            $query->where('user_id', $seller_id);
+        }])->get();
+    
+        return response()->json(['data' => $dealProduct]);
     }
 
     public function create(Request $request)
     {
         foreach ($request->deal_product as $product_id) {
-            DealProduct::create([
+            DealProduct::updateOrCreate([
                 'deal_id' => 4,  
                 'product_id' => $product_id,  
             ]);
