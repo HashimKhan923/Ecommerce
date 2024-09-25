@@ -642,7 +642,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                     /// Deal Products \\\
 
-                Route::group(['prefix' => '/admin/deal/'], function() {
+                Route::group(['prefix' => '/seller/dealproduct/'], function() {
                     Route::controller(App\Http\Controllers\Seller\DealProductController::class)->group(function () {
                         Route::get('show','index');
                         Route::post('create','create');
