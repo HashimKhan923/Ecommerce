@@ -39,7 +39,7 @@ class ProductController extends Controller
             'discount',
             'tax',
             'shipping',
-            'deal.deal_product',
+            'deal',
             'wholesale',
             'shop.shop_policy',
             'reviews.user',

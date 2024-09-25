@@ -45,7 +45,7 @@ class ProductController extends Controller
     }
 
     
-    private function loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
+    private function loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue, $dealId)
     {
        
         $query = Product::with([
@@ -61,7 +61,7 @@ class ProductController extends Controller
             'discount',
             'tax',
             'shipping',
-            'deal.deal_product',
+            'deal',
             'wholesale',
             'shop.shop_policy',
             'reviews',
@@ -89,6 +89,14 @@ class ProductController extends Controller
        
         if ($isFeatured != 10) {
             $query->where('featured', $isFeatured);  
+        }
+
+        if ($isFeatured != 10) {
+            $query->where('featured', $isFeatured);  
+        }
+
+        if ($dealId != 10) {
+            $query->where('deal_id', 4);  
         }
 
     
@@ -126,7 +134,7 @@ class ProductController extends Controller
             'tax',
             'shipping',
             'shop',
-            'deal.deal_product',
+            'deal',
             'product_varient'
         ])->where('id', $product_id)->first();
 
