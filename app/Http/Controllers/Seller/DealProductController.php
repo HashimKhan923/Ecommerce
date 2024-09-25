@@ -19,13 +19,11 @@ class DealProductController extends Controller
 
     public function create(Request $request)
     {
-        foreach ($request->deal_product as $deal_product) {
-            DealProduct::create(
-                [
-                    'deal_id' => 4,
-                    'product_id' => $deal_product['product_id'],
-                ],
-            );
+        foreach ($request->deal_product as $product_id) {
+            DealProduct::create([
+                'deal_id' => 4,  
+                'product_id' => $product_id,  
+            ]);
         }
 
         $response = ['status'=>true,"message" => "Products Added Successfully!"];
