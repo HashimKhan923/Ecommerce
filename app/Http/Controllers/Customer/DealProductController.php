@@ -15,7 +15,7 @@ class DealProductController extends Controller
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
-            'discount', 'tax', 'shipping',
+            'discount','deal','tax', 'shipping',
             'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->where('published', 1)->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
@@ -34,7 +34,7 @@ class DealProductController extends Controller
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
-            'discount', 'tax', 'shipping',
+            'discount','deal','tax', 'shipping',
             'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->where('published', 1)->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
