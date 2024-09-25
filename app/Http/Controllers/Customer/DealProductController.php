@@ -22,7 +22,9 @@ class DealProductController extends Controller
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('deal_id',4)
-        ->take(24);
+        ->take(24)->get();
+
+        return response()->json(['DealProducts'=>$DealProducts]);
     }
 
     public function load_more($length)
@@ -40,6 +42,8 @@ class DealProductController extends Controller
             $query->where('status', 1);
         })->where('deal_id',4)
         ->skip($length)
-        ->take(24);
+        ->take(24)->get();
+
+        return response()->json(['DealProducts'=>$DealProducts]);
     }
 }

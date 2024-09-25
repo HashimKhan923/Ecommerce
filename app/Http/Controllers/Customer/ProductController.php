@@ -25,7 +25,7 @@ class ProductController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->take(24);
+        })->take(24)->get();
 
 
         return response()->json(['Products'=>$Products]);

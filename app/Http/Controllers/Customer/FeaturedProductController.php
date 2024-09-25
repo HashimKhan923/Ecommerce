@@ -23,7 +23,9 @@ class FeaturedProductController extends Controller
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('featured',1)
-        ->take(24);
+        ->take(24)->get();
+
+        return response()->json(['FeaturedProducts'=>$FeaturedProducts]);
     }
 
     public function load_more($length)
@@ -41,6 +43,9 @@ class FeaturedProductController extends Controller
             $query->where('status', 1);
         })->where('featured',1)
         ->skip($length)
-        ->take(24);
+        ->take(24)->get();
+
+        return response()->json(['FeaturedProducts'=>$FeaturedProducts]);
+
     }
 }
