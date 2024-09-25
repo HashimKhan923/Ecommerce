@@ -12,7 +12,9 @@ class DealProductController extends Controller
     {
         $dealProduct = Deal::with(['deal_product.product' => function ($query) use ($seller_id) {
             $query->where('user_id', $seller_id);
-        }])->get();
+        },
+        'deal_product.product.product_single_gallery',
+        'deal_product.product.shop'])->get();
     
         return response()->json(['data' => $dealProduct]);
     }
