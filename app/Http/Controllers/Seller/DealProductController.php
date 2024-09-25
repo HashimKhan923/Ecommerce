@@ -28,5 +28,17 @@ class DealProductController extends Controller
             );
         }
 
+        $response = ['status'=>true,"message" => "Products Added Successfully!"];
+        return response($response, 200);
+
+    }
+
+
+    public function multi_delete(Request $request)
+    {
+        Product::whereIn('id',$request->ids)->delete();
+
+        $response = ['status'=>true,"message" => "Products Deleted Successfully!"];
+        return response($response, 200);
     }
 }
