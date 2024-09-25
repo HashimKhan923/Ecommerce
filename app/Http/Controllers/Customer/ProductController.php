@@ -13,16 +13,44 @@ use App\Models\ProductRating;
 
 class ProductController extends Controller
 {
-    // public function index()
-    // {
-    //     $Products = Product::with('user','category','brand','stock','product_gallery','discount','tax','shipping','deal','wholesale','shop','reviews','product_varient')->where('published',1)->where('approved',1)->get();
-    //     $Categories = Category::where('is_active',1)->get();
-    //     $Barnds = Brand::where('is_active',1)->get();
+    public function index()
+    {
+        $Products = Product::with([
+            'user', 'category','sub_category','brand', 'model', 'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount', 'tax', 'shipping','deal','shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)->orderBy('id', 'desc')->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->take(24);
 
 
-    //     return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands]);
+        return response()->json(['Products'=>$Products]);
 
-    // }
+    }
+
+    private function loadMoreProducts($orderBy, $length)
+    {
+        return Product::with([
+            'user', 'category','sub_category','brand', 'model', 'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            }, 'discount', 'tax', 'shipping','deal','shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)->orderBy($orderBy, 'desc')->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })->skip($length)->take(24)->get();
+    }
+    
+    public function load_more($length)
+    {
+        $Products = $this->loadMoreProducts('id', $length);
+        return response()->json(['Products' => $Products]);
+    }
 
     public function detail($id)
     {

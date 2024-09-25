@@ -21,7 +21,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $Products = Product::with([
+        $FeaturedProducts = Product::with([
             'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
@@ -31,9 +31,9 @@ class HomeController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->take(24);
+        })->where('featured', 1)->inRandomOrder()->take(50);
     
-        $TopSelling = Product::with([
+        $DealProducts = Product::with([
             'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
@@ -44,28 +44,11 @@ class HomeController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->inRandomOrder()->orderBy('num_of_sale', 'desc')
-        ->take(10);
+        })->inRandomOrder()->where('deal_id',4)
+        ->take(50);
 
     
-        
-        $TrendingProducts = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount', 'tax', 'shipping', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })->inRandomOrder()->orderBy('average_rating', 'desc')
-        ->take(10);
-    
-        $FeaturedProducts = clone $Products;
-        $FeaturedProducts->where('featured', 1)->take(10);
-    
-        $allProducts = $Products->get();
+
         $Categories = Category::with(['sub_category' => function ($query) {
             $query->orderBy('order', 'asc');
         }])
@@ -86,17 +69,10 @@ class HomeController extends Controller
         ->where('discount_end_date', '>=', now())
         ->get();
 
-        // $dealProduct = Deal::with(['deal_product.product' => function ($query) use ($seller_id) {
-        //     $query->where('user_id', $seller_id);
-        // },
-        // 'deal_product.product.product_single_gallery',
-        // 'deal_product.product.shop'])->get();
+
     
         return response()->json([
-            'Products' => $allProducts,
-            'FeaturedProducts' => $FeaturedProducts->get(),
-            'TopSelling' => $TopSelling->get(),
-            'TrendingProducts' => $TrendingProducts->get(),
+            'FeaturedProducts' => $FeaturedProducts,
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
@@ -109,25 +85,7 @@ class HomeController extends Controller
     }
 
 
-    private function loadMoreProducts($orderBy, $length)
-    {
-        return Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            }, 'discount', 'tax', 'shipping','deal','shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy($orderBy, 'desc')->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })->skip($length)->take(24)->get();
-    }
-    
-    public function load_more($length)
-    {
-        $Products = $this->loadMoreProducts('id', $length);
-        return response()->json(['Products' => $Products]);
-    }
+
     
     public function load_more_top_selling($length)
     {
