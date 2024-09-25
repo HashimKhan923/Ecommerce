@@ -86,11 +86,11 @@ class HomeController extends Controller
         ->where('discount_end_date', '>=', now())
         ->get();
 
-        $dealProduct = Deal::with(['deal_product.product' => function ($query) use ($seller_id) {
-            $query->where('user_id', $seller_id);
-        },
-        'deal_product.product.product_single_gallery',
-        'deal_product.product.shop'])->get();
+        // $dealProduct = Deal::with(['deal_product.product' => function ($query) use ($seller_id) {
+        //     $query->where('user_id', $seller_id);
+        // },
+        // 'deal_product.product.product_single_gallery',
+        // 'deal_product.product.shop'])->get();
     
         return response()->json([
             'Products' => $allProducts,
