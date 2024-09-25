@@ -73,6 +73,7 @@ class HomeController extends Controller
     
         return response()->json([
             'FeaturedProducts' => $FeaturedProducts,
+            'DealProducts'=>$DealProducts,
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
