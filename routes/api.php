@@ -644,7 +644,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/dealproduct/'], function() {
                     Route::controller(App\Http\Controllers\Seller\DealProductController::class)->group(function () {
-                        Route::get('show','index');
+                        Route::get('show/{seller_id}','index');
                         Route::post('create','create');
                         Route::post('update','update');
                         Route::get('delete/{id}','delete');
