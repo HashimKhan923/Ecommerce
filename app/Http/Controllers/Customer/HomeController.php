@@ -33,7 +33,7 @@ class HomeController extends Controller
           })->whereHas('shop', function ($query) {
               $query->where('status', 1);
           })->where('featured', 1)
-          ->orderByRaw('RAND()') // For MySQL (use RANDOM() if using PostgreSQL)
+          ->orderByRaw('RAND()') 
           ->take(50)
           ->get();
     
@@ -48,8 +48,10 @@ class HomeController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->inRandomOrder()->where('deal_id',4)
-        ->take(50)->get();
+        })->where('deal_id',4)
+        ->orderByRaw('RAND()') 
+        ->take(50)
+        ->get();
 
     
 
