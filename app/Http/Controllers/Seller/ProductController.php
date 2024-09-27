@@ -106,7 +106,7 @@ class ProductController extends Controller
                      ->get();
     }
     
-    public function load_more($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue)
+    public function load_more($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue, $dealId)
     {
         
         
@@ -114,7 +114,7 @@ class ProductController extends Controller
             $start = 0;
         }
     
-        $products = $this->loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue);
+        $products = $this->loadMoreProducts($userId, $start, $length, $shopId, $status, $isFeatured, $searchValue, $dealId);
         return response()->json(['Products' => $products]);
     }
 
