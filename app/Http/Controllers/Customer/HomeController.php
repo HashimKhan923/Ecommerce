@@ -73,6 +73,7 @@ class HomeController extends Controller
         $Deal = Deal::with('deal_shop.shop')
         ->where('discount_start_date', '<=', now())
         ->where('discount_end_date', '>=', now())
+        ->where('status',1)
         ->get();
 
 

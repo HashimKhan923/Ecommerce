@@ -44,8 +44,11 @@ class DashboardController extends Controller
         $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
         $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
 
-        $Deals = Deal::where('discount_start_date', '<=', now())
+        $Deals = Deal::with('products')
+        ->withCount('products')
+        ->where('discount_start_date', '<=', now())
         ->where('discount_end_date', '>=', now())
+        ->where('status',1)
         ->get();
 
         return response()->json([

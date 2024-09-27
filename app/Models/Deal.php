@@ -9,9 +9,9 @@ class Deal extends Model
 {
     use HasFactory;
 
-    public function deal_product()
+    public function products()
     {
-        return $this->hasMany(DealProduct::class,'deal_id','id');
+        return $this->hasMany(Product::class,'deal_id','id');
     } 
 
     public function deal_shop()

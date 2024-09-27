@@ -108,6 +108,25 @@ class DealController extends Controller
         return response($response, 200);
     }
 
+    public function status($id)
+    {
+        $is_status = Deal::where('id',$id)->first();
+
+        if($is_status->status == 0)
+        {
+            $is_status->status = 1;
+        }
+        else
+        {
+            $is_status->status = 0;
+        }
+
+        $is_status->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
     public function deal_shop(Request $request)
     {
         DealShop::updateOrCreate(

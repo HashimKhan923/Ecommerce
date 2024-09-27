@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('create','create');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
+                    Route::get('status/{id}','status');
                     Route::post('multi_delete','multi_delete');
                 });
             });
