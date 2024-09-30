@@ -46,8 +46,8 @@ class DashboardController extends Controller
 
         $Deals = Deal::with('products')
         ->withCount('products')
-        ->where('discount_start_date', '<=', now())
-        ->where('discount_end_date', '>=', now())
+        // ->where('discount_start_date', '<=', now())
+        // ->where('discount_end_date', '>=', now())
         ->where('status',1)
         ->get();
 
