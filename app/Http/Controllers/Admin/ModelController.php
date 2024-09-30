@@ -14,7 +14,7 @@ class ModelController extends Controller
 {
     public function index()
     {
-      $Models = Models::orderBy('order', 'asc')->get();
+      $Models = Models::orderBy('order', 'asc')->withCount('product')->get();
 
       return response()->json(['Models'=>$Models]);
     }

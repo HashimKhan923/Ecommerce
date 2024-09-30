@@ -11,6 +11,11 @@ class Models extends Model
         'meta_keywords' => 'array',
     ];
 
+    public function product()
+    {
+        return $this->hasMany(Product::class,'category_id','id');
+    }
+
     protected $fillable = ['order'];
     use HasFactory;
 }
