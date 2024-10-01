@@ -14,7 +14,7 @@ class BrandProductController extends Controller
             'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
-            }, 'discount', 'tax', 'shipping', 'deal.deal_product',
+            }, 'discount', 'tax', 'shipping', 'deal',
             'wholesale', 'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)
         ->where('brand_id', $brand_id)

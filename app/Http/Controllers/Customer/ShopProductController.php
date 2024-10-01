@@ -25,7 +25,7 @@ class ShopProductController extends Controller
             'discount',
             'tax',
             'shipping',
-            'deal.deal_product',
+            'deal',
             'wholesale',
             'shop' => function($query) {
                 $query->where('status', 1);

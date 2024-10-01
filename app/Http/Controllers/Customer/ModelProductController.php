@@ -14,7 +14,7 @@ class ModelProductController extends Controller
             'user', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
-            }, 'discount', 'tax', 'shipping', 'deal.deal_product',
+            }, 'discount', 'tax', 'shipping', 'deal',
             'wholesale', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])->where('published', 1)
         ->where('model_id', $model_id)
