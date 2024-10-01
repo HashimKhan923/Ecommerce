@@ -192,6 +192,18 @@ class AuthController extends Controller
             $new->location = $request->location;
             $new->is_active = 1;
             $new->save();
+
+            Mail::send(
+                'email.customer_welcome',
+                [
+                    'name' => $new->name,
+                ], 
+                function ($message) use ($new) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to($new->email);
+                    $message->subject('Welcome');
+                }
+            );
             
             $token = $new->createToken('Laravel Password Grant Client')->accessToken;
             $response = ['status'=>true,"message" => "Customer Register Successfully",'token' => $token,'user'=>$new];
