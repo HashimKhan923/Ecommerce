@@ -47,15 +47,15 @@ class SubscriberController extends Controller
     public function sendEmail(Request $request)
     {
         $details = $request->only('body');
-
-        // Fetch all users
-        $users = Subscriber::all();
-
-        // Dispatch a job for each user
+        $userIds = $request->input('user_ids'); 
+    
+        
+        $users = Subscriber::whereIn('id', $userIds)->get();
+    
         foreach ($users as $user) {
             SendEmailJob::dispatch($user, $details);
         }
-
+    
         return response()->json(['message' => 'Emails are being sent.'], 200);
     }
 }
