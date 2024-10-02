@@ -32,10 +32,11 @@ class FilterController extends Controller
         })
         ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
-                $query->where(function ($query) use ($keyword) {
-                    $query->where('sku', $keyword)
-                          ->orWhere('name', 'LIKE', "%{$keyword}%")
-                          ->orWhereRaw("JSON_CONTAINS(tags, '\"{$keyword}\"')"); // Match exact keyword in JSON tags
+                $query->orWhere(function ($subquery) use ($keyword) {
+                    $subquery->where('sku', $keyword)
+                        ->orWhere('name', 'LIKE', "%{$keyword}%")
+                        // ->orWhere('description', 'LIKE', "%{$keyword}%")
+                        ->orWhereJsonContains('tags', $keyword);
                 });
             }
         })
