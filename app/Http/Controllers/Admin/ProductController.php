@@ -23,7 +23,7 @@ class ProductController extends Controller
     {
         $Products = Product::with(['user','category','sub_category','brand','stock','product_gallery' => function($query) {
             $query->orderBy('order', 'asc');
-        },'discount','tax','shipping','deal.deal_product','shop','reviews','product_varient'])->get();
+        },'discount','tax','shipping','deal','shop','reviews','product_varient'])->get();
 
         return response()->json(['Products'=>$Products]);
     }
