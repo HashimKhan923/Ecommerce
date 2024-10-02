@@ -33,9 +33,9 @@ class FilterController extends Controller
         ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
                 $query->orWhere(function ($query) use ($keyword) {
-                    // Match exact word in name using word boundaries
+                    // Match exact phrase in the name (with spaces before/after for precision)
                     $query->where('sku', $keyword)
-                          ->orWhere('name', 'REGEXP', '[[:<:]]' . $keyword . '[[:>:]]') // Exact match with word boundaries
+                          ->orWhereRaw("LOWER(name) = ?", [strtolower($keyword)]) // Exact match in name
                           ->orWhereJsonContains('tags', $keyword); // Exact match in tags
                 });
             }
