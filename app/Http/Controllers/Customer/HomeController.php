@@ -22,7 +22,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return Carbon::now();
+        return Carbon::now()->format('Y-m-d H:i:s');
         $FeaturedProducts = Product::with([
             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function ($query) {
