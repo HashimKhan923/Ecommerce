@@ -22,7 +22,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return  now()->setTimezone('Asia/Karachi')->format('Y-m-d H:i:s');
         $FeaturedProducts = Product::with([
             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function ($query) {
@@ -72,8 +71,8 @@ class HomeController extends Controller
         $Models = Models::where('is_active',1)->get();
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')->where('status',1)->where('featured', 1)->get();
-        $Deal = Deal::where('discount_start_date', '<=', now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'))
-        ->where('discount_end_date', '>=', now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'))
+        $Deal = Deal::where('discount_start_date', '<=', now())
+        ->where('discount_end_date', '>=', now())
         ->where('status', 1)
         ->get();
 
