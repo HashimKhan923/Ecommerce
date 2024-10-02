@@ -29,12 +29,12 @@ class FilterController extends Controller
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->where(function ($query) use ($keywords) {
+        ->where(function ($query) use ($keywords,$searchValue) {
             foreach ($keywords as $keyword) {
-                $query->where(function ($query) use ($keyword) {
+                $query->where(function ($query) use ($keyword,$searchValue) {
                     $query->where('sku',$keyword)
                     ->orWhere('name', 'LIKE', "%{$keyword}%")
-                    ->orWhereJsonContains('tags', $keyword);
+                    ->orWhereJsonContains('tags', $searchValue);
                 });
             }
         })
