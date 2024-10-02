@@ -33,9 +33,14 @@ class FilterController extends Controller
             foreach ($keywords as $keyword) {
                 $query->where(function ($query) use ($keyword) {
                     $query->where('sku',$keyword)
-                    ->orWhere('name', 'LIKE', "%{$keyword}%")
-                    // ->orWhere('description', 'LIKE', "%{$keyword}%")
-                    ->orWhereJsonContains('tags', $keyword);
+                    ->orWhere('name', 'LIKE', "%{$keyword}%");
+
+                });
+            }
+        })->OrWhere(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->where(function ($query) use ($keyword) {
+                    $query->WhereJsonContains('tags', $keyword);
                 });
             }
         })
