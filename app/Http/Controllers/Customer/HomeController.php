@@ -15,6 +15,7 @@ use App\Models\State;
 use App\Models\Shop;
 use App\Models\Models;
 use App\Models\Deal;
+use Carbon\Carbon;
 use DB;
 
 class HomeController extends Controller
@@ -71,8 +72,8 @@ class HomeController extends Controller
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')->where('status',1)->where('featured', 1)->get();
         $Deal = Deal::
-        where('discount_start_date', '<=', now()->format('Y-m-d H:i:s'))
-        ->where('discount_end_date', '>=', now()->format('Y-m-d H:i:s'))
+        where('discount_start_date', '<=', Carbon::now())
+        ->where('discount_end_date', '>=', Carbon::now())
         ->where('status',1)
         ->get();
 
