@@ -43,7 +43,7 @@ class FilterController extends Controller
         })
         ->where(function ($query) use ($variations) {
             foreach ($variations as $variation) {
-                $query->orWhere(function ($query) use ($variation) {
+                $query->where(function ($query) use ($variation) {
                     $query->where('sku', 'LIKE', "%{$variation}%")
                           ->orWhere('name', 'LIKE', "%{$variation}%")
                           // ->orWhere('description', 'LIKE', "%{$variation}%")
