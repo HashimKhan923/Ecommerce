@@ -15,13 +15,13 @@ use App\Models\State;
 use App\Models\Shop;
 use App\Models\Models;
 use App\Models\Deal;
-use Carbon\Carbon;
 use DB;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        return now();
         $FeaturedProducts = Product::with([
             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function ($query) {
@@ -72,8 +72,8 @@ class HomeController extends Controller
         $AllBanners = AllBanner::where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')->where('status',1)->where('featured', 1)->get();
         $Deal = Deal::
-        where('discount_start_date', '<=', Carbon::today())
-        ->where('discount_end_date', '>=', Carbon::today())
+        where('discount_start_date', '<=', now())
+        ->where('discount_end_date', '>=', now())
         ->where('status',1)
         ->get();
 
