@@ -16,12 +16,13 @@ use App\Models\Shop;
 use App\Models\Models;
 use App\Models\Deal;
 use DB;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return now()->timezone(config('Asia/Karachi'))->format('Y-m-d H:i:s');
+        return Carbon::now();
         $FeaturedProducts = Product::with([
             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function ($query) {
