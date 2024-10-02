@@ -17,6 +17,18 @@ class FilterController extends Controller
         $Keyword->save();
         
         $keywords = explode(' ', $searchValue);
+        $variations = [];
+        
+        // Create variations for keywords (e.g., headlight, headlights)
+        foreach ($keywords as $keyword) {
+            $variations[] = $keyword; // Original keyword
+            // Adding plural variations (this can be expanded to more complex rules if needed)
+            if (substr($keyword, -1) == 's') {
+                $variations[] = substr($keyword, 0, -1); // Singular form
+            } else {
+                $variations[] = $keyword . 's'; // Plural form
+            }
+        }
         
         $data = Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
@@ -29,13 +41,13 @@ class FilterController extends Controller
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->where(function ($query) use ($keywords,$searchValue) {
-            foreach ($keywords as $keyword) {
-                $query->where(function ($query) use ($keyword,$searchValue) {
-                    $query->where('sku',$keyword)
-                    ->orWhere('name', 'LIKE', "%{$keyword}%")
-                    // ->orWhere('description', 'LIKE', "%{$keyword}%")
-                    ->orWhereJsonContains('tags', $searchValue);
+        ->where(function ($query) use ($variations) {
+            foreach ($variations as $variation) {
+                $query->orWhere(function ($query) use ($variation) {
+                    $query->where('sku', 'LIKE', "%{$variation}%")
+                          ->orWhere('name', 'LIKE', "%{$variation}%")
+                          // ->orWhere('description', 'LIKE', "%{$variation}%")
+                          ->orWhereJsonContains('tags', $variation);
                 });
             }
         })
