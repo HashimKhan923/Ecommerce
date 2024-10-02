@@ -38,15 +38,6 @@ class FilterController extends Controller
                     ->orWhereJsonContains('tags', $keyword);
                 });
             }
-        })        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $query->where(function ($query) use ($keyword) {
-                    $query->where('sku',$keyword)
-                    ->orWhere('name', 'LIKE', "%{$keyword}%")
-                    // ->orWhere('description', 'LIKE', "%{$keyword}%")
-                    ->orWhereJsonContains('tags', $keyword);
-                });
-            }
         })
         ->orderBy('featured', 'DESC')
         ->skip($length)->take(24)->get();
