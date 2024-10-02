@@ -21,7 +21,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s');
+        return now()->timezone(config('Asia/Karachi'))->format('Y-m-d H:i:s');
         $FeaturedProducts = Product::with([
             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function ($query) {
