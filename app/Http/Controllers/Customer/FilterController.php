@@ -37,7 +37,7 @@ class FilterController extends Controller
 
                 });
             }
-        })->OrWhere(function ($query) use ($keywords) {
+        })->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
                 $query->where(function ($query) use ($keyword) {
                     $query->WhereJsonContains('tags', $keyword);
