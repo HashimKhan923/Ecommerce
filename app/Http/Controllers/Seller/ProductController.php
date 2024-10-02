@@ -172,7 +172,7 @@ class ProductController extends Controller
         'brand_id' => $request->brand_id,
         'model_id' => $request->model_id,
         'shop_id' => $request->shop_id,
-        'tags' => $request->tags,
+        'tags' => json_encode(array_map('strtolower', $request->tags)),
         'trim' => $request->trim,
         'description' => $request->description,
         'price' => $request->price,
@@ -354,7 +354,7 @@ class ProductController extends Controller
                     'brand_id' => $productData['brand_id'] ?? null,
                     'model_id' => $productData['model_id'] ?? null,
                     'shop_id' => $productData['shop_id'] ?? null,
-                    'tags' => $productData['tags'] ?? '',
+                    'tags' => json_encode(array_map('strtolower', $productData['tags'] ?? [])),
                     'trim' => $productData['trim'] ?? '',
                     'description' => $productData['description'] ?? null,
                     'price' => $productData['price'] ?? 0.0,
@@ -534,6 +534,8 @@ class ProductController extends Controller
             'cost_price', 'shop_id', 'shipping', 'featured', 'published', 'is_tax',
             'meta_title','meta_description','video', 'slug'
         ]);
+
+        $productData['tags'] = json_encode(array_map('strtolower', $productData['tags'] ?? []));
         
         $productData['added_by'] = 'seller';
         if(isset($productData['year']))
@@ -754,6 +756,10 @@ class ProductController extends Controller
                         'lenght','width','make', 'brand_id', 'model_id', 'tags', 'price', 'shop_id'
                     ]);
                 }, ARRAY_FILTER_USE_KEY);
+
+                if (isset($productFields['tags'])) {
+                    $productFields['tags'] = json_encode(array_map('strtolower', $productFields['tags'])); // Convert tags to lowercase and encode as JSON
+                }
                 
                 $product->update($productFields);
 
