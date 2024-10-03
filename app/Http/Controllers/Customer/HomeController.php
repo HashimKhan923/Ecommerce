@@ -72,7 +72,7 @@ class HomeController extends Controller
             $query->where('status', 1);
         })
         ->orderByRaw('RAND()') 
-        ->take(50)
+        ->take(30)
         ->get();
 
     
