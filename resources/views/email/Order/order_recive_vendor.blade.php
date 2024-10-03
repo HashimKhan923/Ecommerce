@@ -144,7 +144,7 @@
                     </tr>
                 @endif
                 @if ($request->tax)
-                    @php $total_amount += $request->tax; @endphp
+                    @php $total_amount += floatval($request->tax[2]); @endphp
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -152,12 +152,12 @@
                         </td>
                         <td width="25%" align="right"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            ${{ $request->tax }}
+                            {{ floatval($request->tax[2]) }}%
                         </td>
                     </tr>
                 @endif
                 @if ($request->insurance)
-                    @php $total_amount += $request->insurance; @endphp
+                    @php $total_amount += floatval($request->insurance[2]); @endphp
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -165,12 +165,12 @@
                         </td>
                         <td width="25%" align="right"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            ${{ $request->insurance }}
+                            ${{ floatval($request->insurance[2]) }}
                         </td>
                     </tr>
                 @endif
                 @if ($request->singnature)
-                    @php $total_amount += $request->singnature; @endphp
+                    @php $total_amount += floatval($request->signature[2]); @endphp
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -178,7 +178,7 @@
                         </td>
                         <td width="25%" align="right"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            ${{ $request->singnature }}
+                            ${{ floatval($request->signature[2]) }}
                         </td>
                     </tr>
                 @endif
