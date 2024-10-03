@@ -9,81 +9,165 @@
     />
     <meta name="author" content="DAM Team" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script> -->
     <!-- <link rel="stylesheet" href="index.css" /> -->
-    <style>
-      .hero {
-        width: 100%;
-        height: 100%;
-        background-image: url("https://devapi.dragonautomart.com/EmailTemplate/hero.jpeg");
-        background-size: cover; /* Ensure the image covers the entire modal */
-        background-repeat: no-repeat; /* Prevent the image from repeating */
-        background-position: center;
-      }
-    </style>
   </head>
-  <body class="max-w-[50rem] mx-auto">
+  <body
+    style="
+      max-width: 55rem;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: Arial, sans-serif;
+    "
+  >
     <!-- header  -->
     <header
-      class="bg-[#4d4d4d] px-8 w-full flex flex-wrap items-center justify-between"
+      style="
+        background-color: #4d4d4d;
+        padding-left: 2rem;
+        padding-right: 2rem;
+
+        /* width: 100%; */
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      "
     >
-      <!-- logo  -->
-      <div class="flex items-center justify-center gap-x-2 flex-shrink-0">
+      <!-- logo -->
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          flex-shrink: 0;
+        "
+      >
         <a target="_blank" href="https://dragonautomart.com">
           <img
-            class="size-28 object-contain"
+            style="width: 5rem; height: 6rem; object-fit: contain"
             src="https://devapi.dragonautomart.com/EmailTemplate/logo.png"
             alt="logo"
           />
         </a>
         <a target="_blank" href="https://dragonautomart.com">
           <img
-            class="size-32 object-contain"
+            style="width: 8rem; height: 5rem; object-fit: contain"
             src="https://devapi.dragonautomart.com/EmailTemplate/whitetext.png"
             alt="logo"
           />
         </a>
       </div>
-      <!-- right side options  -->
+      <!-- right side options -->
       <div
-        class="flex items-center justify-center gap-x-6 text-white tracking-wider"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1.5rem;
+          color: white;
+          letter-spacing: 0.05em;
+        "
       >
-        <a target="_blank" href="https://dragonautomart.com/allmakes">
+        <a
+          target="_blank"
+          href="https://dragonautomart.com/allmakes"
+          style="color: inherit; text-decoration: none"
+        >
           Popular Makes
         </a>
-        <a target="_blank" href="https://dragonautomart.com/sellondam">Sell</a>
-        <a target="_blank" href="https://dragonautomart.com">
+        <a
+          target="_blank"
+          href="https://dragonautomart.com/sellondam"
+          style="color: inherit; text-decoration: none"
+        >
+          Sell
+        </a>
+        <a
+          style="color: inherit; text-decoration: none"
+          target="_blank"
+          href="https://dragonautomart.com"
+        >
           <button
-            class="bg-red-600 rounded-lg px-5 py-2 text-white font-medium text-md uppercase"
+            style="
+              background-color: #dc2626;
+              border-radius: 0.5rem;
+              padding-left: 1.25rem;
+              padding-right: 1.25rem;
+              padding-top: 0.5rem;
+              padding-bottom: 0.5rem;
+              color: white;
+              font-weight: 500;
+              font-size: 1rem;
+              text-transform: uppercase;
+              border: none;
+            "
           >
             Explore More
           </button>
         </a>
       </div>
     </header>
-
     <!-- hero section  -->
-    <div class="hero h-screen w-full bg-black px-4">
+    <div
+      style="
+        /* width: 104%; */
+        height: 100vh;
+        background-image: url('https://devapi.dragonautomart.com/EmailTemplate/hero.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      "
+    >
       <!-- heading section -->
-      <div class="pt-6">
+      <div style="padding-top: 1.5rem">
         <div
-          class="font-normal text-white uppercase text-[1.5rem] drop-shadow-xl"
+          style="
+            font-weight: 400;
+            color: white;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+          "
         >
-          <span class="[text-shadow:_0_2px_0_rgb(0_0_0_/_50%)]">
-            new arrivals
-          </span>
+          <span> new arrivals </span>
         </div>
         <div
-          class="font-semibold text-white text-[3rem] mb-2 -mt-2 drop-shadow-2xl"
+          style="
+            font-weight: 600;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            margin-top: -0.5rem;
+            text-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
+          "
         >
-          <span class="[text-shadow:_0_2px_0_rgb(0_0_0_/_80%)]">
-            Save up to 30% on all items.
-          </span>
+          <span> Save up to 30% on all items. </span>
         </div>
-        <a target="_blank" href="https://dragonautomart.com">
+        <a
+          target="_blank"
+          href="https://dragonautomart.com"
+          style="color: inherit; text-decoration: none"
+        >
           <button
-            class="bg-red-600 drop-shadow-xl shadow-xl rounded-lg px-6 py-2 text-white tracking-wider font-semibold text-lg"
+            style="
+              background-color: #dc2626;
+              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+              border-radius: 0.5rem;
+              padding-left: 1.5rem;
+              padding-right: 1.5rem;
+              padding-top: 0.5rem;
+              padding-bottom: 0.5rem;
+              color: white;
+
+              font-weight: 600;
+              font-size: 1.125rem;
+              border: none;
+            "
           >
             Shop Now
           </button>
@@ -91,107 +175,219 @@
       </div>
     </div>
     <!-- diffuser  -->
-    <div class="bg-gradient-to-b from-transparent to-white -mt-64 h-64"></div>
+    <div
+      style="
+        background: linear-gradient(to bottom, transparent, white);
+        margin-top: -16rem;
+        height: 16rem;
+      "
+    ></div>
     <!-- categories grid boxes  -->
-    <div class="flex items-center justify-center gap-5 my-2 mx-2 -mt-32">
-      <!-- left vertical grid  -->
-      <div class="w-[40%]">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: between;
+        column-gap: 1.5rem;
+        margin: 0.5rem 0.5rem;
+        margin-top: -8rem;
+      "
+    >
+      <!-- left vertical grid -->
+      <div style="width: 35%">
         <div
-          class="flex flex-col items-center justify-center p-3 gap-y-5 bg-gray-200 border border-gray-400 rounded-xl"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            gap: 1.25rem;
+            background-color: #e5e7eb;
+            border: 1px solid #9ca3af;
+            border-radius: 0.75rem;
+          "
         >
-          <!-- category box  -->
+          <!-- category box -->
           <a
             target="_blank"
             href="https://dragonautomart.com/subcategory/Tail%20Lights/4"
+            style="color: inherit; text-decoration: none"
           >
-            <div class="flex flex-col items-center justify-center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <img
-                class="w-64 h-36 object-contain"
+                style="width: 16rem; height: 9rem; object-fit: contain"
                 src="https://devapi.dragonautomart.com/EmailTemplate/tail.png"
                 alt="logo"
               />
-              <span class="font-medium text-lg"> Tail Lights </span>
+              <span style="font-weight: 500; font-size: 1.125rem">
+                Tail Lights
+              </span>
             </div>
           </a>
-          <!-- category box  -->
+          <!-- category box -->
           <a
             target="_blank"
             href="https://dragonautomart.com/subcategory/Headlights/5"
+            style="color: inherit; text-decoration: none"
           >
-            <div class="flex flex-col items-center justify-center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <img
-                class="w-64 h-36 object-contain"
+                style="width: 16rem; height: 9rem; object-fit: contain"
                 src="https://devapi.dragonautomart.com/EmailTemplate/head.png"
                 alt="logo"
               />
-              <span class="font-medium text-lg"> Headlights </span>
+              <span style="font-weight: 500; font-size: 1.125rem">
+                Headlights
+              </span>
             </div>
           </a>
         </div>
       </div>
-      <!-- right horizontal grid  -->
-      <div class="w-[60%] flex flex-col items-center justify-center gap-y-3">
+      <!-- right horizontal grid -->
+      <div
+        style="
+          width: 60%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          row-gap: 1.5rem;
+        "
+      >
         <div
-          class="flex items-center justify-center p-5 gap-x-5 bg-gray-200 border border-gray-400 rounded-xl w-full"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            gap: 1.25rem;
+            background-color: #e5e7eb;
+            border: 1px solid #9ca3af;
+            border-radius: 0.75rem;
+            width: 100%;
+          "
         >
-          <!-- category box  -->
+          <!-- category box -->
           <a
             target="_blank"
             href="https://dragonautomart.com/subcategory/Bumpers/66"
+            style="color: inherit; text-decoration: none"
           >
-            <div class="flex flex-col items-center justify-center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <img
-                class="w-48 h-full object-contain"
+                style="width: 12rem; height: auto; object-fit: contain"
                 src="https://devapi.dragonautomart.com/EmailTemplate/bumper.png"
                 alt="logo"
               />
-              <span class="font-medium text-lg">Bumper </span>
+              <span style="font-weight: 500; font-size: 1.125rem">Bumper </span>
             </div>
           </a>
-          <!-- category box  -->
+          <!-- category box -->
           <a
             target="_blank"
             href="https://dragonautomart.com/subcategory/Fenders/67"
+            style="color: inherit; text-decoration: none"
           >
-            <div class="flex flex-col items-center justify-center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <img
-                class="w-48 h-full object-contain"
+                style="width: 12rem; height: auto; object-fit: contain"
                 src="https://devapi.dragonautomart.com/EmailTemplate/fender.png"
                 alt="logo"
               />
-              <span class="font-medium text-lg"> Fenders </span>
+              <span style="font-weight: 500; font-size: 1.125rem">
+                Fenders
+              </span>
             </div>
           </a>
         </div>
         <div
-          class="flex items-center justify-center p-5 gap-x-5 bg-gray-200 border border-gray-400 rounded-xl w-full"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            gap: 1.25rem;
+            background-color: #e5e7eb;
+            border: 1px solid #9ca3af;
+            border-radius: 0.75rem;
+            width: 100%;
+          "
         >
-          <!-- category box  -->
+          <!-- category box -->
           <a
             target="_blank"
             href="https://dragonautomart.com/subcategory/Wheels/112"
+            style="color: inherit; text-decoration: none"
           >
-            <div class="flex flex-col items-center justify-center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <img
-                class="w-48 h-full object-contain"
+                style="width: 12rem; height: auto; object-fit: contain"
                 src="https://devapi.dragonautomart.com/EmailTemplate/rims.png"
                 alt="logo"
               />
-              <span class="font-medium text-lg"> Wheels </span>
+              <span style="font-weight: 500; font-size: 1.125rem">
+                Wheels
+              </span>
             </div>
           </a>
-          <!-- category box  -->
+          <!-- category box -->
           <a
             target="_blank"
             href="https://dragonautomart.com/category/Brakes/18"
+            style="color: inherit; text-decoration: none"
           >
-            <div class="flex flex-col items-center justify-center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
               <img
-                class="w-48 h-[124px] object-contain"
+                style="width: 12rem; height: 7.75rem; object-fit: contain"
                 src="https://devapi.dragonautomart.com/EmailTemplate/brake.png"
                 alt="logo"
               />
-              <span class="font-medium text-lg"> Brakes </span>
+              <span style="font-weight: 500; font-size: 1.125rem">
+                Brakes
+              </span>
             </div>
           </a>
         </div>
@@ -199,94 +395,296 @@
     </div>
     <!-- round makes  -->
     <div
-      class="flex items-center justify-center gap-x-3 p-3 bg-[#F6F6F6] rounded-xl border border-gray-400 mb-2 mx-2"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 0.75rem;
+        background-color: #f6f6f6;
+        border-radius: 0.75rem;
+        border: 1px solid #9ca3af;
+        margin-bottom: 0.5rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      "
     >
-      <!-- make card  -->
-      <a href="https://dragonautomart.com/make/Toyota/1">
-        <div className="flex flex-col items-center justify-center gap-y-2">
+      <!-- make card -->
+      <a
+        href="https://dragonautomart.com/make/Toyota/1"
+        style="color: inherit; text-decoration: none"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
           <img
-            class="p-2.5 h-[7rem] w-[7rem] object-cover rounded-full bg-white border border-gray-300"
+            style="
+              padding: 0.625rem;
+              height: 5.5rem;
+              width: 5.5rem;
+              object-fit: cover;
+              border-radius: 50%;
+              background-color: white;
+              border: 1px solid #d1d5db;
+            "
             src="https://api.dragonautomart.com/Brand/20231207125747bAY5J4xfVzBSEOq2PCCw7vsrOIkXckiM7AnQPuGS.png"
+            alt="Toyota"
           />
-          <div class="font-medium text-sm text-center">Toyota</div>
+          <div
+            style="font-weight: 500; font-size: 0.875rem; text-align: center"
+          >
+            Toyota
+          </div>
         </div>
       </a>
-      <!-- make card  -->
-      <a href="https://dragonautomart.com/make/Honda/3">
-        <div className="flex flex-col items-center justify-center gap-y-2">
+      <!-- make card -->
+      <a
+        href="https://dragonautomart.com/make/Honda/3"
+        style="color: inherit; text-decoration: none"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
           <img
-            class="p-2.5 h-[7rem] w-[7rem] object-cover rounded-full bg-white border border-gray-300"
+            style="
+              padding: 0.625rem;
+              height: 5.5rem;
+              width: 5.5rem;
+              object-fit: cover;
+              border-radius: 50%;
+              background-color: white;
+              border: 1px solid #d1d5db;
+            "
             src="https://api.dragonautomart.com/Brand/20231207125809xAQikskHMre64dR1wl9PXnOlUaoyhP2yUYWIz6sE.png"
+            alt="Honda"
           />
-          <div class="font-medium text-sm text-center">Honda</div>
+          <div
+            style="font-weight: 500; font-size: 0.875rem; text-align: center"
+          >
+            Honda
+          </div>
         </div>
       </a>
 
-      <a href="https://dragonautomart.com/make/Ford/7">
-        <!-- make card  -->
-        <div className="flex flex-col items-center justify-center gap-y-2">
+      <a
+        href="https://dragonautomart.com/make/Ford/7"
+        style="color: inherit; text-decoration: none"
+      >
+        <!-- make card -->
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
           <img
-            class="p-2.5 h-[7rem] w-[7rem] object-cover rounded-full bg-white border border-gray-300"
+            style="
+              padding: 0.625rem;
+              height: 5.5rem;
+              width: 5.5rem;
+              object-fit: cover;
+              border-radius: 50%;
+              background-color: white;
+              border: 1px solid #d1d5db;
+            "
             src="https://api.dragonautomart.com/Brand/20231207125946PYfzlfpPczxOtX5NZee5w2ImThjGGkRzysVfnf8m.png"
+            alt="Ford"
           />
-          <div class="font-medium text-sm text-center">Ford</div>
+          <div
+            style="font-weight: 500; font-size: 0.875rem; text-align: center"
+          >
+            Ford
+          </div>
         </div>
       </a>
-      <!-- make card  -->
-      <a href="https://dragonautomart.com/make/Tesla/72">
-        <div className="flex flex-col items-center justify-center gap-y-2">
+      <!-- make card -->
+      <a
+        href="https://dragonautomart.com/make/Tesla/72"
+        style="color: inherit; text-decoration: none"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
           <img
-            class="p-2.5 h-[7rem] w-[7rem] object-cover rounded-full bg-white border border-gray-300"
+            style="
+              padding: 0.625rem;
+              height: 5.5rem;
+              width: 5.5rem;
+              object-fit: cover;
+              border-radius: 50%;
+              background-color: white;
+              border: 1px solid #d1d5db;
+            "
             src="https://api.dragonautomart.com/Brand/20240301152912tesla.png"
+            alt="Tesla"
           />
-          <div class="font-medium text-sm text-center">Tesla</div>
+          <div
+            style="font-weight: 500; font-size: 0.875rem; text-align: center"
+          >
+            Tesla
+          </div>
         </div>
       </a>
 
-      <!-- make card  -->
-      <a href="https://dragonautomart.com/make/BMW/5">
-        <div className="flex flex-col items-center justify-center gap-y-2">
+      <!-- make card -->
+      <a
+        href="https://dragonautomart.com/make/BMW/5"
+        style="color: inherit; text-decoration: none"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
           <img
-            class="p-2.5 h-[7rem] w-[7rem] object-cover rounded-full bg-white border border-gray-300"
+            style="
+              padding: 0.625rem;
+              height: 5.5rem;
+              width: 5.5rem;
+              object-fit: cover;
+              border-radius: 50%;
+              background-color: white;
+              border: 1px solid #d1d5db;
+            "
             src="https://api.dragonautomart.com/Brand/20240301145134bmw.png"
+            alt="BMW"
           />
-          <div class="font-medium text-sm text-center">BMW</div>
+          <div
+            style="font-weight: 500; font-size: 0.875rem; text-align: center"
+          >
+            BMW
+          </div>
         </div>
       </a>
 
-      <!-- make card  -->
-      <a href="https://dragonautomart.com/make/Audi/20">
-        <div className="flex flex-col items-center justify-center gap-y-2">
+      <!-- make card -->
+      <a
+        href="https://dragonautomart.com/make/Audi/20"
+        style="color: inherit; text-decoration: none"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
           <img
-            class="p-2.5 h-[7rem] w-[7rem] object-cover rounded-full bg-white border border-gray-300"
+            style="
+              padding: 0.625rem;
+              height: 5.5rem;
+              width: 5.5rem;
+              object-fit: cover;
+              border-radius: 50%;
+              background-color: white;
+              border: 1px solid #d1d5db;
+            "
             src="https://api.dragonautomart.com/Brand/20240301153950audi.png"
+            alt="Audi"
           />
-          <div class="font-medium text-sm text-center">Audi</div>
+          <div
+            style="font-weight: 500; font-size: 0.875rem; text-align: center"
+          >
+            Audi
+          </div>
         </div>
       </a>
     </div>
     <!-- buyer section  -->
     <div
-      class="flex items-center justify-center gap-x-3 p-3 bg-gray-100 rounded-xl border border-gray-400 mb-2 mx-2"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 1rem;
+        padding: 0.75rem;
+        background-color: #f3f4f6;
+        border-radius: 0.75rem;
+        border: 1px solid #9ca3af;
+        margin-bottom: 0.5rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      "
     >
       <img
-        class="w-80 h-full object-cover rounded-xl"
+        style="
+          width: 20rem;
+          height: auto;
+          object-fit: cover;
+          border-radius: 0.75rem;
+        "
         src="https://devapi.dragonautomart.com/EmailTemplate/customer_faq.jpeg"
         alt="logo"
       />
-      <div class="flex flex-col items-start justify-start gap-y-2">
-        <div class="text-green-900 font-semibold text-3xl">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 0.5rem;
+        "
+      >
+        <div style="color: #1f2937; font-weight: 600; font-size: 1.875rem">
           Are you a Buyer?
         </div>
-        <div class="text-black text-sm tracking-wide font-normal">
+        <div
+          style="
+            color: #000000;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+          "
+        >
           For automotive aficionados seeking clarity on our platform, whether
           through our dedicated mobile app or website, we strive to provide
           comprehensive responses, addressing your specific inquiries and
           concerns with precision and care.
         </div>
-        <a target="_blank" href="https://dragonautomart.com/faq">
+        <a
+          target="_blank"
+          href="https://dragonautomart.com/faq"
+          style="color: inherit; text-decoration: none"
+        >
           <button
-            class="bg-green-800 drop-shadow-sm shadow-sm rounded-full px-10 py-1.5 text-white tracking-wider font-semibold text-sm"
+            style="
+              background-color: #2f855a;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+              border-radius: 9999px;
+              padding: 0.375rem 2.5rem;
+              color: white;
+              letter-spacing: 0.05em;
+              font-weight: 600;
+              font-size: 0.875rem;
+              border: none;
+            "
           >
             Explore
           </button>
@@ -295,28 +693,74 @@
     </div>
     <!-- seller section  -->
     <div
-      class="flex items-center justify-center gap-x-3 p-3 bg-gray-100 rounded-xl border border-gray-400 mb-2 mx-2"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 1rem;
+        padding: 0.75rem;
+        background-color: #f3f4f6;
+        border-radius: 0.75rem;
+        border: 1px solid #9ca3af;
+        margin-bottom: 0.5rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      "
     >
-      <div class="flex flex-col items-start justify-start gap-y-2">
-        <div class="text-red-600 font-semibold text-3xl">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 0.5rem;
+        "
+      >
+        <div style="color: #e53e3e; font-weight: 600; font-size: 1.875rem">
           Want to be a Seller?
         </div>
-        <div class="text-black text-sm tracking-wide font-normal">
+        <div
+          style="
+            color: #000000;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+          "
+        >
           For sellers eager to join our platform and maximize their sales
           potential, whether it's understanding the selling process, managing
           payouts, processing orders, or shipping procedures, we offer detailed
           guidance and comprehensive FAQs.
         </div>
-        <a target="_blank" href="https://dragonautomart.com/sellondam">
+        <a
+          target="_blank"
+          href="https://dragonautomart.com/sellondam"
+          style="color: inherit; text-decoration: none"
+        >
           <button
-            class="bg-red-600 drop-shadow-sm shadow-sm rounded-full px-10 py-1.5 text-white tracking-wider font-semibold text-sm"
+            style="
+              background-color: #e53e3e;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+              border-radius: 9999px;
+              padding: 0.375rem 2.5rem;
+              color: white;
+              letter-spacing: 0.05em;
+              font-weight: 600;
+              font-size: 0.875rem;
+              border: none;
+            "
           >
             Explore
           </button>
         </a>
       </div>
       <img
-        class="w-80 h-full object-cover rounded-xl"
+        style="
+          width: 20rem;
+          height: auto;
+          object-fit: cover;
+          border-radius: 0.75rem;
+        "
         src="https://devapi.dragonautomart.com/EmailTemplate/seller_faq.jpeg"
         alt="logo"
       />
@@ -325,59 +769,135 @@
     <!-- exclusive products  -->
     <!-- heading  -->
     <div
-      class="text-3xl text-black font-semibold tracking-wide uppercase w-full text-center my-4"
+      style="
+        font-size: 1.875rem;
+        color: #000000;
+        font-weight: 600;
+        /* letter-spacing: 0.05em; */
+        text-transform: uppercase;
+        width: 100%;
+        text-align: center;
+        margin: 1rem 0;
+      "
     >
       Exclusive Products
     </div>
     <!-- 3 product cards  -->
-    <div class="flex items-center justify-center gap-x-[13px] mx-2">
-      <!-- product card  -->
-      <a target="_blank" href="https://dragonautomart.com/product/503">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      "
+    >
+      <!-- product card -->
+      <a
+        target="_blank"
+        href="https://dragonautomart.com/product/503"
+        style="color: inherit; text-decoration: none"
+      >
         <div
-          class="flex flex-col items-center justify-center gap-y-1 w-[16rem]"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            width: 16rem;
+          "
         >
           <img
-            class="rounded-lg object-contain"
+            style="border-radius: 0.5rem; object-fit: contain; width: 16rem"
             src="https://api.dragonautomart.com/ProductGallery/20240220150256HRS-2018-22HondaAccordLEDTailLightsOEStyle-V5-4.jpg.webp"
           />
-          <div class="font-light text-sm text-center text-green-800">
+          <div
+            style="
+              font-weight: 300;
+              font-size: 0.875rem;
+              text-align: center;
+              color: #2f855a;
+              width: auto;
+            "
+          >
             Hirev Sports
           </div>
-          <div class="font-normal text-[15px] text-center">
+          <div style="font-weight: 400; font-size: 15px; text-align: center">
             Honda Accord LED Tail Lights OE Style - V5
           </div>
         </div>
       </a>
-      <!-- product card  -->
-      <a target="_blank" href="https://dragonautomart.com/product/5467">
+      <!-- product card -->
+      <a
+        target="_blank"
+        href="https://dragonautomart.com/product/5467"
+        style="color: inherit; text-decoration: none"
+      >
         <div
-          class="flex flex-col items-center justify-center gap-y-1 w-[16rem]"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            width: 16rem;
+          "
         >
           <img
-            class="rounded-lg object-contain"
+            style="border-radius: 0.5rem; object-fit: contain; width: 16rem"
             src="https://www.vicrez.com/image/catalog/vicrez-wheels/redeye-demon-style-widebody-matte-black-wheel-vzn102593.jpg"
           />
-          <div class="font-light text-sm text-center text-green-800">
+          <div
+            style="
+              font-weight: 300;
+              font-size: 0.875rem;
+              text-align: center;
+              color: #2f855a;
+            "
+          >
             Vicrez
           </div>
-          <div class="font-normal text-[15px] text-center">
+          <div style="font-weight: 400; font-size: 15px; text-align: center">
             Redeye Demon Style Matte Black Wheel 20" x 10.5"
           </div>
         </div>
       </a>
-      <!-- product card  -->
-      <a target="_blank" href="https://dragonautomart.com/product/522">
+      <!-- product card -->
+      <a
+        target="_blank"
+        href="https://dragonautomart.com/product/522"
+        style="color: inherit; text-decoration: none"
+      >
         <div
-          class="flex flex-col items-center justify-center gap-y-1 w-[16rem]"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            width: 16rem;
+          "
         >
           <img
-            class="rounded-lg object-contain"
+            style="border-radius: 0.5rem; object-fit: contain; width: 16rem"
             src="https://api.dragonautomart.com/ProductGallery/20240221142955HRS-2018-23ToyotaCamryAvalonCarbonFiberSteeringWheel-4.jpg.webp"
           />
-          <div class="font-light text-sm text-center text-green-800">
+          <div
+            style="
+              font-weight: 300;
+              font-size: 0.875rem;
+              text-align: center;
+              color: #2f855a;
+              width: 16rem;
+            "
+          >
             Hirev Sports
           </div>
-          <div class="font-normal text-[15px] text-center">
+          <div style="font-weight: 400; font-size: 15px; text-align: center">
             Toyota Camry/Avalon Carbon Fiber Steering Wheel
           </div>
         </div>
@@ -385,43 +905,104 @@
     </div>
     <br />
     <!-- cross grid section  -->
-    <div class="flex items-center justify-center">
-      <div class="w-[50%]">
+    <div style="display: flex; align-items: center; justify-content: center">
+      <div style="width: 50%">
         <img
-          class="w-full h-full object-cover"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.75rem;
+          "
           src="https://api.dragonautomart.com/ProductGallery/20240811203025_758b7cc0-acd1-4591-95d5-191d63336368.webp"
           alt="logo"
         />
       </div>
       <div
-        class="w-[50%] flex flex-col items-center justify-center gap-y-2 px-3"
+        style="
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        "
       >
-        <div class="text-black font-semibold text-3xl">
-          Ford Super Duty Headlights
+        <div
+          style="
+            color: black;
+            font-weight: 600;
+            font-size: 1.875rem;
+            text-align: center;
+            margin-left: 2px;
+          "
+        >
+          Ford Superduty Headlights
         </div>
-        <div class="text-black text-center text-sm tracking-wide font-normal">
-          Introducing Morimoto XB LED Headlights for Ford Super Duty trucks.
+        <div
+          style="
+            color: black;
+            text-align: center;
+            font-size: 0.875rem;
+            letter-spacing: 0.025em;
+            font-weight: 400;
+          "
+        >
+          Introducing Morimoto XB LED Headlights for <br />
+          Ford Super Duty trucks.
         </div>
         <a
           target="_blank"
           href="https://dragonautomart.com/searchresults/ford%20headlight"
         >
           <button
-            class="bg-red-600 drop-shadow-sm shadow-sm rounded-full px-10 py-1.5 text-white tracking-wider font-semibold text-sm"
+            style="
+              background-color: #e53e3e;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+              border-radius: 9999px;
+              padding: 0.375rem 2.5rem;
+              color: white;
+
+              font-weight: 600;
+              font-size: 0.875rem;
+              border: none;
+            "
           >
             Shop Now
           </button>
         </a>
       </div>
     </div>
-    <div class="flex items-center justify-center mb-1">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.25rem;
+        margin-top: -4px;
+      "
+    >
       <div
-        class="w-[50%] flex flex-col items-center justify-center gap-y-2 px-3"
+        style="
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        "
       >
-        <div class="text-black font-semibold text-3xl">
-          Toyota Camry Tail lights
+        <div style="color: black; font-weight: 600; font-size: 1.875rem">
+          Toyota Camry Tail Lights
         </div>
-        <div class="text-black text-sm tracking-wide font-normal">
+        <div
+          style="
+            color: black;
+            font-size: 0.875rem;
+            letter-spacing: 0.025em;
+            font-weight: 400;
+          "
+        >
           Introducing Toyota Camry Lexus Style LED Tail Lights.
         </div>
         <a
@@ -429,38 +1010,81 @@
           href="https://dragonautomart.com/searchresults/toyota%20camry%20tail%20light"
         >
           <button
-            class="bg-red-600 drop-shadow-sm shadow-sm rounded-full px-10 py-1.5 text-white tracking-wider font-semibold text-sm"
+            style="
+              background-color: #e53e3e;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+              border-radius: 9999px;
+              padding: 0.375rem 2.5rem;
+              color: white;
+
+              font-weight: 600;
+              font-size: 0.875rem;
+              border: none;
+            "
           >
             Shop Now
           </button>
         </a>
       </div>
-      <div class="w-[50%]">
+      <div style="width: 50%">
         <img
-          class="w-full h-full object-cover"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.75rem;
+          "
           src="https://api.dragonautomart.com/ProductGallery/202402211530592018-Toyota-Camry-Tail-Lights-lexus_Style-BWB.jpg.webp"
           alt="logo"
         />
       </div>
     </div>
     <!-- footer  -->
-    <footer class="flex items-center justify-between px-8 bg-[#4d4d4d] w-full">
+    <footer
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        background-color: #4d4d4d;
+        width: 100%;
+      "
+    >
       <img
-        class="w-32 h-20 object-contain"
+        style="width: 8rem; height: 5rem; object-fit: contain"
         src="https://devapi.dragonautomart.com/EmailTemplate/whitetext.png"
         alt="logo"
       />
       <!-- sm icons -->
       <div
-        class="flex items-center md:justify-start justify-between gap-x-2 pt-1 pb-3 md:pb-0"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem;
+          padding-top: 0.25rem;
+          padding-bottom: 0.75rem;
+        "
       >
         <a
           target="_blank"
           href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"
-          class="p-2 rounded-full bg-[#2d2d2d]"
+          style="
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-radius: 9999px;
+            background-color: #2d2d2d;
+            color: inherit;
+            text-decoration: none;
+          "
         >
           <img
-            class="w-5"
+            style="width: 1.25rem; height: 1.25rem"
             src="https://devapi.dragonautomart.com/EmailTemplate/footerfacebook.webp"
             alt="facebook"
           />
@@ -468,10 +1092,17 @@
         <a
           target="_blank"
           href="https://www.instagram.com/dragonautomart/"
-          class="p-2 rounded-full bg-[#2d2d2d]"
+          style="
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-radius: 9999px;
+            background-color: #2d2d2d;
+          "
         >
           <img
-            class="w-5"
+            style="width: 1.25rem"
             src="https://devapi.dragonautomart.com/EmailTemplate/footerinsta.webp"
             alt="insta"
           />
@@ -479,10 +1110,17 @@
         <a
           target="_blank"
           href="https://www.X.com/dragonautomart"
-          class="p-2 rounded-full bg-[#2d2d2d]"
+          style="
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-radius: 9999px;
+            background-color: #2d2d2d;
+          "
         >
           <img
-            class="w-5"
+            style="width: 1.25rem"
             src="https://devapi.dragonautomart.com/EmailTemplate/footerx.webp"
             alt="x"
           />
@@ -490,10 +1128,17 @@
         <a
           target="_blank"
           href="https://www.youtube.com/@dragonautomart"
-          class="p-2 rounded-full bg-[#2d2d2d]"
+          style="
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-radius: 9999px;
+            background-color: #2d2d2d;
+          "
         >
           <img
-            class="w-5"
+            style="width: 1.25rem"
             src="https://devapi.dragonautomart.com/EmailTemplate/footeryt.webp"
             alt="youtube"
           />
@@ -501,10 +1146,17 @@
         <a
           target="_blank"
           href="https://tiktok.com/@dragonautomart"
-          class="p-2 rounded-full bg-[#2d2d2d]"
+          style="
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-radius: 9999px;
+            background-color: #2d2d2d;
+          "
         >
           <img
-            class="w-5"
+            style="width: 1.25rem"
             src="https://devapi.dragonautomart.com/EmailTemplate/footertiktok.webp"
             alt="tiktok"
           />
@@ -513,26 +1165,56 @@
     </footer>
     <!-- last line footer -->
     <footer
-      class="flex items-center justify-between px-8 bg-[#4d4d4d] w-full border-t-[0.5px] border-gray-200"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        background-color: #4d4d4d;
+        width: 100%;
+        border-top: 0.5px solid #d1d5db;
+      "
     >
-      <div class="text-center text-white text-sm flex items-center">
+      <div
+        style="
+          text-align: center;
+          color: white;
+          font-size: 0.875rem;
+          display: flex;
+          align-items: center;
+        "
+      >
         Powered By
         <a
           href="https://hirevsports.com"
           target="_blank"
-          class="hover:scale-95 transition-all duration-200"
+          style="
+            transition: transform 0.2s;
+            display: inline-block;
+            margin-left: 0.25rem;
+            color: inherit;
+            text-decoration: none;
+          "
         >
           <img
-            class="w-14 h-14 object-contain"
+            style="width: 4.5rem; height: 3.5rem; object-fit: contain"
             src="https://dragonautomart.com/assets/HRS_LOGO-ab8211d0.png"
             alt="hirevsports"
           />
         </a>
       </div>
-      <div class="text-center text-white tracking-wider text-xs">
+      <div
+        style="
+          text-align: center;
+          color: white;
+          letter-spacing: 0.1em;
+          font-size: 0.75rem;
+        "
+      >
         © 2024 Dragon Auto Mart, All Rights Reserved.
       </div>
-      <div class="w-32"></div>
+      <div style="width: 8rem"></div>
     </footer>
   </body>
 </html>
