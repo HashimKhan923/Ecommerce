@@ -23,11 +23,11 @@ class HomeController extends Controller
     public function index()
     {
         $FeaturedProducts = Product::with([
-            'user', 'category', 'sub_category', 'brand', 'model', 'stock',
+            'stock',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             },
-            'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
+            'discount','deal', 'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)
           ->whereHas('stock', function ($query) {
               $query->where('stock', '>', 0);
@@ -39,17 +39,38 @@ class HomeController extends Controller
           ->get();
     
         $DealProducts = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
+            'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
-            'discount','deal','tax', 'shipping',
-            'shop.shop_policy', 'reviews.user', 'product_varient'
+            'discount','deal',
+            'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('deal_id',4)
+        ->orderByRaw('RAND()') 
+        ->take(50)
+        ->get();
+
+
+        $NewArrivals = Product::with([
+           'stock',
+            'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount','shop.shop_policy', 'reviews.user', 'product_varient'
+        ])
+        ->where('published', 1)
+        ->whereDate('created_at', '>=', now()->subMonth()) // Filter products from the last month
+        ->orderBy('created_at', 'asc') // Order by creation date in ascending order
+        ->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
+        })
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })
         ->orderByRaw('RAND()') 
         ->take(50)
         ->get();
@@ -81,6 +102,7 @@ class HomeController extends Controller
         return response()->json([
             'FeaturedProducts' => $FeaturedProducts,
             'DealProducts'=>$DealProducts,
+            'NewArrivals'=>$NewArrivals,
             'Deal'=>$Deal,
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
