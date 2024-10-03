@@ -64,7 +64,7 @@ class HomeController extends Controller
         ])
         ->where('published', 1)
         // ->whereDate('created_at', '>=', now()->subMonth()) // Filter products from the last month
-        ->orderBy('created_at', 'asc') // Order by creation date in ascending order
+        ->orderBy('created_at', 'desc') // Order by creation date in ascending order
         ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
