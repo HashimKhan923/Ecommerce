@@ -35,8 +35,7 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-        try
-        {
+
             $productIds = collect($request->products)->pluck('product_id')->toArray();
         
             $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
@@ -255,28 +254,7 @@ class OrderController extends Controller
             
             $response = ['status' => true, "message" => "Order Created Successfully!","data"=>$MyOrders];
             return response($response, 200);
-        }catch (Exception $e) {
-            // Send error email
-            // Mail::send(
-            //     'email.exception',
-            //     [
-            //         'exceptionMessage' => $e->getMessage(),
-            //         'exceptionFile' => $e->getFile(),
-            //         'exceptionLine' => $e->getLine(),
-            //     ],
-            //     function ($message) {
-            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-            //         $message->to('support@dragonautomart.com'); // Send to support email
-            //         $message->subject('Dragon Exception');
-            //     }
-            // );
 
-            // Log the exception
-            Log::error('Registration error', ['exception' => $e]);
-
-            // Return a response
-            return response(['error' => 'Something went wrong, please try again later.'], 500);
-        }
 
     }
 }
