@@ -9,9 +9,6 @@
     />
     <meta name="author" content="DAM Team" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script> -->
-    <!-- <link rel="stylesheet" href="index.css" /> -->
   </head>
   <body
     style="
@@ -22,15 +19,12 @@
     "
   >
     <!-- header  -->
-    <header
+    <div
       style="
         background-color: #4d4d4d;
         padding-left: 2rem;
         padding-right: 2rem;
-
-        /* width: 100%; */
         display: flex;
-        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
       "
@@ -109,7 +103,7 @@
           </button>
         </a>
       </div>
-    </header>
+    </div>
     <!-- hero section  -->
     <div
       style="
@@ -1040,7 +1034,7 @@
       </div>
     </div>
     <!-- footer  -->
-    <footer
+    <div
       style="
         display: flex;
         align-items: center;
@@ -1162,9 +1156,9 @@
           />
         </a>
       </div>
-    </footer>
+    </div>
     <!-- last line footer -->
-    <footer
+    <div
       style="
         display: flex;
         align-items: center;
@@ -1215,6 +1209,6 @@
         © 2024 Dragon Auto Mart, All Rights Reserved.
       </div>
       <div style="width: 8rem"></div>
-    </footer>
+    </div>
   </body>
 </html>
