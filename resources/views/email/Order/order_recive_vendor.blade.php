@@ -157,7 +157,7 @@
                     </tr>
                 @endif
                 @if ($request->insurance)
-                    @php $total_amount += floatval($request->insurance[2]); @endphp
+                    @php $total_amount += floatval($request->insurance[0]); @endphp
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -165,12 +165,12 @@
                         </td>
                         <td width="25%" align="right"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            ${{ floatval($request->insurance[2]) }}
+                            ${{ floatval($request->insurance[0]) }}
                         </td>
                     </tr>
                 @endif
                 @if ($request->singnature)
-                    @php $total_amount += floatval($request->signature[2]); @endphp
+                    @php $total_amount += floatval($request->signature[0]); @endphp
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -178,7 +178,7 @@
                         </td>
                         <td width="25%" align="right"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            ${{ floatval($request->signature[2]) }}
+                            ${{ floatval($request->signature[0]) }}
                         </td>
                     </tr>
                 @endif
