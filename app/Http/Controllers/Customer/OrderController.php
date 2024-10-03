@@ -257,19 +257,19 @@ class OrderController extends Controller
             return response($response, 200);
         }catch (Exception $e) {
             // Send error email
-            Mail::send(
-                'email.exception',
-                [
-                    'exceptionMessage' => $e->getMessage(),
-                    'exceptionFile' => $e->getFile(),
-                    'exceptionLine' => $e->getLine(),
-                ],
-                function ($message) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('support@dragonautomart.com'); // Send to support email
-                    $message->subject('Dragon Exception');
-                }
-            );
+            // Mail::send(
+            //     'email.exception',
+            //     [
+            //         'exceptionMessage' => $e->getMessage(),
+            //         'exceptionFile' => $e->getFile(),
+            //         'exceptionLine' => $e->getLine(),
+            //     ],
+            //     function ($message) {
+            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+            //         $message->to('support@dragonautomart.com'); // Send to support email
+            //         $message->subject('Dragon Exception');
+            //     }
+            // );
 
             // Log the exception
             Log::error('Registration error', ['exception' => $e]);

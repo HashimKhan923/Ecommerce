@@ -143,6 +143,58 @@
                         </td>
                     </tr>
                 @endif
+                @if ($request->tax)
+                    @php $total_amount += $request->tax; @endphp
+                    <tr>
+                        <td width="75%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            Tax
+                        </td>
+                        <td width="25%" align="right"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            ${{ $request->tax }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($request->insurance)
+                    @php $total_amount += $request->insurance; @endphp
+                    <tr>
+                        <td width="75%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            Insurance
+                        </td>
+                        <td width="25%" align="right"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            ${{ $request->insurance }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($request->singnature)
+                    @php $total_amount += $request->singnature; @endphp
+                    <tr>
+                        <td width="75%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            Singnature
+                        </td>
+                        <td width="25%" align="right"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            ${{ $request->singnature }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($request->coupon_discount)
+                    @php $total_amount += $request->coupon_discount; @endphp
+                    <tr>
+                        <td width="75%" align="left"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            Coupon Discount
+                        </td>
+                        <td width="25%" align="right"
+                            style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
+                            ${{ $request->coupon_discount }}
+                        </td>
+                    </tr>
+                @endif
                 <tr>
                     <td width="75%" align="left"
                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
