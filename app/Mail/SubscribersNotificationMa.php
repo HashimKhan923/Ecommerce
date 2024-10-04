@@ -25,6 +25,6 @@ class SubscribersNotificationMa extends Mailable
     public function build()
     {
         return $this->subject('Newsletter')
-                    ->view('email.subscribers_notification');
+                    ->view('email.subscribers_email');
     }
 }
