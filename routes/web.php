@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/testing', function () {
-    return view('email.subscribers_notification');
+    return view('email.subscribers_email');
 });
 
 
