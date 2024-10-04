@@ -114,7 +114,7 @@ a[x-apple-data-detectors='true'] {
 
 
 
-table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: underline; } @media (max-width: 480px) { #u_content_image_5 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_5 .v-src-width { width: auto !important; } #u_content_image_5 .v-src-max-width { max-width: 100% !important; } #u_content_text_6 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_6 .v-text-align { text-align: center !important; } #u_content_button_8 .v-size-width { width: 65% !important; } #u_content_button_8 .v-text-align { text-align: center !important; } #u_content_button_8 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_6 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_text_7 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_7 .v-text-align { text-align: center !important; } #u_content_button_5 .v-size-width { width: 65% !important; } #u_content_button_5 .v-text-align { text-align: center !important; } #u_content_button_5 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_4 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_image_4 .v-src-width { width: auto !important; } #u_content_image_4 .v-src-max-width { max-width: 100% !important; } #u_content_text_4 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_4 .v-text-align { text-align: center !important; } #u_content_button_7 .v-size-width { width: 65% !important; } #u_content_button_7 .v-text-align { text-align: center !important; } #u_content_button_7 .v-container-padding-padding { padding: 10px 10px 40px !important; } #u_content_image_15 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_15 .v-src-width { width: auto !important; } #u_content_image_15 .v-src-max-width { max-width: 100% !important; } #u_content_text_17 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_17 .v-text-align { text-align: center !important; } #u_content_button_12 .v-size-width { width: 65% !important; } #u_content_button_12 .v-text-align { text-align: center !important; } #u_content_button_12 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_16 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_text_18 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_18 .v-text-align { text-align: center !important; } #u_content_button_13 .v-size-width { width: 65% !important; } #u_content_button_13 .v-text-align { text-align: center !important; } #u_content_button_13 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_17 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_image_17 .v-src-width { width: auto !important; } #u_content_image_17 .v-src-max-width { max-width: 100% !important; } #u_content_text_19 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_19 .v-text-align { text-align: center !important; } #u_content_button_14 .v-size-width { width: 65% !important; } #u_content_button_14 .v-text-align { text-align: center !important; } #u_content_button_14 .v-container-padding-padding { padding: 10px 10px 40px !important; } #u_content_image_2 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_heading_2 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_heading_2 .v-text-align { text-align: center !important; } #u_content_text_3 .v-container-padding-padding { padding: 5px 10px 10px !important; } #u_content_text_3 .v-text-align { text-align: center !important; } #u_content_button_3 .v-size-width { width: 65% !important; } #u_content_button_3 .v-text-align { text-align: center !important; } #u_content_button_3 .v-container-padding-padding { padding: 10px 10px 40px 20px !important; } #u_content_heading_1 .v-container-padding-padding { padding: 40px 10px 0px !important; } #u_content_heading_1 .v-text-align { text-align: center !important; } #u_content_text_2 .v-container-padding-padding { padding: 5px 10px 10px !important; } #u_content_text_2 .v-text-align { text-align: center !important; } #u_content_button_15 .v-size-width { width: 65% !important; } #u_content_button_15 .v-text-align { text-align: center !important; } #u_content_button_15 .v-container-padding-padding { padding: 10px 10px 40px 20px !important; } #u_content_image_3 .v-container-padding-padding { padding: 0px !important; } #u_content_image_12 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_12 .v-src-width { width: auto !important; } #u_content_image_12 .v-src-max-width { max-width: 100% !important; } #u_content_text_22 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_22 .v-text-align { text-align: center !important; } #u_content_button_16 .v-size-width { width: 65% !important; } #u_content_button_16 .v-text-align { text-align: center !important; } #u_content_button_16 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_18 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_18 .v-src-width { width: auto !important; } #u_content_image_18 .v-src-max-width { max-width: 100% !important; } #u_content_text_24 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_24 .v-text-align { text-align: center !important; } #u_content_button_17 .v-size-width { width: 65% !important; } #u_content_button_17 .v-text-align { text-align: center !important; } #u_content_button_17 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_19 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_19 .v-src-width { width: auto !important; } #u_content_image_19 .v-src-max-width { max-width: 100% !important; } #u_content_text_11 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_11 .v-text-align { text-align: center !important; } #u_content_button_9 .v-size-width { width: 65% !important; } #u_content_button_9 .v-text-align { text-align: center !important; } #u_content_button_9 .v-container-padding-padding { padding: 10px 10px 20px !important; } }
+table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: underline; } @media (max-width: 480px) { #u_content_image_5 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_5 .v-src-width { width: auto !important; } #u_content_image_5 .v-src-max-width { max-width: 100% !important; } #u_content_text_6 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_6 .v-text-align { text-align: center !important; } #u_content_button_8 .v-size-width { width: 65% !important; } #u_content_button_8 .v-text-align { text-align: center !important; } #u_content_button_8 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_6 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_text_7 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_7 .v-text-align { text-align: center !important; } #u_content_button_18 .v-size-width { width: 65% !important; } #u_content_button_18 .v-text-align { text-align: center !important; } #u_content_button_18 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_4 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_image_4 .v-src-width { width: auto !important; } #u_content_image_4 .v-src-max-width { max-width: 100% !important; } #u_content_text_4 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_4 .v-text-align { text-align: center !important; } #u_content_button_7 .v-size-width { width: 65% !important; } #u_content_button_7 .v-text-align { text-align: center !important; } #u_content_button_7 .v-container-padding-padding { padding: 10px 10px 40px !important; } #u_content_image_15 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_15 .v-src-width { width: auto !important; } #u_content_image_15 .v-src-max-width { max-width: 100% !important; } #u_content_text_17 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_17 .v-text-align { text-align: center !important; } #u_content_button_12 .v-size-width { width: 65% !important; } #u_content_button_12 .v-text-align { text-align: center !important; } #u_content_button_12 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_16 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_text_18 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_18 .v-text-align { text-align: center !important; } #u_content_button_13 .v-size-width { width: 65% !important; } #u_content_button_13 .v-text-align { text-align: center !important; } #u_content_button_13 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_17 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_image_17 .v-src-width { width: auto !important; } #u_content_image_17 .v-src-max-width { max-width: 100% !important; } #u_content_text_19 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_19 .v-text-align { text-align: center !important; } #u_content_button_14 .v-size-width { width: 65% !important; } #u_content_button_14 .v-text-align { text-align: center !important; } #u_content_button_14 .v-container-padding-padding { padding: 10px 10px 40px !important; } #u_content_image_2 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_heading_2 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_heading_2 .v-text-align { text-align: center !important; } #u_content_text_3 .v-container-padding-padding { padding: 5px 10px 10px !important; } #u_content_text_3 .v-text-align { text-align: center !important; } #u_content_button_3 .v-size-width { width: 65% !important; } #u_content_button_3 .v-text-align { text-align: center !important; } #u_content_button_3 .v-container-padding-padding { padding: 10px 10px 40px 20px !important; } #u_content_heading_1 .v-container-padding-padding { padding: 40px 10px 0px !important; } #u_content_heading_1 .v-text-align { text-align: center !important; } #u_content_text_2 .v-container-padding-padding { padding: 5px 10px 10px !important; } #u_content_text_2 .v-text-align { text-align: center !important; } #u_content_button_15 .v-size-width { width: 65% !important; } #u_content_button_15 .v-text-align { text-align: center !important; } #u_content_button_15 .v-container-padding-padding { padding: 10px 10px 40px 20px !important; } #u_content_image_3 .v-container-padding-padding { padding: 0px !important; } #u_content_image_12 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_12 .v-src-width { width: auto !important; } #u_content_image_12 .v-src-max-width { max-width: 100% !important; } #u_content_text_22 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_22 .v-text-align { text-align: center !important; } #u_content_button_16 .v-size-width { width: 65% !important; } #u_content_button_16 .v-text-align { text-align: center !important; } #u_content_button_16 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_18 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_18 .v-src-width { width: auto !important; } #u_content_image_18 .v-src-max-width { max-width: 100% !important; } #u_content_text_24 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_24 .v-text-align { text-align: center !important; } #u_content_button_17 .v-size-width { width: 65% !important; } #u_content_button_17 .v-text-align { text-align: center !important; } #u_content_button_17 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_19 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_19 .v-src-width { width: auto !important; } #u_content_image_19 .v-src-max-width { max-width: 100% !important; } #u_content_text_11 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_11 .v-text-align { text-align: center !important; } #u_content_button_9 .v-size-width { width: 65% !important; } #u_content_button_9 .v-text-align { text-align: center !important; } #u_content_button_9 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_20 .v-text-align { text-align: center !important; } }
     </style>
   
   
@@ -152,9 +152,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      <a href="https://dragonautomart.com" target="_blank">
-      <img align="center" border="0" src="{{asset('images/image-5.png')}}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 13%;max-width: 75.4px;" width="75.4" class="v-src-width v-src-max-width"/>
-      </a>
+      
+      <img align="center" border="0" src="{{ asset('images/image-1.png')}}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 42%;max-width: 243.6px;" width="243.6" class="v-src-width v-src-max-width"/>
+      
     </td>
   </tr>
 </table>
@@ -195,9 +195,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="{{asset('images/image-6.jpeg')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600" class="v-src-width v-src-max-width"/>
-      
+      <a href="https://dragonautomart.com" target="_blank">
+      <img align="center" border="0" src="{{ asset('images/image-18.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600" class="v-src-width v-src-max-width"/>
+      </a>
     </td>
   </tr>
 </table>
@@ -235,7 +235,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
         
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 700; line-height: 140%; text-align: center; word-wrap: break-word;">
+  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
     <p style="line-height: 140%;">TOP CATEGORIES</p>
   </div>
 
@@ -276,7 +276,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-8.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 67%;max-width: 127.3px;" width="127.3" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-6.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 67%;max-width: 127.3px;" width="127.3" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -338,7 +338,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-7.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 67%;max-width: 127.3px;" width="127.3" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-19.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 67%;max-width: 127.3px;" width="127.3" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -363,7 +363,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   </tbody>
 </table>
 
-<table id="u_content_button_5" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+<table id="u_content_button_18" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
@@ -400,7 +400,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-1.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 190px;" width="190" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-2.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 190px;" width="190" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -472,7 +472,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
         
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 700; line-height: 140%; text-align: center; word-wrap: break-word;">
+  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
     <p style="line-height: 140%;">POPULAR MAKES</p>
   </div>
 
@@ -513,7 +513,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-2.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-3.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -575,7 +575,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-3.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-4.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -637,7 +637,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-4.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-5.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -709,7 +709,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
         
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 700; line-height: 140%; text-align: center; word-wrap: break-word;">
+  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
     <p style="line-height: 140%;">NEW ARRIVALS</p>
   </div>
 
@@ -750,7 +750,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-9.webp')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 300px;" width="300" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-7.webp')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 300px;" width="300" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -905,7 +905,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-10.webp')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 300px;" width="300" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-8.webp')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 300px;" width="300" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -944,7 +944,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
         
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 700; line-height: 140%; text-align: center; word-wrap: break-word;">
+  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
     <p style="line-height: 140%;">EXCLUSIVE PRODUCTS</p>
   </div>
 
@@ -985,7 +985,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-11.webp')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-9.webp')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -1047,7 +1047,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-15.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-10.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -1109,7 +1109,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       
-      <img align="center" border="0" src="{{asset('images/image-14.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="{{ asset('images/image-11.png')}}" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -1176,16 +1176,16 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
   
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+<table id="u_content_image_20" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:25px 10px 10px;font-family:'Raleway',sans-serif;" align="left">
+      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
         
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="left">
       
-      <img align="left" border="0" src="{{asset('images/image-19.png')}}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 78%;max-width: 209.04px;" width="209.04" class="v-src-width v-src-max-width"/>
+      <img align="left" border="0" src="{{ asset('images/image-12.png')}}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 134px;" width="134" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
@@ -1208,58 +1208,58 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:38px 10px 35px;font-family:'Raleway',sans-serif;" align="left">
+      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Raleway',sans-serif;" align="left">
         
-<div align="right">
+<div align="center">
   <div style="display: table; max-width:184px;">
-  <!--[if (mso)|(IE)]><table width="184" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse;" align="right"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:184px;"><tr><![endif]-->
+  <!--[if (mso)|(IE)]><table width="184" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse;" align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:184px;"><tr><![endif]-->
   
     
     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="right" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="right" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
+      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr" title="Facebook" target="_blank">
-          <img src="{{asset('images/image-16.png')}}" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+          <img src="{{ asset('images/image-16.png')}}" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
       </td></tr>
     </tbody></table>
     <!--[if (mso)|(IE)]></td><![endif]-->
     
     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="right" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="right" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
+      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://www.X.com/dragonautomart" title="X" target="_blank">
-          <img src="{{asset('images/image-13.png')}}" alt="X" title="X" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+          <img src="{{ asset('images/image-15.png')}}" alt="X" title="X" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
       </td></tr>
     </tbody></table>
     <!--[if (mso)|(IE)]></td><![endif]-->
     
     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="right" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="right" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
+      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://www.instagram.com/dragonautomart/" title="Instagram" target="_blank">
-          <img src="{{asset('images/image-17.png')}}" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+          <img src="{{ asset('images/image-17.png')}}" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
       </td></tr>
     </tbody></table>
     <!--[if (mso)|(IE)]></td><![endif]-->
     
     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="right" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="right" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
+      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://www.youtube.com/@dragonautomart" title="YouTube" target="_blank">
-          <img src="{{asset('images/image-12.png')}}" alt="YouTube" title="YouTube" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+          <img src="{{ asset('images/image-13.png')}}" alt="YouTube" title="YouTube" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
       </td></tr>
     </tbody></table>
     <!--[if (mso)|(IE)]></td><![endif]-->
     
     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 0px;" valign="top"><![endif]-->
-    <table align="right" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
-      <tbody><tr style="vertical-align: top"><td align="right" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
+      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
         <a href="https://tiktok.com/@dragonautomart" title="TikTok" target="_blank">
-          <img src="{{asset('images/image-18.png')}}" alt="TikTok" title="TikTok" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+          <img src="{{ asset('images/image-14.png')}}" alt="TikTok" title="TikTok" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
       </td></tr>
     </tbody></table>
