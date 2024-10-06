@@ -10,129 +10,93 @@ use Mail;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
-
-
-        // try
-        // {
-
+    public function login(Request $request)
+    {
+        try {
+            // Validate the request
             $validator = Validator::make($request->all(), [
                 'email' => 'required|string|email|max:255',
                 'password' => 'required|string|min:6',
             ]);
-            if ($validator->fails())
-            {
-                return response(['errors'=>$validator->errors()->all()], 422);
+    
+            // Return validation errors if any
+            if ($validator->fails()) {
+                return response(['errors' => $validator->errors()->all()], 422);
             }
-            
-            $user = User::with('shop','seller_information')->where('email', $request->email)->first();
+    
+            // Find user with the provided email
+            $user = User::with('shop', 'seller_information')->where('email', $request->email)->first();
+    
             if ($user) {
+                // Check if the user's email is verified
+                if ($user->remember_token === null) {
+                    // Check if the user is active
+                    if ($user->is_active == 1) {
+                        // Validate password
+                        if (Hash::check($request->password, $user->password)) {
+                            $staff = '';
     
-             if($user->remember_token == null)
-             {
-                if($user->is_active == 1)
-                {
-                    if (Hash::check($request->password, $user->password)) {
-        
-                        // if($user->user_type == 'seller')
-                        // {
-                        //     if($user->is_verify != 1)
-                        //     {
-
-
-                        //         $response = ['status'=>false,"message" => "Your account has not been verified by the admin"];
-                        //         return response($response, 422);
-
-
-                        //     }
+                            // If the user is a staff, get the staff's info
+                            if ($user->user_type == 'staff') {
+                                $staff = User::find($user->id);
+                                $user = User::find($user->seller_id); // Retrieve seller info for staff
+                            }
     
-                        // }
-
-                        $staff = '';
-
-                        if($user->user_type == 'staff')
-                        {
-                            $staff = User::where('id',$user->id)->first();
-                            $user = User::where('id',$user->seller_id)->first();
-                            
+                            // Generate access token for the user
+                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+    
+                            // Send successful login response
+                            return response([
+                                'status' => true,
+                                'message' => 'Login Successfully',
+                                'token' => $token,
+                                'user' => $user,
+                                'staff' => $staff
+                            ], 200);
+                        } else {
+                            return response([
+                                'status' => false,
+                                'message' => 'Password is incorrect!'
+                            ], 422);
                         }
-
-                        
-
-
-                        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                        $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user,'staff'=>$staff];
-                        return response($response, 200);
-
-        
-        
-                        
                     } else {
-                        $response = ['status'=>false,"message" => "Password is incorrect!"];
-                        return response($response, 422);
+                        return response([
+                            'status' => false,
+                            'message' => 'Your account has been blocked by the admin!'
+                        ], 422);
                     }
-        
+                } else {
+                    return response([
+                        'status' => false,
+                        'message' => 'Your email is not verified. We have sent a verification link to your email during registration.'
+                    ], 422);
                 }
-                else
-                {
-                    $response = ['status'=>false,"message" =>'Your account has been blocked by the admin!'];
-                    return response($response, 422);
-                }
-             } 
-             else
-             {
-                // $token = uniqid();
-                // $user->remember_token = $token;
-                // $user->save();
-    
-                // Mail::send(
-                //     'email.seller_verification',
-                //     [
-                //         'token'=>$token,
-                //         'name'=>$user->name,
-                //         //'last_name'=>$query->last_name
-                //     ], 
-                
-                // function ($message) use ($user) {
-                //     $message->from(env('MAIL_USERNAME'));
-                //     $message->to($user->email);
-                //     $message->subject('Email Verification');
-                // });
-    
-    
-                $response = ['status'=>false,"message" =>'Your email is not verified. We have sent a verification link to your email during registration.'];
-                return response($response, 422);
-             }
-    
-    
             } else {
-                $response = ['status'=>false,"message" =>'User does not exist'];
-                return response($response, 422);
+                return response([
+                    'status' => false,
+                    'message' => 'User does not exist'
+                ], 422);
             }
-
-        // }
-        // catch (\Exception $e) {
-            
-
-
-        //     Mail::send(
-        //         'email.exception',
-        //         [
-        //             'exceptionMessage' => $e->getMessage(),
-        //             'exceptionFile' => $e->getFile(),
-        //             'exceptionLine' => $e->getLine(),
-        //         ],
-        //         function ($message) {
-        //             $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-        //             $message->to('support@dragonautomart.com'); // Send to support email
-        //             $message->subject('Dragon Exception');
-        //         }
-        //     );
-
-        //     return response()->json(['status' => 422, 'message' => $e->getMessage()]);
-        // }
-        
+        } catch (\Exception $e) {
+            // Log the exception and send an email to support
+            Mail::send('email.exception', [
+                'exceptionMessage' => $e->getMessage(),
+                'exceptionFile' => $e->getFile(),
+                'exceptionLine' => $e->getLine(),
+            ], function ($message) {
+                $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                $message->to('support@dragonautomart.com'); // Send to support email
+                $message->subject('Dragon Exception');
+            });
+    
+            // Return a response with the exception message
+            return response()->json([
+                'status' => 422,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
+    
 
     public function logout ($id) {
 
@@ -270,42 +234,46 @@ class AuthController extends Controller
 
     public function verification($id)
     {
-        
-   
-      $check = User::where('remember_token',$id)->first();
+        return $id;
 
-      if($check)
-      {
-        $check->remember_token = null;
-        $check->save();
-        $response = ['status' => true, "message" => "Email Verified Successfully!",200];
-        $jsonMessage = json_encode($response);
-        if($check->user_type == 'seller')
-        {
-            
-
-            $redirectUrl = "https://seller.dragonautomart.com/login" . urlencode($jsonMessage);
+        // Find user by remember_token
+        $check = User::where('remember_token', $id)->first();
+    
+        if ($check) {
+            // Set remember_token to null (mark email as verified)
+            $check->remember_token = null;
+            $check->save();
+    
+            // Create success response
+            $response = [
+                'status' => true, 
+                'message' => 'Email Verified Successfully!'
+            ];
+            $jsonMessage = json_encode($response);
+    
+            // Redirect to appropriate login page based on user type
+            if ($check->user_type == 'seller') {
+                $redirectUrl = "https://seller.dragonautomart.com/login?jsonMessage=" . urlencode($jsonMessage);
+            } else {
+                $redirectUrl = "https://dragonautomart.com/emailverification/?jsonMessage=" . urlencode($jsonMessage);
+            }
+    
+            return redirect($redirectUrl);
+        } else {
+            // Create error response if token is not found
+            $response = [
+                'status' => false, 
+                'message' => 'Something went wrong!'
+            ];
+            $jsonMessage = json_encode($response);
+    
+            // Redirect to the main page with the error message
+            $redirectUrl = "https://dragonautomart.com/?jsonMessage=" . urlencode($jsonMessage);
+    
+            return redirect($redirectUrl);
         }
-        else
-        {
-            $redirectUrl = "https://dragonautomart.com/emailverification/?jsonMessage=" . urlencode($jsonMessage);
-
-        }
-        
-        return redirect($redirectUrl);
-
-      }
-      else
-      {
-        $response = ['status' => true, "message" => "something went wrong!",422];
-        $jsonMessage = json_encode($response);
-        $redirectUrl = "https://dragonautomart.com/?jsonMessage=" . urlencode($jsonMessage);
-        
-        return redirect($redirectUrl);
-      }
-
-
     }
+    
 
 
 }
