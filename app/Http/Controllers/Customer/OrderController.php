@@ -133,19 +133,19 @@ class OrderController extends Controller
                 $orderIds[] = $newOrder->id;
         
         
-                if($request->coupon_id)
-                {
-                    Coupon::where('id', $request->coupon_id)->increment('used');
+                // if($request->coupon_id)
+                // {
+                //     Coupon::where('id', $request->coupon_id)->increment('used');
         
                     CouponUser::create([
-                        'coupon_id' => $request->coupon_id,
-                        'user_id' => $request->customer_id,
+                        // 'coupon_id' => $request->coupon_id,
+                        // 'user_id' => $request->customer_id,
                         'discount' => $request->coupon_discount,
-                        'coupon_code' => $request->coupon_code,
+                        // 'coupon_code' => $request->coupon_code,
                         'order_id' => $newOrder->id
                     ]);
         
-                }
+                // }
         
         
         
