@@ -57,7 +57,7 @@
         </div>
 
         <div class="content">
-            <h4>Your order has been refunded! </h4>
+            <h4>Your order #{{$order->id}} has been refunded! </h4>
             <p>
                 Total amount refunded: <b>${{ $order->amount }}</b>. It may take upto 10 days for this refund to
                 <br>
@@ -68,7 +68,7 @@
             <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
 
 
-            <hr>
+            <!-- <hr>
 
             <table cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
@@ -129,7 +129,7 @@
                         ${{ $order->amount }}
                     </td>
                 </tr>
-            </table>
+            </table> -->
 
         </div>
     </div>
