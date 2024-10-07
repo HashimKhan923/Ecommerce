@@ -149,11 +149,11 @@
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            Tax
+                            Tax({{ floatval($request->tax[2]) }}%)
                         </td>
                         <td width="25%" align="right"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                            {{ floatval($request->tax[2]) }}%
+                            ${{ floatval($request->tax[0]) }}
                         </td>
                     </tr>
                 @endif
