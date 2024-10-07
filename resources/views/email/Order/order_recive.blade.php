@@ -145,7 +145,6 @@
                     </tr>
                 @endif
                 @if ($request->tax)
-                    <!-- @php $total_amount += floatval($request->tax[2]); @endphp -->
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -158,7 +157,6 @@
                     </tr>
                 @endif
                 @if ($request->insurance)
-                    <!-- @php $total_amount += floatval($request->insurance[0]); @endphp -->
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -171,7 +169,6 @@
                     </tr>
                 @endif
                 @if ($request->signature)
-                    <!-- @php $total_amount += floatval($request->signature[0]); @endphp -->
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -184,7 +181,6 @@
                     </tr>
                 @endif
                 @if ($request->coupon_discount)
-                    <!-- @php $total_amount += $request->coupon_discount; @endphp -->
                     <tr>
                         <td width="75%" align="left"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
