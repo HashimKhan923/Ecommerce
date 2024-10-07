@@ -68,7 +68,7 @@ class RefundController extends Controller
 
         Notification::create([
             'customer_id' => $user->id,
-            'notification' => 'your order #'.$Order->id.' refund request has been fulfilled by admin and you will recive your amount in 5 to 10 working days.',
+            'notification' => 'your order #'.$Order->id.' refund request has been fulfilled by admin and you will receive your amount in 5 to 10 working days.',
         ]);
 
         Notification::create([
@@ -135,7 +135,7 @@ class RefundController extends Controller
 
         Notification::create([
             'customer_id' => $user->id,
-            'notification' => 'your #'.$Order->id.' refund request has been fulfield by admin and you will recive your amount in 5 to 10 working days.',
+            'notification' => 'your #'.$Order->id.' refund request has been fulfield by admin and you will receive your amount in 5 to 10 working days.',
         ]);
 
         Notification::create([

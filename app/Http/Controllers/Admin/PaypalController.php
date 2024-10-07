@@ -67,7 +67,7 @@ class PaypalController extends Controller
     
             $notification = new Notification();
             $notification->customer_id = $user->id;
-            $notification->notification = 'your #'.$order->id.' refund request has been fulfield by admin and you will recive your amount in 5 to 10 working days.';
+            $notification->notification = 'your #'.$order->id.' refund request has been fulfield by admin and you will receive your amount in 5 to 10 working days.';
             $notification->save();
     
     
