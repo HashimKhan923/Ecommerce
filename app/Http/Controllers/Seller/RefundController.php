@@ -152,6 +152,11 @@ class RefundController extends Controller
             }
         );
 
+        OrderTimeline::create([
+            'order_id' => $change->order_id,
+            'time_line' => 'The amount ($request->amount) has been refunded via Stripe'
+        ]);
+
         $response = ['status'=>true,"message" => "Refund processed successfully!"];
         return response($response, 200);
     }
@@ -224,6 +229,11 @@ class RefundController extends Controller
                     $message->subject('Order Refund');
                 }
             );
+
+            OrderTimeline::create([
+                'order_id' => $change->order_id,
+                'time_line' => 'The amount ($request->amount) has been refunded via Paypal'
+            ]);
     
             return response()->json(['success' => true, 'message' => 'Refund processed successfully']);
     
