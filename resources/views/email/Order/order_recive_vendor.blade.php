@@ -123,7 +123,7 @@
                         </td>
                     </tr>
 
-                    <?php $total_amount = $total_amount + $price; ?>
+                   
                 @endforeach
 
 
@@ -202,7 +202,7 @@
                     </td>
                     <td width="25%" align="right"
                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                        ${{ $total_amount }}
+                        ${{ $request->amount }}
                     </td>
                 </tr>
             </table>
