@@ -46,6 +46,11 @@ class RefundController extends Controller
             return response($response,201);
         }
 
+        
+        $Order = Order::with('order_detail.products.product_gallery')->where('id',$request->order_id)->first();
+        $Shop = Shop::where('id',$request->shop_id)->first();
+        $Customer = User::where('id',$request->customer_id)->first();
+
         $new = new Refund();
         $new->order_id = $request->order_id;
         $new->seller_id = $request->seller_id;
@@ -54,9 +59,6 @@ class RefundController extends Controller
         $new->seller_approval = 'Approved';
         $new->save();
 
-        $Order = Order::with('order_detail.products.product_gallery')->where('id',$request->order_id)->first();
-        $Shop = Shop::where('id',$request->shop_id)->first();
-        $Customer = User::where('id',$request->customer_id)->first();
         
         Mail::send(
             'email.Order.order_cancelled',
