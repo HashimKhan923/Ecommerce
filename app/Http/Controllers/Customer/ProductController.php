@@ -28,8 +28,9 @@ class ProductController extends Controller
           ->whereHas('shop', function ($query) {
               $query->where('status', 1);
           })
-          ->orderByRaw('featured DESC') // Prioritize featured first
-        //   ->orderBy('id', 'desc') // Then by id in descending order
+          ->orderBy('featured', 'desc')
+        //   ->orderByRaw('featured DESC') // Prioritize featured first
+        // //   ->orderBy('id', 'desc') // Then by id in descending order
           ->take(24)
           ->get();
         
@@ -51,8 +52,8 @@ class ProductController extends Controller
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
-        ->orderByRaw('featured DESC') 
-        // ->orderBy('id', 'desc')
+        // ->orderByRaw('featured DESC') 
+        ->orderBy('featured', 'desc')
         ->skip($length)->take(24)->get();
     }
     
