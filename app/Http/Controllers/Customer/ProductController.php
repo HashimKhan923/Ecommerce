@@ -29,7 +29,7 @@ class ProductController extends Controller
               $query->where('status', 1);
           })
           ->orderByRaw('featured DESC') // Prioritize featured first
-          ->orderBy('id', 'desc') // Then by id in descending order
+        //   ->orderBy('id', 'desc') // Then by id in descending order
           ->take(24)
           ->get();
         
@@ -52,7 +52,7 @@ class ProductController extends Controller
             $query->where('status', 1);
         })
         ->orderByRaw('featured DESC') 
-        ->orderBy('id', 'desc')
+        // ->orderBy('id', 'desc')
         ->skip($length)->take(24)->get();
     }
     
