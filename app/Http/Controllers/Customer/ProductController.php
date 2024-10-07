@@ -13,54 +13,47 @@ use App\Models\ProductRating;
 
 class ProductController extends Controller
 {
-    public function index()
+    // Common method to fetch products
+    private function getProducts($length = 0, $limit = 24)
     {
-        $Products = Product::with([
+        return Product::with([
             'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)
-          ->whereHas('stock', function ($query) {
-              $query->where('stock', '>', 0);
-          })
-          ->whereHas('shop', function ($query) {
-              $query->where('status', 1);
-          })
-          ->orderByRaw('featured DESC') // Prioritize featured first
-          ->orderBy('id', 'desc') // Then by id in descending order
-          ->take(24)
-          ->get();
-        
-
-
-        return response()->json(['Products'=>$Products]);
-
-    }
-
-    private function loadMoreProducts($orderBy, $length)
-    {
-        return Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            }, 'discount', 'tax', 'shipping','deal','shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy($orderBy, 'desc')->whereHas('stock', function ($query) {
+        ])
+        ->where('published', 1)
+        ->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
-        ->orderByRaw('featured DESC') 
-        ->orderBy('id', 'desc')
-        ->skip($length)->take(24)->get();
+        ->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
+        ->skip($length)
+        ->take($limit)
+        ->get();
     }
-    
-    public function load_more($length)
+
+    // Index method to load initial products
+    public function index()
     {
-        $Products = $this->loadMoreProducts('id', $length);
+        // Fetch the first 24 products
+        $Products = $this->getProducts();
+
         return response()->json(['Products' => $Products]);
     }
+
+    // Load more products method
+    public function load_more($length)
+    {
+        // Fetch products starting after $length
+        $Products = $this->getProducts($length);
+
+        return response()->json(['Products' => $Products]);
+    }
+
 
     public function detail($id)
     {
