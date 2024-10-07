@@ -16,16 +16,23 @@ class ProductController extends Controller
     public function index()
     {
         $Products = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
+            'user', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
-            'discount', 'tax', 'shipping','deal','shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->orderBy('id', 'desc')->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })->orderByRaw('featured DESC')->take(24)->get();
+            'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
+        ])->where('published', 1)
+          ->whereHas('stock', function ($query) {
+              $query->where('stock', '>', 0);
+          })
+          ->whereHas('shop', function ($query) {
+              $query->where('status', 1);
+          })
+          ->orderByRaw('featured DESC') // Prioritize featured first
+          ->orderBy('id', 'desc') // Then by id in descending order
+          ->take(24)
+          ->get();
+        
 
 
         return response()->json(['Products'=>$Products]);
@@ -43,7 +50,10 @@ class ProductController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->orderByRaw('featured DESC')->skip($length)->take(24)->get();
+        })
+        ->orderByRaw('featured DESC') 
+        ->orderBy('id', 'desc')
+        ->skip($length)->take(24)->get();
     }
     
     public function load_more($length)
