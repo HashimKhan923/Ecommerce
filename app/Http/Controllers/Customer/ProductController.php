@@ -25,7 +25,7 @@ class ProductController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->take(24)->get();
+        })->where('featured', 1)->take(24)->get();
 
 
         return response()->json(['Products'=>$Products]);
@@ -43,7 +43,7 @@ class ProductController extends Controller
             $query->where('stock', '>', 0);
         })->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->skip($length)->take(24)->get();
+        })->where('featured', 1)->skip($length)->take(24)->get();
     }
     
     public function load_more($length)
