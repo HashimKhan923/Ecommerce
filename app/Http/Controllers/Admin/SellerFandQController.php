@@ -49,4 +49,15 @@ class SellerFandQController extends Controller
 
         return response()->json(['message'=>'deleted successfully!',200]);
     }
+
+    public function change_order(Request $request)
+    {
+        foreach($request->order as $index => $order_id) 
+        {
+            $order = FandQ::find($order_id);
+            if ($order) {
+                $order->update(['order' => $index + 1]);
+            }
+        }
+    }
 }
