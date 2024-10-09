@@ -1081,7 +1081,8 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::group(['prefix' => 'payment/'], function() {
         Route::controller(App\Http\Controllers\Customer\PaymentController::class)->group(function () {
             Route::post('stripe','stripe_payment');    
-            Route::post('paypal','paypal_payment');    
+            Route::post('paypal','paypal_payment'); 
+            Route::get('check_payment_method/{id}','check_payment_method'); 
         });
     });
 
