@@ -10,7 +10,7 @@ class SellerFandQController extends Controller
 {
     public function index()
     {
-        $data = SellerFandQ::all();
+        $data = SellerFandQ::orderBy('order', 'asc')->get();
 
         return response()->json(['data'=>$data]);
     }

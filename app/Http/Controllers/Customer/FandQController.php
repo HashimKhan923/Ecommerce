@@ -12,15 +12,15 @@ class FandQController extends Controller
 {
     public function index()
     {
-        $data = FandQ::all();
-        $data2 = SellerFandQ::all();
+        $data = FandQ::orderBy('order', 'asc')->get();
+        $data2 = SellerFandQ::orderBy('order', 'asc')->get();
 
         return response()->json(['data'=>$data,'data2'=>$data2]);
     }
 
     public function index2()
     {
-        $data = SellerFandQ::all();
+        $data = SellerFandQ::orderBy('order', 'asc')->get();
 
         return response()->json(['data'=>$data]);
     }

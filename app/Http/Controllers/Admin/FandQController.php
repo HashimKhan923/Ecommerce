@@ -10,7 +10,7 @@ class FandQController extends Controller
 {
     public function index()
     {
-        $data = FandQ::all();
+        $data = FandQ::orderBy('order', 'asc')->get();
 
         return response()->json(['data'=>$data]);
     }
