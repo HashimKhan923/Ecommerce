@@ -54,7 +54,7 @@ class SellerFandQController extends Controller
     {
         foreach($request->order as $index => $order_id) 
         {
-            $order = FandQ::find($order_id);
+            $order = SellerFandQ::find($order_id);
             if ($order) {
                 $order->update(['order' => $index + 1]);
             }
