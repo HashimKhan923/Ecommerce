@@ -733,17 +733,17 @@ class ProductController extends Controller
 
         foreach ($request->products as $productData) {
 
-            $validator = Validator::make($productData, [
-                "sku" => [
-                    "unique:products,sku," . $productData['id'],
-                ],
-            ], [
-                'sku.unique' => "The SKU :input is already taken for product ID {$productData['id']}."
-            ]);
+            // $validator = Validator::make($productData, [
+            //     "sku" => [
+            //         "unique:products,sku," . $productData['id'],
+            //     ],
+            // ], [
+            //     'sku.unique' => "The SKU :input is already taken for product ID {$productData['id']}."
+            // ]);
         
-            if ($validator->fails()) {
-                return response(['errors'=>$validator->errors()->all()], 422);
-            }
+            // if ($validator->fails()) {
+            //     return response(['errors'=>$validator->errors()->all()], 422);
+            // }
 
             $product = Product::find($productData['id']);
             
