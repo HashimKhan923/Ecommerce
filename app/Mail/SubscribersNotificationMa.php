@@ -24,7 +24,10 @@ class SubscribersNotificationMa extends Mailable
 
     public function build()
     {
-        return $this->subject('DAM | Grand Opening Sale')
-                    ->view('email.subscribers_email');
+
+        return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
+        ->subject('DAM | Grand Opening Sale')
+        ->view('email.subscribers_email')
+        ->with('details', $this->details);            
     }
 }
