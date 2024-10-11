@@ -98,10 +98,10 @@ return [
     |
     */
 
-'from' => [
-    'address' => env('MAIL_FROM_ADDRESS', 'noreply@dragonautomart.com'),
-    'name' => env('MAIL_FROM_NAME', 'Dragon Auto Mart'),
-],
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@dragonautomart.com'),
+        'name' => 'Dragon Auto Mart',
+    ],
 
     /*
     |--------------------------------------------------------------------------
