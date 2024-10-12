@@ -46,6 +46,17 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
+        'no_reply' => [
+            'transport' => 'smtp',
+            'host' => env('NO_REPLY_MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('NO_REPLY_MAIL_PORT', 587),
+            'encryption' => env('NO_REPLY_MAIL_ENCRYPTION', 'tls'),
+            'username' => env('NO_REPLY_MAIL_USERNAME'),
+            'password' => env('NO_REPLY_MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('NO_REPLY_MAIL_EHLO_DOMAIN'),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

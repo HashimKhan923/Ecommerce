@@ -24,14 +24,12 @@ class SubscribersNotificationMa extends Mailable
 
     public function build()
     {
-        config(['mail.mailers.smtp.username' => 'no-reply@dragonautomart.com']);
-        config(['mail.mailers.smtp.password' => 'nvkjwehmyansabhn']);
-        config(['mail.from.address' => 'no-reply@dragonautomart.com']);
-        config(['mail.from.name' => 'Dragon Auto Mart']);
+        // Use the 'no_reply' mailer for sending this email
+        Mail::mailer('no_reply')->send('email.subscribers_email', ['details' => $this->details], function ($message) {
+            $message->from('no-reply@dragonautomart.com', 'Dragon Auto Mart');
+            $message->subject('DAM | Grand Opening Sale');
+        });
 
-        return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
-        ->subject('DAM | Grand Opening Sale')
-        ->view('email.subscribers_email')
-        ->with('details', $this->details);            
+        return;
     }
 }
