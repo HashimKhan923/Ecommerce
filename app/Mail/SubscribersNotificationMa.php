@@ -8,7 +8,6 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Mail;
 
 class SubscribersNotificationMa extends Mailable
 {
@@ -26,20 +25,9 @@ class SubscribersNotificationMa extends Mailable
     public function build()
     {
 
-        Mail::send(
-            'email.subscribers_email',
-            [
-                'details' => $this->details
-            ],
-            function ($message){ 
-                $message->from('no-reply@dragonautomart.com','Dragon Auto Mart');
-                $message->subject('DAM | Grand Opening Sale');
-            }
-        );
-
-        // return $this->from('khanhash1994@gmail.com', 'Dragon Auto Mart')
-        // ->subject('DAM | Grand Opening Sale')
-        // ->view('email.subscribers_email')
-        // ->with('details', $this->details);            
+        return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
+        ->subject('DAM | Grand Opening Sale')
+        ->view('email.subscribers_email')
+        ->with('details', $this->details);            
     }
 }
