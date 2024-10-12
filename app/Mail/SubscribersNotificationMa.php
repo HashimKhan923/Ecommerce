@@ -25,8 +25,6 @@ class SubscribersNotificationMa extends Mailable
     public function build()
     {
 
-        $user = $this->details['email'];
-
         Mail::send(
             'email.subscribers_email',
             [
@@ -34,7 +32,6 @@ class SubscribersNotificationMa extends Mailable
             ],
             function ($message) use ($user) { 
                 $message->from('no-reply@dragonautomart.com','Dragon Auto Mart');
-                $message->to($user);
                 $message->subject('DAM | Grand Opening Sale');
             }
         );
