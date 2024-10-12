@@ -24,6 +24,10 @@ class SubscribersNotificationMa extends Mailable
 
     public function build()
     {
+        config(['mail.mailers.smtp.username' => 'no-reply@dragonautomart.com']);
+        config(['mail.mailers.smtp.password' => 'nvkjwehmyansabhn']);
+        config(['mail.from.address' => 'no-reply@dragonautomart.com']);
+        config(['mail.from.name' => 'Dragon Auto Mart']);
 
         return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
         ->subject('DAM | Grand Opening Sale')
