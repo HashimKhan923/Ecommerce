@@ -25,7 +25,7 @@ class SendEmailJob implements ShouldQueue
 
     public function handle()
     {
-        Mail::to($this->user->email)->send(new SubscribersNotificationMa($this->details));
+        Mail::mailer('no_reply')->to($this->user->email)->send(new SubscribersNotificationMa($this->details));
 
     }
 }
