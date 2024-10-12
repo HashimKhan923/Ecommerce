@@ -31,7 +31,7 @@ class SubscribersNotificationMa extends Mailable
             [
                 'details' => $this->details
             ],
-            function ($message) use ($user) { 
+            function ($message){ 
                 $message->from('no-reply@dragonautomart.com','Dragon Auto Mart');
                 $message->subject('DAM | Grand Opening Sale');
             }
