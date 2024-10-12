@@ -99,7 +99,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@dragonautomart.com'),
+        'address' => 'no-reply@dragonautomart.com',
         'name' => 'Dragon Auto Mart',
     ],
 
