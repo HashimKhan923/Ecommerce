@@ -846,7 +846,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 10px 0px 20px;font-family:'Raleway',sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 class="v-text-align" style="margin: 0px; color: #051140; line-height: 140%; text-align: left; word-wrap: break-word; font-size: 22px; font-weight: 400;"><strong>Toyota Camry Headlights</strong></h1>
+    <h1 class="v-text-align" style="margin: 0px; color: #051140; line-height: 140%; text-align: left; word-wrap: break-word; font-size: 22px; font-weight: 400;"><strong>Toyota Camry Tail Lights</strong></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -860,7 +860,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:5px 30px 10px 20px;font-family:'Raleway',sans-serif;" align="left">
         
   <div class="v-text-align" style="font-size: 14px; color: #34495e; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;">Introducing Vicrez &amp; HRS LED Headlights for Toyota Camry</p>
+    <p style="line-height: 140%;">Introducing Vicrez &amp; HRS LED Tail Lights for Toyota Camry</p>
   </div>
 
       </td>
