@@ -1185,7 +1185,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="left">
       
-      <img align="left" border="0" src="https://api.dragonautomart.com/images/footerlogo22.jpeg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 134px;" width="134" class="v-src-width v-src-max-width"/>
+      <img align="left" border="0" src="https://api.dragonautomart.com/images/backgruind_removed.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 134px;" width="134" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
