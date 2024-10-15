@@ -40,7 +40,7 @@ class FilterController extends Controller
             }
         })
         ->orderBy('featured', 'DESC')
-        ->skip($length)->take(24)->get();
+        ->get();
 
 
         
