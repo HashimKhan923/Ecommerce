@@ -39,7 +39,6 @@ class FilterController extends Controller
                 });
             }
         })
-        ->orderBy('featured', 'DESC')
         ->get();
 
 
