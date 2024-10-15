@@ -1080,7 +1080,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
   <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/5467" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="⁠https://dragonautomart.com/searchresults/wheels" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+    <a href="⁠https://dragonautomart.com/searchresults/wheel" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
     </a>
     <!--[if mso]></center></v:roundrect><![endif]-->
@@ -1185,7 +1185,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="left">
       
-      <img align="left" border="0" src="https://api.dragonautomart.com/images/footerlogo2.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 134px;" width="134" class="v-src-width v-src-max-width"/>
+      <img align="left" border="0" src="https://api.dragonautomart.com/images/footerlogo22.jpeg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 134px;" width="134" class="v-src-width v-src-max-width"/>
       
     </td>
   </tr>
