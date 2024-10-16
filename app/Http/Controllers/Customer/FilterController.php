@@ -24,9 +24,9 @@ class FilterController extends Controller
             }, 'product_varient', 'discount', 'tax', 'shipping'
         ])
         ->where('published', 1)
-        ->whereHas('shop', function ($query) {
-            $query->where('name', 'LIKE', "%{$searchValue}%")
-            ->where('status', 1);
+        ->whereHas('shop', function ($query) use ($searchValue) {
+            $query->where('status', 1)
+            ->where('name', 'LIKE', "%{$searchValue}%");
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
