@@ -25,7 +25,8 @@ class FilterController extends Controller
         ])
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
-            $query->where('status', 1);
+            $query->where('name', 'LIKE', "%{$searchValue}%")
+            ->where('status', 1);
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
