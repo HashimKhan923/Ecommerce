@@ -264,7 +264,7 @@ class FilterController extends Controller
             $query->where('status', 1);
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
-        })->where('store_id','!=',75)->orderByRaw('featured DESC')->get();
+        })->where('shop_id','!=',75)->orderByRaw('featured DESC')->get();
     
         return response()->json(['data'=>$data]);
     }
