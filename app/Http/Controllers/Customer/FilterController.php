@@ -239,7 +239,7 @@ $data = Product::with([
             $query->where('sub_category_id', $request->sub_category_id);
         }
     
-        $data = $query->orderByRaw('featured DESC')->skip($request->length)->take(24)->get();
+        $data = $query->orderByRaw('featured DESC, id ASC')->skip($request->length)->take(24)->get();
     
         return response()->json(['data' => $data]);
     }
