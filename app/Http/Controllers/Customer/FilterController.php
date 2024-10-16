@@ -56,6 +56,7 @@ $data = Product::with([
     }
 })
 ->orderBy('featured', 'DESC')
+->orderBy('id', 'ASC')
 ->skip($length)->take(24)->get();
 
 
