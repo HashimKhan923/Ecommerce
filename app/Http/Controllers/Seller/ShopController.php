@@ -22,7 +22,7 @@ class ShopController extends Controller
     {
         $data = Shop::with('shop_policy')->where('id',53)->first();
 
-        return response()->json(['data'=>$data]);
+        return response()->json($data);
     }
 
     public function create(Request $request)
