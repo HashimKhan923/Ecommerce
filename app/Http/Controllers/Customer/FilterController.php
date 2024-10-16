@@ -37,6 +37,13 @@ class FilterController extends Controller
                     // ->orWhere('description', 'LIKE', "%{$keyword}%")
                     ->orWhereJsonContains('tags', $searchValue);
                 });
+
+                                // Add shop name search
+                $query->orWhereHas('shop', function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->where('name', 'LIKE', "%{$keyword}%");
+                    }
+                });
             }
         })
         ->orderBy('featured', 'DESC')
