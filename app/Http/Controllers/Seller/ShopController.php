@@ -20,7 +20,7 @@ class ShopController extends Controller
 
     public function edit($id)
     {
-        $data = Shop::find($id);
+        $data = Shop::find(53);
 
         return response()->json(['data'=>$data]);
     }
