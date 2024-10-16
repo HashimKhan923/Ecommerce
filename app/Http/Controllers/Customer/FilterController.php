@@ -17,7 +17,7 @@ class FilterController extends Controller
         $Keyword->save();
         
         $keywords = explode(' ', $searchValue);
-        
+
         $data = Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
@@ -29,30 +29,48 @@ class FilterController extends Controller
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })
-        ->where(function ($query) use ($keywords,$searchValue) {
+        ->where(function ($query) use ($keywords, $searchValue) {
             foreach ($keywords as $keyword) {
-                $query->where(function ($query) use ($keyword,$searchValue) {
-                    $query->where('sku',$keyword)
-                    ->orWhere('name', 'LIKE', "%{$keyword}%")
-                    // ->orWhere('description', 'LIKE', "%{$keyword}%")
-                    ->orWhereJsonContains('tags', $searchValue);
+                $query->where(function ($query) use ($keyword, $searchValue) {
+                    $query->where('sku', $keyword)
+                          ->orWhere('name', 'LIKE', "%{$keyword}%")
+                          ->orWhereJsonContains('tags', $searchValue);
                 });
             }
-
-            $query->orWhereHas('shop', function ($query) use ($searchValue) {
-                    $query->where('name', 'LIKE', "%{$searchValue}%");
+        
+            // Search for shop name in the keywords
+            $query->orWhereHas('shop', function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                }
             });
-            $query->orWhereHas('category', function ($query) use ($searchValue) {
-                $query->where('name', 'LIKE', "%{$searchValue}%");
+        
+            // Search for category name in the keywords
+            $query->orWhereHas('category', function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                }
             });
-            $query->orWhereHas('brand', function ($query) use ($searchValue) {
-                $query->where('name', 'LIKE', "%{$searchValue}%");
+        
+            // Search for brand name in the keywords
+            $query->orWhereHas('brand', function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                }
             });
-            $query->orWhereHas('model', function ($query) use ($searchValue) {
-                $query->where('name', 'LIKE', "%{$searchValue}%");
+        
+            // Search for model name in the keywords
+            $query->orWhereHas('model', function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                }
             });
-            $query->orWhereHas('sub_category', function ($query) use ($searchValue) {
-                $query->where('name', 'LIKE', "%{$searchValue}%");
+        
+            // Search for sub-category name in the keywords
+            $query->orWhereHas('sub_category', function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                }
             });
         })
         ->orderBy('featured', 'DESC')
