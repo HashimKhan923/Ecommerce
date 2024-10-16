@@ -197,7 +197,6 @@ class FilterController extends Controller
             'shipping'
         ])
         ->where('published', 1)
-        ->where('shop_id', '!=', 75)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
@@ -223,7 +222,7 @@ class FilterController extends Controller
             $query->where('sub_category_id', $request->sub_category_id);
         }
     
-        $data = $query->orderByRaw('featured DESC')->skip($request->length)->take(6)->get();
+        $data = $query->orderByRaw('featured DESC')->skip($request->length)->take(24)->get();
     
         return response()->json(['data' => $data]);
     }
