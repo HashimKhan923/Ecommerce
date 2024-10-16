@@ -261,10 +261,10 @@ class FilterController extends Controller
 
     
         $data = $query->with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->whereHas('shop', function ($query) {
-            $query->where('status', 1);
+            $query->where('status', 1)->where('id', '!=', 75);
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
-        })->where('shop_id','!=',75)->orderByRaw('featured DESC')->get();
+        })->orderByRaw('featured DESC')->get();
     
         return response()->json(['data'=>$data]);
     }
