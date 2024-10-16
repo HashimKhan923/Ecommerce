@@ -197,6 +197,7 @@ class FilterController extends Controller
             'shipping'
         ])
         ->where('published', 1)
+        ->where('shop_id', '!=', 75)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
@@ -261,7 +262,7 @@ class FilterController extends Controller
 
     
         $data = $query->with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->whereHas('shop', function ($query) {
-            $query->where('status', 1)->where('id', '!=', 75);
+            $query->where('status', 1);
         })->whereHas('stock', function ($query) {
             $query->where('stock', '>', 0);
         })->orderByRaw('featured DESC')->get();
