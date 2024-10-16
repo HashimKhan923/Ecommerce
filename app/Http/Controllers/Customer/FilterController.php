@@ -42,6 +42,18 @@ class FilterController extends Controller
             $query->orWhereHas('shop', function ($query) use ($searchValue) {
                     $query->where('name', 'LIKE', "%{$searchValue}%");
             });
+            $query->orWhereHas('category', function ($query) use ($searchValue) {
+                $query->where('name', 'LIKE', "%{$searchValue}%");
+            });
+            $query->orWhereHas('brand', function ($query) use ($searchValue) {
+                $query->where('name', 'LIKE', "%{$searchValue}%");
+            });
+            $query->orWhereHas('model', function ($query) use ($searchValue) {
+                $query->where('name', 'LIKE', "%{$searchValue}%");
+            });
+            $query->orWhereHas('sub_category', function ($query) use ($searchValue) {
+                $query->where('name', 'LIKE', "%{$searchValue}%");
+            });
         })
         ->orderBy('featured', 'DESC')
         ->skip($length)->take(24)->get();
