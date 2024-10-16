@@ -30,20 +30,14 @@ class FilterController extends Controller
             $query->where('stock', '>', 0);
         })
         ->where(function ($query) use ($keywords,$searchValue) {
-            // foreach ($keywords as $keyword) {
+            foreach ($keywords as $keyword) {
                 $query->where(function ($query) use ($keyword,$searchValue) {
                     $query->where('sku',$keyword)
-                    ->orWhere('name', 'LIKE', "%{$searchValue}%")
+                    ->orWhere('name', 'LIKE', "%{$keyword}%")
                     // ->orWhere('description', 'LIKE', "%{$keyword}%")
                     ->orWhereJsonContains('tags', $searchValue);
                 });
-
-                                // Add shop name search
-                $query->orWhereHas('shop', function ($query) use ($searchValue) {
-                    
-                        $query->where('name', 'LIKE', "%{$searchValue}%");
-                });
-            // }
+            }
         })
         ->orderBy('featured', 'DESC')
         ->skip($length)->take(24)->get();
