@@ -20,7 +20,7 @@ class ShopController extends Controller
 
     public function edit($id)
     {
-        $data = Shop::with('shop_policy')->withCount('product')->where('id',$id)->first();
+        $data = Shop::with('shop_policy')->where('id',$id)->first();
 
         return response()->json(['data'=>$data]);
     }
