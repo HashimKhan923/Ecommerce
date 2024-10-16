@@ -38,6 +38,10 @@ class FilterController extends Controller
                     ->orWhereJsonContains('tags', $searchValue);
                 });
             }
+
+            $query->orWhereHas('shop', function ($query) use ($searchValue) {
+                    $query->where('name', 'LIKE', "%{$searchValue}%");
+            });
         })
         ->orderBy('featured', 'DESC')
         ->skip($length)->take(24)->get();
