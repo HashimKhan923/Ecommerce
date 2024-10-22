@@ -27,6 +27,7 @@ class SubscribersNotificationMa extends Mailable
 
 
         return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
+        ->replyTo('support@dragonautomart.com')
         ->subject('DAM | Grand Opening Sale')
         ->view('email.subscribers_email')
         ->with('details', $this->details);            
