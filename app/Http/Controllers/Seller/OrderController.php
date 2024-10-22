@@ -131,9 +131,9 @@ class OrderController extends Controller
     
     
                 $ListingPayment = 0;
-                $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
-                ->where('payment_status', 'unpaid')
-                ->first();
+                // $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+                // ->where('payment_status', 'unpaid')
+                // ->first();
                 if ($ProductListingPayment) {
                     $ProductListingPayment->payment_status = 'paid';
                     $ProductListingPayment->save();
