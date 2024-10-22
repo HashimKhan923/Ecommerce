@@ -97,4 +97,14 @@ class SubscriberController extends Controller
             return response()->json(['message' => 'Email batch cancelled.']);
         }
     }
+
+    public function trackEmailOpen($batchId, $userId)
+    {
+        // Increment the seen_emails count in the email_batches table
+        DB::table('email_batches')->where('id', $batchId)->increment('seen_emails');
+
+
+        // Return a 1x1 pixel transparent image
+        return response()->file(public_path('transparent.png'));
+    }
 }
