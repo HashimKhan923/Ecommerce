@@ -409,6 +409,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                                 Route::get('show','index');  
                                 Route::post('create','bulk_create');  
                                 Route::post('send/email','sendEmail');  
+                                Route::get('cancel_batch/{batch_id}','cancel_batch');
                                 Route::get('delete/{id}','delete'); 
                                 Route::post('multi_delete','multi_delete'); 
                             });
