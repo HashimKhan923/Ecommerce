@@ -48,7 +48,7 @@ class SubscriberController extends Controller
 
     public function sendEmail(Request $request)
     {
-        return Carbon::now();
+        return Carbon::now('Asia/Karachi');
         // Get details from the request
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
