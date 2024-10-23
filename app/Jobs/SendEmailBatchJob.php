@@ -32,6 +32,8 @@ class SendEmailBatchJob implements ShouldQueue
 
     public function handle()
     {
+
+        return "in the SendEmailBatchJob";
         // Fetch users again in case there were any changes
         $users = Subscriber::whereIn('id', $this->userIds)->get();
         
