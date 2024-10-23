@@ -56,7 +56,7 @@ class SubscriberController extends Controller
     
         foreach ($users as $user) {
             SendEmailJob::dispatch($user, $details)
-            ->delay(Carbon::parse($sendDateTime));
+            ->delay(Carbon::now());
         }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
