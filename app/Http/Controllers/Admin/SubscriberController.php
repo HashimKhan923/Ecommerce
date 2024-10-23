@@ -56,7 +56,7 @@ class SubscriberController extends Controller
     
         foreach ($users as $user) {
             // Calculate the delay in seconds
-            $delayInSeconds = Carbon::parse('2024-10-23T16:36:15.594502Z')->diffInSeconds(now());
+            $delayInSeconds = Carbon::parse('2024-10-24T16:36:15.594502Z')->diffInSeconds(now());
     
             // Check if the delay is positive
             if ($delayInSeconds > 0) {
