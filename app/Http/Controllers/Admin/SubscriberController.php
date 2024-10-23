@@ -55,8 +55,17 @@ class SubscriberController extends Controller
         $users = Subscriber::whereIn('id', $userIds)->get();
     
         foreach ($users as $user) {
-            SendEmailJob::dispatch($user, $details)
-            ->delay(Carbon::parse('2024-10-24T16:36:15.594502Z'));
+            // Calculate the delay in seconds
+            $delayInSeconds = Carbon::now()->diffInSeconds(now());
+    
+            // Check if the delay is positive
+            if ($delayInSeconds > 0) {
+                SendEmailJob::dispatch($user, $details)
+                    ->delay(now()->addSeconds($delayInSeconds));
+            } else {
+                // Handle the case where the scheduled time is in the past
+                return response()->json(['message' => 'Scheduled time must be in the future.'], 400);
+            }
         }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
