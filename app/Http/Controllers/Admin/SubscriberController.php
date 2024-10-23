@@ -51,7 +51,7 @@ class SubscriberController extends Controller
         $utcTime = Carbon::now(); // UTC time
         $chicagoTime = Carbon::parse($utcTime)->setTimezone('America/Chicago');
 
-        return $chicagoTime;
+        return config('app.timezone');
         // Get details from the request
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
