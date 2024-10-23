@@ -48,7 +48,10 @@ class SubscriberController extends Controller
 
     public function sendEmail(Request $request)
     {
-        return Carbon::now();
+        $utcTime = Carbon::now(); // UTC time
+        $chicagoTime = Carbon::parse($utcTime)->setTimezone('America/Chicago');
+
+        return $chicagoTime;
         // Get details from the request
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
