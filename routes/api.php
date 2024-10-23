@@ -404,16 +404,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                                                     /// Subscriber \\\
 
-                        Route::group(['prefix' => '/admin/subscribe/'], function() {
-                            Route::controller(App\Http\Controllers\Admin\SubscriberController::class)->group(function () {
-                                Route::get('show','index');  
-                                Route::post('create','bulk_create');  
-                                Route::post('send/email','sendEmail');  
-                                Route::get('cancel_batch/{batch_id}','cancel_batch');
-                                Route::get('delete/{id}','delete'); 
-                                Route::post('multi_delete','multi_delete'); 
-                            });
-                        });
+
 
 
 
@@ -1200,5 +1191,19 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::group(['prefix' => '/admin/seller/'], function() {
                         Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {                               
                             Route::get('stripe_delete/{stripe_id}','strip_account_delete');
+                        });
+                    });
+
+
+
+
+                    Route::group(['prefix' => '/admin/subscribe/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\SubscriberController::class)->group(function () {
+                            Route::get('show','index');  
+                            Route::post('create','bulk_create');  
+                            Route::post('send/email','sendEmail');  
+                            Route::get('cancel_batch/{batch_id}','cancel_batch');
+                            Route::get('delete/{id}','delete'); 
+                            Route::post('multi_delete','multi_delete'); 
                         });
                     });
