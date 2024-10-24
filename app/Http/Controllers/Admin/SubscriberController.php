@@ -64,8 +64,6 @@ class SubscriberController extends Controller
         
             // Calculate delay if a scheduled time is provided
         $delay = $scheduledTime ? now()->diffInSeconds(Carbon::parse($scheduledTime), false) : 0;
-
-        return $delay;
         
     
         foreach ($users as $user) {
