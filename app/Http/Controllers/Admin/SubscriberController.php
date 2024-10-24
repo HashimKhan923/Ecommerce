@@ -53,36 +53,33 @@ class SubscriberController extends Controller
     {
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
-        
-        $users = Subscriber::where('status',null)->take($userLimit)->get();
-
-
-
-
-                // Create a batch of email jobs
-        $batchJob = Bus::batch([])->then(function (Batch $batch) {
-            // All jobs completed...
-        })->catch(function (Batch $batch, Throwable $e) {
-            // Handle failure...
-        })->finally(function (Batch $batch) {
-            // Final cleanup...
-        })->dispatch();
-
-
+    
+        $users = Subscriber::where('status', null)->take($userLimit)->get();
+    
         $batch = EmailBatch::create([
-            'batch_id' => $batchJob->id,
             'total_emails' => $users->count(),
             'from_id' => $users->first()->id,
-            'start_at' => now()
+            'start_at' => now(),
         ]);
-        
-        
-
-        
     
+        // Collect jobs in an array
+        $jobs = [];
         foreach ($users as $user) {
-            $batchJob->add(new SendEmailJob($user, $details, $batch->id));
+            $jobs[] = new SendEmailJob($user, $details, $batch->id); // Queue each job
         }
+    
+        // Create a batch of the collected jobs
+        $batchJob = Bus::batch($jobs) // Pass the array of jobs
+            ->then(function (Batch $batch) {
+                // Actions when all jobs succeed...
+            })
+            ->catch(function (Batch $batch, Throwable $e) {
+                // Actions on job failure...
+            })
+            ->finally(function (Batch $batch) {
+                // Final actions after all jobs finish...
+            })
+            ->dispatch(); // Dispatch the batch of jobs
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
     }
