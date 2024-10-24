@@ -9,6 +9,5 @@ class JobBatch extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
 
 }
