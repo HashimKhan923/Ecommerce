@@ -49,7 +49,7 @@ class SubscriberController extends Controller
     {
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
-
+        return $userLimit;
         $users = Subscriber::where('status',null)->take($userLimit)->get();
 
         return $users;
