@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Models\EmailBatch;
+use App\Models\Subscriber;
 
 class SendEmailJob implements ShouldQueue
 {
@@ -35,6 +36,7 @@ class SendEmailJob implements ShouldQueue
             // Update successful email count
             EmailBatch::where('id', $this->batchId)->increment('successful_emails');
             EmailBatch::where('id', $this->batchId)->update(['to_id' => $this->user->id]);
+            Subscriber::where('id',$this->user->id)->update(['status' => 'sent']);
 
 
                     // Update completed date if this is the last job in the batch
