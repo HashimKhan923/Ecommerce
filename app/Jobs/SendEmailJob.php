@@ -64,6 +64,7 @@ class SendEmailJob implements ShouldQueue
 
             if ($totalEmailsSent >= $batch->total_emails) { // Make sure to have a total_emails column
                 $batch->completed_at = now(); // Set to current date and time
+                $batch->status = 'sent';
                 $batch->save();
             }
         }
