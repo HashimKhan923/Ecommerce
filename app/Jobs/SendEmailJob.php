@@ -19,7 +19,7 @@ class SendEmailJob implements ShouldQueue
     protected $details;
     protected $batchId;
 
-    public function __construct($user, $details)
+    public function __construct($user, $details, $batchId)
     {
         $this->user = $user;
         $this->details = $details;
