@@ -24,7 +24,7 @@ class SendEmailJob implements ShouldQueue
     {
         $this->user = $user;
         $this->details = $details;
-        $this->details = $details;
+        $this->batchId = $batchId;
     }
 
     public function handle()
