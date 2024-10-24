@@ -81,6 +81,8 @@ class SubscriberController extends Controller
             EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
         })
         ->catch(function (Batch $batch, Throwable $e) {
+
+            return 11;
             return response()->json(['errors'=>$e->get_messages()]);
         })
         ->finally(function (Batch $batch) {
