@@ -52,6 +52,8 @@ class SubscriberController extends Controller
 
         $users = Subscriber::where('status',null)->limit($userLimit)->get();
 
+        return $users;
+
         $batch = EmailBatch::create([
             'total_emails' => $users->count(),
             'from_id' => $users->first()->id,
