@@ -31,7 +31,7 @@ class SendEmailJob implements ShouldQueue
     {
         try {
             // Attempt to send email
-            // Mail::mailer('no_reply')->to($this->user->email)->send(new SubscribersNotificationMa($this->details));
+            Mail::mailer('no_reply')->to($this->user->email)->send(new SubscribersNotificationMa($this->details));
 
             // Update successful email count
             EmailBatch::where('id', $this->batchId)->increment('successful_emails');
