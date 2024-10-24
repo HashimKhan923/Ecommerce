@@ -82,7 +82,7 @@ class SubscriberController extends Controller
         })
         ->catch(function (Batch $batch, Throwable $e) {
             
-            return response()->json(['errors'=>$e->get_messages()]);
+            return response()->json(['errors'=>$e->getMessage()]);
         })
         ->finally(function (Batch $batch) {
             // Called when the batch has finished executing
