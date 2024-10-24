@@ -8,6 +8,10 @@ use App\Models\Subscriber;
 use App\Models\EmailBatch;
 use App\Jobs\SendEmailJob;
 use DB;
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
+use Throwable;
+
 
 class SubscriberController extends Controller
 {
@@ -52,7 +56,21 @@ class SubscriberController extends Controller
         
         $users = Subscriber::where('status',null)->take($userLimit)->get();
 
+
+
+
+                // Create a batch of email jobs
+        $batchJob = Bus::batch([])->then(function (Batch $batch) {
+            // All jobs completed...
+        })->catch(function (Batch $batch, Throwable $e) {
+            // Handle failure...
+        })->finally(function (Batch $batch) {
+            // Final cleanup...
+        })->dispatch();
+
+
         $batch = EmailBatch::create([
+            'batch_id' => $batchJob->id,
             'total_emails' => $users->count(),
             'from_id' => $users->first()->id,
             'start_at' => now()
@@ -63,7 +81,7 @@ class SubscriberController extends Controller
         
     
         foreach ($users as $user) {
-            SendEmailJob::dispatch($user, $details, $batch->id);
+            $batchJob->add(new SendEmailJob($user, $details, $batch->id));
         }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
