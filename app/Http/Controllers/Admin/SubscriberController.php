@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
+use App\Models\EmailBatch;
 use App\Jobs\SendEmailJob;
 use DB;
 
@@ -48,13 +49,19 @@ class SubscriberController extends Controller
     {
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
+
+        $batch = EmailBatch::create([
+            'total_emails' => $users->count(),
+            'from_id' => $users->first()->id,
+            'start_at' => now()
+        ]);
         
         $users = Subscriber::where('status',null)->limit($userLimit)->get();
 
         
     
         foreach ($users as $user) {
-            SendEmailJob::dispatch($user, $details);
+            SendEmailJob::dispatch($user, $details, $batch->id);
         }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
