@@ -36,6 +36,10 @@ class SendEmailJob implements ShouldQueue
             EmailBatch::where('id', $this->batchId)->increment('successful_emails');
             EmailBatch::where('id', $this->batchId)->update(['to_id' => $this->user->id]);
 
+
+                    // Update completed date if this is the last job in the batch
+        $this->updateBatchCompletionDate();
+
         } catch (\Exception $e) {
             // Check if the error is spam-related
             if ($e->getMessage() === 'Spam detected') {
@@ -43,6 +47,22 @@ class SendEmailJob implements ShouldQueue
             } else {
                 // Increment failed email count
                 EmailBatch::where('id', $this->batchId)->increment('failed_emails');
+            }
+        }
+    }
+
+    protected function updateBatchCompletionDate()
+    {
+        // Get the total emails in the batch
+        $batch = EmailBatch::find($this->batchId);
+        
+        if ($batch) {
+            // Check if all emails have been sent (successful + failed + spam)
+            $totalEmailsSent = $batch->successful_emails + $batch->failed_emails + $batch->spam_emails;
+
+            if ($totalEmailsSent >= $batch->total_emails) { // Make sure to have a total_emails column
+                $batch->completed_at = now(); // Set to current date and time
+                $batch->save();
             }
         }
     }
