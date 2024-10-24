@@ -53,6 +53,12 @@ class SubscriberController extends Controller
         
         $users = Subscriber::where('status','!=','sent')->limit($userLimit)->get();
 
+        if ($users->isEmpty()) {
+            // Handle the case where there are no users
+            // You might want to log this or return an appropriate response
+            return response()->json(['message' => 'No subscribers available to send emails.'], 404);
+        }
+
         $firstId = $users->first();
 
           $batch = EmailBatch::create([
