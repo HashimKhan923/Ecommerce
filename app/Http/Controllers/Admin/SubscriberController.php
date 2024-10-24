@@ -76,7 +76,7 @@ class SubscriberController extends Controller
     }
 
     // Dispatch the batch of jobs and store the batch ID
-    $batch = Bus::batch($jobs)->dispatch();
+    // $batch = Bus::batch($jobs)->dispatch();
         // ->then(function (Batch $batch)  use ($batchId) {
         //     EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
         // })
