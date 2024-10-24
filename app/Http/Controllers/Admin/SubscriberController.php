@@ -76,20 +76,20 @@ class SubscriberController extends Controller
     }
 
     // Dispatch the batch of jobs and store the batch ID
-    $batch = Bus::batch($jobs)
-        ->then(function (Batch $batch)  use ($batchId) {
-            EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
-        })
-        ->catch(function (Batch $batch, Throwable $e) {
+    $batch = Bus::batch($jobs)->dispatch();
+        // ->then(function (Batch $batch)  use ($batchId) {
+        //     EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
+        // })
+        // ->catch(function (Batch $batch, Throwable $e) {
             
-            return response()->json(['errors'=>$e->getMessage()]);
-        })
-        ->finally(function (Batch $batch) {
-            // Called when the batch has finished executing
-        })
-        ->dispatch(); // No delay, send immediately
+        //     return response()->json(['errors'=>$e->getMessage()]);
+        // })
+        // ->finally(function (Batch $batch) {
+        //     // Called when the batch has finished executing
+        // })
+        // ->dispatch(); // No delay, send immediately
 
-        EmailBatch::where('id', $batchId)->update(['batch_id' => $batch->id]);
+        // EmailBatch::where('id', $batchId)->update(['batch_id' => $batch->id]);
 
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
