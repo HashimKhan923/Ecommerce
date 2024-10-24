@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Jobs\SendEmailJob;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Bus;
-use App\Models\EmailBatch;
+use DB;
 
 class SubscriberController extends Controller
 {
@@ -51,46 +49,12 @@ class SubscriberController extends Controller
         $details = $request->only('body');
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
         
-        $users = Subscriber::where('status',null)->limit($userLimit)->get();
-
-        if ($users->isEmpty()) {
-            // Handle the case where there are no users
-            // You might want to log this or return an appropriate response
-            return response()->json(['message' => 'No subscribers available to send emails.'], 404);
-        }
-
-        $firstId = $users->first();
-
-          $batch = EmailBatch::create([
-                'total_emails'=>$users->count(),
-                'from_id'=>$firstId->id,
-                'start_at'=>now()
-            ]);
-
-            $batchId = $batch->id;
+        $users = Subscriber::where('status','!=','sent')->limit($userLimit)->get();
+        
     
-    // Prepare jobs for each user
-    $jobs = [];
-    foreach ($users as $user) {
-        $jobs[] = new SendEmailJob($user, $details);
-    }
-
-    // Dispatch the batch of jobs and store the batch ID
-    // $batch = Bus::batch($jobs)->dispatch();
-        // ->then(function (Batch $batch)  use ($batchId) {
-        //     EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
-        // })
-        // ->catch(function (Batch $batch, Throwable $e) {
-            
-        //     return response()->json(['errors'=>$e->getMessage()]);
-        // })
-        // ->finally(function (Batch $batch) {
-        //     // Called when the batch has finished executing
-        // })
-        // ->dispatch(); // No delay, send immediately
-
-        // EmailBatch::where('id', $batchId)->update(['batch_id' => $batch->id]);
-
+        foreach ($users as $user) {
+            SendEmailJob::dispatch($user, $details);
+        }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
     }
