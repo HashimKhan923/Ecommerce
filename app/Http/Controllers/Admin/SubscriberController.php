@@ -20,6 +20,14 @@ class SubscriberController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function batches()
+    {
+        
+        $data = EmailBatch::all();
+
+        return response()->json(['data' => $data]);
+    }
+
     public function bulk_create(Request $request)
     {
         foreach($request->email as $email)

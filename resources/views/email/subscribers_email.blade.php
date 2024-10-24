@@ -196,7 +196,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
       <a href="https://dragonautomart.com" target="_blank">
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/NewBanner.jpeg" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600" class="v-src-width v-src-max-width"/>
+      <img align="center" border="0" src="https://api.dragonautomart.com/images/finalbanner.jpeg" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600" class="v-src-width v-src-max-width"/>
       </a>
     </td>
   </tr>
