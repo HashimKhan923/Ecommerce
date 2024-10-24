@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Jobs\SendEmailJob;
-use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Bus;
+use App\Models\EmailBatch;
 
 class SubscriberController extends Controller
 {
@@ -48,25 +49,41 @@ class SubscriberController extends Controller
     public function sendEmail(Request $request)
     {
         $details = $request->only('body');
-        $userIds = $request->input('user_ids'); 
-        $sendDateTime = $request->input('date_time');
-    
+        $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
         
-        $users = Subscriber::whereIn('id', $userIds)->get();
+        $users = Subscriber::where('status','!=','sent')->limit($userLimit)->get();
+
+        $firstId = $users->first();
+
+          $batch = EmailBatch::create([
+                'total_emails'=>$users->count(),
+                'from_id'=>$firstId->id,
+                'start_at'=>now()
+            ]);
+
+            $batchId = $batch->id;
     
-        foreach ($users as $user) {
-            // Calculate the delay in seconds
-            $delayInSeconds = Carbon::parse('2024-10-24T16:36:15.594502Z')->diffInSeconds(now());
-    
-            // Check if the delay is positive
-            if ($delayInSeconds > 0) {
-                SendEmailJob::dispatch($user, $details)
-                    ->delay(now()->addSeconds($delayInSeconds));
-            } else {
-                // Handle the case where the scheduled time is in the past
-                return response()->json(['message' => 'Scheduled time must be in the future.'], 400);
-            }
-        }
+    // Prepare jobs for each user
+    $jobs = [];
+    foreach ($users as $user) {
+        $jobs[] = new SendEmailJob($user, $details, $batchId);
+    }
+
+    // Dispatch the batch of jobs and store the batch ID
+    $batch = Bus::batch($jobs)
+        ->then(function (Batch $batch)  use ($batchId) {
+            EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
+        })
+        ->catch(function (Batch $batch, Throwable $e) {
+            return response()->json(['errors'=>$e->get_messages()]);
+        })
+        ->finally(function (Batch $batch) {
+            // Called when the batch has finished executing
+        })
+        ->dispatch(); // No delay, send immediately
+
+        EmailBatch::where('id', $batchId)->update(['batch_id' => $batch->id]);
+
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
     }

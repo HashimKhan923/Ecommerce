@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('email_batches', function (Blueprint $table) {
+            $table->id();
+            $table->integer('batch_id')->nullable();
             $table->integer('total_emails')->default(0);        
             $table->integer('successful_emails')->default(0);   
             $table->integer('failed_emails')->default(0);       
