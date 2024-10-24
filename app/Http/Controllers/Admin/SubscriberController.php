@@ -69,4 +69,12 @@ class SubscriberController extends Controller
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
     }
+
+
+    public function refresh_subscriber()
+    {
+        Subscriber::whereNotNull('status')->update(['status' => NULL]);   
+
+        return response()->json(['message' => 'status are successfully reset.'], 200);
+    }
 }
