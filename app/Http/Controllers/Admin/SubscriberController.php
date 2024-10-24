@@ -67,18 +67,18 @@ class SubscriberController extends Controller
                 'start_at'=>now()
             ]);
 
-            $x = $batch->id;
+            $batchId = $batch->id;
     
     // Prepare jobs for each user
     $jobs = [];
     foreach ($users as $user) {
-        $jobs[] = new SendEmailJob($user, $details, $x);
+        $jobs[] = new SendEmailJob($user, $details, $batchId);
     }
 
     // Dispatch the batch of jobs and store the batch ID
     $batch = Bus::batch($jobs)
-        ->then(function (Batch $batch)  use ($x) {
-            EmailBatch::where('id', $x)->update(['completed_at' => now(),'status'=>'completed']);
+        ->then(function (Batch $batch)  use ($batchId) {
+            EmailBatch::where('id', $batchId)->update(['completed_at' => now(),'status'=>'completed']);
         })
         ->catch(function (Batch $batch, Throwable $e) {
             return response()->json(['errors'=>$e->get_messages()]);
@@ -88,7 +88,7 @@ class SubscriberController extends Controller
         })
         ->dispatch(); // No delay, send immediately
 
-        EmailBatch::where('id', $x)->update(['batch_id' => $batch->id]);
+        EmailBatch::where('id', $batchId)->update(['batch_id' => $batch->id]);
 
     
         return response()->json(['message' => 'Emails are being sent.'], 200);

@@ -19,11 +19,11 @@ class SendEmailJob implements ShouldQueue
     protected $details;
     protected $batchId;
 
-    public function __construct($user, $details, $x)
+    public function __construct($user, $details, $batchId)
     {
         $this->user = $user;
         $this->details = $details;
-        $this->batchId = $x;
+        $this->batchId = $batchId;
     }
 
     public function handle()
@@ -33,19 +33,17 @@ class SendEmailJob implements ShouldQueue
             Mail::mailer('no_reply')->to($this->user->email)->send(new SubscribersNotificationMa($this->details));
 
             // Update successful email count
-            EmailBatch::where('id', $this->x)->increment('successful_emails');
-            EmailBatch::where('id', $this->x)->update(['to_id'=>$this->user->id]);
+            EmailBatch::where('id', $this->batchId)->increment('successful_emails');
+            EmailBatch::where('id', $this->batchId)->update(['to_id' => $this->user->id]);
 
         } catch (\Exception $e) {
             // Check if the error is spam-related
             if ($e->getMessage() === 'Spam detected') {
-                EmailBatch::where('id', $this->x)->increment('spam_emails');
+                EmailBatch::where('id', $this->batchId)->increment('spam_emails');
             } else {
                 // Increment failed email count
-                EmailBatch::where('id', $this->x)->increment('failed_emails');
+                EmailBatch::where('id', $this->batchId)->increment('failed_emails');
             }
         }
     }
-
-    
 }
