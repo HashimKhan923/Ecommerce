@@ -68,8 +68,10 @@ class SubscriberController extends Controller
     
         foreach ($users as $user) {
             if ($delay > 0) {
+                return 1;
                 SendEmailJob::dispatch($user, $details, $batch->id)->delay(now()->addSeconds($delay));
             } else {
+                return 2;
                 SendEmailJob::dispatch($user, $details, $batch->id);
             }
         }
