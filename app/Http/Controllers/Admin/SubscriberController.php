@@ -72,7 +72,7 @@ class SubscriberController extends Controller
     // Prepare jobs for each user
     $jobs = [];
     foreach ($users as $user) {
-        $jobs[] = new SendEmailJob($user, $details, $batchId);
+        $jobs[] = new SendEmailJob($user, $details);
     }
 
     // Dispatch the batch of jobs and store the batch ID
