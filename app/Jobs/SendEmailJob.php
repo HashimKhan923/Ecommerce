@@ -46,9 +46,11 @@ class SendEmailJob implements ShouldQueue
             // Check if the error is spam-related
             if ($e->getMessage() === 'Spam detected') {
                 EmailBatch::where('id', $this->batchId)->increment('spam_emails');
+                Subscriber::where('id',$this->user->id)->update(['status' => 'spam']);
             } else {
                 // Increment failed email count
                 EmailBatch::where('id', $this->batchId)->increment('failed_emails');
+                Subscriber::where('id',$this->user->id)->update(['status' => 'failed']);
             }
         }
     }
