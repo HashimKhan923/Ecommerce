@@ -17,7 +17,7 @@ Route::get('/testing', function () {
     return view('testing');
 });
 
-Route::get('/email/track/open/{batchId}', [App\Http\Controllers\Admin\SubscriberController::class, 'trackEmailOpen'])->name('email.track.open');
+Route::get('/email/track/open/{batchId}/{userId}', [App\Http\Controllers\Admin\SubscriberController::class, 'trackEmailOpen'])->name('email.track.open');
 
 
 

@@ -15,20 +15,20 @@ class SubscribersNotificationMa extends Mailable
 
     use Queueable, SerializesModels;
 
-    public $details;
+    public $user;
 
-    public function __construct($details)
+    public function __construct($user)
     {
-        $this->details = $details;
+        $this->user = $user;
     }
 
     public function build()
     {
-
+        $trackingUrl = route('email.track.open', ['batchId' => $this->batchId, 'userId' => $this->userId->id]);
 
         return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
         ->subject('DAM | Grand Opening Sale')
         ->view('email.subscribers_email')
-        ->with('details', $this->details);            
+        ->with('trackingUrl', $trackingUrl);           
     }
 }

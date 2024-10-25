@@ -17,13 +17,11 @@ class SendEmailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $user;
-    protected $details;
     protected $batchId;
 
-    public function __construct($user, $details, $batchId)
+    public function __construct($user, $batchId)
     {
         $this->user = $user;
-        $this->details = $details;
         $this->batchId = $batchId;
     }
 
@@ -31,7 +29,7 @@ class SendEmailJob implements ShouldQueue
     {
         try {
             // Attempt to send email
-            Mail::mailer('no_reply')->to($this->user->email)->send(new SubscribersNotificationMa($this->details));
+            Mail::mailer('no_reply')->to($this->user->email)->send(new SubscribersNotificationMa($this->user));
 
             // Update successful email count
             EmailBatch::where('id', $this->batchId)->increment('successful_emails');

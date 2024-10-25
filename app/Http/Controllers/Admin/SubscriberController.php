@@ -56,7 +56,7 @@ class SubscriberController extends Controller
 
     public function sendEmail(Request $request)
     {
-        $details = $request->only('body');
+       
         $userLimit = $request->input('user_limit'); // Get number of users (e.g., 500)
         
         $users = Subscriber::where('status', null)
@@ -72,10 +72,21 @@ class SubscriberController extends Controller
         
     
         foreach ($users as $user) {
-            SendEmailJob::dispatch($user, $details, $batch->id);
+            SendEmailJob::dispatch($user, $batch->id);
         }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
+    }
+
+
+    public function trackEmailOpen($batchId,$userId)
+    {
+        DB::table('email_batches')->where('id', $batchId)->increment('seen_emails');
+
+        Subscriber::where('id',$userId)->update(['status' => 'seen']);
+
+
+        return response()->file(public_path('transparent.png'));
     }
 
 
