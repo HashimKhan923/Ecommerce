@@ -15,13 +15,14 @@ class SubscribersNotificationMa extends Mailable
 
     use Queueable, SerializesModels;
 
-    public $user;
+   
     public $batchId;
+    public $userId;
 
-    public function __construct($user,$batchId)
+    public function __construct($batchId, $userId)
     {
-        $this->user = $user;
         $this->batchId = $batchId;
+        $this->userId = $userId;
     }
 
     public function build()
