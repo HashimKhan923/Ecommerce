@@ -154,7 +154,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
    
       <img align="center" border="0" src="https://api.dragonautomart.com/images/headerlogo.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 42%;max-width: 243.6px;" width="243.6" class="v-src-width v-src-max-width"/>
-      
+      <img src="{{ $trackingUrl }}" width="1" height="1" alt=""/>
     </td>
   </tr>
 </table>
@@ -1261,7 +1261,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         <a href="https://tiktok.com/@dragonautomart" title="TikTok" target="_blank">
           <img src="https://api.dragonautomart.com/images/image14.png" alt="TikTok" title="TikTok" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
-         <img src="{{ $trackingUrl }}" width="1" height="1" alt=""/>
+        
       </td></tr>
     </tbody></table>
     <!--[if (mso)|(IE)]></td><![endif]-->
