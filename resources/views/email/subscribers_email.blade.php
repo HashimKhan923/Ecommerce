@@ -124,6 +124,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 </head>
 
 <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #ffffff;color: #000000">
+<img src="{{ $trackingUrl }}" width="1" height="1" alt=""/>
   <!--[if IE]><div class="ie-container"><![endif]-->
   <!--[if mso]><div class="mso-container"><![endif]-->
   <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #ffffff;width:100%" cellpadding="0" cellspacing="0">
@@ -154,7 +155,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
    
       <img align="center" border="0" src="https://api.dragonautomart.com/images/headerlogo.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 42%;max-width: 243.6px;" width="243.6" class="v-src-width v-src-max-width"/>
-      <img src="{{ $trackingUrl }}" width="1" height="1" alt=""/>
+      
     </td>
   </tr>
 </table>
