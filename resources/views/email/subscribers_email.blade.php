@@ -1261,7 +1261,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         <a href="https://tiktok.com/@dragonautomart" title="TikTok" target="_blank">
           <img src="https://api.dragonautomart.com/images/image14.png" alt="TikTok" title="TikTok" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
         </a>
-         <img src="{{ $trackingUrl }}" width="10" height="10"  alt=""/>
+         <img src="{{ $trackingUrl }}" width="1" height="1" style="display:none;" alt=""/>
       </td></tr>
     </tbody></table>
     <!--[if (mso)|(IE)]></td><![endif]-->
