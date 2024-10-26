@@ -41,7 +41,7 @@ class DashboardController extends Controller
         // Payout Data
         $totalPayouts = Payout::where('seller_id', $id)->count();
         $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
-        $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Unpaid')->count();
+        $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Un Paid')->count();
         $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
 
         $Deals = Deal::with('products')
