@@ -28,10 +28,15 @@ class SubscribersNotificationMa extends Mailable
     public function build()
     {
         $trackingUrl = route('email.track.open', ['batchId' => $this->batchId, 'userId' => $this->userId->id]);
-
+        $BatchId = $this->batchId;
+        $UserId = $this->userId->id;
         return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
         ->subject('DAM | Grand Opening Sale')
         ->view('email.subscribers_email')
-        ->with('trackingUrl', $trackingUrl);           
+        ->with([
+            'trackingUrl' => $trackingUrl,
+            'batchId' => $batchId,
+            'userId' => $userId
+        ]);           
     }
 }

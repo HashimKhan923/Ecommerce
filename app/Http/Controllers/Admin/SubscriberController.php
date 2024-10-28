@@ -79,14 +79,32 @@ class SubscriberController extends Controller
     }
 
 
-    public function trackEmailOpen($batchId,$userId)
+    public function trackEmailOpen($batchId, $userId)
     {
-        DB::table('email_batches')->where('id', $batchId)->increment('seen_emails');
-
-        Subscriber::where('id',$userId)->update(['status' => 'seen']);
-
-
+        $check = Subscriber::where('id', $userId)->where('status', '!=', 'seen')->exists();
+        if ($check) {
+            Subscriber::where('id', $userId)->update(['status' => 'seen']);
+            
+            DB::table('email_batches')->where('id', $batchId)->increment('seen_emails');
+        }
+    
         return response()->file(public_path('transparent.png'));
+    }
+
+    public function trackVisitor($url,$batchId,$userId)
+    {
+        $decodedUrl = urldecode($url);
+        $completeUrl = 'https://dragonautomart.com/' . $decodedUrl;
+
+
+        $check = Subscriber::where('id', $userId)->where('status', '!=', 'visit')->exists();
+        if ($check) {
+            Subscriber::where('id', $userId)->update(['status' => 'visit']);
+            
+            DB::table('email_batches')->where('id', $batchId)->increment('visitors');
+        }
+
+        return redirect($completeUrl);
     }
 
 

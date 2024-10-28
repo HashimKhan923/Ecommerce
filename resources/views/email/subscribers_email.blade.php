@@ -194,11 +194,16 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Raleway',sans-serif;" align="left">
         
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
+@php
+    $url = '';
+@endphp
   <tr>
     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      <a href="https://dragonautomart.com" target="_blank">
+      <a href="https://api.dragonautomart.com/email/visitor/{{$url}}/{{$batchId}}/{{$userId}}" target="_blank">
       <img align="center" border="0" src="https://api.dragonautomart.com/images/finalbanner.jpeg" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600" class="v-src-width v-src-max-width"/>
       </a>
+
+      
     </td>
   </tr>
 </table>
@@ -309,10 +314,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/subcategory/Headlights/5" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/subcategory/Headlights/5" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="subcategory/Headlights/5" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/{{ urlencode('subcategory/Headlights/5') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -371,10 +378,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/subcategory/Tail%20Lights/4" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/subcategory/Tail%20Lights/4" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="subcategory/Tail%20Lights/4" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/{{ urlencode('subcategory/Tail%20Lights/4') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -433,10 +442,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/subcategory/Fog%20Lights/7" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/subcategory/Fog%20Lights/7" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="subcategory/Fog%20Lights/7" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/{{ urlencode('subcategory/Fog%20Lights/7') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -546,10 +557,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/make/Toyota/1" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/make/Toyota/1" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="make/Toyota/1" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/{{ urlencode('make/Toyota/1') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -608,10 +621,11 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/make/Honda/3" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/make/Honda/3" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="make/Honda/3" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/{{ urlencode('make/Honda/3') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -670,10 +684,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/make/Ford/7" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/make/Ford/7" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="make/Ford/7" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/{{ urlencode('make/Ford/7') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -806,10 +822,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="left">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/searchresults/ford%20headlight" style="height:37px; v-text-anchor:middle; width:159px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/searchresults/ford%20headlight" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:59%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-width: 0px; border-top-style: solid; border-top-color: #CCC; border-left-width: 0px; border-left-style: solid; border-left-color: #CCC; border-right-width: 0px; border-right-style: solid; border-right-color: #CCC; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #CCC;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="searchresults/ford%20headlight" style="height:37px; v-text-anchor:middle; width:159px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/searchresults/{{ urlencode('searchresults/ford%20headlight') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:59%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-width: 0px; border-top-style: solid; border-top-color: #CCC; border-left-width: 0px; border-left-style: solid; border-left-color: #CCC; border-right-width: 0px; border-right-style: solid; border-right-color: #CCC; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #CCC;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
+
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -876,8 +894,8 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="left">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/searchresults/toyota%20camry%20tail%20light" style="height:37px; v-text-anchor:middle; width:159px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/searchresults/toyota%20camry%20tail%20light" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:59%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-width: 0px; border-top-style: solid; border-top-color: #CCC; border-left-width: 0px; border-left-style: solid; border-left-color: #CCC; border-right-width: 0px; border-right-style: solid; border-right-color: #CCC; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #CCC;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="searchresults/toyota%20camry%20tail%20light" style="height:37px; v-text-anchor:middle; width:159px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/searchresults/toyota%20camry%20tail%20light" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:59%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-width: 0px; border-top-style: solid; border-top-color: #CCC; border-left-width: 0px; border-left-style: solid; border-left-color: #CCC; border-right-width: 0px; border-right-style: solid; border-right-color: #CCC; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #CCC;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
     </a>
     <!--[if mso]></center></v:roundrect><![endif]-->
@@ -1018,10 +1036,11 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/493" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/searchresults/honda%20accord%20tail%20lights" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="product/493" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/searchresults/{{ urlencode('searchresults/honda%20accord%20tail%20lights') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
     </a>
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -1080,10 +1099,11 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/5467" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="⁠https://dragonautomart.com/searchresults/wheel" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="product/5467" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/searchresults/{{ urlencode('⁠searchresults/wheel') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
     </a>
+    
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
 
@@ -1142,8 +1162,8 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/2592" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="https://dragonautomart.com/searchresults/vinyl%20wrap" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="product/2592" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="https://api.dragonautomart.com/email/visitor/searchresults/{{ urlencode('vinyl%20wrap') }}/{{$batchId}}/{{$userId}}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
     </a>
     <!--[if mso]></center></v:roundrect><![endif]-->
