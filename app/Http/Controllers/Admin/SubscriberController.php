@@ -81,12 +81,12 @@ class SubscriberController extends Controller
 
     public function trackEmailOpen($batchId, $userId)
     {
-        $check = Subscriber::where('id', $userId)->where('status', '!=', 'seen')->exists();
-        if ($check) {
+        // $check = Subscriber::where('id', $userId)->where('status', '!=', 'seen')->exists();
+        // if ($check) {
             Subscriber::where('id', $userId)->update(['status' => 'seen']);
             
             DB::table('email_batches')->where('id', $batchId)->increment('seen_emails');
-        }
+        // }
     
         return response()->file(public_path('transparent.png'));
     }
