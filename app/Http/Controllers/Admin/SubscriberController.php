@@ -93,7 +93,7 @@ class SubscriberController extends Controller
 
     public function trackVisitor($url,$batchId,$userId)
     {
-        return $url;
+       
         $decodedUrl = urldecode($url);
         $completeUrl = 'https://dragonautomart.com/' . $decodedUrl;
 
