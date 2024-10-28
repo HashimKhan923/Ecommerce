@@ -35,8 +35,8 @@ class SubscribersNotificationMa extends Mailable
         ->view('email.subscribers_email')
         ->with([
             'trackingUrl' => $trackingUrl,
-            'batchId' => $batchId,
-            'userId' => $userId
+            'batchId' => $BatchId,
+            'userId' => $UserId
         ]);           
     }
 }
