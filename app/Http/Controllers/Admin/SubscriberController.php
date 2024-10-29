@@ -91,11 +91,13 @@ class SubscriberController extends Controller
         return response()->file(public_path('transparent.png'));
     }
 
-    public function trackVisitor($url,$batchId,$userId)
+    public function trackVisitor(Request $request)
     {
+
+        $url = $request->query('url'); 
+        $batchId = $request->query('batch_id');
+        $userId = $request->query('user_id');
        
-        $decodedUrl = urldecode($url);
-        $completeUrl = 'https://dragonautomart.com/' . $decodedUrl;
 
         
 
@@ -107,7 +109,7 @@ class SubscriberController extends Controller
             DB::table('email_batches')->where('id', $batchId)->increment('visitors');
         }
 
-        return redirect($completeUrl);
+        return redirect()->to($url);
     }
 
 
