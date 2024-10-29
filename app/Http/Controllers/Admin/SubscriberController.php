@@ -94,7 +94,7 @@ class SubscriberController extends Controller
     public function trackVisitor(Request $request)
     {
 
-        $url = $request->query('url'); 
+        $url = urldecode($request->query('url'));
         $batchId = $request->query('batch_id');
         $userId = $request->query('user_id');
        
@@ -109,7 +109,7 @@ class SubscriberController extends Controller
             DB::table('email_batches')->where('id', $batchId)->increment('visitors');
         }
 
-        return redirect()->to($url);
+        return redirect()->away($url);;
     }
 
 
