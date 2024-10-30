@@ -114,9 +114,9 @@ class OrderController extends Controller
                 
                 $firstCommissionRate = 0.04;
                 $secondCommissionRate = 0; 
-                if ($seller->created_at < Carbon::now()->subMonths(3)) {
-                    $secondCommissionRate = 0.05;
-                }
+                // if ($seller->created_at < Carbon::now()->subMonths(3)) {
+                //     $secondCommissionRate = 0.05;
+                // }
                 
                 $percentageDeduction = $orderAmountInCents * $firstCommissionRate;
                 $fixedDeduction = 40;
