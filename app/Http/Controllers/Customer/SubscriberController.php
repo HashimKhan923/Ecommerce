@@ -25,17 +25,30 @@ class SubscriberController extends Controller
             $new->date = Carbon::now('Asia/Karachi');
             $new->save();
 
-            Mail::send(
+            // Mail::send(
+            //     'email.subscriber',
+            //     [
+                    
+            //     ],
+            //     function ($message) use ($request) { 
+            //         $message->from('support@dragonautomart.com','Dragon Auto Mart');
+            //         $message->to($request->email);
+            //         $message->subject('Subscription Confirmation');
+            //     }
+            // );
+
+            Mail::mailer('no_reply')->send(
                 'email.subscriber',
                 [
                     
                 ],
                 function ($message) use ($request) { 
-                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                    $message->from('no-reply@dragonautomart.com','Dragon Auto Mart');
                     $message->to($request->email);
                     $message->subject('Subscription Confirmation');
                 }
             );
+
     
             $response = ['status'=>true,"message" => "You have Subscribe Successfully!"];
             return response($response, 200);
