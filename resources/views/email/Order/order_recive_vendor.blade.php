@@ -84,6 +84,10 @@
                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
                         Quantity
                     </td>
+                    <td width="20%" align="left" bgcolor="#eeeeee"
+                        style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
+                        Varient
+                    </td>
 
                     <td width="20%" align="left" bgcolor="#eeeeee"
                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
@@ -117,6 +121,12 @@
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                             {{ $orderProduct['quantity'] }}
                         </td>
+                        <td align="center"
+                                style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
+                                @if(isset($orderProduct['product_varient']))
+                                {{ $orderProduct['product_varient'] }}
+                                @endif
+                            </td>
                         <td width="20%" align="center"
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                             ${{ $price }}
