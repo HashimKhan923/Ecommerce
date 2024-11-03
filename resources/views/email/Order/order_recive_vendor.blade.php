@@ -86,7 +86,7 @@
                     </td>
                     <td width="20%" align="left" bgcolor="#eeeeee"
                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                        Varient
+                        Variant
                     </td>
 
                     <td width="20%" align="left" bgcolor="#eeeeee"
