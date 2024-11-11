@@ -76,21 +76,21 @@ class OrderController extends Controller
     
     
     
-                Mail::send(
-                    'email.Order.order_completed',
-                    [
-                        'buyer_name' => $user->name,
-                        'shop' => $shop,
-                        'order'=> $order,
-                        'TrackingOrder' => $TrackingOrder,
-                        'date' => Carbon::today()->toDateString()
-                    ],
-                    function ($message) use ($user) { 
-                        $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                        $message->to($user->email);
-                        $message->subject('Order Confirmation');
-                    }
-                );
+                // Mail::send(
+                //     'email.Order.order_completed',
+                //     [
+                //         'buyer_name' => $user->name,
+                //         'shop' => $shop,
+                //         'order'=> $order,
+                //         'TrackingOrder' => $TrackingOrder,
+                //         'date' => Carbon::today()->toDateString()
+                //     ],
+                //     function ($message) use ($user) { 
+                //         $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                //         $message->to($user->email);
+                //         $message->subject('Order Confirmation');
+                //     }
+                // );
     
                 OrderTimeline::create([
                     'seller_id' => $seller->id,
