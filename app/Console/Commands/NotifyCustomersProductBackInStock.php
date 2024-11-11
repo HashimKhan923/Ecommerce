@@ -27,21 +27,40 @@ class NotifyCustomersProductBackInStock extends Command
      */
     public function handle()
     {
-
-        $datas = StockNotifyMe::where('status','pending')->get();
-
-        foreach($datas as $data)
-        {
-            Product::where('id',$data->product_id)
-                ->whereHas('stock', function ($query) {
-                $query->where('stock', '>', 0);
-            })
-            ->orWhereHas('product_varient', function ($query,$data) {
-                $query->where('id',$data->variant_id)
-                ->where('stock', '>', 0);
-            });
+        $datas = StockNotifyMe::where('status', 'pending')->get();
+    
+        foreach ($datas as $data) {
+            if ($data->variant_id) {
+                // Case 1: Notify when the variant is back in stock
+                $variantAvailable = Product::where('id', $data->product_id)
+                    ->whereHas('product_varient', function ($query) use ($data) {
+                        $query->where('id', $data->variant_id)
+                              ->where('stock', '>', 0);
+                    })->exists();
+    
+                if ($variantAvailable) {
+                    // Send notification for the variant back in stock
+                    $this->notifyCustomer($data);
+                    // Mark as notified
+                    $data->status = 'notified';
+                    $data->save();
+                }
+    
+            } else {
+                // Case 2: Notify when the main product is back in stock
+                $productAvailable = Product::where('id', $data->product_id)
+                    ->where('stock', '>', 0)
+                    ->exists();
+    
+                if ($productAvailable) {
+                    // Send notification for the product back in stock
+                    $this->notifyCustomer($data);
+                    // Mark as notified
+                    $data->status = 'notified';
+                    $data->save();
+                }
+            }
         }
-
-        
     }
+    
 }

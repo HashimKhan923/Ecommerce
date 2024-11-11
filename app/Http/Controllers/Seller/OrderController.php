@@ -134,14 +134,14 @@ class OrderController extends Controller
                 // $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
                 // ->where('payment_status', 'unpaid')
                 // ->first();
-                if ($ProductListingPayment) {
-                    $ProductListingPayment->payment_status = 'paid';
-                    $ProductListingPayment->save();
+                // if ($ProductListingPayment) {
+                //     $ProductListingPayment->payment_status = 'paid';
+                //     $ProductListingPayment->save();
     
-                    $ListingPayment = $ProductListingPayment->listing_amount;
+                //     $ListingPayment = $ProductListingPayment->listing_amount;
                 
-                $NewPayout->product_listing_id = $ProductListingPayment->id;
-                }
+                // $NewPayout->product_listing_id = $ProductListingPayment->id;
+                // }
                 $NewPayout->platform_fee = $totalDeduction;
                 $NewPayout->commission = $firstCommissionRate + $secondCommissionRate;
                 $nn =  $order->shipping_amount + $featuredAmount + $ListingPayment;
@@ -202,17 +202,17 @@ class OrderController extends Controller
                     ]);
                 }
     
-                $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
-                ->where('payment_status', 'paid')
-                ->latest()
-                ->first();
+                // $ProductListingPayment = ProductListingPayment::where('seller_id', $order->sellers_id)
+                // ->where('payment_status', 'paid')
+                // ->latest()
+                // ->first();
     
-                if ($ProductListingPayment) {
+                // if ($ProductListingPayment) {
                     
-                    $ProductListingPayment->update([
-                        'payment_status' => 'unpaid'
-                    ]);
-                }
+                //     $ProductListingPayment->update([
+                //         'payment_status' => 'unpaid'
+                //     ]);
+                // }
     
                 OrderTimeline::create([
                     'seller_id' => $seller->id,
