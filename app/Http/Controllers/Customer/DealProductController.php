@@ -17,9 +17,11 @@ class DealProductController extends Controller
             },
             'discount','deal','tax', 'shipping',
             'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        ])->where('published', 1)
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('deal_id',4)
         ->take(24)->get();
@@ -36,9 +38,11 @@ class DealProductController extends Controller
             },
             'discount','deal','tax', 'shipping',
             'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        ])->where('published', 1)
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('deal_id',4)
         ->skip($length)

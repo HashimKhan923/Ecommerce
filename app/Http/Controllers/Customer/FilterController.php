@@ -27,9 +27,9 @@ $data = Product::with([
 ->whereHas('shop', function ($query) {
     $query->where('status', 1);
 })
-->whereHas('stock', function ($query) {
-    $query->where('stock', '>', 0);
-})
+// ->whereHas('stock', function ($query) {
+//     $query->where('stock', '>', 0);
+// })
 ->where(function ($query) use ($keywords) {
     foreach ($keywords as $keyword) {
         // Match keyword in multiple fields (Product name, SKU, tags, shop name, brand, model, etc.)
@@ -217,10 +217,10 @@ $data = Product::with([
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })
-        ->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
         });
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // });
 
 
     
@@ -280,9 +280,11 @@ $data = Product::with([
     
         $data = $query->with('user','category','brand','shop','model','stock','product_gallery','product_varient','discount','tax','shipping','deal.deal_product','wholesale')->where('published',1)->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->orderByRaw('featured DESC')->get();
+        })
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->orderByRaw('featured DESC')->get();
     
         return response()->json(['data'=>$data]);
     }

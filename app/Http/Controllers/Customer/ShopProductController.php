@@ -46,9 +46,9 @@ class ShopProductController extends Controller
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
             ->where('shop_id', $shop_id)
-            ->whereHas('stock', function ($query) {
-                $query->where('stock', '>', 0);
-            })
+            // ->whereHas('stock', function ($query) {
+            //     $query->where('stock', '>', 0);
+            // })
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
             });
@@ -81,9 +81,9 @@ class ShopProductController extends Controller
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
             ->where('shop_id', $shop_id)
-            ->whereHas('stock', function ($query) {
-                $query->where('stock', '>', 0);
-            })
+            // ->whereHas('stock', function ($query) {
+            //     $query->where('stock', '>', 0);
+            // })
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
             });

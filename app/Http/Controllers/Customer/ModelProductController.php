@@ -19,9 +19,10 @@ class ModelProductController extends Controller
         ])->where('published', 1)
         ->where('model_id', $model_id)
         ->orderByRaw('featured DESC')
-        ->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         });
     

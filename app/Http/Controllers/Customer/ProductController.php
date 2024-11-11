@@ -24,9 +24,9 @@ class ProductController extends Controller
             'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])
         ->where('published', 1)
-        ->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })

@@ -18,9 +18,11 @@ class CategoryProductController extends Controller
             'wholesale', 'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)
         ->where('category_id', $category_id)
-        ->orderByRaw('featured DESC')->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        ->orderByRaw('featured DESC')
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         });
     

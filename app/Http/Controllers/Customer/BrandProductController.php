@@ -18,9 +18,11 @@ class BrandProductController extends Controller
             'wholesale', 'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)
         ->where('brand_id', $brand_id)
-        ->orderBy('id', 'desc')->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        ->orderBy('id', 'desc')
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         });
     

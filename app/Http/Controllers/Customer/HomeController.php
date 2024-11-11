@@ -29,9 +29,10 @@ class HomeController extends Controller
             },
             'discount','deal', 'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)
-          ->whereHas('stock', function ($query) {
-              $query->where('stock', '>', 0);
-          })->whereHas('shop', function ($query) {
+        //   ->whereHas('stock', function ($query) {
+        //       $query->where('stock', '>', 0);
+        //   })
+          ->whereHas('shop', function ($query) {
               $query->where('status', 1);
           })->where('featured', 1)
           ->orderByRaw('RAND()') 
@@ -45,9 +46,11 @@ class HomeController extends Controller
             },
             'discount','deal',
             'shop', 'reviews.user', 'product_varient'
-        ])->where('published', 1)->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })->whereHas('shop', function ($query) {
+        ])->where('published', 1)
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('deal_id',4)
         ->orderByRaw('RAND()') 
@@ -65,9 +68,9 @@ class HomeController extends Controller
         ->where('published', 1)
         // ->whereDate('created_at', '>=', now()->subMonth()) // Filter products from the last month
         ->orderBy('created_at', 'desc') // Order by creation date in ascending order
-        ->whereHas('stock', function ($query) {
-            $query->where('stock', '>', 0);
-        })
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
