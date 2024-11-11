@@ -1154,21 +1154,30 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
-                                                        /// SellerContact \\\
+                                                    /// SellerContact \\\
 
-                Route::group(['prefix' => 'product/query/'], function() {
-                    Route::controller(App\Http\Controllers\Customer\SellerContactController::class)->group(function () {
-                        Route::post('send','send');
-                    });
+            Route::group(['prefix' => 'product/query/'], function() {
+                Route::controller(App\Http\Controllers\Customer\SellerContactController::class)->group(function () {
+                    Route::post('send','send');
                 });
-                
-                                                        /// Website FeedBack \\\
+            });
+            
+                                                    /// Website FeedBack \\\
 
-                Route::group(['prefix' => 'website_feedback'], function() {
-                    Route::controller(App\Http\Controllers\Customer\WebsiteFeedBackController::class)->group(function () {
-                        Route::post('send','create');
-                    });
-                }); 
+            Route::group(['prefix' => 'website_feedback'], function() {
+                Route::controller(App\Http\Controllers\Customer\WebsiteFeedBackController::class)->group(function () {
+                    Route::post('send','create');
+                });
+            }); 
+
+
+                                                                    /// Stock NotifyMe \\\
+
+            Route::group(['prefix' => 'notify_me'], function() {
+                Route::controller(App\Http\Controllers\Customer\StockNotifyMeController::class)->group(function () {
+                    Route::post('create','create');
+                });
+            }); 
 
 
                                                              // FedEx
