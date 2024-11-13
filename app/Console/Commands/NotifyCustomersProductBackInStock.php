@@ -62,5 +62,22 @@ class NotifyCustomersProductBackInStock extends Command
             }
         }
     }
+
+
+
+    protected function notifyCustomer($data)
+    {
+        // Example of sending an email notification to the customer
+        $product = Product::find($data->product_id);
+        $variantName = $data->variant_id ? $product->product_varient->find($data->variant_id)->name : null;
+        
+        // Use the ProductBackInStock Mailable to send an email
+        Mail::to($data->email)->send(new ProductBackInStock(
+            $data->email,
+            $product->name,
+            $variantName,
+            'https://dragonautomart.com/product/'.$product->id
+        ));
+    }
     
 }
