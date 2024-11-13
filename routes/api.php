@@ -683,6 +683,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
                     Route::post('tags','update_tags');
+                    Route::post('update_buyer_information','update_buyer_information');
                     Route::get('delete/{id}','delete');
                     Route::get('view/{order_id}','order_view');
                     Route::post('multi_delete','multi_delete');

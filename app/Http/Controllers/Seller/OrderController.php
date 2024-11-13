@@ -262,6 +262,14 @@ class OrderController extends Controller
  
     }
 
+    public function update_buyer_information(Request $request)
+    {
+        Order::where('id',$request->order_id)->update(['information'=>$request->information]);
+
+        $response = ['status'=>true,"message" => "updated successfully!"];
+        return response($response, 200);
+    }
+
     public function tracking_update(Request $request)
     {
         OrderTracking::where('order_id',$request->order_id)->update([
