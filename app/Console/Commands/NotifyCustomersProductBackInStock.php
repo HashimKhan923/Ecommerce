@@ -74,6 +74,7 @@ class NotifyCustomersProductBackInStock extends Command
         // Use the ProductBackInStock Mailable to send an email
         Mail::to($data->email)->send(new ProductBackInStock(
             $data->email,
+            $product->product_single_gallery->image,
             $product->name,
             $variantName,
             'https://dragonautomart.com/product/'.$product->id

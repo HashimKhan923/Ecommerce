@@ -14,13 +14,15 @@ class ProductBackInStock extends Mailable
     use Queueable, SerializesModels;
 
     public $customerEmail;
+    public $productImage;
     public $productName;
     public $variantName;
     public $productUrl;
 
-    public function __construct($customerEmail, $productName, $variantName = null, $productUrl)
+    public function __construct($customerEmail, $productImage, $productName, $variantName = null, $productUrl)
     {
         $this->customerEmail = $customerEmail;
+        $this->productImage = $productImage;
         $this->productName = $productName;
         $this->variantName = $variantName;
         $this->productUrl = $productUrl;
@@ -32,6 +34,7 @@ class ProductBackInStock extends Mailable
                     ->subject('Product Back in Stock')
                     ->with([
                         'customerEmail' => $this->customerEmail,
+                        'productImage' => $this->productImage,
                         'productName' => $this->productName,
                         'variantName' => $this->variantName,
                         'productUrl' => $this->productUrl,
