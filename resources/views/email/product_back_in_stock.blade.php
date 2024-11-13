@@ -70,7 +70,7 @@
 
         <p>Don’t miss out! Click the link below to view the product and make your purchase while it's still available:</p>
         
-        <a href="{{ $productUrl }}" class="btn">View Product</a>
+        <a href="{{ $productUrl }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">View Product</a>
 
         <p>If you have any questions, feel free to reach out to our support team at support@dragonautomart.com.</p>
 

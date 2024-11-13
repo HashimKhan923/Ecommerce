@@ -61,7 +61,7 @@
         <p>Your Order Tracking Number is <b><strong>{{ $TrackingOrder->tracking_number }}</strong></b> You can track
             your package at any time using the button below.</p>
         <br>
-        <a href="{{ $TrackingOrder->courier_link }}" class="btn btn-info">Track My Order</a>
+        <a href="{{ $TrackingOrder->courier_link }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Track My Order</a>
         <br>
         <p>Thank you for choosing Dragon Auto Mart!</p>
         <br>
