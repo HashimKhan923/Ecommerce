@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Product;
 use App\Models\StockNotifyMe;
+use Mail;
 
 class NotifyCustomersProductBackInStock extends Command
 {

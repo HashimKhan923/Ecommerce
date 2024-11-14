@@ -74,7 +74,7 @@ class Handler extends ExceptionHandler
                 ],
                 function ($message) {
                     $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to('support@dragonautomart.com'); // Send to support email
+                    $message->to('khanhash1994@gmail.com'); // Send to support email
                     $message->subject('Dragon Exception');
                 }
             );
