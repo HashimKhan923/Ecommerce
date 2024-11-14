@@ -49,7 +49,9 @@ class NotifyCustomersProductBackInStock extends Command
             } else {
                 // Case 2: Notify when the main product is back in stock
                 $productAvailable = Product::where('id', $data->product_id)
-                    ->where('stock', '>', 0)
+                    ->whereHas('stock', function ($query) {
+                    $query->where('stock', '>', 0);
+                    })
                     ->exists();
     
                 if ($productAvailable) {
