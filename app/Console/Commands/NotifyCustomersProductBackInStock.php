@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Product;
 use App\Models\StockNotifyMe;
 use Mail;
+use App\Mail\ProductBackInStock;
 
 class NotifyCustomersProductBackInStock extends Command
 {
