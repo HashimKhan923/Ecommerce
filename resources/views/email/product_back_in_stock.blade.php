@@ -58,7 +58,7 @@
 
         <div class="content">
         <h2>Good News!</h2>
-        <p>Dear {{ $customerName }},</p>
+    
         <p>We are excited to inform you that the product you were interested in is now back in stock:</p>
         <br>
         <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $productImage }}"
