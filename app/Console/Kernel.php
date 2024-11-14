@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('deals:update-status')->everyMinute();
         $schedule->command('coupon:update')->hourly();
         $schedule->command('payout:update')->daily();
-        $schedule->command('notify:back-in-stock')->everyMinute();
+        // $schedule->command('notify:back-in-stock')->everyMinute();
     }
 
 
