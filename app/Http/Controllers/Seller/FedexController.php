@@ -94,7 +94,8 @@ class FedexController extends Controller
                 "recipient" => [
                     "address" => [
                         "postalCode" => $request->recipient_postalCode, 
-                        "countryCode" => $request->recipient_countryCode
+                        "countryCode" => $request->recipient_countryCode,
+                        "residential"=> $request->is_residential
                     ]
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
