@@ -29,7 +29,7 @@ class CartController extends Controller
         $new->varient_id = $request->varient_id;
         $new->quantity = $request->quantity;
         $new->price = $request->price;
-        $new->shipping = $request->shipping;
+        $new->shipping_id = $request->shipping_id;
         $new->save();
 
         return response()->json(['message'=>'add to cart successfully!',200]);
