@@ -21,6 +21,6 @@ class Cart extends Model
 
     public function shipping()
     {
-        return $this->hasOne(Shipping::class,'shipping_id','id');
+        return $this->belongsTo(Shipping::class,'shipping_id','id');
     }
 }
