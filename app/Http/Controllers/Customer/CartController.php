@@ -10,7 +10,7 @@ class CartController extends Controller
 {
     public function index($id)
     {
-        $data = Cart::with('product.product_gallery','varient','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax')->where('customer_id',$id)->get();
+        $data = Cart::with('product.product_single_gallery','product.product_varient','product.shop','product.discount')->where('customer_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }

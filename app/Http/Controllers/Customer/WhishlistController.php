@@ -10,7 +10,7 @@ class WhishlistController extends Controller
 {
     public function index($id)
     {
-        $data = Whishlist::with('product.product_gallery','product.category','product.brand','product.model','product.stock','product.product_varient','product.reviews.user','product.tax','product.product_gallery')->where('customer_id',$id)->get();
+        $data = Whishlist::with('product.product_single_gallery','product.product_varient','product.shop','product.discount')->where('customer_id',$id)->get();
 
         return response()->json(["data"=>$data]);
     }
@@ -28,7 +28,6 @@ class WhishlistController extends Controller
         {
             $new = new Whishlist();
             $new->customer_id = $request->customer_id;
-     
             $new->product_id = $request->product_id;
             $new->save();
 
