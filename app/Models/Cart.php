@@ -18,4 +18,9 @@ class Cart extends Model
     {
         return $this->belongsTo(ProductVarient::class,'varient_id','id');
     }
+
+    public function shipping()
+    {
+        return $this->hasOne(Shipping::class,'shipping_id','id');
+    }
 }
