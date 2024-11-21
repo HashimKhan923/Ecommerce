@@ -15,19 +15,19 @@ class EmailController extends Controller
     {
         $Order = Order::with('order_detail.products.product_gallery')->where('id',$request->order_id)->first();
         $Shop = Shop::where('id',$request->shop_id)->first();
-        $Customer = User::where('id',$request->customer_id)->first();
+        // $Customer = User::where('id',$request->customer_id)->first();
 
         Mail::send(
             'email.Order.order_seller_to_customer',
             [
-                'buyer_name' => $Customer->name,
+                'buyer_name' => $request->customer_name,
                 'shop' => $Shop,
                 'order'=> $Order,
                 'body' => $request->message
             ],
-            function ($message) use ($Customer, $request) { 
+            function ($message) use ($request) { 
                 $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                $message->to($Customer->email);
+                $message->to($request->customer_email);
                 if($request->seller_email)
                 {
                     $message->cc($request->seller_email);
