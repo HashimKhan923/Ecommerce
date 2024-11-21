@@ -241,9 +241,9 @@ class OrderController extends Controller
                     'TotalShippingAmount' => $TotalShippingAmount,
                     'request' => $request
                 ],
-                function ($message) use ($user) {
+                function ($message) use ($user,$request) {
                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                    $message->to($user->email);
+                    $message->to($request->information[7]);
                     $message->subject('Order Confirmation');
                 }
             );

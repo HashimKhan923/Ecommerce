@@ -68,9 +68,9 @@ class RefundController extends Controller
                 'order'=> $Order,
                 'body'=> $request->reason
             ],
-            function ($message) use ($Customer) { 
+            function ($message) use ($Customer,$Order) { 
                 $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                $message->to($Customer->email);
+                $message->to($Order->information[7]);
                 $message->subject('Order Cancelled');
             }
         );
@@ -147,9 +147,9 @@ class RefundController extends Controller
                 'order' => $Order,
                 // 'last_name' => $query->last_name
             ],
-            function ($message) use ($user) {
+            function ($message) use ($user,$Order) {
                 $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                $message->to($user->email);
+                $message->to($Order->information[7]);
                 $message->subject('Order Refund');
             }
         );
@@ -225,9 +225,9 @@ class RefundController extends Controller
                     'buyer_name' => $user->name,
                     'order' => $Order,
                 ],
-                function ($message) use ($user) {
+                function ($message) use ($user,$Order) {
                     $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to($user->email);
+                    $message->to($Order->information[7]);
                     $message->subject('Order Refund');
                 }
             );

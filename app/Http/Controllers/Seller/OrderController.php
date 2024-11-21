@@ -85,9 +85,9 @@ class OrderController extends Controller
                         'TrackingOrder' => $TrackingOrder,
                         'date' => Carbon::today()->toDateString()
                     ],
-                    function ($message) use ($user) { 
+                    function ($message) use ($user,$order) { 
                         $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                        $message->to($user->email);
+                        $message->to($order->information[7]);
                         $message->subject('Order Confirmation');
                     }
                 );
