@@ -21,6 +21,7 @@ class AddressController extends Controller
         $new->user_id = $request->user_id;
         $new->address1 = $request->address1;
         $new->address2 = $request->address2;
+        $new->phone_number = $request->phone_number;
         $new->city = $request->city;
         $new->state = $request->state;
         $new->postal_code = $request->postal_code;
@@ -36,6 +37,7 @@ class AddressController extends Controller
         $update = Address::where('id',$request->id)->first();
         $update->address1 = $request->address1;
         $update->address2 = $request->address2;
+        $update->phone_number = $request->phone_number;
         $update->city = $request->city;
         $update->state = $request->state;
         $update->postal_code = $request->postal_code;
