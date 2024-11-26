@@ -1045,6 +1045,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => 'order/'], function() {
         Route::controller(App\Http\Controllers\Customer\OrderController::class)->group(function () {
             Route::get('show/{id}','index');
+            Route::get('detail/{id}','index');
             Route::post('create','create');
         });
     });
