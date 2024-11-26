@@ -76,6 +76,7 @@ class ProductController extends Controller
         if ($searchValue != 0) {
             $query->where(function($subQuery) use ($searchValue) {
                 $subQuery->where('id', $searchValue)
+                        ->orWhere('name',$searchValue)
                          ->orWhere('name', 'LIKE', "%$searchValue%")
                          ->orWhere('sku', $searchValue);
             });
