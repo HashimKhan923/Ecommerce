@@ -14,7 +14,7 @@ class MyCustomerController extends Controller
       $query->where('seller_id', $seller_id);
         }, 'orders' => function ($query) use ($seller_id) {
             $query->where('sellers_id', $seller_id);
-        }])
+        },'orders.order_refund'])
         ->where('seller_id', $seller_id)
     ->get();
   
@@ -27,7 +27,7 @@ class MyCustomerController extends Controller
         $query->where('seller_id', $seller_id);
           }, 'orders' => function ($query) use ($seller_id) {
               $query->where('sellers_id', $seller_id);
-          }])
+          },'orders.order_refund'])
           ->where('id', $id)
       ->first();
     
