@@ -156,7 +156,7 @@ class RefundController extends Controller
 
         OrderTimeline::create([
             'order_id' => $change->order_id,
-            'time_line' => 'The amount ('.$request->amount.') has been refunded via Stripe'
+            'time_line' => 'The amount ($'.$request->amount.') has been refunded via Stripe'
         ]);
 
         $response = ['status'=>true,"message" => "Refund processed successfully!"];
