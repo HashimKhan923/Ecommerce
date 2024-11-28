@@ -10,7 +10,7 @@ class ProductVarient extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id', 'color', 'size', 'bolt_pattern', 'others', 
+        'custom_variant_id','product_id', 'color', 'size', 'bolt_pattern', 'others', 
         'price', 'discount_price', 'sku', 'stock', 'image'
     ];
 

@@ -338,7 +338,7 @@ class ProductController extends Controller
             foreach ($request->products as $productData) {
             
                 $new = Product::create([
-                    'id' => $productData['id'],
+                    'custom_id' => $productData['custom_id'],
                     'name' => $productData['name'] ?? null,
                     'added_by' => 'seller',
                     'user_id' => $productData['user_id'],
@@ -429,7 +429,7 @@ class ProductController extends Controller
                             // }
     
                             ProductVarient::create([
-                                'id'=> $item['variant_id'],
+                                'custom_variant_id'=> $item['custom_variant_id'],
                                 'product_id' => $new->id,
                                 'color' => $item['color'] ?? null,
                                 'size' => $item['size'] ?? null,
