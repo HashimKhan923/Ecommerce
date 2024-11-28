@@ -436,7 +436,7 @@ class ProductController extends Controller
                                 'bolt_pattern' => $item['bolt_pattern'] ?? null,
                                 'others' => $item['others'] ?? null,
                                 'price' => $item['varient_price'] ?? 0.0,
-                                'discount_price' => $item['varient_discount_price'] ?? 0.0,
+                                'discount_price' => $item['varient_discount_price'] ?? null,
                                 'sku' => $item['varient_sku'] ?? null,
                                 'stock' => $item['varient_stock'] ?? 0,
                                 'image' => $item['varient_image'] ?? null
@@ -448,7 +448,7 @@ class ProductController extends Controller
                     if (!empty($productData['discount'])) {
                         Discount::create([
                             'product_id' => $new->id,
-                            'discount' => $productData['discount'] ?? 0.0,
+                            'discount' => $productData['discount'] ?? null,
                             'discount_start_date' => $productData['discount_start_date'] ?? null,
                             'discount_end_date' => $productData['discount_end_date'] ?? null,
                             'discount_type' => $productData['discount_type'] ?? null
