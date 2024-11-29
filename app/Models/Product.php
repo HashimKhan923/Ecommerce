@@ -84,7 +84,7 @@ class Product extends Model
                         ->where('user_id', auth()->id());
         }
     
-        return $this->hasOne(Wishlist::class, 'product_id', 'id')->whereRaw('1 = 0');
+        return $this->hasOne(Whishlist::class, 'product_id', 'id')->whereRaw('1 = 0');
     
     }
 
