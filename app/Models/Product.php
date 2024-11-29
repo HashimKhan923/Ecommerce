@@ -81,7 +81,7 @@ class Product extends Model
     {
         if (auth()->check()) {
             return $this->hasOne(Whishlist::class, 'product_id', 'id')
-                        ->where('user_id', auth()->id());
+                        ->where('customer_id', auth()->id());
         }
     
         return $this->hasOne(Whishlist::class, 'product_id', 'id')->whereRaw('1 = 0');
