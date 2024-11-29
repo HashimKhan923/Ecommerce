@@ -12,7 +12,7 @@ class FeaturedProductController extends Controller
     public function index()
     {
         $FeaturedProducts = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
+            'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -33,7 +33,7 @@ class FeaturedProductController extends Controller
     public function load_more($length)
     {
         $FeaturedProducts = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
+            'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },

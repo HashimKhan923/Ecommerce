@@ -17,7 +17,7 @@ class ProductController extends Controller
     private function getProducts($length = 0, $limit = 24)
     {
         return Product::with([
-            'user', 'category', 'sub_category', 'brand', 'model', 'stock',
+            'user','wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -58,7 +58,7 @@ class ProductController extends Controller
     public function detail($id)
     {
         $data = Product::with([
-            'user',
+            'user','wishlistProduct',
             'category',
             'sub_category',
             'brand',

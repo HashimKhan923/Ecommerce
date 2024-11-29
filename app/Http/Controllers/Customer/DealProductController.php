@@ -32,7 +32,7 @@ class DealProductController extends Controller
     public function load_more($length)
     {
         $DealProducts = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
+            'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },

@@ -11,7 +11,7 @@ class ShopProductController extends Controller
     private function getProductRelations()
     {
         return [
-            'user',
+            'user','wishlistProduct',
             'category',
             'sub_category',
             'brand',

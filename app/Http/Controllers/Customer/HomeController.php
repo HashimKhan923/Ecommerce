@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function index()
     {
         $FeaturedProducts = Product::with([
-            'stock',
+            'stock','wishlistProduct',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -40,7 +40,7 @@ class HomeController extends Controller
           ->get();
     
         $DealProducts = Product::with([
-            'stock',
+            'stock','wishlistProduct',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
@@ -59,7 +59,7 @@ class HomeController extends Controller
 
 
         $NewArrivals = Product::with([
-           'stock',
+           'stock','wishlistProduct',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             },

@@ -79,8 +79,13 @@ class Product extends Model
 
     public function wishlistProduct()
     {
-        return $this->hasOne(Wishlist::class, 'product_id', 'id')
-                    ->where('user_id', auth()->id());
+        if (auth()->check()) {
+            return $this->hasOne(Wishlist::class, 'product_id', 'id')
+                        ->where('user_id', auth()->id());
+        }
+    
+        return $this->hasOne(Wishlist::class, 'product_id', 'id')->whereRaw('1 = 0');
+    
     }
 
     public function stock()

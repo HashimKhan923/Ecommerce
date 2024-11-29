@@ -11,7 +11,7 @@ class CategoryProductController extends Controller
     private function getProductsWithRelationships($category_id, $length = null)
     {
         $query = Product::with([
-            'user', 'category','sub_category','brand', 'model', 'stock',
+            'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             }, 'discount', 'tax', 'shipping', 'deal',
