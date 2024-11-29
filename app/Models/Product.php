@@ -77,6 +77,12 @@ class Product extends Model
         return $this->hasOne(ProductGallery::class,'product_id','id');
     }
 
+    public function wishlistProduct()
+    {
+        return $this->hasOne(Wishlist::class, 'product_id', 'id')
+                    ->where('user_id', auth()->id());
+    }
+
     public function stock()
     {
         return $this->hasOne(Stock::class,'product_id','id');
