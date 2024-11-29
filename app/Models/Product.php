@@ -80,7 +80,7 @@ class Product extends Model
     public function wishlistProduct()
     {
         if (auth()->check()) {
-            return $this->hasOne(Wishlist::class, 'product_id', 'id')
+            return $this->hasOne(Whishlist::class, 'product_id', 'id')
                         ->where('user_id', auth()->id());
         }
     
