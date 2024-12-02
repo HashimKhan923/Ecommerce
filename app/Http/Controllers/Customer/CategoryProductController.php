@@ -57,7 +57,7 @@ class CategoryProductController extends Controller
         return response()->json(['data' => $data]);
     }
     
-    public function load_more($category_id, $length, $searchValue)
+    public function load_more($category_id, $length, $searchValue = null)
     {
         $data = $this->getProductsWithRelationships($category_id, $length, $searchValue);
         return response()->json(['data' => $data]);
