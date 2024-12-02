@@ -907,7 +907,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/category_products'], function() {
             Route::controller(App\Http\Controllers\Customer\CategoryProductController::class)->group(function () {
                 Route::get('show/{category_id}','index');
-                Route::get('load_more/{category_id}/{length}','load_more');
+                Route::get('load_more/{category_id}/{length}/{query?}','load_more');
             });
         });
 
