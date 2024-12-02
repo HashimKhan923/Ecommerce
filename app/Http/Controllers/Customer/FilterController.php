@@ -239,6 +239,22 @@ $data = Product::with([
         if ($request->has('sub_category_id')) {
             $query->where('sub_category_id', $request->sub_category_id);
         }
+
+                // Apply search logic if a search value is provided
+        if ($request->has('search_query')) {
+            $keywords = explode(' ', $request->search_query); // Split the searchValue into keywords
+
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                    });
+                }
+            });
+        }
     
         $data = $query->orderByRaw('featured DESC, id ASC')->skip($request->length)->take(24)->get();
     

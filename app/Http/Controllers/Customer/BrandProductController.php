@@ -8,7 +8,7 @@ use App\Models\Product;
 
 class BrandProductController extends Controller
 {
-    private function getProductsByBrand($brand_id, $length = null)
+    private function getProductsByBrand($brand_id, $length = null, $searchValue = null)
     {
         $query = Product::with([
             'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
@@ -25,6 +25,23 @@ class BrandProductController extends Controller
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         });
+
+        // Apply search logic if a search value is provided
+        if ($searchValue && !empty($searchValue)) {
+            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                    });
+                }
+            });
+        }
+
     
         if ($length !== null) {
             $query->skip($length)->take(12);
@@ -41,9 +58,9 @@ class BrandProductController extends Controller
         return response()->json(['data' => $data]);
     }
     
-    public function load_more($brand_id, $length)
+    public function load_more($brand_id, $length, $searchValue = null)
     {
-        $data = $this->getProductsByBrand($brand_id, $length);
+        $data = $this->getProductsByBrand($brand_id, $length, $searchValue);
         return response()->json(['data' => $data]);
     }
     

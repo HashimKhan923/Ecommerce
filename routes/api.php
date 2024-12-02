@@ -917,7 +917,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/sub_category_products'], function() {
             Route::controller(App\Http\Controllers\Customer\SubCategoryProductController::class)->group(function () {
                 Route::get('show/{sub_category_id}','index');
-                Route::get('load_more/{sub_category_id}/{length}','load_more');
+                Route::get('load_more/{sub_category_id}/{length}/{query?}','load_more');
             });
         });
 
@@ -926,7 +926,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/brand_products'], function() {
             Route::controller(App\Http\Controllers\Customer\BrandProductController::class)->group(function () {
                 Route::get('show/{brand_id}','index');
-                Route::get('load_more/{brand_id}/{length}','load_more');
+                Route::get('load_more/{brand_id}/{length}/{query?}','load_more');
             });
         });
 
@@ -936,7 +936,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/model_products'], function() {
             Route::controller(App\Http\Controllers\Customer\ModelProductController::class)->group(function () {
                 Route::get('show/{model_id}','index');
-                Route::get('load_more/{model_id}/{length}','load_more');
+                Route::get('load_more/{model_id}/{length}/{query?}','load_more');
             });
         });
 
