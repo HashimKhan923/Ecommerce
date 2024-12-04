@@ -39,7 +39,7 @@ class SubCategoryController extends Controller
             }
     
             $new = new SubCategory();
-            $new->category_id = $SubCatData['category_id'];
+            // $new->category_id = $SubCatData['category_id'];
             $new->name = $SubCatData['name'];
             
             if (isset($SubCatData['banner']) && $SubCatData['banner']) {
@@ -76,7 +76,7 @@ class SubCategoryController extends Controller
 
 
         $update = SubCategory::where('id',$request->id)->first();
-        $update->category_id = $request->category_id;
+        // $update->category_id = $request->category_id;
         $update->name = $request->name;
         if($request->file('banner')){
 
