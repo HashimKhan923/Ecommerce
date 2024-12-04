@@ -19,6 +19,19 @@ class CategoryController extends Controller
       return response()->json(['Categories'=>$Categories]);
     }
 
+    public function sub_cats($cat_id)
+    {
+    //   $SubCategories = SubCategory::with('category')->withCount('product')->orderBy('order', 'asc')->get();
+      $SubCategories = Category::with([
+        'subCategories' => function ($query) {
+            $query->withCount('product') 
+                  ->orderBy('order', 'asc'); 
+        }
+    ])->findOrFail($cat_id);
+
+      return response()->json(['SubCategories'=>$SubCategories]);
+    }
+
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -51,6 +64,10 @@ class CategoryController extends Controller
         // $new->meta_keywords = $request->meta_keywords;
         $new->save();
 
+        if ($request->has('sub_category_ids')) {
+            $new->subCategories()->attach($request->sub_category_ids);
+        }
+
         $response = ['status'=>true,"message" => "New Category Added Successfully!"];
         return response($response, 200);
 
@@ -58,9 +75,6 @@ class CategoryController extends Controller
 
     public function update(Request $request)
     {
-
-
-
 
         $update = Category::where('id',$request->id)->first();
         $update->name = $request->name;
@@ -93,6 +107,10 @@ class CategoryController extends Controller
         // $update->meta_description = $request->meta_description;
         // $update->meta_keywords = $request->meta_keywords;
         $update->save();
+
+        if ($request->has('sub_category_ids')) {
+            $update->subCategories()->sync($request->sub_category_ids);
+        }
 
         $response = ['status'=>true,"message" => "Category Updated Successfully!"];
         return response($response, 200);

@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/admin/category/'], function() {
                 Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
                     Route::get('show','index');
+                    Route::get('sub_cats/{cat_id}','sub_cats');
                     Route::post('create','create');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');

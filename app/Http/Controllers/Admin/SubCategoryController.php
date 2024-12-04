@@ -16,6 +16,7 @@ class SubCategoryController extends Controller
     {
       $SubCategories = SubCategory::with('category')->withCount('product')->orderBy('order', 'asc')->get();
 
+
       return response()->json(['SubCategories'=>$SubCategories]);
     }
 
