@@ -27,7 +27,7 @@ class SubCategoryController extends Controller
         foreach ($request->sub_categories as $SubCatData) {
             $validator = Validator::make($SubCatData, [
                 "name" => "required|unique:sub_categories,name",
-                "category_id" => "required|integer",
+                // "category_id" => "required|integer",
                 // "slug" => "required|string",
                 "banner" => "nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048",
                 "icon" => "nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048",
