@@ -767,7 +767,7 @@ class ProductController extends Controller
                         
                         if ($variant) {
                             $variantFields = array_filter($variantData, function($key) {
-                                return in_array($key, ['varient_price', 'varient_discount_price', 'varient_stock']);
+                                return in_array($key, ['varient_price', 'varient_discount_price','varient_sku','varient_stock','varient_image']);
                             }, ARRAY_FILTER_USE_KEY);
 
                             if (isset($variantFields['varient_price'])) {
@@ -788,6 +788,11 @@ class ProductController extends Controller
                             if (isset($variantFields['varient_stock'])) {
                                 $variantFields['stock'] = $variantFields['varient_stock'];
                                 unset($variantFields['varient_stock']);
+                            }
+
+                            if (isset($variantFields['varient_image'])) {
+                                $variantFields['image'] = $variantFields['varient_image'];
+                                unset($variantFields['varient_image']);
                             }
 
                             $variant->update($variantFields);
