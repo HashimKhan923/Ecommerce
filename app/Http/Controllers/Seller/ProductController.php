@@ -753,7 +753,7 @@ class ProductController extends Controller
             if ($product) {
                 $productFields = array_filter($productData, function($key) {
                     return in_array($key, [
-                        'name', 'category_id', 'sub_category_id','sku','height', 'weight',
+                        'name','description','category_id', 'sub_category_id','sku','height', 'weight',
                         'lenght','width','make', 'brand_id', 'model_id', 'tags', 'price', 'shop_id'
                     ]);
                 }, ARRAY_FILTER_USE_KEY);
