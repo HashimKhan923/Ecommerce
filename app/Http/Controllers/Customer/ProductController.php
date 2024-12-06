@@ -14,26 +14,46 @@ use App\Models\ProductRating;
 class ProductController extends Controller
 {
     // Common method to fetch products
-    private function getProducts($length = 0, $limit = 24)
+    private function getProductsWithRelationships($category_id, $length = null, $searchValue = null)
     {
-        return Product::with([
-            'user','wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
+        $query = Product::with([
+            'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
-            },
-            'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
-        ])
-        ->where('published', 1)
+            }, 'discount', 'tax', 'shipping', 'deal',
+            'wholesale', 'shop', 'reviews.user', 'product_varient'
+        ])->where('published', 1)
+        ->orderByRaw('featured DESC')
         // ->whereHas('stock', function ($query) {
         //     $query->where('stock', '>', 0);
         // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })
-        ->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
-        ->skip($length)
-        ->take($limit)
-        ->get();
+        });
+
+        // Apply search logic if a search value is provided
+        if ($searchValue && !empty($searchValue)) {
+            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                    });
+                }
+            });
+        }
+    
+        if ($length !== null) {
+            $query->skip($length)->take(12);
+        } else {
+            $query->take(24);
+        }
+    
+        return $query->get();
     }
 
     // Index method to load initial products
@@ -46,12 +66,10 @@ class ProductController extends Controller
     }
 
     // Load more products method
-    public function load_more($length)
+    public function load_more($length, $searchValue = null)
     {
-        // Fetch products starting after $length
-        $Products = $this->getProducts($length);
-
-        return response()->json(['Products' => $Products]);
+        $data = $this->getProductsWithRelationships($length, $searchValue);
+        return response()->json(['data' => $data]);
     }
 
 
