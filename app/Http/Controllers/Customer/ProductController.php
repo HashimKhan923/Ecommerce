@@ -72,6 +72,7 @@ class ProductController extends Controller
     // Load more products method
     public function load_more($length, $searchValue = null)
     {
+        return $searchValue;
         // Fetch products starting after $length
         $Products = $this->getProducts($length, $searchValue);
 
