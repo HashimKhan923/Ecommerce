@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     private function getProducts($length = 0, $limit = 24, $searchValue = null)
     {
-        return 2;
+        return $searchValue;
         if ($limit <= 0) {
             $limit = 24; // Default limit
         }
