@@ -13,7 +13,7 @@ use App\Models\ProductRating;
 
 class ProductController extends Controller
 {
-    private function getProducts($length = 0, $limit = 24, $searchValue = null)
+    private function getProducts($length = 0, $limit = 24, $searchValue)
     {
         return $searchValue;
         if ($limit <= 0) {
@@ -72,7 +72,6 @@ class ProductController extends Controller
     // Load more products method
     public function load_more($length, $searchValue = null)
     {
-        return $searchValue;
         // Fetch products starting after $length
         $Products = $this->getProducts($length, $searchValue);
 
