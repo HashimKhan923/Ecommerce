@@ -30,9 +30,9 @@ class FeaturedProductController extends Controller
         return response()->json(['FeaturedProducts'=>$FeaturedProducts]);
     }
 
-    public function load_more($length)
+    public function load_more($length, $searchValue = null)
     {
-        $FeaturedProducts = Product::with([
+        $query = Product::with([
             'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
@@ -45,11 +45,27 @@ class FeaturedProductController extends Controller
         // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->where('featured',1)
-        ->skip($length)
+        })->where('featured',1);
+
+        if ($searchValue && !empty($searchValue)) {
+            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                    });
+                }
+            });
+        }
+
+        $query->skip($length)
         ->take(24)->get();
 
-        return response()->json(['FeaturedProducts'=>$FeaturedProducts]);
+        return response()->json(['FeaturedProducts'=>$query]);
 
     }
 }

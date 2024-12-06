@@ -888,7 +888,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/featured_products'], function() {
             Route::controller(App\Http\Controllers\Customer\FeaturedProductController::class)->group(function () {
                 Route::get('show','index');
-                Route::get('load_more/{length}','load_more');
+                Route::get('load_more/{length}/{query?}','load_more');
             });
         });
 
