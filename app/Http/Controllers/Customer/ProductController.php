@@ -14,26 +14,45 @@ use App\Models\ProductRating;
 class ProductController extends Controller
 {
     // Common method to fetch products
-    private function getProducts($length = 0, $limit = 24)
+    private function fetchProducts($length = null, $limit = 24, $searchValue = null)
     {
-        return Product::with([
-            'user','wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
-            'product_gallery' => function($query) {
+        $query = Product::with([
+            'user', 'wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
+            'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])
         ->where('published', 1)
-        // ->whereHas('stock', function ($query) {
-        //     $query->where('stock', '>', 0);
-        // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
-        ->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
-        ->skip($length)
-        ->take($limit)
-        ->get();
+        ->orderByRaw('featured DESC, id DESC'); // Prioritize featured products and sort by ID
+    
+    
+        // Apply search filter if provided
+        if (!empty($searchValue)) {
+            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                    });
+                }
+            });
+        }
+    
+        // Apply pagination
+        if (!is_null($length)) {
+            $query->skip($length)->take($limit);
+        } else {
+            $query->take($limit);
+        }
+    
+        return $query->get();
     }
 
     // Index method to load initial products
@@ -45,13 +64,10 @@ class ProductController extends Controller
         return response()->json(['Products' => $Products]);
     }
 
-    // Load more products method
-    public function load_more($length)
+    public function load_more($length, $searchValue = null)
     {
-        // Fetch products starting after $length
-        $Products = $this->getProducts($length);
-
-        return response()->json(['Products' => $Products]);
+        $products = $this->fetchProducts($length, $searchValue);
+        return response()->json(['Products' => $products]);
     }
 
 
