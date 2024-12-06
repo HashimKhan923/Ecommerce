@@ -14,7 +14,7 @@ use App\Models\ProductRating;
 class ProductController extends Controller
 {
     // Common method to fetch products
-    private function fetchProducts($length = null, $limit = 24, $searchValue = null)
+    private function fetchProducts($length = null, $limit = 24, $searchValue)
     {
 
         return $searchValue;
