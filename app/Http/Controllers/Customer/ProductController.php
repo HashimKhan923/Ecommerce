@@ -15,6 +15,10 @@ class ProductController extends Controller
 {
     private function getProducts($length = 0, $limit = 24, $searchValue = null)
     {
+        if ($limit <= 0) {
+            $limit = 24; // Default limit
+        }
+    
         $query = Product::with([
             'user', 'wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
             'product_gallery' => function ($query) {
@@ -43,12 +47,14 @@ class ProductController extends Controller
             });
         }
     
-        $query->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
-            ->skip($length) // Offset
-            ->take($limit); // Limit
+        // Apply ordering, limit, and offset
+        $query->orderByRaw('featured DESC, id DESC')
+            ->skip($length) // OFFSET
+            ->take($limit); // LIMIT
     
         return $query->get();
     }
+    
     
 
     // Index method to load initial products
