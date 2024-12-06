@@ -13,52 +13,28 @@ use App\Models\ProductRating;
 
 class ProductController extends Controller
 {
-    private function getProducts($length = 0, $limit = 24, $searchValue)
+    // Common method to fetch products
+    private function getProducts($length = 0, $limit = 24)
     {
-    
-        if ($limit <= 0) {
-            $limit = 24; // Default limit
-        }
-    
-        $query = Product::with([
-            'user', 'wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
-            'product_gallery' => function ($query) {
+        return Product::with([
+            'user','wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
+            'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])
         ->where('published', 1)
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        });
-    
-        // Apply search logic if a search value is provided
-        if ($searchValue && !empty($searchValue)) {
-
-           
-            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
-    
-            $query->where(function ($query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->where(function ($subQuery) use ($keyword) {
-                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
-                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
-                    });
-                }
-            });
-        }
-    
-        // Apply ordering, limit, and offset
-        $query->orderByRaw('featured DESC, id DESC')
-            ->skip($length) // OFFSET
-            ->take($limit); // LIMIT
-    
-        return $query->get();
+        })
+        ->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
+        ->skip($length)
+        ->take($limit)
+        ->get();
     }
-    
-    
 
     // Index method to load initial products
     public function index()
@@ -69,13 +45,12 @@ class ProductController extends Controller
         return response()->json(['Products' => $Products]);
     }
 
-    public function load_more($length, $searchValue = null)
+    // Load more products method
+    public function load_more($length)
     {
-        $limit = 24; // Default limit for loading more products
-    
         // Fetch products starting after $length
-        $Products = $this->getProducts($length, $limit, $searchValue);
-    
+        $Products = $this->getProducts($length);
+
         return response()->json(['Products' => $Products]);
     }
 
