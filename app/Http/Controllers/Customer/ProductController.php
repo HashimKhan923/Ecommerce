@@ -16,7 +16,6 @@ class ProductController extends Controller
     // Common method to fetch products
     private function getProductsWithRelationships($length = null, $searchValue = null)
     {
-        return $searchValue;
 
         $query = Product::with([
             'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
