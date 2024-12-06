@@ -15,6 +15,7 @@ class ProductController extends Controller
 {
     private function getProducts($length = 0, $limit = 24, $searchValue = null)
     {
+        return 2;
         if ($limit <= 0) {
             $limit = 24; // Default limit
         }
@@ -34,7 +35,7 @@ class ProductController extends Controller
         // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
 
-            return 2;
+           
             $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
     
             $query->where(function ($query) use ($keywords) {
