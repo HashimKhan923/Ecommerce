@@ -14,24 +14,28 @@ use App\Models\ProductRating;
 class ProductController extends Controller
 {
     // Common method to fetch products
-    private function getProducts($length = 0, $limit = 24, $searchValue = null)
+    private function getProducts($length = 0, $limit = 24)
     {
-        $query = Product::with([
-            'user', 'wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
-            'product_gallery' => function ($query) {
+       $query = Product::with([
+            'user','wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
+            'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
             },
             'discount', 'tax', 'shipping', 'deal', 'shop.shop_policy', 'reviews.user', 'product_varient'
         ])
         ->where('published', 1)
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         });
-    
+
+
         // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
             $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
-    
+
             $query->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     $query->where(function ($subQuery) use ($keyword) {
@@ -43,14 +47,14 @@ class ProductController extends Controller
                 }
             });
         }
-    
-        // Add order by and pagination
-        return $query->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
-            ->skip($length)
-            ->take($limit)
-            ->get(); // Fetch the results
+
+        $query->orderByRaw('featured DESC, id DESC') // Prioritize featured and order by id
+        ->skip($length)
+        ->take($limit);
+
+        return $query->get();
+        
     }
-    
 
     // Index method to load initial products
     public function index()
@@ -62,10 +66,10 @@ class ProductController extends Controller
     }
 
     // Load more products method
-    public function load_more($length, $searchValue = null)
+    public function load_more($length)
     {
         // Fetch products starting after $length
-        $Products = $this->getProducts($length, $searchValue);
+        $Products = $this->getProducts($length);
 
         return response()->json(['Products' => $Products]);
     }
