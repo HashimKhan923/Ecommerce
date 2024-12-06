@@ -959,7 +959,7 @@ Route::group(['middleware' => ['auth:api']], function(){
       Route::group(['prefix' => '/product'], function() {
         Route::controller(App\Http\Controllers\Customer\ProductController::class)->group(function () {
             Route::get('show','index');
-            Route::get('load_more/{length}','load_more');
+            Route::get('load_more/{length}/{query?}','load_more');
             Route::post('comment','comment');
             Route::post('rating','rating');
             Route::get('detail/{id}','detail');
