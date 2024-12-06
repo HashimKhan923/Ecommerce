@@ -14,7 +14,7 @@ use App\Models\ProductRating;
 class ProductController extends Controller
 {
     // Common method to fetch products
-    private function getProductsWithRelationships($category_id, $length = null, $searchValue = null)
+    private function getProductsWithRelationships($length = null, $searchValue = null)
     {
         return $searchValue;
 
