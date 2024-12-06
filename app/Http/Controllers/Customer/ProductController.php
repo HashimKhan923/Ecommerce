@@ -14,10 +14,10 @@ use App\Models\ProductRating;
 class ProductController extends Controller
 {
     // Common method to fetch products
-    private function fetchProducts($length = null, $limit = 24, $searchValue)
+    private function fetchProducts($length = null, $limit = 24, $searchValue = 'toyota')
     {
 
-        return $searchValue;
+        
         
         $query = Product::with([
             'user', 'wishlistProduct', 'category', 'sub_category', 'brand', 'model', 'stock',
