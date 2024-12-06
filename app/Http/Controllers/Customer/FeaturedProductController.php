@@ -30,23 +30,26 @@ class FeaturedProductController extends Controller
         return response()->json(['FeaturedProducts'=>$FeaturedProducts]);
     }
 
-    public function load_more($length, $searchValue = null)
+    private function getProductsWithRelationships($length = null, $searchValue = null)
     {
+
         $query = Product::with([
             'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
                 $query->orderBy('order', 'asc');
-            },
-            'discount', 'tax', 'shipping',
-            'shop.shop_policy', 'reviews.user', 'product_varient'
+            }, 'discount', 'tax', 'shipping', 'deal',
+            'wholesale', 'shop', 'reviews.user', 'product_varient'
         ])->where('published', 1)
+        ->where('featured',1)
+        ->orderByRaw('featured DESC')
         // ->whereHas('stock', function ($query) {
         //     $query->where('stock', '>', 0);
         // })
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
-        })->where('featured',1);
+        });
 
+        // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
             $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
 
@@ -61,11 +64,20 @@ class FeaturedProductController extends Controller
                 }
             });
         }
+    
+        if ($length !== null) {
+            $query->skip($length)->take(12);
+        } else {
+            $query->take(24);
+        }
+    
+        return $query->get();
+    }
 
-        $query->skip($length)
-        ->take(24)->get();
-
-        return response()->json(['FeaturedProducts'=>$query]);
-
+    public function load_more($length, $searchValue = null)
+    {
+        
+        $data = $this->getProductsWithRelationships($length, $searchValue);
+        return response()->json(['data' => $data]);
     }
 }
