@@ -46,12 +46,12 @@ class ProductController extends Controller
             });
         }
     
-        // Apply pagination
-        if (!is_null($length)) {
-            $query->skip($length)->take($limit);
-        } else {
-            $query->take($limit);
-        }
+// Apply pagination
+if (!is_null($length)) {
+    $query->skip($length)->take($limit ?? 24); // Ensure LIMIT is always set
+} else {
+    $query->take($limit ?? 24); // Default limit
+}
     
         return $query->get();
     }
