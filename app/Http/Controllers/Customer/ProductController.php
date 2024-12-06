@@ -69,12 +69,13 @@ class ProductController extends Controller
         return response()->json(['Products' => $Products]);
     }
 
-    // Load more products method
     public function load_more($length, $searchValue = null)
     {
+        $limit = 24; // Default limit for loading more products
+    
         // Fetch products starting after $length
-        $Products = $this->getProducts($length, $searchValue);
-
+        $Products = $this->getProducts($length, $limit, $searchValue);
+    
         return response()->json(['Products' => $Products]);
     }
 
