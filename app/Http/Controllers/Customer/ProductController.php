@@ -33,6 +33,8 @@ class ProductController extends Controller
     
         // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
+
+            return 2;
             $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
     
             $query->where(function ($query) use ($keywords) {
