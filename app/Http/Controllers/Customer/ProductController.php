@@ -16,6 +16,8 @@ class ProductController extends Controller
     // Common method to fetch products
     private function getProductsWithRelationships($category_id, $length = null, $searchValue = null)
     {
+
+
         $query = Product::with([
             'user','wishlistProduct', 'category','sub_category','brand', 'model', 'stock',
             'product_gallery' => function($query) {
@@ -68,6 +70,7 @@ class ProductController extends Controller
     // Load more products method
     public function load_more($length, $searchValue = null)
     {
+        return $searchValue;
         $data = $this->getProductsWithRelationships($length, $searchValue);
         return response()->json(['data' => $data]);
     }
