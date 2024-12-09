@@ -22,9 +22,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (!auth()->check()) {
-            return response()->json(['error' => 'User not logged in'], 401);
-        }
+        
         $FeaturedProducts = Product::with([
             'stock','wishlistProduct',
             'product_gallery' => function ($query) {
