@@ -854,7 +854,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 }); 
 
-Route::middleware('throttle:api')->get('/user', function (Request $request) {
+// Route::middleware('throttle:api')->get('/user', function (Request $request) {
 
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -1220,6 +1220,6 @@ Route::middleware('throttle:api')->get('/user', function (Request $request) {
                     });
 
 
-                });
+                // });
 
 
