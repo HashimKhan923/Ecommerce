@@ -854,6 +854,8 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 }); 
 
+Route::middleware('throttle:api')->get('/user', function (Request $request) {
+
         /////////////////////////////////// Customer Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         Route::get('/customer/profile/view/{id}', 'App\Http\Controllers\Customer\AuthController@profile_view');
@@ -1218,6 +1220,6 @@ Route::group(['middleware' => ['auth:api']], function(){
                     });
 
 
-
+                });
 
 

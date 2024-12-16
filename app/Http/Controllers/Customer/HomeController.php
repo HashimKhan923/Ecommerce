@@ -22,7 +22,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        
         $FeaturedProducts = Product::with([
             'stock','wishlistProduct',
             'product_gallery' => function ($query) {
