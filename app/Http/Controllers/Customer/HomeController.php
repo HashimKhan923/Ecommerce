@@ -36,7 +36,7 @@ class HomeController extends Controller
               $query->where('status', 1);
           })->where('featured', 1)
           ->orderByRaw('RAND()') 
-          ->take(50)
+          ->take(20)
           ->get();
     
         $DealProducts = Product::with([
@@ -54,7 +54,7 @@ class HomeController extends Controller
             $query->where('status', 1);
         })->where('deal_id',4)
         ->orderByRaw('RAND()') 
-        ->take(50)
+        ->take(20)
         ->get();
 
 
@@ -75,7 +75,7 @@ class HomeController extends Controller
             $query->where('status', 1);
         })
         ->orderByRaw('RAND()') 
-        ->take(30)
+        ->take(20)
         ->get();
 
     
