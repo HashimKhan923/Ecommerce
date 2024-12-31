@@ -15,7 +15,7 @@ class FirebaseService
     {
         if (!self::$messaging) {
             self::$messaging = (new Factory)
-                ->withServiceAccount(storage_path('app/firebase/service-account.json'))
+                ->withServiceAccount(public_path('service-account.json'))
                 ->createMessaging();
         }
     }
