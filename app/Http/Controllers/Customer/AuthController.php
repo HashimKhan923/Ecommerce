@@ -108,6 +108,12 @@ class AuthController extends Controller
                 if($user->is_active == 1)
                 {
                     if (Hash::check($request->password, $user->password)) {
+                        if($request->device_token)
+                        {
+                            $user->device_token = $request->device_token;
+                            $user->save();
+                        }
+
         
                             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                             $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
