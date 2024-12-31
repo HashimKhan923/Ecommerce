@@ -11,6 +11,8 @@ use App\Models\ProductGallery;
 use App\Models\User;
 use Mail;
 use DB;
+use App\Services\FirebaseService;
+
 
 class ChatController extends Controller
 {
@@ -113,6 +115,8 @@ class ChatController extends Controller
                     $message->subject('Message');
                 });
         }
+
+        FirebaseService::sendNotification($Customer->device_token,'New Message',$request->message);
 
 
         return response()->json(['message'=>'message sent successfully!','chat'=>$chat,200]);
