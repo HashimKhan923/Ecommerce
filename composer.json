@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "algolia/algoliasearch-client-php": "^3.4",
+        "ctwillie/expo-server-sdk-php": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "kreait/firebase-php": "^7.16",
