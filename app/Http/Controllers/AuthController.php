@@ -44,6 +44,12 @@ class AuthController extends Controller
     
                             // Generate access token for the user
                             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+
+                            if($request->device_token)
+                            {
+                                $user->device_token = $request->device_token;
+                                $user->save();
+                            }
     
                             // Send successful login response
                             return response([
