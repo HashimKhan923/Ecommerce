@@ -21,15 +21,14 @@ class CategoryController extends Controller
 
     public function sub_cats($cat_id)
     {
-    //   $SubCategories = SubCategory::with('category')->withCount('product')->orderBy('order', 'asc')->get();
-      $SubCategories = Category::with([
-        'subCategories' => function ($query) {
-            $query->withCount('product') 
-                  ->orderBy('order', 'asc'); 
-        }
-    ])->findOrFail($cat_id);
-
-      return response()->json(['SubCategories'=>$SubCategories]);
+        $SubCategories = Category::with([
+            'subCategories' => function ($query) {
+                $query->withCount('product')
+                      ->orderBy('category_sub_category.order', 'asc');
+            }
+        ])->findOrFail($cat_id);
+    
+        return response()->json(['SubCategories' => $SubCategories]);
     }
 
     public function create(Request $request)
