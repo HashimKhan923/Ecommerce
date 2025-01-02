@@ -27,6 +27,7 @@ class Category extends Model
 
     public function subCategories()
     {
-        return $this->belongsToMany(SubCategory::class, 'category_sub_category', 'category_id', 'sub_category_id');
+        return $this->belongsToMany(SubCategory::class, 'category_sub_category', 'category_id', 'sub_category_id')
+        ->withPivot('id');
     }
 }
