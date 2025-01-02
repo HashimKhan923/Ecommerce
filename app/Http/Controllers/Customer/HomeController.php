@@ -82,7 +82,8 @@ class HomeController extends Controller
 
         $Categories = Category::with([
             'subCategories' => function ($query) {
-                $query->withCount('product') 
+                $query->whereHas('product')
+                ->withCount('product') 
                       ->orderBy('order', 'asc'); 
             }
         ])
