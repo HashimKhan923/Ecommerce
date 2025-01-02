@@ -52,7 +52,7 @@ class FirebaseService
         /**
          * Users with the below push tokens, will receive the push notification
          */
-        $to= $deviceToken
+        $to= $deviceToken;
         
         (new Expo)->send($messages)->to($to)->push();
     }
