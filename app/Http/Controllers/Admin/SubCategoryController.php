@@ -175,12 +175,11 @@ class SubCategoryController extends Controller
 
     public function change_order(Request $request)
     {
-        foreach($request->sub_category_order as $index => $sub_category_id) 
+        foreach ($request->sub_category_order as $index => $sub_category_id) 
         {
-            $sub_category = SubCategory::find($sub_category_id);
-            if ($sub_category) {
-                $sub_category->update(['order' => $index + 1]);
-            }
+            DB::table('category_sub_category')
+                ->where('id', $sub_category_id)
+                ->update(['order' => $index + 1]);
         }
     }
 }
