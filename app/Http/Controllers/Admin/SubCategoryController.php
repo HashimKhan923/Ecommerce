@@ -9,6 +9,7 @@ use App\Models\SubCategory;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Validator;
+use DB;
 
 class SubCategoryController extends Controller
 {
