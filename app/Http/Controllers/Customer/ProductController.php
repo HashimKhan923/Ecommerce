@@ -61,7 +61,7 @@ class ProductController extends Controller
     public function index()
     {
         // Fetch the first 24 products
-        $Products = $this->getProducts();
+        $Products = $this->getProductsWithRelationships();
 
         return response()->json(['Products' => $Products]);
     }
