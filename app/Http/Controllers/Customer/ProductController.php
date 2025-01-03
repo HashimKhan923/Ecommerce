@@ -58,13 +58,13 @@ class ProductController extends Controller
     }
 
     // Index method to load initial products
-    // public function index()
-    // {
-    //     // Fetch the first 24 products
-    //     $Products = $this->getProducts();
+    public function index()
+    {
+        // Fetch the first 24 products
+        $Products = $this->getProducts();
 
-    //     return response()->json(['Products' => $Products]);
-    // }
+        return response()->json(['Products' => $Products]);
+    }
 
     // Load more products method
     public function load_more($length, $searchValue = null)
