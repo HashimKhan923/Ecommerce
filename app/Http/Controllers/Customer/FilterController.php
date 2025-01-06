@@ -235,6 +235,10 @@ $data = Product::with([
         if ($request->has('model_id')) {
             $query->where('model_id', $request->model_id);
         }
+
+        if ($request->has('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
     
         if ($request->has('sub_category_id')) {
             $query->where('sub_category_id', $request->sub_category_id);
