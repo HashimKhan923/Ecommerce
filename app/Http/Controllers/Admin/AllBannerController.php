@@ -119,7 +119,7 @@ class AllBannerController extends Controller
 
         if($request->file('mobile_image'))
         {
-            $image = $request->mobile_image;
+            $mobile_image = $request->mobile_image;
 
             $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $image->getClientOriginalExtension();
