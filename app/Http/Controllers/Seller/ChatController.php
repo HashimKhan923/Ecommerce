@@ -115,8 +115,11 @@ class ChatController extends Controller
                     $message->subject('Message');
                 });
         }
+        if($Customer->device_token != null)
+        {
+            FirebaseService::sendNotification($Customer->device_token,'New Message',$request->message);
 
-        FirebaseService::sendNotification($Customer->device_token,'New Message',$request->message);
+        }
 
 
         return response()->json(['message'=>'message sent successfully!','chat'=>$chat,200]);
