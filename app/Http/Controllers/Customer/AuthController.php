@@ -35,32 +35,35 @@ class AuthController extends Controller
             $new->country = $request->country;
             $new->postal_code = $request->postal_code;
             $new->phone = $request->phone;
-            $token = uniqid();
-            $new->remember_token = $token;
+            // $token = uniqid();
+            // $new->remember_token = $token;
             $new->password = Hash::make($request->password);
             $new->platform = $request->platform;
             $new->device_name = $request->device_name;
             $new->device_type = $request->device_type;
+            $new->device_token = $request->device_token;
             $new->location = $request->location;
             $new->user_type = 'customer';
             $new->is_active = 1;
             $new->save();
+
+            $token = $new->createToken('Laravel Password Grant Client')->accessToken;
     
-            Mail::send(
-                'email.customer_verification',
-                [
-                    'token' => $token,
-                    'name' => $new->name,
-                ], 
-                function ($message) use ($new) {
-                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                    $message->to($new->email);
-                    $message->subject('Email Verification');
-                }
-            );
+            // Mail::send(
+            //     'email.customer_verification',
+            //     [
+            //         'token' => $token,
+            //         'name' => $new->name,
+            //     ], 
+            //     function ($message) use ($new) {
+            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+            //         $message->to($new->email);
+            //         $message->subject('Email Verification');
+            //     }
+            // );
     
-            $response = ['status' => true, 'message' => 'We have sent the verification email to your email address. Please verify your account.'];
-            return response($response, 200);
+            $response = ['status' => true, 'message' => 'Registered Successfully.'];
+            return response([$response, 200,'token' => $token,'user'=>$new]);
     
         } catch (Exception $e) {
             // Send error email
