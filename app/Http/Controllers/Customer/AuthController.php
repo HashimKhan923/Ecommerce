@@ -181,14 +181,17 @@ class AuthController extends Controller
     public function social_login(Request $request)
     {
         $check_user = User::where('email',$request->email)->first();
-        if($request->device_token)
-        {
-            $check_user->device_token = $request->device_token;
-            $check_user->save();
-        }
+
 
         if($check_user)
         {
+
+            if($request->device_token)
+            {
+                $check_user->device_token = $request->device_token;
+                $check_user->save();
+            }
+
             $token = $check_user->createToken('Laravel Password Grant Client')->accessToken;
             $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$check_user];
             return response($response, 200);
@@ -203,6 +206,7 @@ class AuthController extends Controller
             $new->platform = $request->platform;
             $new->device_name = $request->device_name;
             $new->device_type = $request->device_type;
+            $new->device_token = $request->device_token;
             $new->location = $request->location;
             $new->is_active = 1;
             $new->save();
