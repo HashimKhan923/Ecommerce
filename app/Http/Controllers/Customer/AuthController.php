@@ -181,11 +181,11 @@ class AuthController extends Controller
     public function social_login(Request $request)
     {
         $check_user = User::where('email',$request->email)->first();
-        // if($request->device_token)
-        // {
-        //     $check_user->device_token = $request->device_token;
-        //     $check_user->save();
-        // }
+        if($request->device_token)
+        {
+            $check_user->device_token = $request->device_token;
+            $check_user->save();
+        }
 
         if($check_user)
         {
