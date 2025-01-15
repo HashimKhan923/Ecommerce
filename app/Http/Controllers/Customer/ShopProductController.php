@@ -52,9 +52,10 @@ class ShopProductController extends Controller
         })
         ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count')) // Count products
         ->groupBy('category_id', 'sub_category_id') // Group by category and subcategory
+        ->orderByRaw('COUNT(*) DESC') // Sort by product count
         ->get();
 
-
+        
             // Apply search logic if a search value is provided
             if ($searchValue && !empty($searchValue)) {
                 $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
