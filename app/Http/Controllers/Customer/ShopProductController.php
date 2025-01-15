@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
 
 class ShopProductController extends Controller
 {
@@ -44,16 +43,16 @@ class ShopProductController extends Controller
 
     public function index($shop_id, $searchValue = null)
     {
-        $query = Product::where('published', 1)
-        ->where('shop_id', $shop_id)
-        ->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })
-        ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count'))
-        ->groupBy('category_id', 'sub_category_id')
-        ->get();
-
-        
+        $query = Product::with($this->getProductRelations())
+            ->where('published', 1)
+            ->where('shop_id', $shop_id)
+            // ->whereHas('stock', function ($query) {
+            //     $query->where('stock', '>', 0);
+            // })
+            ->whereHas('shop', function ($query) {
+                $query->where('status', 1);
+            });
+    
             // Apply search logic if a search value is provided
             if ($searchValue && !empty($searchValue)) {
                 $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
