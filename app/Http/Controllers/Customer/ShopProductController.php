@@ -156,37 +156,40 @@ class ShopProductController extends Controller
                 $query->where('status', 1);
             });
     
-            // Apply search logic if a search value is provided
-            if ($searchValue && !empty($searchValue)) {
-                $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
-
-                $query->where(function ($query) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $query->where(function ($subQuery) use ($keyword) {
-                            $subQuery->where('sku', 'LIKE', "%{$keyword}%")
-                                ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                                ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                                ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
-                        });
-                    }
-                });
-            }
-
-            if ($cat_id && !empty($cat_id))
-            {
-                $query->where('category_id',$cat_id);
-            }
-
-            if ($cat_id && !empty($cat_id))
-            {
-                $query->where('sub_category_id',$subcat_id);
-            }
+        // Apply search logic if a search value is provided
+        if ($searchValue && !empty($searchValue)) {
+            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
     
+            $query->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
+                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                    });
+                }
+            });
+        }
+    
+        // Apply category filter if cat_id is provided
+        if ($cat_id && !empty($cat_id)) {
+            $query->where('category_id', $cat_id);
+        }
+    
+        // Apply subcategory filter if subcat_id is provided
+        if ($subcat_id && !empty($subcat_id)) {
+            $query->where('sub_category_id', $subcat_id);
+        }
+    
+        // Fetch the filtered data
         $data = $query->orderByRaw('featured DESC')
             ->skip($length)
             ->take(12)
             ->get();
     
+        // Return the response
         return $this->formatResponse($data);
     }
+    
 }
