@@ -102,7 +102,7 @@ class ShopProductController extends Controller
                 });
             }
         }])
-        ->with(['subCategories' => function ($query) use ($shop_id, $searchValue) {
+        ->with(['sub_category' => function ($query) use ($shop_id, $searchValue) {
             $query->whereHas('product', function ($productQuery) use ($shop_id, $searchValue) {
                 $productQuery->where('published', 1)->where('shop_id', $shop_id);
     
