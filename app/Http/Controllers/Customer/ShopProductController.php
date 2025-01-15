@@ -43,15 +43,19 @@ class ShopProductController extends Controller
 
     public function index($shop_id, $searchValue = null)
     {
-        $query = Product::with($this->getProductRelations())
-            ->where('published', 1)
-            ->where('shop_id', $shop_id)
-            // ->whereHas('stock', function ($query) {
-            //     $query->where('stock', '>', 0);
-            // })
-            ->whereHas('shop', function ($query) {
-                $query->where('status', 1);
-            });
+        $query = Product::with([
+            'category',
+            'subCategory',
+        ])
+        ->where('published', 1)
+        ->where('shop_id', $shop_id)
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })
+        ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count'))
+        ->groupBy('category_id', 'sub_category_id')
+        ->orderByRaw('COUNT(*) DESC') // Example sorting by product count
+        ->get();
     
             // Apply search logic if a search value is provided
             if ($searchValue && !empty($searchValue)) {
