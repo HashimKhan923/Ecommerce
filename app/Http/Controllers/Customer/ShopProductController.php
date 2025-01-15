@@ -173,12 +173,12 @@ class ShopProductController extends Controller
         }
     
         // Apply category filter if cat_id is provided
-        if ($cat_id && !empty($cat_id)) {
+        if ($cat_id) {
             $query->where('category_id', $cat_id);
         }
     
         // Apply subcategory filter if subcat_id is provided
-        if ($subcat_id && !empty($subcat_id)) {
+        if ($subcat_id) {
             $query->where('sub_category_id', $subcat_id);
         }
     
