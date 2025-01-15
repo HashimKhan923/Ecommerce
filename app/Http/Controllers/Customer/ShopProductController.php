@@ -144,7 +144,7 @@ class ShopProductController extends Controller
         return $this->formatResponse($response);
     }
     
-    public function load_more($shop_id, $length, $searchValue = null)
+    public function load_more($shop_id, $length, $searchValue = null, $cat_id = null, $subcat_id = null)
     {
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
@@ -170,6 +170,16 @@ class ShopProductController extends Controller
                         });
                     }
                 });
+            }
+
+            if ($cat_id && !empty($cat_id))
+            {
+                $query->where('category_id',$cat_id);
+            }
+
+            if ($cat_id && !empty($cat_id))
+            {
+                $query->where('sub_category_id',$subcat_id);
             }
     
         $data = $query->orderByRaw('featured DESC')
