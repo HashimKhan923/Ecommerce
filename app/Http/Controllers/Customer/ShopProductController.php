@@ -52,7 +52,6 @@ class ShopProductController extends Controller
         })
         ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count')) // Count products
         ->groupBy('category_id', 'sub_category_id') // Group by category and subcategory
-        ->orderByRaw('COUNT(*) DESC') // Sort by product count
         ->get();
 
         
