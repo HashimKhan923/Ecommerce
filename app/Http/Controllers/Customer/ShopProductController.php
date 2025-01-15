@@ -46,7 +46,7 @@ class ShopProductController extends Controller
     {
         $query = Product::with([
             'category',
-            'subCategory',
+            'sub_category',
         ])
         ->where('published', 1)
         ->where('shop_id', $shop_id)
