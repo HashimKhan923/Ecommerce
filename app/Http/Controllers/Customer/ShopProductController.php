@@ -73,7 +73,7 @@ class ShopProductController extends Controller
             ->get();
     
         // Fetch categories and their subcategories with product counts
-        $categories = Category::whereHas('products', function ($productQuery) use ($shop_id, $searchValue) {
+        $categories = Category::whereHas('product', function ($productQuery) use ($shop_id, $searchValue) {
             $productQuery->where('published', 1)->where('shop_id', $shop_id);
     
             if ($searchValue && !empty($searchValue)) {
