@@ -44,14 +44,14 @@ class ShopProductController extends Controller
 
     public function index($shop_id, $searchValue = null)
     {
-        $query = Product::with(['category', 'sub_category']) // Load category and subcategory relations
+        $query = Product::with(['category', 'sub_category'])
         ->where('published', 1)
         ->where('shop_id', $shop_id)
         ->whereHas('shop', function ($query) {
-            $query->where('status', 1); // Ensure shop is active
+            $query->where('status', 1);
         })
-        ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count')) // Count products
-        ->groupBy('category_id', 'sub_category_id') // Group by category and subcategory
+        ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count'))
+        ->groupBy('category_id', 'sub_category_id')
         ->get();
 
         
