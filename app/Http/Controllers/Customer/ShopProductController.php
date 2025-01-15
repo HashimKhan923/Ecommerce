@@ -146,6 +146,7 @@ class ShopProductController extends Controller
     
     public function load_more($shop_id, $length, $searchValue = null, $cat_id = null, $subcat_id = null)
     {
+        return $shop_id.'/'.$length.'/'.$searchValue.'/'.$cat_id.'/'.$subcat_id;
 
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
