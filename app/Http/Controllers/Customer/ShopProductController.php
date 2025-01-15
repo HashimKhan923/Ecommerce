@@ -44,8 +44,7 @@ class ShopProductController extends Controller
 
     public function index($shop_id, $searchValue = null)
     {
-        $query = Product::with(['category', 'sub_category'])
-        ->where('published', 1)
+        $query = Product::where('published', 1)
         ->where('shop_id', $shop_id)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
