@@ -44,20 +44,18 @@ class ShopProductController extends Controller
 
     public function index($shop_id, $searchValue = null)
     {
-        $query = Product::with([
-            'category',
-            'sub_category',
-        ])
+        $query = Product::with(['category', 'sub_category']) // Load category and subcategory relations
         ->where('published', 1)
         ->where('shop_id', $shop_id)
         ->whereHas('shop', function ($query) {
-            $query->where('status', 1);
+            $query->where('status', 1); // Ensure shop is active
         })
-        ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count'))
-        ->groupBy('category_id', 'sub_category_id')
-        ->orderByRaw('COUNT(*) DESC') // Example sorting by product count
+        ->select('category_id', 'sub_category_id', DB::raw('COUNT(*) as product_count')) // Count products
+        ->groupBy('category_id', 'sub_category_id') // Group by category and subcategory
+        ->orderByRaw('COUNT(*) DESC') // Sort by product count
         ->get();
-    
+
+        
             // Apply search logic if a search value is provided
             if ($searchValue && !empty($searchValue)) {
                 $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
