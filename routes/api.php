@@ -949,7 +949,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/shop_products'], function() {
             Route::controller(App\Http\Controllers\Customer\ShopProductController::class)->group(function () {
                 Route::get('show/{shop_id}/{query?}','index');
-                Route::get('load_more/{shop_id}/{length}/{query?}','load_more');
+                Route::get('load_more/{shop_id}/{length}/{query?}/{category_id?}/{subcategory_id?}', 'load_more');
             });
         });
                                                             
