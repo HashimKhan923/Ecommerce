@@ -144,7 +144,7 @@ class ShopProductController extends Controller
         return $this->formatResponse($response);
     }
     
-    public function load_more($shop_id, $length, $searchValue = null, $category_id = null)
+    public function load_more($shop_id, $length, $category_id = null, $searchValue = null)
     {
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
