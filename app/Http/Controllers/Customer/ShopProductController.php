@@ -146,7 +146,7 @@ class ShopProductController extends Controller
     
     public function load_more($shop_id, $length, $searchValue = null, $cat_id = null, $subcat_id = null)
     {
-        return $shop_id.'/'.$length.'/'.$searchValue.'/'.$cat_id.'/'.$subcat_id;
+        // return $shop_id.'/'.$length.'/'.$searchValue.'/'.$cat_id.'/'.$subcat_id;
 
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
@@ -160,7 +160,7 @@ class ShopProductController extends Controller
     
         // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
-            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+            $keywords = explode('', $searchValue); // Split the searchValue into keywords
     
             $query->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
@@ -176,6 +176,7 @@ class ShopProductController extends Controller
     
         // Apply category filter if cat_id is provided
         if ($cat_id) {
+            return 'in cat';
             $query->where('category_id', $cat_id);
         }
     
