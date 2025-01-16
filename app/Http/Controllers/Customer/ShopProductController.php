@@ -144,7 +144,7 @@ class ShopProductController extends Controller
         return $this->formatResponse($response);
     }
     
-    public function load_more($shop_id, $length, $searchValue = null, $category_id = null, $subcategory_id = null)
+    public function load_more($shop_id, $length, $searchValue = null, $category_id = null)
     {
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
@@ -156,10 +156,6 @@ class ShopProductController extends Controller
         // Apply category and subcategory filters if provided
         if ($category_id) {
             $query->where('category_id', $category_id);
-        }
-    
-        if ($subcategory_id) {
-            $query->where('sub_category_id', $subcategory_id);
         }
     
         // Apply search logic if a search value is provided
