@@ -157,6 +157,17 @@ class ShopProductController extends Controller
             ->whereHas('shop', function ($query) {
                 $query->where('status', 1);
             });
+
+                    // Apply category filter if cat_id is provided
+        if ($cat_id) {
+            return 'in cat';
+            $query->where('category_id', $cat_id);
+        }
+    
+        // Apply subcategory filter if subcat_id is provided
+        if ($subcat_id) {
+            $query->where('sub_category_id', $subcat_id);
+        }
     
         // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
@@ -174,16 +185,7 @@ class ShopProductController extends Controller
             });
         }
     
-        // Apply category filter if cat_id is provided
-        if ($cat_id) {
-            return 'in cat';
-            $query->where('category_id', $cat_id);
-        }
-    
-        // Apply subcategory filter if subcat_id is provided
-        if ($subcat_id) {
-            $query->where('sub_category_id', $subcat_id);
-        }
+
     
         // Fetch the filtered data
         $data = $query->orderByRaw('featured DESC')
