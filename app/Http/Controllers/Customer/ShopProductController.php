@@ -159,7 +159,7 @@ class ShopProductController extends Controller
         }
     
         if ($subcategory_id) {
-            $query->where('subcategory_id', $subcategory_id);
+            $query->where('sub_category_id', $subcategory_id);
         }
     
         // Apply search logic if a search value is provided
