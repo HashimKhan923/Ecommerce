@@ -160,7 +160,7 @@ class ShopProductController extends Controller
 
                     // Apply category filter if cat_id is provided
         if ($cat_id != null) {
-            return 'in cat';
+            return 'in cat'. $cat_id;
             $query->where('category_id', $cat_id);
         }
     
