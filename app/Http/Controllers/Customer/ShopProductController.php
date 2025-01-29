@@ -68,7 +68,7 @@ class ShopProductController extends Controller
         }
     
         // Retrieve products
-        $products = $query->take(24)
+        $products = $query->take(12)
             ->orderByRaw('featured DESC')
             ->get();
     

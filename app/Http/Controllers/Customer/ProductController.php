@@ -51,7 +51,7 @@ class ProductController extends Controller
         if ($length !== null) {
             $query->skip($length)->take(12);
         } else {
-            $query->take(24);
+            $query->take(12);
         }
     
         return $query->get();
