@@ -25,7 +25,7 @@ class FeaturedProductController extends Controller
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })->where('featured',1)
-        ->take(24)->get();
+        ->take(12)->get();
 
         return response()->json(['FeaturedProducts'=>$FeaturedProducts]);
     }
