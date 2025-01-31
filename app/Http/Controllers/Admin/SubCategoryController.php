@@ -104,9 +104,9 @@ class SubCategoryController extends Controller
             $update->icon = $filename;
         }
         $update->slug = $request->slug;
-        // $update->meta_title = $request->meta_title;
-        // $update->meta_description = $request->meta_description;
-        // $update->meta_keywords = $request->meta_keywords;
+        $update->meta_title = $request->meta_title;
+        $update->meta_description = $request->meta_description;
+        $update->meta_keywords = $request->meta_keywords;
         $update->save();
 
         $response = ['status'=>true,"message" => "Sub-Category Updated Successfully!"];
