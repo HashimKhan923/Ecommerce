@@ -58,9 +58,9 @@ class CategoryController extends Controller
             $new->icon = $filename;
         }
         $new->slug = $request->slug;
-        // $new->meta_title = $request->meta_title;
-        // $new->meta_description = $request->meta_description;
-        // $new->meta_keywords = $request->meta_keywords;
+        $new->meta_title = $request->meta_title;
+        $new->meta_description = $request->meta_description;
+        $new->meta_keywords = $request->meta_keywords;
         $new->save();
 
         if ($request->has('sub_category_ids')) {
@@ -102,9 +102,9 @@ class CategoryController extends Controller
             $update->icon = $filename;
         }
         $update->slug = $request->slug;
-        // $update->meta_title = $request->meta_title;
-        // $update->meta_description = $request->meta_description;
-        // $update->meta_keywords = $request->meta_keywords;
+        $update->meta_title = $request->meta_title;
+        $update->meta_description = $request->meta_description;
+        $update->meta_keywords = $request->meta_keywords;
         $update->save();
 
         if ($request->has('sub_category_ids')) {
