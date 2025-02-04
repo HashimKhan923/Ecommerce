@@ -22,90 +22,82 @@ class BannerController extends Controller
     {
         $new = new Banner();
         $new->link = $request->link;
-
-        if($request->file('image'))
-        {
+    
+        if ($request->file('image')) {
             $image = $request->image;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
+            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileSize = $image->getSize(); // Get original file size in bytes
+    
             $compressedImage = Image::make($image->getRealPath());
-            
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            
+    
             $new->image = $filename . '.webp';
+            $new->image_size = filesize(public_path('Banner') . '/' . $filename . '.webp'); // Store compressed file size
         }
-
+    
         $new->mobile_link = $request->mobile_link;
-
-        if($request->file('mobile_image'))
-        {
+    
+        if ($request->file('mobile_image')) {
             $image = $request->mobile_image;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
+            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileSize = $image->getSize(); // Get original file size in bytes
+    
             $compressedImage = Image::make($image->getRealPath());
-            
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            
+    
             $new->mobile_image = $filename . '.webp';
+            $new->mobile_image_size = filesize(public_path('Banner') . '/' . $filename . '.webp'); // Store compressed file size
         }
+    
         $new->save();
-
-        $response = ['status'=>true,"message" => "Banner Added Successfully!"];
-        return response($response, 200);
+    
+        return response(['status' => true, "message" => "Banner Added Successfully!"], 200);
     }
-
+    
     public function update(Request $request)
     {
-        $update = Banner::where('id',$request->id)->first();
+        $update = Banner::where('id', $request->id)->first();
         $update->link = $request->link;
-
-        if($request->file('image'))
-        {
-
-            if($update->image)
-            {
-                unlink(public_path('Banner/'.$update->image));
+    
+        if ($request->file('image')) {
+            if ($update->image) {
+                unlink(public_path('Banner/' . $update->image));
             }
-
+    
             $image = $request->image;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
+            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileSize = $image->getSize(); // Get original file size in bytes
+    
             $compressedImage = Image::make($image->getRealPath());
-            
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            
+    
             $update->image = $filename . '.webp';
+            $update->image_size = filesize(public_path('Banner') . '/' . $filename . '.webp'); // Store compressed file size
         }
-
+    
         $update->mobile_link = $request->mobile_link;
-
-        if($request->file('mobile_image'))
-        {
-
-            if($update->mobile_image)
-            {
-                unlink(public_path('Banner/'.$update->mobile_image));
+    
+        if ($request->file('mobile_image')) {
+            if ($update->mobile_image) {
+                unlink(public_path('Banner/' . $update->mobile_image));
             }
-
+    
             $image = $request->mobile_image;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
+            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileSize = $image->getSize(); // Get original file size in bytes
+    
             $compressedImage = Image::make($image->getRealPath());
-            
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            
+    
             $update->mobile_image = $filename . '.webp';
+            $update->mobile_image_size = filesize(public_path('Banner') . '/' . $filename . '.webp'); // Store compressed file size
         }
-        
+    
         $update->save();
-
-        $response = ['status'=>true,"message" => "Banner Updated Successfully!"];
-        return response($response, 200);
+    
+        return response(['status' => true, "message" => "Banner Updated Successfully!"], 200);
     }
+    
 
     public function delete($id)
     {

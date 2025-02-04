@@ -22,129 +22,111 @@ class AllBannerController extends Controller
         $new = new AllBanner();
         $new->name = $request->name;
         $new->link = $request->link;
-
-        if($request->file('image'))
-        {
+    
+        if ($request->file('image')) {
             $image = $request->image;
-
             $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $image->getClientOriginalExtension();
-
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif')
-            {
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
-            
-            $new->image = $filename . '.webp';
-            }
-            else
-            {
+            $fileSize = $image->getSize(); // Get file size in bytes
+    
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+                $compressedImage = Image::make($image->getRealPath());
+                $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
+                $new->image = $filename . '.webp';
+                $new->image_size = filesize(public_path('AllBanners') . '/' . $filename . '.webp'); // Get compressed file size
+            } else {
                 $image->move(public_path('AllBanners'), $filename);
                 $new->image = $filename;
+                $new->image_size = $fileSize; // Store original file size
             }
-            
-            
         }
-
+    
         $new->mobile_name = $request->mobile_name;
         $new->mobile_link = $request->mobile_link;
-
-        if($request->file('mobile_image'))
-        {
+    
+        if ($request->file('mobile_image')) {
             $mobile_image = $request->mobile_image;
-
             $filename = date('YmdHis') . $mobile_image->getClientOriginalName();
             $fileExtension = $mobile_image->getClientOriginalExtension();
-
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif')
-            {
-
-            $compressedImage = Image::make($mobile_image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
-            
-            $new->mobile_image = $filename . '.webp';
-            }
-            else
-            {
+            $fileSize = $mobile_image->getSize(); // Get file size in bytes
+    
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+                $compressedImage = Image::make($mobile_image->getRealPath());
+                $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
+                $new->mobile_image = $filename . '.webp';
+                $new->mobile_image_size = filesize(public_path('AllBanners') . '/' . $filename . '.webp'); // Get compressed file size
+            } else {
                 $mobile_image->move(public_path('AllBanners'), $filename);
                 $new->mobile_image = $filename;
+                $new->mobile_image_size = $fileSize;
             }
-            
-            
         }
-
+    
         $new->save();
-
-        $response = ['status'=>true,"message" => "Created Successfully!"];
+    
+        $response = ['status' => true, "message" => "Created Successfully!"];
         return response($response, 200);
-
     }
+    
 
     public function update(Request $request)
     {
-        $update = AllBanner::where('id',$request->id)->first();
+        $update = AllBanner::where('id', $request->id)->first();
         $update->name = $request->name;
         $update->link = $request->link;
-
-        if($request->file('image'))
-        {
+    
+        if ($request->file('image')) {
+            if ($update->image) {
+                unlink(public_path('AllBanners/' . $update->image));
+            }
+    
             $image = $request->image;
-
             $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $image->getClientOriginalExtension();
-
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif')
-            {
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
-            
-            $update->image = $filename . '.webp';
-            }
-            else
-            {
+            $fileSize = $image->getSize(); // Get file size in bytes
+    
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+                $compressedImage = Image::make($image->getRealPath());
+                $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
+    
+                $update->image = $filename . '.webp';
+                $update->image_size = filesize(public_path('AllBanners') . '/' . $filename . '.webp'); // Get compressed file size
+            } else {
                 $image->move(public_path('AllBanners'), $filename);
                 $update->image = $filename;
+                $update->image_size = $fileSize; // Store original file size
             }
-            
-            
         }
-
+    
         $update->mobile_name = $request->mobile_name;
         $update->mobile_link = $request->mobile_link;
-
-        if($request->file('mobile_image'))
-        {
-            $mobile_image = $request->mobile_image;
-
-            $filename = date('YmdHis') . $image->getClientOriginalName();
-            $fileExtension = $image->getClientOriginalExtension();
-
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif')
-            {
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
-            
-            $update->mobile_image = $filename . '.webp';
+    
+        if ($request->file('mobile_image')) {
+            if ($update->mobile_image) {
+                unlink(public_path('AllBanners/' . $update->mobile_image));
             }
-            else
-            {
+    
+            $mobile_image = $request->mobile_image;
+            $filename = date('YmdHis') . $mobile_image->getClientOriginalName();
+            $fileExtension = $mobile_image->getClientOriginalExtension();
+            $fileSize = $mobile_image->getSize(); // Get file size in bytes
+    
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+                $compressedImage = Image::make($mobile_image->getRealPath());
+                $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
+    
+                $update->mobile_image = $filename . '.webp';
+                $update->mobile_image_size = filesize(public_path('AllBanners') . '/' . $filename . '.webp'); // Get compressed file size
+            } else {
                 $mobile_image->move(public_path('AllBanners'), $filename);
                 $update->mobile_image = $filename;
+                $update->mobile_image_size = $fileSize; // Store original file size
             }
-            
-            
         }
-
+    
         $update->save();
-
-        $response = ['status'=>true,"message" => "Updated Successfully!"];
-        return response($response, 200);
+    
+        return response(['status' => true, "message" => "Updated Successfully!"], 200);
     }
+    
 }
