@@ -33,11 +33,11 @@ class AllBannerController extends Controller
                 $compressedImage = Image::make($image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
                 $new->image = $filename . '.webp';
-                $new->image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
+                // $new->image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
             } else {
                 $image->move(public_path('AllBanners'), $filename);
                 $new->image = $filename;
-                $new->image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
+                // $new->image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
             }
         }
     
@@ -54,11 +54,11 @@ class AllBannerController extends Controller
                 $compressedImage = Image::make($mobile_image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
                 $new->mobile_image = $filename . '.webp';
-                $new->mobile_image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
+                // $new->mobile_image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
             } else {
                 $mobile_image->move(public_path('AllBanners'), $filename);
                 $new->mobile_image = $filename;
-                $new->mobile_image_size =  round($fileSize / 1024, 2) . ' KB';
+                // $new->mobile_image_size =  round($fileSize / 1024, 2) . ' KB';
             }
         }
     
@@ -90,11 +90,11 @@ class AllBannerController extends Controller
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
     
                 $update->image = $filename . '.webp';
-                $update->image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
+                // $update->image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
             } else {
                 $image->move(public_path('AllBanners'), $filename);
                 $update->image = $filename;
-                $update->image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
+                // $update->image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
             }
         }
     
@@ -116,11 +116,11 @@ class AllBannerController extends Controller
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
     
                 $update->mobile_image = $filename . '.webp';
-                $update->mobile_image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
+                // $update->mobile_image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
             } else {
                 $mobile_image->move(public_path('AllBanners'), $filename);
                 $update->mobile_image = $filename;
-                $update->mobile_image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
+                // $update->mobile_image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
             }
         }
     
