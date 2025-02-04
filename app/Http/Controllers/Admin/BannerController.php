@@ -26,13 +26,15 @@ class BannerController extends Controller
         if ($request->file('image')) {
             $image = $request->image;
             $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
-    
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-    
+                
             $new->image = $filename . '.webp';
             $new->image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
+            }
         }
     
         $new->mobile_link = $request->mobile_link;
@@ -40,13 +42,15 @@ class BannerController extends Controller
         if ($request->file('mobile_image')) {
             $image = $request->mobile_image;
             $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileExtension = $mobile_image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
-    
+
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-    
             $new->mobile_image = $filename . '.webp';
             $new->mobile_image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
+            }
         }
     
         $new->save();
@@ -66,13 +70,16 @@ class BannerController extends Controller
     
             $image = $request->image;
             $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
-    
+
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
     
             $update->image = $filename . '.webp';
             $update->image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
+            }
         }
     
         $update->mobile_link = $request->mobile_link;
@@ -84,13 +91,16 @@ class BannerController extends Controller
     
             $image = $request->mobile_image;
             $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileExtension = $mobile_image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
-    
+            
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
     
             $update->mobile_image = $filename . '.webp';
             $update->mobile_image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
+            }
         }
     
         $update->save();

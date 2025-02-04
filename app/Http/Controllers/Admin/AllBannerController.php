@@ -29,7 +29,7 @@ class AllBannerController extends Controller
             $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get file size in bytes
     
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
                 $compressedImage = Image::make($image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
                 $new->image = $filename . '.webp';
@@ -50,7 +50,7 @@ class AllBannerController extends Controller
             $fileExtension = $mobile_image->getClientOriginalExtension();
             $fileSize = $mobile_image->getSize(); // Get file size in bytes
     
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
                 $compressedImage = Image::make($mobile_image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
                 $new->mobile_image = $filename . '.webp';
@@ -85,7 +85,7 @@ class AllBannerController extends Controller
             $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get file size in bytes
     
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
                 $compressedImage = Image::make($image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
     
@@ -111,7 +111,7 @@ class AllBannerController extends Controller
             $fileExtension = $mobile_image->getClientOriginalExtension();
             $fileSize = $mobile_image->getSize(); // Get file size in bytes
     
-            if ($fileExtension !== 'svg' && $fileExtension !== 'gif') {
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
                 $compressedImage = Image::make($mobile_image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
     
