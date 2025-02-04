@@ -41,7 +41,7 @@ class BannerController extends Controller
     
         if ($request->file('mobile_image')) {
             $image = $request->mobile_image;
-            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $mobile_image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
 
@@ -69,7 +69,7 @@ class BannerController extends Controller
             }
     
             $image = $request->image;
-            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
 
@@ -90,7 +90,7 @@ class BannerController extends Controller
             }
     
             $image = $request->mobile_image;
-            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $mobile_image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
             
