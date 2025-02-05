@@ -65,7 +65,14 @@ class BlogCategoryController extends Controller
 
     public function delete($id)
     {
-        BlogCategory::find($id)->delete();
+        $file = BlogCategory::find($id);  
+
+        $logoPath = public_path('BlogCategoryThumbnail/' . $file->thumbnail);
+        if (file_exists($logoPath) && is_file($logoPath)) {
+            unlink($logoPath);
+        }
+  
+        $file->delete();
 
         $response = ['status'=>true,"message" => "Blog Category Deleted Successfully!"];
         return response($response, 200);
@@ -73,7 +80,18 @@ class BlogCategoryController extends Controller
 
     public function multi_delete(Request $request)
     {
-        BlogCategory::whereIn('id',$request->ids)->delete();
+        $data = BlogCategory::whereIn('id',$request->ids)->get();
+
+        foreach($data as $item)
+        {
+
+            $logoPath = public_path('BlogCategoryThumbnail/' . $item->thumbnail);
+            if (item_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
+            }
+
+            $item->delete();
+        }
 
 
         $response = ['status'=>true,"message" => "Blog Categories Deleted Successfully!"];
