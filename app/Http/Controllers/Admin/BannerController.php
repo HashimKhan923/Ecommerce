@@ -64,8 +64,9 @@ class BannerController extends Controller
         $update->link = $request->link;
     
         if ($request->file('image')) {
-            if ($update->image) {
-                unlink(public_path('Banner/' . $update->image));
+            $path = public_path('Banner/' . $update->image);
+            if (file_exists($path)) {
+                unlink($path);
             }
     
             $image = $request->image;
@@ -85,8 +86,9 @@ class BannerController extends Controller
         $update->mobile_link = $request->mobile_link;
     
         if ($request->file('mobile_image')) {
-            if ($update->mobile_image) {
-                unlink(public_path('Banner/' . $update->mobile_image));
+            $path = public_path('Banner/' . $update->mobile_image);
+            if (file_exists($path)) {
+                unlink($path);
             }
     
             $image = $request->mobile_image;
@@ -113,13 +115,13 @@ class BannerController extends Controller
     {
         $file = Banner::find($id);
 
-        if($file->image)
-        {
-            unlink(public_path('Banner/'.$file->image));
+        $path = public_path('Banner/' . $file->image);
+        if (file_exists($path)) {
+            unlink($path);
         }
-        if($file->mobile_image)
-        {
-            unlink(public_path('Banner/'.$file->mobile_image));
+        $path = public_path('Banner/' . $file->mobile_image);
+        if (file_exists($path)) {
+            unlink($path);
         }
 
       $file->delete();
@@ -134,14 +136,13 @@ class BannerController extends Controller
 
         foreach($data as $item)
         {
-            if($item->image)
-            {
-                unlink(public_path('Banner/'.$item->image));
+            $path = public_path('Banner/' . $item->image);
+            if (file_exists($path)) {
+                unlink($path);
             }
-
-            if($item->mobile_image)
-            {
-                unlink(public_path('Banner/'.$item->mobile_image));
+            $path = public_path('Banner/' . $item->mobile_image);
+            if (file_exists($path)) {
+                unlink($path);
             }
 
             $item->delete();
