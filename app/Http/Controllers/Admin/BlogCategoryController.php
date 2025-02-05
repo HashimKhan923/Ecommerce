@@ -17,9 +17,18 @@ class BlogCategoryController extends Controller
 
     public function create(Request $request)
     {
-        BlogCategory::create([
-            'name' => $request->name,
-        ]);
+        $new = new BlogCategory();
+        $new->name = $request->name;
+        if($request->file('thumbnail')){
+
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('BlogCategoryThumbnail'),$filename);
+            $new->thumbnail = $filename;
+        }
+        $new->meta_title = $request->meta_title;
+        $new->meta_description = $request->meta_description;
+        $new->save();
 
 
         $response = ['status'=>true,"message" => "Blog Category Created Successfully!"];
@@ -31,6 +40,24 @@ class BlogCategoryController extends Controller
         BlogCategory::where('id',$request->id)->update([
             'name' => $request->name
         ]);
+
+        $update = BlogCategory::where('id',$request->id)->first();
+        $update->name = $request->name;
+        if($request->file('thumbnail')){
+
+            $logoPath = public_path('BlogCategoryThumbnail/' . $update->thumbnail);
+            if (file_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
+            }
+
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('BlogCategoryThumbnail'),$filename);
+            $update->thumbnail = $filename;
+        }
+        $update->meta_title = $request->meta_title;
+        $update->meta_description = $request->meta_description;
+        $update->save();
 
         $response = ['status'=>true,"message" => "Blog Category Updated Successfully!"];
         return response($response, 200);
