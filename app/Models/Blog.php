@@ -11,6 +11,7 @@ class Blog extends Model
 
     protected $casts = [
         'meta_keywords' => 'array',
+        'tags'=>'array'
     ];
 
 
