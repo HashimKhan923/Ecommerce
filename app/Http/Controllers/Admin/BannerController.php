@@ -42,7 +42,7 @@ class BannerController extends Controller
         if ($request->file('mobile_image')) {
             $image = $request->mobile_image;
             $filename = date('YmdHis') . $image->getClientOriginalName();
-            $fileExtension = $mobile_image->getClientOriginalExtension();
+            $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
 
             if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
@@ -93,7 +93,7 @@ class BannerController extends Controller
     
             $image = $request->mobile_image;
             $filename = date('YmdHis') . $image->getClientOriginalName();
-            $fileExtension = $mobile_image->getClientOriginalExtension();
+            $fileExtension = $image->getClientOriginalExtension();
             $fileSize = $image->getSize(); // Get original file size in bytes
             
             if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
