@@ -32,9 +32,10 @@ class BannerController extends Controller
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
                 
-            $new->image = $filename . '.webp';
             // $new->image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
             }
+            $new->image = $filename . '.webp';
+
         }
     
         $new->mobile_link = $request->mobile_link;
@@ -48,9 +49,10 @@ class BannerController extends Controller
             if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            $new->mobile_image = $filename . '.webp';
+            
             // $new->mobile_image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
             }
+            $new->mobile_image = $filename . '.webp';
         }
     
         $new->save();
@@ -78,9 +80,10 @@ class BannerController extends Controller
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
     
-            $update->image = $filename . '.webp';
+            
             // $update->image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
             }
+            $update->image = $filename . '.webp';
         }
     
         $update->mobile_link = $request->mobile_link;
@@ -100,9 +103,10 @@ class BannerController extends Controller
             $compressedImage = Image::make($image->getRealPath());
             $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
     
-            $update->mobile_image = $filename . '.webp';
+            
             // $update->mobile_image_size = round(filesize(public_path('Banner') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Store compressed file size
             }
+            $update->mobile_image = $filename . '.webp';
         }
     
         $update->save();
