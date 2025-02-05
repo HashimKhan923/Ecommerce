@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use Storage;
+use Intervention\Image\Facades\Image;
+
 
 class BlogController extends Controller
 {
@@ -22,12 +24,16 @@ class BlogController extends Controller
         $new->blogcat_id = $request->blogcat_id;
         $new->user_id = $request->user_id;
         $new->title = $request->title;
-        if($request->file('thumbnail')){
-
-            $file= $request->thumbnail;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('BlogThumbnail'),$filename);
-            $new->thumbnail = $filename;
+        if ($request->file('thumbnail')) {
+            $image = $request->thumbnail;
+            $filename = date('YmdHis') . uniqid() . $image->getClientOriginalName();
+            $fileExtension = $image->getClientOriginalExtension();
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
+            $compressedImage = Image::make($image->getRealPath());
+            $compressedImage->encode('webp')->save(public_path('BlogThumbnail') . '/' . $filename . '.webp');
+                
+            $new->thumbnail = $filename . '.webp';
+            }
         }
         $new->description = $request->description;
         $new->content = $request->content;
@@ -44,17 +50,21 @@ class BlogController extends Controller
         $update->blogcat_id = $request->blogcat_id;
         $update->user_id = $request->user_id;
         $update->title = $request->title;
-        if($request->file('thumbnail')){
-
-            $logoPath = public_path('BlogThumbnail/' . $update->thumbnail);
-            if (file_exists($logoPath) && is_file($logoPath)) {
-                unlink($logoPath);
+        if ($request->file('thumbnail')) {
+            if ($update->thumbnail) {
+                unlink(public_path('BlogThumbnail/' . $update->thumbnail));
             }
+    
+            $image = $request->thumbnail;
+            $filename = date('YmdHis') . $image->getClientOriginalName();
+            $fileExtension = $image->getClientOriginalExtension();
 
-            $file= $request->thumbnail;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('BlogThumbnail'),$filename);
-            $update->thumbnail = $filename;
+            if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
+            $compressedImage = Image::make($image->getRealPath());
+            $compressedImage->encode('webp')->save(public_path('BlogThumbnail') . '/' . $filename . '.webp');
+    
+            $update->thumbnail = $filename . '.webp';
+            }
         }
         $update->description = $request->description;
         $update->content = $request->content;
