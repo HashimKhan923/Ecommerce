@@ -91,7 +91,7 @@ class BlogController extends Controller
         {
 
             $logoPath = public_path('BlogThumbnail/' . $item->thumbnail);
-            if (item_exists($logoPath) && is_file($logoPath)) {
+            if (file_exists($logoPath)) {
                 unlink($logoPath);
             }
 
