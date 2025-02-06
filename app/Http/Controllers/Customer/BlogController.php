@@ -24,7 +24,7 @@ class BlogController extends Controller
     }
 
 
-    public function load_more($length = null, $searchValue = null, $catId = null)
+    public function load_more($length = null, $catId = null, $searchValue = null)
     {
     
         $Blogs = Blog::with('user','blog_category');

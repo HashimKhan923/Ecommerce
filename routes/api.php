@@ -974,7 +974,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => '/blog'], function() {
             Route::controller(App\Http\Controllers\Customer\BlogController::class)->group(function () {
                 Route::get('show','index');
-                Route::get('load_more/{length}/{searchValue?}/{catId?}','load_more');
+                Route::get('load_more/{length}/{catId?}/{searchValue?}','load_more');
                 Route::get('detail/{id}','detail');
             });
         });
