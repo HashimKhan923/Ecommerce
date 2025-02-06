@@ -29,11 +29,11 @@ class BlogController extends Controller
     
         $Blogs = Blog::with('user','blog_category')->where('status',1);
     
-        if ($catId != null) {
+        if ($catId != 0) {
             $Blogs->where('cat_id', $catId);
         }
     
-        if ($searchValue != null) {
+        if ($searchValue != 0) {
             $Blogs->where(function ($query) use ($searchValue) {
                 $query->where('title', 'like', "%$searchValue%")
                       ->orWhere('description', 'like', "%$searchValue%")
