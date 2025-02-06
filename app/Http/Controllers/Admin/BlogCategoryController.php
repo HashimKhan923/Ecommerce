@@ -50,9 +50,13 @@ class BlogCategoryController extends Controller
         $update = BlogCategory::where('id',$request->id)->first();
         $update->name = $request->name;
         if ($request->file('thumbnail')) {
-            if ($update->thumbnail) {
-                unlink(public_path('BlogCategoryThumbnail/' . $update->thumbnail));
+
+
+            $logoPath = public_path('BlogCategoryThumbnail/' . $update->thumbnail);
+            if (file_exists($logoPath) && is_file($logoPath)) {
+                unlink($logoPath);
             }
+            
     
             $image = $request->thumbnail;
             $filename = date('YmdHis') . $image->getClientOriginalName();

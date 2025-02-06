@@ -51,9 +51,11 @@ class BlogController extends Controller
         $update->user_id = $request->user_id;
         $update->title = $request->title;
         if ($request->file('thumbnail')) {
-            if ($update->thumbnail) {
-                unlink(public_path('BlogThumbnail/' . $update->thumbnail));
+            $path = public_path('BlogThumbnail/' . $update->thumbnail);
+            if (file_exists($path) && is_file($path)) {
+                unlink($path);
             }
+
     
             $image = $request->thumbnail;
             $filename = date('YmdHis') . $image->getClientOriginalName();
@@ -101,7 +103,7 @@ class BlogController extends Controller
         {
 
             $logoPath = public_path('BlogThumbnail/' . $item->thumbnail);
-            if (file_exists($logoPath)) {
+            if (file_exists($logoPath) && is_file($logoPath)) {
                 unlink($logoPath);
             }
 
