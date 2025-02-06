@@ -10,9 +10,22 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
-    public function index($length = null, $searchValue = null, $catId = null)
+    public function index()
     {
         $BlogCategory = BlogCategory::all();
+
+        $Blogs = Blog::with('user','blog_category')->take(6);
+
+        return response()->json([
+            'categories' => $BlogCategory,
+            'blogs' => $Blogs
+        ]);
+
+    }
+
+
+    public function load_more($length = null, $searchValue = null, $catId = null)
+    {
     
         $Blogs = Blog::with('user','blog_category');
     
