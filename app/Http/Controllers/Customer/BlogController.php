@@ -14,7 +14,7 @@ class BlogController extends Controller
     {
         $BlogCategory = BlogCategory::all();
 
-        $Blogs = Blog::with('user','blog_category')->take(6);
+        $Blogs = Blog::with('user','blog_category')->take(6)->get();
 
         return response()->json([
             'categories' => $BlogCategory,
