@@ -56,6 +56,9 @@ class BlogController extends Controller
     {
         $Blog = Blog::with('user','blog_category')->where('id',$id)->first();
 
+        $Blog->view += 1;
+        $Blog->save();
+
         return response()->json([
             'blogs' => $Blog
         ]);
