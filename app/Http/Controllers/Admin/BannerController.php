@@ -76,7 +76,7 @@ class BannerController extends Controller
     
         if ($request->file('image')) {
             $path = public_path('Banner/' . $update->image);
-            if (file_exists($path)) {
+            if (file_exists($path) && is_file($path)) {
                 unlink($path);
             }
     
@@ -104,7 +104,7 @@ class BannerController extends Controller
     
         if ($request->file('mobile_image')) {
             $path = public_path('Banner/' . $update->mobile_image);
-            if (file_exists($path)) {
+            if (file_exists($path) && is_file($path)) {
                 unlink($path);
             }
     
@@ -138,7 +138,7 @@ class BannerController extends Controller
         $file = Banner::find($id);
 
         $path = public_path('Banner/' . $file->image);
-        if (file_exists($path)) {
+        if (file_exists($path) && is_file($path)) {
             unlink($path);
         }
         $path = public_path('Banner/' . $file->mobile_image);

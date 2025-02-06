@@ -27,17 +27,14 @@ class AllBannerController extends Controller
             $image = $request->image;
             $filename = date('YmdHis') . $image->getClientOriginalName();
             $fileExtension = $image->getClientOriginalExtension();
-            $fileSize = $image->getSize(); // Get file size in bytes
     
             if ($fileExtension !== 'svg' && $fileExtension !== 'gif' && $fileExtension !== 'webp') {
                 $compressedImage = Image::make($image->getRealPath());
                 $compressedImage->encode('webp')->save(public_path('AllBanners') . '/' . $filename . '.webp');
                 $new->image = $filename . '.webp';
-                // $new->image_size = round(filesize(public_path('AllBanners') . '/' . $filename . '.webp') / 1024, 2) . ' KB'; // Get compressed file size
             } else {
                 $image->move(public_path('AllBanners'), $filename);
                 $new->image = $filename;
-                // $new->image_size =  round($fileSize / 1024, 2) . ' KB'; // Store original file size
             }
         }
     
