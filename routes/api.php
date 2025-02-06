@@ -968,6 +968,15 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
+
+                                     /// Bolg  \\\
+
+        Route::group(['prefix' => '/blog'], function() {
+            Route::controller(App\Http\Controllers\Customer\BlogController::class)->group(function () {
+                Route::get('show/{length}/{searchValue?}/{catId?}','index');
+            });
+        });
+
                                                    /// Address \\\
 
         Route::group(['prefix' => '/address'], function() {
