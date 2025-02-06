@@ -48,7 +48,6 @@ class BlogController extends Controller
         $Blogs = $Blogs->take(6)->get();
     
         return response()->json([
-            'categories' => $BlogCategory,
             'blogs' => $Blogs
         ]);
     }
