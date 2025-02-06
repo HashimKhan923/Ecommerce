@@ -159,11 +159,11 @@ class BannerController extends Controller
         foreach($data as $item)
         {
             $path = public_path('Banner/' . $item->image);
-            if (file_exists($path)) {
+            if (file_exists($path) && is_file($path)) {
                 unlink($path);
             }
             $path = public_path('Banner/' . $item->mobile_image);
-            if (file_exists($path)) {
+            if (file_exists($path) && is_file($path)) {
                 unlink($path);
             }
 

@@ -863,6 +863,15 @@ class ProductController extends Controller
         {
             $checkCount = ProductGallery::where('image',$item->image)->count();
 
+            if($checkCount < 2)
+            {
+                $fileToDelete = public_path('ProductGallery/'.$item->image);
+                
+                if (file_exists($fileToDelete) && is_file($fileToDelete)) {
+                    unlink($fileToDelete);
+                } 
+            }
+
 
                 unlink(public_path('ProductGallery/'.$item->image));
         }
@@ -874,15 +883,14 @@ class ProductController extends Controller
 
             if($checkCount < 2)
             {
-                unlink(public_path('ProductVarient/'.$item->image));
+                $fileToDelete = public_path('ProductVarient/'.$item->image);
+                
+                if (file_exists($fileToDelete) && is_file($fileToDelete)) {
+                    unlink($fileToDelete);
+                } 
             }
         }
 
-
-      if($file->meta_img)
-      {
-          unlink(public_path('ProductMetaImg/'.$file->meta_img));
-      }
 
         $file->delete();
 
@@ -909,7 +917,7 @@ class ProductController extends Controller
                 {
                     $fileToDelete = public_path('ProductGallery/'.$item1->image);
 
-                        if (file_exists($fileToDelete)) {
+                        if (file_exists($fileToDelete) && is_file($fileToDelete)) {
                             unlink($fileToDelete);
                         } 
                 }
@@ -924,17 +932,13 @@ class ProductController extends Controller
                 {
                     $fileToDelete = public_path('ProductVarient/'.$item2->image);
 
-                    if (file_exists($fileToDelete)) {
+                    if (file_exists($fileToDelete) && is_file($fileToDelete)) {
                         unlink($fileToDelete);
                     } 
                 }
             }
     
-    
-          if($item->meta_img)
-          {
-              unlink(public_path('ProductMetaImg/'.$item->meta_img));
-          }
+
     
 
             $item->delete();
@@ -1053,7 +1057,7 @@ class ProductController extends Controller
         {
             $fileToDelete = public_path('ProductGallery/'.$file->image);
 
-            if (file_exists($fileToDelete)) {
+            if (file_exists($fileToDelete) && is_file($fileToDelete)) {
                 unlink($fileToDelete);
             } 
         }
