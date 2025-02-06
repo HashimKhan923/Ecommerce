@@ -52,5 +52,14 @@ class BlogController extends Controller
             'blogs' => $Blogs
         ]);
     }
+
+    public function detail($id)
+    {
+        $Blog = Blog::with('user','blog_category')->where('id',$id)->first();
+
+        return response()->json([
+            'blogs' => $Blog
+        ]);
+    }
     
 }
