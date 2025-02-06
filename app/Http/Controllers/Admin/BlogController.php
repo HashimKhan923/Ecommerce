@@ -114,6 +114,28 @@ class BlogController extends Controller
         return response($response, 200);
     }
 
+    public function status($id)
+    {
+      $blog = Blog::where('id',$id)->first();
+
+      if($blog->status == 1)
+      {
+        $blog->status = 0;
+      }
+      else
+      {
+        $blog->status = 1;
+      }
+
+      $blog->save();
+
+      
+      $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+      return response($response, 200);
+
+
+    }
+
 
     
 }

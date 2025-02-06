@@ -12,7 +12,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $BlogCategory = BlogCategory::all();
+        $BlogCategory = BlogCategory::where('status',1)->get();
 
         $Blogs = Blog::with('user','blog_category')->take(6)->get();
 
@@ -27,7 +27,7 @@ class BlogController extends Controller
     public function load_more($length = null, $catId = null, $searchValue = null)
     {
     
-        $Blogs = Blog::with('user','blog_category');
+        $Blogs = Blog::with('user','blog_category')->where('status',1);
     
         if ($catId != null) {
             $Blogs->where('cat_id', $catId);
@@ -61,5 +61,8 @@ class BlogController extends Controller
             'blogs' => $Blog
         ]);
     }
+
+
+
     
 }
