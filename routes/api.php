@@ -460,7 +460,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                                                  /// Support Policy \\\
             
-                    Route::group(['prefix' => '/admin/supportpolicy/'], function() {
+                    Route::group(['prefix' => '/admin/support_policy/'], function() {
                         Route::controller(App\Http\Controllers\Admin\SupportPolicyController::class)->group(function () {
                             Route::get('show','index');
                             Route::post('createOrUpdate','createOrUpdate');
@@ -469,7 +469,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                             /// Cookies Policy \\\
 
-                    Route::group(['prefix' => '/admin/cookiespolicy/'], function() {
+                    Route::group(['prefix' => '/admin/cookies_policy/'], function() {
                     Route::controller(App\Http\Controllers\Admin\CookiesPolicyController::class)->group(function () {
                         Route::get('show','index');
                         Route::post('createOrUpdate','createOrUpdate');
@@ -1158,7 +1158,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                     /// Support Policy \\\
 
-            Route::group(['prefix' => 'supportpolicy/'], function() {
+            Route::group(['prefix' => 'support_policy/'], function() {
                 Route::controller(App\Http\Controllers\Customer\SupportPolicyController::class)->group(function () {
                     Route::get('web/show','web_index');
                     Route::get('app/show','app_index');
@@ -1168,7 +1168,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             
                                         /// Cookies Policy \\\
 
-            Route::group(['prefix' => 'cookiespolicy/'], function() {
+            Route::group(['prefix' => 'cookies_policy/'], function() {
                 Route::controller(App\Http\Controllers\Customer\CookiesPolicyController::class)->group(function () {
                     Route::get('web/show','web_index');
                     Route::get('app/show','app_index');
