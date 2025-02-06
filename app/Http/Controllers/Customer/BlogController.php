@@ -37,7 +37,8 @@ class BlogController extends Controller
             $Blogs->where(function ($query) use ($searchValue) {
                 $query->where('title', 'like', "%$searchValue%")
                       ->orWhere('description', 'like', "%$searchValue%")
-                      ->orWhere('content', 'like', "%$searchValue%");
+                      ->orWhere('content', 'like', "%$searchValue%")
+                      ->orWhereJsonContains('tags', $searchValue);
             });
         }
     
