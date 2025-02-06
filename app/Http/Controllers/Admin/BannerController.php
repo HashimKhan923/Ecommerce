@@ -142,7 +142,7 @@ class BannerController extends Controller
             unlink($path);
         }
         $path = public_path('Banner/' . $file->mobile_image);
-        if (file_exists($path)) {
+        if (file_exists($path) && is_file($path)) {
             unlink($path);
         }
 
