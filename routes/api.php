@@ -458,6 +458,24 @@ Route::group(['middleware' => ['auth:api']], function(){
                         });
                     });  
 
+                                                                 /// Support Policy \\\
+            
+                    Route::group(['prefix' => '/admin/supportpolicy/'], function() {
+                        Route::controller(App\Http\Controllers\Admin\SupportPolicyController::class)->group(function () {
+                            Route::get('show','index');
+                            Route::post('createOrUpdate','createOrUpdate');
+                        });
+                    });  
+
+                                            /// Cookies Policy \\\
+
+                    Route::group(['prefix' => '/admin/cookiespolicy/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\CookiesPolicyController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::post('createOrUpdate','createOrUpdate');
+                    });
+                    });  
+
 
                                                         /// Contact us \\\
 
@@ -1136,6 +1154,26 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::get('app/show','app_index');
             });
         });  
+
+
+                                    /// Support Policy \\\
+
+            Route::group(['prefix' => 'supportpolicy/'], function() {
+                Route::controller(App\Http\Controllers\Customer\SupportPolicyController::class)->group(function () {
+                    Route::get('web/show','web_index');
+                    Route::get('app/show','app_index');
+                });
+            }); 
+            
+            
+                                        /// Cookies Policy \\\
+
+            Route::group(['prefix' => 'cookiespolicy/'], function() {
+                Route::controller(App\Http\Controllers\Customer\CookiesPolicyController::class)->group(function () {
+                    Route::get('web/show','web_index');
+                    Route::get('app/show','app_index');
+                });
+            });  
 
 
                                                         /// F&Qs \\\
