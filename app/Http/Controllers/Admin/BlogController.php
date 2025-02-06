@@ -67,6 +67,13 @@ class BlogController extends Controller
     
             $update->thumbnail = $filename . '.webp';
             }
+            else
+            {
+                $image->move(public_path('BlogThumbnail'),$filename);
+                $update->thumbnail = $filename;
+            }
+
+
         }
         $update->description = $request->description;
         $update->content = $request->content;

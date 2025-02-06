@@ -68,6 +68,11 @@ class BlogCategoryController extends Controller
     
             $update->thumbnail = $filename . '.webp';
             }
+            else
+            {
+                $image->move(public_path('BlogCategoryThumbnail'),$filename);
+                $update->thumbnail = $filename;
+            }
         }
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
