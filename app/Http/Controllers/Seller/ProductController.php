@@ -761,44 +761,65 @@ class ProductController extends Controller
                 $product->update($productFields);
 
                 // Update product variants
-                if (isset($productData['product_variants'])) {
+                // if (isset($productData['product_variants'])) {
+                //     foreach ($productData['product_variants'] as $variantData) {
+                //         $variant = ProductVarient::find($variantData['id']);
+                        
+                //         if ($variant) {
+                //             $variantFields = array_filter($variantData, function($key) {
+                //                 return in_array($key, ['varient_price', 'varient_discount_price','varient_sku','varient_stock','varient_image']);
+                //             }, ARRAY_FILTER_USE_KEY);
+
+                //             if (isset($variantFields['varient_price'])) {
+                //                 $variantFields['price'] = $variantFields['varient_price'];
+                //                 unset($variantFields['varient_price']);
+                //             }
+
+                //             if (isset($variantFields['varient_discount_price'])) {
+                //                 $variantFields['discount_price'] = $variantFields['varient_discount_price'];
+                //                 unset($variantFields['varient_discount_price']);
+                //             }
+
+                //             if (isset($variantFields['varient_sku'])) {
+                //                 $variantFields['sku'] = $variantFields['varient_sku'];
+                //                 unset($variantFields['varient_sku']);
+                //             }
+
+                //             if (isset($variantFields['varient_stock'])) {
+                //                 $variantFields['stock'] = $variantFields['varient_stock'];
+                //                 unset($variantFields['varient_stock']);
+                //             }
+
+                //             if (isset($variantFields['varient_image'])) {
+                //                 $variantFields['image'] = $variantFields['varient_image'];
+                //                 unset($variantFields['varient_image']);
+                //             }
+
+                //             $variant->update($variantFields);
+                //         }
+                //     }
+                // }
+
+
+                if (!empty($productData['product_variants'])) {
                     foreach ($productData['product_variants'] as $variantData) {
                         $variant = ProductVarient::find($variantData['id']);
                         
                         if ($variant) {
-                            $variantFields = array_filter($variantData, function($key) {
-                                return in_array($key, ['varient_price', 'varient_discount_price','varient_sku','varient_stock','varient_image']);
-                            }, ARRAY_FILTER_USE_KEY);
-
-                            if (isset($variantFields['varient_price'])) {
-                                $variantFields['price'] = $variantFields['varient_price'];
-                                unset($variantFields['varient_price']);
-                            }
-
-                            if (isset($variantFields['varient_discount_price'])) {
-                                $variantFields['discount_price'] = $variantFields['varient_discount_price'];
-                                unset($variantFields['varient_discount_price']);
-                            }
-
-                            if (isset($variantFields['varient_sku'])) {
-                                $variantFields['sku'] = $variantFields['varient_sku'];
-                                unset($variantFields['varient_sku']);
-                            }
-
-                            if (isset($variantFields['varient_stock'])) {
-                                $variantFields['stock'] = $variantFields['varient_stock'];
-                                unset($variantFields['varient_stock']);
-                            }
-
-                            if (isset($variantFields['varient_image'])) {
-                                $variantFields['image'] = $variantFields['varient_image'];
-                                unset($variantFields['varient_image']);
-                            }
-
+                            // Map old keys to new keys
+                            $variantFields = [
+                                'price' => $variantData['varient_price'] ?? null,
+                                'discount_price' => $variantData['varient_discount_price'] ?? null,
+                                'sku' => $variantData['varient_sku'] ?? null,
+                                'stock' => $variantData['varient_stock'] ?? null,
+                                'image' => $variantData['varient_image'] ?? null,
+                            ];
+                
                             $variant->update($variantFields);
                         }
                     }
                 }
+                
 
                 // Update stock
                 $stock = Stock::where('product_id', $productData['id'])->firstOrNew(['product_id' => $productData['id']]);
