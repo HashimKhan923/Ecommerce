@@ -15,7 +15,7 @@ class VarientController extends Controller
 
         $fileToDelete = public_path('ProductVarient/'.$file->image);
 
-        if (file_exists($fileToDelete)) {
+        if (file_exists($fileToDelete) && is_file($fileToDelete)) {
             unlink($fileToDelete);
         } 
         $file->delete();
