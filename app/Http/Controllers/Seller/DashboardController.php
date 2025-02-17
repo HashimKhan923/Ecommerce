@@ -86,7 +86,7 @@ class DashboardController extends Controller
         $draftProducts = Product::where('shop_id', $shop_id)->where('published', 0)->count();
 
         // Order Data
-        $orders = Shop::with('order.payout')->where('id',$shop_id)->get();
+        $orders = Shop::with('order.payout','order.order_refund')->where('id',$shop_id)->get();
  
 
         // Payout Data
