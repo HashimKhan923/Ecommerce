@@ -50,6 +50,10 @@
     </style>
 </head>
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <body>
     <div class="container">
         <div class="logo">
@@ -62,8 +66,15 @@
             <hr>
 
             <div>
-                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $ProductImage }}" width="150px"
-                    alt="">
+
+
+                    @if(Str::startsWith($ProductImage, 'https'))
+                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $ProductImage }}"
+                                width="100px">
+                                 @else
+                                 <img src="{{ $ProductImage }}"
+                                 width="100px">                          
+                                @endif
 
                 <h4><strong>Product : </strong>{{ $ProductName }}</h4>
                 <!-- <img src="https://api.dragonautomart.com/ShopLogo/{{ $ShopImage }}" width="100" alt="Product Image"> -->

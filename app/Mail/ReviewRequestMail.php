@@ -12,16 +12,16 @@ class ReviewRequestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    public $order_detail;
 
-    public function __construct(OrderDetail $order)
+    public function __construct(OrderDetail $order_detail)
     {
-        $this->order = $order;
+        $this->order_detail = $order_detail;
     }
 
     public function build()
     {
-        return $this->subject('Review Your Purchase on Dragon Auto Mart')
+        return $this->subject('Product Review')
                     ->view('emails.review_request');
     }
 }

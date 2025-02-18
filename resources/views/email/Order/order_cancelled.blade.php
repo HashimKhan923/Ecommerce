@@ -50,6 +50,10 @@
     </style>
 </head>
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <body>
     <div class="container">
         <div class="logo">
@@ -100,8 +104,15 @@
                     <tr>
                         <td
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                            <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}"
+
+
+                                @if(Str::startsWith($detail->products->product_gallery->first()->image, 'https'))
+                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}"
                                 width="100px" alt="{{ $detail->products->name }}">
+                                 @else
+                                 <img src="{{ $detail->products->product_gallery->first()->image }}"
+                                 width="100px" alt="{{ $detail->products->name }}">                          
+                                @endif
 
                         </td>
                         <td

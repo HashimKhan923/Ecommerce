@@ -50,6 +50,10 @@
     </style>
 </head>
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <body>
     <div class="container">
         <div class="logo">
@@ -61,8 +65,18 @@
     
         <p>We are excited to inform you that the product you were interested in is now back in stock:</p>
         <br>
-        <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $productImage }}"
-        width="150px" alt="">
+
+
+
+        @if(Str::startsWith($ProductImage, 'https'))
+                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $ProductImage }}"
+                                width="100px">
+                                 @else
+                                 <img src="{{ $ProductImage }}"
+                                 width="150px">                          
+                                @endif
+
+        
         <h3>{{ $productName }}</h3>
         @if($variantName)
             <p>Variant: {{ $variantName }}</p>

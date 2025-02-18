@@ -50,6 +50,10 @@
     </style>
 </head>
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <body>
     <div class="container">
         <div class="logo">
@@ -109,8 +113,15 @@
                     <tr>
                         <td
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                            <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
-                                width="100px" alt="">
+
+
+                                @if(Str::startsWith($orderProduct['product_image'], 'https'))
+                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
+                                width="100px">
+                                 @else
+                                 <img src="{{ $orderProduct['product_image'] }}"
+                                 width="100px">                          
+                                @endif
                         </td>
                         <td
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">

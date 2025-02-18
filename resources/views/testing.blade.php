@@ -1,96 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dragon Auto Mart Newsletter</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
         }
+
         .container {
-            width: 100%;
             max-width: 600px;
-            margin: auto;
-            background: white;
-            border: 1px solid #dddddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        .content {
+            margin: 30px auto;
+            background-color: #ffffff;
             padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .category {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .category img {
+
+        .logo img {
             width: 100%;
-            max-width: 250px;
             height: auto;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
         }
-        .category h3 {
-            margin: 10px 0;
+
+        .content {
+            margin-top: 20px;
         }
-        .button {
+
+        .verification-link {
             display: inline-block;
-            background-color: #4CAF50;
-            color: white;
             padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
             text-decoration: none;
             border-radius: 5px;
         }
+
         .footer {
-            background-color: #f4f4f4;
-            color: #666666;
+            margin-top: 20px;
             text-align: center;
-            padding: 10px 20px;
-            font-size: 12px;
+            color: #888888;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Welcome to Dragon Auto Mart!</h1>
+        <div class="logo">
+            <img src="https://api.dragonautomart.com/gmail_banner.png" alt="Company Logo">
         </div>
+
         <div class="content">
-            <h2>Top Categories</h2>
-            <div class="category">
-                <a href="https://dragonautomart.com/headlights">
-                    <img src="https://dragonautomart.com/images/headlights.png" alt="Head Lights">
+        <p>Dear Customer,</p>
+
+            <p>We hope you’re enjoying your purchase of <strong>product name</strong>!</p>
+
+            <p><img src="" alt="" 
+                    style="max-width: 200px; height: auto; border-radius: 5px;"></p>
+
+            <p>We’d love to hear your thoughts. Please take a moment to leave a review:</p>
+
+            <p>
+                <a href="" 
+                style="background: #007bff; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
+                    Leave a Review
                 </a>
-                <h3>Head Lights</h3>
-                <a class="button" href="https://dragonautomart.com/headlights">Shop Now</a>
-            </div>
-            <div class="category">
-                <a href="https://dragonautomart.com/taillights">
-                    <img src="https://api.dragonautomart.com/images/taillights.png" alt="Tail Lights">
-                </a>
-                <h3>Tail Lights</h3>
-                <a class="button" href="https://dragonautomart.com/taillights">Shop Now</a>
-            </div>
-            <div class="category">
-                <a href="https://dragonautomart.com/foglights">
-                    <img src="https://api.dragonautomart.com/images/foglights.png" alt="Fog Lights">
-                </a>
-                <h3>Fog Lights</h3>
-                <a class="button" href="https://dragonautomart.com/foglights">Shop Now</a>
-            </div>
-        </div>
-        <div class="footer">
-            <p>&copy; 2024 Dragon Auto Mart. All rights reserved.</p>
-            <p>If you no longer wish to receive these emails, please <a href="https://dragonautomart.com/unsubscribe">unsubscribe</a>.</p>
+            </p>
+
+            <p>Thank you for shopping with Dragon Auto Mart!</p>
         </div>
     </div>
+
 </body>
+
 </html>

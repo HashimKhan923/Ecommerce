@@ -50,6 +50,10 @@
     </style>
 </head>
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <body>
     <div class="container">
         <div class="logo">
@@ -57,7 +61,29 @@
         </div>
 
         <div class="content">
+        <p>Dear Customer,</p>
 
+            <p>We hope you’re enjoying your purchase of <strong>{{ $order->product_name }}</strong>!</p>
+
+            <p>
+            @if(Str::startsWith($order_detail->product_image, 'https'))
+                <img src="{{ $order_detail->product_image }}" alt="{{ $order_detail->product_name }}" style="max-width: 200px; height: auto; border-radius: 5px;">
+            @else
+                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $order_detail->product_image }}" alt="{{ $order_detail->product_name }}" style="max-width: 200px; height: auto; border-radius: 5px;">
+            @endif
+
+            </p>
+
+            <p>We’d love to hear your thoughts. Please take a moment to leave a review:</p>
+
+            <p>
+                <a href="{{ 'https://dragonautomart.com/product/' . $order_detail->product_id }}" 
+                style="background: #007bff; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
+                    Leave a Review
+                </a>
+            </p>
+
+            <p>Thank you for shopping with Dragon Auto Mart!</p>
         </div>
     </div>
 
