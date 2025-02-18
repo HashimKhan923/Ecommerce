@@ -116,10 +116,10 @@
 
 
                                 @if(Str::startsWith($orderProduct['product_image'], 'https'))
-                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
+                                <img src="{{ $orderProduct['product_image'] }}"
                                 width="100px">
                                  @else
-                                 <img src="{{ $orderProduct['product_image'] }}"
+                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
                                  width="100px">                          
                                 @endif
                         </td>

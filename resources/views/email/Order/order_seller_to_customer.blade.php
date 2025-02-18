@@ -106,10 +106,12 @@
                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
 
                                 @if(Str::startsWith($detail->products->product_gallery->first()->image, 'https'))
-                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}"
+                                <img src="{{ $detail->products->product_gallery->first()->image }}"
+
                                 width="100px">
                                  @else
-                                 <img src="{{ $detail->products->product_gallery->first()->image }}"
+                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}"
+
                                  width="100px">                          
                                 @endif
                         </td>

@@ -107,10 +107,10 @@
 
 
                                 @if(Str::startsWith($detail->products->product_gallery->first()->image, 'https'))
-                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}"
+                                <img src="{{ $detail->products->product_gallery->first()->image }}"
                                 width="100px" alt="{{ $detail->products->name }}">
                                  @else
-                                 <img src="{{ $detail->products->product_gallery->first()->image }}"
+                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $detail->products->product_gallery->first()->image }}"
                                  width="100px" alt="{{ $detail->products->name }}">                          
                                 @endif
 
