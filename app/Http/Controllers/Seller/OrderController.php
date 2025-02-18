@@ -17,6 +17,8 @@ use App\Models\ProductListingPayment;
 use App\Models\NagativePayoutBalance;
 use App\Models\OrderTimeline;
 use Mail;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
 
 class OrderController extends Controller
 {
@@ -29,10 +31,24 @@ class OrderController extends Controller
 
     public function detail($id)
     {
+        $StripRiskEvaluation = '';
+
         $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.sub_category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_detail.products.shop.shop_policy','order_status','order_tracking','order_refund','shop','nagative_payout_balance','coupon_user.coupon','order_timeline')->where('id',$id)->first();
+        if($data->payment_method == 'STRIPE')
+        {
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            
+                $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id);
+            
+                $StripRiskEvaluation = $paymentIntent->charges->data;
+
+        
+        }
 
         return response()->json(['data'=>$data]);
-    }
+
+    }    
 
     public function delivery_status(Request $request)
     {   
