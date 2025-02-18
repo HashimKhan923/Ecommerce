@@ -33,7 +33,7 @@ class OrderController extends Controller
 
     public function detail($id)
     {
-        $charge = '';
+        $paymentIntent = '';
 
         $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.sub_category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_detail.products.shop.shop_policy','order_status','order_tracking','order_refund','shop','nagative_payout_balance','coupon_user.coupon','order_timeline')->where('id',$id)->first();
         if($data->payment_method == 'STRIPE')
@@ -44,19 +44,15 @@ class OrderController extends Controller
                 $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id); // Use PaymentIntent instead of Charge
             
                 // Extract charge details
-                $charges = $paymentIntent->charges->data;
-                if (!empty($charges)) {
-                    $charge = $charges[0]; // Get the first charge
-                } else {
-                    $charge = 'No charge found for this Payment Intent';
-                }
+                
+   
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);
             }
             
         }
 
-        return response()->json(['data'=>$data,'charge'=>$charge]);
+        return response()->json(['data'=>$data,'paymentIntent'=>$paymentIntent]);
 
     }    
 
