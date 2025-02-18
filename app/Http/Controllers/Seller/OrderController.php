@@ -19,6 +19,8 @@ use App\Models\OrderTimeline;
 use Mail;
 use Stripe\Stripe;
 use Stripe\Charge;
+use Stripe\PaymentIntent;
+
 
 class OrderController extends Controller
 {
@@ -38,10 +40,19 @@ class OrderController extends Controller
         {
             
 
-            Stripe::setApiKey(env('STRIPE_SECRET'));
-
+            try {
+                $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id); // Use PaymentIntent instead of Charge
             
-            $charge = Charge::retrieve($data->stripe_payment_id);
+                // Extract charge details
+                $charges = $paymentIntent->charges->data;
+                if (!empty($charges)) {
+                    $charge = $charges[0]; // Get the first charge
+                } else {
+                    $charge = 'No charge found for this Payment Intent';
+                }
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()]);
+            }
             
         }
 
