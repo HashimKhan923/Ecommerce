@@ -41,12 +41,27 @@ class OrderController extends Controller
             
                 $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id);
             
-                $StripRiskEvaluation = $paymentIntent->charges->data;
+                $charges = $paymentIntent->charges->data;
+                if (!empty($charges)) {
+                    $charge = $charges[0];
+                    $risk_level = $charge->outcome->risk_level ?? 'Unknown';
+                    $risk_score = $charge->outcome->risk_score ?? 'Unknown';
+                    $review = $charge->review ?? 'No review';
+            
+                    return response()->json([
+                        'data'=>$data,
+                        'risk_level' => $risk_level,
+                        'risk_score' => $risk_score,
+                        'review' => $review
+                    ]);
+                } else {
+                    return response()->json(['error' => 'No charges found for this Payment Intent']);
+                }
 
         
         }
 
-        return response()->json(['data'=>$data,'StripRiskEvaluation'=>$StripRiskEvaluation]);
+        return response()->json(['data'=>$data]);
 
     }    
 
