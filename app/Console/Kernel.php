@@ -19,9 +19,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('deals:update-status')->everyMinute();
-        $schedule->command('coupon:update')->hourly();
+        // $schedule->command('coupon:update')->hourly();
         $schedule->command('payout:update')->daily();
         $schedule->command('notify:back-in-stock')->daily();
+        $schedule->command('send:review-request')->daily();
     }
 
 

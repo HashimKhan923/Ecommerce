@@ -77,7 +77,7 @@
             <p>We’d love to hear your thoughts. Please take a moment to leave a review:</p>
 
             <p>
-                <a href="{{ 'https://dragonautomart.com/orders/detail?id=' . $order_detail->order_id }}" 
+                <a href="{{ 'https://dragonautomart.com/product/' . $order_detail->product_id }}" 
                 style="background: #007bff; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
                     Leave a Review
                 </a>
