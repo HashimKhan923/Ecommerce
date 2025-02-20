@@ -19,7 +19,7 @@ class SendReviewRequestEmail extends Command
     {
         $sevenDaysAgo = Carbon::now()->subDays(7)->startOfDay();
 
-        $orders = Order::whereDate('created_at', '=', $sevenDaysAgo)->where('delivery_status','Delivered')->get();
+        $orders = Order::where('delivery_status','Delivered')->get();
 
         foreach ($orders as $order) {
 
