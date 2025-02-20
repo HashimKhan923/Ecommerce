@@ -63,7 +63,7 @@
         <div class="content">
         <p>Dear Customer,</p>
 
-            <p>We hope you’re enjoying your purchase of <strong>{{ $order->product_name }}</strong>!</p>
+            <p>We hope you’re enjoying your purchase of <strong>{{ $order_detail->product_name }}</strong>!</p>
 
             <p>
             @if(Str::startsWith($order_detail->product_image, 'https'))
