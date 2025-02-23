@@ -13,13 +13,13 @@ use App\Mail\ReviewRequestMail;
 class SendReviewRequestEmail extends Command
 {
     protected $signature = 'send:review-request';
-    protected $description = 'Send review request email 7 days after order is placed';
+    protected $description = 'Send review request email 10 days after order is placed';
 
     public function handle()
     {
-        $sevenDaysAgo = Carbon::now()->subDays(10)->startOfDay();
+        $tenDaysAgo = Carbon::now()->subDays(10)->startOfDay();
 
-        $orders = Order::where('delivery_status','Delivered')->get();
+        $orders = Order::whereDate('created_at', '=', $tenDaysAgo)->where('delivery_status','Delivered')->get();
 
         foreach ($orders as $order) {
 
