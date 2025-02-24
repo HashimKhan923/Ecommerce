@@ -199,6 +199,7 @@ class ProductController extends Controller
             ProductGallery::create([
                 'product_id' => $new->id,
                 'image' => $image['file'],
+                'url' => $image['file'],
                 'order' => $image['order']
             ]);
         }
@@ -209,18 +210,23 @@ class ProductController extends Controller
         foreach ($request->photos as $image) {
                 // Generate a unique filename
                 $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
-                
+    
                 // Compress and save the image
-                $compressedImage =ImageFacade::make($image['file']->getRealPath());
-                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename . '.webp');
+                $compressedImage = ImageFacade::make($image['file']->getRealPath());
+                $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
                 
-                // Set the filename with the new extension
-                $filename = $filename . '.webp';
+                // // Set the filename with the new extension
+                // $filename = $filename . '.webp';
+
+                                // Generate full URL
+                $fileUrl = asset('ProductGallery/' . $filename);
+
 
             // Create a new ProductGallery entry
             ProductGallery::create([
                 'product_id' => $new->id,
                 'image' => $filename,
+                'url' => $fileUrl,
                 'order' => $image['order'],
             ]);
         }
@@ -396,7 +402,8 @@ class ProductController extends Controller
                                 ProductGallery::create([
                                     'product_id' => $new->id,
                                     'order' => $order++,
-                                    'image' => $url
+                                    'image' => $url,
+                                    'url' => $url
                                 ]);
                             // } else {
                             //     return response()->json(['message' => 'Failed to download one or more images'], 500);
@@ -584,11 +591,15 @@ class ProductController extends Controller
                         $filename = date('YmdHis') . '_' . (string) Str::uuid() . '.webp';
                         $compressedImage = ImageFacade::make($image['file']->getRealPath());
                         $compressedImage->encode('webp')->save(public_path('ProductGallery') . '/' . $filename);
+
+                        $fileUrl = asset('ProductGallery/' . $filename);
+
     
                         ProductGallery::create([
                             'product_id' => $product->id,
                             'order' => $image['order'],
-                            'image' => $filename
+                            'image' => $filename,
+                            'url' => $fileUrl
                         ]);
                     }
                 }
