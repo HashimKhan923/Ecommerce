@@ -12,7 +12,7 @@ use App\Models\Brand;
 
 class SiteMapController extends Controller
 {
-    public function product_ids()
+    public function index()
     {
       $products = Product::pluck('id','name');
       $categories = Category::pluck('id','name');

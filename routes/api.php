@@ -1239,7 +1239,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => 'sitemap/'], function() {
                 Route::controller(App\Http\Controllers\Customer\SiteMapController::class)->group(function () {
-                    Route::get('product_ids','product_ids');
+                    Route::get('show_data','index');
                 });
             });
 
