@@ -14,11 +14,11 @@ class SiteMapController extends Controller
 {
     public function index()
     {
-      $products = Product::pluck('id','name');
-      $categories = Category::pluck('id','name');
-      $sub_categories = SubCategory::pluck('id','name');
-      $models = Models::pluck('id','name');
-      $brands = Brand::pluck('id','name');
+      $products = Product::select('id', 'name')->get();
+      $categories = Category::select('id', 'name')->get();
+      $sub_categories = SubCategory::select('id', 'name')->get();
+      $models = Models::select('id', 'name')->get();
+      $brands = Brand::select('id', 'name')->get();
 
       return response()->json(['products'=> $products,'categories'=> $categories,'sub_categories'=> $sub_categories,'models'=> $models,'brands'=> $brands]);
     }
