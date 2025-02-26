@@ -572,7 +572,8 @@ class ProductController extends Controller
                     ProductGallery::create([
                         'product_id' => $product->id,
                         'image' => $image['file'],
-                        'order' => $image['order']
+                        'order' => $image['order'],
+                        'url' => $image['file']
                     ]);
                     }
                 }

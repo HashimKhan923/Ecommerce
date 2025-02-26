@@ -1235,6 +1235,15 @@ Route::group(['middleware' => ['auth:api']], function(){
             }); 
 
 
+            /// SiteMap \\\
+
+            Route::group(['prefix' => 'sitemap/'], function() {
+                Route::controller(App\Http\Controllers\Customer\SiteMapController::class)->group(function () {
+                    Route::get('product_ids','product_ids');
+                });
+            });
+
+
                                                              // FedEx
                 
         Route::group(['prefix' => '/seller/fedex/'], function() {
@@ -1260,6 +1269,9 @@ Route::group(['middleware' => ['auth:api']], function(){
                 // Route::post('shipping_amount/update','update_shipping_amount');
             });
         });
+
+
+
 
                     /// Seller \\\
 
