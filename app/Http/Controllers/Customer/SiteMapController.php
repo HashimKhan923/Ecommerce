@@ -18,7 +18,7 @@ class SiteMapController extends Controller
       $categories = Category::with('sub_category:id,name,category_id')->select('id', 'name')->get();
       $sub_categories = SubCategory::select('id', 'name')->get();
       $models = Models::select('id', 'name')->get();
-      $brands = Brand::with('model:id,name')->select('id', 'name')->get();
+      $brands = Brand::with('model:id,name,brand_id')->select('id', 'name')->get();
 
       return response()->json(['products'=> $products,'categories'=> $categories,'sub_categories'=> $sub_categories,'models'=> $models,'brands'=> $brands]);
     }
