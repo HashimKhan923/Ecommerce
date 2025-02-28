@@ -49,18 +49,18 @@ class AuthController extends Controller
 
             $token = $new->createToken('Laravel Password Grant Client')->accessToken;
     
-            // Mail::send(
-            //     'email.customer_verification',
-            //     [
-            //         'token' => $token,
-            //         'name' => $new->name,
-            //     ], 
-            //     function ($message) use ($new) {
-            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-            //         $message->to($new->email);
-            //         $message->subject('Email Verification');
-            //     }
-            // );
+            Mail::send(
+                'email.customer_welcome',
+                [
+                    'token' => $token,
+                    'name' => $new->name,
+                ], 
+                function ($message) use ($new) {
+                    $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                    $message->to($new->email);
+                    $message->subject('Email Verification');
+                }
+            );
     
             $response = ['status' => true, 'message' => 'Registered Successfully.'];
             return response([$response, 200,'token' => $token,'user'=>$new]);
