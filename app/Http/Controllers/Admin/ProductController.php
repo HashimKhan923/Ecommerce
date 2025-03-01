@@ -28,19 +28,127 @@ class ProductController extends Controller
         return response()->json(['Products'=>$Products]);
     }
 
-    public function admin_products()
-    {
-        $Products = Product::with('user','category','sub_category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient')->where('added_by','admin')->get();
 
-        return response()->json(['Products'=>$Products]);
+    private function loadMoreProducts($start, $length, $shopId, $status, $isFeatured, $searchValue, $dealId)
+    {
+       
+        $query = Product::with([
+            'user',
+            'category',
+            'sub_category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'deal',
+            'wholesale',
+            'shop.shop_policy',
+            'reviews',
+            'product_varient'
+        ]);
+    
+
+        if ($shopId != 0) {
+            $query->where('shop_id', $shopId);
+        }
+
+        if ($searchValue != 0) {
+
+            $keywords = explode(' ', $searchValue);
+
+            $query->where(function ($subQuery) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $subQuery->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
+                            ->orWhereJsonContains('tags', $keyword)    // Tags
+                            ->orWhereHas('shop', function ($subQuery) use ($keyword) {
+                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Shop name
+                            })
+                            ->orWhereHas('brand', function ($subQuery) use ($keyword) {
+                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
+                            })
+                            ->orWhereHas('model', function ($subQuery) use ($keyword) {
+                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Model name
+                            })
+                            ->orWhereHas('category', function ($subQuery) use ($keyword) {
+                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Category name
+                            })
+                            ->orWhereHas('sub_category', function ($subQuery) use ($keyword) {
+                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
+                            });
+                    });
+                }
+            });
+            
+        }
+    
+       
+        if ($status != 10) {
+            $query->where('published', $status); 
+        }
+    
+       
+        if ($isFeatured != 10) {
+            $query->where('featured', $isFeatured);  
+        }
+
+        if ($isFeatured != 10) {
+            $query->where('featured', $isFeatured);  
+        }
+
+        if ($dealId != 10) {
+            $query->where('deal_id', 4);  
+        }
+
+    
+        return $query->orderBy('id', 'desc')
+                     ->skip($start)
+                     ->take($length)
+                     ->get();
+    }
+    
+    public function load_more($start, $length, $shopId, $status, $isFeatured, $searchValue, $dealId)
+    {
+        
+        
+        if ($start < 0) {
+            $start = 0;
+        }
+    
+        $products = $this->loadMoreProducts($start, $length, $shopId, $status, $isFeatured, $searchValue, $dealId);
+        return response()->json(['Products' => $products]);
     }
 
-    public function seller_products()
+    public function detail($product_id)
     {
-        $Products = Product::with('user','category','sub_category','brand','stock','product_gallery','discount','tax','shipping','deal.deal_product','wholesale','shop','reviews','product_varient')->where('added_by','seller')->get();
+        $data = Product::with([
+            'user',
+            'category',
+            'sub_category',
+            'brand',
+            'model',
+            'stock',
+            'product_gallery' => function($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount',
+            'tax',
+            'shipping',
+            'shop',
+            'deal',
+            'product_varient'
+        ])->where('id', $product_id)->first();
 
-        return response()->json(['Products'=>$Products]);
+        return response()->json(['data' => $data]);
     }
+
+
 
 
 

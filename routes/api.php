@@ -206,8 +206,8 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/admin/product/'], function() {
                 Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
                     Route::get('show','index');
-                    Route::get('admin_products','admin_products');
-                    Route::get('seller_products','seller_products');
+                    Route::get('load_more/{start}/{length}/{shop_id?}/{status?}/{isFeatured?}/{searchValue?}/{dealId?}','load_more');
+                    Route::get('detail/{product_id}','detail');
                     Route::post('create','create');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
