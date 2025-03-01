@@ -74,31 +74,12 @@ class ProductController extends Controller
         }
 
         if ($searchValue != 0) {
-            $query->where(function ($query) use ($searchValue) {
-                foreach ($searchValue as $keyword) {
-                    $subQuery->where(function ($subQuery) use ($keyword) {
-                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
-                            ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
-                            ->orWhereJsonContains('tags', $keyword)    // Tags
-                            ->orWhereHas('shop', function ($subQuery) use ($keyword) {
-                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Shop name
-                            })
-                            ->orWhereHas('brand', function ($subQuery) use ($keyword) {
-                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
-                            })
-                            ->orWhereHas('model', function ($subQuery) use ($keyword) {
-                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Model name
-                            })
-                            ->orWhereHas('category', function ($subQuery) use ($keyword) {
-                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Category name
-                            })
-                            ->orWhereHas('sub_category', function ($subQuery) use ($keyword) {
-                                $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
-                            });
-                    });
-                }
+            $query->where(function($subQuery) use ($searchValue) {
+                $subQuery->where('id', $searchValue)
+                        ->orWhere('name',$searchValue)
+                         ->orWhere('name', 'LIKE', "%$searchValue%")
+                         ->orWhere('sku', $searchValue);
             });
-            
         }
     
        
