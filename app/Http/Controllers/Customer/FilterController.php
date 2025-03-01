@@ -18,46 +18,46 @@ class FilterController extends Controller
         
         $keywords = explode(' ', $searchValue);
 
-$data = Product::with([
-    'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
-        $query->orderBy('order', 'asc');
-    }, 'product_varient', 'discount', 'tax', 'shipping'
-])
-->where('published', 1)
-->whereHas('shop', function ($query) {
-    $query->where('status', 1);
-})
-// ->whereHas('stock', function ($query) {
-//     $query->where('stock', '>', 0);
-// })
-->where(function ($query) use ($keywords) {
-    foreach ($keywords as $keyword) {
-        // Match keyword in multiple fields (Product name, SKU, tags, shop name, brand, model, etc.)
-        $query->where(function ($query) use ($keyword) {
-            $query->where('sku', 'LIKE', "%{$keyword}%")
-                  ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
-                  ->orWhereJsonContains('tags', $keyword)    // Tags
-                  ->orWhereHas('shop', function ($query) use ($keyword) {
-                      $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name
-                  })
-                  ->orWhereHas('brand', function ($query) use ($keyword) {
-                      $query->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
-                  })
-                  ->orWhereHas('model', function ($query) use ($keyword) {
-                      $query->where('name', 'LIKE', "%{$keyword}%");   // Model name
-                  })
-                  ->orWhereHas('category', function ($query) use ($keyword) {
-                      $query->where('name', 'LIKE', "%{$keyword}%");   // Category name
-                  })
-                  ->orWhereHas('sub_category', function ($query) use ($keyword) {
-                      $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
-                  });
-        });
-    }
-})
-->orderBy('featured', 'DESC')
-->orderBy('id', 'ASC')
-->skip($length)->take(12)->get();
+        $data = Product::with([
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }, 'product_varient', 'discount', 'tax', 'shipping'
+        ])
+        ->where('published', 1)
+        ->whereHas('shop', function ($query) {
+            $query->where('status', 1);
+        })
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        ->where(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                // Match keyword in multiple fields (Product name, SKU, tags, shop name, brand, model, etc.)
+                $query->where(function ($query) use ($keyword) {
+                    $query->where('sku', 'LIKE', "%{$keyword}%")
+                        ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
+                        ->orWhereJsonContains('tags', $keyword)    // Tags
+                        ->orWhereHas('shop', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name
+                        })
+                        ->orWhereHas('brand', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
+                        })
+                        ->orWhereHas('model', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Model name
+                        })
+                        ->orWhereHas('category', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Category name
+                        })
+                        ->orWhereHas('sub_category', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
+                        });
+                });
+            }
+        })
+        ->orderBy('featured', 'DESC')
+        ->orderBy('id', 'ASC')
+        ->skip($length)->take(12)->get();
 
 
 
