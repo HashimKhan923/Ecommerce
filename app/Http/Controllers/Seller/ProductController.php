@@ -14,6 +14,7 @@ use App\Models\SubscribeUser;
 use App\Models\ProductVarient;
 use App\Models\DealProduct;
 use App\Models\ProductGallery;
+use App\Models\ProductModel;
 use App\Models\Color;
 use App\Models\ProductListingPayment;
 use App\Models\User;
@@ -223,6 +224,17 @@ class ProductController extends Controller
                 'image' => $image['file'],
                 'url' => $image['file'],
                 'order' => $image['order']
+            ]);
+        }
+    }
+
+    if($request->model_ids)
+    {
+        foreach($request->model_ids as $model)
+        {
+            ProductModel::create([
+                'product_id' => $new->id,
+                'model_id' => $model['model_id'],
             ]);
         }
     }
