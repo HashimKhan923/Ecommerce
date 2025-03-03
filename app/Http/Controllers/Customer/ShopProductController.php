@@ -69,7 +69,7 @@ class ShopProductController extends Controller
     
         // Retrieve products
         $products = $query->take(12)
-            // ->orderByRaw('featured DESC')
+        ->orderBy('featured', 'DESC')
             ->get();
     
         // Fetch categories and their subcategories with product counts
@@ -178,7 +178,7 @@ class ShopProductController extends Controller
             });
         }
     
-        $data = $query
+        $data = $query->orderBy('featured', 'DESC')
             ->skip($length)
             ->take(12)
             ->get();
