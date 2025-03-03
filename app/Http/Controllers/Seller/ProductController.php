@@ -228,16 +228,16 @@ class ProductController extends Controller
         }
     }
 
-    if($request->model_ids)
-    {
-        foreach($request->model_ids as $model)
-        {
-            ProductModel::create([
-                'product_id' => $new->id,
-                'model_id' => $model['model_id'],
-            ]);
-        }
-    }
+    // if($request->model_ids)
+    // {
+    //     foreach($request->model_ids as $model)
+    //     {
+    //         ProductModel::create([
+    //             'product_id' => $new->id,
+    //             'model_id' => $model['model_id'],
+    //         ]);
+    //     }
+    // }
 
     if ($request->photos) {
        
