@@ -199,8 +199,6 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
-
-
                                             /// Product \\\
 
             Route::group(['prefix' => '/admin/product/'], function() {
