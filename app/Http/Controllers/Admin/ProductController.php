@@ -161,28 +161,38 @@ class ProductController extends Controller
         $gallery = ProductGallery::where('product_id',$id)->get();
         foreach($gallery as $item)
         {
-            if($item->image)
+            $checkCount = ProductGallery::where('image',$item->image)->count();
+
+            if($checkCount < 2)
             {
-                unlink(public_path('ProductGallery/'.$item->image));
+                $fileToDelete = public_path('ProductGallery/'.$item->image);
+                
+                if (file_exists($fileToDelete) && is_file($fileToDelete)) {
+                    unlink($fileToDelete);
+                } 
             }
+
+
+                unlink(public_path('ProductGallery/'.$item->image));
         }
         
         $varients = ProductVarient::where('product_id',$id)->get();
         foreach($varients as $item)
         {
-            if($item->image)
+            $checkCount = ProductVarient::where('image',$item->image)->count();
+
+            if($checkCount < 2)
             {
-                unlink(public_path('ProductVarient/'.$item->image));
+                $fileToDelete = public_path('ProductVarient/'.$item->image);
+                
+                if (file_exists($fileToDelete) && is_file($fileToDelete)) {
+                    unlink($fileToDelete);
+                } 
             }
         }
 
 
-      if($file->meta_img)
-      {
-          unlink(public_path('ProductMetaImg/'.$file->meta_img));
-      }
-
-      $file->delete();
+        $file->delete();
 
         $response = ['status'=>true,"message" => "Product Deleted Successfully!"];
         return response($response, 200);
@@ -200,26 +210,35 @@ class ProductController extends Controller
             $gallery = ProductGallery::where('product_id',$item->id)->get();
             foreach($gallery as $item1)
             {
-                if($item1->image)
+                
+                $checkCount = ProductGallery::where('image',$item1->image)->count();
+
+                if($checkCount < 2)
                 {
-                    unlink(public_path('ProductGallery/'.$item1->image));
+                    $fileToDelete = public_path('ProductGallery/'.$item1->image);
+
+                        if (file_exists($fileToDelete) && is_file($fileToDelete)) {
+                            unlink($fileToDelete);
+                        } 
                 }
             }
             
             $varients = ProductVarient::where('product_id',$item->id)->get();
             foreach($varients as $item2)
             {
-                if($item2->image)
+                $checkCount = ProductVarient::where('image',$item2->image)->count();
+
+                if($checkCount < 2)
                 {
-                    unlink(public_path('ProductVarient/'.$item2->image));
+                    $fileToDelete = public_path('ProductVarient/'.$item2->image);
+
+                    if (file_exists($fileToDelete) && is_file($fileToDelete)) {
+                        unlink($fileToDelete);
+                    } 
                 }
             }
     
-    
-          if($item->meta_img)
-          {
-              unlink(public_path('ProductMetaImg/'.$item->meta_img));
-          }
+
     
 
             $item->delete();
