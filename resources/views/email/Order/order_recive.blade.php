@@ -166,7 +166,7 @@
             <div class="text">Automotive Marketplace</div>
         </div>
         <div class="banner">
-            <img src="{{asset(Email/dam_order_banner.webp)}}" alt="Welcome Banner">
+            <img src="{{asset('Email/dam_order_banner.webp')}}" alt="Welcome Banner">
         </div>
         <div class="content">
             <h1>
