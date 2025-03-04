@@ -37,6 +37,7 @@ class FilterController extends Controller
                     $query->where('sku', 'LIKE', "%{$keyword}%")
                         ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
                         ->orWhereJsonContains('tags', $keyword)    // Tags
+                        ->orWhereJsonContains('start_year', $keyword)
                         ->orWhereHas('shop', function ($query) use ($keyword) {
                             $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name
                         })

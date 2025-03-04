@@ -67,6 +67,7 @@ class ProductController extends Controller
                         $subQuery->where('sku', 'LIKE', "%{$keyword}%")
                             ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
                             ->orWhereJsonContains('tags', $keyword)    // Tags
+                            ->orWhereJsonContains('start_year', $keyword)
                             ->orWhereHas('shop', function ($subQuery) use ($keyword) {
                                 $subQuery->where('name', 'LIKE', "%{$keyword}%");   // Shop name
                             })
