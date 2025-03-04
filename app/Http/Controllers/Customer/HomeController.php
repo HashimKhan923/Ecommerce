@@ -39,23 +39,23 @@ class HomeController extends Controller
           ->take(20)
           ->get();
     
-        $DealProducts = Product::with([
-            'stock','wishlistProduct',
-            'product_gallery' => function($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount','deal',
-            'shop', 'reviews.user', 'product_varient'
-        ])->where('published', 1)
-        // ->whereHas('stock', function ($query) {
-        //     $query->where('stock', '>', 0);
-        // })
-        ->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })->where('deal_id',4)
-        ->orderByRaw('RAND()') 
-        ->take(20)
-        ->get();
+        // $DealProducts = Product::with([
+        //     'stock','wishlistProduct',
+        //     'product_gallery' => function($query) {
+        //         $query->orderBy('order', 'asc');
+        //     },
+        //     'discount','deal',
+        //     'shop', 'reviews.user', 'product_varient'
+        // ])->where('published', 1)
+        // // ->whereHas('stock', function ($query) {
+        // //     $query->where('stock', '>', 0);
+        // // })
+        // ->whereHas('shop', function ($query) {
+        //     $query->where('status', 1);
+        // })->where('deal_id',4)
+        // ->orderByRaw('RAND()') 
+        // ->take(20)
+        // ->get();
 
 
         // $NewArrivals = Product::with([
@@ -102,18 +102,15 @@ class HomeController extends Controller
     ->where('status', 1)
     ->withCount('product') 
     ->get();
-        $Deal = Deal::where('discount_start_date', '<=', now())
-        ->where('discount_end_date', '>=', now())
-        ->where('status', 1)
-        ->get();
+        // $Deal = Deal::where('discount_start_date', '<=', now())
+        // ->where('discount_end_date', '>=', now())
+        // ->where('status', 1)
+        // ->get();
 
 
     
         return response()->json([
             'FeaturedProducts' => $FeaturedProducts,
-            'DealProducts'=>$DealProducts,
-            'NewArrivals'=>$NewArrivals,
-            'Deal'=>$Deal,
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
