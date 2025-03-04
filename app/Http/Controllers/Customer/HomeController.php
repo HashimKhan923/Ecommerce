@@ -58,25 +58,25 @@ class HomeController extends Controller
         ->get();
 
 
-        $NewArrivals = Product::with([
-           'stock','wishlistProduct',
-            'product_gallery' => function ($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount','shop.shop_policy', 'reviews.user', 'product_varient'
-        ])
-        ->where('published', 1)
-        // ->whereDate('created_at', '>=', now()->subMonth()) // Filter products from the last month
-        ->orderBy('created_at', 'desc') // Order by creation date in ascending order
-        // ->whereHas('stock', function ($query) {
-        //     $query->where('stock', '>', 0);
+        // $NewArrivals = Product::with([
+        //    'stock','wishlistProduct',
+        //     'product_gallery' => function ($query) {
+        //         $query->orderBy('order', 'asc');
+        //     },
+        //     'discount','shop.shop_policy', 'reviews.user', 'product_varient'
+        // ])
+        // ->where('published', 1)
+        // // ->whereDate('created_at', '>=', now()->subMonth()) // Filter products from the last month
+        // ->orderBy('created_at', 'desc') // Order by creation date in ascending order
+        // // ->whereHas('stock', function ($query) {
+        // //     $query->where('stock', '>', 0);
+        // // })
+        // ->whereHas('shop', function ($query) {
+        //     $query->where('status', 1);
         // })
-        ->whereHas('shop', function ($query) {
-            $query->where('status', 1);
-        })
-        ->orderByRaw('RAND()') 
-        ->take(20)
-        ->get();
+        // ->orderByRaw('RAND()') 
+        // ->take(20)
+        // ->get();
 
     
 
@@ -92,7 +92,7 @@ class HomeController extends Controller
         ->get();
     
 
-        $Brands = Brand::with('model')->withCount('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Brands = Brand::with('model')->withCount('product')->whereHas('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::where('status', 1)->get();
         $States = State::where('status', 1)->get();
         $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
