@@ -31,6 +31,7 @@
             color: #ffffff; /* White text color */
             font-weight: normal;
         }
+
         .banner img {
             width: 100%;
             height: auto;
@@ -57,53 +58,22 @@
             color: #666666;
             margin-bottom: 10px;
         }
-        .content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        .content table th,
-        .content table td {
-            padding: 10px;
-            font-size: 13px;
-            text-align: left;
-            border-bottom: 1px solid #dddddd;
-        }
-        .content table th {
-            background-color: #f9f9f9;
-        }
-        .content table td img {
-            max-width: 90px;
-            height: auto;
+        .content .cta-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #3d772d; /* Green button color */
+            text-decoration: none;
             border-radius: 5px;
+            text-align: center;
         }
-        .content .totals {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 5px;
-        }
-        .content .totals table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .content .totals table td {
-            padding: 4px;
-            border-bottom: 1px solid #dddddd;
-        }
-        .content .totals table td:last-child {
-            text-align: right;
-        }
-        .content .totals table tr:last-child td {
-            border-bottom: none;
-        }
-        .content .totals table strong {
-            font-weight: bold;
-            color: #333333;
-            font-size: 13px;
-        }
-        .content .totals table span {
+        .content .thank-you {
+            margin-top: 20px;
+            font-size: 14px;
             color: black;
-            font-size: 13px;
+            line-height: 1.6;
         }
         .footer {
             text-align: left;
@@ -155,7 +125,7 @@
             <tr>
                 <td width="50%" align="left">
                     <div class="logo">
-                        <img src="https://skartistic.com/wp-content/uploads/2025/03/Screenshot-2025-03-04-015736.png" alt="Company Logo">
+                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo">
                     </div>
                 </td>
                 <td width="50%" align="right">
@@ -166,95 +136,24 @@
 
         <!-- Banner Section -->
         <div class="banner">
-            <img src="https://skartistic.com/wp-content/uploads/2025/03/Dam-order-banner.png" alt="Welcome Banner">
+            <img src="{{asset('Email/dam_shipment_banner.webp')}}" alt="Welcome Banner">
         </div>
 
         <!-- Content Section -->
         <div class="content">
             <h1>Order Confirmation</h1>
-            <p>Hello [Customer's Name],</p>
-            <p>Thank you for placing your order with Dragon auto mart. Your order has been successfully placed and is being processed. We are currently preparing it for shipment.</p>
-            <p>Please allow 3-5 business days for processing and shipping due to high demand.</p>
-            <p>You will receive an email with tracking information once your order has been shipped.</p>
+            <p>Dear {{ $buyer_name }},</p>
+            <p>Thank you for your order from {{ $shop->name }}! We wanted to let you know that your order (#{{ $order->id }}) was shipped via {{ $TrackingOrder->courier_name }}, on {{ $date }}.</p>
+            <p>Your Order Tracking Number is {{ $TrackingOrder->tracking_number }}. You can track your package at any time using the button below.</p>
 
-            <h2>Order #123456</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Name</th>
-                        <th>Qty</th>
-                        <th>Variant</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><img src="https://skartistic.com/wp-content/uploads/2025/03/d3.webp" alt="Product Image"></td>
-                        <td>HRS 2009-24 Nissan GT-R R35 LED Tail Lights - The Elite Series</td>
-                        <td>2</td>
-                        <td>DRL</td>
-                        <td>$25.00</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://skartistic.com/wp-content/uploads/2025/03/d2.webp" alt="Product Image"></td>
-                        <td>HRS 2022-25 Toyota GR86 - Subaru BRZ LED Tail Lights - The Elite Series - RGB</td>
-                        <td>1</td>
-                        <td>GWQ</td>
-                        <td>$30.00</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://skartistic.com/wp-content/uploads/2025/03/d1.jpg" alt="Product Image"></td>
-                        <td>HRS 2014-21 Toyota Tundra LED Tail Lights - The Elite Series</td>
-                        <td>1</td>
-                        <td>CBR</td>
-                        <td>$15.00</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Button -->
+            <a href="{{ $TrackingOrder->courier_link }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Track My Order</a>
 
-            <!-- Tax, Insurance, and Total -->
-            <div class="totals">
-                <table>
-                    
-                    <tr>
-                        <td><strong>Tax:</strong></td>
-                        <td><span>$5.00</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Signature:</strong></td>
-                        <td><span>$5.00</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Insurance:</strong></td>
-                        <td><span>$5.00</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shipping:</strong></td>
-                        <td></td>
-                        <td><span>$5.00</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Discount:</strong></td>
-                        <td></td>
-                        <td><span>-$2.00</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Total:</strong></td>
-                        <td></td>
-                        <td><span>$77.00</span></td>
-                    </tr>
-                </table>
+            <!-- Thank You Message -->
+            <div class="thank-you">
+                <p>Thank you for choosing Dragon Auto Mart!</p>
+                <p>Best regards,<br>Dragon Auto Mart</p>
             </div>
-
-            <h2>Billing Address</h2>
-            <p>
-                Name<br>  
-                Address<br>
-                Country, City<br>
-                Phone <br>
-                Email 
-            </p>
         </div>
 
         <!-- Footer Section -->
@@ -263,19 +162,19 @@
                 <!-- Logo on the left -->
                 <td width="50%" align="left" valign="top">
                     <div class="logo">
-                        <img src="https://skartistic.com/wp-content/uploads/2025/03/Screenshot-2025-03-04-015736.png" alt="Company Logo" style="width: 150px; height: auto;">
+                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo" style="width: 150px; height: auto;">
                     </div>
                 </td>
                 <!-- Social icons and text on the right -->
                 <td width="50%" align="right" valign="top">
                     <div class="social-section" style="padding-top: 20px;">
-                        <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms</div>
+                        <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms:</div>
                         <div class="social-icons" style="text-align: right; white-space: nowrap;">
-                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
-                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
-                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
-                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
-                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block;">
+                        <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"><img src="{{asset('Email/footerfacebook.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://www.instagram.com/dragonautomart/"><img src="{{asset('Email/footerinsta.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://tiktok.com/@dragonautomart"><img src="{{asset('Email/footertiktok.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://www.X.com/dragonautomart"><img src="{{asset('Email/footerx.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://www.youtube.com/@dragonautomart"><img src="{{asset('Email/footeryt.webp')}}" alt="" width="30px" style="display: inline-block;"></a> 
                         </div>
                     </div>
                 </td>
