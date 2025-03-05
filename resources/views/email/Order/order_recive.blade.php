@@ -173,7 +173,7 @@
         <div class="content">
             <h1>Order Confirmation</h1>
             <p>Hello {{ $request->information[0] }},</p>
-            <p>Thank you for placing your order with Dragon auto mart. Your order has been successfully placed and is being processed. We are currently preparing it for shipment.</p>
+            <p>Thank you for placing your order with Dragon Auto Mart. Your order has been successfully placed and is being processed. We are currently preparing it for shipment.</p>
             <p>Please allow 3-5 business days for processing and shipping due to high demand.</p>
             <p>You will receive an email with tracking information once your order has been shipped.</p>
 
