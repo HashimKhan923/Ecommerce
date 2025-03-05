@@ -155,7 +155,7 @@
             <tr>
                 <td width="50%" align="left">
                     <div class="logo">
-                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo">
+                        <img src="https://skartistic.com/wp-content/uploads/2025/03/Screenshot-2025-03-04-015736.png" alt="Company Logo">
                     </div>
                 </td>
                 <td width="50%" align="right">
@@ -166,17 +166,18 @@
 
         <!-- Banner Section -->
         <div class="banner">
-            <img src="{{asset('Email/dam_order_banner.webp')}}" alt="Welcome Banner">
+            <img src="https://skartistic.com/wp-content/uploads/2025/03/Dam-order-banner.png" alt="Welcome Banner">
         </div>
 
         <!-- Content Section -->
         <div class="content">
             <h1>Order Confirmation</h1>
-            <p>Hello {{ $buyer_name }},</p>
+            <p>Hello [Customer's Name],</p>
             <p>Thank you for placing your order with Dragon auto mart. Your order has been successfully placed and is being processed. We are currently preparing it for shipment.</p>
             <p>Please allow 3-5 business days for processing and shipping due to high demand.</p>
             <p>You will receive an email with tracking information once your order has been shipped.</p>
 
+            <h2>Order #123456</h2>
             <table>
                 <thead>
                     <tr>
@@ -188,92 +189,71 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($productsByVendor as $vendorId => $vendorProducts)
-                    @foreach ($vendorProducts as $product)
-                        <?php
-                        $orderProduct = collect($request->products)
-                            ->where('product_id', $product->id)
-                            ->first();
-                        
-                        $price = $orderProduct['product_price'] * $orderProduct['quantity'];
-                        
-                        ?>
                     <tr>
-                        <td>
-                        @if(Str::startsWith($orderProduct['product_image'], 'https'))
-                            <img src="{{ $orderProduct['product_image'] }}" alt="Product Image">
-                        @else    
-                             <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}" alt="Product Image">
-                        @endif
-                        </td>
-                        <td>{{ $product->name }}</td>
-                        <td> {{ $orderProduct['quantity'] }}</td>
-                        <td>   
-                            @if(isset($orderProduct['product_varient']))
-                            {{ $orderProduct['product_varient'] }}
-                            @endif
-                        </td>
-                        <td>${{ $price }}</td>
+                        <td><img src="https://skartistic.com/wp-content/uploads/2025/03/d3.webp" alt="Product Image"></td>
+                        <td>HRS 2009-24 Nissan GT-R R35 LED Tail Lights - The Elite Series</td>
+                        <td>2</td>
+                        <td>DRL</td>
+                        <td>$25.00</td>
                     </tr>
-
-                    @endforeach
-                @endforeach
+                    <tr>
+                        <td><img src="https://skartistic.com/wp-content/uploads/2025/03/d2.webp" alt="Product Image"></td>
+                        <td>HRS 2022-25 Toyota GR86 - Subaru BRZ LED Tail Lights - The Elite Series - RGB</td>
+                        <td>1</td>
+                        <td>GWQ</td>
+                        <td>$30.00</td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://skartistic.com/wp-content/uploads/2025/03/d1.jpg" alt="Product Image"></td>
+                        <td>HRS 2014-21 Toyota Tundra LED Tail Lights - The Elite Series</td>
+                        <td>1</td>
+                        <td>CBR</td>
+                        <td>$15.00</td>
+                    </tr>
                 </tbody>
             </table>
 
             <!-- Tax, Insurance, and Total -->
             <div class="totals">
                 <table>
-                if ($request->tax)
+                    
                     <tr>
-                        <td><strong>Tax({{ floatval($request->tax[2]) }}%)</strong></td>
-                        <td><span>${{ floatval($request->tax[0]) }}</span></td>
+                        <td><strong>Tax:</strong></td>
+                        <td><span>$5.00</span></td>
                     </tr>
-                @endif 
-                
-                @if ($request->signature)
                     <tr>
                         <td><strong>Signature:</strong></td>
-                        <td><span>${{ floatval($request->signature[0]) }}</span></td>
+                        <td><span>$5.00</span></td>
                     </tr>
-                @endif  
-                
-                @if ($request->insurance) 
                     <tr>
                         <td><strong>Insurance:</strong></td>
-                        <td><span>${{ floatval($request->insurance[0]) }}</span></td>
+                        <td><span>$5.00</span></td>
                     </tr>
-                @endif
-
-                @if ($TotalShippingAmount)
                     <tr>
                         <td><strong>Shipping:</strong></td>
-                        <td><span>${{ $TotalShippingAmount }}</span></td>
+                        <td></td>
+                        <td><span>$5.00</span></td>
                     </tr>
-                @endif   
-                
-                @if ($request->coupon_discount)
                     <tr>
                         <td><strong>Discount:</strong></td>
-                        <td><span>${{ $request->coupon_discount }}</span></td>
+                        <td></td>
+                        <td><span>-$2.00</span></td>
                     </tr>
-                @endif    
                     <tr>
                         <td><strong>Total:</strong></td>
-                        <td><span>${{ number_format($request->amount, 2) }}</span></td>
+                        <td></td>
+                        <td><span>$77.00</span></td>
                     </tr>
                 </table>
             </div>
 
             <h2>Billing Address</h2>
             <p>
-            {{ $request->information[0] }},<br>  
-            {{ $request->information[1] }},<br>
-            {{ $request->information[2] }}, {{ $request->information[3] }},<br>
-            {{ $request->information[5] }},<br>
-            {{ $request->information[4] }},<br>
-            {{ $request->information[6] }},<br>
-            {{ $request->information[7] }}
+                Name<br>  
+                Address<br>
+                Country, City<br>
+                Phone <br>
+                Email 
             </p>
         </div>
 
@@ -283,7 +263,7 @@
                 <!-- Logo on the left -->
                 <td width="50%" align="left" valign="top">
                     <div class="logo">
-                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo" style="width: 150px; height: auto;">
+                        <img src="https://skartistic.com/wp-content/uploads/2025/03/Screenshot-2025-03-04-015736.png" alt="Company Logo" style="width: 150px; height: auto;">
                     </div>
                 </td>
                 <!-- Social icons and text on the right -->
@@ -291,11 +271,11 @@
                     <div class="social-section" style="padding-top: 20px;">
                         <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms</div>
                         <div class="social-icons" style="text-align: right; white-space: nowrap;">
-                        <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"><img src="{{asset('Email/footerfacebook.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
-                           <a href="https://www.instagram.com/dragonautomart/"><img src="{{asset('Email/footerinsta.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
-                           <a href="https://tiktok.com/@dragonautomart"><img src="{{asset('Email/footertiktok.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
-                           <a href="https://www.X.com/dragonautomart"><img src="{{asset('Email/footerx.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
-                           <a href="https://www.youtube.com/@dragonautomart"><img src="{{asset('Email/footeryt.webp')}}" alt="" width="30px" style="display: inline-block;"></a> 
+                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
+                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
+                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
+                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block; margin-right: 10px;">
+                            <img src="https://via.placeholder.com/24" alt="" style="display: inline-block;">
                         </div>
                     </div>
                 </td>
