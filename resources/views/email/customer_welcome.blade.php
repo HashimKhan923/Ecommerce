@@ -18,12 +18,9 @@
             border: 1px solid #dddddd;
         }
         .header {
-            display: flex;
-            align-items: center !important;
-            justify-content: space-between !important;
-            padding: 15px;
             background-color: #4d4d4d; /* Dark gray background */
             height: 60px;
+            padding: 15px;
         }
         .header .logo img {
             max-width: 210px;
@@ -80,9 +77,6 @@
             border-top: 1px solid #dddddd;
         }
         .footer .footer-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
             margin-bottom: 15px;
         }
         .footer .footer-top .logo img {
@@ -97,11 +91,6 @@
             font-size: 14px;
             color: #ffffff;
             margin-bottom: 5px;
-        }
-        .footer .footer-top .social-icons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
         }
         .footer .footer-top .social-icons img {
             width: 24px;
@@ -121,14 +110,20 @@
 <body>
     <div class="email-container">
         <!-- Header Section -->
-        <div class="header">
-            <div class="logo">
-                <img src="{{asset('Email/logo.webp')}}" alt="Company Logo">
-            </div>
-            <div class="text">
-                Automotive Marketplace
-            </div>
-        </div>
+        <table class="header" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="50%" align="left">
+                    <div class="logo">
+                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo">
+                    </div>
+                </td>
+                <td width="50%" align="right">
+                    <div class="text">
+                        Automotive Marketplace
+                    </div>
+                </td>
+            </tr>
+        </table>
 
         <!-- Banner Section -->
         <div class="banner">
@@ -137,7 +132,7 @@
 
         <!-- Email Content Section -->
         <div class="content">
-            <!-- <h1>Welcome to Dragon Auto Mart</h1> -->
+            <h1>Welcome to Dragon Auto Mart</h1>
             <p>Hello {{$name}},</p>
             <p>Welcome to Dragon Auto Mart, your trusted source for high-quality automotive parts and accessories. Find everything you need to keep your vehicle running at its best, all in one place.</p>
             <p>With your new account, you can:</p>
@@ -147,36 +142,51 @@
                 <li>Save your favorite items for later</li>
                 <li>Get exclusive deals and personalized recommendations</li>
             </ul>
-            <a href="https://dragonautomart.com/" class="cta-button">visit website</a>
+            <a href="https://dragonautomart.com/" style="display: inline-block; padding: 10px 20px; background-color: #3D772D; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">visit website</a>
+
             <br><br>
             <p>If you need any help, our support team is always here for you. Feel free to reach out at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a></p>
             <p>Regards, Dragon Auto Mart</p>
         </div>
 
         <!-- Footer Section -->
-        <div class="footer">
-            <div class="footer-top">
+        <table class="footer" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
                 <!-- Logo on the left -->
-                <div class="logo">
-                    <img src="{{asset('Email/logo.webp')}}" alt="Company Logo">
-                </div>
-                <!-- Heading and icons on the right -->
-                <div class="social-section">
-                    <div class="heading">Find us on social media platforms</div>
-                    <div class="social-icons">
-                        <img src="{{asset('Email/footerfacebook.webp')}}" alt="Facebook">
-                        <img src="{{asset('Email/footerinsta.webp')}}" alt="Twitter">
-                        <img src="{{asset('Email/footertiktok.webp')}}" alt="Instagram">
-                        <img src="{{asset('Email/footerx.webp')}}" alt="LinkedIn">
-                        <img src="{{asset('Email/footeryt.webp')}}" alt="YouTube">
+                <td width="50%" align="left" valign="top">
+                    <div class="logo">
+                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo" style="width: 150px; height: auto;">
                     </div>
-                </div>
-            </div>
-            <div class="separator"></div>
-            <div class="copyright">
-                © 2025 Dragon Auto Mart, All Rights Reserved.
-            </div>
-        </div>
+                </td>
+                <!-- Social icons and text on the right -->
+                <td width="50%" align="right" valign="top">
+                    <div class="social-section" style="padding-top: 20px;">
+                        <!-- Heading aligned to the right -->
+                        <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms</div>
+                        <!-- Icons in one row -->
+                        <div class="social-icons" style="text-align: right; white-space: nowrap;">
+                           <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"><img src="{{asset('Email/footerfacebook.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://www.instagram.com/dragonautomart/"><img src="{{asset('Email/footerinsta.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://tiktok.com/@dragonautomart"><img src="{{asset('Email/footertiktok.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://www.X.com/dragonautomart"><img src="{{asset('Email/footerx.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://www.youtube.com/@dragonautomart"><img src="{{asset('Email/footeryt.webp')}}" alt="" width="30px" style="display: inline-block;"></a> 
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="separator"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <div class="copyright">
+                        © 2025 Dragon Auto Mart, All Rights Reserved.
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
