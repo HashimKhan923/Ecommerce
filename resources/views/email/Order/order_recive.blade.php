@@ -224,35 +224,35 @@
             <!-- Tax, Insurance, and Total -->
             <div class="totals">
                 <table>
-                if ($request->tax)
+                @if($request->tax)
                     <tr>
                         <td><strong>Tax({{ floatval($request->tax[2]) }}%)</strong></td>
                         <td><span>${{ floatval($request->tax[0]) }}</span></td>
                     </tr>
                 @endif 
                 
-                @if ($request->signature)
+                @if($request->signature)
                     <tr>
                         <td><strong>Signature:</strong></td>
                         <td><span>${{ floatval($request->signature[0]) }}</span></td>
                     </tr>
                 @endif  
                 
-                @if ($request->insurance) 
+                @if($request->insurance) 
                     <tr>
                         <td><strong>Insurance:</strong></td>
                         <td><span>${{ floatval($request->insurance[0]) }}</span></td>
                     </tr>
                 @endif
 
-                @if ($TotalShippingAmount)
+                @if($TotalShippingAmount)
                     <tr>
                         <td><strong>Shipping:</strong></td>
                         <td><span>${{ $TotalShippingAmount }}</span></td>
                     </tr>
                 @endif   
                 
-                @if ($request->coupon_discount)
+                @if($request->coupon_discount)
                     <tr>
                         <td><strong>Discount:</strong></td>
                         <td><span>${{ $request->coupon_discount }}</span></td>
