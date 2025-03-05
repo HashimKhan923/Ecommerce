@@ -227,46 +227,40 @@
                 @if($request->tax)
                     <tr>
                         <td><strong>Tax({{ floatval($request->tax[2]) }}%)</strong></td>
-                        <td></td>
-                        <td><span>${{ floatval($request->tax[0]) }}</span></td>
+                        <td style="text-align: right;"><span>${{ floatval($request->tax[0]) }}</span></td>
                     </tr>
                 @endif 
                 
                 @if($request->signature)
                     <tr>
                         <td><strong>Signature:</strong></td>
-                        <td></td>
-                        <td><span>${{ floatval($request->signature[0]) }}</span></td>
+                        <td style="text-align: right;"><span>${{ floatval($request->signature[0]) }}</span></td>
                     </tr>
                 @endif  
                 
                 @if($request->insurance) 
                     <tr>
                         <td><strong>Insurance:</strong></td>
-                        <td></td>
-                        <td><span>${{ floatval($request->insurance[0]) }}</span></td>
+                        <td style="text-align: right;"><span>${{ floatval($request->insurance[0]) }}</span></td>
                     </tr>
                 @endif
 
                 @if($TotalShippingAmount)
                     <tr>
                         <td><strong>Shipping:</strong></td>
-                        <td></td>
-                        <td><span>${{ $TotalShippingAmount }}</span></td>
+                        <td style="text-align: right;"><span>${{ $TotalShippingAmount }}</span></td>
                     </tr>
                 @endif   
                 
                 @if($request->coupon_discount)
                     <tr>
                         <td><strong>Discount:</strong></td>
-                        <td></td>
-                        <td><span>${{ $request->coupon_discount }}</span></td>
+                        <td style="text-align: right;"><span>${{ $request->coupon_discount }}</span></td>
                     </tr>
                 @endif    
                     <tr>
                         <td><strong>Total:</strong></td>
-                        <td></td>
-                        <td><span>${{ number_format($request->amount, 2) }}</span></td>
+                        <td style="text-align: right;"><span>${{ number_format($request->amount, 2) }}</span></td>
                     </tr>
                 </table>
             </div>
