@@ -152,7 +152,7 @@
             <!-- Thank You Message -->
             <div class="thank-you">
                 <p>Thank you for choosing Dragon Auto Mart!</p>
-                <p>Best regards,<br>Dragon Auto Mart</p>
+                <p>Best Regards,<br>Dragon Auto Mart</p>
             </div>
         </div>
 
