@@ -174,7 +174,7 @@
         <h1>Dear {{ $vendor_name }},</h1>
         <p>You have received a new order in Seller Dashboard. Process it Now!</p>
             <!-- Added "View Dashboard" Button -->
-            <a href="https://seller.dragonautomart.com/seller/showorder/order?id={{$order_id}" style="display: inline-block; padding: 10px 20px; background-color: #3D772D; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">View Order</a>
+            <a href="https://seller.dragonautomart.com/seller/showorder/order?id={{$order_id}}" style="display: inline-block; padding: 10px 20px; background-color: #3D772D; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">View Order</a>
 
             <p>Review the order details below:</p>
 

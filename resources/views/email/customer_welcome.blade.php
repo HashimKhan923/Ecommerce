@@ -147,8 +147,8 @@
             <br><br>
             <p>If you need any help, our support team is always here for you. Feel free to reach out at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a></p>
             <br><br>
-            <p>Regards, Dragon Auto Mart</p>
-        </div>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+            </div>
 
         <!-- Footer Section -->
         <table class="footer" width="100%" cellpadding="0" cellspacing="0">
