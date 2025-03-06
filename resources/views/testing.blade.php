@@ -31,7 +31,6 @@
             color: #ffffff; /* White text color */
             font-weight: normal;
         }
-
         .banner img {
             width: 100%;
             height: auto;
@@ -58,22 +57,53 @@
             color: #666666;
             margin-bottom: 10px;
         }
-        .content .cta-button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #ffffff;
-            background-color: #3d772d; /* Green button color */
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
         }
-        .content .thank-you {
-            margin-top: 20px;
-            font-size: 14px;
+        .content table th,
+        .content table td {
+            padding: 10px;
+            font-size: 13px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+        .content table th {
+            background-color: #f9f9f9;
+        }
+        .content table td img {
+            max-width: 90px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .content .totals {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .content .totals table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .content .totals table td {
+            padding: 4px;
+            border-bottom: 1px solid #dddddd;
+        }
+        .content .totals table td:last-child {
+            text-align: right;
+        }
+        .content .totals table tr:last-child td {
+            border-bottom: none;
+        }
+        .content .totals table strong {
+            font-weight: bold;
+            color: #333333;
+            font-size: 13px;
+        }
+        .content .totals table span {
             color: black;
-            line-height: 1.6;
+            font-size: 13px;
         }
         .footer {
             text-align: left;
@@ -136,24 +166,118 @@
 
         <!-- Banner Section -->
         <div class="banner">
-            <img src="{{asset('Email/dam_shipment_banner.webp')}}" alt="Welcome Banner">
+            <img src="{{asset('Email/vendor_order_recive_banner.png')}}" alt="Welcome Banner">
         </div>
 
         <!-- Content Section -->
         <div class="content">
-            <h1>Order Confirmation</h1>
-            <p>Dear {{ $buyer_name }},</p>
-            <p>Thank you for your order from {{ $shop->name }}! We wanted to let you know that your order (#{{ $order->id }}) was shipped via {{ $TrackingOrder->courier_name }}, on {{ $date }}.</p>
-            <p>Your Order Tracking Number is {{ $TrackingOrder->tracking_number }}. You can track your package at any time using the button below.</p>
+        <h1>Dear {{ $vendor_name }},</h1>
+            <p>You have received a new order with the following details:</p>
 
-            <!-- Button -->
-            <a href="{{ $TrackingOrder->courier_link }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Track My Order</a>
+            <p><strong>Order ID:</strong> {{ $order_id }}</p>
 
-            <!-- Thank You Message -->
-            <div class="thank-you">
-                <p>Thank you for choosing Dragon Auto Mart!</p>
-                <p>Best regards,<br>Dragon Auto Mart</p>
+            <br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Qty</th>
+                        <th>Variant</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($order_details as $product)
+                    <?php
+                    $orderProduct = collect($request->products)
+                        ->where('product_id', $product->id)
+                        ->first();
+                    
+                    $price = $orderProduct['product_price'] * $orderProduct['quantity'];
+                    
+                    ?>
+                    <tr>
+                        <td>
+                        @if(Str::startsWith($orderProduct['product_image'], 'https'))
+                                <img src="{{ $orderProduct['product_image'] }}"
+                                width="100px">
+                                 @else
+                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
+                                 width="100px">                          
+                                @endif
+                        </td>
+                        <td>{{ $product->name }}</td>
+                        <td> {{ $orderProduct['quantity'] }}</td>
+                        <td>   
+                        @if(isset($orderProduct['product_varient']))
+                                {{ $orderProduct['product_varient'] }}
+                                @endif
+                        </td>
+                        <td>${{ $price }}</td>
+                    </tr>
+
+                    @endforeach
+                @endforeach
+                </tbody>
+            </table>
+
+            <!-- Tax, Insurance, and Total -->
+            <div class="totals">
+                <table>
+                @if($request->tax)
+                    <tr>
+                        <td><strong>Tax({{ floatval($request->tax[2]) }}%)</strong></td>
+                        <td style="text-align: right;"><span>${{ floatval($request->tax[0]) }}</span></td>
+                    </tr>
+                @endif 
+                
+                @if($request->signature)
+                    <tr>
+                        <td><strong>Signature:</strong></td>
+                        <td style="text-align: right;"><span>${{ floatval($request->signature[0]) }}</span></td>
+                    </tr>
+                @endif  
+                
+                @if($request->insurance) 
+                    <tr>
+                        <td><strong>Insurance:</strong></td>
+                        <td style="text-align: right;"><span>${{ floatval($request->insurance[0]) }}</span></td>
+                    </tr>
+                @endif
+
+                @if($shipping_charges)
+                    <tr>
+                        <td><strong>Shipping:</strong></td>
+                        <td style="text-align: right;"><span>${{ $shipping_charges }}</span></td>
+                    </tr>
+                @endif   
+                
+                @if($request->coupon_discount)
+                    <tr>
+                        <td><strong>Discount:</strong></td>
+                        <td style="text-align: right;"><span>${{ $request->coupon_discount }}</span></td>
+                    </tr>
+                @endif    
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td style="text-align: right;"><span>${{ number_format($request->amount, 2) }}</span></td>
+                    </tr>
+                </table>
             </div>
+
+            <h2>Billing Address</h2>
+            <p>
+            {{ $request->information[0] }},<br>  
+            {{ $request->information[1] }},<br>
+            {{ $request->information[2] }}, {{ $request->information[3] }},<br>
+            {{ $request->information[5] }},<br>
+            {{ $request->information[4] }},<br>
+            {{ $request->information[6] }},<br>
+            {{ $request->information[7] }}
+            </p>
         </div>
 
         <!-- Footer Section -->
@@ -168,7 +292,7 @@
                 <!-- Social icons and text on the right -->
                 <td width="50%" align="right" valign="top">
                     <div class="social-section" style="padding-top: 20px;">
-                        <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms:</div>
+                        <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms</div>
                         <div class="social-icons" style="text-align: right; white-space: nowrap;">
                         <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"><img src="{{asset('Email/footerfacebook.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
                            <a href="https://www.instagram.com/dragonautomart/"><img src="{{asset('Email/footerinsta.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
