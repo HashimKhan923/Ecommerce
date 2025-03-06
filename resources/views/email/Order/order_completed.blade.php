@@ -147,7 +147,7 @@
             <p>Your Order Tracking Number is {{ $TrackingOrder->tracking_number }}. You can track your package at any time using the button below.</p>
 
             <!-- Button -->
-            <a href="{{ $TrackingOrder->courier_link }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Track My Order</a>
+            <a href="{{ $TrackingOrder->courier_link }}" style="display: inline-block; padding: 10px 20px; background-color: #3D772D; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Track My Order</a>
 
             <!-- Thank You Message -->
             <div class="thank-you">
