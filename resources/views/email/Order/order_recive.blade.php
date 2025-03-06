@@ -275,10 +275,12 @@
             {{ $request->information[6] }},<br>
             {{ $request->information[7] }}
             </p>
+
+            <br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
         </div>
 
-        <br><br>
-        <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+
 
         <!-- Footer Section -->
         <table class="footer" width="100%" cellpadding="0" cellspacing="0">
