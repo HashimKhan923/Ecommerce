@@ -224,7 +224,7 @@
             <!-- Tax, Insurance, and Total -->
             <div class="totals">
                 <table>
-                @if($request->tax != 0)
+                @if($request->tax)
                     <tr>
                         <td><strong>Tax({{ floatval($request->tax[2]) }}%)</strong></td>
                         <td style="text-align: right;"><span>${{ floatval($request->tax[0]) }}</span></td>

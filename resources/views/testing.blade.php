@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation - Dragon Auto Mart</title>
+    <title>Product Review - Dragon Auto Mart</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,7 +17,7 @@
             background-color: #ffffff;
             border: 1px solid #dddddd;
         }
-         .header {
+        .header {
             background-color: #4d4d4d; /* Dark gray background */
             height: 60px;
             padding: 15px;
@@ -57,53 +57,54 @@
             color: #666666;
             margin-bottom: 10px;
         }
-        .content table {
+        .content .review-container {
+            background-color: #fffae9; /* Background color for review section */
+            padding: 15px; /* Added padding for spacing */
+            border: 0.5px solid black; /* Black border */
+            border-radius: 5px; /* Optional: Rounded corners */
+            margin-top: 20px; /* Spacing from the content above */
+        }
+        .content .review-section {
+            margin-top: 0; /* Reset margin for review section */
+        }
+        .content .review-section table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
         }
-        .content table th,
-        .content table td {
-            padding: 10px;
-            font-size: 13px;
-            text-align: left;
-            border-bottom: 1px solid #dddddd;
+        .content .review-section table td {
+            padding: 10px 10px 10px 0; /* Adjusted left padding to 0 */
+            vertical-align: top;
         }
-        .content table th {
-            background-color: #f9f9f9;
-        }
-        .content table td img {
-            max-width: 90px;
+        .content .review-section table td.product-image img {
+            width: 120px; /* Increased image width */
             height: auto;
             border-radius: 5px;
         }
-        .content .totals {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 5px;
+        .content .review-section table td.product-details .store-name {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 9px;
         }
-        .content .totals table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .content .totals table td {
-            padding: 4px;
-            border-bottom: 1px solid #dddddd;
-        }
-        .content .totals table td:last-child {
-            text-align: right;
-        }
-        .content .totals table tr:last-child td {
-            border-bottom: none;
-        }
-        .content .totals table strong {
-            font-weight: bold;
+        .content .review-section table td.product-details .description {
+            font-size: 14px;
             color: #333333;
-            font-size: 13px;
+            margin-bottom: 10px;
         }
-        .content .totals table span {
-            color: black;
-            font-size: 13px;
+        .content .review-section table td.product-details .leave-review-button {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #3d772d;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .content .review-section hr {
+            border: 0;
+            height: 1px;
+            background-color: #dddddd; /* Separator color */
+            margin: 4px 0; /* Spacing around the separator */
         }
         .footer {
             text-align: left;
@@ -166,118 +167,39 @@
 
         <!-- Banner Section -->
         <div class="banner">
-            <img src="{{asset('Email/vendor_order_recive_banner.png')}}" alt="Welcome Banner">
+            <img src="{{asset('Email/dam_leave_review_banner.webp')}}" alt="">
         </div>
 
         <!-- Content Section -->
         <div class="content">
-        <h1>Dear {{ $vendor_name }},</h1>
-            <p>You have received a new order with the following details:</p>
+            <h1>Tell Us About Your Order!</h1>
+            <p>Hello {{ $order->information[0] }},</p>
+            <p>Thank you for your recent purchase from Dragon Auto Mart! We hope you're enjoying your product.</p>
+            <p>Could you take a moment to share your experience by leaving a quick review?</p>
 
-            <p><strong>Order ID:</strong> {{ $order_id }}</p>
+            <!-- Product Review Section -->
+            <div class="review-container">
+                <div class="review-section">
+                    <table>
+                        <!-- Product 1 -->
+                        <tr>
+                            <td class="product-image">
+                            @if(Str::startsWith($order_detail->product_image, 'https'))
+                                <img src="{{ $order_detail->product_image }}" alt="{{ $order_detail->product_name }}">
+                            @else
+                                <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $order_detail->product_image }}" alt="{{ $order_detail->product_name }}">
+                            @endif
+                            </td>
+                            <td class="product-details">
+                                <div class="store-name">{{$order->shop->name}}</div>
+                                <div class="description">{{ $order_detail->product_name }}</div>
+                                <a href="{{ 'https://dragonautomart.com/product/' . $order_detail->product_id . '?flag=review' }}" class="leave-review-button">Write a Review</a>
+                            </td>
+                        </tr>
+                    </table>
 
-            <br><br>
-            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Name</th>
-                        <th>Qty</th>
-                        <th>Variant</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach ($order_details as $product)
-                    <?php
-                    $orderProduct = collect($request->products)
-                        ->where('product_id', $product->id)
-                        ->first();
-                    
-                    $price = $orderProduct['product_price'] * $orderProduct['quantity'];
-                    
-                    ?>
-                    <tr>
-                        <td>
-                        @if(Str::startsWith($orderProduct['product_image'], 'https'))
-                                <img src="{{ $orderProduct['product_image'] }}"
-                                width="100px">
-                                 @else
-                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $orderProduct['product_image'] }}"
-                                 width="100px">                          
-                                @endif
-                        </td>
-                        <td>{{ $product->name }}</td>
-                        <td> {{ $orderProduct['quantity'] }}</td>
-                        <td>   
-                        @if(isset($orderProduct['product_varient']))
-                                {{ $orderProduct['product_varient'] }}
-                                @endif
-                        </td>
-                        <td>${{ $price }}</td>
-                    </tr>
-
-                    @endforeach
-                @endforeach
-                </tbody>
-            </table>
-
-            <!-- Tax, Insurance, and Total -->
-            <div class="totals">
-                <table>
-                @if($request->tax)
-                    <tr>
-                        <td><strong>Tax({{ floatval($request->tax[2]) }}%)</strong></td>
-                        <td style="text-align: right;"><span>${{ floatval($request->tax[0]) }}</span></td>
-                    </tr>
-                @endif 
-                
-                @if($request->signature)
-                    <tr>
-                        <td><strong>Signature:</strong></td>
-                        <td style="text-align: right;"><span>${{ floatval($request->signature[0]) }}</span></td>
-                    </tr>
-                @endif  
-                
-                @if($request->insurance) 
-                    <tr>
-                        <td><strong>Insurance:</strong></td>
-                        <td style="text-align: right;"><span>${{ floatval($request->insurance[0]) }}</span></td>
-                    </tr>
-                @endif
-
-                @if($shipping_charges)
-                    <tr>
-                        <td><strong>Shipping:</strong></td>
-                        <td style="text-align: right;"><span>${{ $shipping_charges }}</span></td>
-                    </tr>
-                @endif   
-                
-                @if($request->coupon_discount)
-                    <tr>
-                        <td><strong>Discount:</strong></td>
-                        <td style="text-align: right;"><span>${{ $request->coupon_discount }}</span></td>
-                    </tr>
-                @endif    
-                    <tr>
-                        <td><strong>Total:</strong></td>
-                        <td style="text-align: right;"><span>${{ number_format($request->amount, 2) }}</span></td>
-                    </tr>
-                </table>
+                </div>
             </div>
-
-            <h2>Billing Address</h2>
-            <p>
-            {{ $request->information[0] }},<br>  
-            {{ $request->information[1] }},<br>
-            {{ $request->information[2] }}, {{ $request->information[3] }},<br>
-            {{ $request->information[5] }},<br>
-            {{ $request->information[4] }},<br>
-            {{ $request->information[6] }},<br>
-            {{ $request->information[7] }}
-            </p>
         </div>
 
         <!-- Footer Section -->
@@ -294,7 +216,7 @@
                     <div class="social-section" style="padding-top: 20px;">
                         <div class="heading" style="text-align: right; margin-bottom: 10px;">Find us on social media platforms</div>
                         <div class="social-icons" style="text-align: right; white-space: nowrap;">
-                        <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"><img src="{{asset('Email/footerfacebook.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
+                           <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr"><img src="{{asset('Email/footerfacebook.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
                            <a href="https://www.instagram.com/dragonautomart/"><img src="{{asset('Email/footerinsta.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
                            <a href="https://tiktok.com/@dragonautomart"><img src="{{asset('Email/footertiktok.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 
                            <a href="https://www.X.com/dragonautomart"><img src="{{asset('Email/footerx.webp')}}" alt="" width="30px" style="display: inline-block; margin-right: 10px;"></a> 

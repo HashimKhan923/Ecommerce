@@ -22,16 +22,13 @@ class SendReviewRequestEmail extends Command
         $orders = Order::whereDate('created_at', '=', $tenDaysAgo)->where('delivery_status','Delivered')->get();
 
         foreach ($orders as $order) {
-
-            $order_detail = OrderDetail::where('order_id',$order->id)->get();
-            foreach($order_detail as $detail)
-            {
+            $order_details = OrderDetail::where('order_id', $order->id)->get();
+            
+            foreach ($order_details as $detail) {
                 $customer = User::find($order->customer_id);
-                Mail::to($customer->email)->send(new ReviewRequestMail($detail));
+                Mail::to($customer->email)->send(new ReviewRequestMail($order, $detail));
                 $this->info("Review request email sent to {$customer->email}");
             }
-
-
         }
 
         return 0;
