@@ -133,7 +133,7 @@
         <!-- Email Content Section -->
         <div class="content">
             <!-- <h1>Welcome to Dragon Auto Mart</h1> -->
-            <p>Hello {{$name}},</p>
+            <p><strong>Hello {{$name}},</strong></p>
             <p>Welcome to Dragon Auto Mart, your trusted source for high-quality automotive parts and accessories. Find everything you need to keep your vehicle running at its best, all in one place.</p>
             <p>With your new account, you can:</p>
             <ul>

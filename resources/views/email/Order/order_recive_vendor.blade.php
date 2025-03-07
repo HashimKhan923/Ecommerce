@@ -171,7 +171,7 @@
 
         <!-- Content Section -->
         <div class="content">
-        <h1>Dear {{ $vendor_name }},</h1>
+        <p><strong>Dear {{ $vendor_name }},</strong></p>
         <p>You have received a new order in Seller Dashboard. Process it Now!</p>
             <!-- Added "View Dashboard" Button -->
             <a href="https://seller.dragonautomart.com/seller/showorder/order?id={{$order_id}}" style="display: inline-block; padding: 10px 20px; background-color: #3D772D; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">View Order</a>
@@ -282,7 +282,7 @@
             {{ $request->information[7] }}
             </p>
             <br><br>
-            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
 
 

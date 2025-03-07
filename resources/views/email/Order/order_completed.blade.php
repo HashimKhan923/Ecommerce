@@ -142,7 +142,7 @@
         <!-- Content Section -->
         <div class="content">
             <h1>Order Confirmation</h1>
-            <p>Dear {{ $order->information[0] }},</p>
+            <p><strong>Dear {{ $order->information[0] }},</strong></p>
             <p>Thank you for your order from {{ $shop->name }}! We wanted to let you know that your order (#{{ $order->id }}) was shipped via {{ $TrackingOrder->courier_name }}, on {{ $date }}.</p>
             <p>Your Order Tracking Number is {{ $TrackingOrder->tracking_number }}. You can track your package at any time using the button below.</p>
 
@@ -153,7 +153,7 @@
             <div class="thank-you">
                 <p>Thank you for choosing Dragon Auto Mart!</p>
                 <br><br>
-                <p>Best Regards,<br>Dragon Auto Mart</p>
+                <p>Regards,<br>Dragon Auto Mart</p>
             </div>
         </div>
 
