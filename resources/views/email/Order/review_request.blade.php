@@ -173,7 +173,7 @@
         <!-- Content Section -->
         <div class="content">
             <h1>Tell Us About Your Order!</h1>
-            <p>Hello {{ $order->information[0] }},</p>
+            <p><strong>Hello {{ $order->information[0] }},</strong></p>
             <p>Thank you for your recent purchase from Dragon Auto Mart! We hope you're enjoying your product.</p>
             <p>Could you take a moment to share your experience by leaving a quick review?</p>
 
@@ -200,6 +200,9 @@
 
                 </div>
             </div>
+
+            <br><br>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
         </div>
 
         <!-- Footer Section -->
