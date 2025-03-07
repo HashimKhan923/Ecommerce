@@ -36,7 +36,9 @@
             height: auto;
         }
         .content {
-            padding: 22px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
             text-align: left;
             font-size: 14px;
         }
