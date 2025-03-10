@@ -144,7 +144,7 @@
             <h1>Order Confirmation</h1>
             <p><strong>Dear {{ $order->information[0] }},</strong></p>
             <p>Thank you for your order from {{ $shop->name }}! We wanted to let you know that your order (#{{ $order->id }}) was shipped via {{ $TrackingOrder->courier_name }}, on {{ $date }}.</p>
-            <p>Your Order Tracking Number is {{ $TrackingOrder->tracking_number }}. You can track your package at any time using the button below.</p>
+            <p>Your Order Tracking Number is <strong>{{ $TrackingOrder->tracking_number }}.</strong> You can track your package at any time using the button below.</p>
 
             <!-- Button -->
             <a href="{{ $TrackingOrder->courier_link }}" style="display: inline-block; padding: 10px 20px; background-color: #3D772D; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 16px;">Track My Order</a>
