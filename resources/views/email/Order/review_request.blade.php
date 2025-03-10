@@ -158,7 +158,7 @@
             <tr>
                 <td width="50%" align="left">
                     <div class="logo">
-                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo">
+                        <img src="https://api.dragonautomart.com/Email/logo.webp" alt="Company Logo">
                     </div>
                 </td>
                 <td width="50%" align="right">
@@ -169,7 +169,7 @@
 
         <!-- Banner Section -->
         <div class="banner">
-            <img src="{{asset('Email/dam_leave_review_banner.webp')}}" alt="">
+            <img src="https://api.dragonautomart.com/Email/dam_leave_review_banner.webp" alt="">
         </div>
 
         <!-- Content Section -->
@@ -213,7 +213,7 @@
                 <!-- Logo on the left -->
                 <td width="50%" align="left" valign="top">
                     <div class="logo">
-                        <img src="{{asset('Email/logo.webp')}}" alt="Company Logo" style="width: 150px; height: auto;">
+                        <img src="https://api.dragonautomart.com/Email/logo.webp" alt="Company Logo" style="width: 150px; height: auto;">
                     </div>
                 </td>
                 <!-- Social icons and text on the right -->
