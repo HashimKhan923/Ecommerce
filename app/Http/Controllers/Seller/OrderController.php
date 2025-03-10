@@ -61,7 +61,7 @@ class OrderController extends Controller
                 $accessToken = $this->getPayPalAccessToken();
     
                 // Fetch PayPal Order Details
-                $response = $client->get("https://api-m.paypal.com/v2/checkout/orders/{$data->stripe_payment_id}", [
+                $response = $client->get("https://api-m.paypal.com/v1/reporting/transactions?transaction_id={$data->stripe_payment_id}", [
                     'headers' => [
                         'Authorization' => "Bearer $accessToken",
                         'Content-Type' => 'application/json',
