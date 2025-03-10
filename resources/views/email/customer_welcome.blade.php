@@ -147,7 +147,7 @@
             <br><br>
             <p>If you need any help, our support team is always here for you. Feel free to reach out at <a href="mailto:support@dragonautomart.com">support@dragonautomart.com</a></p>
             <br><br>
-            <p class="font-size-14">Regards,<br />Dragon Auto Mart Team</p>
+            <p class="font-size-14">Regards,<br />Dragon Auto Mart</p>
             </div>
 
         <!-- Footer Section -->
