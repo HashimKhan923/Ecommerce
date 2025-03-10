@@ -60,6 +60,7 @@ class CategoryController extends Controller
         $new->slug = $request->slug;
         $new->meta_title = $request->meta_title;
         $new->meta_description = $request->meta_description;
+        $new->seo_content = $request->seo_content;
         $new->meta_keywords = $request->meta_keywords;
         $new->save();
 
@@ -104,6 +105,7 @@ class CategoryController extends Controller
         $update->slug = $request->slug;
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
+        $update->seo_content = $request->seo_content;
         $update->meta_keywords = $request->meta_keywords;
         $update->save();
 
