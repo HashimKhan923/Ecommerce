@@ -57,6 +57,8 @@ class OrderController extends Controller
 
         if ($data->payment_method == 'PAYPAL') {
             try {
+
+                $client = new Client();
                 // 1️⃣ Get PayPal Access Token
                 $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
                     'auth' => [env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET')],
