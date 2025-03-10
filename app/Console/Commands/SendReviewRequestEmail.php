@@ -17,7 +17,7 @@ class SendReviewRequestEmail extends Command
 
     public function handle()
     {
-        $tenDaysAgo = Carbon::now()->subDays(10)->startOfDay();
+        $tenDaysAgo = Carbon::now()->subDays(14)->startOfDay();
 
         $orders = Order::whereDate('created_at', '=', $tenDaysAgo)->where('delivery_status','Delivered')->get();
 
