@@ -57,24 +57,31 @@ class OrderController extends Controller
 
         if ($data->payment_method == 'PAYPAL') {
             try {
-                $client = new Client();
-                $accessToken = $this->getPayPalAccessToken();
+                // 1️⃣ Get PayPal Access Token
+                $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
+                    'auth' => [env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET')],
+                    'form_params' => ['grant_type' => 'client_credentials'],
+                ]);
+                $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
     
-                // Fetch PayPal Order Details
-                $response = $client->get("https://api-m.paypal.com/v1/reporting/transactions?transaction_id={$data->stripe_payment_id}", [
+                // 2️⃣ Get PayPal Transaction Details
+                $response = $client->get("https://api-m.paypal.com/v2/checkout/orders/{$data->stripe_payment_id}", [
                     'headers' => [
                         'Authorization' => "Bearer $accessToken",
                         'Content-Type' => 'application/json',
                     ]
                 ]);
     
-                $orderDetails = json_decode($response->getBody(), true);
-                
-                // Extract Risk Evaluation Details
-                $captures = $orderDetails['purchase_units'][0]['payments']['captures'] ?? [];
-                if (!empty($captures)) {
-                    $risk = $captures[0]['risk_details'] ?? 'No risk data available';
-                }
+                $transactionDetails = json_decode($response->getBody(), true);
+    
+                // 3️⃣ Extract Risk Evaluation (if available)
+                $riskEvaluation = $transactionDetails['purchase_units'][0]['payments']['captures'][0]['risk_data'] ?? [];
+    
+                return response()->json([
+                    'transaction' => $transactionDetails,
+                    'risk_evaluation' => $riskEvaluation
+                ]);
+    
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);
             }
