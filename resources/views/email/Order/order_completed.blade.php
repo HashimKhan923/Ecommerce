@@ -143,7 +143,7 @@
         <div class="content">
             <h1>Order Confirmation</h1>
             <p><strong>Dear {{ $order->information[0] }},</strong></p>
-            <p>Thank you for your order from {{ $shop->name }}! We wanted to let you know that your order (#{{ $order->id }}) was shipped via {{ $TrackingOrder->courier_name }}, on {{ $date }}.</p>
+            <p>Thank you for your order from  <strong><a href="https://dragonautomart.com/store/{{ $shop->name }}/{{ $shop->id }}">{{ $shop->name }}!</a></strong> We wanted to let you know that your order (#{{ $order->id }}) was shipped via {{ $TrackingOrder->courier_name }}, on {{ $date }}.</p>
             <p>Your Order Tracking Number is <strong>{{ $TrackingOrder->tracking_number }}.</strong> You can track your package at any time using the button below.</p>
 
             <!-- Button -->
