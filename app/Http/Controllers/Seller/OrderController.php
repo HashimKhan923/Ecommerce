@@ -62,6 +62,8 @@ class OrderController extends Controller
 
                 $clientId = config('services.paypal.client_id'); // Set in .env
                 $clientSecret = config('services.paypal.secret'); // Set in .env
+
+                return 'this is client_id'. config('services.paypal.client_id');
             
                 // Get PayPal access token
                 $response = Http::withBasicAuth($clientId, $clientSecret)->post('https://api-m.paypal.com/v1/oauth2/token', [
