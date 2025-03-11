@@ -85,7 +85,7 @@ class OrderController extends Controller
                 // ✅ 3️⃣ Extract Risk Evaluation (if available)
                 $order1 = $paymentDetails['supplementary_data'];
 
-                $risk = $order1->order_id;
+                $risk = $order1['order_id'];
 
     
             } catch (\Exception $e) {
