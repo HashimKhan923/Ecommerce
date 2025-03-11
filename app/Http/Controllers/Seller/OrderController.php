@@ -83,7 +83,9 @@ class OrderController extends Controller
                 $paymentDetails = $paymentResponse->json();
 
                 // ✅ 3️⃣ Extract Risk Evaluation (if available)
-                $risk = $paymentDetails['supplementary_data'];
+                $order1 = $paymentDetails['supplementary_data'];
+
+                $risk = $order1->order_id;
 
     
             } catch (\Exception $e) {
