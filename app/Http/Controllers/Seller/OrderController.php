@@ -62,30 +62,29 @@ class OrderController extends Controller
 
                 $clientId = config('services.paypal.client_id'); // Set in .env
                 $clientSecret = config('services.paypal.secret'); // Set in .env
+                $client = new Client();
+        
 
-            
-                // Get PayPal access token
-                $response = Http::withBasicAuth($clientId, $clientSecret)->post('https://api-m.paypal.com/v1/oauth2/token', [
-                    'grant_type' => 'client_credentials'
+                // ✅ 1️⃣ Get PayPal Access Token
+                $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
+                    'auth' => [$clientId, $clientSecret],
+                    'form_params' => ['grant_type' => 'client_credentials'],
                 ]);
-            
-                if ($response->failed()) {
-                    return $response->json();
-                }
-            
-                $accessToken = $response->json()['access_token'];
-            
-                // Fetch payment details using payment_id (capture_id or authorization_id)
+
+                $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
+
+                // ✅ 2️⃣ Fetch Payment Details using PayPal Capture ID
                 $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
-            
+
                 if ($paymentResponse->failed()) {
-                    return ['error' => 'Failed to fetch payment details'];
+                    return response()->json(['error' => 'Failed to fetch payment details']);
                 }
-            
+
                 $paymentDetails = $paymentResponse->json();
-            
-                // Check for risk evaluation
-               $risk = $paymentDetails['risk_data'] ?? ['message' => 'Risk evaluation not available'];
+
+                // ✅ 3️⃣ Extract Risk Evaluation (if available)
+                $risk = $paymentDetails['risk_data'] ?? ['message' => 'Risk evaluation not available'];
+
     
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);
