@@ -74,7 +74,7 @@ class OrderController extends Controller
                 $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
 
                 // ✅ 2️⃣ Fetch Payment Details using PayPal Capture ID
-                $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
+                $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$data->stripe_payment_id}");
 
                 if ($paymentResponse->failed()) {
                     return response()->json(['error' => 'Failed to fetch payment details']);
@@ -83,7 +83,7 @@ class OrderController extends Controller
                 $paymentDetails = $paymentResponse->json();
 
                 // ✅ 3️⃣ Extract Risk Evaluation (if available)
-                $risk = $paymentDetails;
+                $risk = $paymentDetails['risk_data'] ?? ['message' => 'Risk evaluation not available'];
 
     
             } catch (\Exception $e) {
