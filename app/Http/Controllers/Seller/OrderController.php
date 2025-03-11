@@ -55,39 +55,39 @@ class OrderController extends Controller
             
         }
 
-        // if ($data->payment_method == 'PAYPAL') {
-        //     try {
+        if ($data->payment_method == 'PAYPAL') {
+            try {
 
-        //         $client = new Client();
-        //         // 1️⃣ Get PayPal Access Token
-        //         $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
-        //             'auth' => [env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET')],
-        //             'form_params' => ['grant_type' => 'client_credentials'],
-        //         ]);
-        //         $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
+                $clientId = env('PAYPAL_CLIENT_ID'); // Set in .env
+                $clientSecret = env('PAYPAL_SECRET'); // Set in .env
+            
+                // Get PayPal access token
+                $response = Http::withBasicAuth($clientId, $clientSecret)->post('https://api-m.paypal.com/v1/oauth2/token', [
+                    'grant_type' => 'client_credentials'
+                ]);
+            
+                if ($response->failed()) {
+                    return ['error' => 'Failed to get access token'];
+                }
+            
+                $accessToken = $response->json()['access_token'];
+            
+                // Fetch payment details using payment_id (capture_id or authorization_id)
+                $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
+            
+                if ($paymentResponse->failed()) {
+                    return ['error' => 'Failed to fetch payment details'];
+                }
+            
+                $paymentDetails = $paymentResponse->json();
+            
+                // Check for risk evaluation
+               $risk = $paymentDetails['risk_data'] ?? ['message' => 'Risk evaluation not available'];
     
-        //         // 2️⃣ Get PayPal Transaction Details
-        //         $response = $client->get("https://api-m.paypal.com/v2/checkout/orders/{$data->stripe_payment_id}", [
-        //             'headers' => [
-        //                 'Authorization' => "Bearer $accessToken",
-        //                 'Content-Type' => 'application/json',
-        //             ]
-        //         ]);
-    
-        //         $transactionDetails = json_decode($response->getBody(), true);
-    
-        //         // 3️⃣ Extract Risk Evaluation (if available)
-        //         $riskEvaluation = $transactionDetails['purchase_units'][0]['payments']['captures'][0]['risk_data'] ?? [];
-    
-        //         return response()->json([
-        //             'transaction' => $transactionDetails,
-        //             'risk_evaluation' => $riskEvaluation
-        //         ]);
-    
-        //     } catch (\Exception $e) {
-        //         return response()->json(['error' => $e->getMessage()]);
-        //     }
-        // }
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()]);
+            }
+        }
 
         return response()->json(['data'=>$data,'charge'=>$charge, 'risk' => $risk]);
 

@@ -61,7 +61,20 @@ class ShopProductController extends Controller
                         $subQuery->where('sku', 'LIKE', "%{$keyword}%")
                             ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
                             ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                            ->orWhereJsonContains('tags', $keyword); // Assuming 'tags' is stored as JSON
+                            ->orWhereJsonContains('tags', $keyword)
+                            ->orWhereJsonContains('start_year', $keyword)
+                            ->orWhereHas('brand', function ($query) use ($keyword) {
+                                $query->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
+                            })
+                            ->orWhereHas('model', function ($query) use ($keyword) {
+                                $query->where('name', 'LIKE', "%{$keyword}%");   // Model name
+                            })
+                            ->orWhereHas('category', function ($query) use ($keyword) {
+                                $query->where('name', 'LIKE', "%{$keyword}%");   // Category name
+                            })
+                            ->orWhereHas('sub_category', function ($query) use ($keyword) {
+                                $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
+                            });
                     });
                 }
             });
