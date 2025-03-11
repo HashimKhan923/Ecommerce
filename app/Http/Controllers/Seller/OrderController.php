@@ -60,8 +60,8 @@ class OrderController extends Controller
         if ($data->payment_method == 'PAYPAL') {
             try {
 
-                $clientId = env('PAYPAL_CLIENT_ID'); // Set in .env
-                $clientSecret = env('PAYPAL_SECRET'); // Set in .env
+                $clientId = config('services.paypal.client_id'); // Set in .env
+                $clientSecret = config('services.paypal.secret'); // Set in .env
             
                 // Get PayPal access token
                 $response = Http::withBasicAuth($clientId, $clientSecret)->post('https://api-m.paypal.com/v1/oauth2/token', [
