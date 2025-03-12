@@ -19,8 +19,10 @@ class StateController extends Controller
     public function create(Request $request)
     {
         $new = new State();
+        $new->country = $request->country;
         $new->name = $request->name;
         $new->tax = $request->tax;
+        $new->shipping = $request->shipping;
         $new->code = $request->code;
         $new->save();
 
@@ -31,8 +33,10 @@ class StateController extends Controller
     public function update(Request $request)
     {
         $update = State::where('id',$request->id)->first();
+        $update->country = $request->country;
         $update->name = $request->name;
         $update->tax = $request->tax;
+        $update->shipping = $request->shipping;
         $update->code = $request->code;
         $update->save();
 
