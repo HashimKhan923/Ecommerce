@@ -76,7 +76,9 @@ class ProductController extends Controller
 
         if ($searchValue != 0) {
 
-            $keywords = explode(' ', $searchValue);
+            $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
+            $searchWords = explode(' ', strtolower($searchValue));
+            $keywords = array_diff($searchWords, $stopWords); // Remove stop words
 
             $query->where(function ($subQuery) use ($keywords) {
                 foreach ($keywords as $keyword) {
