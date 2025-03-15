@@ -57,8 +57,8 @@ class ShopProductController extends Controller
     
             $query->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
-                    $query->where(function ($query) use ($keyword) {
-                        $query->where('sku', 'LIKE', "%{$keyword}%")
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('sku', 'LIKE', "%{$keyword}%")
                             ->orWhereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%'])
                             ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%'])
                             ->orWhereJsonContains('tags', $keyword)
