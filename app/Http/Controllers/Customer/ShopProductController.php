@@ -53,7 +53,10 @@ class ShopProductController extends Controller
     
         // Apply search logic if a search value is provided
         if ($searchValue && !empty($searchValue)) {
-            $keywords = explode(' ', $searchValue); // Split the searchValue into keywords
+            
+            $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
+            $searchWords = explode(' ', strtolower($searchValue));
+            $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
             $query->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
