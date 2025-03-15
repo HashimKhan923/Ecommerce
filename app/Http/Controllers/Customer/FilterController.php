@@ -16,7 +16,9 @@ class FilterController extends Controller
         $Keyword->count++;
         $Keyword->save();
         
-        $keywords = explode(' ', $searchValue);
+        $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
+        $searchWords = explode(' ', strtolower($searchValue));
+        $keywords = array_diff($searchWords, $stopWords); // Remove stop words
 
         $data = Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
