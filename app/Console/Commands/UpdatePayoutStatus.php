@@ -68,14 +68,14 @@ class UpdatePayoutStatus extends Command
 
                             Notification::create([
                                 'customer_id' => $Seller->id,
-                                'notification' => 'your payout $'.$PaymentStatus->amount.' has been successfully processed.'
+                                'notification' => 'your payout $'.$payout->amount.' has been successfully processed.'
                             ]);
 
                             Mail::send(
                                 'email.Payout.seller_payout',
                                 [
                                     'vendor_name' => $Seller->name,
-                                    'amount' => $PaymentStatus->amount,
+                                    'amount' => $payout->amount,
                                 ],
                                 function ($message) use ($Seller, $request) { 
                                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
