@@ -77,7 +77,7 @@ class UpdatePayoutStatus extends Command
                                     'vendor_name' => $Seller->name,
                                     'amount' => $payout->amount,
                                 ],
-                                function ($message) use ($Seller, $request) { 
+                                function ($message) use ($Seller) { 
                                     $message->from('support@dragonautomart.com','Dragon Auto Mart');
                                     $message->to($Seller->email);
                                     $message->subject('Payout Notification');
