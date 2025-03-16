@@ -57,7 +57,8 @@ class UpdatePayoutStatus extends Command
                                                 ]);
 
                                             } catch (\Exception $e) {
-                                                return response()->json(['status' => false,'message'=>$e->getMessage(), 422]);
+                                                $this->error('Stripe Payout Error: ' . $e->getMessage());
+                                                continue;
                                             }
 
                                             
