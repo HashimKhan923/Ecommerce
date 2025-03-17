@@ -1262,10 +1262,6 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::controller(App\Http\Controllers\Customer\FedexController::class)->group(function () {
                 Route::get('create/token','create_token');
                 Route::post('rates','show_rates');
-                Route::post('shipment/create','create_shipment');
-                Route::post('shipment/cancel','cancel_shipment');
-                Route::post('shipment/track','track_shipment');
-                Route::post('shipping_amount/update','update_shipping_amount');
             });
         });
 
