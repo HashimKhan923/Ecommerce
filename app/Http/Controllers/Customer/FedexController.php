@@ -58,7 +58,6 @@ class FedexController extends Controller
 
     public function show_rates(Request $request)
     {
-        return $request;
 
         $url = 'https://apis.fedex.com/rate/v1/rates/quotes';
         $token = $request->header('Authorization');
