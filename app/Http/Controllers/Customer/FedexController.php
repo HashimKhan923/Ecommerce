@@ -26,16 +26,16 @@ class FedexController extends Controller
 
             $token=json_decode($token->body());
 
-            $trackingToken = Http::asForm()->post('https://apis.fedex.com/oauth/token', [
-                'grant_type' => 'client_credentials',
-                'client_id' => env('FEDEX_TRACKING_KEY'),
-                'client_secret' => env('FEDEX_TRACKING_SECRET')
+            // $trackingToken = Http::asForm()->post('https://apis.fedex.com/oauth/token', [
+            //     'grant_type' => 'client_credentials',
+            //     'client_id' => env('FEDEX_TRACKING_KEY'),
+            //     'client_secret' => env('FEDEX_TRACKING_SECRET')
 
-            ]);
+            // ]);
 
             $trackingToken=json_decode($trackingToken->body());
     
-            return response()->json(['token' => $token,'trackingToken' => $trackingToken]);
+            return response()->json(['token' => $token]);
         } catch (\Exception $e) {
 
             Mail::send(
