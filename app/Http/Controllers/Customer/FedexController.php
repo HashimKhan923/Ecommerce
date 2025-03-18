@@ -73,14 +73,14 @@ class FedexController extends Controller
                 ]
             ];
         
-            if (!empty($packageItem['length']) && !empty($packageItem['width']) && !empty($packageItem['height'])) {
-                $packageData["dimensions"] = [
-                    "length" => $packageItem['length'],
-                    "width" => $packageItem['width'],
-                    "height" => $packageItem['height'],
-                    "units" => "IN"
-                ];
-            }
+            // if (!empty($packageItem['length']) && !empty($packageItem['width']) && !empty($packageItem['height'])) {
+            //     $packageData["dimensions"] = [
+            //         "length" => $packageItem['length'],
+            //         "width" => $packageItem['width'],
+            //         "height" => $packageItem['height'],
+            //         "units" => "IN"
+            //     ];
+            // }
         
             $requestedPackageLineItems[] = $packageData;
         }
