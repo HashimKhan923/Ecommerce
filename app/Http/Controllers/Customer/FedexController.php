@@ -33,7 +33,7 @@ class FedexController extends Controller
 
             // ]);
 
-            $trackingToken=json_decode($trackingToken->body());
+            // $trackingToken=json_decode($trackingToken->body());
     
             return response()->json(['token' => $token]);
         } catch (\Exception $e) {
