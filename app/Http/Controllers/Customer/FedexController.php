@@ -99,7 +99,6 @@ class FedexController extends Controller
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
                 "serviceType" => [
-                    "INTERNATIONAL_PRIORITY",
                     "INTERNATIONAL_ECONOMY"
                 ],
                 "rateRequestType" => [ 
@@ -108,7 +107,7 @@ class FedexController extends Controller
                 ],
                 "customsClearanceDetail" => [
                     "customsValue" => [
-                        "amount" => $request->declared_value, // Ensure you send declared value
+                        "amount" => $request->declared_value,
                         "currency" => "USD"
                     ]
                 ],
