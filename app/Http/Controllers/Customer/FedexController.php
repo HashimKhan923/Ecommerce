@@ -65,18 +65,23 @@ class FedexController extends Controller
         $requestedPackageLineItems = [];
 
         foreach ($request->requestedPackageLineItems as $packageItem) {
-            $requestedPackageLineItems[] = [
+            $packageData = [
                 "weight" => [
                     "value" => $packageItem['weight'],
                     "units" => "LB"
-                ],
-                "dimensions"=> [
-                    "length"=> $packageItem['length'],
-                    "width"=> $packageItem['width'],
-                    "height"=> $packageItem['height'],
-                    "units"=> "IN"
                 ]
             ];
+        
+            if (!empty($packageItem['length']) && !empty($packageItem['width']) && !empty($packageItem['height'])) {
+                $packageData["dimensions"] = [
+                    "length" => $packageItem['length'],
+                    "width" => $packageItem['width'],
+                    "height" => $packageItem['height'],
+                    "units" => "IN"
+                ];
+            }
+        
+            $requestedPackageLineItems[] = $packageData;
         }
 
         $payload = [
