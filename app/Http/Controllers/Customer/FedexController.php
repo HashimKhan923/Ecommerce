@@ -104,6 +104,9 @@ class FedexController extends Controller
                 ],
                 "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
                 "serviceType" => "INTERNATIONAL_ECONOMY",
+                "rateRequestType" => [ 
+                    "ACCOUNT"
+                ],
                 "customsClearanceDetail" => [
                     "customsValue" => [
                         "amount" => $request->declared_value,
