@@ -58,6 +58,7 @@ class SubCategoryController extends Controller
             }
     
             $new->slug = $SubCatData['slug'];
+            $new->seo_content = $SubCatData['seo_content'];
             $new->save();
         }
     
@@ -107,6 +108,7 @@ class SubCategoryController extends Controller
         $update->meta_title = $request->meta_title;
         $update->meta_description = $request->meta_description;
         $update->meta_keywords = $request->meta_keywords;
+        $update->seo_content = $request->seo_content;
         $update->save();
 
         $response = ['status'=>true,"message" => "Sub-Category Updated Successfully!"];
