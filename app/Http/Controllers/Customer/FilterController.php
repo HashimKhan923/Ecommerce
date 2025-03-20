@@ -9,56 +9,51 @@ use App\Models\UserSearchingKeyword;
 
 class FilterController extends Controller
 {
-    public function search($searchValue, $length)
+    public function search($searchValue,$length)
     {
+
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
         $Keyword->count++;
         $Keyword->save();
-    
+        
         $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
         $searchWords = explode(' ', strtolower($searchValue));
         $keywords = array_diff($searchWords, $stopWords); // Remove stop words
-    
+
         $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 
-            'product_gallery' => function ($query) {
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
-            }, 
-            'product_varient', 'discount', 'tax', 'shipping'
+            }, 'product_varient', 'discount', 'tax', 'shipping'
         ])
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
+        // ->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
         ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
-                $soundexKeyword = soundex($keyword); // Generate Soundex code for input
-                
-                $query->where(function ($query) use ($keyword, $soundexKeyword) {
+                // Match keyword in multiple fields (Product name, SKU, tags, shop name, brand, model, etc.)
+                $query->where(function ($query) use ($keyword) {
                     $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")  // Exact match
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]) // Soundex Match
+                        ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
                         ->orWhereJsonContains('tags', $keyword)    // Tags
                         ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Shop name Soundex
+                        ->orWhereHas('shop', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name
                         })
-                        ->orWhereHas('brand', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Brand Soundex
+                        ->orWhereHas('brand', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
                         })
-                        ->orWhereHas('model', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Model Soundex
+                        ->orWhereHas('model', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Model name
                         })
-                        ->orWhereHas('category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Category Soundex
+                        ->orWhereHas('category', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Category name
                         })
-                        ->orWhereHas('sub_category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Sub-category Soundex
+                        ->orWhereHas('sub_category', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
                         });
                 });
             }
@@ -66,10 +61,66 @@ class FilterController extends Controller
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
-    
+
+
+
+        
+        // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
+
+        // $searchValue = $request->searchValue;
+        // $keywords = explode(' ', $searchValue);
+
+        // $data = Product::with([
+        //     'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
+        //         $query->orderBy('order', 'asc');
+        //     }, 'product_varient', 'discount', 'tax', 'shipping'
+        // ])
+        // ->where('published', 1)
+        // ->whereHas('shop', function ($query) {
+        //     $query->where('status', 1);
+        // })->whereHas('stock', function ($query) {
+        //     $query->where('stock', '>', 0);
+        // })
+        // ->where(function ($query) use ($keywords, $searchValue) {
+        //     $query->where('sku',$searchValue)
+        //     ->orWhere('name', 'LIKE', "%$searchValue%")
+        //         ->orWhere(function ($q) use ($keywords) {
+        //             foreach ($keywords as $keyword) {
+        //                 $q->orWhere('name', 'LIKE', "%$keyword%");
+        //             }
+        //         })
+        //         ->orWhere('description', 'LIKE', "%$searchValue%")
+        //         ->orWhere(function ($q) use ($keywords) {
+        //             foreach ($keywords as $keyword) {
+        //                 $q->orWhere('description', 'LIKE', "%$keyword%");
+        //             }
+        //         })
+        //         ->orWhere(function ($q) use ($keywords) {
+        //             foreach ($keywords as $keyword) {
+        //                 $q->orWhereJsonContains('tags', $keyword);
+        //             }
+        //         });
+        // })
+        // ->when(count($keywords) >= 2, function ($query) use ($searchValue, $keywords) {
+        //     return $query->orderByRaw('CASE 
+        //         WHEN name = ? THEN 1 
+        //         WHEN name LIKE ? THEN 2 
+        //         WHEN name LIKE ? THEN 3 
+        //         ELSE 4 
+        //     END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
+        // }, function ($query) use ($searchValue) {
+        //     return $query->orderByRaw('CASE 
+        //         WHEN name = ? THEN 1 
+        //         WHEN name LIKE ? THEN 2 
+        //         ELSE 3 
+        //     END', [$searchValue, "%$searchValue%"]);
+        // })
+        // ->orderBy('featured', 'DESC')
+        // ->get();
+
         return response()->json(['data' => $data]);
+        
     }
-    
 
     public function getSuggestions1($query)
     {
