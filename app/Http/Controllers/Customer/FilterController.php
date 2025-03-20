@@ -41,24 +41,19 @@ class FilterController extends Controller
                         ->orWhereJsonContains('tags', $keyword)    // Tags
                         ->orWhereJsonContains('start_year', $keyword)
                         ->orWhereHas('shop', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Shop name Soundex
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name Soundex
                         })
                         ->orWhereHas('brand', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Brand Soundex
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Brand Soundex
                         })
                         ->orWhereHas('model', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Model Soundex
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Model Soundex
                         })
                         ->orWhereHas('category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Category Soundex
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Category Soundex
                         })
                         ->orWhereHas('sub_category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%")
-                                  ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]);   // Sub-category Soundex
+                            $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category Soundex
                         });
                 });
             }
