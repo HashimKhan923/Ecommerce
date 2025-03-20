@@ -66,8 +66,21 @@ class FilterController extends Controller
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
+
+        $filteredData = $data->filter(function ($product) use ($keywords) {
+            $levenshteinThreshold = 3; // Max typo distance
+            $productName = strtolower($product->name);
+        
+            foreach ($keywords as $keyword) {
+                if (levenshtein($keyword, $productName) <= $levenshteinThreshold ||
+                    str_contains($productName, $keyword)) {
+                    return true; // If any keyword matches closely, keep the product
+                }
+            }
+            return false; // Otherwise, filter it out
+        });
     
-        return response()->json(['data' => $data]);
+        return response()->json(['data' => $filteredData->values()]);
     }
     
 
