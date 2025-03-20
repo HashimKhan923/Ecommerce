@@ -9,19 +9,19 @@ use App\Models\UserSearchingKeyword;
 
 class FilterController extends Controller
 {
-    public function search($searchValue,$length)
+    public function search($searchValue, $length)
     {
-
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
         $Keyword->count++;
         $Keyword->save();
-        
+    
         $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
         $searchWords = explode(' ', strtolower($searchValue));
-        $keywords = array_diff($searchWords, $stopWords); // Remove stop words
-
-        $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
+        $keywords = array_diff($searchWords, $stopWords);
+    
+        $products = Product::with([
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 
+            'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             }, 'product_varient', 'discount', 'tax', 'shipping'
         ])
@@ -29,97 +29,37 @@ class FilterController extends Controller
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
-        // ->whereHas('stock', function ($query) {
-        //     $query->where('stock', '>', 0);
-        // })
-        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                // Match keyword in multiple fields (Product name, SKU, tags, shop name, brand, model, etc.)
-                $query->where(function ($query) use ($keyword) {
-                    $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")  // Product name
-                        ->orWhereJsonContains('tags', $keyword)    // Tags
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name
-                        })
-                        ->orWhereHas('brand', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Brand name (Make)
-                        })
-                        ->orWhereHas('model', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Model name
-                        })
-                        ->orWhereHas('category', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Category name
-                        })
-                        ->orWhereHas('sub_category', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category name
-                        });
-                });
+        ->get(); // Fetch all products first
+    
+        // Apply Fuzzy Search Manually
+        $filteredProducts = $products->filter(function ($product) use ($searchValue, $keywords) {
+            $name = strtolower($product->name);
+            
+            // Check exact match first
+            if (Str::contains($name, $searchValue)) {
+                return true;
             }
-        })
-        ->orderBy('featured', 'DESC')
-        ->orderBy('id', 'ASC')
-        ->skip($length)->take(12)->get();
-
-
-
-        
-        // $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $request->searchValue);
-
-        // $searchValue = $request->searchValue;
-        // $keywords = explode(' ', $searchValue);
-
-        // $data = Product::with([
-        //     'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
-        //         $query->orderBy('order', 'asc');
-        //     }, 'product_varient', 'discount', 'tax', 'shipping'
-        // ])
-        // ->where('published', 1)
-        // ->whereHas('shop', function ($query) {
-        //     $query->where('status', 1);
-        // })->whereHas('stock', function ($query) {
-        //     $query->where('stock', '>', 0);
-        // })
-        // ->where(function ($query) use ($keywords, $searchValue) {
-        //     $query->where('sku',$searchValue)
-        //     ->orWhere('name', 'LIKE', "%$searchValue%")
-        //         ->orWhere(function ($q) use ($keywords) {
-        //             foreach ($keywords as $keyword) {
-        //                 $q->orWhere('name', 'LIKE', "%$keyword%");
-        //             }
-        //         })
-        //         ->orWhere('description', 'LIKE', "%$searchValue%")
-        //         ->orWhere(function ($q) use ($keywords) {
-        //             foreach ($keywords as $keyword) {
-        //                 $q->orWhere('description', 'LIKE', "%$keyword%");
-        //             }
-        //         })
-        //         ->orWhere(function ($q) use ($keywords) {
-        //             foreach ($keywords as $keyword) {
-        //                 $q->orWhereJsonContains('tags', $keyword);
-        //             }
-        //         });
-        // })
-        // ->when(count($keywords) >= 2, function ($query) use ($searchValue, $keywords) {
-        //     return $query->orderByRaw('CASE 
-        //         WHEN name = ? THEN 1 
-        //         WHEN name LIKE ? THEN 2 
-        //         WHEN name LIKE ? THEN 3 
-        //         ELSE 4 
-        //     END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
-        // }, function ($query) use ($searchValue) {
-        //     return $query->orderByRaw('CASE 
-        //         WHEN name = ? THEN 1 
-        //         WHEN name LIKE ? THEN 2 
-        //         ELSE 3 
-        //     END', [$searchValue, "%$searchValue%"]);
-        // })
-        // ->orderBy('featured', 'DESC')
-        // ->get();
-
+    
+            // Check for partial matches with individual keywords
+            foreach ($keywords as $keyword) {
+                if (Str::contains($name, $keyword)) {
+                    return true;
+                }
+            }
+    
+            // Apply Levenshtein Distance for typo-tolerance
+            $levenshteinScore = levenshtein($searchValue, $name);
+            if ($levenshteinScore <= 3) { // Allow minor spelling errors (distance of 3)
+                return true;
+            }
+    
+            return false;
+        });
+    
+        // Paginate results
+        $data = $filteredProducts->slice($length, 12)->values();
+    
         return response()->json(['data' => $data]);
-        
     }
 
     public function getSuggestions1($query)
