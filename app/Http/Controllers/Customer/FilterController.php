@@ -20,7 +20,7 @@ class FilterController extends Controller
         $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
         $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             }, 
@@ -33,7 +33,7 @@ class FilterController extends Controller
         ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
                 $soundexKeyword = soundex($keyword); // Generate Soundex code for input
-                
+    
                 $query->where(function ($query) use ($keyword, $soundexKeyword) {
                     $query->where('sku', 'LIKE', "%{$keyword}%")
                         ->orWhere('name', 'LIKE', "%{$keyword}%")  // Exact match
@@ -67,8 +67,16 @@ class FilterController extends Controller
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
     
-        return response()->json(['data' => $data]);
+        // **Step 2: Apply Levenshtein Filtering**
+        $filteredData = $data->filter(function ($product) use ($searchValue) {
+            $levenshteinThreshold = 3; // Maximum allowed edit distance
+            $productName = strtolower($product->name);
+            return levenshtein($searchValue, $productName) <= $levenshteinThreshold;
+        });
+    
+        return response()->json(['data' => $filteredData->values()]);
     }
+    
     
 
     public function getSuggestions1($query)
