@@ -19,7 +19,7 @@ class FilterController extends Controller
         $searchWords = explode(' ', strtolower($searchValue));
         $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
-        $data = collect(); // Store unique results
+        $data = collect(); // Use collection to manage unique results
     
         while ($data->isEmpty() && count($keywords) > 1) {
             $data = $this->searchProducts($keywords, $length);
@@ -30,7 +30,7 @@ class FilterController extends Controller
             }
         }
     
-        // Remove duplicate results by applying unique filtering
+        // Ensure unique results by using the `unique` method on the collection
         $data = $data->unique('id')->values(); 
     
         return response()->json(['data' => $data]);
@@ -53,7 +53,7 @@ class FilterController extends Controller
             foreach ($keywords as $keyword) {
                 $soundexKeyword = soundex($keyword);
     
-                $query->orWhere(function ($query) use ($keyword, $soundexKeyword) {
+                $query->where(function ($query) use ($keyword, $soundexKeyword) {
                     $query->where('sku', 'LIKE', "%{$keyword}%")
                         ->orWhere('name', 'LIKE', "%{$keyword}%")
                         ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
