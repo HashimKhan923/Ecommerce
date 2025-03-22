@@ -19,14 +19,19 @@ class FilterController extends Controller
         $searchWords = explode(' ', strtolower($searchValue));
         $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
-        $data = $this->searchProducts($keywords, $length);
+        $data = collect(); // Use collection to manage unique results
     
-        // If no products found, identify which keyword(s) cause empty results
         while ($data->isEmpty() && count($keywords) > 1) {
-            $keywords = $this->removeNonMatchingKeyword($keywords, $length);
-            if (empty($keywords)) break; // If all keywords are removed, stop the search
             $data = $this->searchProducts($keywords, $length);
+    
+            if ($data->isEmpty()) {
+                $keywords = $this->removeNonMatchingKeyword($keywords, $length);
+                if (empty($keywords)) break;
+            }
         }
+    
+        // Ensure unique results by using the `unique` method on the collection
+        $data = $data->unique('id')->values(); 
     
         return response()->json(['data' => $data]);
     }
@@ -50,8 +55,8 @@ class FilterController extends Controller
     
                 $query->where(function ($query) use ($keyword, $soundexKeyword) {
                     $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")  // Exact match
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]) // Soundex Match
+                        ->orWhere('name', 'LIKE', "%{$keyword}%")
+                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
                         ->orWhereJsonContains('tags', $keyword)
                         ->orWhereJsonContains('start_year', $keyword)
                         ->orWhereHas('shop', function ($query) use ($keyword) {
@@ -81,15 +86,15 @@ class FilterController extends Controller
     {
         foreach ($keywords as $index => $keyword) {
             $tempKeywords = $keywords;
-            unset($tempKeywords[$index]); // Remove one keyword at a time
+            unset($tempKeywords[$index]);
     
             $data = $this->searchProducts($tempKeywords, $length);
             if (!$data->isEmpty()) {
-                return array_values($tempKeywords); // Keep only matching keywords
+                return array_values($tempKeywords);
             }
         }
     
-        return []; // If no keyword combination works, return empty array
+        return [];
     }
     
     
