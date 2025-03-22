@@ -19,11 +19,24 @@ class FilterController extends Controller
         $searchWords = explode(' ', strtolower($searchValue));
         $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
-        $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 
+        $data = $this->searchProducts($keywords, $length);
+    
+        // Fallback: If no products found, try searching with fewer keywords
+        while ($data->isEmpty() && count($keywords) > 1) {
+            array_pop($keywords); // Remove the last word
+            $data = $this->searchProducts($keywords, $length);
+        }
+    
+        return response()->json(['data' => $data]);
+    }
+    
+    private function searchProducts($keywords, $length)
+    {
+        return Product::with([
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
-            }, 
+            },
             'product_varient', 'discount', 'tax', 'shipping'
         ])
         ->where('published', 1)
@@ -32,28 +45,28 @@ class FilterController extends Controller
         })
         ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
-                $soundexKeyword = soundex($keyword); // Generate Soundex code for input
-                
+                $soundexKeyword = soundex($keyword);
+    
                 $query->where(function ($query) use ($keyword, $soundexKeyword) {
                     $query->where('sku', 'LIKE', "%{$keyword}%")
                         ->orWhere('name', 'LIKE', "%{$keyword}%")  // Exact match
                         ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]) // Soundex Match
-                        ->orWhereJsonContains('tags', $keyword)    // Tags
+                        ->orWhereJsonContains('tags', $keyword)
                         ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name Soundex
+                        ->orWhereHas('shop', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");
                         })
-                        ->orWhereHas('brand', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Brand Soundex
+                        ->orWhereHas('brand', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");
                         })
-                        ->orWhereHas('model', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Model Soundex
+                        ->orWhereHas('model', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");
                         })
-                        ->orWhereHas('category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Category Soundex
+                        ->orWhereHas('category', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");
                         })
-                        ->orWhereHas('sub_category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category Soundex
+                        ->orWhereHas('sub_category', function ($query) use ($keyword) {
+                            $query->where('name', 'LIKE', "%{$keyword}%");
                         });
                 });
             }
@@ -61,11 +74,8 @@ class FilterController extends Controller
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
-
-
-    
-        return response()->json(['data' => $data]);
     }
+    
     
 
     public function getSuggestions1($query)
