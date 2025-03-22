@@ -30,34 +30,8 @@ class FilterController extends Controller
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
         })
-        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $soundexKeyword = soundex($keyword); // Generate Soundex code for input
-                
-                $query->where(function ($query) use ($keyword, $soundexKeyword) {
-                    $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")  // Exact match
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword]) // Soundex Match
-                        ->orWhereJsonContains('tags', $keyword)    // Tags
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Shop name Soundex
-                        })
-                        ->orWhereHas('brand', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Brand Soundex
-                        })
-                        ->orWhereHas('model', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Model Soundex
-                        })
-                        ->orWhereHas('category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Category Soundex
-                        })
-                        ->orWhereHas('sub_category', function ($query) use ($keyword, $soundexKeyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");   // Sub-category Soundex
-                        });
-                });
-            }
-        })
+        ->where('name', 'LIKE', "%{$searchValue}%")
+        ->orWhere('description', 'LIKE', "%{$searchValue}%")
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
