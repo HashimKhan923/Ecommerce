@@ -15,26 +15,62 @@ class FilterController extends Controller
         $Keyword->count++;
         $Keyword->save();
     
-        $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
-        $searchWords = explode(' ', strtolower($searchValue));
-        $keywords = array_diff($searchWords, $stopWords); // Remove stop words
+        // $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
+        // $searchWords = explode(' ', strtolower($searchValue));
+        // $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
+       $searchValue = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $searchValue);
+
+        $searchValue = $request->searchValue;
+        $keywords = explode(' ', $searchValue);
+
         $data = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 
-            'product_gallery' => function ($query) {
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock', 'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
-            }, 
-            'product_varient', 'discount', 'tax', 'shipping'
+            }, 'product_varient', 'discount', 'tax', 'shipping'
         ])
         ->where('published', 1)
         ->whereHas('shop', function ($query) {
             $query->where('status', 1);
+        })->whereHas('stock', function ($query) {
+            $query->where('stock', '>', 0);
         })
-        ->where('name', 'LIKE', "%{$searchValue}%")
-        ->orWhere('description', 'LIKE', "%{$searchValue}%")
+        ->where(function ($query) use ($keywords, $searchValue) {
+            $query->where('sku',$searchValue)
+            ->orWhere('name', 'LIKE', "%$searchValue%")
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhere('name', 'LIKE', "%$keyword%");
+                    }
+                })
+                ->orWhere('description', 'LIKE', "%$searchValue%")
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhere('description', 'LIKE', "%$keyword%");
+                    }
+                })
+                ->orWhere(function ($q) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $q->orWhereJsonContains('tags', $keyword);
+                    }
+                });
+        })
+        ->when(count($keywords) >= 2, function ($query) use ($searchValue, $keywords) {
+            return $query->orderByRaw('CASE 
+                WHEN name = ? THEN 1 
+                WHEN name LIKE ? THEN 2 
+                WHEN name LIKE ? THEN 3 
+                ELSE 4 
+            END', [$searchValue, "%$searchValue%", "%$keywords[0]%$keywords[1]%"]);
+        }, function ($query) use ($searchValue) {
+            return $query->orderByRaw('CASE 
+                WHEN name = ? THEN 1 
+                WHEN name LIKE ? THEN 2 
+                ELSE 3 
+            END', [$searchValue, "%$searchValue%"]);
+        })
         ->orderBy('featured', 'DESC')
-        ->orderBy('id', 'ASC')
-        ->skip($length)->take(12)->get();
+        ->get();
 
 
     
