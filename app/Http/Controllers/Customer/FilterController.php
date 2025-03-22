@@ -21,9 +21,10 @@ class FilterController extends Controller
     
         $data = $this->searchProducts($keywords, $length);
     
-        // Fallback: If no products found, try searching with fewer keywords
+        // If no products found, identify which keyword(s) cause empty results
         while ($data->isEmpty() && count($keywords) > 1) {
-            array_pop($keywords); // Remove the last word
+            $keywords = $this->removeNonMatchingKeyword($keywords, $length);
+            if (empty($keywords)) break; // If all keywords are removed, stop the search
             $data = $this->searchProducts($keywords, $length);
         }
     
@@ -74,6 +75,21 @@ class FilterController extends Controller
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
+    }
+    
+    private function removeNonMatchingKeyword($keywords, $length)
+    {
+        foreach ($keywords as $index => $keyword) {
+            $tempKeywords = $keywords;
+            unset($tempKeywords[$index]); // Remove one keyword at a time
+    
+            $data = $this->searchProducts($tempKeywords, $length);
+            if (!$data->isEmpty()) {
+                return array_values($tempKeywords); // Keep only matching keywords
+            }
+        }
+    
+        return []; // If no keyword combination works, return empty array
     }
     
     
