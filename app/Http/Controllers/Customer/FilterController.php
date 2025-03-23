@@ -21,17 +21,17 @@ class FilterController extends Controller
     
         $data = $this->searchProducts($keywords, $length);
     
-        while ($data->isEmpty() && count($keywords) > 1) {
-            $data = $this->searchProducts($keywords, $length);
+        // while ($data->isEmpty() && count($keywords) > 1) {
+        //     $data = $this->searchProducts($keywords, $length);
     
-            if ($data->isEmpty()) {
-                $keywords = $this->removeNonMatchingKeyword($keywords, $length);
-                if (empty($keywords)) break;
-            }
-        }
+        //     if ($data->isEmpty()) {
+        //         $keywords = $this->removeNonMatchingKeyword($keywords, $length);
+        //         if (empty($keywords)) break;
+        //     }
+        // }
     
         // Ensure unique results by using the `unique` method on the collection
-        $data = $data->unique('id')->values(); 
+        // $data = $data->unique('id')->values(); 
     
         return response()->json(['data' => $data]);
     }
