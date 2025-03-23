@@ -31,7 +31,7 @@ class FilterController extends Controller
         }
     
         // Ensure unique results by using the `unique` method on the collection
-        $data = $data->unique('id')->values(); 
+        // $data = $data->unique('id')->values(); 
     
         return response()->json(['data' => $data]);
     }
