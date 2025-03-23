@@ -19,7 +19,7 @@ class FilterController extends Controller
         $searchWords = explode(' ', strtolower($searchValue));
         $keywords = array_diff($searchWords, $stopWords); // Remove stop words
     
-        $data = collect(); // Use collection to manage unique results
+        $data = $this->searchProducts($keywords, $length);
     
         while ($data->isEmpty() && count($keywords) > 1) {
             $data = $this->searchProducts($keywords, $length);
