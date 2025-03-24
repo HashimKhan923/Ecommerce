@@ -17,21 +17,24 @@ class FilterController extends Controller
     
         $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
         $searchWords = explode(' ', strtolower($searchValue));
-        $keywords = array_diff($searchWords, $stopWords); // Remove stop words
+        $keywords = array_diff($searchWords, $stopWords);
     
-        $data = $this->searchProducts($keywords, $length);
-    
-        while ($data->isEmpty() && count($keywords) > 1) {
+        // Only process keyword reduction for the initial search
+        if ($length === 0) {
             $data = $this->searchProducts($keywords, $length);
     
-            if ($data->isEmpty()) {
+            // Reduce keywords deterministically if no results are found
+            while ($data->isEmpty() && count($keywords) > 1) {
                 $keywords = $this->removeNonMatchingKeyword($keywords, $length);
-                if (empty($keywords)) break;
+                if (empty($keywords)) {
+                    break;
+                }
+                $data = $this->searchProducts($keywords, $length);
             }
+        } else {
+            // For load more, use the original keywords without reduction
+            $data = $this->searchProducts($keywords, $length);
         }
-    
-        // Ensure unique results by using the `unique` method on the collection
-        // $data = $data->unique('id')->values(); 
     
         return response()->json(['data' => $data]);
     }
@@ -78,19 +81,22 @@ class FilterController extends Controller
             }
         })
         ->orderBy('featured', 'DESC')
-        ->orderBy('id', 'ASC')
+        ->orderBy('id', 'ASC') // Stable order
         ->skip($length)->take(12)->get();
     }
     
     private function removeNonMatchingKeyword($keywords, $length)
     {
-        foreach ($keywords as $index => $keyword) {
+        // Remove keywords from the end first for deterministic reduction
+        $keywords = array_values($keywords);
+        for ($i = count($keywords) - 1; $i >= 0; $i--) {
             $tempKeywords = $keywords;
-            unset($tempKeywords[$index]);
+            unset($tempKeywords[$i]);
+            $tempKeywords = array_values($tempKeywords);
     
             $data = $this->searchProducts($tempKeywords, $length);
             if (!$data->isEmpty()) {
-                return array_values($tempKeywords);
+                return $tempKeywords;
             }
         }
     
