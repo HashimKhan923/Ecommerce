@@ -27,6 +27,7 @@ class ContactUsController extends Controller
             function ($message) use ($request) { 
                 $message->from($request->email,'Dragon Auto Mart');
                 $message->to('support@dragonautomart.com');
+                $message->replyTo($request->email);
                 $message->subject('Contact');
             }
         );
