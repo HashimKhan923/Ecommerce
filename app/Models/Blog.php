@@ -14,6 +14,8 @@ class Blog extends Model
         'tags'=>'array'
     ];
 
+    protected $fillable = ['order'];
+
 
     public function blog_category()
     {
