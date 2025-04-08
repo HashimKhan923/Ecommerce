@@ -13,7 +13,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $data = Blog::with('user','blog_category')->get();
+        $data = Blog::with('user','blog_category')->orderBy('order', 'asc')->get();
 
         return response()->json(['data'=>$data]);
     }
@@ -143,6 +143,17 @@ class BlogController extends Controller
       return response($response, 200);
 
 
+    }
+
+    public function change_order(Request $request)
+    {
+        foreach($request->blog_order as $index => $blog_id) 
+        {
+            $blog = Blog::find($blog_id);
+            if ($blog) {
+                $blog->update(['order' => $index + 1]);
+            }
+        }
     }
 
 

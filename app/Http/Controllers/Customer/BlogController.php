@@ -14,7 +14,7 @@ class BlogController extends Controller
     {
         $BlogCategory = BlogCategory::where('status',1)->get();
 
-        $Blogs = Blog::with('user','blog_category')->where('status',1)->take(6)->get();
+        $Blogs = Blog::with('user','blog_category')->where('status',1)->orderBy('order', 'asc')->take(6)->get();
 
         return response()->json([
             'categories' => $BlogCategory,

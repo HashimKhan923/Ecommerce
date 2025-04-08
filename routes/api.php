@@ -194,6 +194,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('delete/{id}','delete');
                     Route::get('status/{id}','status');
                     Route::post('multi_delete','multi_delete');
+                    Route::post('change_order','change_order');
                 });
             });
 
