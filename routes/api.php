@@ -1018,6 +1018,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::post('update','update');
             Route::get('delete/{cart_id}','delete');
             Route::get('clear/{customer_id}','clear');
+            Route::post('cart_data','cart_data');
         });
     });
 

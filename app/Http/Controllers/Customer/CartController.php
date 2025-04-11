@@ -59,4 +59,24 @@ class CartController extends Controller
         return response()->json(['message'=>'deleted successfully!',200]);
 
     }
+
+    public function cart_data(Request $request)
+    {
+        $Products = Product::with([
+            'user',
+            'category',
+            'sub_category',
+            'brand',
+            'stock',
+            'product_gallery',
+            'discount',
+            'tax',
+            'shipping',
+            'shop',
+            'reviews',
+            'product_varient'
+        ])->whereIn('id', $request->ids)->get();
+    
+        return response()->json(['data'=>$Products]);
+    }
 }
