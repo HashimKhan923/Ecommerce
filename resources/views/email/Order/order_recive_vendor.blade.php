@@ -270,6 +270,10 @@
                     </tr>
                 </table>
             </div>
+            @if(isset($request->information[8]) && $request->information[8])
+                <h2>Customer Note</h2>
+                <p>{{ $request->information[8] }}</p>
+            @endif
 
             <h2>Billing Address</h2>
             <p>
