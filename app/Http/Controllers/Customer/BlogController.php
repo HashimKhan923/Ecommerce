@@ -27,7 +27,7 @@ class BlogController extends Controller
     public function load_more($length = null, $catId = null, $searchValue = null)
     {
     
-        $Blogs = Blog::with('user','blog_category')->where('status',1);
+        $Blogs = Blog::with('user','blog_category')->orderBy('order', 'asc')->where('status',1);
     
         if ($catId != 0) {
             $Blogs->where('cat_id', $catId);
