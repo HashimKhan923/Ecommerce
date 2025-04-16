@@ -78,7 +78,8 @@ class ProductController extends Controller
     public function detail($id)
     {
         $data = Product::with([
-            'user','wishlistProduct',
+            'user',
+            'wishlistProduct',
             'category',
             'sub_category',
             'brand',
@@ -92,17 +93,17 @@ class ProductController extends Controller
             'shipping',
             'deal',
             'wholesale',
-            'shop.shop_policy',
+            'shop' => function($query) {
+                $query->withCount('product')
+                      ->with('shop_policy');   
+            },
             'reviews.user',
             'product_varient'
-        ])->where('id',$id)->first();
-
-
-        return response()->json(['data'=>$data]);
-
-
-
+        ])->where('id', $id)->first();
+    
+        return response()->json(['data' => $data]);
     }
+    
 
     public function comment(Request $request)
     {
