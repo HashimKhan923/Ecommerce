@@ -34,11 +34,11 @@ class Product extends Model
         parent::boot();
 
         static::saved(function ($review) {
-            $review->product->updateAverageRating();
+            $review->user->updateAverageRating();
         });
 
         static::deleted(function ($review) {
-            $review->product->updateAverageRating();
+            $review->user->updateAverageRating();
         });
     }
 
