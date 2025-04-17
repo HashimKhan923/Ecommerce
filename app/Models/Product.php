@@ -31,9 +31,6 @@ class Product extends Model
 
 
 
-
-
-
     
     public function user()
     {
@@ -135,8 +132,6 @@ class Product extends Model
         $averageRating = $this->reviews()->avg('rating');
         $this->update(['average_rating' => $averageRating]);
     }
-
-
 
     
 

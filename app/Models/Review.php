@@ -14,15 +14,13 @@ class Review extends Model
     protected static function boot()
     {
         parent::boot();
-    
+
         static::saved(function ($review) {
-            $review->product->updateAverageRating();                   // update product rating
-            $review->product->user?->updateAverageRating();         // update seller rating
+            $review->product->updateAverageRating();
         });
-    
+
         static::deleted(function ($review) {
-            $review->product->updateAverageRating();                   // update product rating
-            $review->product->user?->updateAverageRating();         // update seller rating
+            $review->product->updateAverageRating();
         });
     }
 
