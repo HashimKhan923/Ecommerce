@@ -50,6 +50,13 @@ class CategoryController extends Controller
             $file->move(public_path('CategoryBanner'),$filename);
             $new->banner = $filename;
         }
+        if($request->file('mobile_banner')){
+
+            $file= $request->mobile_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('CategoryMobileBanner'),$filename);
+            $new->mobile_banner = $filename;
+        }
         if($request->file('icon')){
 
             $file= $request->icon;
@@ -89,6 +96,18 @@ class CategoryController extends Controller
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('CategoryBanner'),$filename);
             $update->banner = $filename;
+        }
+        if($request->file('mobile_banner')){
+
+            $bannerPath = public_path('CategoryMobileBanner/' . $update->mobile_banner);
+            if (file_exists($bannerPath) && is_file($bannerPath)) {
+                unlink($bannerPath);
+            }
+
+            $file= $request->mobile_banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('CategoryMobileBanner'),$filename);
+            $update->mobile_banner = $filename;
         }
         if($request->file('icon')){
 
@@ -133,6 +152,11 @@ class CategoryController extends Controller
             unlink($bannerPath);
         }
 
+        $moblebannerPath = public_path('CategoryMobileBanner/' . $file->mobile_banner);
+        if (file_exists($moblebannerPath) && is_file($moblebannerPath)) {
+            unlink($moblebannerPath);
+        }
+
         $iconPath = public_path('CategoryIcon/' . $file->icon);
         if (file_exists($iconPath) && is_file($iconPath)) {
             unlink($iconPath);
@@ -162,6 +186,11 @@ class CategoryController extends Controller
             if($item->banner)
             {
                 unlink(public_path('CategoryBanner/'.$item->banner));
+            }
+
+            if($item->mobile_banner)
+            {
+                unlink(public_path('CategoryMobileBanner/'.$item->mobile_banner));
             }
     
             if($item->icon)
