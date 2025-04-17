@@ -126,4 +126,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class, 'user_id','id');
     }
+
+    public function updateAverageRating()
+    {
+        $averageRating = $this->products()->avg('average_rating');
+        $this->update(['average_rating' => $averageRating]);
+    }
 }
