@@ -127,9 +127,20 @@ class User extends Authenticatable
         return $this->hasMany(Product::class, 'user_id','id');
     }
 
+        // Direct relation to all reviews on the seller’s products
+    public function reviews()
+    {
+        return $this->hasManyThrough(
+            Review::class,  // Final model
+            Product::class, // Middle model
+            'seller_id',    // Foreign key on Product table
+            'product_id'    // Foreign key on Review table
+        );
+    }
+
     public function updateAverageRating()
     {
-        $averageRating = $this->products()->avg('average_rating');
+        $averageRating = $this->reviews()->avg('rating');
         $this->update(['average_rating' => $averageRating]);
     }
 }

@@ -29,18 +29,7 @@ class Product extends Model
     ];
 
 
-    protected static function boot()
-    {
-        parent::boot();
 
-        static::saved(function ($review) {
-            $review->user->updateAverageRating();
-        });
-
-        static::deleted(function ($review) {
-            $review->user->updateAverageRating();
-        });
-    }
 
 
 
@@ -146,6 +135,8 @@ class Product extends Model
         $averageRating = $this->reviews()->avg('rating');
         $this->update(['average_rating' => $averageRating]);
     }
+
+
 
     
 
