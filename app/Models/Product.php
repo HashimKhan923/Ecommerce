@@ -143,7 +143,7 @@ class Product extends Model
 
     public function updateAverageRating()
     {
-        $averageRating = $this->users()->avg('average_rating');
+        $averageRating = $this->reviews()->avg('rating');
         $this->update(['average_rating' => $averageRating]);
     }
 
