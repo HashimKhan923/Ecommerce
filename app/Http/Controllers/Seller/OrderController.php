@@ -30,7 +30,7 @@ class OrderController extends Controller
 {
     public function index($id)
     {
-        $data = Order::with('order_detail.varient','order_status','order_refund','shop')->where('sellers_id',$id)->get();
+        $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')->where('sellers_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
