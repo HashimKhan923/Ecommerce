@@ -17,7 +17,7 @@ use App\Models\Shop;
 use App\Models\MyCustomer;
 use App\Models\Notification;
 use App\Models\Deal;
-
+use App\Models\Chat;
 
 
 class DashboardController extends Controller
@@ -29,6 +29,8 @@ class DashboardController extends Controller
         $featuredProducts = Product::where('user_id', $id)->where('featured', 1)->count();
         $activeProducts = Product::where('user_id', $id)->where('published', 1)->count();
         $draftProducts = Product::where('user_id', $id)->where('published', 0)->count();
+
+        $unReadMessageCount = Chat::where('reciver_id', $id)->where('status','unread')->count();
 
         // Order Data
         $orders = Order::where('sellers_id', $id)->get();
@@ -57,6 +59,8 @@ class DashboardController extends Controller
             'featuredProducts' => $featuredProducts,
             'activeProducts' => $activeProducts,
             'draftProducts' => $draftProducts,
+
+            'unReadMessageCount' => $unReadMessageCount,
             
             // Order Data
             'orders' => $orders,
