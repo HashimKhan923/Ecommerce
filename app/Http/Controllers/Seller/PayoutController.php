@@ -13,7 +13,7 @@ class PayoutController extends Controller
 {
     public function index($id)
     {
-        $data = Payout::where('seller_id',$id)->get();
+        $data = Payout::with('order.shop','listing_fee','featuredProductOrders','seller')->where('seller_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
