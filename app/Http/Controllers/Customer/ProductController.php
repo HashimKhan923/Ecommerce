@@ -78,7 +78,7 @@ class ProductController extends Controller
     public function detail($id)
     {
         $data = Product::with([
-            'user',
+            'user.productReviews.product.product_single_gallery',
             'wishlistProduct',
             'category',
             'sub_category',
