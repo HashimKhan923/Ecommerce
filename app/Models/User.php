@@ -138,4 +138,11 @@ class User extends Authenticatable
             'id'                               
         );
     }
+
+    public function updateAverageRating()
+    {
+        $average = $this->productReviews()->avg('average_rating');
+        $this->rating = $average ?? 0;  // fallback if no reviews yet
+        $this->save();
+    }
 }

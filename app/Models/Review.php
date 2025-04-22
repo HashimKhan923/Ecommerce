@@ -24,6 +24,17 @@ class Review extends Model
         });
     }
 
+    protected static function booted()
+    {
+        static::created(function ($review) {
+            $review->product->seller->updateAverageRating();
+        });
+
+        static::deleted(function ($review) {
+            $review->product->seller->updateAverageRating();
+        });
+    }
+
 
     public function product() {
         return $this->belongsTo(Product::class);
