@@ -46,7 +46,7 @@ class ShopProductController extends Controller
 
     public function index($shop_id, $searchValue = null)
     {   
-        $shop=Shop::with('seller.productReviews')->first();
+        $shop=Shop::with('seller.productReviews.product.product_single_gallery')->first();
 
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
