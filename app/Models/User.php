@@ -126,4 +126,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class, 'user_id','id');
     }
+
+    public function productReviews()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Review::class,
+            \App\Models\Product::class,       
+            'user_id',                       
+            'product_id',                     
+            'id',                             
+            'id'                               
+        );
+    }
 }

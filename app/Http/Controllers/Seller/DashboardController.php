@@ -46,12 +46,12 @@ class DashboardController extends Controller
         $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Un Paid')->count();
         $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
 
-        $Deals = Deal::with('products')
-        ->withCount('products')
-        ->where('discount_start_date', '<=', now())
-        ->where('discount_end_date', '>=', now())
-        ->where('status',1)
-        ->get();
+        // $Deals = Deal::with('products')
+        // ->withCount('products')
+        // ->where('discount_start_date', '<=', now())
+        // ->where('discount_end_date', '>=', now())
+        // ->where('status',1)
+        // ->get();
 
         return response()->json([
             // Product Data
@@ -76,7 +76,6 @@ class DashboardController extends Controller
             'unpaidPayouts' => $unpaidPayouts,
             'totalPayoutAmount' => $totalPayoutAmount,
 
-            'Deals' => $Deals
         ]);
     }
 
