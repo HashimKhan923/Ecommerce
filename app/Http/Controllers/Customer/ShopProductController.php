@@ -43,7 +43,9 @@ class ShopProductController extends Controller
     }
 
     public function index($shop_id, $searchValue = null)
-    {
+    {   
+        $shop=Shop::with('seller.productReviews')->first();
+
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
             ->where('shop_id', $shop_id)
@@ -154,6 +156,7 @@ class ShopProductController extends Controller
     
         // Format response
         $response = [
+            'shop'=>$shop,
             'products' => $products,
             'categories' => $categories,
         ];
