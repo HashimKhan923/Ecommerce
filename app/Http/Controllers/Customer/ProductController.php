@@ -99,10 +99,13 @@ class ProductController extends Controller
             'reviews.user',
             'product_varient',
             'user.productReviews' => function ($query) {
-                $query->with(['product' => function ($q) {
-                    $q->select('id', 'name') 
-                      ->with('product_single_gallery'); 
-                }]);
+                $query->with([
+                    'user', // This loads the user who wrote the review
+                    'product' => function ($q) {
+                        $q->select('id', 'name')
+                          ->with('product_single_gallery');
+                    }
+                ]);
             }
         ])->where('id', $id)->first();
     
