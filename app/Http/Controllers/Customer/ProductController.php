@@ -96,6 +96,7 @@ class ProductController extends Controller
                 $query->withCount('product')
                       ->with('shop_policy');
             },
+            'reviews.user',
             'product_varient',
             'user.productReviews' => function ($query) {
                 $query->with([
