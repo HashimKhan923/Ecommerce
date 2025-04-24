@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Payout;
-use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\BankDetail;
@@ -35,76 +34,57 @@ class UpdatePayoutStatus extends Command
     public function handle()
     {
 
-        $orders = Order::where('delivery_status', 'Delivered')
-            ->with(['payout' => function ($query) {
-                $query->where('status', '!=', 'Paid');
-            }])
-            ->get();
-
         $DaysAgo = Carbon::now()->subDays(5);
-        if($orders)
-        {
-            foreach($orders as $order)
-            {
-                $payouts = Payout::where('order_id',$order->id)
-                ->where('created_at', '<=', $DaysAgo)
-                ->where('status', '!=', 'Paid')
-                ->get();
+
+        $payouts = Payout::where('created_at', '<=', $DaysAgo)
+                        ->where('status', '!=', 'Paid')
+                        ->get();
 
 
-                foreach ($payouts as $payout) {
-                    $Seller = User::where('id',$payout->seller_id)->first();
+                        foreach ($payouts as $payout) {
+                            $Seller = User::where('id',$payout->seller_id)->first();
 
-                    if($Seller->stripe_account_id != null)
-                                {
-                                    Stripe::setApiKey(config('services.stripe.secret'));
+                            if($Seller->stripe_account_id != null)
+                                        {
+                                            Stripe::setApiKey(config('services.stripe.secret'));
 
-                        
-                                    try {
-                                        Transfer::create([
-                                            'amount' => $payout->amount * 100,
-                                            'currency' => 'usd',
-                                            'destination' => $Seller->stripe_account_id,
-                                        ]);
+                                
+                                            try {
+                                                Transfer::create([
+                                                    'amount' => $payout->amount * 100,
+                                                    'currency' => 'usd',
+                                                    'destination' => $Seller->stripe_account_id,
+                                                ]);
 
-                                    } catch (\Exception $e) {
-                                        $this->error('Stripe Payout Error: ' . $e->getMessage());
-                                        continue;
-                                    }
+                                            } catch (\Exception $e) {
+                                                $this->error('Stripe Payout Error: ' . $e->getMessage());
+                                                continue;
+                                            }
 
-                                    
-                    }
+                                            
+                            }
 
-                    $payout->status = 'Paid';
-                    $payout->save();
+                            $payout->status = 'Paid';
+                            $payout->save();
 
-                    Notification::create([
-                        'customer_id' => $Seller->id,
-                        'notification' => 'your payout $'.$payout->amount.' has been successfully processed.'
-                    ]);
+                            Notification::create([
+                                'customer_id' => $Seller->id,
+                                'notification' => 'your payout $'.$payout->amount.' has been successfully processed.'
+                            ]);
 
-                    Mail::send(
-                        'email.Payout.seller_payout',
-                        [
-                            'vendor_name' => $Seller->name,
-                            'amount' => $payout->amount,
-                        ],
-                        function ($message) use ($Seller) { 
-                            $message->from('support@dragonautomart.com','Dragon Auto Mart');
-                            $message->to($Seller->email);
-                            $message->subject('Payout Notification');
-                        }
-                    );
-                } 
-            }
-        }
-        else
-        {
-            $this->info('Payouts Not available.');
-        }
-
-
-               
+                            Mail::send(
+                                'email.Payout.seller_payout',
+                                [
+                                    'vendor_name' => $Seller->name,
+                                    'amount' => $payout->amount,
+                                ],
+                                function ($message) use ($Seller) { 
+                                    $message->from('support@dragonautomart.com','Dragon Auto Mart');
+                                    $message->to($Seller->email);
+                                    $message->subject('Payout Notification');
+                                }
+                            );
+                        }                
 
 
         $this->info('Payouts paid successfully.');
