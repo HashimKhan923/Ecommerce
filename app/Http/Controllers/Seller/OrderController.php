@@ -123,7 +123,7 @@ class OrderController extends Controller
             $seller = User::where('id',$order->sellers_id)->first();
             $shop = Shop::where('seller_id',$order->sellers_id)->first();
             $TrackingNumber = '';
-            if($request->delivery_status == 'Delivered')
+            if($request->delivery_status == 'Confirmed')
             {
     
                 $order->shipping_amount = $request->shipping_amount;
