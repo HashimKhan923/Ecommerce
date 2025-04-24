@@ -40,6 +40,7 @@ class TrackFedExDeliveries extends Command
                         $this->info("Order #{$order->id} marked as delivered.");
                     }
                 } catch (\Exception $e) {
+                    $this->info("error.");
                     $this->error("Failed to track order #{$order->id}: " . $e->getMessage());
                 }
             }
