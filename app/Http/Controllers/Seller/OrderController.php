@@ -86,11 +86,11 @@ class OrderController extends Controller
 
                 // ✅ 3️⃣ Extract Risk Evaluation (if available)
 
-                // $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'];
+                $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'];
 
-                // $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
+                $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
 
-                //   $risk = $paypal_order_response->json();
+                  $risk = $paypal_order_response->json();
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);
             }
