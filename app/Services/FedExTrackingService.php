@@ -39,6 +39,18 @@ class FedExTrackingService
 
         if ($response->successful()) {
             return $response->json();
+        } else {
+            \Log::error('FedEx tracking API error', [
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+        
+            // Optionally throw or return an error structure
+            return [
+                'error' => true,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ];
         }
 
         logger()->error('FedEx tracking failed', [
