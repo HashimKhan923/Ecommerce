@@ -17,31 +17,38 @@ class TrackFedExDeliveries extends Command
     {
         $this->info("Tracking FedEx shipments...");
     
-        $orders = Order::where('delivery_status', '!=', 'Delivered')
+        $orders = Order::where('delivery_status','Confirmed')
             ->with('order_tracking')
             ->get();
     
         $fedex = new FedExTrackingService();
-    
-        foreach ($orders as $order) {
-            if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
-                $this->warn("Order #{$order->id} has no tracking number.");
-                continue;
-            }
-    
-            try {
-                $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
-                $status = data_get($trackingData, 'output.completeTrackResults.0.trackResults.0.latestStatusDetail.statusByLocale');
-    
-                if (strtolower($status) === 'delivered') {
-                    $order->delivery_status = 'Delivered';
-                    $order->save();
-                    $this->info("Order #{$order->id} marked as delivered.");
+        if($orders)
+        {
+            foreach ($orders as $order) {
+                if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
+                    $this->warn("Order #{$order->id} has no tracking number.");
+                    continue;
                 }
-            } catch (\Exception $e) {
-                $this->error("Failed to track order #{$order->id}: " . $e->getMessage());
+        
+                try {
+                    $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
+                    $status = data_get($trackingData, 'output.completeTrackResults.0.trackResults.0.latestStatusDetail.statusByLocale');
+        
+                    if (strtolower($status) === 'delivered') {
+                        $order->delivery_status = 'Delivered';
+                        $order->save();
+                        $this->info("Order #{$order->id} marked as delivered.");
+                    }
+                } catch (\Exception $e) {
+                    $this->error("Failed to track order #{$order->id}: " . $e->getMessage());
+                }
             }
         }
+        else
+        {
+            $this->info("No Fullfiled orders available.");
+        }
+
     
         $this->info("Tracking completed.");
     }
