@@ -32,6 +32,13 @@ class TrackFedExDeliveries extends Command
             
                 try {
                     $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
+
+                            // 🔍 Check for API error before proceeding
+        if (isset($trackingData['error'])) {
+            $this->error("FedEx API error for Order #{$order->id}: " . $trackingData['body']);
+            continue;
+        }
+
                     $this->line("FedEx Response for Order #{$order->id}:\n" . json_encode($trackingData, JSON_PRETTY_PRINT));
                     
                     $status = data_get($trackingData, 'completeTrackResults.0.trackResults.0.latestStatusDetail.description');
