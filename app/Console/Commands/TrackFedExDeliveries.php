@@ -25,12 +25,13 @@ class TrackFedExDeliveries extends Command
         if($orders)
         {
             foreach ($orders as $order) {
-                // if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
-                //     $this->warn("Order #{$order->id} has no tracking number.");
-                //     continue;
-                // }
+                if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
+                    $this->warn("Order #{$order->id} has no tracking number.");
+                    continue;
+                }
         
                 try {
+                    return 'inin';
                     $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
                     $status = data_get($trackingData, 'output.completeTrackResults.0.trackResults.0.latestStatusDetail.statusByLocale');
         
@@ -40,7 +41,6 @@ class TrackFedExDeliveries extends Command
                         $this->info("Order #{$order->id} marked as delivered.");
                     }
                 } catch (\Exception $e) {
-                    $this->info("error.");
                     $this->error("Failed to track order #{$order->id}: " . $e->getMessage());
                 }
             }
