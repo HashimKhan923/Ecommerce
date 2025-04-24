@@ -29,36 +29,24 @@ class TrackFedExDeliveries extends Command
                     $this->warn("Order #{$order->id} has no tracking number.");
                     continue;
                 }
-            
+        
                 try {
                     $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
-
-                            // 🔍 Check for API error before proceeding
-        if (isset($trackingData['error'])) {
-            $this->error("FedEx API error for Order #{$order->id}: " . $trackingData['body']);
-            continue;
-        }
-
-                    $this->line("FedEx Response for Order #{$order->id}:\n" . json_encode($trackingData, JSON_PRETTY_PRINT));
-                    
-                    $status = data_get($trackingData, 'completeTrackResults.0.trackResults.0.latestStatusDetail.description');
-            
-                    $this->info("Order #{$order->id} FedEx status: " . $status);
-            
-                    if (str_contains(strtolower($status), 'delivered')) {
+                    $status = data_get($trackingData, 'output.completeTrackResults.0.trackResults.0.latestStatusDetail.statusByLocale');
+        
+                    if (strtolower($status) === 'delivered') {
                         $order->delivery_status = 'Delivered';
                         $order->save();
                         $this->info("Order #{$order->id} marked as delivered.");
                     }
                 } catch (\Exception $e) {
                     $this->error("Failed to track order #{$order->id}: " . $e->getMessage());
-                    $this->line("Tracking response: " . json_encode($trackingData ?? [], JSON_PRETTY_PRINT));
                 }
             }
         }
         else
         {
-            $this->info("No Fullfiled orders available.");
+            $this->info("No Fullfiled orders.");
         }
 
     
