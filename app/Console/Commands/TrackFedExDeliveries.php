@@ -31,11 +31,12 @@ class TrackFedExDeliveries extends Command
                 }
         
                 try {
-                    return 'inin';
+                    
                     $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
                     $status = data_get($trackingData, 'output.completeTrackResults.0.trackResults.0.latestStatusDetail.statusByLocale');
         
                     if (strtolower($status) === 'delivered') {
+                        return 'inin';
                         $order->delivery_status = 'Delivered';
                         $order->save();
                         $this->info("Order #{$order->id} marked as delivered.");
