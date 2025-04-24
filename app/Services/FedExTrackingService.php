@@ -65,8 +65,8 @@ class FedExTrackingService
     {
         $response = Http::asForm()->post('https://apis.fedex.com/oauth/token', [
             'grant_type' => 'client_credentials',
-            'client_id' => $this->apiKey,
-            'client_secret' => $this->apiSecret,
+            'client_id' => env('FEDEX_TRACKING_KEY'),
+            'client_secret' => env('FEDEX_TRACKING_SECRET')
         ]);
 
         if ($response->successful()) {
