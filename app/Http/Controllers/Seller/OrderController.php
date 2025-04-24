@@ -57,44 +57,44 @@ class OrderController extends Controller
             
         }
 
-        // if ($data->payment_method == 'PAYPAL') {
-        //     try {
+        if ($data->payment_method == 'PAYPAL') {
+            try {
 
-        //         $clientId = config('services.paypal.client_id'); // Set in .env
-        //         $clientSecret = config('services.paypal.secret'); // Set in .env
-        //         $client = new Client();
+                $clientId = config('services.paypal.client_id'); // Set in .env
+                $clientSecret = config('services.paypal.secret'); // Set in .env
+                $client = new Client();
         
 
-        //         // ✅ 1️⃣ Get PayPal Access Token
-        //         $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
-        //             'auth' => [$clientId, $clientSecret],
-        //             'form_params' => ['grant_type' => 'client_credentials'],
-        //         ]);
+                // ✅ 1️⃣ Get PayPal Access Token
+                $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
+                    'auth' => [$clientId, $clientSecret],
+                    'form_params' => ['grant_type' => 'client_credentials'],
+                ]);
 
-        //         $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
+                $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
 
-        //         // ✅ 2️⃣ Fetch Payment Details using PayPal Capture ID
-        //         $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
+                // ✅ 2️⃣ Fetch Payment Details using PayPal Capture ID
+                $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
 
-        //         if ($paymentResponse->failed()) {
-        //             return response()->json(['error' => 'Failed to fetch payment details']);
-        //         }
+                if ($paymentResponse->failed()) {
+                    return response()->json(['error' => 'Failed to fetch payment details']);
+                }
 
-        //         $paymentDetails = $paymentResponse->json();
+                $paymentDetails = $paymentResponse->json();
 
-        //         $risk = $paymentDetails;
+                $risk = $paymentDetails;
 
-        //         // ✅ 3️⃣ Extract Risk Evaluation (if available)
+                // ✅ 3️⃣ Extract Risk Evaluation (if available)
 
-        //         // $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'];
+                // $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'];
 
-        //         // $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
+                // $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
 
-        //         //   $risk = $paypal_order_response->json();
-        //     } catch (\Exception $e) {
-        //         return response()->json(['error' => $e->getMessage()]);
-        //     }
-        // }
+                //   $risk = $paypal_order_response->json();
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()]);
+            }
+        }
 
         return response()->json(['data'=>$data,'charge'=>$charge, 'risk' => $risk]);
 
