@@ -25,10 +25,10 @@ class TrackFedExDeliveries extends Command
         if($orders)
         {
             foreach ($orders as $order) {
-                if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
-                    $this->warn("Order #{$order->id} has no tracking number.");
-                    continue;
-                }
+                // if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
+                //     $this->warn("Order #{$order->id} has no tracking number.");
+                //     continue;
+                // }
         
                 try {
                     $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
