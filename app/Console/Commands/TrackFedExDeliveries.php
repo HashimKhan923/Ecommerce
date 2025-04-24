@@ -32,7 +32,8 @@ class TrackFedExDeliveries extends Command
             
                 try {
                     $trackingData = $fedex->trackShipment($order->order_tracking->tracking_number);
-                    $this->line(json_encode($trackingData, JSON_PRETTY_PRINT));
+                    $this->line("FedEx Response for Order #{$order->id}:\n" . json_encode($trackingData, JSON_PRETTY_PRINT));
+                    
                     $status = data_get($trackingData, 'completeTrackResults.0.trackResults.0.latestStatusDetail.description');
             
                     $this->info("Order #{$order->id} FedEx status: " . $status);
