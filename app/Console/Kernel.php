@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('payout:update')->daily();
         $schedule->command('notify:back-in-stock')->daily();
         $schedule->command('send:review-request')->daily();
+        $schedule->command('orders:track-fedex')->everySixHours();
     }
 
 

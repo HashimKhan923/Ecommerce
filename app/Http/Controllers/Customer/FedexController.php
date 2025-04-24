@@ -26,31 +26,11 @@ class FedexController extends Controller
 
             $token=json_decode($token->body());
 
-            // $trackingToken = Http::asForm()->post('https://apis.fedex.com/oauth/token', [
-            //     'grant_type' => 'client_credentials',
-            //     'client_id' => env('FEDEX_TRACKING_KEY'),
-            //     'client_secret' => env('FEDEX_TRACKING_SECRET')
 
-            // ]);
-
-            // $trackingToken=json_decode($trackingToken->body());
     
             return response()->json(['token' => $token]);
         } catch (\Exception $e) {
 
-            // Mail::send(
-            //     'email.exception',
-            //     [
-            //         'exceptionMessage' => $e->getMessage(),
-            //         'exceptionFile' => $e->getFile(),
-            //         'exceptionLine' => $e->getLine(),
-            //     ],
-            //     function ($message) {
-            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-            //         $message->to('support@dragonautomart.com'); // Send to support email
-            //         $message->subject('Dragon Exception');
-            //     }
-            // );
 
             return response()->json([$e->getMessage()]);
         }
