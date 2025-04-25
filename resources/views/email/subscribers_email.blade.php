@@ -1,1322 +1,676 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+
 <head>
-<!--[if gte mso 9]>
-<xml>
-  <o:OfficeDocumentSettings>
-    <o:AllowPNG/>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
-  </o:OfficeDocumentSettings>
-</xml>
-<![endif]-->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="x-apple-disable-message-reformatting">
-  <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
-  <title></title>
-  
-    <style type="text/css">
-      
-      @media only screen and (min-width: 620px) {
-        .u-row {
-          width: 600px !important;
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]-->
+    <!--[if !mso]><!-->
+    <link href="https://creatives.attn.tv/hirevsports/abel_n4.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;700&amp;display=swap" rel="stylesheet"
+        type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" rel="stylesheet"
+        type="text/css">
+    <!--<![endif]-->
+    <style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        margin: 0;
+        padding: 0
+    }
+
+    a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: inherit !important
+    }
+
+    #MessageViewBody a {
+        color: inherit;
+        text-decoration: none
+    }
+
+    p {
+        line-height: inherit
+    }
+
+    .desktop_hide,
+    .desktop_hide table {
+        mso-hide: all;
+        display: none;
+        max-height: 0;
+        overflow: hidden
+    }
+
+    .image_block img+div {
+        display: none
+    }
+
+    sub,
+    sup {
+        font-size: 75%;
+        line-height: 0
+    }
+
+    .menu_block.desktop_hide .menu-links span {
+        mso-hide: all
+    }
+
+    @media (max-width:685px) {
+        .social_block.desktop_hide .social-table {
+            display: inline-block !important
         }
 
-        .u-row .u-col {
-          vertical-align: top;
+        .mobile_hide {
+            display: none
         }
 
-        
-            .u-row .u-col-33p33 {
-              width: 199.98px !important;
-            }
-          
-
-            .u-row .u-col-48 {
-              width: 288px !important;
-            }
-          
-
-            .u-row .u-col-50 {
-              width: 300px !important;
-            }
-          
-
-            .u-row .u-col-52 {
-              width: 312px !important;
-            }
-          
-
-            .u-row .u-col-100 {
-              width: 600px !important;
-            }
-          
-      }
-
-      @media only screen and (max-width: 620px) {
-        .u-row-container {
-          max-width: 100% !important;
-          padding-left: 0px !important;
-          padding-right: 0px !important;
+        .row-content {
+            width: 100% !important
         }
 
-        .u-row {
-          width: 100% !important;
+        .stack .column {
+            width: 100%;
+            display: block
         }
 
-        .u-row .u-col {
-          display: block !important;
-          width: 100% !important;
-          min-width: 320px !important;
-          max-width: 100% !important;
+        .mobile_hide {
+            min-height: 0;
+            max-height: 0;
+            max-width: 0;
+            overflow: hidden;
+            font-size: 0
         }
 
-        .u-row .u-col > div {
-          margin: 0 auto;
+        .desktop_hide,
+        .desktop_hide table {
+            display: table !important;
+            max-height: none !important
         }
 
-
-        .u-row .u-col img {
-          max-width: 100% !important;
+        .row-6 .column-1 .block-1.image_block td.pad {
+            padding: 5px 0 0 !important
         }
 
-}
-    
-body {
-  margin: 0;
-  padding: 0;
-}
+        .row-2 .column-1 .block-1.menu_block .menu-links a,
+        .row-2 .column-1 .block-1.menu_block .menu-links span {
+            font-size: 11px !important
+        }
 
-table,
-tr,
-td {
-  vertical-align: top;
-  border-collapse: collapse;
-}
+        .row-4 .column-1 .block-1.heading_block td.pad,
+        .row-7 .column-1 .block-1.heading_block td.pad {
+            padding: 5px !important
+        }
 
-p {
-  margin: 0;
-}
+        .row-4 .column-1 .block-1.heading_block h1,
+        .row-7 .column-1 .block-1.heading_block h1 {
+            font-size: 14px !important
+        }
 
-.ie-container table,
-.mso-container table {
-  table-layout: fixed;
-}
+        .row-6 .column-2 .block-1.image_block td.pad {
+            padding: 0 !important
+        }
 
-* {
-  line-height: inherit;
-}
+        .row-9 .column-1 .block-3.social_block td.pad {
+            padding: 5px 10px 0 !important
+        }
 
-a[x-apple-data-detectors='true'] {
-  color: inherit !important;
-  text-decoration: none !important;
-}
+        .row-9 .column-1 .block-2.paragraph_block td.pad>div,
+        .row-9 .column-1 .block-4.paragraph_block td.pad>div {
+            font-size: 15px !important
+        }
 
-
-
-table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: underline; } @media (max-width: 480px) { #u_content_image_5 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_5 .v-src-width { width: auto !important; } #u_content_image_5 .v-src-max-width { max-width: 100% !important; } #u_content_text_6 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_6 .v-text-align { text-align: center !important; } #u_content_button_8 .v-size-width { width: 65% !important; } #u_content_button_8 .v-text-align { text-align: center !important; } #u_content_button_8 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_6 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_text_7 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_7 .v-text-align { text-align: center !important; } #u_content_button_18 .v-size-width { width: 65% !important; } #u_content_button_18 .v-text-align { text-align: center !important; } #u_content_button_18 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_4 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_image_4 .v-src-width { width: auto !important; } #u_content_image_4 .v-src-max-width { max-width: 100% !important; } #u_content_text_4 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_4 .v-text-align { text-align: center !important; } #u_content_button_7 .v-size-width { width: 65% !important; } #u_content_button_7 .v-text-align { text-align: center !important; } #u_content_button_7 .v-container-padding-padding { padding: 10px 10px 40px !important; } #u_content_image_15 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_15 .v-src-width { width: auto !important; } #u_content_image_15 .v-src-max-width { max-width: 100% !important; } #u_content_text_17 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_17 .v-text-align { text-align: center !important; } #u_content_button_12 .v-size-width { width: 65% !important; } #u_content_button_12 .v-text-align { text-align: center !important; } #u_content_button_12 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_16 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_text_18 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_18 .v-text-align { text-align: center !important; } #u_content_button_13 .v-size-width { width: 65% !important; } #u_content_button_13 .v-text-align { text-align: center !important; } #u_content_button_13 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_17 .v-container-padding-padding { padding: 10px 0px 0px !important; } #u_content_image_17 .v-src-width { width: auto !important; } #u_content_image_17 .v-src-max-width { max-width: 100% !important; } #u_content_text_19 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_19 .v-text-align { text-align: center !important; } #u_content_button_14 .v-size-width { width: 65% !important; } #u_content_button_14 .v-text-align { text-align: center !important; } #u_content_button_14 .v-container-padding-padding { padding: 10px 10px 40px !important; } #u_content_image_2 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_heading_2 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_heading_2 .v-text-align { text-align: center !important; } #u_content_text_3 .v-container-padding-padding { padding: 5px 10px 10px !important; } #u_content_text_3 .v-text-align { text-align: center !important; } #u_content_button_3 .v-size-width { width: 65% !important; } #u_content_button_3 .v-text-align { text-align: center !important; } #u_content_button_3 .v-container-padding-padding { padding: 10px 10px 40px 20px !important; } #u_content_heading_1 .v-container-padding-padding { padding: 40px 10px 0px !important; } #u_content_heading_1 .v-text-align { text-align: center !important; } #u_content_text_2 .v-container-padding-padding { padding: 5px 10px 10px !important; } #u_content_text_2 .v-text-align { text-align: center !important; } #u_content_button_15 .v-size-width { width: 65% !important; } #u_content_button_15 .v-text-align { text-align: center !important; } #u_content_button_15 .v-container-padding-padding { padding: 10px 10px 40px 20px !important; } #u_content_image_3 .v-container-padding-padding { padding: 0px !important; } #u_content_image_12 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_12 .v-src-width { width: auto !important; } #u_content_image_12 .v-src-max-width { max-width: 100% !important; } #u_content_text_22 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_22 .v-text-align { text-align: center !important; } #u_content_button_16 .v-size-width { width: 65% !important; } #u_content_button_16 .v-text-align { text-align: center !important; } #u_content_button_16 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_18 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_18 .v-src-width { width: auto !important; } #u_content_image_18 .v-src-max-width { max-width: 100% !important; } #u_content_text_24 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_24 .v-text-align { text-align: center !important; } #u_content_button_17 .v-size-width { width: 65% !important; } #u_content_button_17 .v-text-align { text-align: center !important; } #u_content_button_17 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_19 .v-container-padding-padding { padding: 40px 0px 0px !important; } #u_content_image_19 .v-src-width { width: auto !important; } #u_content_image_19 .v-src-max-width { max-width: 100% !important; } #u_content_text_11 .v-container-padding-padding { padding: 20px 10px 0px !important; } #u_content_text_11 .v-text-align { text-align: center !important; } #u_content_button_9 .v-size-width { width: 65% !important; } #u_content_button_9 .v-text-align { text-align: center !important; } #u_content_button_9 .v-container-padding-padding { padding: 10px 10px 20px !important; } #u_content_image_20 .v-text-align { text-align: center !important; } }
+        .row-9 .column-1 .block-6.paragraph_block td.pad>div {
+            font-size: 12px !important
+        }
+    }
     </style>
-  
-  
-
-<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
-
+    <!--[if mso ]><style>sup, sub { font-size: 100% !important; } sup { mso-text-raise:10% } sub { mso-text-raise:-10% }</style> <![endif]-->
 </head>
 
-<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #ffffff;color: #000000">
-  <img src="{{ $trackingUrl }}" width="1" height="1" alt=""/>
-  <!--[if IE]><div class="ie-container"><![endif]-->
-  <!--[if mso]><div class="mso-container"><![endif]-->
-  <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #ffffff;width:100%" cellpadding="0" cellspacing="0">
-  <tbody>
-  <tr style="vertical-align: top">
-    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-    <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #ffffff;"><![endif]-->
-    
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="background-color: #2d2d2d;width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #2d2d2d;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-   
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/headerlogo.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 42%;max-width: 243.6px;" width="243.6" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank">
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/finalbanner.jpeg" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600" class="v-src-width v-src-max-width"/>
-      </a>
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">TOP CATEGORIES</p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_5" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image6.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 67%;max-width: 127.3px;" width="127.3" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_6" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Head Lights</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_8" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 15px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/subcategory/Headlights/5" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/subcategory/Headlights/5'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-
-    
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_6" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/taillight.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 67%;max-width: 127.3px;" width="127.3" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_7" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Tail Lights</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_18" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/subcategory/Tail%20Lights/4" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/subcategory/Tail%20Lights/4'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_4" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/foglight.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 190px;" width="190" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_4" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Fog Lights</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_7" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/subcategory/Fog%20Lights/7" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/subcategory/Fog%20Lights/7'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">POPULAR MAKES</p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_15" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image3.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_17" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Toyota</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_12" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 15px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/make/Toyota/1" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/make/Toyota/1'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_16" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image4.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_18" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Honda</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_13" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/make/Honda/3" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/make/Honda/3'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_17" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/fordlogo.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 70%;max-width: 133px;" width="133" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_19" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Ford</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_14" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/make/Ford/7" style="height:37px; v-text-anchor:middle; width:126px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/make/Ford/7'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:70%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">NEW ARRIVALS</p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="300" style="background-color: #ecf0f1;width: 300px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_2" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image7.webp" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 300px;" width="300" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="300" style="background-color: #ecf0f1;width: 300px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_heading_2" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 10px 0px 20px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h2 class="v-text-align" style="margin: 0px; color: #051140; line-height: 140%; text-align: left; word-wrap: break-word; font-size: 20px; font-weight: 400;"><strong>Ford SuperDuty Headlights</strong></h2>
-  <!--[if mso]></td></tr></table><![endif]-->
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_3" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:5px 20px 10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; color: #34495e; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;">Introducing Morimoto XB LED Headlights for Ford Super Duty Trucks</p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_3" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 60px 20px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="left">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/searchresults/ford%20headlight" style="height:37px; v-text-anchor:middle; width:159px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/searchresults/ford%20headlight'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:59%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-width: 0px; border-top-style: solid; border-top-color: #CCC; border-left-width: 0px; border-left-style: solid; border-left-color: #CCC; border-right-width: 0px; border-right-style: solid; border-right-color: #CCC; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #CCC;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="300" style="background-color: #cfd2d3;width: 300px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #cfd2d3;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_heading_1" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 10px 0px 20px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 class="v-text-align" style="margin: 0px; color: #051140; line-height: 140%; text-align: left; word-wrap: break-word; font-size: 22px; font-weight: 400;"><strong>Toyota Camry Tail Lights</strong></h1>
-  <!--[if mso]></td></tr></table><![endif]-->
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_2" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:5px 30px 10px 20px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; color: #34495e; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;">Introducing Vicrez &amp; HRS LED Tail Lights for Toyota Camry</p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_15" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 60px 20px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="left">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/searchresults/toyota%20camry%20tail%20light" style="height:37px; v-text-anchor:middle; width:159px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/searchresults/toyota%20camry%20tail%20light'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:59%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-width: 0px; border-top-style: solid; border-top-color: #CCC; border-left-width: 0px; border-left-style: solid; border-left-color: #CCC; border-right-width: 0px; border-right-style: solid; border-right-color: #CCC; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #CCC;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Shop Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="300" style="background-color: #cfd2d3;width: 300px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #cfd2d3;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_3" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image8.webp" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 300px;" width="300" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-family: 'Montserrat',sans-serif; font-size: 30px; font-weight: 400; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">EXCLUSIVE PRODUCTS</p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_12" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image9.webp" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_22" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Honda Accord LED Tail Lights - The Elite Series</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_16" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/493" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/searchresults/honda%20accord%20tail%20lights'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_18" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image10.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_24" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Redeye Demon Style Matte Black Wheel</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_17" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/5467" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('⁠https://dragonautomart.com/searchresults/wheel'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="200" style="background-color: #ecf0f1;width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-  <div style="background-color: #ecf0f1;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_19" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 5px 5px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://api.dragonautomart.com/images/image11.png" alt="image" title="image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 98%;max-width: 186.2px;" width="186.2" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_text_11" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>HRS Elite Series Vinyl Wrap - Heavy Gray</strong></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_9" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div class="v-text-align" align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dragonautomart.com/product/2592" style="height:37px; v-text-anchor:middle; width:130px;" arcsize="27%"  stroke="f" fillcolor="#bb0500"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-    <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/searchresults/vinyl%20wrap'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button v-size-width" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #bb0500; border-radius: 10px;-webkit-border-radius: 10px; -moz-border-radius: 10px; width:72%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><strong><span style="line-height: 16.8px;">Buy Now</span></strong></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="288" style="width: 288px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-48" style="max-width: 320px;min-width: 288px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table id="u_content_image_20" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="left">
-      
-      <img align="left" border="0" src="https://api.dragonautomart.com/images/backgruind_removed.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 134px;" width="134" class="v-src-width v-src-max-width"/>
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="312" style="width: 312px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-52" style="max-width: 320px;min-width: 312px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Raleway',sans-serif;" align="left">
-        
-<div align="center">
-  <div style="display: table; max-width:184px;">
-  <!--[if (mso)|(IE)]><table width="184" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse;" align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:184px;"><tr><![endif]-->
-  
-    
-    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://web.facebook.com/dragonautomart?_rdc=1&_rdr" title="Facebook" target="_blank">
-          <img src="https://api.dragonautomart.com/images/image16.png" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-        </a>
-      </td></tr>
-    </tbody></table>
-    <!--[if (mso)|(IE)]></td><![endif]-->
-    
-    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://www.X.com/dragonautomart" title="X" target="_blank">
-          <img src="https://api.dragonautomart.com/images/image15.png" alt="X" title="X" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-        </a>
-      </td></tr>
-    </tbody></table>
-    <!--[if (mso)|(IE)]></td><![endif]-->
-    
-    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://www.instagram.com/dragonautomart/" title="Instagram" target="_blank">
-          <img src="https://api.dragonautomart.com/images/image17.png" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-        </a>
-      </td></tr>
-    </tbody></table>
-    <!--[if (mso)|(IE)]></td><![endif]-->
-    
-    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 5px;" valign="top"><![endif]-->
-    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 5px">
-      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://www.youtube.com/@dragonautomart" title="YouTube" target="_blank">
-          <img src="https://api.dragonautomart.com/images/youtube.png" alt="YouTube" title="YouTube" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-        </a>
-      </td></tr>
-    </tbody></table>
-    <!--[if (mso)|(IE)]></td><![endif]-->
-    
-    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 0px;" valign="top"><![endif]-->
-    <table align="center" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
-      <tbody><tr style="vertical-align: top"><td align="center" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-        <a href="https://tiktok.com/@dragonautomart" title="TikTok" target="_blank">
-          <img src="https://api.dragonautomart.com/images/image14.png" alt="TikTok" title="TikTok" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-        </a>
-        
-      </td></tr>
-    </tbody></table>
-    <!--[if (mso)|(IE)]></td><![endif]-->
-    
-    
-    <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-  </div>
-</div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-    </td>
-  </tr>
-  </tbody>
-  </table>
-  <!--[if mso]></div><![endif]-->
-  <!--[if IE]></div><![endif]-->
+<body class="body" style="background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
+    <img src="{{ $trackingUrl }}" width="1" height="1" alt="" />
+    <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff">
+        <tbody>
+            <tr>
+                <td>
+                    <table class="row row-1" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#4d4d4d;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:15px;padding-top:15px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="width:100%;padding-right:0;padding-left:0">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:233px">
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OmRhbTEucG5nOjoyMDI0LTExLTAxVDE2OjM4OjEzLjg4MzA0NDQyMVo=.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="233" alt title height="auto"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#2c2d2c;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:8px;padding-top:8px;vertical-align:top">
+                                                    <table class="menu_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="color:#fff;font-family:Barlow,sans-serif;font-size:14px;font-weight:400;letter-spacing:1px;text-align:center">
+                                                                <table width="100%" cellpadding="0" cellspacing="0"
+                                                                    border="0" role="presentation"
+                                                                    style="mso-table-lspace:0;mso-table-rspace:0">
+                                                                    <tr>
+                                                                        <td class="alignment"
+                                                                            style="text-align:center;font-size:0">
+                                                                            <div class="menu-links">
+                                                                                <!--[if mso]><table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style=""><tr style="text-align:center;"><![endif]-->
+                                                                                <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/lighting/3'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                    target="_self"
+                                                                                    style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Lighting</a>
+                                                                                <!--[if mso]></td><![endif]-->
+                                                                                <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/body-parts/7'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                    target="_self"
+                                                                                    style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Body
+                                                                                    Parts</a>
+                                                                                <!--[if mso]></td><![endif]-->
+                                                                                <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/exterior/2'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                    target="_self"
+                                                                                    style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Exterior</a>
+                                                                                <!--[if mso]></td><![endif]-->
+                                                                                <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/interior/1'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                    target="_self"
+                                                                                    style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Interior</a>
+                                                                                <!--[if mso]></td><![endif]-->
+                                                                                <!--[if mso]></tr></table><![endif]-->
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#f3f3f3;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="width:100%">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:665px">
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OkVtYWlsK0RhbStJbWFnZXMucG5nOjoyMDI1LTAzLTIxVDIzOjA1OjA4LjI3NjQyMjYzMFo=.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="665" alt title height="auto"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#2c2d2c;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="heading_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-bottom:5px;padding-top:5px;text-align:center;width:100%">
+                                                                <h1
+                                                                    style="margin:0;color:#fff;direction:ltr;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;font-size:23px;font-weight:400;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;mso-line-height-alt:27.599999999999998px">
+                                                                    <span class="tinyMce-placeholder"
+                                                                        style="word-break: break-word;">You Might Also
+                                                                        like !</span>
+                                                                </h1>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-5" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content" align="center" border="0" cellpadding="0" cellspacing="0"
+                                        role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#f3f3f3;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-top:5px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="width:100%">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:332.5px">
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNS5wbmc6OjIwMjUtMDMtMjFUMjI6NTA6NTQuMDkwMDQzNDc3Wg==.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="332.5" alt title
+                                                                                height="auto"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td class="column column-2" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="width:100%">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:332.5px">
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6794?slug=hrs-2018-22-honda-accord-led-tail-lights-v3'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxOC5wbmc6OjIwMjUtMDMtMjFUMjI6NTk6NDYuOTMxNzI2NDE1Wg==.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="332.5" alt title
+                                                                                height="auto"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-6" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content" align="center" border="0" cellpadding="0" cellspacing="0"
+                                        role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#f3f3f3;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="padding-top:5px;width:100%">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:332.5px"><a
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNC5wbmc6OjIwMjUtMDMtMTVUMDI6NDg6MjQuMjcwMjI0OTkwWg==.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="332.5" alt title
+                                                                                height="auto"></a></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td class="column column-2" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="width:100%">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:332.5px"><a
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6521?slug=hrs-2018-22-honda-accord-led-tail-lights-the-elite-series"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNS5wbmc6OjIwMjUtMDMtMTVUMDI6NTg6MzEuMDMwNjk1MjI3Wg==.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="332.5" alt title
+                                                                                height="auto"></a></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-7" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#2c2d2c;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="heading_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-bottom:5px;padding-top:5px;text-align:center;width:100%">
+                                                                <h1
+                                                                    style="margin:0;color:#fff;direction:ltr;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;font-size:23px;font-weight:400;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;mso-line-height-alt:27.599999999999998px">
+                                                                    <span class="tinyMce-placeholder"
+                                                                        style="word-break: break-word;">Become a Seller
+                                                                        and Start Your Store Today</span>
+                                                                </h1>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-8" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#f3f3f3;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="width:100%">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:665px">
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/sellondam'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            target="_blank" style="outline:none"
+                                                                            tabindex="-1"><img
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OkVtYWlsK0RhbStJbWFnZXMrMS5wbmc6OjIwMjUtMDMtMjFUMjM6MTA6NDguNTAyNTUyNTYzWg==.png"
+                                                                                style="display:block;height:auto;border:0;width:100%"
+                                                                                width="665" alt title height="auto"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-9" align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#4d4d4d;border-radius:0;color:#000;width:665px;margin:0 auto"
+                                        width="665">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;padding-top:5px;vertical-align:top">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-bottom:5px;padding-top:15px;width:100%;padding-right:0;padding-left:0">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <div style="max-width:166px"><img
+                                                                            src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OjYzMTg4ZmFmLTU3MDItNDJjNC05MGQxLTU3MGYzOTgwZWUzZS5wbmc6OjIwMjQtMTEtMDRUMTg6MDY6NTAuNTU4NTA1ODAzWg==.png"
+                                                                            style="display:block;height:auto;border:0;width:100%"
+                                                                            width="166" alt title height="auto"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="paragraph_block block-2" width="100%" border="0"
+                                                        cellpadding="10" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div
+                                                                    style="color:#fff;direction:ltr;font-family:abel_n4,Arial,sans-serif;font-size:16px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:19.2px">
+                                                                    <p style="margin:0">Find us on social media
+                                                                        platforms</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="social_block block-3" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-left:10px;padding-right:10px;text-align:center">
+                                                                <div class="alignment" align="center">
+                                                                    <table class="social-table" width="230px" border="0"
+                                                                        cellpadding="0" cellspacing="0"
+                                                                        role="presentation"
+                                                                        style="mso-table-lspace:0;mso-table-rspace:0;display:inline-block">
+                                                                        <tr>
+                                                                            <td style="padding:0 7px 0 7px"><a
+                                                                                    href="https://www.facebook.com/dragonautomart?_rdc=2&_rdr"
+                                                                                    target="_blank"><img
+                                                                                        src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/facebook@2x.png"
+                                                                                        width="32" height="auto"
+                                                                                        alt="Facebook" title="Facebook"
+                                                                                        style="display:block;height:auto;border:0"></a>
+                                                                            </td>
+                                                                            <td style="padding:0 7px 0 7px"><a
+                                                                                    href="https://www.x.com/dragonautomart"
+                                                                                    target="_blank"><img
+                                                                                        src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/twitter@2x.png"
+                                                                                        width="32" height="auto" alt="X"
+                                                                                        title="X"
+                                                                                        style="display:block;height:auto;border:0"></a>
+                                                                            </td>
+                                                                            <td style="padding:0 7px 0 7px">
+                                                                                <a href="https://www.instagram.com/dragonautomart/"
+                                                                                    target="_blank"><img
+                                                                                        src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/instagram@2x.png"
+                                                                                        width="32" height="auto"
+                                                                                        alt="Instagram"
+                                                                                        title="Instagram"
+                                                                                        style="display:block;height:auto;border:0"></a>
+                                                                            </td>
+                                                                            <td style="padding:0 7px 0 7px"><a
+                                                                                    href="https://www.youtube.com/@dragonautomart"
+                                                                                    target="_blank"><img
+                                                                                        src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/youtube@2x.png"
+                                                                                        width="32" height="auto"
+                                                                                        alt="YouTube" title="YouTube"
+                                                                                        style="display:block;height:auto;border:0"></a>
+                                                                            </td>
+                                                                            <td style="padding:0 7px 0 7px"><a
+                                                                                    href="https://www.tiktok.com/@dragonautomart"
+                                                                                    target="_blank"><img
+                                                                                        src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/tiktok@2x.png"
+                                                                                        width="32" height="auto"
+                                                                                        alt="TikTok" title="TikTok"
+                                                                                        style="display:block;height:auto;border:0"></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <table class="divider_block block-5" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-bottom:10px;padding-left:10px;padding-right:10px;padding-top:5px">
+                                                                <div class="alignment" align="center">
+                                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                                        role="presentation" width="100%"
+                                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                                        <tr>
+                                                                            <td class="divider_inner"
+                                                                                style="font-size:1px;line-height:1px;border-top:1px solid #bbb">
+                                                                                <span
+                                                                                    style="word-break: break-word;">&#8202;</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="paragraph_block block-6" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-bottom:10px;padding-left:10px;padding-right:10px;padding-top:5px">
+                                                                <div
+                                                                    style="color:#fff;direction:ltr;font-family:abel_n4,Arial,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0">©️ 2025 Dragon Auto Mart, All
+                                                                        Rights Reserved.</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table><!-- End -->
 </body>
 
 </html>
