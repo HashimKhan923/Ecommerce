@@ -404,7 +404,7 @@
                                                                 <div class="alignment" align="center"
                                                                     style="line-height:10px">
                                                                     <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series"
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNC5wbmc6OjIwMjUtMDMtMTVUMDI6NDg6MjQuMjcwMjI0OTkwWg==.png"
@@ -426,7 +426,7 @@
                                                                 <div class="alignment" align="center"
                                                                     style="line-height:10px">
                                                                     <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6521?slug=hrs-2018-22-honda-accord-led-tail-lights-the-elite-series"
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6521?slug=hrs-2018-22-honda-accord-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNS5wbmc6OjIwMjUtMDMtMTVUMDI6NTg6MzEuMDMwNjk1MjI3Wg==.png"
