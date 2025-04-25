@@ -72,7 +72,15 @@ class SubscriberController extends Controller
         
     
         foreach ($users as $user) {
-            SendEmailJob::dispatch($user, $batch->id);
+            try {
+                SendEmailJob::dispatch($user, $batch->id);
+            } catch (\Exception $e) {
+                // Optionally log the error
+                \Log::error("Failed to dispatch email for user ID {$user->id}: " . $e->getMessage());
+                
+                // Continue to the next user
+                continue;
+            }
         }
     
         return response()->json(['message' => 'Emails are being sent.'], 200);
