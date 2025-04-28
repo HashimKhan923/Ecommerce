@@ -161,7 +161,7 @@
                                                                 style="width:100%;padding-right:0;padding-left:0">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:233px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OmRhbTEucG5nOjoyMDI0LTExLTAxVDE2OjM4OjEzLjg4MzA0NDQyMVo=.png"
@@ -208,23 +208,23 @@
                                                                             <div class="menu-links">
                                                                                 <!--[if mso]><table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style=""><tr style="text-align:center;"><![endif]-->
                                                                                 <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
-                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/lighting/3'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/lighting/3'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                                     target="_self"
                                                                                     style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Lighting</a>
                                                                                 <!--[if mso]></td><![endif]-->
                                                                                 <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
-                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/body-parts/7'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/body-parts/7'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                                     target="_self"
                                                                                     style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Body
                                                                                     Parts</a>
                                                                                 <!--[if mso]></td><![endif]-->
                                                                                 <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
-                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/exterior/2'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/exterior/2'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                                     target="_self"
                                                                                     style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Exterior</a>
                                                                                 <!--[if mso]></td><![endif]-->
                                                                                 <!--[if mso]><td style="padding-top:5px;padding-right:17px;padding-bottom:5px;padding-left:12px"><![endif]-->
-                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/interior/1'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                                <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/category/interior/1'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                                     target="_self"
                                                                                     style="mso-hide:false;padding-top:5px;padding-bottom:5px;padding-left:12px;padding-right:17px;display:inline-block;color:#ffffff;font-family:'Barlow', sans-serif;font-size:14px;text-decoration:none;letter-spacing:1px;">Interior</a>
                                                                                 <!--[if mso]></td><![endif]-->
@@ -264,7 +264,7 @@
                                                             <td class="pad" style="width:100%">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:665px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6325?slug=hrs-2022-25-honda-civic-11th-gen-fl5-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6325?slug=hrs-2022-25-honda-civic-11th-gen-fl5-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OkVtYWlsK21haW4rSW1hZ2UucG5nOjoyMDI1LTA0LTI2VDE2OjM2OjM0LjE0OTg3Njg3Mlo=.png"
@@ -339,7 +339,7 @@
                                                             <td class="pad" style="width:100%">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNy5wbmc6OjIwMjUtMDQtMjZUMTc6NDA6MTEuMzMzNTU3ODU1Wg==.png"
@@ -360,7 +360,7 @@
                                                             <td class="pad" style="width:100%">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNC5wbmc6OjIwMjUtMDQtMjZUMTc6NDg6NDkuMTgyMTY2NTAxWg==.png"
@@ -399,8 +399,8 @@
                                                             <td class="pad" style="padding-top:5px;width:100%">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series"
-                                                                            target="_blank" style="outline:none"
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
+                                                                            target=" _blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxMC5wbmc6OjIwMjUtMDQtMjZUMTg6MjI6MTIuNDU3NjczNjU1Wg==.png"
                                                                                 style="display:block;height:auto;border:0;width:100%"
@@ -420,7 +420,7 @@
                                                             <td class="pad" style="width:100%">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:332.5px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6672?slug=hrs-2009-14-ford-f-150-led-tail-lights'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6672?slug=hrs-2009-14-ford-f-150-led-tail-lights'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxMy5wbmc6OjIwMjUtMDQtMjZUMTc6NTg6NTguNTY4OTMwNzk3Wg==.png"
@@ -496,7 +496,7 @@
                                                             <td class="pad" style="width:100%">
                                                                 <div class="alignment" align="center">
                                                                     <div style="max-width:665px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/sellondam'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/sellondam'), 'batch_id' => $batchId, 'user_id' => $userId]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
                                                                                 src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OkVtYWlsK0RhbStJbWFnZXMrMS5wbmc6OjIwMjUtMDMtMjFUMjM6MTA6NDguNTAyNTUyNTYzWg==.png"
