@@ -31,7 +31,7 @@ class SubscribersNotificationMa extends Mailable
         $BatchId = $this->batchId;
         $UserId = $this->userId->id;
         return $this->from('no-reply@dragonautomart.com', 'Dragon Auto Mart')
-        ->subject('DAM | Grand Opening Sale')
+        ->subject('DAM | Your Exclusive 10% Discount on Auto Parts Awaits!')
         ->view('email.subscribers_email')
         ->with([
             'trackingUrl' => $trackingUrl,
