@@ -5,7 +5,10 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]-->
+    <!--[if mso]>
+<xml><w:WordDocument xmlns:w="urn:schemas-microsoft-com:office:word"><w:DontUseAdvancedTypographyReadingMail/></w:WordDocument>
+<o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml>
+<![endif]-->
     <!--[if !mso]><!-->
     <link href="https://creatives.attn.tv/hirevsports/abel_n4.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;700&amp;display=swap" rel="stylesheet"
@@ -95,11 +98,6 @@
             padding: 5px 0 0 !important
         }
 
-        .row-2 .column-1 .block-1.menu_block .menu-links a,
-        .row-2 .column-1 .block-1.menu_block .menu-links span {
-            font-size: 11px !important
-        }
-
         .row-4 .column-1 .block-1.heading_block td.pad,
         .row-7 .column-1 .block-1.heading_block td.pad {
             padding: 5px !important
@@ -110,20 +108,24 @@
             font-size: 14px !important
         }
 
+        .row-2 .column-1 .block-1.menu_block .menu-links a,
+        .row-2 .column-1 .block-1.menu_block .menu-links span {
+            font-size: 11px !important
+        }
+
         .row-6 .column-2 .block-1.image_block td.pad {
             padding: 0 !important
+        }
+
+        .row-9 .column-1 .block-2.paragraph_block td.pad>div {
+            font-size: 15px !important
         }
 
         .row-9 .column-1 .block-3.social_block td.pad {
             padding: 5px 10px 0 !important
         }
 
-        .row-9 .column-1 .block-2.paragraph_block td.pad>div,
-        .row-9 .column-1 .block-4.paragraph_block td.pad>div {
-            font-size: 15px !important
-        }
-
-        .row-9 .column-1 .block-6.paragraph_block td.pad>div {
+        .row-9 .column-1 .block-5.paragraph_block td.pad>div {
             font-size: 12px !important
         }
     }
@@ -157,8 +159,7 @@
                                                         <tr>
                                                             <td class="pad"
                                                                 style="width:100%;padding-right:0;padding-left:0">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
+                                                                <div class="alignment" align="center">
                                                                     <div style="max-width:233px">
                                                                         <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
@@ -261,13 +262,12 @@
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
                                                             <td class="pad" style="width:100%">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
+                                                                <div class="alignment" align="center">
                                                                     <div style="max-width:665px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6325?slug=hrs-2022-25-honda-civic-11th-gen-fl5-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
-                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OkVtYWlsK0RhbStJbWFnZXMucG5nOjoyMDI1LTAzLTIxVDIzOjA1OjA4LjI3NjQyMjYzMFo=.png"
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OkVtYWlsK21haW4rSW1hZ2UucG5nOjoyMDI1LTA0LTI2VDE2OjM2OjM0LjE0OTg3Njg3Mlo=.png"
                                                                                 style="display:block;height:auto;border:0;width:100%"
                                                                                 width="665" alt title height="auto"></a>
                                                                     </div>
@@ -303,10 +303,10 @@
                                                             <td class="pad"
                                                                 style="padding-bottom:5px;padding-top:5px;text-align:center;width:100%">
                                                                 <h1
-                                                                    style="margin:0;color:#fff;direction:ltr;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;font-size:23px;font-weight:400;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;mso-line-height-alt:27.599999999999998px">
+                                                                    style="margin:0;color:#fff;direction:ltr;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;font-size:23px;font-weight:400;letter-spacing:normal;line-height:1.2;text-align:center;margin-top:0;margin-bottom:0;mso-line-height-alt:28px">
                                                                     <span class="tinyMce-placeholder"
-                                                                        style="word-break: break-word;">You Might Also
-                                                                        like !</span>
+                                                                        style="word-break: break-word;">Other Products
+                                                                        You might like </span>
                                                                 </h1>
                                                             </td>
                                                         </tr>
@@ -337,17 +337,15 @@
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
                                                             <td class="pad" style="width:100%">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
-                                                                    <div style="max-width:332.5px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                <div class="alignment" align="center">
+                                                                    <div style="max-width:332.5px"><a
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
-                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNS5wbmc6OjIwMjUtMDMtMjFUMjI6NTA6NTQuMDkwMDQzNDc3Wg==.png"
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNy5wbmc6OjIwMjUtMDQtMjZUMTc6NDA6MTEuMzMzNTU3ODU1Wg==.png"
                                                                                 style="display:block;height:auto;border:0;width:100%"
                                                                                 width="332.5" alt title
-                                                                                height="auto"></a>
-                                                                    </div>
+                                                                                height="auto"></a></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -360,17 +358,15 @@
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
                                                             <td class="pad" style="width:100%">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
-                                                                    <div style="max-width:332.5px">
-                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6794?slug=hrs-2018-22-honda-accord-led-tail-lights-v3'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                <div class="alignment" align="center">
+                                                                    <div style="max-width:332.5px"><a
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
-                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxOC5wbmc6OjIwMjUtMDMtMjFUMjI6NTk6NDYuOTMxNzI2NDE1Wg==.png"
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNC5wbmc6OjIwMjUtMDQtMjZUMTc6NDg6NDkuMTgyMTY2NTAxWg==.png"
                                                                                 style="display:block;height:auto;border:0;width:100%"
                                                                                 width="332.5" alt title
-                                                                                height="auto"></a>
-                                                                    </div>
+                                                                                height="auto"></a></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -401,13 +397,12 @@
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
                                                             <td class="pad" style="padding-top:5px;width:100%">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
+                                                                <div class="alignment" align="center">
                                                                     <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
-                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNC5wbmc6OjIwMjUtMDMtMTVUMDI6NDg6MjQuMjcwMjI0OTkwWg==.png"
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxMC5wbmc6OjIwMjUtMDQtMjZUMTg6MjI6MTIuNDU3NjczNjU1Wg==.png"
                                                                                 style="display:block;height:auto;border:0;width:100%"
                                                                                 width="332.5" alt title
                                                                                 height="auto"></a></div>
@@ -423,16 +418,16 @@
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
                                                             <td class="pad" style="width:100%">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
-                                                                    <div style="max-width:332.5px"><a
-                                                                            href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6521?slug=hrs-2018-22-honda-accord-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
+                                                                <div class="alignment" align="center">
+                                                                    <div style="max-width:332.5px">
+                                                                        <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6672?slug=hrs-2009-14-ford-f-150-led-tail-lights'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
                                                                             tabindex="-1"><img
-                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxNS5wbmc6OjIwMjUtMDMtMTVUMDI6NTg6MzEuMDMwNjk1MjI3Wg==.png"
+                                                                                src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OnByb2QxMy5wbmc6OjIwMjUtMDQtMjZUMTc6NTg6NTguNTY4OTMwNzk3Wg==.png"
                                                                                 style="display:block;height:auto;border:0;width:100%"
                                                                                 width="332.5" alt title
-                                                                                height="auto"></a></div>
+                                                                                height="auto"></a>
+                                                                    </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -465,10 +460,10 @@
                                                             <td class="pad"
                                                                 style="padding-bottom:5px;padding-top:5px;text-align:center;width:100%">
                                                                 <h1
-                                                                    style="margin:0;color:#fff;direction:ltr;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;font-size:23px;font-weight:400;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;mso-line-height-alt:27.599999999999998px">
+                                                                    style="margin:0;color:#fff;direction:ltr;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;font-size:23px;font-weight:400;letter-spacing:normal;line-height:1.2;text-align:center;margin-top:0;margin-bottom:0;mso-line-height-alt:28px">
                                                                     <span class="tinyMce-placeholder"
-                                                                        style="word-break: break-word;">Become a Seller
-                                                                        and Start Your Store Today</span>
+                                                                        style="word-break: break-word;">Start Selling
+                                                                        and Open Your Store Today</span>
                                                                 </h1>
                                                             </td>
                                                         </tr>
@@ -499,8 +494,7 @@
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
                                                             <td class="pad" style="width:100%">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
+                                                                <div class="alignment" align="center">
                                                                     <div style="max-width:665px">
                                                                         <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/sellondam'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}"
                                                                             target="_blank" style="outline:none"
@@ -540,8 +534,7 @@
                                                         <tr>
                                                             <td class="pad"
                                                                 style="padding-bottom:5px;padding-top:15px;width:100%;padding-right:0;padding-left:0">
-                                                                <div class="alignment" align="center"
-                                                                    style="line-height:10px">
+                                                                <div class="alignment" align="center">
                                                                     <div style="max-width:166px"><img
                                                                             src="https://d3ptznaucccg76.cloudfront.net/ODkxMTg6OjYzMTg4ZmFmLTU3MDItNDJjNC05MGQxLTU3MGYzOTgwZWUzZS5wbmc6OjIwMjQtMTEtMDRUMTg6MDY6NTAuNTU4NTA1ODAzWg==.png"
                                                                             style="display:block;height:auto;border:0;width:100%"
@@ -556,7 +549,7 @@
                                                         <tr>
                                                             <td class="pad">
                                                                 <div
-                                                                    style="color:#fff;direction:ltr;font-family:abel_n4,Arial,sans-serif;font-size:16px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:19.2px">
+                                                                    style="color:#fff;direction:ltr;font-family:abel_n4,Arial,sans-serif;font-size:16px;font-weight:400;letter-spacing:0;line-height:1.2;text-align:center;mso-line-height-alt:19px">
                                                                     <p style="margin:0">Find us on social media
                                                                         platforms</p>
                                                                 </div>
@@ -591,8 +584,8 @@
                                                                                         title="X"
                                                                                         style="display:block;height:auto;border:0"></a>
                                                                             </td>
-                                                                            <td style="padding:0 7px 0 7px">
-                                                                                <a href="https://www.instagram.com/dragonautomart/"
+                                                                            <td style="padding:0 7px 0 7px"><a
+                                                                                    href="https://www.instagram.com/dragonautomart/"
                                                                                     target="_blank"><img
                                                                                         src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/instagram@2x.png"
                                                                                         width="32" height="auto"
@@ -622,8 +615,7 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-
-                                                    <table class="divider_block block-5" width="100%" border="0"
+                                                    <table class="divider_block block-4" width="100%" border="0"
                                                         cellpadding="0" cellspacing="0" role="presentation"
                                                         style="mso-table-lspace:0;mso-table-rspace:0">
                                                         <tr>
@@ -645,15 +637,15 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    <table class="paragraph_block block-6" width="100%" border="0"
+                                                    <table class="paragraph_block block-5" width="100%" border="0"
                                                         cellpadding="0" cellspacing="0" role="presentation"
                                                         style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
                                                         <tr>
                                                             <td class="pad"
                                                                 style="padding-bottom:10px;padding-left:10px;padding-right:10px;padding-top:5px">
                                                                 <div
-                                                                    style="color:#fff;direction:ltr;font-family:abel_n4,Arial,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:16.8px">
-                                                                    <p style="margin:0">©️ 2025 Dragon Auto Mart, All
+                                                                    style="color:#fff;direction:ltr;font-family:abel_n4,Arial,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:1.2;text-align:center;mso-line-height-alt:17px">
+                                                                    <p style="margin:0">© 2025 Dragon Auto Mart, All
                                                                         Rights Reserved.</p>
                                                                 </div>
                                                             </td>
