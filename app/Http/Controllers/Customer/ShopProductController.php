@@ -54,7 +54,7 @@ class ShopProductController extends Controller
                       ->with('product_single_gallery');
                 }
             ]);
-        }])->first();
+        }])->where('id',$shop_id)->first();
 
         $query = Product::with($this->getProductRelations())
             ->where('published', 1)
