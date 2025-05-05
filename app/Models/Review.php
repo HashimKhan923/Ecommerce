@@ -15,15 +15,15 @@ class Review extends Model
     {
         static::created(function ($review) {
             $review->loadMissing('product.seller');
-            if ($review->product && $review->product->seller) {
-                $review->product->seller->updateAverageRating();
+            if ($review->product && review->product->user) {
+                $review->product->user->updateAverageRating();
             }
         });
     
         static::deleted(function ($review) {
             $review->loadMissing('product.seller');
-            if ($review->product && $review->product->seller) {
-                $review->product->seller->updateAverageRating();
+            if ($review->product && review->product->user) {
+                $review->product->user->updateAverageRating();
             }
         });
     }
