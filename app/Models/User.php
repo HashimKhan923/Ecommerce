@@ -142,7 +142,7 @@ class User extends Authenticatable
     public function updateAverageRating()
     {
         $average = $this->productReviews()->avg('average_rating');
-        $this->rating = $average ?? 0;  // fallback if no reviews yet
+        $this->average_rating = $average ?? 0;  // fallback if no reviews yet
         $this->save();
     }
 }
