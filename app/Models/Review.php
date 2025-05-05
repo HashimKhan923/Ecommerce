@@ -14,14 +14,12 @@ class Review extends Model
     protected static function booted()
     {
         static::created(function ($review) {
-            $review->loadMissing('product.seller');
             if ($review->product && $review->product->user) {
                 $review->product->user->updateAverageRating();
             }
         });
     
         static::deleted(function ($review) {
-            $review->loadMissing('product.seller');
             if ($review->product && $review->product->user) {
                 $review->product->user->updateAverageRating();
             }
