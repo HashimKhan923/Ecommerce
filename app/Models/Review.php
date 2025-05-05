@@ -27,11 +27,15 @@ class Review extends Model
     protected static function booted()
     {
         static::created(function ($review) {
+            if ($review->product) {
             $review->product->seller->updateAverageRating();
+            }
         });
 
         static::deleted(function ($review) {
+            if ($review->product) {
             $review->product->seller->updateAverageRating();
+            }
         });
     }
 
