@@ -11,30 +11,38 @@ class Review extends Model
 
 
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saved(function ($review) {
-            $review->product->updateAverageRating();
-        });
-
-        static::deleted(function ($review) {
-            $review->product->updateAverageRating();
-        });
-    }
-
     protected static function booted()
     {
         static::created(function ($review) {
-            if ($review->product) {
-            $review->product->seller->updateAverageRating();
+            $review->loadMissing('product.seller');
+            if ($review->product && $review->product->seller) {
+                $review->product->seller->updateAverageRating();
             }
         });
-
+    
         static::deleted(function ($review) {
+            $review->loadMissing('product.seller');
+            if ($review->product && $review->product->seller) {
+                $review->product->seller->updateAverageRating();
+            }
+        });
+    }
+    
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::saved(function ($review) {
+            $review->loadMissing('product');
             if ($review->product) {
-            $review->product->seller->updateAverageRating();
+                $review->product->updateAverageRating();
+            }
+        });
+    
+        static::deleted(function ($review) {
+            $review->loadMissing('product');
+            if ($review->product) {
+                $review->product->updateAverageRating();
             }
         });
     }
