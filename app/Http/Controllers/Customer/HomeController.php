@@ -97,7 +97,7 @@ class HomeController extends Controller
           ->take(20)
           ->get();
     
-          $Categories = Category::select('categories.id', 'categories.name', 'categories.mobile_banner') // Fully qualify columns
+          $Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.mobile_banner') // Fully qualify columns
           ->with([
               'subCategories' => function ($query) {
                   $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
@@ -106,6 +106,7 @@ class HomeController extends Controller
               }
           ])
           ->whereHas('product')
+          ->orderByDesc('product_count')
           ->where('is_active', 1)
           ->orderBy('order', 'asc')
           ->get();
@@ -117,10 +118,11 @@ class HomeController extends Controller
         $States = State::where('status', 1)->get();
         $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
         ->with(['category' => function ($query) {
-            $query->select('categories.id', 'categories.name','categories.mobile_banner');
+            $query->select('categories.id', 'categories.name','categories.icon','categories.mobile_banner');
         }])
         ->where('is_active', 1)
-        ->get();        $Models = Models::select('id', 'name','logo','banner')->where('is_active',1)->get();
+        ->get();        
+        $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->orderByDesc('product_count')->where('is_active',1)->get();
         $AllBanners = AllBanner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
         ->where('status', 1)
