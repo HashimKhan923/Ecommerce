@@ -115,8 +115,12 @@ class HomeController extends Controller
         $Brands = Brand::select('id','name','logo','banner')->with('model')->withCount('product')->whereHas('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $States = State::where('status', 1)->get();
-        $SubCategories = SubCategory::select('id', 'name','category_id')->with('category')->where('is_active', 1)->get();
-        $Models = Models::select('id', 'name','logo','banner')->where('is_active',1)->get();
+        $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
+        ->with(['category' => function ($query) {
+            $query->select('categories.id', 'categories.name');
+        }])
+        ->where('is_active', 1)
+        ->get();        $Models = Models::select('id', 'name','logo','banner')->where('is_active',1)->get();
         $AllBanners = AllBanner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
         ->where('status', 1)
