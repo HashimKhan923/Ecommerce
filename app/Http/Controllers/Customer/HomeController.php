@@ -120,8 +120,9 @@ class HomeController extends Controller
             $query->select('categories.id', 'categories.name','categories.icon','categories.mobile_banner');
         }])
         ->where('is_active', 1)
+        ->orderBy('order', 'asc')
         ->get();        
-        $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->where('is_active',1)->get();
+        $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->withCount('product')->orderByDesc('product_count')->where('is_active',1)->get();
         $AllBanners = AllBanner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
         ->where('status', 1)
