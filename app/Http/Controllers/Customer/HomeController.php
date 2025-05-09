@@ -106,7 +106,6 @@ class HomeController extends Controller
               }
           ])
           ->whereHas('product')
-          ->orderByDesc('product_count')
           ->where('is_active', 1)
           ->orderBy('order', 'asc')
           ->get();
