@@ -100,7 +100,7 @@ class HomeController extends Controller
           $Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.mobile_banner') // Fully qualify columns
           ->with([
               'subCategories' => function ($query) {
-                  $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
+                  $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.icon','sub_categories.category_id')
                         ->withCount('product')
                         ->orderBy('category_sub_category.order', 'asc');
               }
@@ -115,7 +115,7 @@ class HomeController extends Controller
         $Brands = Brand::select('id','name','logo','banner')->with('model')->withCount('product')->whereHas('product')->where('is_active', 1)->orderByDesc('product_count')->get();
         $Banners = Banner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $States = State::where('status', 1)->get();
-        $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
+        $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.icon','sub_categories.category_id')
         ->with(['category' => function ($query) {
             $query->select('categories.id', 'categories.name','categories.icon','categories.mobile_banner');
         }])
