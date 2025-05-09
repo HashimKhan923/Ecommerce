@@ -117,7 +117,7 @@ class HomeController extends Controller
         $States = State::where('status', 1)->get();
         $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
         ->with(['category' => function ($query) {
-            $query->select('categories.id', 'categories.name');
+            $query->select('categories.id', 'categories.name','categories.mobile_banner');
         }])
         ->where('is_active', 1)
         ->get();        $Models = Models::select('id', 'name','logo','banner')->where('is_active',1)->get();
