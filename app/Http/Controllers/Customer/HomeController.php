@@ -100,7 +100,7 @@ class HomeController extends Controller
           $Categories = Category::select('categories.id', 'categories.name', 'categories.mobile_banner') // Fully qualify columns
           ->with([
               'subCategories' => function ($query) {
-                  $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.mobile_banner', 'sub_categories.category_id')
+                  $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.category_id')
                         ->withCount('product')
                         ->orderBy('category_sub_category.order', 'asc');
               }
