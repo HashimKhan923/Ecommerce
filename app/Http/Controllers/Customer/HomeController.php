@@ -121,7 +121,7 @@ class HomeController extends Controller
         }])
         ->where('is_active', 1)
         ->get();        
-        $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->orderByDesc('product_count')->where('is_active',1)->get();
+        $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->where('is_active',1)->get();
         $AllBanners = AllBanner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
         ->where('status', 1)
