@@ -36,10 +36,9 @@ class FilterController extends Controller
     //     return response()->json(['data' => $data]);
     // }
 
-    public function search(Request $request, ProductSearchService $productSearchService)
+    public function search($searchValue, $length, ProductSearchService $productSearchService)
     {
-        $searchValue = $request->input('search');
-        $length = $request->input('length', 0);
+
 
         $data = $productSearchService->search($searchValue, $length);
 
