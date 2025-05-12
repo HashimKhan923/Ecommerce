@@ -862,7 +862,14 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                                /// Stock NotifyMe \\\
 
+            Route::group(['prefix' => '/seller/stock_notify_me'], function() {
+                Route::controller(App\Http\Controllers\Seller\StockNotifyMeController::class)->group(function () {
+                    Route::get('show/{seller_id}','index');
+                    Route::get('notify/{id}','notify');
+                });
+            }); 
 
  
 

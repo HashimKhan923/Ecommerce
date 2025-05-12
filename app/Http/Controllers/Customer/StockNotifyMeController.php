@@ -12,6 +12,7 @@ class StockNotifyMeController extends Controller
     {
         StockNotifyMe::create([
             'email'=>$request->email,
+            'seller_id'=>$request->seller_id,
             'product_id'=>$request->product_id,
             'variant_id'=>$request->variant_id
         ]);
