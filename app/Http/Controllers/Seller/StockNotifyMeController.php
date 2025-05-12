@@ -14,7 +14,7 @@ class StockNotifyMeController extends Controller
 {
     public function index($seller_id)
     {
-      $data = StockNotifyMe::where('seller_id',$seller_id)->get();
+      $data = StockNotifyMe::with('product','varient.product')->where('seller_id',$seller_id)->get();
 
       return response()->json(['data'=>$data]);
     }
