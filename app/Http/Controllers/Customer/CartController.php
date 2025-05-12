@@ -20,7 +20,7 @@ class CartController extends Controller
     public function create(Request $request)
     {
 
-        $check = Cart::where('product_id',$request->product_id)->first();
+        $check = Cart::where('product_id',$request->product_id)->where('customer_id',$request->customer_id)->first();
         if($check)
         {
             return response()->json(['message'=>'already added in cart']);
