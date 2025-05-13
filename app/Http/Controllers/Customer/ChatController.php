@@ -99,8 +99,21 @@ class ChatController extends Controller
 
 
 
-        $data=Chat::with('shop','seller','customer','product.product_gallery')->where('seller_id',$request->seller_id)->where('customer_id',$request->customer_id)->where('shop_id',$request->shop_id)->get();
+        $data = Chat::with([
+            'shop',
+            'seller',
+            'customer',
+            'product' => function ($query) {
+                $query->select('id', 'name')
+                      ->with('product_single_gallery');
+            },
+        ])
+        ->where('seller_id', $request->seller_id)
+        ->where('customer_id', $request->customer_id)
+        ->where('shop_id', $request->shop_id)
+        ->get();
         
+                
         return response()->json(['data'=>$data]);
     }
 

@@ -39,7 +39,10 @@ class ChatController extends Controller
             'seller', 
             'customer', 
             'shop', 
-            'product.product_gallery', 
+            'product' => function ($query) {
+                $query->select('id', 'name')
+                      ->with('product_single_gallery');
+            }, 
             'my_customer' => function($query) use ($request) {
                 $query->where('seller_id', $request->seller_id)
                       ->with(['customer.time_line', 'orders']);
