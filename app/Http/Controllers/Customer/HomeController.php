@@ -126,7 +126,10 @@ class HomeController extends Controller
         $AllBanners = AllBanner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
         ->where('status', 1)
-        ->withCount('product') 
+        ->whereHas('seller', function ($query) {
+            $query->where('is_active', 1)->where('is_verify', 1); // or 1, depending on how you're storing status
+        })
+        ->withCount('product')
         ->get();
 
 
