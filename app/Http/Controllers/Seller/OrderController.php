@@ -46,19 +46,19 @@ class OrderController extends Controller
             Stripe::setApiKey(env('STRIPE_SECRET'));
 
 
-            try {
+            // try {
                 $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id);
             
                 $charge = Charge::retrieve($paymentIntent->latest_charge);                
    
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()]);
-            }
+            // } catch (\Exception $e) {
+            //     return response()->json(['error' => $e->getMessage()]);
+            // }
             
         }
 
         if ($data->payment_method == 'PAYPAL') {
-            try {
+            // try {
 
                 $clientId = config('services.paypal.client_id'); // Set in .env
                 $clientSecret = config('services.paypal.secret'); // Set in .env
@@ -91,9 +91,9 @@ class OrderController extends Controller
                 $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
 
                   $risk = $paypal_order_response->json();
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()]);
-            }
+            // } catch (\Exception $e) {
+            //     return response()->json(['error' => $e->getMessage()]);
+            // }
         }
 
         return response()->json(['data'=>$data,'charge'=>$charge, 'risk' => $risk]);
