@@ -41,6 +41,17 @@ class AuthController extends Controller
                                 $staff = User::find($user->id);
                                 $user = User::find($user->seller_id); // Retrieve seller info for staff
                             }
+
+                            if($user->user_type == 'seller')
+                            {
+                                if($user->is_verify != 1)
+                                {
+                                    $response = ['status'=>false,"message" => "Your account is not verify by admin"];
+                                    return response($response, 422);
+                                }
+        
+                            }
+
     
                             // Generate access token for the user
                             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
