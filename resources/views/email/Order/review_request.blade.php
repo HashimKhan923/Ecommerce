@@ -224,12 +224,24 @@
             <div class="store-section">
                 <div class="store-header">
                     <div class="store-logo">
-                        <img src="https://skartistic.com/wp-content/uploads/2025/05/Screenshot_2025-05-07_203910-removebg-preview.png"
+                        <img src="https://api.dragonautomart.com/ShopLogo/{{ $order->shop->logo }}"
                             alt="Store Logo" />
                         <div class="store-logo-info">
                             <div class="name">{{ $order->shop->name }}</div>
                             <div class="sold">{{$order->shop->sold_products}} Items Sold</div>
+                            @if($order->seller->average_rating > 4.5)
+                            <div class="rating">★★★★★</div>
+                            @elseif($order->seller->average_rating > 3.5)
                             <div class="rating">★★★★☆</div>
+                            @elseif($order->seller->average_rating > 2.5)
+                            <div class="rating">★★★☆☆</div>
+                            @elseif($order->seller->average_rating > 1.5)
+                            <div class="rating">★★☆☆☆</div>
+                            @elseif($order->seller->average_rating >= 1)
+                            <div class="rating">★☆☆☆☆</div>
+                            @else
+
+                            @endif
                         </div>
                     </div>
                     <div class="feedback-button">

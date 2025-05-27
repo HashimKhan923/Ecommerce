@@ -58,6 +58,11 @@ class Order extends Model
         return $this->hasOne(Refund::class,'order_id','id');
     } 
 
+    public function seller()
+    {
+        return $this->belongsTo(User::class,'sellers_id','id');
+    }
+
     public function shop()
     {
         return $this->belongsTo(Shop::class,'shop_id','id');
