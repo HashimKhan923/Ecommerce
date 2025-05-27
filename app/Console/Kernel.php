@@ -11,6 +11,7 @@ class Kernel extends ConsoleKernel
 
     protected $commands = [
         Commands\UpdatePayoutStatus::class,
+        Commands\RemoveOldNotification::class,
     ];
 
     /**
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('notify:back-in-stock')->everySixHours();
         $schedule->command('send:review-request')->daily();
         $schedule->command('orders:track-fedex')->everySixHours();
+        $schedule->command('app:remove-old-notification')->monthly();
     }
 
 

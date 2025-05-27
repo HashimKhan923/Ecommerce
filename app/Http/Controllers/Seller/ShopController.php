@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Product;
 use App\Models\SellerPolicy;
+use App\Models\Notification;
+
 
 
 class ShopController extends Controller
@@ -134,6 +136,10 @@ class ShopController extends Controller
             unlink(public_path('ShopLogo/'.$file->logo));
 
         }
+
+        Notification::create([
+            'notification' => 'The '.$file->name.' Store has been deleted by Seller',
+        ]);
 
         if($file->banner)
         {
