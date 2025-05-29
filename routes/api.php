@@ -1012,6 +1012,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('show/{id}','index');
             Route::post('create','create');
             Route::post('update','update');
+            Route::post('status','status');
             Route::get('delete/{id}','delete');
         });
     });

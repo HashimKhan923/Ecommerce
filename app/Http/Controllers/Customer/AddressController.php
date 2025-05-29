@@ -55,4 +55,13 @@ class AddressController extends Controller
         $response = ['status'=>true,"message" => "Address Deleted Successfully!"];
         return response($response, 200);
     }
+
+    public function status(Request $request)
+    {
+
+        Address::where('user_id', $request->user_id)->update(['status' => 0]);
+        Address::where('id', $request->address_id)->update(['status' => 1]);
+
+        return response()->json(['message' => 'Primary address updated successfully.']);
+    }
 }
