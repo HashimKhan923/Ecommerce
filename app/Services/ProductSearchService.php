@@ -9,34 +9,6 @@ use Illuminate\Support\Facades\Http;
 
 class ProductSearchService
 {
-    // public function search(string $searchValue, int $length = 0)
-    // {
-    //     $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
-    //     $Keyword->count++;
-    //     $Keyword->save();
-
-    //     $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
-    //     $searchWords = explode(' ', strtolower($searchValue));
-    //     $keywords = array_diff($searchWords, $stopWords);
-
-    //     $data = $this->searchProducts($keywords, $length);
-
-    //     while ($data->isEmpty() && count($keywords) > 1) {
-    //         $data = $this->searchProducts($keywords, $length);
-
-    //         if ($data->isEmpty()) {
-    //             $keywords = $this->removeNonMatchingKeyword($keywords, $length);
-    //             if (empty($keywords)) break;
-    //         }
-    //     }
-
-    //     return $data;
-    // }
-
-
-
-
-
     public function search(string $searchValue, int $length = 0)
     {
         $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
@@ -47,22 +19,50 @@ class ProductSearchService
         $searchWords = explode(' ', strtolower($searchValue));
         $keywords = array_diff($searchWords, $stopWords);
 
-        // 🔥 Get AI-based expansion
-        $aiKeywords = $this->getAIExpandedKeywords($searchValue);
-        if (!empty($aiKeywords)) {
-            $keywords = array_unique(array_merge($keywords, $aiKeywords));
-        }
-
         $data = $this->searchProducts($keywords, $length);
 
         while ($data->isEmpty() && count($keywords) > 1) {
-            $keywords = $this->removeNonMatchingKeyword($keywords, $length);
             $data = $this->searchProducts($keywords, $length);
-            if (empty($keywords)) break;
+
+            if ($data->isEmpty()) {
+                $keywords = $this->removeNonMatchingKeyword($keywords, $length);
+                if (empty($keywords)) break;
+            }
         }
 
         return $data;
     }
+
+
+
+
+
+    // public function search(string $searchValue, int $length = 0)
+    // {
+    //     $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
+    //     $Keyword->count++;
+    //     $Keyword->save();
+
+    //     $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
+    //     $searchWords = explode(' ', strtolower($searchValue));
+    //     $keywords = array_diff($searchWords, $stopWords);
+
+    //     // 🔥 Get AI-based expansion
+    //     $aiKeywords = $this->getAIExpandedKeywords($searchValue);
+    //     if (!empty($aiKeywords)) {
+    //         $keywords = array_unique(array_merge($keywords, $aiKeywords));
+    //     }
+
+    //     $data = $this->searchProducts($keywords, $length);
+
+    //     while ($data->isEmpty() && count($keywords) > 1) {
+    //         $keywords = $this->removeNonMatchingKeyword($keywords, $length);
+    //         $data = $this->searchProducts($keywords, $length);
+    //         if (empty($keywords)) break;
+    //     }
+
+    //     return $data;
+    // }
 
 
         private function searchProducts(array $keywords, int $length = 0)
@@ -124,27 +124,27 @@ class ProductSearchService
         return [];
     }
 
-    private function getAIExpandedKeywords(string $query): array
-    {
-        try {
-            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/completions', [
-                'model' => 'text-davinci-003',
-                'prompt' => "Expand this search query with related keywords and synonyms: {$query}. Return comma-separated keywords.",
-                'max_tokens' => 60,
-                'temperature' => 0.7,
-            ]);
+    // private function getAIExpandedKeywords(string $query): array
+    // {
+    //     try {
+    //         $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/completions', [
+    //             'model' => 'text-davinci-003',
+    //             'prompt' => "Expand this search query with related keywords and synonyms: {$query}. Return comma-separated keywords.",
+    //             'max_tokens' => 60,
+    //             'temperature' => 0.7,
+    //         ]);
 
-            if ($response->successful()) {
-                $text = $response->json()['choices'][0]['text'] ?? '';
-                $keywords = array_filter(array_map('trim', explode(',', $text)));
-                return $keywords;
-            }
-        } catch (\Exception $e) {
-            \Log::error('OpenAI query expansion failed: ' . $e->getMessage());
-        }
+    //         if ($response->successful()) {
+    //             $text = $response->json()['choices'][0]['text'] ?? '';
+    //             $keywords = array_filter(array_map('trim', explode(',', $text)));
+    //             return $keywords;
+    //         }
+    //     } catch (\Exception $e) {
+    //         \Log::error('OpenAI query expansion failed: ' . $e->getMessage());
+    //     }
 
-        return [];
-    }
+    //     return [];
+    // }
 
 
 }
