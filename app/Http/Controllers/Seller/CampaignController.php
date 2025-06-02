@@ -11,14 +11,14 @@ class CampaignController extends Controller
 {
     public function index($seller_id) {
 
-        $campaigns = Campaign::with('recipients','trackingEvents','opens','clicks','stats')->where('seller_id', $seller_id)->get();
+        $campaigns = Campaign::where('seller_id', $seller_id)->get();
 
         return response()->json(['campaigns'=>$campaigns]);
     }
 
     public function detail($id) {
 
-        $campaign = Campaign::find($id);
+        $campaign = Campaign::with('recipients','trackingEvents','opens','clicks','stats')->find($id);
 
         $links = LinkStat::where('campaign_id', $id)->get();
 

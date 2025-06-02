@@ -35,7 +35,7 @@ class Campaign extends Model
         $sent = $this->recipients()->count();
         $opens = $this->opens()->count();
         $clicks = $this->clicks()->count();
-        $unsubs = $this->trackingEvents()->where('event_type','unsubscribe')->count();
+        // $unsubs = $this->trackingEvents()->where('event_type','unsubscribe')->count();
         $linkClicks = $this->trackingEvents()->where('event_type','click')->pluck('url');
         $cvr = 0; // Would compute purchases from clicks if connected to orders
 
@@ -43,7 +43,7 @@ class Campaign extends Model
             'sent' => $sent,
             'opens' => $opens,
             'clicks' => $clicks,
-            'unsubscribes' => $unsubs,
+            // 'unsubscribes' => $unsubs,
             'open_rate' => $sent ? $opens/$sent*100 : 0,
             'click_rate' => $sent ? $clicks/$sent*100 : 0,
             // additional stats...
