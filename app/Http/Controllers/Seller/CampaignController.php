@@ -11,7 +11,7 @@ class CampaignController extends Controller
 {
     public function index($seller_id) {
 
-        $campaigns = Campaign::where('seller_id', $seller_id)->get();
+        $campaigns = Campaign::with('recipients','trackingEvents','opens','clicks','stats')->where('seller_id', $seller_id)->get();
 
         return response()->json(['campaigns'=>$campaigns]);
     }
@@ -28,7 +28,6 @@ class CampaignController extends Controller
 
     public function create(Request $request)
     {
-        // Create the campaign
         $campaign = Campaign::create([
             'seller_id'     => $request->seller_id,
             'name'          => $request->name,
@@ -36,10 +35,9 @@ class CampaignController extends Controller
             'preview_text'  => $request->preview_text,
             'content'       => $request->content,
             'send_time'     => $request->send_time,
-            'status'        => 'scheduled' // Optional but useful
+            'status'        => 'scheduled'
         ]);
 
-        // Prepare recipients
         $recipients = collect($request->recipient_ids)->map(function ($userId) use ($campaign) {
             return [
                 'campaign_id' => $campaign->id,
@@ -49,7 +47,6 @@ class CampaignController extends Controller
             ];
         });
 
-        // Insert all recipients in one query
         CampaignRecipient::insert($recipients->toArray());
 
         return response()->json([
@@ -60,10 +57,8 @@ class CampaignController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Find campaign
         $campaign = Campaign::findOrFail($id);
 
-        // Update campaign fields
         $campaign->update([
             'seller_id'     => $request->seller_id,
             'name'          => $request->name,
@@ -71,13 +66,11 @@ class CampaignController extends Controller
             'preview_text'  => $request->preview_text,
             'content'       => $request->content,
             'send_time'     => $request->send_time,
-            'status'        => 'scheduled' // Optional
+            'status'        => 'scheduled'
         ]);
 
-        // Remove old recipients
         CampaignRecipient::where('campaign_id', $campaign->id)->delete();
 
-        // Add updated recipients
         $recipients = collect($request->recipient_ids)->map(function ($userId) use ($campaign) {
             return [
                 'campaign_id' => $campaign->id,
