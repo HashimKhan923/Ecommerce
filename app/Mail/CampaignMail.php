@@ -25,15 +25,12 @@ class CampaignMail extends Mailable implements ShouldQueue
  
     public function build()
     {
-        // Personalize content by replacing placeholders
         $content = $this->campaign->content;
         $content = str_replace('{{buyer_name}}', $this->recipient->name, $content);
-        // ... more placeholders as needed ...
 
-        // Inject open-tracking pixel and convert links (see Tracking below)
         $content = app('App\Services\TrackingHelper')->injectTracking($content, $this->campaign->id, $this->recipient->id);
 
         return $this->subject($this->campaign->subject)
-                    ->html($content); // Use raw HTML content
+                    ->html($content);
     }
 }
