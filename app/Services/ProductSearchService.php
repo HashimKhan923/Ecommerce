@@ -21,14 +21,14 @@ class ProductSearchService
 
         $data = $this->searchProducts($keywords, $length);
 
-        while ($data->isEmpty() && count($keywords) > 1) {
-            $data = $this->searchProducts($keywords, $length);
+        // while ($data->isEmpty() && count($keywords) > 1) {
+        //     $data = $this->searchProducts($keywords, $length);
 
-            if ($data->isEmpty()) {
-                $keywords = $this->removeNonMatchingKeyword($keywords, $length);
-                if (empty($keywords)) break;
-            }
-        }
+        //     if ($data->isEmpty()) {
+        //         $keywords = $this->removeNonMatchingKeyword($keywords, $length);
+        //         if (empty($keywords)) break;
+        //     }
+        // }
 
         return $data;
     }
