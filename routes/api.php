@@ -820,7 +820,20 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('view/{customer_id}','view');
                     Route::post('multi_delete','multi_delete');
                 });
-            });  
+            }); 
+            
+            
+                                                        /// Campaign \\\
+
+            Route::group(['prefix' => '/seller/campaign/'], function() {
+                Route::controller(App\Http\Controllers\Seller\CampaignController::class)->group(function () {
+                    Route::get('show/{seller_id}','index');
+                    Route::get('detail/{id}','detail');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                });
+            });
 
 
 
@@ -1290,15 +1303,21 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
 
 
+        Route::get('track/open/{campaign}/{user}', [App\Http\Controllers\Seller\TrackingController::class, 'open'])->name('track.open');
+        Route::get('track/click/{campaign}/{user}/{link}', [App\Http\Controllers\Seller\TrackingController::class, 'click'])->name('track.click');
+        Route::get('track/unsubscribe/{campaign}/{user}', [App\Http\Controllers\Seller\TrackingController::class, 'unsubscribe'])->name('track.unsubscribe');
+
+
+
 
 
                     /// Seller \\\
 
-                    Route::group(['prefix' => '/admin/seller/'], function() {
-                        Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {                               
-                            Route::get('stripe_delete/{stripe_id}','strip_account_delete');
-                        });
-                    });
+                    // Route::group(['prefix' => '/admin/seller/'], function() {
+                    //     Route::controller(App\Http\Controllers\Admin\SellerController::class)->group(function () {                               
+                    //         Route::get('stripe_delete/{stripe_id}','strip_account_delete');
+                    //     });
+                    // });
 
 
                 // });
