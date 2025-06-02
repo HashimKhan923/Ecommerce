@@ -37,32 +37,42 @@ class ProductSearchService
 
 
 
-    public function search(string $searchValue, int $length = 0)
-    {
-        $Keyword = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
-        $Keyword->count++;
-        $Keyword->save();
+public function search(string $searchValue, int $length = 0)
+{
+    $keywordEntry = UserSearchingKeyword::firstOrNew(['keyword' => $searchValue]);
+    $keywordEntry->count++;
+    $keywordEntry->save();
 
-        $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
-        $searchWords = explode(' ', strtolower($searchValue));
-        $keywords = array_diff($searchWords, $stopWords);
+    $stopWords = ['for', 'the', 'a', 'and', 'of', 'to', 'on', 'in'];
+    $searchWords = explode(' ', strtolower($searchValue));
+    $keywords = array_diff($searchWords, $stopWords);
 
-        // 🔥 Get AI-based expansion
-        $aiKeywords = $this->getAIExpandedKeywords($searchValue);
-        if (!empty($aiKeywords)) {
-            $keywords = array_unique(array_merge($keywords, $aiKeywords));
-        }
-
-        $data = $this->searchProducts($keywords, $length);
-
-        // while ($data->isEmpty() && count($keywords) > 1) {
-        //     $keywords = $this->removeNonMatchingKeyword($keywords, $length);
-        //     $data = $this->searchProducts($keywords, $length);
-        //     if (empty($keywords)) break;
-        // }
-
-        return $data;
+    // 🔥 Get AI-based expansion
+    $aiKeywords = $this->getAIExpandedKeywords($searchValue);
+    if (!empty($aiKeywords)) {
+        $keywords = array_unique(array_merge($keywords, $aiKeywords));
     }
+
+    // 🟢 First try with all combined keywords
+    $products = $this->searchProducts($keywords, $length);
+
+    // 🔴 If no results found, try with only AI keywords (fallback)
+    if ($products->isEmpty() && !empty($aiKeywords)) {
+        $products = $this->searchProducts($aiKeywords, $length);
+    }
+
+    // 🔴 Still no results? Try with each keyword individually (last fallback)
+    if ($products->isEmpty()) {
+        foreach ($keywords as $keyword) {
+            $products = $this->searchProducts([$keyword], $length);
+            if ($products->isNotEmpty()) {
+                break;
+            }
+        }
+    }
+
+    return $products;
+}
 
 
         private function searchProducts(array $keywords, int $length = 0)
