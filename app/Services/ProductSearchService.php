@@ -114,6 +114,7 @@ public function search(string $searchValue, int $length = 0)
                 });
             }
         })
+        ->distinct()
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
         ->skip($length)->take(12)->get();
