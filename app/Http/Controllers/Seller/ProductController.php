@@ -1137,4 +1137,27 @@ class ProductController extends Controller
         $response = ['status'=>true,"message" => "Deleted Successfully!"];
         return response($response, 200);
     }
+
+
+        public function generateProductDescription($productName, $features = [])
+        {
+            $prompt = "Write a detailed and persuasive product description for an auto part named '{$productName}'. ";
+            $prompt .= "Include information about its compatibility, performance, materials, and installation. ";
+            $prompt .= "Target audience is vehicle owners and auto mechanics looking for reliable parts. ";
+            if (!empty($features)) {
+                $prompt .= "Highlight these key features: " . implode(', ', $features) . ".";
+            }
+
+            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-3.5-turbo', // or 'gpt-4' if available
+                'messages' => [
+                    ['role' => 'system', 'content' => 'You are an expert automotive product copywriter. Write clear, technical yet engaging descriptions.'],
+                    ['role' => 'user', 'content' => $prompt],
+                ],
+                'temperature' => 0.6,
+                'max_tokens' => 350,
+            ]);
+
+            return $response->json()['choices'][0]['message']['content'] ?? 'Description not available.';
+        }
 }
