@@ -40,32 +40,47 @@ class OrderController extends Controller
         $charge = '';
         $risk = '';
 
-        $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.sub_category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_detail.products.shop.shop_policy','order_status','order_tracking','order_refund','shop','nagative_payout_balance','coupon_user.coupon','order_timeline')->where('id',$id)->first();
-        if($data->payment_method == 'STRIPE')
-        {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
+        $data = Order::with(
+            'order_detail.products.product_gallery',
+            'order_detail.products.category',
+            'order_detail.products.sub_category',
+            'order_detail.products.brand',
+            'order_detail.products.model',
+            'order_detail.products.stock',
+            'order_detail.varient',
+            'order_detail.products.reviews.user',
+            'order_detail.products.tax',
+            'order_detail.products.shop.shop_policy',
+            'order_status',
+            'order_tracking',
+            'order_refund',
+            'shop',
+            'nagative_payout_balance',
+            'coupon_user.coupon',
+            'order_timeline'
+        )->where('id', $id)->first();
 
+        // Stripe Payment Details
+        if ($data->payment_method == 'STRIPE') {
+            try {
+                Stripe::setApiKey(env('STRIPE_SECRET'));
 
-            // try {
                 $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id);
-            
-                $charge = Charge::retrieve($paymentIntent->latest_charge);                
-   
-            // } catch (\Exception $e) {
-            //     return response()->json(['error' => $e->getMessage()]);
-            // }
-            
+                $charge = Charge::retrieve($paymentIntent->latest_charge);
+
+            } catch (\Exception $e) {
+                // Log the error or just continue silently
+                $charge = ''; // Optional: set to null or leave empty
+            }
         }
 
+        // PayPal Payment Details
         if ($data->payment_method == 'PAYPAL') {
-            // try {
+            try {
+                $clientId = config('services.paypal.client_id');
+                $clientSecret = config('services.paypal.secret');
+                $client = new \GuzzleHttp\Client();
 
-                $clientId = config('services.paypal.client_id'); // Set in .env
-                $clientSecret = config('services.paypal.secret'); // Set in .env
-                $client = new Client();
-        
-
-                // ✅ 1️⃣ Get PayPal Access Token
                 $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
                     'auth' => [$clientId, $clientSecret],
                     'form_params' => ['grant_type' => 'client_credentials'],
@@ -73,32 +88,32 @@ class OrderController extends Controller
 
                 $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
 
-                // ✅ 2️⃣ Fetch Payment Details using PayPal Capture ID
                 $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
 
-                if ($paymentResponse->failed()) {
-                    return response()->json(['error' => 'Failed to fetch payment details']);
+                if ($paymentResponse->successful()) {
+                    $paymentDetails = $paymentResponse->json();
+
+                    $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'] ?? null;
+
+                    if ($paypal_order_id) {
+                        $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
+                        $risk = $paypal_order_response->json();
+                    }
                 }
 
-                $paymentDetails = $paymentResponse->json();
-
-                $risk = $paymentDetails;
-
-                // ✅ 3️⃣ Extract Risk Evaluation (if available)
-
-                $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'];
-
-                $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
-
-                  $risk = $paypal_order_response->json();
-            // } catch (\Exception $e) {
-            //     return response()->json(['error' => $e->getMessage()]);
-            // }
+            } catch (\Exception $e) {
+                // Log the error or just continue silently
+                $risk = ''; // Optional: set to null or leave empty
+            }
         }
 
-        return response()->json(['data'=>$data,'charge'=>$charge, 'risk' => $risk]);
-
-    }    
+        return response()->json([
+            'data' => $data,
+            'charge' => $charge,
+            'risk' => $risk,
+        ]);
+    }
+   
 
     private function getPayPalAccessToken()
     {
