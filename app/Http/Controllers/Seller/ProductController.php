@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 
 
+
 class ProductController extends Controller
 {
 
@@ -1147,17 +1148,18 @@ class ProductController extends Controller
             if (!empty($features)) {
                 $prompt .= "Highlight these key features: " . implode(', ', $features) . ".";
             }
-
             $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-3.5-turbo', // or 'gpt-4' if available
+                'model' => 'gpt-3.5-turbo',
                 'messages' => [
-                    ['role' => 'system', 'content' => 'You are an expert automotive product copywriter. Write clear, technical yet engaging descriptions.'],
+                    ['role' => 'system', 'content' => 'You are a helpful assistant that writes engaging product descriptions for auto parts.'],
                     ['role' => 'user', 'content' => $prompt],
                 ],
-                'temperature' => 0.6,
-                'max_tokens' => 350,
+                'temperature' => 0.7,
+                'max_tokens' => 300,
             ]);
 
-            return $response->json()['choices'][0]['message']['content'] ?? 'Description not available.';
+            \Log::info('OpenAI API Response:', $response->json()); // 👈 log response to storage/logs/laravel.log
+
+            return $response->json();
         }
 }
