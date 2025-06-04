@@ -300,7 +300,7 @@ class OrderController extends Controller
             $shopTaxAmount = ($shopTotalAmount * $taxPercentage) / 100;
 
             // Final amount = subtotal + tax + flat insurance + flat signature
-            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount;
+            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $TotalShippingAmount;
 
             $order = Order::create([
                 'order_code' => Str::uuid(),
@@ -311,6 +311,7 @@ class OrderController extends Controller
                 'amount' => $shopFinalAmount, // updated final amount
                 'tax' => $shopTaxAmount,
                 'information' => $request->information,
+                'shipping_amount' => $TotalShippingAmount,
                 'stripe_payment_id' => $request->payment_id,
                 'payment_method' => $request->payment_method,
                 'payment_status' => $request->payment_status,
