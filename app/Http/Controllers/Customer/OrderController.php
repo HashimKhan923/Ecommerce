@@ -297,7 +297,8 @@ class OrderController extends Controller
             // Calculate tax and insurance per shop
             $shopTaxAmount = is_numeric($request->tax) ? ($shopTotalAmount * $request->tax) / 100 : 0;
             $shopInsuranceAmount = is_numeric($request->insurance) ? ($shopTotalAmount * $request->insurance) / 100 : 0;
-            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $shopInsuranceAmount + $request->signature;
+            $signatureAmount = is_numeric($request->signature) ? (float) $request->signature : 0;
+            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $shopInsuranceAmount + $signatureAmount;
 
             $order = Order::create([
                 'order_code' => Str::uuid(),
