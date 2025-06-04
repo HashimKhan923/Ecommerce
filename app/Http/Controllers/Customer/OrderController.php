@@ -303,6 +303,8 @@ class OrderController extends Controller
             // Final amount = subtotal + tax + flat insurance + flat signature
             $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $TotalShippingAmount;
 
+            $request->tax[0] = $shopTaxAmount;
+
             $order = Order::create([
                 'order_code' => Str::uuid(),
                 'number_of_products' => $shopProducts->count(),
@@ -310,7 +312,7 @@ class OrderController extends Controller
                 'shop_id' => $shopId,
                 'sellers_id' => $vendorId,
                 'amount' => $shopFinalAmount, // updated final amount
-                'tax' => $shopTaxAmount,
+                'tax' => $request->tax,
                 'information' => $request->information,
                 'shipping_amount' => $TotalShippingAmount,
                 'stripe_payment_id' => $request->payment_id,
