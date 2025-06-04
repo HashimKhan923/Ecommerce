@@ -294,16 +294,21 @@ class OrderController extends Controller
 
             $TotalShippingAmount += $shopTotalShipment;
 
+            // Calculate tax and insurance per shop
+            $shopTaxAmount = is_numeric($request->tax) ? ($shopTotalAmount * $request->tax) / 100 : 0;
+            $shopInsuranceAmount = is_numeric($request->insurance) ? ($shopTotalAmount * $request->insurance) / 100 : 0;
+            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $shopInsuranceAmount;
+
             $order = Order::create([
                 'order_code' => Str::uuid(),
                 'number_of_products' => $shopProducts->count(),
                 'customer_id' => $request->customer_id,
                 'shop_id' => $shopId,
                 'sellers_id' => $vendorId,
-                'amount' => $shopTotalAmount,
-                'tax' => $request->tax,
+                'amount' => $shopFinalAmount,
+                'tax' => $shopTaxAmount,
                 'signature' => $request->signature,
-                'insurance' => $request->insurance,
+                'insurance' => $shopInsuranceAmount,
                 'information' => $request->information,
                 'stripe_payment_id' => $request->payment_id,
                 'payment_method' => $request->payment_method,
@@ -444,5 +449,6 @@ class OrderController extends Controller
 
         return response(['status' => true, 'message' => 'Order Created Successfully!', 'data' => $MyOrders], 200);
     }
+
 
 }
