@@ -294,8 +294,8 @@ class OrderController extends Controller
 
             $TotalShippingAmount += $shopTotalShipment;
 
-            // Extract tax percentage (e.g. 8.25)
-            $taxPercentage = isset($request->tax[2]) && is_numeric($request->tax[2]) ? (float) $request->tax[2] : 0;
+            $taxArray = $request->tax; // Get a copy of the array
+            $taxPercentage = isset($taxArray[2]) && is_numeric($taxArray[2]) ? (float) $taxArray[2] : 0;
 
             // Calculate tax based on shop subtotal (percentage)
             $shopTaxAmount = ($shopTotalAmount * $taxPercentage) / 100;
@@ -303,7 +303,7 @@ class OrderController extends Controller
             // Final amount = subtotal + tax + flat insurance + flat signature
             $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $TotalShippingAmount;
 
-            $request->tax[0] = $shopTaxAmount;
+            $taxArray[0] = $shopTaxAmount;
 
             $order = Order::create([
                 'order_code' => Str::uuid(),
@@ -312,7 +312,7 @@ class OrderController extends Controller
                 'shop_id' => $shopId,
                 'sellers_id' => $vendorId,
                 'amount' => $shopFinalAmount, // updated final amount
-                'tax' => $request->tax,
+                'tax' => $taxArray,
                 'information' => $request->information,
                 'shipping_amount' => $TotalShippingAmount,
                 'stripe_payment_id' => $request->payment_id,
