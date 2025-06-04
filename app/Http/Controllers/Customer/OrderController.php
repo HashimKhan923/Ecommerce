@@ -75,7 +75,7 @@ class OrderController extends Controller
                     'customer_id' => $request->customer_id,
                     'shop_id' => $shopId,
                     'sellers_id' => $vendorId,
-                    'amount' => $request->amount,
+                    'amount' => $shopTotalAmount,
                     'tax'=> $request->tax,
                     'signature'=> $request->signature,
                     'insurance'=> $request->insurance,
