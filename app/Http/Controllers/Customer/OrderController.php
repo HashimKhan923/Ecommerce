@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use App\Models\User;
+use DB;
 
 
 class OrderController extends Controller
