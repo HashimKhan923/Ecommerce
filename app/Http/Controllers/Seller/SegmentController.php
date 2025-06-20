@@ -22,7 +22,7 @@ class SegmentController extends Controller
     public function create(Request $request)
     {
         Segment::create([
-        'seller_id'=>$seller_id,   
+        'seller_id'=>$request->seller_id,   
         'name' => $request->name,
         'rules' => $request->rules,
         ]);
