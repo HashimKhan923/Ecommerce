@@ -52,11 +52,8 @@ class SegmentController extends Controller
             ->where('seller_id', $segment->seller_id)
             ->get();
 
-        $rulesGroup = is_string($segment->rules) ? json_decode($segment->rules, true) : $segment->rules;    
-
-        $matchedCustomers = $customers->filter(function ($customer) use ($rulesGroup) {
-            return 'working';
-            return $this->evaluateRules();
+        $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
+            return $this->evaluateRules($customer, $segment->rules);
         });
 
 
@@ -68,10 +65,9 @@ class SegmentController extends Controller
     }
 
 
-    private function evaluateRules()
+    private function evaluateRules($customer, $rulesGroup)
     {
-        return 'testing';
-        $matchType = $rulesGroup['match_type'] ?? null;
+        $matchType = $rulesGroup['match_type'] ?? 'AND';
         $rules = $rulesGroup['rules'] ?? [];
 
         $results = [];
@@ -84,37 +80,15 @@ class SegmentController extends Controller
             $value = $rule['value'] ?? null;
 
             if (is_null($field)) {
-                 return 1;
                 $results[] = false;
                 continue;
             }
 
-            // Case 1: No relation, direct field from MyCustomer
+            // Case 1: No relation, direct customer field
             if (is_null($relation)) {
-               return 2;
                 $result = data_get($customer, $field);
-            }
-
-            // Case 2: Relation with no aggregate (e.g., belongsTo like customer.email)
-            elseif (is_null($aggregate)) {
-                 return 3;
-                $related = $customer->$relation;
-
-                if (!$related) {
-                     return 4;
-                    $results[] = false;
-                    continue;
-                }
-
-                $result = data_get($related, $field);
-            }
-
-
-            // Case 3: Relation with aggregate (e.g., orders.count)
-            else {
-                 return 5;
+            } else {
                 if (!method_exists($customer, $relation)) {
-                     return 6;
                     $results[] = false;
                     continue;
                 }
@@ -122,21 +96,11 @@ class SegmentController extends Controller
                 $relationQuery = $customer->$relation();
 
                 switch ($aggregate) {
-                    case 'sum':
-                        $result = $relationQuery->sum($field);
-                        break;
-                    case 'count':
-                        $result = $relationQuery->count();
-                        break;
-                    case 'avg':
-                        $result = $relationQuery->avg($field);
-                        break;
-                    case 'min':
-                        $result = $relationQuery->min($field);
-                        break;
-                    case 'max':
-                        $result = $relationQuery->max($field);
-                        break;
+                    case 'sum': $result = $relationQuery->sum($field); break;
+                    case 'count': $result = $relationQuery->count(); break;
+                    case 'avg': $result = $relationQuery->avg($field); break;
+                    case 'min': $result = $relationQuery->min($field); break;
+                    case 'max': $result = $relationQuery->max($field); break;
                     case 'first':
                         $related = $relationQuery->orderBy('id')->first();
                         $result = $related ? data_get($related, $field) : null;
@@ -145,28 +109,21 @@ class SegmentController extends Controller
                         $related = $relationQuery->orderByDesc('id')->first();
                         $result = $related ? data_get($related, $field) : null;
                         break;
-                    case 'exists':
-                        $result = $relationQuery->exists();
-                        break;
-                    case 'distinct_count':
-                        $result = $relationQuery->distinct($field)->count($field);
-                        break;
+                    case 'exists': $result = $relationQuery->exists(); break;
+                    case 'distinct_count': $result = $relationQuery->distinct($field)->count($field); break;
                     default:
                         $results[] = false;
-                        continue 2;
+                        continue;
                 }
             }
 
-            // Final comparison
             $results[] = $this->compare($result, $operator, $value);
         }
 
-        // Apply match_type logic
         return $matchType === 'AND'
             ? !in_array(false, $results, true)
             : in_array(true, $results, true);
     }
-
 
 
     private function compare($left, $operator, $right)
