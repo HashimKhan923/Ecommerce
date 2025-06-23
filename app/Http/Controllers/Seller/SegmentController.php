@@ -56,13 +56,9 @@ class SegmentController extends Controller
             return $this->evaluateRules($customer, $segment->rules);
         });
 
-        // $customerIds = $matchedCustomers->pluck('id')->toArray();
-
-        // $segment->customers()->sync($customerIds);
 
         return response()->json([
             'message' => 'Segment applied successfully.',
-            // 'matched_customer_count' => count($customerIds),
             'segment' => $segment,
             'matchedCustomers' => $matchedCustomers,
         ]);
@@ -95,9 +91,16 @@ class SegmentController extends Controller
 
             // Case 2: Relation with no aggregate (e.g., belongsTo like customer.email)
             elseif (is_null($aggregate)) {
-                $related = $customer->$relation; // returns the related model instance
-                $result = $related ? data_get($related, $field) : null;
+                $related = $customer->$relation;
+
+                if (!$related) {
+                    $results[] = false;
+                    continue;
+                }
+
+                $result = data_get($related, $field);
             }
+
 
             // Case 3: Relation with aggregate (e.g., orders.count)
             else {
