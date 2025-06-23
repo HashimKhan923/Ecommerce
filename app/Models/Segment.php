@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Segment extends Model
 {
 
-    protected $fillable = ['name', 'rules'];
+    protected $fillable = ['seller_id','name', 'rules'];
     protected $casts = ['rules' => 'array'];
 
     public function seller()
