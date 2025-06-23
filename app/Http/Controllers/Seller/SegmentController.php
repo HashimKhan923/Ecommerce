@@ -46,7 +46,6 @@ class SegmentController extends Controller
 
     public function apply($segment_id)
     {
-        return 'working';
         $segment = Segment::findOrFail($segment_id);
 
         $customers = MyCustomer::with('customer', 'orders')
@@ -68,6 +67,7 @@ class SegmentController extends Controller
 
     private function evaluateRules($customer, $rulesGroup)
     {
+        return 'qwqw';
         $matchType = $rulesGroup['match_type'] ?? 'AND';
         $rules = $rulesGroup['rules'] ?? [];
 
