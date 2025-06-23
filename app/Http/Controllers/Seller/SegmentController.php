@@ -67,7 +67,7 @@ class SegmentController extends Controller
 
     private function evaluateRules($customer, $rulesGroup)
     {
-        return 'working';
+        
         $matchType = $rulesGroup['match_type'] ?? 'AND';
         $rules = $rulesGroup['rules'] ?? [];
 
