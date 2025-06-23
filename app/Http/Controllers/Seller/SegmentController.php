@@ -15,7 +15,7 @@ class SegmentController extends Controller
     {
       $data = Segment::where('seller_id',$seller_id)->get();
 
-      return response()->json(['$data'=>$data]);
+      return response()->json(['data'=>$data]);
 
     }
 
@@ -60,7 +60,7 @@ class SegmentController extends Controller
         return response()->json([
             'message' => 'Segment applied successfully.',
             'segment' => $segment,
-            'matchedCustomers' => $matchedCustomers->toArray(),
+            'matchedCustomers' => $matchedCustomers,
         ]);
     }
 
