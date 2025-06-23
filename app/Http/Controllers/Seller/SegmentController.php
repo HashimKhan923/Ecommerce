@@ -63,6 +63,7 @@ class SegmentController extends Controller
         return response()->json([
             'message' => 'Segment applied successfully.',
             // 'matched_customer_count' => count($customerIds),
+            'segment' => $segment,
             'matchedCustomers' => $matchedCustomers,
         ]);
     }
