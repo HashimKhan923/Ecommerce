@@ -60,7 +60,7 @@ class SegmentController extends Controller
         return response()->json([
             'message' => 'Segment applied successfully.',
             'segment' => $segment,
-            'matchedCustomers' => $matchedCustomers,
+            'matchedCustomers' => $matchedCustomers->toArray(),
         ]);
     }
 
