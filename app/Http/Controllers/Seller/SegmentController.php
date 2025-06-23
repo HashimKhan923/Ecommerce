@@ -80,20 +80,24 @@ class SegmentController extends Controller
             $value = $rule['value'] ?? null;
 
             if (is_null($field)) {
+                 return 1;
                 $results[] = false;
                 continue;
             }
 
             // Case 1: No relation, direct field from MyCustomer
             if (is_null($relation)) {
+               return 2;
                 $result = data_get($customer, $field);
             }
 
             // Case 2: Relation with no aggregate (e.g., belongsTo like customer.email)
             elseif (is_null($aggregate)) {
+                 return 3;
                 $related = $customer->$relation;
 
                 if (!$related) {
+                     return 4;
                     $results[] = false;
                     continue;
                 }
@@ -104,7 +108,9 @@ class SegmentController extends Controller
 
             // Case 3: Relation with aggregate (e.g., orders.count)
             else {
+                 return 5;
                 if (!method_exists($customer, $relation)) {
+                     return 6;
                     $results[] = false;
                     continue;
                 }
