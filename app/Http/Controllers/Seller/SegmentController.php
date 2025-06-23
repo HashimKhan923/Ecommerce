@@ -88,10 +88,19 @@ class SegmentController extends Controller
                 continue;
             }
 
-            // Case 1: No relation, direct customer field
+            // Case 1: No relation, direct field from MyCustomer
             if (is_null($relation)) {
                 $result = data_get($customer, $field);
-            } else {
+            }
+
+            // Case 2: Relation with no aggregate (e.g., belongsTo like customer.email)
+            elseif (is_null($aggregate)) {
+                $related = $customer->$relation; // returns the related model instance
+                $result = $related ? data_get($related, $field) : null;
+            }
+
+            // Case 3: Relation with aggregate (e.g., orders.count)
+            else {
                 if (!method_exists($customer, $relation)) {
                     $results[] = false;
                     continue;
@@ -100,11 +109,21 @@ class SegmentController extends Controller
                 $relationQuery = $customer->$relation();
 
                 switch ($aggregate) {
-                    case 'sum': $result = $relationQuery->sum($field); break;
-                    case 'count': $result = $relationQuery->count(); break;
-                    case 'avg': $result = $relationQuery->avg($field); break;
-                    case 'min': $result = $relationQuery->min($field); break;
-                    case 'max': $result = $relationQuery->max($field); break;
+                    case 'sum':
+                        $result = $relationQuery->sum($field);
+                        break;
+                    case 'count':
+                        $result = $relationQuery->count();
+                        break;
+                    case 'avg':
+                        $result = $relationQuery->avg($field);
+                        break;
+                    case 'min':
+                        $result = $relationQuery->min($field);
+                        break;
+                    case 'max':
+                        $result = $relationQuery->max($field);
+                        break;
                     case 'first':
                         $related = $relationQuery->orderBy('id')->first();
                         $result = $related ? data_get($related, $field) : null;
@@ -113,21 +132,28 @@ class SegmentController extends Controller
                         $related = $relationQuery->orderByDesc('id')->first();
                         $result = $related ? data_get($related, $field) : null;
                         break;
-                    case 'exists': $result = $relationQuery->exists(); break;
-                    case 'distinct_count': $result = $relationQuery->distinct($field)->count($field); break;
+                    case 'exists':
+                        $result = $relationQuery->exists();
+                        break;
+                    case 'distinct_count':
+                        $result = $relationQuery->distinct($field)->count($field);
+                        break;
                     default:
                         $results[] = false;
-                        continue;
+                        continue 2;
                 }
             }
 
+            // Final comparison
             $results[] = $this->compare($result, $operator, $value);
         }
 
+        // Apply match_type logic
         return $matchType === 'AND'
             ? !in_array(false, $results, true)
             : in_array(true, $results, true);
     }
+
 
 
     private function compare($left, $operator, $right)
