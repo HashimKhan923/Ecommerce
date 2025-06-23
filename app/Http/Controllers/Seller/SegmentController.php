@@ -55,6 +55,7 @@ class SegmentController extends Controller
         $rulesGroup = is_string($segment->rules) ? json_decode($segment->rules, true) : $segment->rules;    
 
         $matchedCustomers = $customers->filter(function ($customer) use ($rulesGroup) {
+            return 'working';
             return $this->evaluateRules();
         });
 
