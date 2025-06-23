@@ -52,26 +52,15 @@ class SegmentController extends Controller
             ->where('seller_id', $segment->seller_id)
             ->get();
 
-        $debug = [];
-
-        $matchedCustomers = $customers->filter(function ($customer) use ($segment, &$debug) {
-            $rules = is_string($segment->rules) ? json_decode($segment->rules, true) : $segment->rules;
-            $result = $this->evaluateRules($customer, $rules);
-
-            $debug[] = [
-                'customer_id' => $customer->id,
-                'email' => optional($customer->customer)->email,
-                'passed' => $result
-            ];
-
-            return $result;
+        $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
+            return $this->evaluateRules($customer, $segment->rules);
         });
+
 
         return response()->json([
             'message' => 'Segment applied successfully.',
             'segment' => $segment,
             'matchedCustomers' => $matchedCustomers,
-            'debug' => $debug
         ]);
     }
 
