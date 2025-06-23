@@ -52,8 +52,10 @@ class SegmentController extends Controller
             ->where('seller_id', $segment->seller_id)
             ->get();
 
-        $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
-            return $this->evaluateRules($customer, $segment->rules);
+        $rulesGroup = is_string($segment->rules) ? json_decode($segment->rules, true) : $segment->rules;    
+
+        $matchedCustomers = $customers->filter(function ($customer) use ($rulesGroup) {
+            return $this->evaluateRules($customer, $rulesGroup);
         });
 
 
@@ -67,8 +69,8 @@ class SegmentController extends Controller
 
     private function evaluateRules($customer, $rulesGroup)
     {
-        return 'qwqw';
-        $matchType = $rulesGroup['match_type'] ?? 'AND';
+        return 'testing';
+        $matchType = $rulesGroup['match_type'] ?? null;
         $rules = $rulesGroup['rules'] ?? [];
 
         $results = [];
