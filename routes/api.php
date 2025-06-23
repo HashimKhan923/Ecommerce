@@ -827,7 +827,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/seller/segment/'], function() {
                 Route::controller(App\Http\Controllers\Seller\SegmentController::class)->group(function () {
                     Route::get('show/{seller_id}','index');
-                    Route::get('detail/{id}','detail');
+                    Route::get('apply/{segment_id}','apply');
                     Route::post('create','create');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
