@@ -13,11 +13,35 @@ class SegmentController extends Controller
 
     public function index($seller_id)
     {
-      $data = Segment::where('seller_id',$seller_id)->get();
+        $segments = Segment::where('seller_id', $seller_id)->get();
 
-      return response()->json(['data'=>$data]);
+        $totalCustomerCount = MyCustomer::where('seller_id', $seller_id)->count();
 
+        $data = $segments->map(function ($segment) use ($totalCustomerCount) {
+            $customers = MyCustomer::with('customer', 'orders')
+                ->where('seller_id', $segment->seller_id)
+                ->get();
+
+            $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
+                return $this->evaluateRules($customer, $segment->rules);
+            });
+
+            $matchedCount = $matchedCustomers->count();
+            $percentage = $totalCustomerCount > 0
+                ? round(($matchedCount / $totalCustomerCount) * 100, 2)
+                : 0;
+
+            return [
+                'id' => $segment->id,
+                'name' => $segment->name,
+                'percentage' => $percentage,
+                'last_activity' => $segment->updated_at->toDateTimeString(),
+            ];
+        });
+
+        return response()->json(['data' => $data]);
     }
+
 
     public function create(Request $request)
     {
