@@ -97,7 +97,7 @@ class CampaignController extends Controller
             'preview_text'  => $request->preview_text,
             'content'       => $request->content,
             'send_time'     => $request->send_time,
-            'status'        => 'scheduled'
+            'status'        => $request->status,
         ]);
 
         CampaignRecipient::where('campaign_id', $campaign->id)->delete();
