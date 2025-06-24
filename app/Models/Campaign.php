@@ -23,7 +23,7 @@ class Campaign extends Model
         return $this->hasMany(TrackingEvent::class);
     }
     public function segments() {
-        return $this->hasMany(Segment::class);
+        return $this->hasMany(CampaignSegment::class);
     }
     // convenience relations
     public function opens() {
