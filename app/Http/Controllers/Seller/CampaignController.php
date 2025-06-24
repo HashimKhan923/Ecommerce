@@ -15,7 +15,7 @@ class CampaignController extends Controller
 {
     public function index($seller_id) {
 
-        $campaigns = Campaign::where('seller_id', $seller_id)->get();
+        $campaigns = Campaign::with('segments','trackingEvents','opens','clicks')->where('seller_id', $seller_id)->get();
 
         return response()->json(['campaigns'=>$campaigns]);
     }
