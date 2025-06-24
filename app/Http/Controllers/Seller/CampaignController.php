@@ -22,7 +22,7 @@ class CampaignController extends Controller
 
     public function detail($id) {
 
-        $campaign = Campaign::with('trackingEvents','opens','clicks','stats')->find($id);
+        $campaign = Campaign::with('trackingEvents','opens','clicks','stats')->where('id',$id)->first();;
 
         $links = LinkStat::where('campaign_id', $id)->get();
 
