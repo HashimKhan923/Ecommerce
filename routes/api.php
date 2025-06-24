@@ -842,6 +842,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show/{seller_id}','index');
                     Route::get('detail/{id}','detail');
                     Route::post('create','create');
+                    Route::get('sendCampaign/{id}','sendCampaign');
                     Route::post('update','update');
                     Route::get('delete/{id}','delete');
                 });
