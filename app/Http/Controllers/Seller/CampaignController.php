@@ -87,9 +87,9 @@ class CampaignController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $campaign = Campaign::findOrFail($id);
+        $campaign = Campaign::findOrFail($request->id);
 
         $campaign->update([
             'seller_id'     => $request->seller_id,
