@@ -8,6 +8,7 @@ use App\Models\Campaign;
 use App\Models\CampaignRecipient;
 use App\Models\CampaignSegment;
 use App\Models\LinkStat;
+use App\Models\Segment;
 use App\Models\MyCustomer;
 use App\Jobs\SendCampaignEmail;
 class CampaignController extends Controller
