@@ -91,6 +91,7 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($request->id);
 
+        // Update campaign fields
         $campaign->update([
             'seller_id'     => $request->seller_id,
             'name'          => $request->name,
@@ -101,9 +102,39 @@ class CampaignController extends Controller
             'status'        => $request->status,
         ]);
 
+        // 🔁 Remove old campaign segments and recipients
+        CampaignSegment::where('campaign_id', $campaign->id)->delete();
         CampaignRecipient::where('campaign_id', $campaign->id)->delete();
 
-        $recipients = collect($request->recipient_ids)->map(function ($userId) use ($campaign) {
+        // 🔍 Recalculate based on selected segments
+        $allMatchedCustomers = collect();
+
+        foreach ($request->segment_ids as $segment_id) {
+            CampaignSegment::create([
+                'campaign_id' => $campaign->id,
+                'segment_id' => $segment_id,
+            ]);
+
+            $segment = Segment::findOrFail($segment_id);
+
+            $customers = MyCustomer::with('customer', 'orders')
+                ->where('seller_id', $segment->seller_id)
+                ->get();
+
+            $matched = $customers->filter(function ($customer) use ($segment) {
+                return $this->evaluateRules($customer, $segment->rules);
+            });
+
+            $allMatchedCustomers = $allMatchedCustomers->merge($matched);
+        }
+
+        $recipient_ids = $allMatchedCustomers
+            ->pluck('customer_id')
+            ->filter()
+            ->unique()
+            ->toArray();
+
+        $recipients = collect($recipient_ids)->map(function ($userId) use ($campaign) {
             return [
                 'campaign_id' => $campaign->id,
                 'user_id'     => $userId,
@@ -116,8 +147,10 @@ class CampaignController extends Controller
 
         return response()->json([
             'message' => 'Campaign updated successfully',
+            'campaign_id' => $campaign->id
         ]);
     }
+
 
 
     public function delete($id) {
@@ -125,6 +158,15 @@ class CampaignController extends Controller
         Campaign::find($id)->delete();
 
         return response()->json(['message'=>'deleted successfully',200]);
+    }
+
+    public function multi_delete(Request $request)
+    {
+        Campaign::whereIn('id',$request->ids)->delete();
+
+
+        $response = ['status'=>true,"message" => "Campaigns Deleted Successfully!"];
+        return response($response, 200);
     }
 
     public function sendCampaign($id)

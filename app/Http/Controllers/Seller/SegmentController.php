@@ -183,5 +183,14 @@ class SegmentController extends Controller
 
     }
 
+    public function multi_delete(Request $request)
+    {
+        Segment::whereIn('id',$request->ids)->delete();
+
+
+        $response = ['status'=>true,"message" => "Segments Deleted Successfully!"];
+        return response($response, 200);
+    }
+
 
 }
