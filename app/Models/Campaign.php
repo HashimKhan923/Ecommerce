@@ -22,6 +22,9 @@ class Campaign extends Model
     public function trackingEvents() {
         return $this->hasMany(TrackingEvent::class);
     }
+    public function segments() {
+        return $this->hasMany(Segment::class);
+    }
     // convenience relations
     public function opens() {
         return $this->trackingEvents()->where('event_type', 'open');
