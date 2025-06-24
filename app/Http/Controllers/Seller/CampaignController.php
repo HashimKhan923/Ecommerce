@@ -127,7 +127,7 @@ class CampaignController extends Controller
         return response()->json(['message'=>'deleted successfully',200]);
     }
 
-    public function sendCampaign(Request $request, $id)
+    public function sendCampaign($id)
     {
         $campaign = Campaign::findOrFail($id);
 
