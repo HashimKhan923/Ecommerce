@@ -24,7 +24,7 @@ class SendScheduledCampaigns extends Command
             foreach ($campaign->recipients as $user) {
                 SendCampaignEmail::dispatch($campaign->id, $user->id);
             }
-            $campaign->update(['status' => 'sending']);
+            $campaign->update(['status' => 'sent']);
         }
     }
 }
