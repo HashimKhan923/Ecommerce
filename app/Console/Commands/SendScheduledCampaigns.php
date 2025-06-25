@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use App\Jobs\SendCampaignEmail;
+use App\Models\Campaign;
+
 
 class SendScheduledCampaigns extends Command
 {
