@@ -11,13 +11,16 @@ use App\Models\LinkStat;
 use App\Models\Segment;
 use App\Models\MyCustomer;
 use App\Jobs\SendCampaignEmail;
+use Carbon\Carbon;
 class CampaignController extends Controller
 {
     public function index($seller_id) {
 
+
+        $now = Carbon::now();
         $campaigns = Campaign::with('segments','trackingEvents','opens','clicks')->where('seller_id', $seller_id)->get();
 
-        return response()->json(['campaigns'=>$campaigns]);
+        return response()->json(['campaigns'=>$campaigns,'time'=>$now]);
     }
 
     public function detail($id) {
