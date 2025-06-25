@@ -17,7 +17,7 @@ class SendScheduledCampaigns extends Command
     {
         $now = Carbon::now();
         $campaigns = Campaign::where('status','scheduled')
-                             ->where('send_time','<=',$now)
+                             ->where('send_time','<=',$now->toDateTimeString())
                              ->get();
         foreach ($campaigns as $campaign) {
             // Dispatch emails to all recipients

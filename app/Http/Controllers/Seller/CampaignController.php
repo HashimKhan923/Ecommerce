@@ -17,10 +17,10 @@ class CampaignController extends Controller
     public function index($seller_id) {
 
 
-        $now = Carbon::now();
+        
         $campaigns = Campaign::with('segments','trackingEvents','opens','clicks')->where('seller_id', $seller_id)->get();
 
-        return response()->json(['campaigns'=>$campaigns,'time'=>$now->toDateTimeString()]);
+        return response()->json(['campaigns'=>$campaigns]);
     }
 
     public function detail($id) {
