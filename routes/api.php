@@ -851,6 +851,20 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
 
 
+                                                                    /// EmailTemplete \\\
+
+            Route::group(['prefix' => '/seller/email_templete/'], function() {
+                Route::controller(App\Http\Controllers\Seller\EmailTempleteController::class)->group(function () {
+                    Route::get('show/{seller_id}','index');
+                    Route::get('detail/{id}','detail');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
+                });
+            });
+
+
 
                                                                                  /// Order Timeline \\\
 
