@@ -37,7 +37,7 @@ class EmailTempleteController extends Controller
 
     public function update(Request $request)
     {
-        EmailTemplete::where('id',$request->templete_id)->update([
+        EmailTemplete::where('id',$request->template_id)->update([
             'name' => $request->name,
             'content' => $request->content,
         ]);
