@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\EmailTemplete;
+use App\Models\EmailTemplete;
 
 class EmailTempleteController extends Controller
 {
