@@ -853,7 +853,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                                                     /// EmailTemplete \\\
 
-            Route::group(['prefix' => '/seller/email_templete/'], function() {
+            Route::group(['prefix' => '/seller/email_template/'], function() {
                 Route::controller(App\Http\Controllers\Seller\EmailTempleteController::class)->group(function () {
                     Route::get('show/{seller_id}','index');
                     Route::get('detail/{id}','detail');
