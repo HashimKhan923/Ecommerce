@@ -66,38 +66,20 @@
   const operators = ['=', '!=', '>', '<', '>=', '<=', 'LIKE', 'NOT LIKE'];
 
   const fields = [
-const fields = [
-  // USER TABLE
-  { label: "Customer Name", value: "users.name" },
-  { label: "Customer Email", value: "users.email" },
-  { label: "Email Verified", value: "users.email_verified_at" },
-  { label: "Is Active", value: "users.is_active" },
-  { label: "Country", value: "users.country" },
-  { label: "State", value: "users.state" },
-  { label: "City", value: "users.city" },
-  { label: "Postal Code", value: "users.postal_code" },
-  { label: "Phone", value: "users.phone" },
-  { label: "Balance", value: "users.balance" },
-  { label: "Created At", value: "users.created_at" },
-  { label: "Average Rating", value: "users.average_rating" },
-
-  // MYCUSTOMER TABLE
-  { label: "Sale", value: "my_customers.sale" },
-  { label: "First Seen", value: "my_customers.created_at" },
-  { label: "Last Updated", value: "my_customers.updated_at" },
-
-  // ORDERS
-  { label: "Total Orders", value: "orders.count" },
-  { label: "Total Spent", value: "orders.amount" },
-  { label: "Average Order Value", value: "orders.avg_amount" },
-  { label: "First Order Date", value: "orders.first_order_date" },
-  { label: "Last Order Date", value: "orders.last_order_date" },
-  { label: "Order Created At", value: "orders.created_at" },
-  { label: "Payment Status", value: "orders.payment_status" },
-  { label: "Delivery Status", value: "orders.delivery_status" },
-  { label: "Refund Status", value: "orders.refund" },
-  { label: "Shipping Amount", value: "orders.shipping_amount" },
-  { label: "Tax", value: "orders.tax" },
+    { label: "Customer Name", value: "users.name" },
+    { label: "Customer Email", value: "users.email" },
+    { label: "Country", value: "users.country" },
+    { label: "State", value: "users.state" },
+    { label: "City", value: "users.city" },
+    { label: "Phone", value: "users.phone" },
+    { label: "Email Verified", value: "users.email_verified_at" },
+    { label: "Is Active", value: "users.is_active" },
+    { label: "Sale", value: "my_customers.sale" },
+    { label: "Total Orders", value: "orders.count" },
+    { label: "Order Amount", value: "orders.amount" },
+    { label: "Order Created At", value: "orders.created_at" },
+    { label: "Payment Status", value: "orders.payment_status" },
+    { label: "Delivery Status", value: "orders.delivery_status" }
   ];
 
   function addLine() {
