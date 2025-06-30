@@ -65,6 +65,7 @@
   let index = 0;
   const operators = ['=', '!=', '>', '<', '>=', '<=', 'LIKE', 'NOT LIKE'];
 
+  const fields = [
 const fields = [
   // USER TABLE
   { label: "Customer Name", value: "users.name" },
@@ -97,6 +98,7 @@ const fields = [
   { label: "Refund Status", value: "orders.refund" },
   { label: "Shipping Amount", value: "orders.shipping_amount" },
   { label: "Tax", value: "orders.tax" },
+  ];
 
   function addLine() {
     const container = document.getElementById('query-lines');
