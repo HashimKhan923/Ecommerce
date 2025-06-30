@@ -36,7 +36,7 @@ class SendCampaignEmail implements ShouldQueue
         }
 
         // Send the email
-        Mail::to($user->email)->send(new CampaignMail($campaign, $user));
+        Mail::mailer('no_reply')->to($user->email)->send(new CampaignMail($campaign, $user));
         
         // Update status if this was the last email (optional)
         // e.g., mark campaign as 'sent' if all emails dispatched

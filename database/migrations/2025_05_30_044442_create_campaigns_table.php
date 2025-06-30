@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('seller_id')->constrained('users');
             $table->string('name');
-            $table->string('subject');
+            $table->string('subject')->nullable();
             $table->string('preview_text')->nullable();
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->timestamp('send_time')->nullable();
             $table->enum('status', ['draft','scheduled','sending','sent'])->default('draft');
             $table->timestamps();
