@@ -61,58 +61,70 @@
     <div class="query-preview" id="preview">WHERE ...</div>
   </div>
 
-  <script>
-    let index = 0;
-    const operators = ['=', '!=', '>', '<', '>=', '<='];
-    const fields = [
-      { label: 'Orders Placed', value: 'orders_count' },
-      { label: 'Amount Spent', value: 'amount_spent' },
-      { label: 'Country', value: 'country' },
-      { label: 'Email Subscription', value: 'email_subscribed' },
-    ];
+<script>
+  let index = 0;
+  const operators = ['=', '!=', '>', '<', '>=', '<=', 'LIKE', 'NOT LIKE'];
 
-    function addLine() {
-      const container = document.getElementById('query-lines');
-      const div = document.createElement('div');
-      div.classList.add('query-line');
-      div.setAttribute('data-index', index);
+  const fields = [
+    { label: "Customer Name", value: "users.name" },
+    { label: "Customer Email", value: "users.email" },
+    { label: "Country", value: "users.country" },
+    { label: "State", value: "users.state" },
+    { label: "City", value: "users.city" },
+    { label: "Phone", value: "users.phone" },
+    { label: "Email Verified", value: "users.email_verified_at" },
+    { label: "Is Active", value: "users.is_active" },
+    { label: "Sale", value: "my_customers.sale" },
+    { label: "Total Orders", value: "orders.count" },
+    { label: "Order Amount", value: "orders.amount" },
+    { label: "Order Created At", value: "orders.created_at" },
+    { label: "Payment Status", value: "orders.payment_status" },
+    { label: "Delivery Status", value: "orders.delivery_status" }
+  ];
 
-      div.innerHTML = `
-        <select onchange="updatePreview()" class="field">
-          ${fields.map(f => `<option value="${f.value}">${f.label}</option>`).join('')}
-        </select>
-        <select onchange="updatePreview()" class="operator">
-          ${operators.map(op => `<option value="${op}">${op}</option>`).join('')}
-        </select>
-        <input type="text" oninput="updatePreview()" class="value" placeholder="Value" />
-        <button onclick="this.parentElement.remove(); updatePreview();">❌</button>
-      `;
-      container.appendChild(div);
-      index++;
-    }
+  function addLine() {
+    const container = document.getElementById('query-lines');
+    const div = document.createElement('div');
+    div.classList.add('query-line');
+    div.setAttribute('data-index', index);
 
-    function updatePreview() {
-      const lines = document.querySelectorAll('.query-line');
-      const conditions = [];
+    div.innerHTML = `
+      <select onchange="updatePreview()" class="field">
+        ${fields.map(f => `<option value="${f.value}">${f.label}</option>`).join('')}
+      </select>
+      <select onchange="updatePreview()" class="operator">
+        ${operators.map(op => `<option value="${op}">${op}</option>`).join('')}
+      </select>
+      <input type="text" oninput="updatePreview()" class="value" placeholder="Value" />
+      <button onclick="this.parentElement.remove(); updatePreview();">❌</button>
+    `;
+    container.appendChild(div);
+    index++;
+  }
 
-      lines.forEach(line => {
-        const field = line.querySelector('.field').value;
-        const operator = line.querySelector('.operator').value;
-        const value = line.querySelector('.value').value;
+  function updatePreview() {
+    const lines = document.querySelectorAll('.query-line');
+    const conditions = [];
 
-        if (field && operator && value !== '') {
-          let valStr = value;
-          if (isNaN(value)) valStr = `'${value}'`;
-          conditions.push(`${field} ${operator} ${valStr}`);
+    lines.forEach(line => {
+      const field = line.querySelector('.field').value;
+      const operator = line.querySelector('.operator').value;
+      const value = line.querySelector('.value').value;
+
+      if (field && operator && value !== '') {
+        let valStr = value;
+        if (isNaN(value) && operator.indexOf('LIKE') === -1) {
+          valStr = `'${value}'`;
         }
-      });
+        conditions.push(`${field} ${operator} ${valStr}`);
+      }
+    });
 
-      const preview = document.getElementById('preview');
-      preview.textContent = conditions.length ? 'WHERE ' + conditions.join(' AND ') : 'WHERE ...';
-    }
+    const preview = document.getElementById('preview');
+    preview.textContent = conditions.length ? 'WHERE ' + conditions.join(' AND ') : 'WHERE ...';
+  }
 
-    // Initialize with one condition
-    addLine();
-  </script>
+  addLine();
+</script>
 </body>
 </html>
