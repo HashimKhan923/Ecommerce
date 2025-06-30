@@ -81,9 +81,9 @@ const fields = [
   { label: "Average Rating", value: "users.average_rating" },
 
   // MYCUSTOMER TABLE
-  { label: "Sale", value: "my_customers.sale" },
-  { label: "First Seen", value: "my_customers.created_at" },
-  { label: "Last Updated", value: "my_customers.updated_at" },
+  { label: "Sale", value: "sale" },
+  { label: "First Seen", value: "created_at" },
+  { label: "Last Updated", value: "updated_at" },
 
   // ORDERS
   { label: "Total Orders", value: "orders.count" },
