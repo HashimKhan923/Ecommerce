@@ -19,8 +19,10 @@ class FinancialController extends Controller
         $totalOrders = $orders->count();
         $completedOrders = $orders->where('delivery_status', 'Delivered')->count();
         $pendingOrders = $orders->whereIn('delivery_status', 'Pending')->count();
-        $cancelledOrders = $orders->whereHas('order_refund')->count();
-
+        $cancelledOrders = $orders->filter(function ($order) {
+            return $order->order_refund !== null;
+        })->count();
+        
         // Payouts
         $payouts = Payout::where('seller_id', $sellerId)->get();
         $commissionPaid = $payouts->sum('commission');
