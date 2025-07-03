@@ -1364,7 +1364,6 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => '/seller/financial'], function() {
                     Route::controller(App\Http\Controllers\Seller\FinancialController::class)->group(function () {
                         Route::get('show/{sellerId}','getSellerFinancialDashboard');
-    
                     });
                 });
 

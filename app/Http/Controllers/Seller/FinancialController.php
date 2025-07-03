@@ -29,10 +29,10 @@ class FinancialController extends Controller
         // Payouts
         $payouts = Payout::where('seller_id', $sellerId)->get();
         $commissionPaid = $payouts->sum('commission');
-        $totalPayout = $payouts->where('payment_status', 'paid')->sum('amount');
+        $totalPayout = $payouts->where('status', 'Paid')->sum('amount');
         $withdrawableBalance = $totalSales - $commissionPaid - $totalPayout;
 
-        $lastPayout = $payouts->where('payment_status', 'paid')->sortByDesc('date')->first();
+        $lastPayout = $payouts->where('status', 'Paid')->sortByDesc('date')->first();
 
         $transactions = $orders->map(function ($order) use ($payouts) {
             $payout = $payouts->where('order_id', $order->id)->first();
