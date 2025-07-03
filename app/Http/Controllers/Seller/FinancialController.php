@@ -58,7 +58,7 @@ class FinancialController extends Controller
             'cancelled_orders' => $cancelledOrders,
             'commission_paid' => $commissionPaid,
             'net_earnings' => $totalSales - $commissionPaid,
-            'withdrawable_balance' => $withdrawableBalance,
+            // 'withdrawable_balance' => $withdrawableBalance,
             'last_payout' => $lastPayout ? [
                 'amount' => $lastPayout->amount,
                 'date' => $lastPayout->date
