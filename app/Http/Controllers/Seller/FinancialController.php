@@ -17,9 +17,9 @@ class FinancialController extends Controller
 
         $totalSales = $orders->sum('amount');
         $totalOrders = $orders->count();
-        $completedOrders = $orders->where('delivery_status', 'delivered')->count();
-        $pendingOrders = $orders->whereIn('delivery_status', ['pending', 'processing'])->count();
-        $cancelledOrders = $orders->whereIn('delivery_status', ['cancelled', 'refunded'])->count();
+        $completedOrders = $orders->where('delivery_status', 'Delivered')->count();
+        $pendingOrders = $orders->whereIn('delivery_status', 'Pending')->count();
+        $cancelledOrders = $orders->whereHas('order_refund')->count();
 
         // Payouts
         $payouts = Payout::where('seller_id', $sellerId)->get();
@@ -29,13 +29,12 @@ class FinancialController extends Controller
 
         $lastPayout = $payouts->where('payment_status', 'paid')->sortByDesc('date')->first();
 
-        // Transactions (based on orders)
         $transactions = $orders->map(function ($order) use ($payouts) {
             $payout = $payouts->where('order_id', $order->id)->first();
 
             return [
-                'order_id' => $order->order_code,
-                'customer' => optional($order->customer)->name ?? 'N/A', // add `customer()` relation if needed
+                'order_id' => $order->id,
+                'customer' => optional($order->customer)->name ?? 'N/A',
                 'order_total' => (float) $order->amount,
                 'commission' => (float) ($payout->commission ?? 0),
                 'net' => (float) ($order->amount - ($payout->commission ?? 0)),

@@ -63,6 +63,11 @@ class Order extends Model
         return $this->belongsTo(User::class,'sellers_id','id');
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(User::class,'customer_id','id');
+    }
+
     public function shop()
     {
         return $this->belongsTo(Shop::class,'shop_id','id');

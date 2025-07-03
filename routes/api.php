@@ -866,7 +866,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
-                                                                                 /// Order Timeline \\\
+                                            /// Order Timeline \\\
 
                 Route::group(['prefix' => '/seller/order/timeline'], function() {
                     Route::controller(App\Http\Controllers\Seller\OrderTimelineController::class)->group(function () {
@@ -1358,5 +1358,14 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 });
             });
+
+                                                        /// Order Timeline \\\
+
+                Route::group(['prefix' => '/seller/financial'], function() {
+                    Route::controller(App\Http\Controllers\Seller\OrderTimelineController::class)->group(function () {
+                        Route::get('show/{sellerId}','getSellerFinancialDashboard');
+    
+                    });
+                });
 
 
