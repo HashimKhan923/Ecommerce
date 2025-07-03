@@ -11,5 +11,13 @@ class CampaignSegment extends Model
 
     protected $fillable = ['campaign_id','segment_id']; 
 
+    public function campaing() {
+        return $this->belongsTo(Campaign::class, 'campaign_id');
+    }
+
+    public function segment() {
+        return $this->belongsTo(Segment::class, 'segment_id');
+    }
+
 
 }
