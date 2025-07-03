@@ -38,6 +38,8 @@ class SegmentController extends Controller
                 'name' => $segment->name,
                 'percentage' => $percentage,
                 'last_activity' => $segment->updated_at->toDateTimeString(),
+                'matchedCount' => $matchedCount,
+                'totalCustomerCount' => $totalCustomerCount
             ];
         });
 
