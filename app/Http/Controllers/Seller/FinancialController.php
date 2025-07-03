@@ -43,8 +43,8 @@ class FinancialController extends Controller
                 'order_id' => $order->id,
                 'customer' => optional($order->customer)->name ?? 'N/A',
                 'order_total' => (float) $order->amount,
-                'commission' => (float) ($payout->platform_fee / 100 ?? 0),
-                'net' => (float) ($order->amount - ($payout->platform_fee ?? 0)),
+                'commission' => (float) ((($payout->platform_fee ?? 0) / 100)),
+                'net' => (float) ($order->amount - (($payout->platform_fee ?? 0) / 100)),
                 'status' => $order->payment_status,
                 'date' => $order->created_at->format('Y-m-d')
             ];
