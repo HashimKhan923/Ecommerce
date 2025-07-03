@@ -80,7 +80,7 @@ class SegmentController extends Controller
             $this->evaluateRules($customer, json_decode($segment->rules, true))
         );
 
-        return response()->json(['matchedCustomers' => $matched]);
+        return response()->json(['matchedCustomers' => $matched->count()]);
     }
 
 
