@@ -16,7 +16,9 @@ class FinancialController extends Controller
         $orders = Order::where('sellers_id', $sellerId)->get();
 
         $totalSales = $orders->sum('amount');
-        $totalOrders = $orders->count();
+        $totalOrders = $orders->filter(function ($order) {
+            return $order->order_refund == null;
+        })->count();
         $completedOrders = $orders->where('delivery_status', 'Delivered')->count();
         $pendingOrders = $orders->whereIn('delivery_status', 'Pending')->filter(function ($order) {
             return $order->order_refund == null;
