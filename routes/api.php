@@ -1359,10 +1359,10 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
-                                                        /// Order Timeline \\\
+                                                        /// Financial \\\
 
                 Route::group(['prefix' => '/seller/financial'], function() {
-                    Route::controller(App\Http\Controllers\Seller\OrderTimelineController::class)->group(function () {
+                    Route::controller(App\Http\Controllers\Seller\FinancialController::class)->group(function () {
                         Route::get('show/{sellerId}','getSellerFinancialDashboard');
     
                     });
