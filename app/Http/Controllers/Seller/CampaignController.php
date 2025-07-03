@@ -25,7 +25,7 @@ class CampaignController extends Controller
 
     public function detail($id) {
 
-        $campaign = Campaign::with('segments.segment','trackingEvents','opens','clicks')->where('id',$id)->first();;
+        $campaign = Campaign::with('segments.segment','trackingEvents','opens','clicks')->withCount('recipients')->where('id',$id)->first();;
 
         $links = LinkStat::where('campaign_id', $id)->get();
 
