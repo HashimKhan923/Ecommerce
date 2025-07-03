@@ -22,11 +22,11 @@ class SegmentController extends Controller
                 ->where('seller_id', $segment->seller_id)
                 ->get();
 
+            $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
+                return $this->evaluateRules($customer, $segment->rules);
+            });
 
-
-            $matchedCustomers = $customers->filter(fn($customer) =>
-                $this->evaluateRules($customer, $segment->rules)
-            );
+            
 
             $matchedCount = $matchedCustomers->count();
             $percentage = $totalCustomerCount > 0
@@ -83,93 +83,95 @@ class SegmentController extends Controller
 
 
 
-private function evaluateRules($customer, $rulesGroup)
-{
-    $matchType = $rulesGroup['match_type'] ?? 'AND';
-    $rules = $rulesGroup['rules'] ?? [];
+    private function evaluateRules($customer, $rulesGroup)
+    {
+        $matchType = $rulesGroup['match_type'] ?? 'AND';
+        $rules = $rulesGroup['rules'] ?? [];
 
-    // ✅ If rules are empty, match everyone
-    if (empty($rules)) {
-        return true;
-    }
+        $results = [];
 
-    $results = [];
+        foreach ($rules as $rule) {
+            $field = $rule['field'];
+            $operator = $rule['operator'];
+            $value = $rule['value'];
 
-    foreach ($rules as $rule) {
-        $field = $rule['field'] ?? null;
-        $operator = $rule['operator'] ?? '=';
-        $value = $rule['value'] ?? null;
+            // Parse field like "orders.count"
+            $parts = explode('.', $field);
 
-        if (is_null($field)) {
-            $results[] = false;
-            continue;
-        }
+            if (count($parts) === 2) {
+                [$relation, $fieldPart] = $parts;
 
-        // ✅ Parse the field parts: example 'orders.amount' ➜ ['orders', 'amount']
-        $parts = explode('.', $field);
-        $relation = count($parts) > 1 ? $parts[0] : null;
-        $fieldPart = $parts[1] ?? $parts[0];
+                // Handle aggregate keywords
+                $aggregates = ['count', 'sum', 'avg', 'min', 'max', 'first', 'last'];
 
-        // Check for aggregate in the fieldPart
-        $aggregates = ['count', 'sum', 'avg', 'min', 'max', 'first', 'last', 'exists'];
+    if (in_array($fieldPart, $aggregates)) {
+        $query = $customer->$relation();
 
-        if (in_array($fieldPart, $aggregates)) {
-            $query = $customer->$relation();
+        switch ($fieldPart) {
+            case 'count':
+                $actual = $query->count();
+                break;
 
-            switch ($fieldPart) {
-                case 'count':
-                    $actual = $query->count();
-                    break;
-                case 'sum':
-                    $actual = $query->sum('amount'); // or adjust to sum which column you want
-                    break;
-                case 'avg':
-                    $actual = $query->avg('amount');
-                    break;
-                case 'min':
-                    $actual = $query->min('amount');
-                    break;
-                case 'max':
-                    $actual = $query->max('amount');
-                    break;
-                case 'exists':
-                    $actual = $query->exists();
-                    break;
-                case 'first':
-                    $related = $query->orderBy('id')->first();
-                    $actual = $related ? data_get($related, 'created_at') : null;
-                    break;
-                case 'last':
-                    $related = $query->orderByDesc('id')->first();
-                    $actual = $related ? data_get($related, 'created_at') : null;
-                    break;
-                default:
-                    $actual = null;
-            }
+            case 'sum':
+                $sumField = $rule['field'] ?? 'amount'; // default to 'amount' or use passed field
+                $actual = $query->sum($sumField);
+                break;
 
-        } elseif ($relation) {
-            // Regular relation field, no aggregate
-            $related = $customer->$relation;
+            case 'avg':
+                $avgField = $rule['field'] ?? 'amount'; // adjust default if needed
+                $actual = $query->avg($avgField);
+                break;
 
-            if ($related) {
-                $actual = data_get($related, $fieldPart);
-            } else {
+            case 'min':
+                $minField = $rule['field'] ?? 'amount';
+                $actual = $query->min($minField);
+                break;
+
+            case 'max':
+                $maxField = $rule['field'] ?? 'amount';
+                $actual = $query->max($maxField);
+                break;
+
+            case 'exists':
+                $actual = $query->exists();
+                break;
+
+            case 'first':
+                $firstField = $rule['field'] ?? null;
+                $record = $query->orderBy('id')->first();
+                $actual = $record && $firstField ? data_get($record, $firstField) : null;
+                break;
+
+            case 'last':
+                $lastField = $rule['field'] ?? null;
+                $record = $query->orderByDesc('id')->first();
+                $actual = $record && $lastField ? data_get($record, $lastField) : null;
+                break;
+
+            case 'distinct_count':
+                $distinctField = $rule['field'] ?? null;
+                $actual = $distinctField ? $query->distinct($distinctField)->count($distinctField) : null;
+                break;
+
+            default:
                 $actual = null;
+        }
+    }
+    else {
+                        $actual = data_get($customer->$relation, $fieldPart);
+                    }
+                } else {
+                    // Direct field, like "customer.is_active"
+                    $actual = data_get($customer, $field);
+                }
+
+                $results[] = $this->compare($actual, $operator, $value);
             }
 
-        } else {
-            // Direct customer field
-            $actual = data_get($customer, $fieldPart);
+            return $matchType === 'AND'
+                ? !in_array(false, $results, true)
+                : in_array(true, $results, true);
         }
-
-        $results[] = $this->compare($actual, $operator, $value);
-    }
-
-    return $matchType === 'AND'
-        ? !in_array(false, $results, true)
-        : in_array(true, $results, true);
-}
-
 
         private function compare($left, $operator, $right)
         {
