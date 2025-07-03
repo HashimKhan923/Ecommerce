@@ -22,12 +22,10 @@ class SegmentController extends Controller
                 ->where('seller_id', $segment->seller_id)
                 ->get();
 
-            // $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
-            //     return $this->evaluateRules($customer, $segment->rules);
-            // });
+
 
             $matchedCustomers = $customers->filter(fn($customer) =>
-               $this->evaluateRules($customer, json_decode($segment->rules, true))
+                $this->evaluateRules($customer, $segment->rules)
             );
 
             $matchedCount = $matchedCustomers->count();
