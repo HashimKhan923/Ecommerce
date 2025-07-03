@@ -30,7 +30,7 @@ class FinancialController extends Controller
         
         // Payouts
         $payouts = Payout::where('seller_id', $sellerId)->get();
-        $commissionPaid = $payouts->sum('commission');
+        $commissionPaid = $payouts->sum('platform_fee') / 100;
         $totalPayout = $payouts->where('status', 'Paid')->sum('amount');
         $withdrawableBalance = $totalSales - $commissionPaid - $totalPayout;
 
