@@ -88,10 +88,9 @@ private function evaluateRules($customer, $rulesGroup)
     $matchType = $rulesGroup['match_type'] ?? 'AND';
     $rules = $rulesGroup['rules'] ?? [];
 
-    // ✅ IMPORTANT: Decide how empty rules behave
+    // ✅ If rules are empty, match everyone
     if (empty($rules)) {
-        return false; // ➜ If no rules, do NOT match any customer
-        // return true; // ➜ Or use this if you want to match ALL customers instead
+        return true;
     }
 
     $results = [];
