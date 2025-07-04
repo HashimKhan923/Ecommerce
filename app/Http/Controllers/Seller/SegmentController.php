@@ -26,9 +26,7 @@ class SegmentController extends Controller
                 return $this->evaluateRules($customer, $segment->rules);
             });
 
-            $matched = $customers->filter(fn($customer) =>
-                $this->evaluateRules($customer, json_decode($segment->rules, true))
-            );
+
 
             
 
