@@ -26,6 +26,10 @@ class SegmentController extends Controller
                 return $this->evaluateRules($customer, $segment->rules);
             });
 
+            $matched = $customers->filter(fn($customer) =>
+                $this->evaluateRules($customer, json_decode($segment->rules, true))
+            );
+
             
 
             $matchedCount = $matchedCustomers->count();
@@ -71,17 +75,37 @@ class SegmentController extends Controller
     }
 
 
-    public function apply($segmentId)
-    {
-        $segment = Segment::findOrFail($segmentId);
-        $customers = MyCustomer::with('customer','orders')->where('seller_id', $segment->seller_id)->get();
+    // public function apply($segmentId)
+    // {
+    //     $segment = Segment::findOrFail($segmentId);
+    //     $customers = MyCustomer::with('customer','orders')->where('seller_id', $segment->seller_id)->get();
 
-        $matched = $customers->filter(fn($customer) =>
-            $this->evaluateRules($customer, json_decode($segment->rules, true))
-        );
+    //     $matched = $customers->filter(fn($customer) =>
+    //         $this->evaluateRules($customer, json_decode($segment->rules, true))
+    //     );
 
-        return response()->json(['matchedCustomers' => $matched->count()]);
-    }
+    //     return response()->json(['matchedCustomers' => $matched]);
+    // }
+
+        public function apply($segment_id)
+        {
+            $segment = Segment::findOrFail($segment_id);
+
+            $customers = MyCustomer::with('customer', 'orders')
+                ->where('seller_id', $segment->seller_id)
+                ->get();
+
+            $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
+                return $this->evaluateRules($customer, $segment->rules);
+            });
+
+
+            return response()->json([
+                'message' => 'Segment applied successfully.',
+                'segment' => $segment,
+                'matchedCustomers' => $matchedCustomers,
+            ]);
+        }
 
 
 
