@@ -203,6 +203,22 @@ private function evaluateRules($customer, $rulesGroup)
 }
 
 
+        private function compare($left, $operator, $right)
+        {
+            return match ($operator) {
+                '='  => $left == $right,
+                '!=' => $left != $right,
+                '>'  => $left > $right,
+                '>=' => $left >= $right,
+                '<'  => $left < $right,
+                '<=' => $left <= $right,
+                'LIKE' => str_contains($left, $right),
+                'NOT LIKE' => !str_contains($left, $right),
+                default => false,
+            };
+        }
+
+
 
 
         //////////////////////// OLD \\\\\\\\\\\\\\\\\\\\\\\\
