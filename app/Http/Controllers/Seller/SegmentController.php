@@ -94,7 +94,7 @@ class SegmentController extends Controller
                 ->get();
 
         $matchedCustomers = $customers->filter(fn($customer) =>
-            $this->evaluateRules($customer, json_decode($segment->rules, true))
+            $this->evaluateRules($customer, $segment->rules, true)
         );
 
             // $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
