@@ -54,7 +54,7 @@ class SegmentController extends Controller
         Segment::create([
         'seller_id'=>$request->seller_id,   
         'name' => $request->name,
-        'rules' => json_encode($request->rules),
+        'rules' => $request->rules,
         ]);
 
         return response()->json(['message' => 'Segment created successfully.']);
@@ -65,7 +65,7 @@ class SegmentController extends Controller
     {
         Segment::where('id',$request->segment_id)->update([   
         'name' => $request->name,
-        'rules' => json_encode($request->rules),
+        'rules' => $request->rules,
         ]);
 
         return response()->json(['message' => 'Segment updated successfully.']);
