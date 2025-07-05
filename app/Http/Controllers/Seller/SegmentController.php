@@ -110,10 +110,17 @@ class SegmentController extends Controller
         public function apply($segment_id)
         {
             $segment = Segment::findOrFail($segment_id);
-
-            $customers = MyCustomer::with('customer', 'orders')
+            if($segment->seller_id)
+            {
+                $customers = MyCustomer::with('customer', 'orders')
                 ->where('seller_id', $segment->seller_id)
                 ->get();
+            }
+            else
+            {
+                $customers = MyCustomer::with('customer', 'orders')->all();
+            }
+
 
             $matchedCustomers = $customers->filter(fn($customer) =>
                 $this->evaluateRules($customer, $segment->rules, true)
