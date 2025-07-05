@@ -85,6 +85,28 @@ class SegmentController extends Controller
     //     return response()->json(['matchedCustomers' => $matched]);
     // }
 
+
+        public function check($seller_id)
+        {
+            
+
+            $customers = MyCustomer::with('customer', 'orders')
+                ->where('seller_id', $seller_id)
+                ->get();
+
+            $matchedCustomers = $customers->filter(fn($customer) =>
+                $this->evaluateRules($customer, $segment->rules, true)
+            );
+
+
+
+
+            return response()->json([
+                'matchedCustomers' => $matchedCustomers,
+            ]);
+        }
+
+
         public function apply($segment_id)
         {
             $segment = Segment::findOrFail($segment_id);
@@ -106,6 +128,7 @@ class SegmentController extends Controller
                 'matchedCustomers' => $matchedCustomers,
             ]);
         }
+
 
 
 

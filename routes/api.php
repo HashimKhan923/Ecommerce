@@ -1362,6 +1362,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/seller/segment/'], function() {
                 Route::controller(App\Http\Controllers\Seller\SegmentController::class)->group(function () {
                     Route::get('show/{seller_id}','index');
+                    Route::get('check/{seller_id}','check');
                     Route::get('apply/{segment_id}','apply');
                     Route::post('create','create');
                     Route::post('update','update');
