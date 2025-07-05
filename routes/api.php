@@ -830,18 +830,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             }); 
 
-                                    /// Segment \\\
 
-            Route::group(['prefix' => '/seller/segment/'], function() {
-                Route::controller(App\Http\Controllers\Seller\SegmentController::class)->group(function () {
-                    Route::get('show/{seller_id}','index');
-                    Route::get('apply/{segment_id}','apply');
-                    Route::post('create','create');
-                    Route::post('update','update');
-                    Route::get('delete/{id}','delete');
-                    Route::post('multi_delete','multi_delete');
-                });
-            });
             
             
                                                         /// Campaign \\\
@@ -1364,6 +1353,20 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
                     Route::get('ai_description/{productName}','generateProductDescription');
 
+                });
+            });
+
+
+                                                /// Segment \\\
+
+            Route::group(['prefix' => '/seller/segment/'], function() {
+                Route::controller(App\Http\Controllers\Seller\SegmentController::class)->group(function () {
+                    Route::get('show/{seller_id}','index');
+                    Route::get('apply/{segment_id}','apply');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
                 });
             });
 
