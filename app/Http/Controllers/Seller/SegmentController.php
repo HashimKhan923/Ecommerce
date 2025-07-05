@@ -86,7 +86,7 @@ class SegmentController extends Controller
     // }
 
 
-        public function check($seller_id)
+        public function check($seller_id, $rules)
         {
             
 
@@ -95,7 +95,7 @@ class SegmentController extends Controller
                 ->get();
 
             $matchedCustomers = $customers->filter(fn($customer) =>
-                $this->evaluateRules($customer, $segment->rules, true)
+                $this->evaluateRules($customer, $rules, true)
             );
 
 
