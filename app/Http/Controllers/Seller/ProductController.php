@@ -1142,24 +1142,13 @@ class ProductController extends Controller
 
         public function generateProductDescription($productName, $features = [])
         {
-            $prompt = "Write a detailed and persuasive product description for an auto part named '{$productName}'. ";
-            $prompt .= "Include information about its compatibility, performance, materials, and installation. ";
-            $prompt .= "Target audience is vehicle owners and auto mechanics looking for reliable parts. ";
-            if (!empty($features)) {
-                $prompt .= "Highlight these key features: " . implode(', ', $features) . ".";
-            }
-            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'You are a helpful assistant that writes engaging product descriptions for auto parts.'],
-                    ['role' => 'user', 'content' => $prompt],
-                ],
-                'temperature' => 0.7,
-                'max_tokens' => 300,
-            ]);
+            $cohere = new \App\Services\CohereService();
 
-            \Log::info('OpenAI API Response:', $response->json()); // 👈 log response to storage/logs/laravel.log
+            $description = $cohere->generateProductDescription(
+                $productName,
+                ['High-performance', 'Durable build', 'Fits Honda Civic 2016-2020']
+            );
 
-            return $response->json();
+            return response()->json(['description' => $description]);
         }
 }
