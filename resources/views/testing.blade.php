@@ -1,155 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Segment Query Builder with AND/OR</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attentive Campaign Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
-    .segment-builder { background: white; border-radius: 8px; padding: 1.5rem; max-width: 800px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .query-line { display: flex; align-items: center; margin-bottom: 1rem; }
-    select, input[type="text"], input[type="datetime-local"] { padding: 0.5rem; margin-right: 0.5rem; border-radius: 4px; border: 1px solid #ccc; }
-    .query-preview { background: #f4f4f4; border-radius: 4px; padding: 1rem; font-family: monospace; color: #333; }
-    .btn { padding: 0.5rem 1rem; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    .btn:hover { background: #4338ca; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .sidebar {
+      height: 100vh;
+      background: #fff;
+      border-right: 1px solid #dee2e6;
+      padding: 1rem;
+    }
+    .sidebar h6 {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #6c757d;
+      text-transform: uppercase;
+    }
+    .sidebar .nav-link {
+      color: #000;
+      font-size: 0.9rem;
+    }
+    .sidebar .nav-link.active {
+      font-weight: bold;
+    }
+    .badge {
+      background: #ffc107;
+      color: #000;
+      font-size: 0.75rem;
+    }
+    .topbar {
+      border-bottom: 1px solid #dee2e6;
+      padding: 1rem 2rem;
+    }
+    .status-pill {
+      background: #d9f0c3;
+      color: #4b8b0c;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 0.75rem;
+    }
+    .campaign-card {
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .filters button {
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
-  <div class="segment-builder">
-    <h2>Create Customer Segment</h2>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-2 sidebar">
+      <div class="mb-4">
+        <i class="bi bi-house me-2"></i> Home
+      </div>
+      <h6>GROWTH</h6>
+      <a href="#" class="nav-link"><i class="bi bi-plus-circle me-2"></i> Sign-up Units</a>
+      <h6>AUDIENCE</h6>
+      <a href="#" class="nav-link"><i class="bi bi-people me-2"></i> Subscribers</a>
+      <a href="#" class="nav-link"><i class="bi bi-segment me-2"></i> Segments</a>
+      <h6>MESSAGING</h6>
+      <a href="#" class="nav-link"><i class="bi bi-arrow-repeat me-2"></i> Journeys</a>
+      <a href="#" class="nav-link active">
+        <i class="bi bi-bullseye me-2"></i> Campaigns
+      </a>
+      <a href="#" class="nav-link">
+        <i class="bi bi-chat-dots me-2"></i> Conversations <span class="badge">99+</span>
+      </a>
+      <h6>ANALYTICS</h6>
+      <a href="#" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+      <a href="#" class="nav-link"><i class="bi bi-bar-chart-line me-2"></i> Reports</a>
+      <h6>SETUP</h6>
+      <a href="#" class="nav-link"><i class="bi bi-shop me-2"></i> Marketplace</a>
+      <a href="#" class="nav-link"><i class="bi bi-tags me-2"></i> Offers</a>
+      <a href="#" class="nav-link"><i class="bi bi-palette me-2"></i> Brand Kit</a>
+      <a href="#" class="nav-link"><i class="bi bi-envelope me-2"></i> Email Templates</a>
+      <a href="#" class="nav-link"><i class="bi bi-gear me-2"></i> Settings</a>
+    </div>
 
-    <div id="query-lines"></div>
+    <!-- Main Content -->
+    <div class="col-10">
+      <!-- Topbar -->
+      <div class="topbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-4">
+          <h4 class="mb-0">Campaigns</h4>
+          <button class="btn btn-warning">+ Create campaign</button>
+        </div>
+        <div>
+          <i class="bi bi-question-circle me-3"></i>
+          <i class="bi bi-bell me-3"></i>
+          <i class="bi bi-chat-left-text me-3"></i>
+          HIREV Sports <i class="bi bi-caret-down-fill"></i>
+        </div>
+      </div>
 
-    <button class="btn" onclick="addLine()">+ Add Condition</button>
+      <!-- Filters -->
+      <div class="p-4">
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search campaigns"/>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select">
+              <option>All statuses</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select">
+              <option>All time</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-outline-secondary w-100">More filters (2)</button>
+          </div>
+          <div class="col-md-2 filters text-end">
+            <button class="btn btn-outline-secondary">%</button>
+            <button class="btn btn-outline-secondary">#</button>
+          </div>
+        </div>
 
-    <h3 style="margin-top: 2rem;">Query Preview:</h3>
-    <div class="query-preview" id="preview">FROM customers WHERE ...</div>
+        <!-- Campaigns -->
+        <div id="campaignList">
+          <!-- Example Campaign -->
+          <div class="campaign-card">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h6>HRS | 4th July</h6>
+                <div>Sent Sat, Jul 5, 2025 at 12:00 PM CDT</div>
+                <div>Sent to <a href="#">Purchased in last 30 days</a>, All</div>
+                <button class="btn btn-outline-secondary btn-sm mt-1">
+                  <i class="bi bi-play-circle"></i> Smart Sending On
+                </button>
+              </div>
+              <div class="text-end">
+                <span class="status-pill">Delivered</span>
+                <div>Delivered: 25,463</div>
+                <div>Open Rate: 41.2%</div>
+                <div>Click Rate: 1.2%</div>
+                <div>CVR: 1.7%</div>
+                <div>Unsubs: 0.5%</div>
+                <div>Revenue: $2,141</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="campaign-card">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h6>DAM | 10% off discount</h6>
+                <div>Sent Wed, May 7, 2025 at 12:00 PM CDT</div>
+                <div>Sent to <a href="#">DAM NEW USERS</a></div>
+                <button class="btn btn-outline-secondary btn-sm mt-1">
+                  <i class="bi bi-play-circle"></i> Smart Sending On
+                </button>
+              </div>
+              <div class="text-end">
+                <span class="status-pill">Delivered</span>
+                <div>Delivered: 25,162</div>
+                <div>Open Rate: 39.6%</div>
+                <div>Click Rate: 1.5%</div>
+                <div>CVR: 3.6%</div>
+                <div>Unsubs: 0.0%</div>
+                <div>Revenue: $5,406</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add more campaign-card divs -->
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-  let index = 0;
-
-  const fields = [
-    { label: "Customer Name", value: "customer.name" },
-    { label: "Customer Email", value: "customer.email" },
-    { label: "Email Verified", value: "customer.email_verified_at", type: "datetime" },
-    { label: "Customer Status", value: "customer.is_active", type: "status", options: ["Active", "Not Active"] },
-    { label: "Country", value: "customer.country" },
-    { label: "State", value: "customer.state" },
-    { label: "City", value: "customer.city" },
-    { label: "Postal Code", value: "customer.postal_code" },
-    { label: "Phone", value: "customer.phone" },
-    { label: "Created At", value: "customer.created_at", type: "datetime" },
-    { label: "Average Rating", value: "customer.average_rating" },
-    { label: "Sale", value: "sale" },
-    { label: "First Seen", value: "created_at", type: "datetime" },
-    { label: "Last Updated", value: "updated_at", type: "datetime" },
-    { label: "Total Orders", value: "orders.count" },
-    { label: "Total Spent", value: "orders.amount" },
-    { label: "Average Order Value", value: "orders.avg_amount" },
-    { label: "Order Created At", value: "orders.created_at", type: "datetime" },
-    { label: "Delivery Status", value: "orders.delivery_status", type: "status", options: ["Pending","Delivered"] },
-    { label: "Shipping Amount", value: "orders.shipping_amount" },
-    { label: "Tax", value: "orders.tax" },
-  ];
-
-  const operators = [
-    { label: "Equal to", value: "=" },
-    { label: "Not equal to", value: "!=" },
-    { label: "Greater than", value: ">" },
-    { label: "Less than", value: "<" },
-    { label: "Greater than or equal to", value: ">=" },
-    { label: "Less than or equal to", value: "<=" },
-    { label: "LIKE", value: "LIKE" },
-    { label: "NOT LIKE", value: "NOT LIKE" }
-  ];
-
-  function addLine() {
-    const container = document.getElementById('query-lines');
-    const div = document.createElement('div');
-    div.classList.add('query-line');
-    div.setAttribute('data-index', index);
-
-    div.innerHTML = `
-      ${index > 0 ? `<select class="joiner" onchange="updatePreview()">
-        <option value="AND">AND</option>
-        <option value="OR">OR</option>
-      </select>` : ''}
-      <select onchange="updateField(this)" class="field">
-        ${fields.map(f => `<option value="${f.value}">${f.label}</option>`).join('')}
-      </select>
-      <select class="operator"></select>
-      <span class="value-container">
-        <input type="text" oninput="updatePreview()" class="value" placeholder="Value" />
-      </span>
-      <button onclick="this.parentElement.remove(); updatePreview();">❌</button>
-    `;
-    container.appendChild(div);
-
-    updateField(div.querySelector('.field'));
-    index++;
-  }
-
-  function updateField(fieldSelect) {
-    const line = fieldSelect.closest('.query-line');
-    const operatorSelect = line.querySelector('.operator');
-    const valueContainer = line.querySelector('.value-container');
-
-    const selectedField = fields.find(f => f.value === fieldSelect.value);
-
-    if (selectedField.type === 'status') {
-      operatorSelect.innerHTML = `
-        <option value="=">Equal to</option>
-        <option value="!=">Not equal to</option>
-      `;
-      valueContainer.innerHTML = `
-        <select class="value" onchange="updatePreview()">
-          ${selectedField.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-        </select>
-      `;
-    } else {
-      operatorSelect.innerHTML = operators.map(op => `<option value="${op.value}">${op.label}</option>`).join('');
-
-      if (selectedField.type === 'datetime') {
-        valueContainer.innerHTML = `<input type="datetime-local" class="value" onchange="updatePreview()" />`;
-      } else {
-        valueContainer.innerHTML = `<input type="text" oninput="updatePreview()" class="value" placeholder="Value" />`;
-      }
-    }
-
-    updatePreview();
-  }
-
-  function updatePreview() {
-    const lines = document.querySelectorAll('.query-line');
-    const conditions = [];
-
-    lines.forEach((line, idx) => {
-      const field = line.querySelector('.field').value;
-      const operator = line.querySelector('.operator').value;
-      const valueElem = line.querySelector('.value');
-      const value = valueElem.value;
-      const joiner = line.querySelector('.joiner') ? line.querySelector('.joiner').value : '';
-
-      if (field && operator && value !== '') {
-        let valStr = value;
-        if (isNaN(value) && !valueElem.tagName.includes('SELECT') && operator.indexOf('LIKE') === -1) {
-          valStr = `'${value}'`;
-        }
-        const condition = `${field} ${operator} ${valStr}`;
-        if (idx === 0) {
-          conditions.push(condition);
-        } else {
-          conditions.push(`${joiner} ${condition}`);
-        }
-      }
+  // Example: filter campaigns by search input
+  $('#searchInput').on('keyup', function() {
+    var value = $(this).val().toLowerCase();
+    $('#campaignList .campaign-card').filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
     });
-
-    const preview = document.getElementById('preview');
-    preview.textContent = conditions.length ? 'FROM customers WHERE ' + conditions.join(' ') : 'FROM customers WHERE ...';
-  }
-
-  addLine();
+  });
 </script>
 </body>
 </html>
