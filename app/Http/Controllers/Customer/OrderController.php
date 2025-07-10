@@ -319,6 +319,7 @@ class OrderController extends Controller
                 'payment_method' => $request->payment_method,
                 'payment_status' => $request->payment_status,
                 'refund' => $request->refund,
+                'campaign_id' => $request->campaign_id
             ]);
 
             $shop = Shop::find($shopId);

@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('orders:track-fedex')->everySixHours();
         $schedule->command('app:remove-old-notification')->monthly();
         $schedule->command('campaigns:send')->everyMinute();
+        // $schedule->command('campaigns:rollup')->weeklyOn(0, '0:00');
 
     }
 

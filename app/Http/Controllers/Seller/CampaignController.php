@@ -33,6 +33,40 @@ class CampaignController extends Controller
         return response()->json(['campaign'=>$campaign,'links'=>$links]);
     }
 
+    public function show($id)
+    {
+        $campaign = Campaign::with('summary')->findOrFail($id);
+
+        if ($campaign->summary) {
+            // Use rolled up stats
+            return response()->json([
+                'total_sent' => $campaign->summary->total_sent,
+                'total_opened' => $campaign->summary->total_opened,
+                'total_clicked' => $campaign->summary->total_clicked,
+                'open_rate' => $campaign->summary->open_rate,
+                'click_rate' => $campaign->summary->click_rate,
+            ]);
+        } else {
+            // Use live stats
+            $totalSent = $campaign->recipient()->count();
+            $totalOpened = $campaign->trackingEvents()->where('event_type','open')->count();
+            $totalClicked = $campaign->trackingEvents()->where('event_type', 'click')->count();
+            $totalUnsubscribed = $campaign->recipient()->where('unsubscribed', true)->count();
+
+            $openRate = $totalSent > 0 ? round(($totalOpened / $totalSent) * 100, 2) : 0;
+            $clickRate = $totalSent > 0 ? round(($totalClicked / $totalSent) * 100, 2) : 0;
+
+            return response()->json([
+                'total_sent' => $totalSent,
+                'total_opened' => $totalOpened,
+                'total_clicked' => $totalClicked,
+                'open_rate' => $openRate,
+                'click_rate' => $clickRate,
+            ]);
+        }
+    }
+
+
     public function create(Request $request)
     {
         $campaign = Campaign::create([

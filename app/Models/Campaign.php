@@ -15,6 +15,14 @@ class Campaign extends Model
     public function seller() {
         return $this->belongsTo(User::class, 'seller_id');
     }
+    public function summary()
+    {
+        return $this->hasOne(CampaignSummary::class);
+    }
+    public function recipient()
+    {
+        return $this->hasMany(CampaignRecipient::class);
+    }
     public function recipients() {
         return $this->belongsToMany(User::class, 'campaign_recipients')
                     ->withPivot('unsubscribed')->withTimestamps();

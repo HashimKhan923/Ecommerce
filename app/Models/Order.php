@@ -30,7 +30,8 @@ class Order extends Model
         'signature',
         'insurance',
         'tax',
-        'view_status'
+        'view_status',
+        'campaign_id'
     ];
 
     public function order_detail()
