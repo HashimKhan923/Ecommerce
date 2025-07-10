@@ -8,29 +8,48 @@ use Illuminate\Support\Facades\Http;
 
 class TrackingHelper
 {
-function injectTracking($html, $campaignId, $userId)
-{
-    $baseUrl = 'https://api.dragonautomart.com'; // your static domain
+    function injectTracking($html, $campaignId, $userId)
+    {
+        $baseUrl = 'https://api.dragonautomart.com';
 
-    // Add open tracking pixel
-    $pixel = "<img src=\"{$baseUrl}/api/track/open/{$campaignId}/{$userId}\" width=\"1\" height=\"1\" />";
-    $html .= $pixel;
+        // Open tracking pixel
+        $pixel = "<img src=\"{$baseUrl}/api/track/open/{$campaignId}/{$userId}\" width=\"1\" height=\"1\" style=\"display:none;\" />";
+        $html .= $pixel;
 
-    // Replace all <a href="..."> with tracked versions
-    return preg_replace_callback('/<a\s+href="([^"]+)"/i', function ($matches) use ($campaignId, $userId, $baseUrl) {
-        $originalUrl = $matches[1];
+        $html = preg_replace_callback('/<a\s+href="([^"]+)"/i', function ($matches) use ($campaignId, $userId, $baseUrl) {
+            $originalUrl = $matches[1];
 
-        // Store or retrieve link in DB
-        $link = LinkStat::firstOrCreate([
-            'campaign_id' => $campaignId,
-            'url' => $originalUrl
-        ]);
+            // ✅ Add campaign_id as query param
+            $parsed = parse_url($originalUrl);
 
-        $trackUrl = "{$baseUrl}/api/track/click/{$campaignId}/{$userId}/{$link->id}";
+            // Check if URL already has query params
+            $query = isset($parsed['query']) ? $parsed['query'] . '&' : '';
+            $query .= 'campaign_id=' . $campaignId;
 
-        return '<a href="' . $trackUrl . '"';
-    }, $html);
-}
+            // Rebuild URL with new query
+            $newUrl = (isset($parsed['scheme']) ? "{$parsed['scheme']}://" : '') .
+                    (isset($parsed['host']) ? "{$parsed['host']}" : '') .
+                    (isset($parsed['path']) ? "{$parsed['path']}" : '') .
+                    '?' . $query;
+
+            if (isset($parsed['fragment'])) {
+                $newUrl .= '#' . $parsed['fragment'];
+            }
+
+            // ✅ Save link in DB with appended campaign_id
+            $link = LinkStat::firstOrCreate([
+                'campaign_id' => $campaignId,
+                'url' => $newUrl
+            ]);
+
+            // ✅ Replace with your tracked redirect link
+            $trackUrl = "{$baseUrl}/api/track/click/{$campaignId}/{$userId}/{$link->id}";
+
+            return '<a href="' . $trackUrl . '"';
+        }, $html);
+
+        return $html;
+    }
 
 
 
