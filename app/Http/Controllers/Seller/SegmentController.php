@@ -73,17 +73,7 @@ class SegmentController extends Controller
     }
 
 
-    // public function apply($segmentId)
-    // {
-    //     $segment = Segment::findOrFail($segmentId);
-    //     $customers = MyCustomer::with('customer','orders')->where('seller_id', $segment->seller_id)->get();
 
-    //     $matched = $customers->filter(fn($customer) =>
-    //         $this->evaluateRules($customer, json_decode($segment->rules, true))
-    //     );
-
-    //     return response()->json(['matchedCustomers' => $matched]);
-    // }
 
 
         public function check($seller_id, $rules)
@@ -242,116 +232,6 @@ private function evaluateRules($customer, $rulesGroup)
         }
 
 
-
-
-        //////////////////////// OLD \\\\\\\\\\\\\\\\\\\\\\\\
-
-        // public function apply($segment_id)
-        // {
-        //     $segment = Segment::findOrFail($segment_id);
-
-        //     $customers = MyCustomer::with('customer', 'orders')
-        //         ->where('seller_id', $segment->seller_id)
-        //         ->get();
-
-        //     $matchedCustomers = $customers->filter(function ($customer) use ($segment) {
-        //         return $this->evaluateRules($customer, $segment->rules);
-        //     });
-
-
-        //     return response()->json([
-        //         'message' => 'Segment applied successfully.',
-        //         'segment' => $segment,
-        //         'matchedCustomers' => $matchedCustomers,
-        //     ]);
-        // }
-
-
-        // private function evaluateRules($customer, $rulesGroup)
-        // {
-            
-        //     $matchType = $rulesGroup['match_type'] ?? 'AND';
-        //     $rules = $rulesGroup['rules'] ?? [];
-
-        //     $results = [];
-
-        //     foreach ($rules as $rule) {
-        //         $relation = $rule['relation'] ?? null;
-        //         $field = $rule['field'] ?? null;
-        //         $aggregate = $rule['aggregate'] ?? null;
-        //         $operator = $rule['operator'] ?? '=';
-        //         $value = $rule['value'] ?? null;
-
-        //         if (is_null($field)) {
-        //             $results[] = false;
-        //             continue;
-        //         }
-
-        //         // Case 1: No relation, direct customer field
-        //         if (is_null($relation)) {
-        //             $result = data_get($customer, $field);
-        //         } else {
-        //         if (!method_exists($customer, $relation)) {
-        //             $results[] = false;
-        //             continue;
-        //         }
-
-        //         if (is_null($aggregate)) {
-        //             $related = $customer->$relation;
-
-        //             if (!$related) {
-        //                 $results[] = false;
-        //                 continue;
-        //             }
-
-        //             $result = data_get($related, $field);
-        //             } else {
-        //                 $relationQuery = $customer->$relation();
-
-        //                 switch ($aggregate) {
-        //                     case 'sum': $result = $relationQuery->sum($field); break;
-        //                     case 'count': $result = $relationQuery->count(); break;
-        //                     case 'avg': $result = $relationQuery->avg($field); break;
-        //                     case 'min': $result = $relationQuery->min($field); break;
-        //                     case 'max': $result = $relationQuery->max($field); break;
-        //                     case 'first':
-        //                         $related = $relationQuery->orderBy('id')->first();
-        //                         $result = $related ? data_get($related, $field) : null;
-        //                         break;
-        //                     case 'last':
-        //                         $related = $relationQuery->orderByDesc('id')->first();
-        //                         $result = $related ? data_get($related, $field) : null;
-        //                         break;
-        //                     case 'exists': $result = $relationQuery->exists(); break;
-        //                     case 'distinct_count': $result = $relationQuery->distinct($field)->count($field); break;
-        //                     default:
-        //                         $results[] = false;
-        //                         continue 2; // exit this switch+foreach cleanly
-        //                 }
-        //             }
-        //         }
-
-        //         $results[] = $this->compare($result, $operator, $value);
-        //     }
-
-        //     return $matchType === 'AND'
-        //         ? !in_array(false, $results, true)
-        //         : in_array(true, $results, true);
-        // }
-
-
-        // private function compare($left, $operator, $right)
-        // {
-        //     return match ($operator) {
-        //         '>' => $left > $right,
-        //         '>=' => $left >= $right,
-        //         '<' => $left < $right,
-        //         '<=' => $left <= $right,
-        //         '=' => $left == $right,
-        //         '!=' => $left != $right,
-        //         default => false,
-        //     };
-        // }
 
         public function delete($segment_id)
         {

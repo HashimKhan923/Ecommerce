@@ -1142,13 +1142,21 @@ class ProductController extends Controller
 
         public function generateProductDescription($productName, $features = [])
         {
-            $cohere = new \App\Services\CohereService();
+            $prompt = "Write a compelling product description for a product named '{$productName}'";
+            if (!empty($features)) {
+                $prompt .= " with the following features: " . implode(', ', $features);
+            }
 
-            $description = $cohere->generateProductDescription(
-                $productName,
-                ['High-performance', 'Durable build', 'Fits Honda Civic 2016-2020']
-            );
+            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-4', // or 'gpt-4' if you have access
+                'messages' => [
+                    ['role' => 'system', 'content' => 'You are a helpful assistant that writes engaging product descriptions.'],
+                    ['role' => 'user', 'content' => $prompt],
+                ],
+                'temperature' => 0.7,
+                'max_tokens' => 300,
+            ]);
 
-            return response()->json(['description' => $description]);
+            return $response->json()['choices'][0]['message']['content'] ?? 'Description not available.';
         }
 }
