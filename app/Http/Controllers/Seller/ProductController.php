@@ -1151,7 +1151,7 @@ public function generateProductDescription($productName, $features = [])
         $response = Http::withToken(env('OPENAI_API_KEY'))
             ->timeout(30)
             ->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-4', // Use 'gpt-4' or 'gpt-3.5-turbo' if gpt-4 gives errors
+                'model' => 'gpt-3.5-turbo', // Use 'gpt-4' or 'gpt-3.5-turbo' if gpt-4 gives errors
                 'messages' => [
                     ['role' => 'system', 'content' => 'You are a helpful assistant that writes engaging product descriptions.'],
                     ['role' => 'user', 'content' => $prompt],
