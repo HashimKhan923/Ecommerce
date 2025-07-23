@@ -1140,15 +1140,18 @@ class ProductController extends Controller
     }
 
 
-        public function generateProductDescription($productName, $features = [])
-        {
-            $prompt = "Write a compelling product description for a product named '{$productName}'";
-            if (!empty($features)) {
-                $prompt .= " with the following features: " . implode(', ', $features);
-            }
+public function generateProductDescription($productName, $features = [])
+{
+    $prompt = "Write a compelling product description for a product named '{$productName}'";
+    if (!empty($features)) {
+        $prompt .= " with the following features: " . implode(', ', $features);
+    }
 
-            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-4', // or 'gpt-4' if you have access
+    try {
+        $response = Http::withToken(env('OPENAI_API_KEY'))
+            ->timeout(30)
+            ->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-4', // Use 'gpt-4' or 'gpt-3.5-turbo' if gpt-4 gives errors
                 'messages' => [
                     ['role' => 'system', 'content' => 'You are a helpful assistant that writes engaging product descriptions.'],
                     ['role' => 'user', 'content' => $prompt],
@@ -1157,6 +1160,15 @@ class ProductController extends Controller
                 'max_tokens' => 300,
             ]);
 
-            return $response->json()['choices'][0]['message']['content'] ?? 'Description not available.';
+        $data = $response->json();
+
+        if ($response->successful() && isset($data['choices'][0]['message']['content'])) {
+            return $data['choices'][0]['message']['content'];
+        } else {
+            return "Description not available (API error: " . ($data['error']['message'] ?? 'Unknown error') . ")";
         }
+    } catch (\Exception $e) {
+        return "Description not available (Exception: " . $e->getMessage() . ")";
+    }
+}
 }
