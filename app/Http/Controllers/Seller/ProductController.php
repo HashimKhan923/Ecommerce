@@ -1153,11 +1153,11 @@ public function generateProductDescription($productName, $features = [])
             ->post('https://api.openai.com/v1/chat/completions', [
                 'model' => 'gpt-3.5-turbo', // Use 'gpt-4' or 'gpt-3.5-turbo' if gpt-4 gives errors
                 'messages' => [
-                    ['role' => 'system', 'content' => 'You are a helpful assistant that writes engaging product descriptions.'],
+                    ['role' => 'system', 'content' => 'You are an expert in writing car part product descriptions.'],
                     ['role' => 'user', 'content' => $prompt],
                 ],
                 'temperature' => 0.7,
-                'max_tokens' => 300,
+                'max_tokens' => 180,
             ]);
 
         $data = $response->json();
