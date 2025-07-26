@@ -1203,53 +1203,56 @@ class ProductController extends Controller
         // Step 6: Save history back to session
         session(['chat_history' => $chatHistory]);
 
-        // Step 7: Extract filters from response (same as your code)
-        preg_match('/\{.*\}/s', $reply, $jsonMatch);
-        $filters = json_decode($jsonMatch[0] ?? '', true);
+preg_match('/\{.*\}/s', $reply, $jsonMatch);
+$filters = json_decode($jsonMatch[0] ?? '', true);
 
-        // Step 8: Convert filters to keywords
-        $keywords = [];
-        if (!empty($filters['make'])) $keywords[] = $filters['make'];
-        if (!empty($filters['model'])) $keywords[] = $filters['model'];
-        if (!empty($filters['year'])) $keywords[] = $filters['year'];
-        if (!empty($filters['part'])) $keywords[] = $filters['part'];
+// Build keywords
+$keywords = [];
+if (!empty($filters['make'])) $keywords[] = $filters['make'];
+if (!empty($filters['model'])) $keywords[] = $filters['model'];
+if (!empty($filters['year'])) $keywords[] = $filters['year'];
+if (!empty($filters['part'])) $keywords[] = $filters['part'];
 
-        // Step 9: Product search (same as your code)
-        $products = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
-            'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
-            'product_varient', 'discount', 'tax', 'shipping'
-        ])
-        ->where('published', 1)
-        ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $soundexKeyword = soundex($keyword);
+// Default empty product list
+$products = collect();
 
-                $query->where(function ($query) use ($keyword, $soundexKeyword) {
-                    $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
-                        ->orWhereJsonContains('tags', $keyword)
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('model', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('sub_category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"));
-                });
-            }
-        })
-        ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
-        ->distinct()
-        ->orderBy('featured', 'DESC')
-        ->orderBy('id', 'ASC')
-        ->take(12)->get();
+// Only search if valid filters are detected
+if (!empty($keywords)) {
+    $products = Product::with([
+        'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
+        'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
+        'product_varient', 'discount', 'tax', 'shipping'
+    ])
+    ->where('published', 1)
+    ->whereHas('shop', fn($q) => $q->where('status', 1))
+    ->where(function ($query) use ($keywords) {
+        foreach ($keywords as $keyword) {
+            $soundexKeyword = soundex($keyword);
+            $query->where(function ($query) use ($keyword, $soundexKeyword) {
+                $query->where('sku', 'LIKE', "%{$keyword}%")
+                    ->orWhere('name', 'LIKE', "%{$keyword}%")
+                    ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
+                    ->orWhereJsonContains('tags', $keyword)
+                    ->orWhereJsonContains('start_year', $keyword)
+                    ->orWhereHas('shop', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('model', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('sub_category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"));
+            });
+        }
+    })
+    ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
+    ->distinct()
+    ->orderBy('featured', 'DESC')
+    ->orderBy('id', 'ASC')
+    ->take(12)
+    ->get();
 
         return response()->json([
             'reply' => $reply,
             'products' => $products,
             'chat_history' => $chatHistory,
         ]);
-    }
+}}
 }
