@@ -1197,12 +1197,12 @@ class ProductController extends Controller
             // Prepend system message
             $messages = array_merge([$systemMessage], $chatHistory);
 
-            // Call OpenAI Chat Completion
-            $response = OpenAI::chat()->create([
-                'model' => 'gpt-3.5-turbo',
-                'messages' => $messages,
-                'temperature' => 0.7,
-            ]);
+
+
+                $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => $messages,
+                ]);
 
             $assistantReply = $response['choices'][0]['message']['content'] ?? '';
 
