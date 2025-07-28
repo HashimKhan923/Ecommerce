@@ -1310,7 +1310,10 @@ class ProductController extends Controller
 
         
 
-        $prompt = "Generate a comma-separated list of 15 SEO-friendly keywords for the product: \"$productName\".";
+        $prompt = <<<EOT
+        Generate a JSON array of 10 SEO-friendly keyword phrases (each 2-5 words max) based on this product name: "$productName".
+        Only return the JSON array. Do not include any explanations.
+        EOT;
 
         try {
 
@@ -1319,14 +1322,19 @@ class ProductController extends Controller
         $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
             'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ['role' => 'system', 'content' => 'You are an SEO expert.'],
+                ['role' => 'system', 'content' => 'You are an SEO expert who generates SEO keyphrases.'],
                 ['role' => 'user', 'content' => $prompt],
             ],
         ]);
 
-            $text = $response['choices'][0]['message']['content'];
+        $content = $response['choices'][0]['message']['content'] ?? '[]';
 
-            $keywords = array_map('trim', explode(',', $text));
+        $keywords = json_decode($content, true);
+
+        if (!is_array($keywords)) {
+            throw new \Exception('Invalid keyword format returned from AI.');
+        }
+
 
             return response()->json([
                 'success' => true,
