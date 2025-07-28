@@ -1304,7 +1304,7 @@ class ProductController extends Controller
     }
 
 
-    public function generateSeoKeywords($productName)
+    public function generateSeoMeta($productName)
     {
 
 
