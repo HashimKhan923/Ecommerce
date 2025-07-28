@@ -1191,60 +1191,67 @@ class ProductController extends Controller
     }
 
 
-    public function chat(Request $request)
-    {
-        $userMessage = $request->message;
+public function chat(Request $request)
+{
+    $userMessage = $request->message;
 
-        // Step 1: Load previous chat history and filters
-        $chatHistory = session('chat_history', []);
-        $storedFilters = session('chat_filters', []);
+    // Step 1: Load previous chat history and filters
+    $chatHistory = session('chat_history', []);
+    $storedFilters = session('chat_filters', []);
 
-        // Append current user message to history
-        $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
+    // Append current user message to history
+    $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-        // Step 2: Create system prompt for assistant
-        $systemMessage = [
-            'role' => 'system',
-            'content' => 'You are an auto parts shopping assistant for a marketplace website. 
-    Respond naturally to users. At the end of each reply, include a JSON object with any available fields like: 
-    {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
-    All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
-        ];
+    // Step 2: Create system prompt for assistant
+    $systemMessage = [
+        'role' => 'system',
+        'content' => 'You are an auto parts shopping assistant for a marketplace website. 
+Respond naturally to users. At the end of each reply, include a JSON object with any available fields like: 
+{"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
+All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
+    ];
 
-        // Step 3: Send request to OpenAI API
-        $messages = array_merge([$systemMessage], $chatHistory);
+    // Step 3: Send request to OpenAI API
+    $messages = array_merge([$systemMessage], $chatHistory);
 
-        $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => $messages,
-        ]);
+    $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => $messages,
+    ]);
 
-        $assistantReply = $response['choices'][0]['message']['content'] ?? '';
+    $assistantReply = $response['choices'][0]['message']['content'] ?? '';
 
-        // Step 4: Extract JSON filters from assistant's reply
-        preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
-        $newFilters = [];
+    // Step 4: Extract JSON filters from assistant's reply
+    preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
+    $newFilters = [];
 
-        if (!empty($jsonMatch)) {
-            try {
-                $newFilters = json_decode($jsonMatch[0], true);
-                if (!is_array($newFilters)) {
-                    $newFilters = [];
-                }
-            } catch (\Exception $e) {
+    if (!empty($jsonMatch)) {
+        try {
+            $newFilters = json_decode($jsonMatch[0], true);
+            if (!is_array($newFilters)) {
                 $newFilters = [];
             }
+        } catch (\Exception $e) {
+            $newFilters = [];
         }
+    }
 
-        // Merge with previous filters
-        $filters = array_merge($storedFilters, array_filter($newFilters));
-        session(['chat_filters' => $filters]);
+    // Merge new filters with stored ones
+    $filters = array_merge($storedFilters, array_filter($newFilters));
+    session(['chat_filters' => $filters]);
 
-        // Append assistant reply to chat history
-        $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
-        session(['chat_history' => $chatHistory]);
+    // Append assistant reply to chat history
+    $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
+    session(['chat_history' => $chatHistory]);
 
-        // Step 5: Generate combined search string
+    // Step 5: Check if the message contains any relevant filter before searching
+    $hasSearchableFilter = !empty($filters['make']) || !empty($filters['model']) || !empty($filters['part']) || !empty($filters['year']) || !empty($filters['max_price']);
+
+    $products = collect(); // default empty collection
+    $keywords = [];
+
+    if ($hasSearchableFilter) {
+        // Step 6: Generate combined search string
         $searchQuery = implode(' ', array_filter([
             $filters['make'] ?? '',
             $filters['model'] ?? '',
@@ -1254,13 +1261,11 @@ class ProductController extends Controller
 
         $keywords = explode(' ', $searchQuery);
 
-        // Step 6: Use your advanced keyword-based product search
+        // Step 7: Use your advanced keyword-based product search
         $products = Product::with([
-            
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
             },
-            
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
@@ -1289,19 +1294,21 @@ class ProductController extends Controller
         ->take(20)
         ->get();
 
-        // Step 7: Optional – adjust reply if products found
+        // Step 8: Optional – adjust reply if products found
         if ($products->count() > 0 && str_contains($assistantReply, "don't have")) {
             $assistantReply = "Yes, we have products matching your query. Let me show you the available options.";
         }
-
-        return response()->json([
-            'reply' => $assistantReply,
-            'products' => $products,
-            'chat_history' => $chatHistory,
-            'filters' => $filters,
-            'keywords' => $keywords
-        ]);
     }
+
+    return response()->json([
+        'reply' => $assistantReply,
+        'products' => $products,
+        'chat_history' => $chatHistory,
+        'filters' => $filters,
+        'keywords' => $keywords
+    ]);
+}
+
 
 
     public function generateSeoMeta($productName)
