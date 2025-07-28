@@ -1187,13 +1187,21 @@ class ProductController extends Controller
             $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
             // System prompt — telling assistant to return JSON with ANY filters it finds
-            $systemMessage = [
-                'role' => 'system',
-                'content' => 'You are an auto parts shopping assistant for a marketplace website. 
-        Respond naturally to users. At the end of each reply, include a JSON object with any available fields like: 
-        {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
-        All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
-            ];
+    $systemMessage = [
+        'role' => 'system',
+        'content' => <<<EOT
+    You are an intelligent auto parts shopping assistant for a car parts marketplace. 
+
+    - If the user message contains enough information (e.g., make, model, year, part), do NOT ask clarifying questions like "left or right side?" — just respond confidently.
+    - Include a JSON object at the end of each reply with any of the fields: make, model, year, part, max_price.
+    - If some fields were already known from earlier messages (stored in memory), assume them and DO NOT ask again.
+    - Always behave as if the assistant has memory of earlier context — combine it with new information.
+
+    Example response:
+    "Yes, we have tail lights for the 2022 Honda Civic. Let me show you the options."
+    {"make": "Honda", "model": "Civic", "year": 2022, "part": "tail light"}
+    EOT
+    ];
 
             // Prepare messages for OpenAI
             $messages = array_merge([$systemMessage], $chatHistory);
