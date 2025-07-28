@@ -1351,7 +1351,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/product/'], function() {
                 Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
-                    Route::get('ai_description/{productName}','generateProductDescription');
+                    Route::post('ai_description','generateProductDescription');
                     Route::post('ai_chat','chat');
                     Route::get('/ai_chat/clear', function () {
                         session()->forget('chat_history');

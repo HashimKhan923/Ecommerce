@@ -1140,8 +1140,13 @@ class ProductController extends Controller
     }
 
 
-    public function generateProductDescription($productName, $features = [])
+    public function generateProductDescription(Request $request)
     {
+
+
+        $productName = $request->input('product_name');
+        $features = $request->input('features', []);
+
         $prompt = "Write a compelling product description for a product named '{$productName}'";
         if (!empty($features)) {
             $prompt .= " with the following features: " . implode(', ', $features);
@@ -1151,7 +1156,7 @@ class ProductController extends Controller
             $response = Http::withToken(env('OPENAI_API_KEY'))
                 ->timeout(30)
                 ->post('https://api.openai.com/v1/chat/completions', [
-                    'model' => 'gpt-3.5-turbo', // Use 'gpt-4' or 'gpt-3.5-turbo' if gpt-4 gives errors
+                    'model' => 'gpt-3.5-turbo', // You can switch to 'gpt-4' if available
                     'messages' => [
                         ['role' => 'system', 'content' => 'You are an expert in writing car part product descriptions.'],
                         ['role' => 'user', 'content' => $prompt],
@@ -1163,12 +1168,25 @@ class ProductController extends Controller
             $data = $response->json();
 
             if ($response->successful() && isset($data['choices'][0]['message']['content'])) {
-                return $data['choices'][0]['message']['content'];
+                return response()->json([
+                    'success' => true,
+                    'product_name' => $productName,
+                    'features' => $features,
+                    'description' => $data['choices'][0]['message']['content'],
+                ]);
             } else {
-                return "Description not available (API error: " . ($data['error']['message'] ?? 'Unknown error') . ")";
+                return response()->json([
+                    'success' => false,
+                    'message' => 'OpenAI API error',
+                    'error' => $data['error']['message'] ?? 'Unknown error',
+                ], 500);
             }
         } catch (\Exception $e) {
-            return "Description not available (Exception: " . $e->getMessage() . ")";
+            return response()->json([
+                'success' => false,
+                'message' => 'Exception occurred',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 
