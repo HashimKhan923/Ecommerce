@@ -1177,14 +1177,14 @@ public function chat(Request $request)
 {
     $userMessage = $request->message;
 
-    // Get chat history and stored filters
+    // Step 1: Load previous chat history and filters
     $chatHistory = session('chat_history', []);
     $storedFilters = session('chat_filters', []);
 
-    // Append new user message
+    // Append current user message to history
     $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-    // System prompt
+    // Step 2: Create system prompt for assistant
     $systemMessage = [
         'role' => 'system',
         'content' => 'You are an auto parts shopping assistant for a marketplace website. 
@@ -1193,10 +1193,9 @@ Respond naturally to users. At the end of each reply, include a JSON object with
 All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
     ];
 
-    // Combine messages
+    // Step 3: Send request to OpenAI API
     $messages = array_merge([$systemMessage], $chatHistory);
 
-    // Call OpenAI
     $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
         'model' => 'gpt-3.5-turbo',
         'messages' => $messages,
@@ -1204,7 +1203,7 @@ All fields are optional. If some fields are already known from previous conversa
 
     $assistantReply = $response['choices'][0]['message']['content'] ?? '';
 
-    // Extract JSON
+    // Step 4: Extract JSON filters from assistant's reply
     preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
     $newFilters = [];
 
@@ -1219,7 +1218,7 @@ All fields are optional. If some fields are already known from previous conversa
         }
     }
 
-    // Merge filters
+    // Merge with previous filters
     $filters = array_merge($storedFilters, array_filter($newFilters));
     session(['chat_filters' => $filters]);
 
@@ -1227,49 +1226,54 @@ All fields are optional. If some fields are already known from previous conversa
     $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
     session(['chat_history' => $chatHistory]);
 
-    // Search products
-    $products = [];
+    // Step 5: Generate combined search string
+    $searchQuery = implode(' ', array_filter([
+        $filters['make'] ?? '',
+        $filters['model'] ?? '',
+        $filters['part'] ?? '',
+        $filters['year'] ?? ''
+    ]));
 
-    if (!empty($filters)) {
-        $products = Product::with([
-            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
-            'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
-            'product_varient', 'discount', 'tax', 'shipping'
-        ])
-        ->where('published', 1)
-        ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->when(!empty($filters['make']), function ($q) use ($filters) {
-            $q->where(function ($query) use ($filters) {
-                $query->where('name', 'LIKE', '%' . $filters['make'] . '%')
-                      ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', '%' . $filters['make'] . '%'));
-            });
-        })
-        ->when(!empty($filters['model']), function ($q) use ($filters) {
-            $q->whereHas('model', fn($q) => $q->where('name', 'LIKE', '%' . $filters['model'] . '%'));
-        })
-        ->when(!empty($filters['year']), function ($q) use ($filters) {
-            $q->whereJsonContains('start_year', (string) $filters['year']);
-        })
-        ->when(!empty($filters['part']), function ($q) use ($filters) {
-            $q->where(function ($query) use ($filters) {
-                $query->where('name', 'LIKE', '%' . $filters['part'] . '%')
-                      ->orWhereJsonContains('tags', $filters['part']);
-            });
-        })
-        ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
-        ->orderBy('featured', 'DESC')
-        ->orderBy('id', 'ASC')
-        ->take(12)
-        ->get();
-    }
+    $keywords = explode(' ', $searchQuery);
 
-    // ✅ Update assistant reply if it falsely says “no products” but we actually have products
-    if (!empty($products)) {
-        $assistantReply = preg_replace(
-            '/(i (currently )?don\'?t have any listings?|no products? (found|available))/i',
-            'Here are some matching products I found for you',
-            $assistantReply
-        );
+    // Step 6: Use your advanced keyword-based product search
+    $products = Product::with([
+        'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
+        'product_gallery' => function ($query) {
+            $query->orderBy('order', 'asc');
+        },
+        'product_varient', 'discount', 'tax', 'shipping'
+    ])
+    ->where('published', 1)
+    ->whereHas('shop', fn($q) => $q->where('status', 1))
+    ->where(function ($query) use ($keywords) {
+        foreach ($keywords as $keyword) {
+            $soundexKeyword = soundex($keyword);
+
+            $query->where(function ($query) use ($keyword, $soundexKeyword) {
+                $query->where('sku', 'LIKE', "%{$keyword}%")
+                    ->orWhere('name', 'LIKE', "%{$keyword}%")
+                    ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
+                    ->orWhereJsonContains('tags', $keyword)
+                    ->orWhereJsonContains('start_year', $keyword)
+                    ->orWhereHas('shop', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('model', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('sub_category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"));
+            });
+        }
+    })
+    ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
+    ->distinct()
+    ->orderBy('featured', 'DESC')
+    ->orderBy('id', 'ASC')
+    ->take(12)
+    ->get();
+
+    // Step 7: Optional – adjust reply if products found
+    if ($products->count() > 0 && str_contains($assistantReply, "don't have")) {
+        $assistantReply = "Yes, we have products matching your query. Let me show you the available options.";
     }
 
     return response()->json([
@@ -1277,6 +1281,7 @@ All fields are optional. If some fields are already known from previous conversa
         'products' => $products,
         'chat_history' => $chatHistory,
         'filters' => $filters,
+        'keywords' => $keywords
     ]);
 }
 
