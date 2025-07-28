@@ -1244,7 +1244,7 @@ All fields are optional. If some fields are already known from previous conversa
     $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
     session(['chat_history' => $chatHistory]);
     $products = collect();
-    $keyword = '';
+    $keywords = '';
 
     if (!empty($filters['make']) || !empty($filters['model']) || !empty($filters['part']) || !empty($filters['year'])) {
 
