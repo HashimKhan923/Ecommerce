@@ -1173,57 +1173,61 @@ class ProductController extends Controller
     }
 
 
-   public function chat(Request $request)
+public function chat(Request $request)
 {
     $userMessage = $request->message;
 
-    // Get chat history and filters from session
+    // Get chat history and stored filters
     $chatHistory = session('chat_history', []);
     $storedFilters = session('chat_filters', []);
 
-    // Add new user message to chat history
+    // Append new user message
     $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-    // Define system instruction for assistant
+    // System prompt
     $systemMessage = [
         'role' => 'system',
-        'content' => 'You are an auto parts shopping assistant for a marketplace website.
+        'content' => 'You are an auto parts shopping assistant for a marketplace website. 
 Respond naturally to users. At the end of each reply, include a JSON object with any available fields like: 
 {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
-All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.
-Only ask follow-up questions if no matching products are found.'
+All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
     ];
 
-    // Build message array for OpenAI API
+    // Combine messages
     $messages = array_merge([$systemMessage], $chatHistory);
 
-    // Call OpenAI API
+    // Call OpenAI
     $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
         'model' => 'gpt-3.5-turbo',
         'messages' => $messages,
     ]);
 
-    // Extract assistant reply
     $assistantReply = $response['choices'][0]['message']['content'] ?? '';
 
-    // Try to extract JSON filters from assistant response
+    // Extract JSON
     preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
     $newFilters = [];
 
     if (!empty($jsonMatch)) {
         try {
             $newFilters = json_decode($jsonMatch[0], true);
-            if (!is_array($newFilters)) $newFilters = [];
+            if (!is_array($newFilters)) {
+                $newFilters = [];
+            }
         } catch (\Exception $e) {
             $newFilters = [];
         }
     }
 
-    // Merge new filters with previous
+    // Merge filters
     $filters = array_merge($storedFilters, array_filter($newFilters));
     session(['chat_filters' => $filters]);
 
-    // Fetch products using filters
+    // Append assistant reply to chat history
+    $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
+    session(['chat_history' => $chatHistory]);
+
+    // Search products
     $products = [];
 
     if (!empty($filters)) {
@@ -1259,18 +1263,15 @@ Only ask follow-up questions if no matching products are found.'
         ->get();
     }
 
-    // If products found, remove trailing questions from reply
-    if (count($products)) {
-        // Remove follow-up questions by truncating at first question mark
-        $assistantReply = preg_split('/\?/', $assistantReply)[0] ?? $assistantReply;
-        $assistantReply = trim($assistantReply) . '.'; // End with period
+    // ✅ Update assistant reply if it falsely says “no products” but we actually have products
+    if (!empty($products)) {
+        $assistantReply = preg_replace(
+            '/(i (currently )?don\'?t have any listings?|no products? (found|available))/i',
+            'Here are some matching products I found for you',
+            $assistantReply
+        );
     }
 
-    // Append assistant reply to chat history
-    $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
-    session(['chat_history' => $chatHistory]);
-
-    // Return response
     return response()->json([
         'reply' => $assistantReply,
         'products' => $products,
@@ -1278,5 +1279,6 @@ Only ask follow-up questions if no matching products are found.'
         'filters' => $filters,
     ]);
 }
+
 
 }
