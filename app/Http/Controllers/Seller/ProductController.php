@@ -1181,8 +1181,10 @@ class ProductController extends Controller
         // Step 1: Prepare ChatGPT prompt for auto parts
         $messages = array_merge(
             [['role' => 'system', 'content' => 'You are an auto parts shopping assistant for a marketplace website. 
-Respond naturally to users. Respond like a human first. At the end of each reply, include a JSON object with any available fields like: 
-{"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}']],
+Respond naturally to users. When all required product filters (make, model, year, part) are available and you find matching products, 
+do not ask follow-up questions. Just show the products. If anything is missing, ask for clarification. 
+Always include a JSON object with the best-known values: {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}'
+]],
             $chatHistory,
             [['role' => 'user', 'content' => $userInput]]
         );
