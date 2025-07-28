@@ -1355,6 +1355,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::post('ai_chat','chat');
                     Route::get('/ai_chat/clear', function () {
                         session()->forget('chat_history');
+                        session()->forget('chat_filters');
                         return response()->json(['message' => 'Chat history cleared.']);
                     });
 
