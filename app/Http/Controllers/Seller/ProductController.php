@@ -1181,6 +1181,7 @@ class ProductController extends Controller
 
             // Retrieve chat history from Laravel session
             $chatHistory = session('chat_history', []);
+            $storedFilters = session('chat_filters', []);
 
             // Add user message to chat history
             $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
@@ -1209,11 +1210,12 @@ class ProductController extends Controller
             // Extract JSON using regex
             preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
 
-            $filters = json_decode($jsonMatch[0] ?? '', true);
+            $filters = array_filter(array_merge($storedFilters, $newFilters ?? []));
 
             // Update chat history with assistant reply
             $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
-            session(['chat_history' => $chatHistory]);
+            session(['chat_filters' => $filters, 'chat_history' => $chatHistory]);
+
 
             $products = [];
 
