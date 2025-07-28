@@ -1173,87 +1173,103 @@ class ProductController extends Controller
     }
 
 
-    public function chat(Request $request)
-    {
-        $chatHistory = $request->input('history', []);
-        $userInput = $request->input('message');
+   public function chat(Request $request)
+{
+    $userMessage = $request->message;
 
-        // Step 1: Prepare ChatGPT prompt for auto parts
-        $messages = array_merge(
-            [['role' => 'system', 'content' => 'You are an auto parts shopping assistant for a marketplace website. 
-Respond naturally to users. When all required product filters (make, model, year, part) are available and you find matching products, 
-do not ask follow-up questions. Just show the products. If anything is missing, ask for clarification. 
-Always include a JSON object with the best-known values: {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}'
-]],
-            $chatHistory,
-            [['role' => 'user', 'content' => $userInput]]
-        );
+    // Get existing chat history and filters
+    $chatHistory = session('chat_history', []);
+    $storedFilters = session('chat_filters', []);
 
-        $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => $messages,
-        ]);
+    // Append new user message
+    $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-        $reply = $response['choices'][0]['message']['content'] ?? '';
+    // System prompt — telling assistant to return JSON with ANY filters it finds
+    $systemMessage = [
+        'role' => 'system',
+        'content' => 'You are an auto parts shopping assistant for a marketplace website. 
+Respond naturally to users. At the end of each reply, include a JSON object with any available fields like: 
+{"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
+All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
+    ];
 
-        // Step 2: Extract JSON filter
-        preg_match('/\{.*\}/s', $reply, $jsonMatch);
-        $filters = json_decode($jsonMatch[0] ?? '', true);
+    // Prepare messages for OpenAI
+    $messages = array_merge([$systemMessage], $chatHistory);
 
-        // Step 3: Convert filters to keywords
-        $keywords = [];
-        if (!empty($filters['make'])) $keywords[] = $filters['make'];
-        if (!empty($filters['model'])) $keywords[] = $filters['model'];
-        if (!empty($filters['year'])) $keywords[] = $filters['year'];
-        if (!empty($filters['part'])) $keywords[] = $filters['part'];
+    // Call OpenAI
+    $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => $messages,
+    ]);
 
-        // Step 4: Use your search query
+    $assistantReply = $response['choices'][0]['message']['content'] ?? '';
+
+    // Extract JSON (filters) from assistant response
+    preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
+    $newFilters = [];
+
+    if (!empty($jsonMatch)) {
+        try {
+            $newFilters = json_decode($jsonMatch[0], true);
+            if (!is_array($newFilters)) {
+                $newFilters = [];
+            }
+        } catch (\Exception $e) {
+            $newFilters = [];
+        }
+    }
+
+    // Merge with old filters
+    $filters = array_merge($storedFilters, array_filter($newFilters));
+    session(['chat_filters' => $filters]);
+
+    // Append assistant reply to chat history
+    $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
+    session(['chat_history' => $chatHistory]);
+
+    // Fetch products if any filter present
+    $products = [];
+
+    if (!empty($filters)) {
         $products = Product::with([
-            'product_gallery' => function ($query) {
-                $query->orderBy('order', 'asc');
-            },
+            'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
+            'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
             'product_varient', 'discount', 'tax', 'shipping'
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $soundexKeyword = soundex($keyword);
-
-                $query->where(function ($query) use ($keyword, $soundexKeyword) {
-                    $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
-                        ->orWhereJsonContains('tags', $keyword)
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('brand', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('model', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('category', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('sub_category', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        });
-                });
-            }
+        ->when(!empty($filters['make']), function ($q) use ($filters) {
+            $q->where(function ($query) use ($filters) {
+                $query->where('name', 'LIKE', '%' . $filters['make'] . '%')
+                      ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', '%' . $filters['make'] . '%'));
+            });
+        })
+        ->when(!empty($filters['model']), function ($q) use ($filters) {
+            $q->whereHas('model', fn($q) => $q->where('name', 'LIKE', '%' . $filters['model'] . '%'));
+        })
+        ->when(!empty($filters['year']), function ($q) use ($filters) {
+            $q->where(function ($query) use ($filters) {
+                $query->orWhereJsonContains('start_year', $filters['year']);
+            });
+        })
+        ->when(!empty($filters['part']), function ($q) use ($filters) {
+            $q->where(function ($query) use ($filters) {
+                $query->where('name', 'LIKE', '%' . $filters['part'] . '%')
+                      ->orWhereJsonContains('tags', $filters['part']);
+            });
         })
         ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
-        ->distinct()
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
-        ->take(12)->get();
-
-        return response()->json([
-            'reply' => $reply,
-            'products' => $products,
-            'new_message' => ['role' => 'assistant', 'content' => $reply]
-        ]);
+        ->take(12)
+        ->get();
     }
+
+    return response()->json([
+        'reply' => $assistantReply,
+        'products' => $products,
+        'chat_history' => $chatHistory,
+        'filters' => $filters, // optional for debug
+    ]);
+}
 }
