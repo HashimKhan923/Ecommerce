@@ -1311,7 +1311,7 @@ class ProductController extends Controller
         
 
         $prompt = <<<EOT
-        Generate a JSON array of 10 SEO-friendly keyword phrases (each 2-5 words max) based on this product name: "$productName".
+        Generate a JSON array of 10 to 15 SEO-friendly keyword phrases (each 2-5 words max) based on this product name: "$productName".
         Only return the JSON array. Do not include any explanations.
         EOT;
 
