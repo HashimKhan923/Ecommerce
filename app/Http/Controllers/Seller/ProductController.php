@@ -1146,8 +1146,10 @@ class ProductController extends Controller
 
         $productName = $request->input('product_name');
         $features = $request->input('features', []);
+        $tone = $request->input('tone', 'professional');
 
-        $prompt = "Write a compelling product description for a product named '{$productName}'";
+
+        $prompt = "Write a compelling product description in a {$tone} tone for a product named '{$productName}'";
         if (!empty($features)) {
             $prompt .= " with the following features: " . implode(', ', $features);
         }
