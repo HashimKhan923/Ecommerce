@@ -1179,48 +1179,60 @@ class ProductController extends Controller
     {
             $userMessage = $request->message;
 
-            // Retrieve chat history from Laravel session
+            // Get existing chat history and filters
             $chatHistory = session('chat_history', []);
             $storedFilters = session('chat_filters', []);
 
-            // Add user message to chat history
+            // Append new user message
             $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-            // Prepare system message
+            // System prompt — telling assistant to return JSON with ANY filters it finds
             $systemMessage = [
                 'role' => 'system',
                 'content' => 'You are an auto parts shopping assistant for a marketplace website. 
-        Respond conversationally and naturally first. Then at the end, include a JSON like: 
-        {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}. 
-        These fields are optional. Return whatever user provides.'
+        Respond naturally to users. At the end of each reply, include a JSON object with any available fields like: 
+        {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
+        All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
             ];
 
-            // Prepend system message
+            // Prepare messages for OpenAI
             $messages = array_merge([$systemMessage], $chatHistory);
 
-
-
-                $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-                    'model' => 'gpt-3.5-turbo',
-                    'messages' => $messages,
-                ]);
+            // Call OpenAI
+            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => $messages,
+            ]);
 
             $assistantReply = $response['choices'][0]['message']['content'] ?? '';
 
-            // Extract JSON using regex
+            // Extract JSON (filters) from assistant response
             preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
+            $newFilters = [];
 
-            $filters = array_filter(array_merge($storedFilters, $newFilters ?? []));
+            if (!empty($jsonMatch)) {
+                try {
+                    $newFilters = json_decode($jsonMatch[0], true);
+                    if (!is_array($newFilters)) {
+                        $newFilters = [];
+                    }
+                } catch (\Exception $e) {
+                    $newFilters = [];
+                }
+            }
 
-            // Update chat history with assistant reply
+            // Merge with old filters
+            $filters = array_merge($storedFilters, array_filter($newFilters));
+            session(['chat_filters' => $filters]);
+
+            // Append assistant reply to chat history
             $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
-            session(['chat_filters' => $filters, 'chat_history' => $chatHistory]);
+            session(['chat_history' => $chatHistory]);
 
-
+            // Fetch products if any filter present
             $products = [];
 
-            // Only search if any filters provided
-            if (!empty($filters) && is_array($filters) && array_filter($filters)) {
+            if (!empty($filters)) {
                 $products = Product::with([
                     'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
                     'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
@@ -1258,7 +1270,8 @@ class ProductController extends Controller
             return response()->json([
                 'reply' => $assistantReply,
                 'products' => $products,
-                'chat_history' => $chatHistory
+                'chat_history' => $chatHistory,
+                'filters' => $filters, // optional for debug
             ]);
     }
 }
