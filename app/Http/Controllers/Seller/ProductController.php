@@ -1238,11 +1238,11 @@ All fields are optional. If some fields are already known from previous conversa
 
     // Step 6: Use your advanced keyword-based product search
     $products = Product::with([
-        'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
+        
         'product_gallery' => function ($query) {
             $query->orderBy('order', 'asc');
         },
-        'product_varient', 'discount', 'tax', 'shipping'
+        
     ])
     ->where('published', 1)
     ->whereHas('shop', fn($q) => $q->where('status', 1))
@@ -1268,7 +1268,7 @@ All fields are optional. If some fields are already known from previous conversa
     ->distinct()
     ->orderBy('featured', 'DESC')
     ->orderBy('id', 'ASC')
-    ->take(12)
+    ->take(20)
     ->get();
 
     // Step 7: Optional – adjust reply if products found
