@@ -1243,6 +1243,9 @@ All fields are optional. If some fields are already known from previous conversa
     // Append assistant reply to chat history
     $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
     session(['chat_history' => $chatHistory]);
+    $products = collect();
+
+    if (!empty($filters['make']) || !empty($filters['model']) || !empty($filters['part']) || !empty($filters['year'])) {
 
     // Step 5: Generate combined search string
     $searchQuery = implode(' ', array_filter([
@@ -1286,6 +1289,8 @@ All fields are optional. If some fields are already known from previous conversa
     ->orderBy('id', 'ASC')
     ->take(20)
     ->get();
+
+    }
 
     // Step 7: Adjust reply if products found
     if ($products->count() > 0 && str_contains($assistantReply, "don't have")) {
