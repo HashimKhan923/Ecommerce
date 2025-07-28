@@ -1318,7 +1318,7 @@ All fields are optional. If some fields are already known from previous conversa
     You are an SEO expert. Based on the product name "$productName", generate the following:
     1. meta_title (max 60 characters),
     2. meta_description (between 150–160 characters),
-    3. meta_keywords: a JSON array of 10-15 keyword phrases (each 2–5 words).
+    3. meta_keywords: a JSON array of 10 keyword phrases (each 2–5 words).
 
     Respond ONLY in the following JSON format:
 
