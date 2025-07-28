@@ -1248,9 +1248,7 @@ All fields are optional. If some fields are already known from previous conversa
             $q->whereHas('model', fn($q) => $q->where('name', 'LIKE', '%' . $filters['model'] . '%'));
         })
         ->when(!empty($filters['year']), function ($q) use ($filters) {
-            $q->where(function ($query) use ($filters) {
-                $query->orWhereJsonContains('start_year', $filters['year']);
-            });
+            $q->whereJsonContains('start_year', (string) $filters['year']);
         })
         ->when(!empty($filters['part']), function ($q) use ($filters) {
             $q->where(function ($query) use ($filters) {
