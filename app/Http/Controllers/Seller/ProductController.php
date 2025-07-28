@@ -1237,8 +1237,7 @@ class ProductController extends Controller
                 })
                 ->when(!empty($filters['year']), function ($q) use ($filters) {
                     $q->where(function ($query) use ($filters) {
-                        $query->where('start_year', '<=', $filters['year'])
-                            ->where('end_year', '>=', $filters['year']);
+                        $query->orWhereJsonContains('start_year', $filters['year']);
                     });
                 })
                 ->when(!empty($filters['part']), function ($q) use ($filters) {
