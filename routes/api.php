@@ -1358,6 +1358,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                         session()->forget('chat_filters');
                         return response()->json(['message' => 'Chat history cleared.']);
                     });
+                    Route::get('ai_seo_keyword/{productName}','generateSeoKeywords');
 
                 });
             });
