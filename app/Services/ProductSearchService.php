@@ -47,21 +47,13 @@ public function search(string $searchValue, int $length = 0)
     $searchWords = explode(' ', strtolower($searchValue));
     $keywords = array_diff($searchWords, $stopWords);
 
-    // // 🔥 Get AI-based expansion
-    // $aiKeywords = $this->getAIExpandedKeywords($searchValue);
-    // if (!empty($aiKeywords)) {
-    //     $keywords = array_unique(array_merge($keywords, $aiKeywords));
-    // }
 
-    // 🟢 First try with all combined keywords
     $products = $this->searchProducts($keywords, $length);
 
-    // 🔴 If no results found, try with only AI keywords (fallback)
     if ($products->isEmpty() && !empty($aiKeywords)) {
         $products = $this->searchProducts($aiKeywords, $length);
     }
 
-    // 🔴 Still no results? Try with each keyword individually (last fallback)
     if ($products->isEmpty()) {
         foreach ($keywords as $keyword) {
             $products = $this->searchProducts([$keyword], $length);
@@ -94,7 +86,7 @@ public function search(string $searchValue, int $length = 0)
                     $query->where('sku', 'LIKE', "%{$keyword}%")
                         ->orWhere('name', 'LIKE', "%{$keyword}%")
                         ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
-                        ->orWhereJsonContains('tags', $keyword)
+                        ->orWhereRaw("JSON_SEARCH(tags, 'one', ?) IS NOT NULL", [$keyword])
                         ->orWhereJsonContains('start_year', $keyword)
                         ->orWhereHas('shop', function ($query) use ($keyword) {
                             $query->where('name', 'LIKE', "%{$keyword}%");
@@ -120,42 +112,7 @@ public function search(string $searchValue, int $length = 0)
         ->skip($length)->take(12)->get();
     }
 
-    // private function removeNonMatchingKeyword(array $keywords, int $length = 0): array
-    // {
-    //     foreach ($keywords as $index => $keyword) {
-    //         $tempKeywords = $keywords;
-    //         unset($tempKeywords[$index]);
 
-    //         $data = $this->searchProducts($tempKeywords, $length);
-    //         if (!$data->isEmpty()) {
-    //             return array_values($tempKeywords);
-    //         }
-    //     }
-
-    //     return [];
-    // }
-
-    // private function getAIExpandedKeywords(string $query): array
-    // {
-    //     try {
-    //         $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/completions', [
-    //             'model' => 'text-davinci-003',
-    //             'prompt' => "Expand this search query with related keywords and synonyms: {$query}. Return comma-separated keywords.",
-    //             'max_tokens' => 60,
-    //             'temperature' => 0.7,
-    //         ]);
-
-    //         if ($response->successful()) {
-    //             $text = $response->json()['choices'][0]['text'] ?? '';
-    //             $keywords = array_filter(array_map('trim', explode(',', $text)));
-    //             return $keywords;
-    //         }
-    //     } catch (\Exception $e) {
-    //         \Log::error('OpenAI query expansion failed: ' . $e->getMessage());
-    //     }
-
-    //     return [];
-    // }
 
 
 }
