@@ -634,6 +634,15 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
 
 
+            Route::group(['prefix' => '/seller/product/'], function() {
+                Route::controller(App\Http\Controllers\Seller\AiProductController::class)->group(function () {
+                    Route::post('ai_description','generateProductDescription');
+                    Route::get('ai_generateSeoMeta/{productName}','generateSeoMeta');
+
+                });
+            });
+
+
                                                          /// Varient \\\
 
             Route::group(['prefix' => '/seller/varient/'], function() {
@@ -1030,6 +1039,12 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::post('comment','comment');
             Route::post('rating','rating');
             Route::get('detail/{id}','detail');
+            Route::post('ai_chat','chat');
+            Route::get('/ai_chat/clear', function () {
+                session()->forget('chat_history');
+                session()->forget('chat_filters');
+                return response()->json(['message' => 'Chat history cleared.']);
+            });
         });
     });
 
@@ -1349,19 +1364,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 // });
 
 
-                Route::group(['prefix' => '/seller/product/'], function() {
-                Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
-                    Route::post('ai_description','generateProductDescription');
-                    Route::post('ai_chat','chat');
-                    Route::get('/ai_chat/clear', function () {
-                        session()->forget('chat_history');
-                        session()->forget('chat_filters');
-                        return response()->json(['message' => 'Chat history cleared.']);
-                    });
-                    Route::get('ai_generateSeoMeta/{productName}','generateSeoMeta');
 
-                });
-            });
 
 
                                                 /// Segment \\\
