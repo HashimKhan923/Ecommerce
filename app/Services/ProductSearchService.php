@@ -69,7 +69,7 @@ public function search(string $searchValue, int $length = 0)
 
         private function searchProducts(array $keywords, int $length = 0)
     {
-        return 1;
+        
         return Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
             'product_gallery' => function ($query) {
