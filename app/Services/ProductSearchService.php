@@ -47,11 +47,11 @@ public function search(string $searchValue, int $length = 0)
     $searchWords = explode(' ', strtolower($searchValue));
     $keywords = array_diff($searchWords, $stopWords);
 
-    // 🔥 Get AI-based expansion
-    $aiKeywords = $this->getAIExpandedKeywords($searchValue);
-    if (!empty($aiKeywords)) {
-        $keywords = array_unique(array_merge($keywords, $aiKeywords));
-    }
+    // // 🔥 Get AI-based expansion
+    // $aiKeywords = $this->getAIExpandedKeywords($searchValue);
+    // if (!empty($aiKeywords)) {
+    //     $keywords = array_unique(array_merge($keywords, $aiKeywords));
+    // }
 
     // 🟢 First try with all combined keywords
     $products = $this->searchProducts($keywords, $length);
@@ -135,27 +135,27 @@ public function search(string $searchValue, int $length = 0)
     //     return [];
     // }
 
-    private function getAIExpandedKeywords(string $query): array
-    {
-        try {
-            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/completions', [
-                'model' => 'text-davinci-003',
-                'prompt' => "Expand this search query with related keywords and synonyms: {$query}. Return comma-separated keywords.",
-                'max_tokens' => 60,
-                'temperature' => 0.7,
-            ]);
+    // private function getAIExpandedKeywords(string $query): array
+    // {
+    //     try {
+    //         $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/completions', [
+    //             'model' => 'text-davinci-003',
+    //             'prompt' => "Expand this search query with related keywords and synonyms: {$query}. Return comma-separated keywords.",
+    //             'max_tokens' => 60,
+    //             'temperature' => 0.7,
+    //         ]);
 
-            if ($response->successful()) {
-                $text = $response->json()['choices'][0]['text'] ?? '';
-                $keywords = array_filter(array_map('trim', explode(',', $text)));
-                return $keywords;
-            }
-        } catch (\Exception $e) {
-            \Log::error('OpenAI query expansion failed: ' . $e->getMessage());
-        }
+    //         if ($response->successful()) {
+    //             $text = $response->json()['choices'][0]['text'] ?? '';
+    //             $keywords = array_filter(array_map('trim', explode(',', $text)));
+    //             return $keywords;
+    //         }
+    //     } catch (\Exception $e) {
+    //         \Log::error('OpenAI query expansion failed: ' . $e->getMessage());
+    //     }
 
-        return [];
-    }
+    //     return [];
+    // }
 
 
 }
