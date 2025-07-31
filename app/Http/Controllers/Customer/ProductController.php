@@ -10,6 +10,8 @@ use App\Models\Brand;
 use App\Models\Banner;
 use App\Models\ProductComments;
 use App\Models\ProductRating;
+use Illuminate\Support\Facades\Http;
+
 
 class ProductController extends Controller
 {
