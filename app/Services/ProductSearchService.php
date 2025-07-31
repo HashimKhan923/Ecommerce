@@ -67,9 +67,9 @@ public function search(string $searchValue, int $length = 0)
 }
 
 
-        private function searchProducts(array $keywords, int $length = 0)
-    {
-        return Product::with([
+private function searchProducts(array $keywords, int $length = 0)
+{
+    return Product::with([
             'user', 'category', 'brand', 'shop.shop_policy', 'model', 'stock',
             'product_gallery' => function ($query) {
                 $query->orderBy('order', 'asc');
@@ -79,38 +79,47 @@ public function search(string $searchValue, int $length = 0)
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
         ->where(function ($query) use ($keywords) {
+            // Add full phrase match first
+            $fullPhrase = implode(' ', $keywords);
+            $soundexFull = soundex($fullPhrase);
+
+            $query->where(function ($q) use ($fullPhrase, $soundexFull) {
+                $q->where('name', 'LIKE', "%{$fullPhrase}%")
+                    ->orWhere('sku', 'LIKE', "%{$fullPhrase}%")
+                    ->orWhereRaw("SOUNDEX(name) = ?", [$soundexFull])
+                    ->orWhereRaw("JSON_SEARCH(tags, 'one', ?) IS NOT NULL", [$fullPhrase])
+                    ->orWhereHas('shop', fn($q) => $q->where('name', 'LIKE', "%{$fullPhrase}%"))
+                    ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', "%{$fullPhrase}%"))
+                    ->orWhereHas('model', fn($q) => $q->where('name', 'LIKE', "%{$fullPhrase}%"))
+                    ->orWhereHas('category', fn($q) => $q->where('name', 'LIKE', "%{$fullPhrase}%"))
+                    ->orWhereHas('sub_category', fn($q) => $q->where('name', 'LIKE', "%{$fullPhrase}%"));
+            });
+
+            // Then search each individual keyword
             foreach ($keywords as $keyword) {
                 $soundexKeyword = soundex($keyword);
 
-                $query->where(function ($query) use ($keyword, $soundexKeyword) {
-                    $query->where('sku', 'LIKE', "%{$keyword}%")
+                $query->orWhere(function ($q) use ($keyword, $soundexKeyword) {
+                    $q->where('sku', 'LIKE', "%{$keyword}%")
                         ->orWhere('name', 'LIKE', "%{$keyword}%")
                         ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
                         ->orWhereRaw("JSON_SEARCH(tags, 'one', ?) IS NOT NULL", [$keyword])
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('brand', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('model', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('category', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        })
-                        ->orWhereHas('sub_category', function ($query) use ($keyword) {
-                            $query->where('name', 'LIKE', "%{$keyword}%");
-                        });
+                        ->orWhereRaw("JSON_SEARCH(start_year, 'one', ?) IS NOT NULL", [$keyword])
+                        ->orWhereHas('shop', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                        ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                        ->orWhereHas('model', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                        ->orWhereHas('category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+                        ->orWhereHas('sub_category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"));
                 });
             }
         })
         ->distinct()
         ->orderBy('featured', 'DESC')
         ->orderBy('id', 'ASC')
-        ->skip($length)->take(12)->get();
-    }
+        ->skip($length)
+        ->take(12)
+        ->get();
+}
 
 
 
