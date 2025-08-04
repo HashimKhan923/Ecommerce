@@ -137,9 +137,7 @@ class ProductController extends Controller
     {
         $userMessage = $request->message;
 
-        // Step 1: Load previous chat history and filters
-        $chatHistory = session('chat_history', []);
-        $storedFilters = session('chat_filters', []);
+        $chatHistory = $request->input('chat_history', []);
 
         // Append current user message to history
         $chatHistory[] = ['role' => 'user', 'content' => $userMessage];

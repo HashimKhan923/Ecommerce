@@ -21,6 +21,19 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SpecificErrorOccurred' => [
             'App\Listeners\LogEventListener',
         ],
+
+        \App\Events\OrderPlaced::class => [
+            \App\Listeners\CreateOrderTimeline::class,
+            \App\Listeners\SendVendorEmail::class,
+            \App\Listeners\NotifyVendor::class,
+            \App\Listeners\StoreCouponData::class,
+            \App\Listeners\UpdateCustomerSale::class,
+            \App\Listeners\StoreOrderDetails::class,
+            \App\Listeners\UpdateStockLevels::class,
+            \App\Listeners\TrackFeaturedProducts::class,
+            \App\Listeners\SendBuyerConfirmationEmail::class,
+
+        ],
     
     ];
 
