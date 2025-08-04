@@ -268,196 +268,6 @@ class OrderController extends Controller
 
     // }
 
-    public function create(Request $request)
-    {
-        $productIds = collect($request->products)->pluck('product_id')->toArray();
-        $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
-        $productsByShop = $products->groupBy('shop_id');
-
-        $orderIds = [];
-        $TotalShippingAmount = 0.00;
-
-        foreach ($productsByShop as $shopId => $shopProducts) {
-            $vendorId = $shopProducts->first()->user_id;
-            $vendor = User::find($vendorId);
-            $customer = User::find($request->customer_id);
-
-            // Calculate shop total amount and total shipment
-            $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
-                $productItems = collect($request->products)->where('product_id', $product->id);
-                return $productItems->sum(function ($item) {
-                    return $item['product_price'] * $item['quantity'];
-                });
-            });
-
-            $shopTotalShipment = $shopProducts->sum(function ($product) use ($request) {
-                return collect($request->products)->where('product_id', $product->id)->sum('shipping_amount');
-            });
-
-            $TotalShippingAmount += $shopTotalShipment;
-
-            $taxArray = $request->tax; // Get a copy of the array
-            $taxPercentage = isset($taxArray[2]) && is_numeric($taxArray[2]) ? (float) $taxArray[2] : 0;
-
-            // Calculate tax based on shop subtotal (percentage)
-            $shopTaxAmount = ($shopTotalAmount * $taxPercentage) / 100;
-
-            // Final amount = subtotal + tax + flat insurance + flat signature
-            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $TotalShippingAmount;
-
-            $taxArray[0] = $shopTaxAmount;
-
-            $order = Order::create([
-                'order_code' => Str::uuid(),
-                'number_of_products' => $shopProducts->count(),
-                'customer_id' => $request->customer_id,
-                'shop_id' => $shopId,
-                'sellers_id' => $vendorId,
-                'amount' => $shopFinalAmount, // updated final amount
-                'tax' => $taxArray,
-                'information' => $request->information,
-                'shipping_amount' => $TotalShippingAmount,
-                'stripe_payment_id' => $request->payment_id,
-                'payment_method' => $request->payment_method,
-                'payment_status' => $request->payment_status,
-                'refund' => $request->refund,
-                'campaign_id' => $request->campaign_id
-            ]);
-
-            $shop = Shop::find($shopId);
-
-            OrderTimeline::insert([
-                [
-                    'seller_id' => $vendorId,
-                    'customer_id' => $request->customer_id,
-                    'order_id' => $order->id,
-                    'time_line' => $order->amount . ' USD was captured using a ' . $request->payment_method . '.'
-                ],
-                [
-                    'seller_id' => $vendorId,
-                    'customer_id' => $request->customer_id,
-                    'order_id' => $order->id,
-                    'time_line' => $customer->name . ' placed this order on ' . $shop->name . ' checkout (#' . $order->id . ')'
-                ],
-                [
-                    'seller_id' => $vendorId,
-                    'customer_id' => $request->customer_id,
-                    'order_id' => $order->id,
-                    'time_line' => 'Confirmation ' . $order->order_code . ' was generated for this order'
-                ]
-            ]);
-
-            Notification::create([
-                'customer_id' => $vendorId,
-                'notification' => 'New order #' . $order->id . ' received'
-            ]);
-
-            Mail::send('email.Order.order_recive_vendor', [
-                'vendor_name' => $vendor->name,
-                'order_id' => $order->id,
-                'order_details' => $shopProducts,
-                'shipping_charges' => $shopTotalShipment,
-                'request' => $request
-            ], function ($message) use ($vendor, $order, $customer) {
-                $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-                $message->to($vendor->email);
-                $message->subject('New Order Received');
-
-                OrderTimeline::create([
-                    'seller_id' => $vendor->id,
-                    'order_id' => $order->id,
-                    'time_line' => 'Order confirmation email was sent to ' . $customer->name . ' (' . $customer->email . ').'
-                ]);
-            });
-
-            CouponUser::create([
-                'discount' => $request->coupon_discount,
-                'order_id' => $order->id
-            ]);
-
-            MyCustomer::updateOrCreate(
-                [
-                    'seller_id' => $vendorId,
-                    'customer_id' => $request->customer_id,
-                ],
-                [
-                    'sale' => DB::raw("sale + {$shopTotalAmount}")
-                ]
-            );
-
-            foreach ($shopProducts as $product) {
-                $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
-                $sale = Product::with('product_single_gallery')->find($product->id);
-
-                OrderDetail::create([
-                    'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'product_name' => $sale->name,
-                    'product_image' => $sale->product_single_gallery->image ?? '',
-                    'product_varient' => $orderProduct['product_varient'],
-                    'product_price' => $orderProduct['product_price'],
-                    'shipping_amount' => $orderProduct['shipping_amount'],
-                    'quantity' => $orderProduct['quantity'],
-                    'varient_id' => $orderProduct['varient_id'],
-                ]);
-
-                ProductVarient::where('product_id', $product->id)
-                    ->decrement('stock', $orderProduct['quantity']);
-
-                Stock::where('product_id', $product->id)
-                    ->decrement('stock', $orderProduct['quantity']);
-
-                if ($product->featured) {
-                    $total = $orderProduct['product_price'] * 0.1 * $orderProduct['quantity'];
-                    FeaturedProductOrder::create([
-                        'order_id' => $order->id,
-                        'product_id' => $product->id,
-                        'seller_id' => $vendorId,
-                        'product_price' => $orderProduct['product_price'],
-                        'quantity' => $orderProduct['quantity'],
-                        'payment' => $total,
-                    ]);
-                }
-
-                $shopModel = Shop::where('seller_id', $sale->user_id)->first();
-                $shopModel->increment('sold_products', $orderProduct['quantity']);
-                $sale->increment('num_of_sale', $orderProduct['quantity']);
-            }
-
-            $orderIds[] = $order->id;
-        }
-
-        $user = User::find($request->customer_id);
-
-        Mail::send('email.Order.order_recive', [
-            'buyer_name' => $user->name,
-            'productsByVendor' => $productsByShop,
-            'TotalShippingAmount' => $TotalShippingAmount,
-            'request' => $request
-        ], function ($message) use ($user, $request) {
-            $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-            $message->to($request->information[7]);
-            $message->subject('Order Confirmation');
-        });
-
-        $MyOrders = Order::with([
-            'order_detail.products.shop',
-            'order_detail.products.product_gallery',
-            'order_detail.products.category',
-            'order_detail.products.brand',
-            'order_detail.products.model',
-            'order_detail.products.stock',
-            'order_detail.products.product_varient',
-            'order_detail.products.reviews.user',
-            'order_detail.products.tax',
-            'order_detail.varient',
-            'order_status',
-            'order_tracking'
-        ])->whereIn('id', $orderIds)->get();
-
-        return response(['status' => true, 'message' => 'Order Created Successfully!', 'data' => $MyOrders], 200);
-    }
-
     // public function create(Request $request)
     // {
     //     $productIds = collect($request->products)->pluck('product_id')->toArray();
@@ -486,20 +296,24 @@ class OrderController extends Controller
 
     //         $TotalShippingAmount += $shopTotalShipment;
 
-    //         $taxArray = $request->tax;
+    //         $taxArray = $request->tax; // Get a copy of the array
     //         $taxPercentage = isset($taxArray[2]) && is_numeric($taxArray[2]) ? (float) $taxArray[2] : 0;
+
+    //         // Calculate tax based on shop subtotal (percentage)
     //         $shopTaxAmount = ($shopTotalAmount * $taxPercentage) / 100;
+
+    //         // Final amount = subtotal + tax + flat insurance + flat signature
     //         $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $TotalShippingAmount;
+
     //         $taxArray[0] = $shopTaxAmount;
 
-    //         // ✅ Create Order
     //         $order = Order::create([
     //             'order_code' => Str::uuid(),
     //             'number_of_products' => $shopProducts->count(),
     //             'customer_id' => $request->customer_id,
     //             'shop_id' => $shopId,
     //             'sellers_id' => $vendorId,
-    //             'amount' => $shopFinalAmount,
+    //             'amount' => $shopFinalAmount, // updated final amount
     //             'tax' => $taxArray,
     //             'information' => $request->information,
     //             'shipping_amount' => $TotalShippingAmount,
@@ -510,17 +324,122 @@ class OrderController extends Controller
     //             'campaign_id' => $request->campaign_id
     //         ]);
 
-    //         // ✅ Fire Event for this Order
-    //         event(new OrderPlaced($order, $shopProducts, $request, $vendor, $customer, $shopTotalShipment));
+    //         $shop = Shop::find($shopId);
+
+    //         OrderTimeline::insert([
+    //             [
+    //                 'seller_id' => $vendorId,
+    //                 'customer_id' => $request->customer_id,
+    //                 'order_id' => $order->id,
+    //                 'time_line' => $order->amount . ' USD was captured using a ' . $request->payment_method . '.'
+    //             ],
+    //             [
+    //                 'seller_id' => $vendorId,
+    //                 'customer_id' => $request->customer_id,
+    //                 'order_id' => $order->id,
+    //                 'time_line' => $customer->name . ' placed this order on ' . $shop->name . ' checkout (#' . $order->id . ')'
+    //             ],
+    //             [
+    //                 'seller_id' => $vendorId,
+    //                 'customer_id' => $request->customer_id,
+    //                 'order_id' => $order->id,
+    //                 'time_line' => 'Confirmation ' . $order->order_code . ' was generated for this order'
+    //             ]
+    //         ]);
+
+    //         Notification::create([
+    //             'customer_id' => $vendorId,
+    //             'notification' => 'New order #' . $order->id . ' received'
+    //         ]);
+
+    //         Mail::send('email.Order.order_recive_vendor', [
+    //             'vendor_name' => $vendor->name,
+    //             'order_id' => $order->id,
+    //             'order_details' => $shopProducts,
+    //             'shipping_charges' => $shopTotalShipment,
+    //             'request' => $request
+    //         ], function ($message) use ($vendor, $order, $customer) {
+    //             $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+    //             $message->to($vendor->email);
+    //             $message->subject('New Order Received');
+
+    //             OrderTimeline::create([
+    //                 'seller_id' => $vendor->id,
+    //                 'order_id' => $order->id,
+    //                 'time_line' => 'Order confirmation email was sent to ' . $customer->name . ' (' . $customer->email . ').'
+    //             ]);
+    //         });
+
+    //         CouponUser::create([
+    //             'discount' => $request->coupon_discount,
+    //             'order_id' => $order->id
+    //         ]);
+
+    //         MyCustomer::updateOrCreate(
+    //             [
+    //                 'seller_id' => $vendorId,
+    //                 'customer_id' => $request->customer_id,
+    //             ],
+    //             [
+    //                 'sale' => DB::raw("sale + {$shopTotalAmount}")
+    //             ]
+    //         );
+
+    //         foreach ($shopProducts as $product) {
+    //             $orderProduct = collect($request->products)->where('product_id', $product->id)->first();
+    //             $sale = Product::with('product_single_gallery')->find($product->id);
+
+    //             OrderDetail::create([
+    //                 'order_id' => $order->id,
+    //                 'product_id' => $product->id,
+    //                 'product_name' => $sale->name,
+    //                 'product_image' => $sale->product_single_gallery->image ?? '',
+    //                 'product_varient' => $orderProduct['product_varient'],
+    //                 'product_price' => $orderProduct['product_price'],
+    //                 'shipping_amount' => $orderProduct['shipping_amount'],
+    //                 'quantity' => $orderProduct['quantity'],
+    //                 'varient_id' => $orderProduct['varient_id'],
+    //             ]);
+
+    //             ProductVarient::where('product_id', $product->id)
+    //                 ->decrement('stock', $orderProduct['quantity']);
+
+    //             Stock::where('product_id', $product->id)
+    //                 ->decrement('stock', $orderProduct['quantity']);
+
+    //             if ($product->featured) {
+    //                 $total = $orderProduct['product_price'] * 0.1 * $orderProduct['quantity'];
+    //                 FeaturedProductOrder::create([
+    //                     'order_id' => $order->id,
+    //                     'product_id' => $product->id,
+    //                     'seller_id' => $vendorId,
+    //                     'product_price' => $orderProduct['product_price'],
+    //                     'quantity' => $orderProduct['quantity'],
+    //                     'payment' => $total,
+    //                 ]);
+    //             }
+
+    //             $shopModel = Shop::where('seller_id', $sale->user_id)->first();
+    //             $shopModel->increment('sold_products', $orderProduct['quantity']);
+    //             $sale->increment('num_of_sale', $orderProduct['quantity']);
+    //         }
 
     //         $orderIds[] = $order->id;
     //     }
 
-    //     // ✅ Final email to Buyer
     //     $user = User::find($request->customer_id);
-    //     event(new BuyerOrderPlaced($user, $productsByShop, $TotalShippingAmount, $request));
 
-    //     // ✅ Get Orders for response
+    //     Mail::send('email.Order.order_recive', [
+    //         'buyer_name' => $user->name,
+    //         'productsByVendor' => $productsByShop,
+    //         'TotalShippingAmount' => $TotalShippingAmount,
+    //         'request' => $request
+    //     ], function ($message) use ($user, $request) {
+    //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+    //         $message->to($request->information[7]);
+    //         $message->subject('Order Confirmation');
+    //     });
+
     //     $MyOrders = Order::with([
     //         'order_detail.products.shop',
     //         'order_detail.products.product_gallery',
@@ -536,12 +455,93 @@ class OrderController extends Controller
     //         'order_tracking'
     //     ])->whereIn('id', $orderIds)->get();
 
-    //     return response([
-    //         'status' => true,
-    //         'message' => 'Order Created Successfully!',
-    //         'data' => $MyOrders
-    //     ], 200);
+    //     return response(['status' => true, 'message' => 'Order Created Successfully!', 'data' => $MyOrders], 200);
     // }
+
+    public function create(Request $request)
+    {
+        $productIds = collect($request->products)->pluck('product_id')->toArray();
+        $products = Product::with('product_gallery')->whereIn('id', $productIds)->get();
+        $productsByShop = $products->groupBy('shop_id');
+
+        $orderIds = [];
+        $TotalShippingAmount = 0.00;
+
+        foreach ($productsByShop as $shopId => $shopProducts) {
+            $vendorId = $shopProducts->first()->user_id;
+            $vendor = User::find($vendorId);
+            $customer = User::find($request->customer_id);
+
+            // Calculate shop total amount and total shipment
+            $shopTotalAmount = $shopProducts->sum(function ($product) use ($request) {
+                $productItems = collect($request->products)->where('product_id', $product->id);
+                return $productItems->sum(function ($item) {
+                    return $item['product_price'] * $item['quantity'];
+                });
+            });
+
+            $shopTotalShipment = $shopProducts->sum(function ($product) use ($request) {
+                return collect($request->products)->where('product_id', $product->id)->sum('shipping_amount');
+            });
+
+            $TotalShippingAmount += $shopTotalShipment;
+
+            $taxArray = $request->tax;
+            $taxPercentage = isset($taxArray[2]) && is_numeric($taxArray[2]) ? (float) $taxArray[2] : 0;
+            $shopTaxAmount = ($shopTotalAmount * $taxPercentage) / 100;
+            $shopFinalAmount = $shopTotalAmount + $shopTaxAmount + $TotalShippingAmount;
+            $taxArray[0] = $shopTaxAmount;
+
+            // ✅ Create Order
+            $order = Order::create([
+                'order_code' => Str::uuid(),
+                'number_of_products' => $shopProducts->count(),
+                'customer_id' => $request->customer_id,
+                'shop_id' => $shopId,
+                'sellers_id' => $vendorId,
+                'amount' => $shopFinalAmount,
+                'tax' => $taxArray,
+                'information' => $request->information,
+                'shipping_amount' => $TotalShippingAmount,
+                'stripe_payment_id' => $request->payment_id,
+                'payment_method' => $request->payment_method,
+                'payment_status' => $request->payment_status,
+                'refund' => $request->refund,
+                'campaign_id' => $request->campaign_id
+            ]);
+
+            // ✅ Fire Event for this Order
+            event(new OrderPlaced($order, $shopProducts, $request, $vendor, $customer, $shopTotalShipment));
+
+            $orderIds[] = $order->id;
+        }
+
+        // ✅ Final email to Buyer
+        $user = User::find($request->customer_id);
+        event(new BuyerOrderPlaced($user, $productsByShop, $TotalShippingAmount, $request));
+
+        // ✅ Get Orders for response
+        $MyOrders = Order::with([
+            'order_detail.products.shop',
+            'order_detail.products.product_gallery',
+            'order_detail.products.category',
+            'order_detail.products.brand',
+            'order_detail.products.model',
+            'order_detail.products.stock',
+            'order_detail.products.product_varient',
+            'order_detail.products.reviews.user',
+            'order_detail.products.tax',
+            'order_detail.varient',
+            'order_status',
+            'order_tracking'
+        ])->whereIn('id', $orderIds)->get();
+
+        return response([
+            'status' => true,
+            'message' => 'Order Created Successfully!',
+            'data' => $MyOrders
+        ], 200);
+    }
 
 
 
