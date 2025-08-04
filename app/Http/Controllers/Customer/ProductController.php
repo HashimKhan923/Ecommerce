@@ -200,12 +200,10 @@ class ProductController extends Controller
 
         // Step 6: Use keyword-based product search
         $products = Product::with([
-            'product_single_gallery' => function ($query) {
-                $query->orderBy('order', 'asc')
-                    ->select('id', 'product_id', 'image'); // necessary fields
+            'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
             },
         ])
-        ->select('id', 'name')
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
         ->where(function ($query) use ($keywords) {
