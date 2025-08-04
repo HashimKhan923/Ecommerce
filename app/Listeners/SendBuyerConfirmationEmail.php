@@ -23,7 +23,7 @@ class SendBuyerConfirmationEmail
     public function handle(OrderPlaced $event)
     {
         Mail::send('email.Order.order_recive', [
-            'buyer_name' => $event->user->name,
+            'buyer_name' => $event->customer->name,
             'productsByVendor' => $event->productsByShop,
             'TotalShippingAmount' => $event->TotalShippingAmount,
             'request' => $event->request
