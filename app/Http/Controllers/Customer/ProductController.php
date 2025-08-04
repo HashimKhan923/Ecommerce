@@ -162,6 +162,7 @@ class ProductController extends Controller
         ]);
 
         $assistantReply = $response['choices'][0]['message']['content'] ?? '';
+        $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
 
         // Step 4: Extract JSON filters from assistant's reply
         preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
