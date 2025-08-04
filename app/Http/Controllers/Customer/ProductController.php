@@ -138,6 +138,8 @@ class ProductController extends Controller
         $userMessage = $request->message;
 
         $chatHistory = $request->input('chat_history', []);
+        $storedFilters = $request->input('filters', []);
+
 
         // Append current user message to history
         $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
@@ -178,11 +180,8 @@ class ProductController extends Controller
 
         // Merge with previous filters
         $filters = array_merge($storedFilters, array_filter($newFilters));
-        session(['chat_filters' => $filters]);
 
-        // Append assistant reply to chat history
-        $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
-        session(['chat_history' => $chatHistory]);
+
         $products = collect();
         $keywords = '';
 

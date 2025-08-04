@@ -231,19 +231,7 @@
                     </tr>
                 @endif 
                 
-                @if($request->signature)
-                    <tr>
-                        <td><strong>Signature:</strong></td>
-                        <td style="text-align: right;"><span>${{ floatval($request->signature[0]) }}</span></td>
-                    </tr>
-                @endif  
-                
-                @if($request->insurance) 
-                    <tr>
-                        <td><strong>Insurance:</strong></td>
-                        <td style="text-align: right;"><span>${{ floatval($request->insurance[0]) }}</span></td>
-                    </tr>
-                @endif
+
 
                 @if($TotalShippingAmount)
                     <tr>
