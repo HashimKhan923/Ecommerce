@@ -135,117 +135,113 @@ class ProductController extends Controller
 
     public function chat(Request $request)
     {
-        $userMessage = $request->message;
+            $userMessage = $request->input('message');
+            $chatHistory = $request->input('chat_history', []);
+            $storedFilters = $request->input('filters', []);
 
-        $chatHistory = $request->input('chat_history', []);
-        $storedFilters = $request->input('filters', []);
+            // Append the user's message to history
+            $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-
-        // Append current user message to history
-        $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
-
-        // Step 2: Create system prompt for assistant
+            // System prompt — defining AutoGenie and product-prompt behavior
             $systemMessage = [
                 'role' => 'system',
-                'content' => 'You are AutoGenie, an auto parts shopping assistant for a marketplace website. 
-        Respond naturally to users. Not every time you have to return product data—if the message doesn’t contain any auto part-related keyword, just answer the question. At the end of each reply, include a JSON object with any available fields like: 
-        {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}.
-        All fields are optional. If some fields are already known from previous conversation, you don’t need to ask again.'
+                'content' => 'You are AutoGenie, an auto parts shopping assistant for a marketplace website.
+        Respond naturally to users. Not every time you have to return product‑related data—if the message doesn’t contain any auto parts keyword or request, just answer the question.
+        At the end of each reply, include a JSON object with available filters like: {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}. All fields are optional.'
             ];
 
-        // Step 3: Send request to OpenAI API
-        $messages = array_merge([$systemMessage], $chatHistory);
+            $messages = array_merge([$systemMessage], $chatHistory);
 
-        $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => $messages,
-        ]);
+            // Send to OpenAI
+            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => $messages,
+            ]);
 
-        $assistantReply = $response['choices'][0]['message']['content'] ?? '';
-        $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
+            $assistantReply = $response['choices'][0]['message']['content'] ?? '';
+            // Append assistant reply to history
+            $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
 
-        // Step 4: Extract JSON filters from assistant's reply
-        preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
-        $newFilters = [];
-
-        if (!empty($jsonMatch)) {
-            try {
-                $newFilters = json_decode($jsonMatch[0], true);
-                if (!is_array($newFilters)) {
+            // Extract JSON filters from assistant's reply
+            preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
+            $newFilters = [];
+            if (!empty($jsonMatch)) {
+                try {
+                    $decoded = json_decode($jsonMatch[0], true);
+                    if (is_array($decoded)) {
+                        $newFilters = $decoded;
+                    }
+                } catch (\Exception $e) {
                     $newFilters = [];
                 }
-            } catch (\Exception $e) {
-                $newFilters = [];
             }
-        }
 
-        // Merge with previous filters
-        $filters = array_merge($storedFilters, array_filter($newFilters));
+            $filters = [];
+            $products = collect();
+            $keywords = [];
 
+            // Only apply filters and search if newFilters contains meaningful product data
+            if (!empty($newFilters) && (
+                !empty($newFilters['make']) ||
+                !empty($newFilters['model']) ||
+                !empty($newFilters['part']) ||
+                !empty($newFilters['year']) ||
+                !empty($newFilters['max_price'])
+            )) {
+                $filters = array_merge($storedFilters, array_filter($newFilters));
 
-        $products = collect();
-        $keywords = '';
+                $searchQuery = implode(' ', array_filter([
+                    $filters['make'] ?? '',
+                    $filters['model'] ?? '',
+                    $filters['part'] ?? '',
+                    $filters['year'] ?? ''
+                ]));
 
-        if (!empty($filters['make']) || !empty($filters['model']) || !empty($filters['part']) || !empty($filters['year'])) {
+                $keywords = $searchQuery ? explode(' ', $searchQuery) : [];
 
-        // Step 5: Generate combined search string
-        $searchQuery = implode(' ', array_filter([
-            $filters['make'] ?? '',
-            $filters['model'] ?? '',
-            $filters['part'] ?? '',
-            $filters['year'] ?? ''
-        ]));
+                // Perform your product query
+                $products = Product::with(['product_single_gallery' => function ($q) {
+                    $q->orderBy('order', 'asc')->select('id', 'product_id', 'image');
+                }])
+                ->select('id', 'name', 'featured', 'price', 'published')
+                ->where('published', 1)
+                ->whereHas('shop', fn($q) => $q->where('status', 1))
+                ->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $soundex = soundex($keyword);
+                        $query->where(function ($q2) use ($keyword, $soundex) {
+                            $q2->where('sku', 'LIKE', "%{$keyword}%")
+                            ->orWhere('name', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw("SOUNDEX(name) = ?", [$soundex])
+                            ->orWhereJsonContains('tags', $keyword)
+                            ->orWhereJsonContains('start_year', $keyword)
+                            ->orWhereHas('shop', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                            ->orWhereHas('brand', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                            ->orWhereHas('model', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                            ->orWhereHas('category', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                            ->orWhereHas('sub_category', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"));
+                        });
+                    }
+                })
+                ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
+                ->distinct()
+                ->orderBy('featured', 'DESC')
+                ->orderBy('id', 'ASC')
+                ->take(20)
+                ->get();
 
-        $keywords = explode(' ', $searchQuery);
-
-        // Step 6: Use keyword-based product search
-        $products = Product::with([
-            'product_single_gallery' => function ($query) {
-                $query->orderBy('order', 'asc')
-                    ->select('id', 'product_id', 'image'); // necessary fields
-            },
-        ])
-        ->select('id', 'name','featured','price','published')
-        ->where('published', 1)
-        ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $soundexKeyword = soundex($keyword);
-
-                $query->where(function ($query) use ($keyword, $soundexKeyword) {
-                    $query->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundexKeyword])
-                        ->orWhereJsonContains('tags', $keyword)
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('brand', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('model', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('sub_category', fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"));
-                });
+                if ($products->count() && str_contains($assistantReply, "don't have")) {
+                    $assistantReply = "Yes, we have products matching your query. Let me show you the available options.";
+                }
             }
-        })
-        ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
-        ->distinct()
-        ->orderBy('featured', 'DESC')
-        ->orderBy('id', 'ASC')
-        ->take(20)
-        ->get();
 
-        }
-
-        // Step 7: Adjust reply if products found
-        if ($products->count() > 0 && str_contains($assistantReply, "don't have")) {
-            $assistantReply = "Yes, we have products matching your query. Let me show you the available options.";
-        }
-
-        return response()->json([
-            'reply' => $assistantReply,
-            'products' => $products,
-            'chat_history' => $chatHistory,
-            'filters' => $filters,
-            'keywords' => $keywords
-        ]);
+            return response()->json([
+                'reply' => $assistantReply,
+                'products' => $products,
+                'chat_history' => $chatHistory,
+                'filters' => $filters,
+                'keywords' => $keywords,
+            ]);
     }
+
 }
