@@ -148,7 +148,6 @@ class ProductController extends Controller
             $systemMessage = [
                 'role' => 'system',
                 'content' => 'You are AutoGenie, an auto parts shopping assistant for a marketplace website. only answers auto part-related questions. Always reply in English.
-                if someone ask about product which is not any auto parts just reply I am here to assist only with auto part-related questions. Please ask something related to car parts.
         Respond naturally to users. Not every time you have to return product‑related data—if the message doesn’t contain any auto parts keyword or request, just answer the question.
         At the end of each reply, include a JSON object with available filters like: {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}. All fields are optional.'
             ];
