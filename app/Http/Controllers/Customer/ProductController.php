@@ -182,10 +182,13 @@ class ProductController extends Controller
         $keywords = [];
 
         // Check for intent to view products
-        $productIntents = [
-            'do you have', 'i need', 'i want', 'can i get', 'show me', 'looking for',
-            'search for', 'find me', 'need to buy', 'i wanna buy', 'where can i get'
-        ];
+$productIntents = [
+    'do you have','i need','i want','can i get','show me','looking for','search for','find me','need to buy','i wanna buy','where can i get',
+    'i am looking for','i am searching for','i would like to buy','i’m interested in','can you show me','do you sell','i’d like to see',
+    'where to buy','can i see','want to buy','sell me','give me','suggest me','is there any','got any','any recommendation for','i’m buying','how much is','how can i buy',
+    'need a replacement for','replacement for','i want to order','help me find','buying options for','i’d love to get',
+    'please show me','can you find','can you help me get','i’m after','i want to purchase','want to see',
+];
 
         $userMessageLower = strtolower($userMessage);
         $hasProductIntent = false;
