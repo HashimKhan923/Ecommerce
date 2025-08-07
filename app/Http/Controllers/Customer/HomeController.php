@@ -97,6 +97,7 @@ class HomeController extends Controller
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
+
             'Models' => $Models,
             'Banners' => $Banners,
             'AllBanners' => $AllBanners,
