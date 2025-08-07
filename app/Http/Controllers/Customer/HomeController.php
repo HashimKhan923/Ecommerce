@@ -40,31 +40,31 @@ class HomeController extends Controller
           ->take(20)
           ->get();
 
-        //   $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
+          $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 
-        //     $trendingProducts = collect();
+            $trendingProducts = collect();
 
-        //     foreach ($trendingKeywords as $keyword) {
-        //         $matched = Product::with([
-        //     'stock',
-        //     'product_gallery' => function ($query) {
-        //         $query->orderBy('order', 'asc');
-        //     },
-        //     'discount','shop', 'reviews.user', 'product_varient'
-        // ])->where('published', 1)
+            foreach ($trendingKeywords as $keyword) {
+                $matched = Product::with([
+            'stock',
+            'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount','shop', 'reviews.user', 'product_varient'
+        ])->where('published', 1)
 
-        //   ->whereHas('shop', function ($query) {
-        //       $query->where('status', 1);
-        //   })->where('name', 'like', '%' . $keyword . '%')
-        //             ->where('is_active', 1) // Optional status
-        //             ->limit(2) // fetch 2 per keyword
-        //             ->get();
+          ->whereHas('shop', function ($query) {
+              $query->where('status', 1);
+          })->where('name', 'like', '%' . $keyword . '%')
+                    ->where('is_active', 1) // Optional status
+                    ->limit(2) // fetch 2 per keyword
+                    ->get();
 
-        //         $trendingProducts = $trendingProducts->merge($matched);
-        //     }
+                $trendingProducts = $trendingProducts->merge($matched);
+            }
 
-        //     // Remove duplicate products
-        //     $trendingProducts = $trendingProducts->unique('id')->take(20);
+            // Remove duplicate products
+            $trendingProducts = $trendingProducts->unique('id')->take(20);
     
         $Categories = Category::with([
             'subCategories' => function ($query) {
