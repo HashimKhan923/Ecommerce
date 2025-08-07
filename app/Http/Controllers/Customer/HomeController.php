@@ -13,6 +13,7 @@ use App\Models\Banner;
 use App\Models\AllBanner;
 use App\Models\State;
 use App\Models\Shop;
+use App\Models\AiTrendingProduct;
 use App\Models\Models;
 use App\Models\Deal;
 use DB;
@@ -38,6 +39,32 @@ class HomeController extends Controller
           ->orderByRaw('RAND()') 
           ->take(20)
           ->get();
+
+          $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
+
+            $trendingProducts = collect();
+
+            foreach ($trendingKeywords as $keyword) {
+                $matched = Product::with([
+            'stock',
+            'product_gallery' => function ($query) {
+                $query->orderBy('order', 'asc');
+            },
+            'discount','shop', 'reviews.user', 'product_varient'
+        ])->where('published', 1)
+
+          ->whereHas('shop', function ($query) {
+              $query->where('status', 1);
+          })->where('name', 'like', '%' . $keyword . '%')
+                    ->where('is_active', 1) // Optional status
+                    ->limit(2) // fetch 2 per keyword
+                    ->get();
+
+                $trendingProducts = $trendingProducts->merge($matched);
+            }
+
+            // Remove duplicate products
+            $trendingProducts = $trendingProducts->unique('id')->take(20);
     
         $Categories = Category::with([
             'subCategories' => function ($query) {
@@ -70,6 +97,7 @@ class HomeController extends Controller
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
+            'TrendingProducts' => $trendingKeywords,
             'Models' => $Models,
             'Banners' => $Banners,
             'AllBanners' => $AllBanners,
