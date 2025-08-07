@@ -68,10 +68,10 @@
 
 
 
-        @if(Str::startsWith($ProductImage, 'https'))
-        <img src="{{ $ProductImage }}" width="100px">
+        @if(Str::startsWith($productImage, 'https'))
+        <img src="{{ $productImage }}" width="100px">
                                  @else
-                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $ProductImage }}"
+                                 <img src="{{ 'https://api.dragonautomart.com/ProductGallery/' . $productImage }}"
                                  width="100px">                          
                                 @endif
 
