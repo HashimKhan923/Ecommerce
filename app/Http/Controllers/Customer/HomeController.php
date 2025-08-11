@@ -65,7 +65,7 @@ class HomeController extends Controller
         }
 
         // Remove duplicates and take final 20
-        $trendingProducts = $trendingProducts->unique('id')->take(20)->values();
+        $trendingProducts = $trendingProducts->unique('id')->take(30)->values();
     
         $Categories = Category::with([
             'subCategories' => function ($query) {
