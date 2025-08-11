@@ -23,22 +23,28 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $FeaturedProducts = Product::with([
-            'stock','wishlistProduct',
-            'product_gallery' => function ($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount','shop', 'reviews.user', 'product_varient'
-        ])->where('published', 1)
-        //   ->whereHas('stock', function ($query) {
-        //       $query->where('stock', '>', 0);
-        //   })
-          ->whereHas('shop', function ($query) {
-              $query->where('status', 1);
-          })->where('featured', 1)
-          ->orderByRaw('RAND()') 
-          ->take(20)
-          ->get();
+$FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured')
+    ->with([
+        'shop:id,name,status', // Only shop fields you need
+        'discount:id,product_id,discount,discount_type',
+        'product_gallery' => function ($query) {
+            $query->select('id', 'product_id', 'image', 'order')
+                  ->orderBy('order', 'asc');
+        },
+        'product_varient:id,product_id,price,discount_price',
+        'reviews' => function ($query) {
+            $query->select('id', 'product_id', 'user_id', 'rating')
+                  ->with('user:id,name');
+        }
+    ])
+    ->where('published', 1)
+    ->whereHas('shop', function ($query) {
+        $query->where('status', 1);
+    })
+    ->where('featured', 1)
+    ->orderByRaw('RAND()')
+    ->take(20)
+    ->get();
 
         $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 
