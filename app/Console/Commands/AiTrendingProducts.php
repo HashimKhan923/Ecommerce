@@ -31,7 +31,7 @@ class AiTrendingProducts extends Command
 
 $prompt = "Give me a list of the top 10 trending auto parts worldwide right now.
 Only include popular car makes and models like Toyota, Honda, Ford, BMW, etc.
-Each item should be a short keyword phrase (2 to 3 words), without any descriptions or extra text.
+Each item should be a short keyword phrase (3 to 4 words), without any descriptions or extra text.
 Format the response as a simple list, one per line.";
 
         $response = Http::withHeaders([
