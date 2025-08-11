@@ -46,42 +46,42 @@ $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured'
     ->take(20)
     ->get();
 
-        $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
+       $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 
-        $trendingProducts = collect();
+$trendingProducts = collect();
 
-        foreach ($trendingKeywords as $keyword) {
-            $words = explode(' ', trim($keyword));
+foreach ($trendingKeywords as $keyword) {
+    $words = explode(' ', trim($keyword));
 
-            $matched = Product::with([
-        'shop:id,name,status', // Only shop fields you need
-        'discount:id,product_id,discount,discount_type',
-        'product_gallery' => function ($query) {
-            $query->select('id', 'product_id', 'image', 'order')
-                  ->orderBy('order', 'asc');
-        },
-        'product_varient:id,product_id,price,discount_price',
-        'reviews' => function ($query) {
-            $query->select('id', 'product_id', 'user_id', 'rating')
-                  ->with('user:id,name');
-        }
-    ])
-    ->where('published', 1)
-    ->whereHas('shop', function ($query) {
-        $query->where('status', 1);
-    })
-            ->where(function($q) use ($words) {
-                foreach ($words as $word) {
-                    $q->orWhere('name', 'like', '%' . $word . '%'); // OR instead of AND
-                }
-            })
-            ->get(); // No limit here, collect everything first
+    $matched = Product::select('id', 'name', 'shop_id', 'price', 'featured')
+        ->with([
+            'shop:id,name,status',
+            'discount:id,product_id,discount,discount_type',
+            'product_gallery' => function ($query) {
+                $query->select('id', 'product_id', 'image', 'order')
+                      ->orderBy('order', 'asc');
+            },
+            'product_varient:id,product_id,price,discount_price',
+            'reviews' => function ($query) {
+                $query->select('id', 'product_id', 'user_id', 'rating')
+                      ->with('user:id,name');
+            }
+        ])
+        ->where('published', 1)
+        ->whereHas('shop', fn($q) => $q->where('status', 1))
+        ->where(function($q) use ($words) {
+            foreach ($words as $word) {
+                $q->orWhere('name', 'like', '%' . $word . '%');
+            }
+        })
+        ->get();
 
-            $trendingProducts = $trendingProducts->merge($matched);
-        }
+    $trendingProducts = $trendingProducts->merge($matched);
+}
 
-        // Remove duplicates and take final 20
-        $trendingProducts = $trendingProducts->unique('id')->take(30)->values();
+// Remove duplicates and take 30
+$trendingProducts = $trendingProducts->unique('id')->take(30)->values();
+
     
         $Categories = Category::with([
             'subCategories' => function ($query) {
