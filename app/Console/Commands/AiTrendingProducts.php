@@ -29,10 +29,17 @@ class AiTrendingProducts extends Command
     {
          AiTrendingProduct::truncate();
 
-$prompt = "Give me a list of the top 10 trending auto parts worldwide right now.
-Only include popular car makes and models like Toyota, Honda, Ford, BMW, etc.
-Each item should be a short keyword phrase (3 to 4 words), without any descriptions or extra text.
-Format the response as a simple list, one per line.";
+$prompt = <<<EOT
+Give me a list of the top 10 trending auto parts worldwide right now.
+
+Rules:
+- Each keyword must include a car make and model (e.g., "Honda Accord", "Toyota Camry", "Ford F-150", "BMW X5").
+- Then add the part name (e.g., "headlights", "brake pads", "tail lights").
+- Each keyword phrase should be 3 to 4 words total.
+- Do not give generic items without a make and model.
+- No descriptions, numbers, or extra text — just the keyword phrase.
+- Format as a simple list, one per line.
+EOT;
 
         $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
