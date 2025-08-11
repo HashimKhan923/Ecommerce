@@ -42,6 +42,8 @@ class HomeController extends Controller
 
           $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 
+          return $trendingKeywords;
+
             $trendingProducts = collect();
 
             foreach ($trendingKeywords as $keyword) {
