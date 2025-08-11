@@ -45,21 +45,23 @@ class HomeController extends Controller
         //   return $trendingKeywords;
 
             $trendingProducts = collect();
-
             foreach ($trendingKeywords as $keyword) {
-                $matched = Product::with([
-            'stock',
-            'product_gallery' => function ($query) {
-                $query->orderBy('order', 'asc');
-            },
-            'discount','shop', 'reviews.user', 'product_varient'
-        ])->where('published', 1)
+                $shortKeyword = Str::words($keyword, 3, ''); // keep only first 3 words
 
-          ->whereHas('shop', function ($query) {
-              $query->where('status', 1);
-          })->where('name', 'like', '%' . $keyword . '%')
-                    ->limit(2) // fetch 2 per keyword
-                    ->get();
+                $matched = Product::with([
+                    'stock',
+                    'product_gallery' => function ($query) {
+                        $query->orderBy('order', 'asc');
+                    },
+                    'discount', 'shop', 'reviews.user', 'product_varient'
+                ])
+                ->where('published', 1)
+                ->whereHas('shop', function ($query) {
+                    $query->where('status', 1);
+                })
+                ->where('name', 'like', '%' . $shortKeyword . '%')
+                ->limit(2)
+                ->get();
 
                 $trendingProducts = $trendingProducts->merge($matched);
             }
@@ -98,7 +100,7 @@ class HomeController extends Controller
             'Categories' => $Categories,
             'SubCategories'=>$SubCategories,
             'Brands' => $Brands,
-            'TrendingProducts' => $trendingKeywords,
+            'TrendingProducts' => $trendingProducts,
             'Models' => $Models,
             'Banners' => $Banners,
             'AllBanners' => $AllBanners,
