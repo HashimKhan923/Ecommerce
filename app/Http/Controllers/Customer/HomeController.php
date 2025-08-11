@@ -18,6 +18,7 @@ use App\Models\Models;
 use App\Models\Deal;
 use DB;
 use Carbon\Carbon;
+use Str;
 
 class HomeController extends Controller
 {
