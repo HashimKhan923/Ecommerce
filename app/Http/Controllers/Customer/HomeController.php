@@ -54,12 +54,22 @@ $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured'
             $words = explode(' ', trim($keyword));
 
             $matched = Product::with([
-                'stock',
-                'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
-                'discount', 'shop', 'reviews.user', 'product_varient'
-            ])
-            ->where('published', 1)
-            ->whereHas('shop', fn($q) => $q->where('status', 1))
+        'shop:id,name,status', // Only shop fields you need
+        'discount:id,product_id,discount,discount_type',
+        'product_gallery' => function ($query) {
+            $query->select('id', 'product_id', 'image', 'order')
+                  ->orderBy('order', 'asc');
+        },
+        'product_varient:id,product_id,price,discount_price',
+        'reviews' => function ($query) {
+            $query->select('id', 'product_id', 'user_id', 'rating')
+                  ->with('user:id,name');
+        }
+    ])
+    ->where('published', 1)
+    ->whereHas('shop', function ($query) {
+        $query->where('status', 1);
+    })
             ->where(function($q) use ($words) {
                 foreach ($words as $word) {
                     $q->orWhere('name', 'like', '%' . $word . '%'); // OR instead of AND
