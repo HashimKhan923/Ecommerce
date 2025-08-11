@@ -31,13 +31,13 @@ class AiTrendingProducts extends Command
 
 $prompt = "Give me a list of the top 10 trending auto parts worldwide right now.
 Only include popular car makes and models like Toyota, Honda, Ford, BMW, etc.
-Each item should be a short keyword phrase only words, without any descriptions or extra text.
+Each item should be a short keyword phrase (1 to 2 words), without any descriptions or extra text.
 Format the response as a simple list, one per line.";
 
         $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
         ])->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-4',
+            'model' => 'gpt-3.5-turbo',
             'messages' => [
                 ['role' => 'system', 'content' => 'You are an expert in the auto parts industry.'],
                 ['role' => 'user', 'content' => $prompt],
