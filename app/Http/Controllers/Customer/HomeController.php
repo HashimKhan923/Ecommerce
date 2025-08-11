@@ -40,32 +40,27 @@ class HomeController extends Controller
           ->take(20)
           ->get();
 
-        $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
+$trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 
-        $trendingProducts = collect();
+$trendingProducts = collect();
 
-        foreach ($trendingKeywords as $keyword) {
-            $words = explode(' ', trim($keyword));
+foreach ($trendingKeywords as $keyword) {
+    $matched = Product::with([
+        'stock',
+        'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
+        'discount', 'shop', 'reviews.user', 'product_varient'
+    ])
+    ->where('published', 1)
+    ->whereHas('shop', fn($q) => $q->where('status', 1))
+    ->where('name', 'like', '%' . $keyword . '%') // Full phrase match
+    ->limit(4) // Get 4 products per keyword
+    ->get();
 
-            $matched = Product::with([
-                'stock',
-                'product_gallery' => fn($q) => $q->orderBy('order', 'asc'),
-                'discount', 'shop', 'reviews.user', 'product_varient'
-            ])
-            ->where('published', 1)
-            ->whereHas('shop', fn($q) => $q->where('status', 1))
-            ->where(function($q) use ($words) {
-                foreach ($words as $word) {
-                    $q->orWhere('name', 'like', '%' . $word . '%'); // OR instead of AND
-                }
-            })
-            ->get(); // No limit here, collect everything first
+    $trendingProducts = $trendingProducts->merge($matched);
+}
 
-            $trendingProducts = $trendingProducts->merge($matched);
-        }
-
-        // Remove duplicates and take final 20
-        $trendingProducts = $trendingProducts->unique('id')->take(20)->values();
+// Remove duplicates & keep order
+$trendingProducts = $trendingProducts->unique('id')->values();
     
         $Categories = Category::with([
             'subCategories' => function ($query) {
