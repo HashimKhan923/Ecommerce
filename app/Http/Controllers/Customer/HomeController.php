@@ -83,28 +83,40 @@ foreach ($trendingKeywords as $keyword) {
 $trendingProducts = $trendingProducts->unique('id')->take(30)->values();
 
     
-        $Categories = Category::with([
-            'subCategories' => function ($query) {
-                $query->withCount('product') 
-                      ->orderBy('category_sub_category.order', 'asc'); 
-            }
-        ])
-        ->whereHas('product')
-        ->where('is_active', 1)
-        ->orderBy('order', 'asc')
-        ->get();
+$Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.mobile_banner') // Fully qualify columns
+          ->with([
+              'subCategories' => function ($query) {
+                  $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.icon','sub_categories.category_id')
+                        ->withCount('product')
+                        ->orderBy('category_sub_category.order', 'asc');
+              }
+          ])
+          ->whereHas('product')
+          ->where('is_active', 1)
+          ->orderBy('order', 'asc')
+          ->get();
+      
     
 
-        $Brands = Brand::with('model')->withCount('product')->whereHas('product')->where('is_active', 1)->orderByDesc('product_count')->get();
-        $Banners = Banner::where('status', 1)->get();
+        $Brands = Brand::select('id','name','logo','banner')->with('model')->withCount('product')->whereHas('product')->where('is_active', 1)->orderByDesc('product_count')->get();
+        $Banners = Banner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $States = State::where('status', 1)->get();
-        $SubCategories = SubCategory::with('category')->where('is_active', 1)->get();
-        $Models = Models::where('is_active',1)->get();
-        $AllBanners = AllBanner::where('status', 1)->get();
+        $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.icon','sub_categories.category_id')
+        ->with(['category' => function ($query) {
+            $query->select('categories.id', 'categories.name','categories.icon','categories.mobile_banner');
+        }])
+        ->where('is_active', 1)
+        ->orderBy('order', 'asc')
+        ->get();        
+        $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->withCount('product')->orderByDesc('product_count')->where('is_active',1)->get();
+        $AllBanners = AllBanner::select('id','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
-    ->where('status', 1)
-    ->withCount('product') 
-    ->get();
+        ->where('status', 1)
+        ->whereHas('seller', function ($query) {
+            $query->where('is_active', 1)->where('is_verify', 1); // or 1, depending on how you're storing status
+        })
+        ->withCount('product')
+        ->get();
 
 
 
