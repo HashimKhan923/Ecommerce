@@ -69,7 +69,7 @@ foreach ($trendingKeywords as $keyword) {
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->where('name', 'like', '%' . $keyword . '%') // full phrase search
+        ->whereRaw("MATCH(name) AGAINST(? IN NATURAL LANGUAGE MODE)", [$keyword])
         ->take(4)
         ->get();
 
