@@ -160,6 +160,7 @@ At the end of each reply, include a JSON object with available filters like: {"m
         if ($product) {
             $makes = $product->brand->pluck('name')->toArray();
             $models = $product->model->pluck('name')->toArray();
+            $price = $product->price;
             $years = json_decode($product->years, true); // true => array
             if (!is_array($years)) {
                 $years = []; // fallback if null or invalid
@@ -176,9 +177,10 @@ At the end of each reply, include a JSON object with available filters like: {"m
                 1. Help customers check if a part is compatible with their vehicle.
                 2. Provide detailed, helpful, and friendly information about the product itself.
 
-                description: $description
+                description: . $description
                 Make(s): " . implode(', ', $makes) . "
                 Model(s): " . implode(', ', $models) . "
+                Price: . $price
                 'Years: ' . $yearsText
 
                 Question: {$userMessage}
