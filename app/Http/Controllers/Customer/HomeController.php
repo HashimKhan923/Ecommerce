@@ -50,7 +50,7 @@ $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured'
 
 $trendingProducts = $trendingService->getTrendingProducts();
     
-$Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.banner') // Fully qualify columns
+$Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.banner','categories.mobile_banner') // Fully qualify columns
           ->with([
               'subCategories' => function ($query) {
                   $query->select('sub_categories.id', 'sub_categories.name', 'sub_categories.icon','sub_categories.category_id')
@@ -66,17 +66,17 @@ $Categories = Category::select('categories.id', 'categories.name','categories.ic
     
 
         $Brands = Brand::select('id','name','logo','banner')->with('model')->withCount('product')->whereHas('product')->where('is_active', 1)->orderByDesc('product_count')->get();
-        $Banners = Banner::select('id','link','image')->where('status', 1)->get();
+        $Banners = Banner::select('id','link','image','mobile_link','mobile_image')->where('status', 1)->get();
         $States = State::where('status', 1)->get();
         $SubCategories = SubCategory::select('sub_categories.id', 'sub_categories.name', 'sub_categories.icon','sub_categories.category_id')
         ->with(['category' => function ($query) {
-            $query->select('categories.id', 'categories.name','categories.icon','categories.banner');
+            $query->select('categories.id', 'categories.name','categories.icon','categories.banner','categories.mobile_banner');
         }])
         ->where('is_active', 1)
         ->orderBy('order', 'asc')
         ->get();        
         $Models = Models::select('id', 'name','logo','banner')->whereHas('product')->withCount('product')->orderByDesc('product_count')->where('is_active',1)->get();
-        $AllBanners = AllBanner::select('id','link','image')->where('status', 1)->get();
+        $AllBanners = AllBanner::select('id','link','image','mobile_link','mobile_image')->where('status', 1)->get();
         $Shops = Shop::with('seller', 'shop_policy')
         ->where('status', 1)
         ->whereHas('seller', function ($query) {
