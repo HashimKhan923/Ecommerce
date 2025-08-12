@@ -171,6 +171,11 @@ At the end of each reply, include a JSON object with available filters like: {"m
             $fitmentPrompt = "
                 The user is asking about this product: {$product->name}
 
+                You are an expert auto parts assistant. 
+                You have two main roles:
+                1. Help customers check if a part is compatible with their vehicle.
+                2. Provide detailed, helpful, and friendly information about the product itself.
+
                 description: $description
                 Make(s): " . implode(', ', $makes) . "
                 Model(s): " . implode(', ', $models) . "
@@ -181,7 +186,15 @@ At the end of each reply, include a JSON object with available filters like: {"m
                 If the product fits, say clearly: 'Yes, it fits your [year make model]' and explain why.
                 If it doesn't fit, say: 'No, it does not fit' and explain why.
                 If unsure, say: 'I don't have enough information to confirm'.
+
+                When the user asks:
+                - If the question is about vehicle fitment, check compatibility based on the Years Compatible.
+                - If the question is about the product, give detailed but easy-to-understand answers using the product data.
+                - Always keep your tone friendly and helpful.
                 ";
+                
+
+
 
             $messages[] = ['role' => 'system', 'content' => 'You are an auto parts compatibility checker.'];
             $messages[] = ['role' => 'user', 'content' => $fitmentPrompt];
