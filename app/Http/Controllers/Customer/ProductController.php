@@ -161,21 +161,23 @@ At the end of each reply, include a JSON object with available filters like: {"m
             $makes = $product->brand->pluck('name')->toArray();
             $models = $product->model->pluck('name')->toArray();
             $years  = $product->years;
+            $description = html_entity_decode(trim(strip_tags($product->description)));
+
 
             $fitmentPrompt = "
-The user is asking about this product: {$product->name}
+                The user is asking about this product: {$product->name}
 
-Specs:
-Make(s): " . implode(', ', $makes) . "
-Model(s): " . implode(', ', $models) . "
-Years: " . implode(', ', $years) . "
+                description: $description
+                Make(s): " . implode(', ', $makes) . "
+                Model(s): " . implode(', ', $models) . "
+                Years: " . implode(', ', $years) . "
 
-Question: {$userMessage}
+                Question: {$userMessage}
 
-If the product fits, say clearly: 'Yes, it fits your [year make model]' and explain why.
-If it doesn't fit, say: 'No, it does not fit' and explain why.
-If unsure, say: 'I don't have enough information to confirm'.
-";
+                If the product fits, say clearly: 'Yes, it fits your [year make model]' and explain why.
+                If it doesn't fit, say: 'No, it does not fit' and explain why.
+                If unsure, say: 'I don't have enough information to confirm'.
+                ";
 
             $messages[] = ['role' => 'system', 'content' => 'You are an auto parts compatibility checker.'];
             $messages[] = ['role' => 'user', 'content' => $fitmentPrompt];
