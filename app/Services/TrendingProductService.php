@@ -33,6 +33,7 @@ class TrendingProductService
                         }
                     ])
                     ->where('published', 1)
+                    ->orderByRaw('RAND()')
                     ->whereHas('shop', fn($q) => $q->where('status', 1))
                     ->where(function($q) use ($words) {
                         foreach ($words as $word) {
