@@ -160,7 +160,11 @@ At the end of each reply, include a JSON object with available filters like: {"m
         if ($product) {
             $makes = $product->brand->pluck('name')->toArray();
             $models = $product->model->pluck('name')->toArray();
-            $years  = $product->years;
+            $years = json_decode($product->years, true); // true => array
+            if (!is_array($years)) {
+                $years = []; // fallback if null or invalid
+            }
+            $yearsText = implode(', ', $years);
             $description = html_entity_decode(trim(strip_tags($product->description)));
 
 
@@ -170,7 +174,7 @@ At the end of each reply, include a JSON object with available filters like: {"m
                 description: $description
                 Make(s): " . implode(', ', $makes) . "
                 Model(s): " . implode(', ', $models) . "
-                Years: " . implode(', ', $years) . "
+                'Years: ' . $yearsText
 
                 Question: {$userMessage}
 
