@@ -155,12 +155,12 @@ At the end of each reply, include a JSON object with available filters like: {"m
 
     // ✅ If product_id is given, add fitment check prompt
     if ($productId) {
-        $product = Product::with(['makes', 'models', 'years'])->find($productId);
+        $product = Product::with(['brand', 'model'])->find($productId);
 
         if ($product) {
-            $makes = $product->makes->pluck('name')->toArray();
-            $models = $product->models->pluck('name')->toArray();
-            $years  = $product->years ? $product->years->pluck('year')->toArray() : [];
+            $makes = $product->brand->pluck('name')->toArray();
+            $models = $product->model->pluck('name')->toArray();
+            $years  = $product->years;
 
             $fitmentPrompt = "
 The user is asking about this product: {$product->name}
