@@ -46,39 +46,59 @@ $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured'
     ->take(20)
     ->get();
 
-       $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
-
+      $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 $trendingProducts = collect();
 
-foreach ($trendingKeywords as $keyword) {
+foreach ($trendingKeywords as $phrase) {
+
+    // Step 1: Exact phrase search
     $matched = Product::select('id', 'name', 'shop_id', 'price', 'featured')
         ->with([
             'shop:id,name,status',
             'discount:id,product_id,discount,discount_type',
-            'product_gallery' => function ($query) {
-                $query->select('id', 'product_id', 'image', 'order')
-                      ->orderBy('order', 'asc');
-            },
+            'product_gallery' => fn($q) => $q->select('id','product_id','image','order')->orderBy('order','asc'),
             'product_varient:id,product_id,price,discount_price',
-            'reviews' => function ($query) {
-                $query->select('id', 'product_id', 'user_id', 'rating')
-                      ->with('user:id,name');
-            }
+            'reviews' => fn($q) => $q->select('id','product_id','user_id','rating')->with('user:id,name')
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
-        // Exact phrase match using FULLTEXT
-        ->whereRaw("MATCH(name) AGAINST(? IN BOOLEAN MODE)", ['"' . $keyword . '"'])
+        ->where('name', 'LIKE', '%' . $phrase . '%') // full phrase match
         ->take(4)
         ->get();
 
+    // Step 2: If less than 4 found, fallback to keyword-by-keyword search
+    if ($matched->count() < 4) {
+        $words = explode(' ', $phrase);
+        
+        $additional = Product::select('id', 'name', 'shop_id', 'price', 'featured')
+            ->with([
+                'shop:id,name,status',
+                'discount:id,product_id,discount,discount_type',
+                'product_gallery' => fn($q) => $q->select('id','product_id','image','order')->orderBy('order','asc'),
+                'product_varient:id,product_id,price,discount_price',
+                'reviews' => fn($q) => $q->select('id','product_id','user_id','rating')->with('user:id,name')
+            ])
+            ->where('published', 1)
+            ->whereHas('shop', fn($q) => $q->where('status', 1))
+            ->where(function($q) use ($words) {
+                foreach ($words as $word) {
+                    $q->orWhere('name', 'LIKE', '%' . $word . '%');
+                }
+            })
+            ->take(4 - $matched->count())
+            ->get();
+
+        $matched = $matched->merge($additional);
+    }
+
+    // Step 3: Merge into final collection
     if ($matched->isNotEmpty()) {
         $trendingProducts = $trendingProducts->merge($matched);
     }
 }
 
-// Remove duplicates and take 30
-$trendingProducts = $trendingProducts->unique('id')->take(30)->values();
+// Remove duplicates and reindex
+$trendingProducts = $trendingProducts->unique('id')->values();
 
     
 $Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.banner') // Fully qualify columns
