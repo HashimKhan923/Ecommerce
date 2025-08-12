@@ -134,133 +134,161 @@ class ProductController extends Controller
     }
 
     public function chat(Request $request)
-    {
-        $userMessage = $request->input('message');
-        $chatHistory = $request->input('chat_history', []);
-        $storedFilters = $request->input('filters', []);
+{
+    $userMessage = $request->input('message');
+    $chatHistory = $request->input('chat_history', []);
+    $storedFilters = $request->input('filters', []);
+    $productId = $request->input('product_id'); // ✅ New
 
-        
+    // Append the user's message to history
+    $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
 
-        // Append the user's message to history
-        $chatHistory[] = ['role' => 'user', 'content' => $userMessage];
+    // System prompt
+    $systemMessage = [
+        'role' => 'system',
+        'content' => 'You are AutoGenie, an auto parts shopping assistant for a marketplace website. only answers auto part-related questions. Always reply in English.
+Respond naturally to users. Not every time you have to return product-related data—if the message doesn’t contain any auto parts keyword or request, just answer the question.
+At the end of each reply, include a JSON object with available filters like: {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}. All fields are optional.'
+    ];
 
-        // System prompt
-            $systemMessage = [
-                'role' => 'system',
-                'content' => 'You are AutoGenie, an auto parts shopping assistant for a marketplace website. only answers auto part-related questions. Always reply in English.
-        Respond naturally to users. Not every time you have to return product‑related data—if the message doesn’t contain any auto parts keyword or request, just answer the question.
-        At the end of each reply, include a JSON object with available filters like: {"make":"Honda","model":"Civic","year":2016,"part":"tail light","max_price":100}. All fields are optional.'
-            ];
+    $messages = array_merge([$systemMessage], $chatHistory);
 
-        $messages = array_merge([$systemMessage], $chatHistory);
+    // ✅ If product_id is given, add fitment check prompt
+    if ($productId) {
+        $product = Product::with(['makes', 'models', 'years'])->find($productId);
 
-        // Send to OpenAI
-        $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => $messages,
-        ]);
+        if ($product) {
+            $makes = $product->makes->pluck('name')->toArray();
+            $models = $product->models->pluck('name')->toArray();
+            $years  = $product->years ? $product->years->pluck('year')->toArray() : [];
 
-        $assistantReply = $response['choices'][0]['message']['content'] ?? '';
-        $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
+            $fitmentPrompt = "
+The user is asking about this product: {$product->name}
 
-        // Extract JSON filters from assistant's reply
-        preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
-        $newFilters = [];
-        if (!empty($jsonMatch)) {
-            try {
-                $decoded = json_decode($jsonMatch[0], true);
-                if (is_array($decoded)) {
-                    $newFilters = $decoded;
-                }
-            } catch (\Exception $e) {
-                $newFilters = [];
-            }
+Specs:
+Make(s): " . implode(', ', $makes) . "
+Model(s): " . implode(', ', $models) . "
+Years: " . implode(', ', $years) . "
+
+Question: {$userMessage}
+
+If the product fits, say clearly: 'Yes, it fits your [year make model]' and explain why.
+If it doesn't fit, say: 'No, it does not fit' and explain why.
+If unsure, say: 'I don't have enough information to confirm'.
+";
+
+            $messages[] = ['role' => 'system', 'content' => 'You are an auto parts compatibility checker.'];
+            $messages[] = ['role' => 'user', 'content' => $fitmentPrompt];
         }
-
-        $filters = [];
-        $products = collect();
-        $keywords = [];
-
-        // Check for intent to view products
-$productIntents = [
-    'do you have','i need','i want','can i get','show me','looking for','search for','find me','need to buy','i wanna buy','where can i get',
-    'i am looking for','i am searching for','i would like to buy','i’m interested in','can you show me','do you sell','i’d like to see',
-    'where to buy','can i see','want to buy','sell me','give me','suggest me','is there any','got any','any recommendation for','i’m buying','how much is','how can i buy',
-    'need a replacement for','replacement for','i want to order','help me find','buying options for','i’d love to get',
-    'please show me','can you find','can you help me get','i’m after','i want to purchase','want to see',
-];
-
-        $userMessageLower = strtolower($userMessage);
-        $hasProductIntent = false;
-        foreach ($productIntents as $intent) {
-            if (strpos($userMessageLower, $intent) !== false) {
-                $hasProductIntent = true;
-                break;
-            }
-        }
-
-        // Only search products if it's an actual product intent
-        if ($hasProductIntent && !empty($newFilters) && (
-            !empty($newFilters['make']) ||
-            !empty($newFilters['model']) ||
-            !empty($newFilters['part']) ||
-            !empty($newFilters['year']) ||
-            !empty($newFilters['max_price'])
-        )) {
-            $filters = array_merge($storedFilters, array_filter($newFilters));
-
-            $searchQuery = implode(' ', array_filter([
-                $filters['make'] ?? '',
-                $filters['model'] ?? '',
-                $filters['part'] ?? '',
-                $filters['year'] ?? ''
-            ]));
-
-            $keywords = $searchQuery ? explode(' ', $searchQuery) : [];
-
-            $products = Product::with(['product_single_gallery' => function ($q) {
-                $q->orderBy('order', 'asc')->select('id', 'product_id', 'image');
-            }])
-            ->select('id', 'name', 'featured', 'price', 'published')
-            ->where('published', 1)
-            ->whereHas('shop', fn($q) => $q->where('status', 1))
-            ->where(function ($query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $soundex = soundex($keyword);
-                    $query->where(function ($q2) use ($keyword, $soundex) {
-                        $q2->where('sku', 'LIKE', "%{$keyword}%")
-                        ->orWhere('name', 'LIKE', "%{$keyword}%")
-                        ->orWhereRaw("SOUNDEX(name) = ?", [$soundex])
-                        ->orWhereJsonContains('tags', $keyword)
-                        ->orWhereJsonContains('start_year', $keyword)
-                        ->orWhereHas('shop', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('brand', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('model', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('category', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
-                        ->orWhereHas('sub_category', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"));
-                    });
-                }
-            })
-            ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
-            ->distinct()
-            ->orderBy('featured', 'DESC')
-            ->orderBy('id', 'ASC')
-            ->take(20)
-            ->get();
-
-            if ($products->count() && str_contains($assistantReply, "don't have")) {
-                $assistantReply = "Yes, we have products matching your query. Let me show you the available options.";
-            }
-        }
-
-        return response()->json([
-            'reply' => $assistantReply,
-            'products' => $products,
-            'chat_history' => $chatHistory,
-            'filters' => $filters,
-            'keywords' => $keywords,
-        ]);
     }
+
+    // Send to OpenAI
+    $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => $messages,
+    ]);
+
+    $assistantReply = $response['choices'][0]['message']['content'] ?? '';
+    $chatHistory[] = ['role' => 'assistant', 'content' => $assistantReply];
+
+    // Extract JSON filters from assistant's reply
+    preg_match('/\{(?:[^{}]|(?R))*\}/', $assistantReply, $jsonMatch);
+    $newFilters = [];
+    if (!empty($jsonMatch)) {
+        try {
+            $decoded = json_decode($jsonMatch[0], true);
+            if (is_array($decoded)) {
+                $newFilters = $decoded;
+            }
+        } catch (\Exception $e) {
+            $newFilters = [];
+        }
+    }
+
+    $filters = [];
+    $products = collect();
+    $keywords = [];
+
+    // Check for intent to view products
+    $productIntents = [
+        'do you have','i need','i want','can i get','show me','looking for','search for','find me','need to buy','i wanna buy','where can i get',
+        'i am looking for','i am searching for','i would like to buy','i’m interested in','can you show me','do you sell','i’d like to see',
+        'where to buy','can i see','want to buy','sell me','give me','suggest me','is there any','got any','any recommendation for','i’m buying','how much is','how can i buy',
+        'need a replacement for','replacement for','i want to order','help me find','buying options for','i’d love to get',
+        'please show me','can you find','can you help me get','i’m after','i want to purchase','want to see',
+    ];
+
+    $userMessageLower = strtolower($userMessage);
+    $hasProductIntent = false;
+    foreach ($productIntents as $intent) {
+        if (strpos($userMessageLower, $intent) !== false) {
+            $hasProductIntent = true;
+            break;
+        }
+    }
+
+    // Only search products if it's an actual product intent
+    if ($hasProductIntent && !empty($newFilters) && (
+        !empty($newFilters['make']) ||
+        !empty($newFilters['model']) ||
+        !empty($newFilters['part']) ||
+        !empty($newFilters['year']) ||
+        !empty($newFilters['max_price'])
+    )) {
+        $filters = array_merge($storedFilters, array_filter($newFilters));
+
+        $searchQuery = implode(' ', array_filter([
+            $filters['make'] ?? '',
+            $filters['model'] ?? '',
+            $filters['part'] ?? '',
+            $filters['year'] ?? ''
+        ]));
+
+        $keywords = $searchQuery ? explode(' ', $searchQuery) : [];
+
+        $products = Product::with(['product_single_gallery' => function ($q) {
+            $q->orderBy('order', 'asc')->select('id', 'product_id', 'image');
+        }])
+        ->select('id', 'name', 'featured', 'price', 'published')
+        ->where('published', 1)
+        ->whereHas('shop', fn($q) => $q->where('status', 1))
+        ->where(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $soundex = soundex($keyword);
+                $query->where(function ($q2) use ($keyword, $soundex) {
+                    $q2->where('sku', 'LIKE', "%{$keyword}%")
+                    ->orWhere('name', 'LIKE', "%{$keyword}%")
+                    ->orWhereRaw("SOUNDEX(name) = ?", [$soundex])
+                    ->orWhereJsonContains('tags', $keyword)
+                    ->orWhereJsonContains('start_year', $keyword)
+                    ->orWhereHas('shop', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('brand', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('model', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('category', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"))
+                    ->orWhereHas('sub_category', fn($q3) => $q3->where('name', 'LIKE', "%{$keyword}%"));
+                });
+            }
+        })
+        ->when(!empty($filters['max_price']), fn($q) => $q->where('price', '<=', $filters['max_price']))
+        ->distinct()
+        ->orderBy('featured', 'DESC')
+        ->orderBy('id', 'ASC')
+        ->take(20)
+        ->get();
+
+        if ($products->count() && str_contains($assistantReply, "don't have")) {
+            $assistantReply = "Yes, we have products matching your query. Let me show you the available options.";
+        }
+    }
+
+    return response()->json([
+        'reply' => $assistantReply,
+        'products' => $products,
+        'chat_history' => $chatHistory,
+        'filters' => $filters,
+        'keywords' => $keywords,
+    ]);
+}
 
 
 }
