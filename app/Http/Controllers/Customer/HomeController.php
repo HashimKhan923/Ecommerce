@@ -51,8 +51,6 @@ $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured'
 $trendingProducts = collect();
 
 foreach ($trendingKeywords as $keyword) {
-    // $words = explode(' ', trim($keyword));
-
     $matched = Product::select('id', 'name', 'shop_id', 'price', 'featured')
         ->with([
             'shop:id,name,status',
@@ -69,11 +67,14 @@ foreach ($trendingKeywords as $keyword) {
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->where('name', 'like', '%' . $keyword . '%') // full phrase search
+        // Exact phrase match using FULLTEXT
+        ->whereRaw("MATCH(name) AGAINST(? IN BOOLEAN MODE)", ['"' . $keyword . '"'])
         ->take(4)
         ->get();
 
-    $trendingProducts = $trendingProducts->merge($matched);
+    if ($matched->isNotEmpty()) {
+        $trendingProducts = $trendingProducts->merge($matched);
+    }
 }
 
 // Remove duplicates and take 30
