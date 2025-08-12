@@ -23,7 +23,7 @@ use App\Services\TrendingProductService;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(TrendingProductService $trendingService)
     {
 $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured')
     ->with([
