@@ -46,59 +46,122 @@ $FeaturedProducts = Product::select('id', 'name', 'shop_id', 'price', 'featured'
     ->take(20)
     ->get();
 
-$trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
+      $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 $trendingProducts = collect();
 
-foreach ($trendingKeywords as $phrase) {
-    
-    // Step 1: Exact phrase match first
-    $matched = Product::select('id', 'name', 'shop_id', 'price', 'featured')
+foreach ($trendingKeywords as $keyword) {
+    $words = array_filter(explode(' ', trim($keyword))); // split and remove empty words
+    $collected = collect();
+
+    // --- Tier 1: Match at least 3 words ---
+    $tier1 = Product::select('id', 'name', 'shop_id', 'price', 'featured')
         ->with([
             'shop:id,name,status',
             'discount:id,product_id,discount,discount_type',
-            'product_gallery' => fn($q) => $q->select('id','product_id','image','order')->orderBy('order','asc'),
+            'product_gallery' => function ($query) {
+                $query->select('id', 'product_id', 'image', 'order')->orderBy('order', 'asc');
+            },
             'product_varient:id,product_id,price,discount_price',
-            'reviews' => fn($q) => $q->select('id','product_id','user_id','rating')->with('user:id,name')
+            'reviews' => function ($query) {
+                $query->select('id', 'product_id', 'user_id', 'rating')->with('user:id,name');
+            }
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->where('name', 'LIKE', '%' . $phrase . '%')
-        ->take(4)
-        ->get();
+        ->where(function($q) use ($words) {
+            foreach ($words as $word) {
+                $q->orWhere('name', 'like', '%' . $word . '%');
+            }
+        })
+        ->get()
+        ->filter(function ($product) use ($words) {
+            $count = 0;
+            foreach ($words as $word) {
+                if (stripos($product->name, $word) !== false) {
+                    $count++;
+                }
+            }
+            return $count >= 3;
+        });
 
-    // Step 2: If less than 4 results, fallback to word-by-word search
-    if ($matched->count() < 4) {
-        $words = explode(' ', $phrase);
+    $collected = $collected->merge($tier1)->take(4);
 
-        $additional = Product::select('id', 'name', 'shop_id', 'price', 'featured')
+    // --- Tier 2: Match at least 2 words ---
+    if ($collected->count() < 4) {
+        $tier2 = Product::select('id', 'name', 'shop_id', 'price', 'featured')
             ->with([
                 'shop:id,name,status',
                 'discount:id,product_id,discount,discount_type',
-                'product_gallery' => fn($q) => $q->select('id','product_id','image','order')->orderBy('order','asc'),
+                'product_gallery' => function ($query) {
+                    $query->select('id', 'product_id', 'image', 'order')->orderBy('order', 'asc');
+                },
                 'product_varient:id,product_id,price,discount_price',
-                'reviews' => fn($q) => $q->select('id','product_id','user_id','rating')->with('user:id,name')
+                'reviews' => function ($query) {
+                    $query->select('id', 'product_id', 'user_id', 'rating')->with('user:id,name');
+                }
             ])
             ->where('published', 1)
             ->whereHas('shop', fn($q) => $q->where('status', 1))
             ->where(function($q) use ($words) {
                 foreach ($words as $word) {
-                    $q->orWhere('name', 'LIKE', '%' . $word . '%');
+                    $q->orWhere('name', 'like', '%' . $word . '%');
                 }
             })
-            ->take(4 - $matched->count())
-            ->get();
+            ->get()
+            ->filter(function ($product) use ($words) {
+                $count = 0;
+                foreach ($words as $word) {
+                    if (stripos($product->name, $word) !== false) {
+                        $count++;
+                    }
+                }
+                return $count == 2;
+            });
 
-        $matched = $matched->merge($additional);
+        $collected = $collected->merge($tier2)->take(4);
     }
 
-    // Step 3: Add to final collection (no duplicates per keyword group)
-    if ($matched->isNotEmpty()) {
-        $trendingProducts = $trendingProducts->merge($matched);
+    // --- Tier 3: Match at least 1 word ---
+    if ($collected->count() < 4) {
+        $tier3 = Product::select('id', 'name', 'shop_id', 'price', 'featured')
+            ->with([
+                'shop:id,name,status',
+                'discount:id,product_id,discount,discount_type',
+                'product_gallery' => function ($query) {
+                    $query->select('id', 'product_id', 'image', 'order')->orderBy('order', 'asc');
+                },
+                'product_varient:id,product_id,price,discount_price',
+                'reviews' => function ($query) {
+                    $query->select('id', 'product_id', 'user_id', 'rating')->with('user:id,name');
+                }
+            ])
+            ->where('published', 1)
+            ->whereHas('shop', fn($q) => $q->where('status', 1))
+            ->where(function($q) use ($words) {
+                foreach ($words as $word) {
+                    $q->orWhere('name', 'like', '%' . $word . '%');
+                }
+            })
+            ->get()
+            ->filter(function ($product) use ($words) {
+                $count = 0;
+                foreach ($words as $word) {
+                    if (stripos($product->name, $word) !== false) {
+                        $count++;
+                    }
+                }
+                return $count == 1;
+            });
+
+        $collected = $collected->merge($tier3)->take(4);
     }
+
+    // Add the collected results for this keyword
+    $trendingProducts = $trendingProducts->merge($collected);
 }
 
-// Step 4: Remove duplicates overall
-$trendingProducts = $trendingProducts->unique('id')->values();
+// Remove duplicates and limit to 30
+$trendingProducts = $trendingProducts->unique('id')->take(30)->values();
 
     
 $Categories = Category::select('categories.id', 'categories.name','categories.icon','categories.banner') // Fully qualify columns
