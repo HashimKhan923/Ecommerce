@@ -50,8 +50,8 @@ $trendingKeywords = AiTrendingProduct::pluck('names')->toArray();
 $trendingProducts = collect();
 
 foreach ($trendingKeywords as $phrase) {
-
-    // Step 1: FULLTEXT exact phrase search
+    
+    // Step 1: Exact phrase match first
     $matched = Product::select('id', 'name', 'shop_id', 'price', 'featured')
         ->with([
             'shop:id,name,status',
@@ -62,14 +62,14 @@ foreach ($trendingKeywords as $phrase) {
         ])
         ->where('published', 1)
         ->whereHas('shop', fn($q) => $q->where('status', 1))
-        ->whereRaw("MATCH(name) AGAINST(? IN BOOLEAN MODE)", ['"'.$phrase.'"'])
+        ->where('name', 'LIKE', '%' . $phrase . '%')
         ->take(4)
         ->get();
 
-    // Step 2: Fallback to LIKE if not enough products
+    // Step 2: If less than 4 results, fallback to word-by-word search
     if ($matched->count() < 4) {
         $words = explode(' ', $phrase);
-        
+
         $additional = Product::select('id', 'name', 'shop_id', 'price', 'featured')
             ->with([
                 'shop:id,name,status',
@@ -91,12 +91,13 @@ foreach ($trendingKeywords as $phrase) {
         $matched = $matched->merge($additional);
     }
 
-    // Step 3: Add to final collection
+    // Step 3: Add to final collection (no duplicates per keyword group)
     if ($matched->isNotEmpty()) {
         $trendingProducts = $trendingProducts->merge($matched);
     }
 }
 
+// Step 4: Remove duplicates overall
 $trendingProducts = $trendingProducts->unique('id')->values();
 
     
