@@ -47,7 +47,7 @@ class CleanImageFolder extends Command
             $fileName = strtolower($file->getFilename());
 
             // If filename not in DB, delete it
-            if (!in_array($fileName, $dbImages)) {
+            if (!in_array($fileName, $productGalleryImages)) {
                 File::delete($file->getPathname());
                 $this->info("Deleted junk file: " . $fileName);
                 $deletedCount++;
@@ -58,7 +58,7 @@ class CleanImageFolder extends Command
             $fileName = strtolower($file->getFilename());
 
             // If filename not in DB, delete it
-            if (!in_array($fileName, $dbImages)) {
+            if (!in_array($fileName, $productVarientImages)) {
                 File::delete($file->getPathname());
                 $this->info("Deleted junk file: " . $fileName);
                 $deletedCount++;
