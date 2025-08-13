@@ -26,20 +26,35 @@ class CleanImageFolder extends Command
     public function handle()
     {
         // Adjust this to your image folder path
-        $folderPath = public_path('ProductGallery');  
+        $productGalleryPath = public_path('ProductGallery');  
+        $productVarientPath = public_path('ProductVarient');
 
         // If your DB table and column for images is different, change this
         // Example: If images are in "products" table in "image" column:
-        $dbImages = DB::table('product_galleries')->pluck('image')->toArray(); 
+        $productGalleryImages = DB::table('product_galleries')->pluck('image')->toArray(); 
+        $productVarientImages = DB::table('product_varients')->pluck('image')->toArray(); 
 
         // Convert array to fast lookup
-        $dbImages = array_map('strtolower', $dbImages);
+        $productGalleryImages = array_map('strtolower', $productGalleryImages);
+        $productVarientImages = array_map('strtolower', $productVarientImages);
 
         // Get all files in folder
-        $files = File::files($folderPath);
+        $galleryFiles = File::files($productGalleryPath);
+        $varientFiles = File::files($productVarientPath);
 
         $deletedCount = 0;
-        foreach ($files as $file) {
+        foreach ($galleryFiles as $file) {
+            $fileName = strtolower($file->getFilename());
+
+            // If filename not in DB, delete it
+            if (!in_array($fileName, $dbImages)) {
+                File::delete($file->getPathname());
+                $this->info("Deleted junk file: " . $fileName);
+                $deletedCount++;
+            }
+        }
+
+        foreach ($varientFiles as $file) {
             $fileName = strtolower($file->getFilename());
 
             // If filename not in DB, delete it
