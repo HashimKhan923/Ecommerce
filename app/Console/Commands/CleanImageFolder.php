@@ -26,11 +26,11 @@ class CleanImageFolder extends Command
     public function handle()
     {
         // Adjust this to your image folder path
-        $folderPath = public_path('Banner');  
+        $folderPath = public_path('ProductGallery');  
 
         // If your DB table and column for images is different, change this
         // Example: If images are in "products" table in "image" column:
-        $dbImages = DB::table('banners')->pluck('image')->toArray(); 
+        $dbImages = DB::table('product_galleries')->pluck('image')->toArray(); 
 
         // Convert array to fast lookup
         $dbImages = array_map('strtolower', $dbImages);
