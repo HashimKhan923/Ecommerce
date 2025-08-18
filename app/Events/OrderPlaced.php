@@ -18,12 +18,13 @@ class OrderPlaced
     /**
      * Create a new event instance.
      */
-    public $order, $shopProducts, $request, $vendor, $customer, $shopTotalShipment;
+    public $order, $shopProducts, $productsByShop, $request, $vendor, $customer, $shopTotalShipment;
 
-    public function __construct($order, $shopProducts, $request, $vendor, $customer, $shopTotalShipment)
+    public function __construct($order, $shopProducts, $productsByShop, $request, $vendor, $customer, $shopTotalShipment)
     {
         $this->order = $order;
         $this->shopProducts = $shopProducts;
+        $this->productsByShop = $productsByShop;
         $this->request = $request;
         $this->vendor = $vendor;
         $this->customer = $customer;
