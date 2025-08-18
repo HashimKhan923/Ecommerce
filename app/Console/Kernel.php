@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:remove-old-notification')->monthly();
         $schedule->command('campaigns:send')->everyMinute();
         $schedule->command('trending:update')->cron('0 0 */3 * *');
-        $schedule->command('clean:images')->daily();
+        $schedule->command('clean:images')->weekly();
         // $schedule->command('campaigns:rollup')->weeklyOn(0, '0:00');
 
     }
