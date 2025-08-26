@@ -15,7 +15,7 @@ class UpdateCustomerSale
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
