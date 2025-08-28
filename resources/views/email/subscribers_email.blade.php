@@ -363,7 +363,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style" style="height:37px; v-text-anchor:middle; width:221px;" arcsize="11%"  stroke="f" fillcolor="#3d772d"><w:anchorlock/><center style="color:#f3f3f3;"><![endif]-->
     <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6856?slug=hrs-2025-toyota-camry-led-tail-lights-the-retro-style'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #f3f3f3; background-color: #3d772d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;">Shop Now</span>
     </a>
@@ -439,7 +438,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series" style="height:37px; v-text-anchor:middle; width:220px;" arcsize="11%"  stroke="f" fillcolor="#3d772d"><w:anchorlock/><center style="color:#f3f3f3;"><![endif]-->
     <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6324?slug=hrs-2015-18-lexus-rc-series-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #f3f3f3; background-color: #3d772d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;">Shop Now</span>
     </a>
@@ -529,7 +527,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6355?slug=hrs-2017-21-honda-civic-10th-gen-hatchback-fk7-fk8-led-tail-lights-the-elite-series" style="height:37px; v-text-anchor:middle; width:220px;" arcsize="11%"  stroke="f" fillcolor="#3d772d"><w:anchorlock/><center style="color:#f3f3f3;"><![endif]-->
     <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6355?slug=hrs-2017-21-honda-civic-10th-gen-hatchback-fk7-fk8-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #f3f3f3; background-color: #3d772d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;">Shop Now</span>
     </a>
@@ -605,7 +602,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6607?slug=hrs-2022-25-toyota-gr86-subaru-brz-led-tail-lights-the-elite-series" style="height:37px; v-text-anchor:middle; width:220px;" arcsize="11%"  stroke="f" fillcolor="#3d772d"><w:anchorlock/><center style="color:#f3f3f3;"><![endif]-->
     <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6607?slug=hrs-2022-25-toyota-gr86-subaru-brz-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #f3f3f3; background-color: #3d772d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;">Shop Now</span>
     </a>
@@ -695,7 +691,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6435?slug=hrs-2009-24-nissan-gt-r-r35-led-tail-lights-the-elite-series" style="height:37px; v-text-anchor:middle; width:220px;" arcsize="11%"  stroke="f" fillcolor="#3d772d"><w:anchorlock/><center style="color:#f3f3f3;"><![endif]-->
     <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6435?slug=hrs-2009-24-nissan-gt-r-r35-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #f3f3f3; background-color: #3d772d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;">Shop Now</span>
     </a>
@@ -771,7 +766,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series" style="height:37px; v-text-anchor:middle; width:220px;" arcsize="11%"  stroke="f" fillcolor="#3d772d"><w:anchorlock/><center style="color:#f3f3f3;"><![endif]-->
     <a href="{{ route('email.track.visit', ['url' => urlencode('https://dragonautomart.com/product/6439?slug=hrs-2022-25-honda-civic-11th-gen-sedan-led-tail-lights-the-elite-series'), 'batch_id' => $batchId, 'user_id' => $userId->id]) }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #f3f3f3; background-color: #3d772d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
       <span style="display:block;padding:10px 20px;line-height:120%;">Shop Now</span>
     </a>
