@@ -155,6 +155,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                     Route::get('show','index');
                     Route::post('create','create');
                     Route::post('update','update');
+                    Route::get('status/{id}','status');
                     Route::get('delete/{id}','delete');
                     Route::post('multi_delete','multi_delete');
                 });
