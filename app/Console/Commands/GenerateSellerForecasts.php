@@ -1,14 +1,10 @@
 <?php
 
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Seller;
 use App\Models\Order;
 use App\Models\OrderForcast;
-use OpenAI\Laravel\Facades\OpenAI;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 
@@ -26,6 +22,7 @@ class GenerateSellerForecasts extends Command
 
             // Get past 12 months data
             $orders = Order::where('sellers_id', $seller->id)
+                ->where('created_at', '>=', now()->subMonths(12))
                 ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total_orders, SUM(amount) as total_revenue')
                 ->groupBy('month')
                 ->orderBy('month', 'asc')
@@ -36,22 +33,31 @@ class GenerateSellerForecasts extends Command
                 continue;
             }
 
-            // Prepare data for AI
+            // Prepare historical data
             $data = $orders->map(fn($o) => [
-                'month' => $o->month,
-                'orders' => $o->total_orders,
+                'month'   => $o->month,
+                'orders'  => $o->total_orders,
                 'revenue' => $o->total_revenue,
             ])->toArray();
+
+            // Generate fixed next 6 months
+            $months = [];
+            for ($i = 1; $i <= 6; $i++) {
+                $months[] = now()->addMonths($i)->format('Y-m');
+            }
 
             $prompt = "
             You are an AI that predicts sales.
             Input: past 12 months orders and revenue.
+            Task: Predict exactly the next 6 months starting from the next calendar month.
+            Months: " . json_encode($months) . "
+            
             Output: ONLY a valid JSON array with exactly this structure:
             [
-            {\"month\": \"YYYY-MM\", \"predicted_orders\": 123, \"predicted_revenue\": 4567.89, \"insight\": \"short insight\"}
+              {\"month\": \"YYYY-MM\", \"predicted_orders\": 123, \"predicted_revenue\": 4567.89, \"insight\": \"short insight\"}
             ]
 
-            No text before or after JSON. No explanations.
+            No text before or after JSON. 
             Data: " . json_encode($data);
 
             try {
@@ -73,15 +79,19 @@ class GenerateSellerForecasts extends Command
                     continue;
                 }
 
-                foreach ($predictions as $row) {
+                // Save predictions, enforce correct months
+                foreach ($months as $index => $month) {
+                    $row = $predictions[$index] ?? null;
+                    if (!$row) continue;
+
                     OrderForcast::updateOrCreate(
                         [
                             'seller_id' => $seller->id,
-                            'month'     => $row['month'],
+                            'month'     => $month,
                         ],
                         [
-                            'predicted_orders'  => $row['predicted_orders'],
-                            'predicted_revenue' => $row['predicted_revenue'],
+                            'predicted_orders'  => $row['predicted_orders'] ?? 0,
+                            'predicted_revenue' => $row['predicted_revenue'] ?? 0,
                             'insight'           => $row['insight'] ?? null,
                         ]
                     );
