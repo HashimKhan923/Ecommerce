@@ -9,6 +9,8 @@ use App\Models\Order;
 use App\Models\OrderForecast;
 use OpenAI\Laravel\Facades\OpenAI;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+use App\Models\User;
 
 class GenerateOrderForecasts extends Command
 {
@@ -53,14 +55,15 @@ class GenerateOrderForecasts extends Command
             ";
 
             try {
-                $response = OpenAI::chat()->create([
-                    'model' => 'gpt-4o-mini',
-                    'messages' => [
-                        ['role' => 'system', 'content' => 'You are an AI that generates numeric forecasts.'],
-                        ['role' => 'user', 'content' => $prompt]
-                    ],
-                    'temperature' => 0.3
-                ]);
+                $response = Http::withToken(env('OPENAI_API_KEY'))
+                    ->post('https://api.openai.com/v1/chat/completions', [
+                        'model' => 'gpt-4o-mini',
+                        'messages' => [
+                            ['role' => 'system', 'content' => 'You are an AI that generates numeric forecasts.'],
+                            ['role' => 'user', 'content' => $prompt],
+                        ],
+                        'temperature' => 0.3,
+                    ]);
 
                 $content = $response['choices'][0]['message']['content'] ?? '[]';
                 $predictions = json_decode($content, true);
