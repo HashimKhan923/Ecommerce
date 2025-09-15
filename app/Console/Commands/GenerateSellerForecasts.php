@@ -44,15 +44,15 @@ class GenerateSellerForecasts extends Command
             ])->toArray();
 
             $prompt = "
-            You are a sales forecasting assistant.
-            Based on this past 12 months data:\n" . json_encode($data) . "\n
-            Predict the next 6 months:
-            - month (YYYY-MM)
-            - predicted_orders
-            - predicted_revenue
-            - a one-sentence business insight
-            Return only JSON array.
-            ";
+            You are an AI that predicts sales.
+            Input: past 12 months orders and revenue.
+            Output: ONLY a valid JSON array with exactly this structure:
+            [
+            {\"month\": \"YYYY-MM\", \"predicted_orders\": 123, \"predicted_revenue\": 4567.89, \"insight\": \"short insight\"}
+            ]
+
+            No text before or after JSON. No explanations.
+            Data: " . json_encode($data);
 
             try {
                 $response = Http::withToken(env('OPENAI_API_KEY'))
