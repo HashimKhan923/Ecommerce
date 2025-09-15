@@ -25,7 +25,7 @@ class GenerateSellerForecasts extends Command
             $this->info("Processing seller: {$seller->id} - {$seller->name}");
 
             // Get past 12 months data
-            $orders = Order::where('seller_id', $seller->id)
+            $orders = Order::where('sellers_id', $seller->id)
                 ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as month, COUNT(*) as total_orders, SUM(amount) as total_revenue')
                 ->groupBy('month')
                 ->orderBy('month', 'asc')
