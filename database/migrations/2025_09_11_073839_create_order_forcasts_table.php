@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('insight')->nullable();
             $table->timestamps();
 
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
         });
 
     }
