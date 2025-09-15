@@ -6,7 +6,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Seller;
 use App\Models\Order;
-use App\Models\OrderForecast;
+use App\Models\OrderForcast;
 use OpenAI\Laravel\Facades\OpenAI;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -74,7 +74,7 @@ class GenerateSellerForecasts extends Command
                 }
 
                 foreach ($predictions as $row) {
-                    OrderForecast::updateOrCreate(
+                    OrderForcast::updateOrCreate(
                         [
                             'seller_id' => $seller->id,
                             'month'     => $row['month'],
