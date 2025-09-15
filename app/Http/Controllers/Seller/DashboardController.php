@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $activeProducts = Product::where('user_id', $id)->where('published', 1)->count();
         $draftProducts = Product::where('user_id', $id)->where('published', 0)->count();
 
-        $forecast = OrderForcast::where('seller_id', auth()->id())
+        $orderForcast = OrderForcast::where('seller_id', auth()->id())
         ->orderBy('month', 'asc')
         ->get();
 
@@ -64,6 +64,7 @@ class DashboardController extends Controller
             'featuredProducts' => $featuredProducts,
             'activeProducts' => $activeProducts,
             'draftProducts' => $draftProducts,
+            'orderForcast' => $orderForcast,
 
             'unReadMessageCount' => $unReadMessageCount,
             
