@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 
-class GenerateOrderForecasts extends Command
+class GenerateSellerForecasts extends Command
 {
     protected $signature = 'forecast:generate';
     protected $description = 'Generate 6-month AI forecasts for all sellers';
