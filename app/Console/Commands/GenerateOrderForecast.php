@@ -10,7 +10,7 @@ use App\Models\OrderForecast;
 use OpenAI\Laravel\Facades\OpenAI;
 use Carbon\Carbon;
 
-class GenerateSellerForecasts extends Command
+class GenerateOrderForecasts extends Command
 {
     protected $signature = 'forecast:generate';
     protected $description = 'Generate 6-month AI forecasts for all sellers';
