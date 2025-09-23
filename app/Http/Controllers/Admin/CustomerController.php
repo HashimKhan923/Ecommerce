@@ -34,6 +34,20 @@ class CustomerController extends Controller
         return response($response, 200);
     }
 
+    public function view_status($id)
+    {
+        $view_status = User::where('user_type','customer')->where('admin_status_view',0)->get();
+
+        foreach($view_status as $status)
+        {
+            $status->admin_status_view = 1;
+            $status->save();
+        }
+
+        $response = ['status'=>true,"message" => "View Status Changed Successfully!"];
+        return response($response, 200);
+    }
+
     public function delete($id)
     {
         User::find($id)->delete();

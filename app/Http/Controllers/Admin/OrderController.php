@@ -146,7 +146,18 @@ class OrderController extends Controller
 
     public function order_view()
     {
-        Order::where('view_status', 0)->update(['view_status' => 1]);
+        
+            $order = Order::where('admin_view_status', 0)->get();
+            if($order)
+            {
+                foreach($order as $orders)
+                    {
+                        $orders->admin_view_status = 1;
+                        $orders->save();
+                    }
+            }
+            $response = ['status'=>true,"message" => "Order Viewed Successfully!"];
+            return response($response, 200);
     }
 
     public function delete($id)

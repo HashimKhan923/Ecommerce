@@ -60,6 +60,9 @@ class OrderController extends Controller
             'order_timeline'
         )->where('id', $id)->first();
 
+  
+
+
         // Stripe Payment Details
         if ($data->payment_method == 'STRIPE') {
             try {
@@ -393,9 +396,15 @@ class OrderController extends Controller
         return response($response, 200);
     }
 
-    public function order_view($order_id)
+    public function order_view($seller_id)
     {
-        Order::where('id', $order_id)->update(['view_status' => 1]);
+        $order = Order::where('sellers_id', $seller_id)->where('view_status', 0)->get();
+        foreach($order as $orders)
+        {
+            $orders->view_status = 1;
+            $orders->save();
+        }
+
     }
 
     public function delete($id)
