@@ -87,7 +87,7 @@ public function show_rates(Request $request)
             ],
             "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
             "serviceType" => "INTERNATIONAL_ECONOMY",
-            "rateRequestType" => ["LIST"],
+            "rateRequestType" => ["ACCOUNT"],
             "customsClearanceDetail" => [
                 "commodities" => [
                     [
