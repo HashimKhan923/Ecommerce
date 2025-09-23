@@ -172,7 +172,7 @@ class SellerController extends Controller
 
     }
 
-    public function view_status($id)
+    public function view_status()
     {
         $view_status = User::where('user_type','seller')->where('admin_status_view',0)->get();
 
