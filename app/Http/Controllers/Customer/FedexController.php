@@ -36,104 +36,102 @@ class FedexController extends Controller
         }
     }
 
-    public function show_rates(Request $request)
-    {
+public function show_rates(Request $request)
+{
+    $url = 'https://apis.fedex.com/rate/v1/rates/quotes';
+    $token = $request->header('Authorization');
 
-        $url = 'https://apis.fedex.com/rate/v1/rates/quotes';
-        $token = $request->header('Authorization');
+    $requestedPackageLineItems = [];
 
-        
-        $requestedPackageLineItems = [];
-
-        foreach ($request->requestedPackageLineItems as $packageItem) {
-            $packageData = [
-                "weight" => [
-                    "value" => $packageItem['weight'],
-                    "units" => "LB"
-                ]
-            ];
-        
-            // if (!empty($packageItem['length']) && !empty($packageItem['width']) && !empty($packageItem['height'])) {
-            //     $packageData["dimensions"] = [
-            //         "length" => $packageItem['length'],
-            //         "width" => $packageItem['width'],
-            //         "height" => $packageItem['height'],
-            //         "units" => "IN"
-            //     ];
-            // }
-        
-            $requestedPackageLineItems[] = $packageData;
-        }
-
-        $payload = [
-            "accountNumber" => [
-                "value" => env('FEDEX_ACCOUNT')
-            ],
-            "requestedShipment" => [
-                "shipper" => [
-                    "address" => [
-                        "postalCode" => $request->shipper_postalCode, 
-                        "countryCode" => $request->shipper_countryCode
-                    ]
-                ],
-                "recipient" => [
-                    "address" => [
-                        "postalCode" => $request->recipient_postalCode, 
-                        "countryCode" => $request->recipient_countryCode,
-                    ]
-                ],
-                "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
-                "serviceType" => "INTERNATIONAL_ECONOMY",
-                "rateRequestType" => [ 
-                    "ACCOUNT"
-                ],
-                "customsClearanceDetail" => [
-                    "customsValue" => [
-                        "amount" => $request->declared_value,
-                        "currency" => "USD"
-                    ]
-                ],
-                "requestedPackageLineItems" => $requestedPackageLineItems
+    foreach ($request->requestedPackageLineItems as $packageItem) {
+        $packageData = [
+            "weight" => [
+                "value" => $packageItem['weight'],
+                "units" => $packageItem['units'] ?? "KG" // Middle East prefers KG
             ]
         ];
 
+        if (!empty($packageItem['length']) && !empty($packageItem['width']) && !empty($packageItem['height'])) {
+            $packageData["dimensions"] = [
+                "length" => $packageItem['length'],
+                "width" => $packageItem['width'],
+                "height" => $packageItem['height'],
+                "units" => $packageItem['dimension_unit'] ?? "CM"
+            ];
+        }
 
-        $client = new Client();
+        $requestedPackageLineItems[] = $packageData;
+    }
 
-        try {
+    $payload = [
+        "accountNumber" => [
+            "value" => env('FEDEX_ACCOUNT')
+        ],
+        "requestedShipment" => [
+            "shipper" => [
+                "address" => [
+                    "streetLines" => [$request->shipper_street ?? "Unknown"],
+                    "city" => $request->shipper_city ?? "",
+                    "postalCode" => $request->shipper_postalCode ?? "00000",
+                    "countryCode" => $request->shipper_countryCode
+                ]
+            ],
+            "recipient" => [
+                "address" => [
+                    "streetLines" => [$request->recipient_street ?? "Unknown"],
+                    "city" => $request->recipient_city ?? "",
+                    "postalCode" => $request->recipient_postalCode ?? "00000",
+                    "countryCode" => $request->recipient_countryCode,
+                    "residential" => false
+                ]
+            ],
+            "pickupType" => "DROPOFF_AT_FEDEX_LOCATION",
+            "serviceType" => $request->serviceType ?? "INTERNATIONAL_PRIORITY",
+            "rateRequestType" => ["ACCOUNT"],
+            "customsClearanceDetail" => [
+                "commodities" => [
+                    [
+                        "description" => $request->commodity_description ?? "Car Parts",
+                        "quantity" => $request->commodity_quantity ?? 1,
+                        "quantityUnits" => "PCS",
+                        "weight" => [
+                            "value" => $request->commodity_weight ?? 1,
+                            "units" => "KG"
+                        ],
+                        "customsValue" => [
+                            "amount" => $request->declared_value,
+                            "currency" => $request->currency ?? "USD"
+                        ]
+                    ]
+                ],
+                "customsValue" => [
+                    "amount" => $request->declared_value,
+                    "currency" => $request->currency ?? "USD"
+                ]
+            ],
+            "requestedPackageLineItems" => $requestedPackageLineItems
+        ]
+    ];
+
+    $client = new Client();
+
+    try {
         $response = $client->post($url, [
             'headers' => [
                 'Authorization' => $token,
                 'X-locale' => 'en_US',
                 'Content-Type' => 'application/json',
             ],
-            
-            'json' => $payload, 
+            'json' => $payload,
         ]);
 
         $body = $response->getBody()->getContents();
-
         return response()->json(json_decode($body));
-
-        } catch (\Exception $e) {
-
-            // Mail::send(
-            //     'email.exception',
-            //     [
-            //         'exceptionMessage' => $e->getMessage(),
-            //         'exceptionFile' => $e->getFile(),
-            //         'exceptionLine' => $e->getLine(),
-            //     ],
-            //     function ($message) {
-            //         $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
-            //         $message->to('support@dragonautomart.com'); // Send to support email
-            //         $message->subject('Dragon Exception');
-            //     }
-            // );
-
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
 
 
