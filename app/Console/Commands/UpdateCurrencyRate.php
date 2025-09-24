@@ -17,7 +17,7 @@ class UpdateCurrencyRate extends Command
             $response = Http::get('https://api.exchangerate.host/convert', [
                 'from'   => 'USD',
                 'to'     => 'AED',
-                'apikey' => config('services.exchangerate.key'),
+                'access_key' => config('services.exchangerate.key'),
             ]);
 
             $data = $response->json();
