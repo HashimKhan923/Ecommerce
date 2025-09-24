@@ -44,11 +44,16 @@ return [
     ],
 
 
-        'google' => [
-            'client_id' => '400530329929-hlp4g1d951orjf69l7nauf90c7qlqvdr.apps.googleusercontent.com',
-            'client_secret' => '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',
-            'redirect' => 'https://api.dragonautomart.com/api/login/google/callback',
-        ],
+    'google' => [
+        'client_id' => '400530329929-hlp4g1d951orjf69l7nauf90c7qlqvdr.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'https://api.dragonautomart.com/api/login/google/callback',
+    ],
+
+    'exchangerate' => [
+        'key' => env('EXCHANGERATE_API_KEY'),
+    ],
+
     
 
 ];

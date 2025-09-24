@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('trending:update')->cron('0 0 */3 * *');
         $schedule->command('clean:images')->weekly();
         $schedule->command('forecast:generate')->daily();
+        $schedule->command('currency:update')->everyEightHours();
 
         // $schedule->command('campaigns:rollup')->weeklyOn(0, '0:00');
 
