@@ -30,16 +30,6 @@ class OrderController extends Controller
 {
     public function index($id)
     {
-        $order = Order::where('sellers_id', $id)->where('view_status', 0)->get();
-        if($order->isNotEmpty()){
-                foreach($order as $orders)
-                {
-                    $orders->view_status = 1;
-                    $orders->save();
-                }  
-        }
-
-
 
         $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')->where('sellers_id',$id)->get();
 
@@ -71,7 +61,11 @@ class OrderController extends Controller
             'order_timeline'
         )->where('id', $id)->first();
 
-  
+            if($data->view_status == 0)
+            {
+                $data->view_status = 1;
+                $data->save();
+            }
 
 
         // Stripe Payment Details
