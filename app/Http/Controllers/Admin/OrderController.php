@@ -16,6 +16,17 @@ class OrderController extends Controller
 
     public function index()
     {
+        $order = Order::where('admin_view_status', 0)->get();
+        if($order)
+        {
+            foreach($order as $orders)
+                {
+                    $orders->admin_view_status = 1;
+                    $orders->save();
+                }
+        }
+
+
         $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')->get();
 
         return response()->json(['data'=>$data]);
