@@ -24,8 +24,8 @@ class DashboardController extends Controller
         $Orders = Order::all();
         $Payouts = Payout::all();
 
-        $customersViewCount = User::where('user_type','customer')->where('admin_status_view',0)->count();
-        $sellersViewCount = User::where('user_type','seller')->where('admin_status_view',0)->count();
+        $customersViewCount = User::where('user_type','customer')->where('admin_view_status',0)->count();
+        $sellersViewCount = User::where('user_type','seller')->where('admin_view_status',0)->count();
 
         $Notifications = Notification::where('customer_id',null)->get();
 

@@ -16,13 +16,13 @@ class SellerController extends Controller
     public function index()
     {
 
-        $view_status = User::where('user_type','seller')->where('admin_status_view',0)->get();
+        $view_status = User::where('user_type','seller')->where('admin_view_status',0)->get();
 
         if($view_status->isNotEmpty())
         {
             foreach($view_status as $status)
                 {
-                    $status->admin_status_view = 1;
+                    $status->admin_view_status = 1;
                     $status->save();
                 }
         }
