@@ -19,6 +19,9 @@ use App\Models\Deal;
 use DB;
 use Carbon\Carbon;
 use App\Services\TrendingProductService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\CurrencyRate;
 
 
 class HomeController extends Controller
@@ -85,6 +88,16 @@ $Categories = Category::select('categories.id', 'categories.name','categories.ic
         ->withCount('product')
         ->get();
 
+        $CurrencyRate = CurrencyRate::where('base_currency', 'USD')->where('target_currency', 'AED')->first();
+        if ($CurrencyRate) {
+            $exchangeRate = $CurrencyRate->rate;
+            // You can now use $exchangeRate as needed
+        } else {
+            // Handle the case where the rate is not found
+            $exchangeRate = null; // or some default value
+        }
+        // Log::info('Exchange Rate (USD to AED): ' . $exchangeRate);
+
 
 
     
@@ -98,7 +111,8 @@ $Categories = Category::select('categories.id', 'categories.name','categories.ic
             'Banners' => $Banners,
             'AllBanners' => $AllBanners,
             'Shops' => $Shops,
-            'States' => $States
+            'States' => $States,
+            'ExchangeRate' => $exchangeRate
         ]);
     }
 
