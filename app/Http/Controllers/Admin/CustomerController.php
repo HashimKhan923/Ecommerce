@@ -10,6 +10,18 @@ class CustomerController extends Controller
 {
     public function index()
     {
+        $view_status = User::where('user_type','customer')->where('admin_status_view',0)->get();
+
+        if($view_status->isNotEmpty())
+        {
+            foreach($view_status as $status)
+                {
+                    $status->admin_status_view = 1;
+                    $status->save();
+                }
+        }
+
+
         $Customers = User::with('time_line','order.order_timeline')->where('user_type','customer')->get();
 
         return response()->json(["Customers"=>$Customers]);

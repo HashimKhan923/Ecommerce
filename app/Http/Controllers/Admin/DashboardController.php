@@ -24,9 +24,12 @@ class DashboardController extends Controller
         $Orders = Order::all();
         $Payouts = Payout::all();
 
+        $customersViewCount = User::where('user_type','customer')->where('admin_status_view',0)->count();
+        $sellersViewCount = User::where('user_type','seller')->where('admin_status_view',0)->count();
+
         $Notifications = Notification::where('customer_id',null)->get();
 
 
-        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores,'Notifications'=>$Notifications,'Payouts'=>$Payouts]);
+        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores,'Notifications'=>$Notifications,'Payouts'=>$Payouts,'customersViewCount'=>$customersViewCount,'sellersViewCount'=>$sellersViewCount]);
     }
 }

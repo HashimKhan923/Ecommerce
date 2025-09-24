@@ -15,7 +15,19 @@ class SellerController extends Controller
 {
     public function index()
     {
-        // $Sellers = User::with('my_customers.customer','time_line','seller_order.order_timeline','seller_order.order_refund','stafs','shop.shop_policy','shop.product','seller_information','SellingPlatforms','SocialPlatforms','BankDetail','CreditCard')->where('user_type','seller')->get();
+
+        $view_status = User::where('user_type','seller')->where('admin_status_view',0)->get();
+
+        if($view_status->isNotEmpty())
+        {
+            foreach($view_status as $status)
+                {
+                    $status->admin_status_view = 1;
+                    $status->save();
+                }
+        }
+
+
         $Sellers = User::with(['my_customers.customer', 'seller_time_line', 'seller_order.order_timeline', 'seller_order.order_refund', 'stafs', 'shop' => function($query) {
             $query->withCount('product');
         }, 'seller_information', 'SellingPlatforms', 'SocialPlatforms', 'BankDetail', 'CreditCard'])
@@ -174,13 +186,7 @@ class SellerController extends Controller
 
     public function view_status()
     {
-        $view_status = User::where('user_type','seller')->where('admin_status_view',0)->get();
 
-        foreach($view_status as $status)
-        {
-            $status->admin_status_view = 1;
-            $status->save();
-        }
 
         $response = ['status'=>true,"message" => "View Status Changed Successfully!"];
         return response($response, 200);

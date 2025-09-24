@@ -30,6 +30,17 @@ class OrderController extends Controller
 {
     public function index($id)
     {
+        $order = Order::where('sellers_id', $id)->where('view_status', 0)->get();
+        if($order->isNotEmpty()){
+                foreach($order as $orders)
+                {
+                    $orders->view_status = 1;
+                    $orders->save();
+                }  
+        }
+
+
+
         $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')->where('sellers_id',$id)->get();
 
         return response()->json(['data'=>$data]);
