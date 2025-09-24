@@ -17,28 +17,24 @@ class UpdateCurrencyRate extends Command
             $response = Http::get('https://api.exchangerate.host/convert', [
                 'from'   => 'USD',
                 'to'     => 'AED',
+                'amount' => 1,
                 'access_key' => config('services.exchangerate.key'),
             ]);
 
             $data = $response->json();
 
-            if (isset($data['result'])) {
-                $rate = $data['result'];
+        if (isset($data['result'])) {
+            $rate = $data['result'];
 
-                CurrencyRate::updateOrCreate(
-                    [
-                        'base_currency'   => 'USD',
-                        'target_currency' => 'AED',
-                    ],
-                    [
-                        'rate' => $rate,
-                    ]
-                );
+            CurrencyRate::updateOrCreate(
+                ['base_currency' => 'USD', 'target_currency' => 'AED'],
+                ['rate' => $rate]
+            );
 
-                $this->info("Exchange rate updated: 1 USD = {$rate} AED");
-            } else {
-                $this->error("Failed to fetch rate: " . json_encode($data));
-            }
+            $this->info("Exchange rate updated: 1 USD = {$rate} AED");
+        } else {
+            $this->error("Failed to fetch rate: " . json_encode($data));
+        }
 
         } catch (\Exception $e) {
             $this->error("Error: " . $e->getMessage());
