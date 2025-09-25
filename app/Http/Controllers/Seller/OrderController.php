@@ -54,9 +54,10 @@ class OrderController extends Controller
             });
         }
 
-        $data = $query->skip($start)
-                    ->take($length)
-                    ->get();
+        $data = $query->orderBy('id', 'desc')
+        ->skip($start)
+        ->take($length)
+        ->get();
 
         return response()->json(['data' => $data]);
     }
