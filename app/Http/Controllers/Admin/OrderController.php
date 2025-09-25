@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
 
 
-    public function index()
+    public function index($shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
     {
         $order = Order::where('admin_view_status', 0)->get();
         if($order)
@@ -27,10 +27,37 @@ class OrderController extends Controller
         }
 
 
-        $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')->get();
+        $query = Order::with(['shop', 'order_tracking']);
 
-        return response()->json(['data'=>$data]);
+
+
+        if ($shop_id) {
+            $query->where('shop_id', $shop_id);
+        }
+
+        if ($status) {
+            $query->where('delivery_status', $status);
+        }
+
+        if ($searchValue) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('id',$searchValue);
+            })
+            ->orWhereHas('customer', function ($q) use ($searchValue) {
+                $q->where('name', 'like', "%{$searchValue}%")
+                ->orWhere('email', 'like', "%{$searchValue}%");
+            });
+        }
+
+        $data = $query->orderBy('id', 'desc')
+        ->skip($start)
+        ->take($length)
+        ->get();
+
+        return response()->json(['data' => $data]);
     }
+
+    
 
     public function admin_orders($id)
     {
