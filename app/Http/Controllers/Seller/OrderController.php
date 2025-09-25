@@ -28,18 +28,39 @@ use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    public function index($seller_id = null, $shop_id = null, $start = null, $lenght = null, $searchValue = null)
+    public function index($seller_id = null, $shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
     {
+        $query = Order::with(['order_detail.varient', 'order_status', 'order_refund', 'shop', 'order_tracking']);
 
-        $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')
-        ->where('sellers_id',$id)
-        ->where('shop_id',$shop_id)
-        ->skip($start)
-        ->take($lenght)
-        ->get();
+        if ($seller_id) {
+            $query->where('sellers_id', $seller_id);
+        }
 
-        return response()->json(['data'=>$data]);
+        if ($shop_id) {
+            $query->where('shop_id', $shop_id);
+        }
+
+        if ($status) {
+            $query->where('delivery_status', $status);
+        }
+
+        if ($searchValue) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('id',$searchValue);
+            })
+            ->orWhereHas('customer', function ($q) use ($searchValue) {
+                $q->where('name', 'like', "%{$searchValue}%")
+                ->orWhere('email', 'like', "%{$searchValue}%");
+            });
+        }
+
+        $data = $query->skip($start)
+                    ->take($length)
+                    ->get();
+
+        return response()->json(['data' => $data]);
     }
+
 
     public function detail($id)
     {

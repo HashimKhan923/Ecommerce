@@ -710,7 +710,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/order/'], function() {
                 Route::controller(App\Http\Controllers\Seller\OrderController::class)->group(function () {
-                    Route::get('show/{seller_id}/{shop_id}/{start}/{lenght}','index');
+                    Route::get('show/{seller_id?}/{shop_id?}/{start?}/{length?}','index');
                     Route::get('detail/{id}','detail');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
