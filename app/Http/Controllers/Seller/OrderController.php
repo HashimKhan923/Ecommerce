@@ -28,10 +28,15 @@ use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    public function index($id)
+    public function index($seller_id, $shop_id, $start, $lenght)
     {
 
-        $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')->where('sellers_id',$id)->get();
+        $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')
+        ->where('sellers_id',$id)
+        ->where('shop_id',$shop_id)
+        ->skip($start)
+        ->take($lenght)
+        ->get();
 
         return response()->json(['data'=>$data]);
     }
