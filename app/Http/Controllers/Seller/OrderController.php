@@ -30,7 +30,7 @@ class OrderController extends Controller
 {
     public function index($seller_id = null, $shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
     {
-        $query = Order::with(['order_detail.varient', 'order_status', 'order_refund', 'shop', 'order_tracking']);
+        $query = Order::with(['shop', 'order_tracking']);
 
         if ($seller_id) {
             $query->where('sellers_id', $seller_id);
