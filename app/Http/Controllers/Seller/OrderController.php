@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    public function index($seller_id, $shop_id, $start, $lenght)
+    public function index($seller_id = null, $shop_id = null, $start = null, $lenght = null, $searchValue = null)
     {
 
         $data = Order::with('order_detail.varient','order_status','order_refund','shop','order_tracking')

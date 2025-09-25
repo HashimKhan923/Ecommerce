@@ -126,6 +126,9 @@ class RefundController extends Controller
         Payout::where('order_id',$change->order_id)->delete();
 
         $Order = Order::with('order_detail.products.product_single_gallery')->where('id',$change->order_id)->first();
+        $Order->delivery_status = 'Cancelled';
+        $Order->payment_status = 'Refunded';
+        $Order->save();
         $user = User::where('id',$Order->customer_id)->first();
 
         Notification::create([
