@@ -19,6 +19,8 @@ use App\Models\Notification;
 use App\Models\Deal;
 use App\Models\Chat;
 use App\Models\OrderForcast;
+use Carbon\Carbon;
+use DB;
 
 
 class DashboardController extends Controller
@@ -38,7 +40,10 @@ class DashboardController extends Controller
         $unReadMessageCount = Chat::where('reciver_id', $id)->where('status','unread')->count();
 
         // Order Data
-        $orders = Order::where('sellers_id', $id)->get();
+        $orders = Order::where('sellers_id', $id)
+        ->where('created_at', '>=', Carbon::now()->subYear()) // last 12 months
+        ->select('amount', 'created_at') // only required columns
+        ->get();
         $totalOrders = Order::where('sellers_id', $id)->count();
         $fulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->count();
         $unfulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Pending')->doesntHave('order_refund')->count();
