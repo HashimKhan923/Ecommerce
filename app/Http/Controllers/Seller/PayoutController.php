@@ -11,9 +11,27 @@ use App\Models\User;
 
 class PayoutController extends Controller
 {
-    public function index($id)
+    public function index($seller_id = null, $shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
     {
-        $data = Payout::with('order.shop','listing_fee','featuredProductOrders','seller')->where('seller_id',$id)->get();
+        $query = Payout::with('order.shop','listing_fee','featuredProductOrders','seller')->where('seller_id',$seller_id)->get();
+
+
+        if ($shop_id) {
+            $query->where('shop_id', $shop_id);
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        if ($searchValue) {
+            $query->where('order_id',$searchValue);
+        }
+
+        $data = $query->orderBy('id', 'desc')
+        ->skip($start)
+        ->take($length)
+        ->get();
 
         return response()->json(['data'=>$data]);
     }

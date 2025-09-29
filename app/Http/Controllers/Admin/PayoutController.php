@@ -14,9 +14,27 @@ use Mail;
 
 class PayoutController extends Controller
 {
-    public function index()
+    public function index($shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
     {
-        $data = Payout::with('order.shop','listing_fee','featuredProductOrders','seller')->get();
+        $query = Payout::with('order.shop','listing_fee','featuredProductOrders','seller')->get();
+
+
+        if ($shop_id) {
+            $query->where('shop_id', $shop_id);
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        if ($searchValue) {
+            $query->where('order_id',$searchValue);
+        }
+
+        $data = $query->orderBy('id', 'desc')
+        ->skip($start)
+        ->take($length)
+        ->get();
 
         return response()->json(['data'=>$data]);
     }
