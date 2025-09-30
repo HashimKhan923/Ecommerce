@@ -13,7 +13,7 @@ class PayoutController extends Controller
 {
     public function index($seller_id, $shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
     {
-        $query = Payout::with('order.shop','listing_fee','featuredProductOrders','seller')->where('seller_id',$seller_id)->get();
+        $query = Payout::with(['order.shop','listing_fee','featuredProductOrders','seller'])->where('seller_id',$seller_id);
 
 
         if ($shop_id) {
