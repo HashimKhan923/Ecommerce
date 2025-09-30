@@ -758,7 +758,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/payout/'], function() {
                     Route::controller(App\Http\Controllers\Seller\PayoutController::class)->group(function () {
-                        Route::get('show/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
+                        Route::get('show/{seller_id}/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
                         Route::post('create','create');
                         Route::get('delete/{id}','delete');
                         Route::post('stripe/connect','create_stripe_connect_account');
