@@ -10,6 +10,13 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Models\OrderStatus;
 use Mail;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
+use Stripe\Charge;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Exception;
+
 class OrderController extends Controller
 {
 
@@ -57,21 +64,94 @@ class OrderController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    
 
-    public function admin_orders($id)
+    public function detail($id)
     {
-        $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking')->where('seller_id',$id)->get();
+        $charge = '';
+        $risk = '';
 
-        return response()->json(['data'=>$data]);
+        $data = Order::with(
+            'order_detail.products.product_gallery',
+            'order_detail.products.category',
+            'order_detail.products.sub_category',
+            'order_detail.products.brand',
+            'order_detail.products.model',
+            'order_detail.products.stock',
+            'order_detail.varient',
+            'order_detail.products.reviews.user',
+            'order_detail.products.tax',
+            'order_detail.products.shop.shop_policy',
+            'order_status',
+            'order_tracking',
+            'order_refund',
+            'shop',
+            'nagative_payout_balance',
+            'coupon_user.coupon',
+            'order_timeline'
+        )->where('id', $id)->first();
+
+            if($data->view_status == 0)
+            {
+                $data->view_status = 1;
+                $data->save();
+            }
+
+
+        // Stripe Payment Details
+        if ($data->payment_method == 'STRIPE') {
+            try {
+                Stripe::setApiKey(env('STRIPE_SECRET'));
+
+                $paymentIntent = PaymentIntent::retrieve($data->stripe_payment_id);
+                $charge = Charge::retrieve($paymentIntent->latest_charge);
+
+            } catch (\Exception $e) {
+                // Log the error or just continue silently
+                $charge = ''; // Optional: set to null or leave empty
+            }
+        }
+
+        // PayPal Payment Details
+        if ($data->payment_method == 'PAYPAL') {
+            try {
+                $clientId = config('services.paypal.client_id');
+                $clientSecret = config('services.paypal.secret');
+                $client = new \GuzzleHttp\Client();
+
+                $tokenResponse = $client->post("https://api-m.paypal.com/v1/oauth2/token", [
+                    'auth' => [$clientId, $clientSecret],
+                    'form_params' => ['grant_type' => 'client_credentials'],
+                ]);
+
+                $accessToken = json_decode($tokenResponse->getBody(), true)['access_token'];
+
+                $paymentResponse = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/payments/captures/{$data->stripe_payment_id}");
+
+                if ($paymentResponse->successful()) {
+                    $paymentDetails = $paymentResponse->json();
+
+                    $paypal_order_id = $paymentDetails['supplementary_data']['related_ids']['order_id'] ?? null;
+
+                    if ($paypal_order_id) {
+                        $paypal_order_response = Http::withToken($accessToken)->get("https://api-m.paypal.com/v2/checkout/orders/{$paypal_order_id}");
+                        $risk = $paypal_order_response->json();
+                    }
+                }
+
+            } catch (\Exception $e) {
+                // Log the error or just continue silently
+                $risk = ''; // Optional: set to null or leave empty
+            }
+        }
+
+        return response()->json([
+            'data' => $data,
+            'charge' => $charge,
+            'risk' => $risk,
+        ]);
     }
 
-    public function seller_orders($id)
-    {
-        $data = Order::with('order_detail.products.product_gallery','order_detail.products.category','order_detail.products.brand','order_detail.products.model','order_detail.products.stock','order_detail.products.product_varient','order_detail.products.reviews.user','order_detail.products.tax','order_status','order_tracking')->where('seller_id','!=',$id)->get();
 
-        return response()->json(['data'=>$data]);
-    }
 
     public function delivery_status(Request $request)
     {

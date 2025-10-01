@@ -248,8 +248,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/admin/order/'], function() {
                 Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function () {
                     Route::get('show/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
-                    Route::get('admin_orders/{id}','admin_orders');
-                    Route::get('seller_orders/{id}','seller_orders');
+                    Route::get('detail/{id}','detail');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
                     Route::post('tags','update_tags');
