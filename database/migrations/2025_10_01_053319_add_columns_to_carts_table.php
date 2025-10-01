@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::table('carts', function (Blueprint $table) {
             $table->unsignedBigInteger('seller_id');
-            $table->decimal('amount', 12, 2)->default(0);
             $table->string('status')->default('incomplete');
+            $table->decimal('discount_amount', 12, 2)->default(0);
+            $table->string('discount_reason')->nullable();
+            $table->timestamp('discount_given_at')->nullable();
 
+            $table->foreign('seller_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

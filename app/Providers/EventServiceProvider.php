@@ -22,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\LogEventListener',
         ],
 
+         ProductPriceUpdated::class => [
+            NotifyCartPriceDrop::class,
+        ],
+
         \App\Events\OrderPlaced::class => [
             \App\Listeners\CreateOrderTimeline::class,
             \App\Listeners\SendVendorEmail::class,
@@ -42,7 +46,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        parent::boot();
     }
 
     /**

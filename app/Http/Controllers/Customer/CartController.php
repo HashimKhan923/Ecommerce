@@ -27,6 +27,7 @@ class CartController extends Controller
         }
         $new = new Cart();
         $new->customer_id = $request->customer_id;
+        $new->customer_id = $request->customer_id;
         $new->product_id = $request->product_id;
         $new->varient_id = $request->varient_id;
         $new->quantity = $request->quantity;

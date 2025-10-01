@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Events\ProductPriceUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -131,6 +131,19 @@ class Product extends Model
     {
         $averageRating = $this->reviews()->avg('rating');
         $this->update(['average_rating' => $averageRating]);
+    }
+
+    protected static function booted()
+    {
+        static::updating(function ($product) {
+            if ($product->isDirty('price')) {
+                event(new ProductPriceUpdated(
+                    $product,
+                    $product->getOriginal('price'),
+                    $product->price
+                ));
+            }
+        });
     }
 
     
