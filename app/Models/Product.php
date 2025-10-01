@@ -133,18 +133,18 @@ class Product extends Model
         $this->update(['average_rating' => $averageRating]);
     }
 
-    protected static function booted()
-    {
-        static::updating(function ($product) {
-            if ($product->isDirty('price')) {
-                event(new ProductPriceUpdated(
-                    $product,
-                    $product->getOriginal('price'),
-                    $product->price
-                ));
-            }
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::updating(function ($product) {
+    //         if ($product->isDirty('price')) {
+    //             event(new ProductPriceUpdated(
+    //                 $product,
+    //                 $product->getOriginal('price'),
+    //                 $product->price
+    //             ));
+    //         }
+    //     });
+    // }
 
     
 
