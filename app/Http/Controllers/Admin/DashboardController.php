@@ -26,10 +26,11 @@ class DashboardController extends Controller
 
         $customersViewCount = User::where('user_type','customer')->where('admin_view_status',0)->count();
         $sellersViewCount = User::where('user_type','seller')->where('admin_view_status',0)->count();
+        $ordersViewCount = Order::where('admin_view_status',0)->count();
 
         $Notifications = Notification::where('customer_id',null)->get();
 
 
-        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores,'Notifications'=>$Notifications,'Payouts'=>$Payouts,'customersViewCount'=>$customersViewCount,'sellersViewCount'=>$sellersViewCount]);
+        return response()->json(['Users'=>$Users,'Products'=>$Products,'Orders'=>$Orders,'Stores'=>$Stores,'Notifications'=>$Notifications,'Payouts'=>$Payouts,'customersViewCount'=>$customersViewCount,'sellersViewCount'=>$sellersViewCount,'ordersViewCount'=>$ordersViewCount]);
     }
 }
