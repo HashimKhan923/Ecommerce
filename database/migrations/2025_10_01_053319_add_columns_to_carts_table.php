@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->unsignedBigInteger('seller_id');
+            $table->bigInteger('seller_id')->unsigned()->nullable();
             $table->string('status')->default('incomplete');
             $table->decimal('discount_amount', 12, 2)->default(0);
             $table->string('discount_reason')->nullable();
