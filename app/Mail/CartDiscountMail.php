@@ -20,7 +20,7 @@ class CartDiscountMail extends Mailable
     public function build()
     {
         return $this->subject('Good news! Your cart has a discount 🎉')
-            ->markdown('emails.cart_discount', [
+            ->markdown('email.cart_discount', [
                 'cart' => $this->cart,
             ]);
     }
