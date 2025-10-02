@@ -725,9 +725,9 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                                             /// Cart \\\
 
-                Route::group(['prefix' => '/cart'], function() {
+                Route::group(['prefix' => 'seller/cart'], function() {
                 Route::controller(App\Http\Controllers\Seller\CartController::class)->group(function () {
-                    Route::get('show/{customer_id}','index');
+                    Route::get('show/{seller_id}','index');
                     Route::post('giveDiscount','giveDiscount');
                     Route::post('notifyPriceDrop','notifyPriceDrop');
                 });

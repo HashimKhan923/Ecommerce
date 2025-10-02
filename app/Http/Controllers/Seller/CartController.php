@@ -13,9 +13,9 @@ use App\Mail\CartDiscountMail;
 
 class CartController extends Controller
 {
-    public function index($id)
+    public function index($seller_id)
     {
-        $data = Cart::with('product.product_single_gallery','varient','shipping','product.shop','product.discount','product.user','customer')->where('seller_id',$id)->get();
+        $data = Cart::with('product.product_single_gallery','varient','shipping','product.shop','product.discount','product.user','customer')->where('seller_id',$seller_id)->get();
 
         return response()->json(['data'=>$data]);
     }
