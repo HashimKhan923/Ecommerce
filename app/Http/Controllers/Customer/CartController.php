@@ -20,7 +20,6 @@ class CartController extends Controller
     public function create(Request $request)
     {
 
-        return $request;
 
         $check = Cart::where('product_id',$request->product_id)->where('customer_id',$request->customer_id)->first();
         if($check)
