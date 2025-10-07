@@ -20,22 +20,24 @@ class UPSTrackingService
     /**
      * Get Access Token
      */
-    protected function getAccessToken()
-    {
-        $response = Http::asForm()->post("{$this->baseUrl}/security/v1/oauth/token", [
+protected function getAccessToken()
+{
+    $response = Http::withBasicAuth($this->clientId, $this->clientSecret)
+        ->asForm()
+        ->post("{$this->baseUrl}/security/v1/oauth/token", [
             'grant_type' => 'client_credentials',
-        ])->withBasicAuth($this->clientId, $this->clientSecret);
-
-        if ($response->successful()) {
-            return $response->json()['access_token'];
-        }
-
-        \Log::error('UPS OAuth token request failed', [
-            'body' => $response->body(),
         ]);
 
-        throw new \Exception('Failed to get UPS access token');
+    if ($response->successful()) {
+        return $response->json()['access_token'];
     }
+
+    \Log::error('UPS OAuth token request failed', [
+        'body' => $response->body(),
+    ]);
+
+    throw new \Exception('Failed to get UPS access token');
+}
 
     /**
      * Track a UPS Shipment
