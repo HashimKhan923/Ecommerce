@@ -17,7 +17,10 @@ class TrackFedExDeliveries extends Command
     {
         $this->info("Tracking FedEx shipments...");
     
-        $orders = Order::where('delivery_status','Confirmed')
+        $orders = Order::where('delivery_status', 'Confirmed')
+            ->whereHas('order_tracking', function ($q) {
+                $q->where('courier_name', 'FEDEX');
+            })
             ->with('order_tracking')
             ->get();
     
