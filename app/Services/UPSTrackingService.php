@@ -20,24 +20,27 @@ class UPSTrackingService
     /**
      * Get Access Token
      */
-protected function getAccessToken()
-{
-    $response = Http::withBasicAuth($this->clientId, $this->clientSecret)
-        ->asForm()
-        ->post("{$this->baseUrl}/security/v1/oauth/token", [
-            'grant_type' => 'client_credentials',
-        ]);
+    public function getAccessToken()
+    {
+        if (!$this->clientId || !$this->clientSecret) {
+            throw new \Exception('UPS credentials missing in .env');
+        }
 
-    if ($response->successful()) {
-        return $response->json()['access_token'];
+        $response = Http::asForm()
+            ->withBasicAuth($this->clientId, $this->clientSecret)
+            ->post("{$this->baseUrl}/security/v1/oauth/token", [
+                'grant_type' => 'client_credentials',
+            ]);
+
+        if ($response->failed()) {
+            Log::error('UPS token request failed', [
+                'body' => $response->body(),
+            ]);
+            throw new \Exception('UPS token request failed: ' . $response->body());
+        }
+
+        return $response->json()['access_token'] ?? null;
     }
-
-    \Log::error('UPS OAuth token request failed', [
-        'body' => $response->body(),
-    ]);
-
-    throw new \Exception('Failed to get UPS access token');
-}
 
     /**
      * Track a UPS Shipment
