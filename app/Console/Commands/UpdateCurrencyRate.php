@@ -9,36 +9,45 @@ use App\Models\CurrencyRate;
 class UpdateCurrencyRate extends Command
 {
     protected $signature = 'currency:update';
-    protected $description = 'Fetch USD to AED rate and update database';
+    protected $description = 'Fetch USD to AED and USD to CAD rates, and update database';
 
     public function handle()
     {
-        try {
-            $response = Http::get('https://api.exchangerate.host/convert', [
-                'from'   => 'USD',
-                'to'     => 'AED',
-                'amount' => 1,
-                'access_key' => config('services.exchangerate.key'),
-            ]);
+        // List of currencies you want to fetch
+        $targetCurrencies = ['AED', 'CAD'];
 
-            $data = $response->json();
+        foreach ($targetCurrencies as $currency) {
+            try {
+                $response = Http::get('https://api.exchangerate.host/convert', [
+                    'from'        => 'USD',
+                    'to'          => $currency,
+                    'amount'      => 1,
+                    'access_key'  => config('services.exchangerate.key'),
+                ]);
 
-        if (isset($data['result'])) {
-            $rate = $data['result'];
+                $data = $response->json();
 
-            CurrencyRate::updateOrCreate(
-                ['base_currency' => 'USD', 'target_currency' => 'AED'],
-                ['rate' => $rate]
-            );
+                if (isset($data['result'])) {
+                    $rate = $data['result'];
 
-            $this->info("Exchange rate updated: 1 USD = {$rate} AED");
-        } else {
-            $this->error("Failed to fetch rate: " . json_encode($data));
-        }
+                    CurrencyRate::updateOrCreate(
+                        [
+                            'base_currency'   => 'USD',
+                            'target_currency' => $currency,
+                        ],
+                        [
+                            'rate' => $rate,
+                        ]
+                    );
 
-        } catch (\Exception $e) {
-            $this->error("Error: " . $e->getMessage());
+                    $this->info("Exchange rate updated: 1 USD = {$rate} {$currency}");
+                } else {
+                    $this->error("Failed to fetch rate for {$currency}: " . json_encode($data));
+                }
+
+            } catch (\Exception $e) {
+                $this->error("Error fetching {$currency} rate: " . $e->getMessage());
+            }
         }
     }
 }
-
