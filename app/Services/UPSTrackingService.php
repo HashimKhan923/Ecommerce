@@ -12,7 +12,7 @@ class UPSTrackingService
 
     public function __construct()
     {
-        $this->baseUrl = env('UPS_BASE_URL', 'https://onlinetools.ups.com');
+        $this->baseUrl = 'https://onlinetools.ups.com';
         $this->clientId = env('UPS_CLIENT_ID');
         $this->clientSecret = env('UPS_CLIENT_SECRET');
     }
