@@ -22,30 +22,35 @@ class TrackUPSDeliveries extends Command
             ->with('order_tracking')
             ->get();
 
-        $ups = new UPSTrackingService();
-
         if ($orders->isEmpty()) {
-            $this->info("No confirmed orders found.");
+            $this->info("No confirmed UPS orders found.");
             return;
         }
 
+        $ups = new UPSTrackingService();
+
         foreach ($orders as $order) {
-            if (!$order->order_tracking || !$order->order_tracking->tracking_number) {
+            $trackingNumber = optional($order->order_tracking)->tracking_number;
+
+            if (!$trackingNumber) {
                 $this->warn("Order #{$order->id} has no tracking number.");
                 continue;
             }
 
             try {
-                $trackingData = $ups->trackShipment($order->order_tracking->tracking_number);
-                $status = data_get($trackingData, 'trackResponse.shipment.0.package.0.activity.0.status.description');
+                $trackingData = $ups->trackShipment($trackingNumber);
+                $status = trim(strtoupper(data_get($trackingData, 'trackResponse.shipment.0.package.0.activity.0.status.description', 'UNKNOWN')));
+
+                $this->line("Order #{$order->id} - UPS Status: {$status}");
 
                 if ($status === 'DELIVERED') {
                     $order->delivery_status = 'Delivered';
                     $order->save();
-                    $this->info("Order #{$order->id} marked as delivered.");
+
+                    $this->info("✅ Order #{$order->id} marked as delivered.");
                 }
             } catch (\Exception $e) {
-                $this->error("Failed to track order #{$order->id}: " . $e->getMessage());
+                $this->error("❌ Failed to track order #{$order->id}: " . $e->getMessage());
             }
         }
 
