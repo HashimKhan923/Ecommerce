@@ -39,7 +39,7 @@ class TrackUPSDeliveries extends Command
                 $trackingData = $ups->trackShipment($order->order_tracking->tracking_number);
                 $status = data_get($trackingData, 'trackResponse.shipment.0.package.0.activity.0.status.description');
 
-                if (strtolower($status) === 'DELIVERED') {
+                if ($status === 'DELIVERED') {
                     $order->delivery_status = 'Delivered';
                     $order->save();
                     $this->info("Order #{$order->id} marked as delivered.");
