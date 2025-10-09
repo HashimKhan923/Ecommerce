@@ -49,6 +49,6 @@ class TrackUPSDeliveries extends Command
             }
         }
 
-        $this->info("UPS tracking completed.");
+        $this->info("UPS tracking completed.".$status);
     }
 }
