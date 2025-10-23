@@ -603,7 +603,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => '/seller/dashboard'], function() {
                 Route::controller(App\Http\Controllers\Seller\DashboardController::class)->group(function () {
-                    Route::get('show/{id}','index');
+                    Route::get('show/{user_id?}/{shop_id?}','index');
                     Route::get('shop/{shop_id}','searchByshop');
                     Route::get('collection/{seller_id}','collection');
                 });

@@ -25,85 +25,96 @@ use DB;
 
 class DashboardController extends Controller
 {
-    public function index($id)
+    public function index($user_id = 0, $shop_id = 0)
     {
+        // Build dynamic filter
+        $productQuery = Product::query();
+        $orderQuery = Order::query();
+        $payoutQuery = Payout::query();
+
+        if ($user_id != 0) {
+            $productQuery->where('user_id', $user_id);
+            $orderQuery->where('sellers_id', $user_id);
+            $payoutQuery->where('seller_id', $user_id);
+        }
+
+        if ($shop_id != 0) {
+            $productQuery->where('shop_id', $shop_id);
+            $orderQuery->where('shop_id', $shop_id);
+            $payoutQuery->where('shop_id', $shop_id);
+        }
+
         // Product Data
-        $totalProducts = Product::where('user_id', $id)->count();
-        $featuredProducts = Product::where('user_id', $id)->where('featured', 1)->count();
-        $activeProducts = Product::where('user_id', $id)->where('published', 1)->count();
-        $draftProducts = Product::where('user_id', $id)->where('published', 0)->count();
-
-        $orderForcast = OrderForcast::where('seller_id', auth()->id())
-        ->orderBy('month', 'asc')
-        ->get();
-
-        $unReadMessageCount = Chat::where('reciver_id', $id)->where('status','unread')->count();
+        $products = $productQuery->selectRaw("
+            COUNT(*) as totalProducts,
+            SUM(CASE WHEN featured = 1 THEN 1 ELSE 0 END) as featuredProducts,
+            SUM(CASE WHEN published = 1 THEN 1 ELSE 0 END) as activeProducts,
+            SUM(CASE WHEN published = 0 THEN 1 ELSE 0 END) as draftProducts
+        ")->first();
 
         // Order Data
-        $orders = Order::where('sellers_id', $id)
-        ->where('created_at', '>=', Carbon::now()->subYear()) // last 12 months
-        ->select('amount', 'created_at') // only required columns
-        ->get();
-
-        $stats = Order::where('sellers_id', $id)
-            ->selectRaw("
-                COUNT(*) as totalOrders,
-                SUM(CASE WHEN delivery_status = 'Delivered' THEN 1 ELSE 0 END) as fulfilledOrders,
-                SUM(CASE WHEN delivery_status = 'Pending' THEN 1 ELSE 0 END) as unfulfilledOrders,
-                SUM(CASE WHEN delivery_status = 'Confirmed' THEN 1 ELSE 0 END) as confirmedOrders,
-                SUM(CASE WHEN delivery_status = 'Cancelled' THEN 1 ELSE 0 END) as refundedOrders,
-                SUM(CASE WHEN delivery_status = 'Delivered' THEN amount ELSE 0 END) as totalSales
-            ")
-            ->first(); 
-
-
-            $totalOrders = $stats->totalOrders;
-            $confirmedOrders = $stats->confirmedOrders;
-            $fulfilledOrders = $stats->fulfilledOrders;
-            $unfulfilledOrders = $stats->unfulfilledOrders;
-            $refundedOrders = $stats->refundedOrders;
-            $totalSales = $stats->totalSales;
+        $stats = $orderQuery->selectRaw("
+            COUNT(*) as totalOrders,
+            SUM(CASE WHEN delivery_status = 'Delivered' THEN 1 ELSE 0 END) as fulfilledOrders,
+            SUM(CASE WHEN delivery_status = 'Pending' THEN 1 ELSE 0 END) as unfulfilledOrders,
+            SUM(CASE WHEN delivery_status = 'Confirmed' THEN 1 ELSE 0 END) as confirmedOrders,
+            SUM(CASE WHEN delivery_status = 'Cancelled' THEN 1 ELSE 0 END) as refundedOrders,
+            SUM(CASE WHEN delivery_status = 'Delivered' THEN amount ELSE 0 END) as totalSales
+        ")->first();
 
         // Payout Data
-        $totalPayouts = Payout::where('seller_id', $id)->count();
-        $paidPayouts = Payout::where('seller_id', $id)->where('status', 'Paid')->count();
-        $unpaidPayouts = Payout::where('seller_id', $id)->where('status', 'Un Paid')->count();
-        $totalPayoutAmount = Payout::where('seller_id', $id)->where('status', 'Paid')->sum('amount'); 
+        $payouts = $payoutQuery->selectRaw("
+            COUNT(*) as totalPayouts,
+            SUM(CASE WHEN status = 'Paid' THEN 1 ELSE 0 END) as paidPayouts,
+            SUM(CASE WHEN status = 'Un Paid' THEN 1 ELSE 0 END) as unpaidPayouts,
+            SUM(CASE WHEN status = 'Paid' THEN amount ELSE 0 END) as totalPayoutAmount
+        ")->first();
 
-        // $Deals = Deal::with('products')
-        // ->withCount('products')
-        // ->where('discount_start_date', '<=', now())
-        // ->where('discount_end_date', '>=', now())
-        // ->where('status',1)
-        // ->get();
+        // Forecast
+        $orderForcast = OrderForcast::where('seller_id', $user_id)
+            ->orderBy('month', 'asc')
+            ->get();
+
+        // Unread messages
+        $unReadMessageCount = Chat::where('reciver_id', $user_id)
+            ->where('status', 'unread')
+            ->count();
+
+        // Last 12 months orders (for chart)
+        $orders = Order::when($user_id, fn($q) => $q->where('sellers_id', $user_id))
+            ->when($shop_id, fn($q) => $q->where('shop_id', $shop_id))
+            ->where('created_at', '>=', Carbon::now()->subYear())
+            ->select('amount', 'created_at')
+            ->get();
 
         return response()->json([
             // Product Data
-            'totalProducts' => $totalProducts,
-            'featuredProducts' => $featuredProducts,
-            'activeProducts' => $activeProducts,
-            'draftProducts' => $draftProducts,
+            'totalProducts' => $products->totalProducts ?? 0,
+            'featuredProducts' => $products->featuredProducts ?? 0,
+            'activeProducts' => $products->activeProducts ?? 0,
+            'draftProducts' => $products->draftProducts ?? 0,
+
+            // Orders
+            'totalOrders' => $stats->totalOrders ?? 0,
+            'fulfilledOrders' => $stats->fulfilledOrders ?? 0,
+            'unfulfilledOrders' => $stats->unfulfilledOrders ?? 0,
+            'confirmedOrders' => $stats->confirmedOrders ?? 0,
+            'refundedOrders' => $stats->refundedOrders ?? 0,
+            'totalSales' => $stats->totalSales ?? 0,
+
+            // Payouts
+            'totalPayouts' => $payouts->totalPayouts ?? 0,
+            'paidPayouts' => $payouts->paidPayouts ?? 0,
+            'unpaidPayouts' => $payouts->unpaidPayouts ?? 0,
+            'totalPayoutAmount' => $payouts->totalPayoutAmount ?? 0,
+
+            // Other
             'orderForcast' => $orderForcast,
-
             'unReadMessageCount' => $unReadMessageCount,
-            
-            // Order Data
             'orders' => $orders,
-            'totalOrders' => $totalOrders,
-            'fulfilledOrders' => $fulfilledOrders,
-            'unfulfilledOrders' => $unfulfilledOrders,
-            'refundedOrders' => $refundedOrders,
-            'confirmedOrders' => $confirmedOrders,
-            'totalSales' => $totalSales,
-            
-            // Payout Data
-            'totalPayouts' => $totalPayouts,
-            'paidPayouts' => $paidPayouts,
-            'unpaidPayouts' => $unpaidPayouts,
-            'totalPayoutAmount' => $totalPayoutAmount,
-
         ]);
     }
+
 
 
     public function searchByshop($shop_id)
