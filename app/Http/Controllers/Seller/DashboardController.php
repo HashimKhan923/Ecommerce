@@ -44,11 +44,23 @@ class DashboardController extends Controller
         ->where('created_at', '>=', Carbon::now()->subYear()) // last 12 months
         ->select('amount', 'created_at') // only required columns
         ->get();
-        $totalOrders = Order::where('sellers_id', $id)->count();
-        $fulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->count();
-        $unfulfilledOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Pending')->count();
-        $refundedOrders = Order::where('sellers_id', $id)->where('delivery_status', 'Cancelled')->count();
-        $totalSales = Order::where('sellers_id', $id)->where('delivery_status', 'Delivered')->sum('amount'); 
+
+        $stats = Order::where('sellers_id', $id)
+            ->selectRaw("
+                COUNT(*) as totalOrders,
+                SUM(CASE WHEN delivery_status = 'Delivered' THEN 1 ELSE 0 END) as fulfilledOrders,
+                SUM(CASE WHEN delivery_status = 'Pending' THEN 1 ELSE 0 END) as unfulfilledOrders,
+                SUM(CASE WHEN delivery_status = 'Cancelled' THEN 1 ELSE 0 END) as refundedOrders,
+                SUM(CASE WHEN delivery_status = 'Delivered' THEN amount ELSE 0 END) as totalSales
+            ")
+            ->first(); 
+
+
+            $totalOrders = $stats->totalOrders;
+            $fulfilledOrders = $stats->fulfilledOrders;
+            $unfulfilledOrders = $stats->unfulfilledOrders;
+            $refundedOrders = $stats->refundedOrders;
+            $totalSales = $stats->totalSales;
 
         // Payout Data
         $totalPayouts = Payout::where('seller_id', $id)->count();
