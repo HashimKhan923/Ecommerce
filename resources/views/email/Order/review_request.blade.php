@@ -225,7 +225,7 @@
                 <div class="store-header">
                     <div class="store-logo">
                         <img src="https://api.dragonautomart.com/ShopLogo/{{ $order->shop->logo }}"
-                            alt="Store Logo" />
+                            alt="Store Logo" width="100px" />
                         <div class="store-logo-info">
                             <div class="name">{{ $order->shop->name }}</div>
                             <div class="sold">{{$order->shop->sold_products}} Items Sold</div>
