@@ -50,6 +50,7 @@ class DashboardController extends Controller
                 COUNT(*) as totalOrders,
                 SUM(CASE WHEN delivery_status = 'Delivered' THEN 1 ELSE 0 END) as fulfilledOrders,
                 SUM(CASE WHEN delivery_status = 'Pending' THEN 1 ELSE 0 END) as unfulfilledOrders,
+                SUM(CASE WHEN delivery_status = 'Confirmed' THEN 1 ELSE 0 END) as confirmedOrders,
                 SUM(CASE WHEN delivery_status = 'Cancelled' THEN 1 ELSE 0 END) as refundedOrders,
                 SUM(CASE WHEN delivery_status = 'Delivered' THEN amount ELSE 0 END) as totalSales
             ")
@@ -57,6 +58,7 @@ class DashboardController extends Controller
 
 
             $totalOrders = $stats->totalOrders;
+            $confirmedOrders = $stats->confirmedOrders;
             $fulfilledOrders = $stats->fulfilledOrders;
             $unfulfilledOrders = $stats->unfulfilledOrders;
             $refundedOrders = $stats->refundedOrders;
@@ -91,6 +93,7 @@ class DashboardController extends Controller
             'fulfilledOrders' => $fulfilledOrders,
             'unfulfilledOrders' => $unfulfilledOrders,
             'refundedOrders' => $refundedOrders,
+            'confirmedOrders' => $confirmedOrders,
             'totalSales' => $totalSales,
             
             // Payout Data
