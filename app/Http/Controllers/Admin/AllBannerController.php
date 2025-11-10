@@ -73,8 +73,10 @@ class AllBannerController extends Controller
         $update->link = $request->link;
     
         if ($request->file('image')) {
-            if ($update->image) {
-                unlink(public_path('AllBanners/' . $update->image));
+            $path = public_path('AllBanners/' . $update->image);
+
+            if (file_exists($path) && is_file($path)) {
+                unlink($path);
             }
     
             $image = $request->image;
@@ -99,8 +101,10 @@ class AllBannerController extends Controller
         $update->mobile_link = $request->mobile_link;
     
         if ($request->file('mobile_image')) {
-            if ($update->mobile_image) {
-                unlink(public_path('AllBanners/' . $update->mobile_image));
+            $path = public_path('AllBanners/' . $update->mobile_image);
+            
+            if (file_exists($path) && is_file($path)) {
+                unlink($path);
             }
     
             $mobile_image = $request->mobile_image;
