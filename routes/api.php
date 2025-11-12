@@ -645,6 +645,19 @@ Route::group(['middleware' => ['auth:api']], function(){
                 });
             });
 
+                                        // Ads \\\
+
+            Route::group(['prefix' => '/seller/ads/'], function() {
+                Route::controller(App\Http\Controllers\Seller\AdController::class)->group(function () {
+                    Route::post('create','store');
+                    Route::get('show/{id}','show');
+                    Route::post('update/{id}','update');
+                    Route::get('delete/{id}','destroy');
+                    Route::get('image_delete/{imageId}','destroyImage');
+                    Route::get('index','index');
+                });
+            });
+
 
                                                          /// Varient \\\
 
@@ -1061,6 +1074,17 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         });
     });
+
+                                //Ads \\\
+
+        Route::group(['prefix' => '/ads'], function() {
+            Route::controller(App\Http\Controllers\Customer\AdController::class)->group(function () {
+                Route::get('','index');
+                Route::get('detail/{id}','show');
+                Route::get('filter_by_tag/{tag}','filterByTag');
+                Route::get('search','search');
+            });
+        });
 
 
                                      /// Bolg  \\\
