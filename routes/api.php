@@ -579,6 +579,34 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                                                                    /// EmailTemplete \\\
+
+            Route::group(['prefix' => '/admin/email_template/'], function() {
+                Route::controller(App\Http\Controllers\Admin\EmailTempleteController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::get('detail/{id}','detail');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
+                });
+            });
+
+                                                            /// Segment \\\
+
+            Route::group(['prefix' => '/admin/segment/'], function() {
+                Route::controller(App\Http\Controllers\Admin\SegmentController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::get('apply/{segment_id}','apply');
+                    Route::post('create','create');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
+                });
+            });
+
+
+
 
 
 
