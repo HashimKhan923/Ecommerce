@@ -86,22 +86,14 @@ public function index(Request $request)
     /**
      * Update an existing admin segment.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $segment = Segment::findOrFail($id);
-
-        if ($segment->seller_id !== null) {
-            return response()->json(['error' => 'This is not an admin segment.'], 403);
-        }
-
-        $segment->update([
-            'name'         => $request->name,
-            'rules'        => $request->rules,
-            // optional: allow changing type
-            'segment_type' => $request->get('segment_type', $segment->segment_type),
+        Segment::where('id',$request->segment_id)->update([   
+        'name' => $request->name,
+        'rules' => $request->rules,
         ]);
 
-        return response()->json(['segment' => $segment]);
+        return response()->json(['message' => 'Segment updated successfully.']);
     }
 
     /**
