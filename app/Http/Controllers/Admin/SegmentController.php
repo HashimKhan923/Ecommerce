@@ -149,35 +149,98 @@ public function index(Request $request)
      *   [ ... ] // group2
      * ]
      */
-    private function evaluateRules($entity, $rulesGroup)
-    {
-        if (empty($rulesGroup)) {
-            return false;
-        }
+private function evaluateRules($customer, $rulesGroup)
+{
+    $matchType = $rulesGroup['match_type'] ?? 'AND';
+    $rules = $rulesGroup['rules'] ?? [];
 
-        foreach ($rulesGroup as $group) {
-            $matchAll = true;
+    // If no rules, match all customers
+    if (empty($rules)) {
+        return true;
+    }
 
-            foreach ($group as $rule) {
-                $field    = $rule['field'];
-                $operator = $rule['operator'];
-                $value    = $rule['value'];
+    $results = [];
 
-                $actualValue = data_get($entity, $field);
+    foreach ($rules as $rule) {
+        $field = $rule['field'];
+        $operator = $rule['operator'];
+        $value = $rule['value'];
 
-                if (!$this->compare($actualValue, $operator, $value)) {
-                    $matchAll = false;
-                    break;
+        $parts = explode('.', $field);
+
+        if (count($parts) === 2) {
+            [$relation, $fieldPart] = $parts;
+
+            $aggregates = ['count', 'sum', 'avg', 'min', 'max', 'first', 'last', 'distinct_count'];
+
+            if (in_array($fieldPart, $aggregates)) {
+                $query = $customer->$relation();
+
+                switch ($fieldPart) {
+                    case 'count':
+                        $actual = $query->count();
+                        break;
+                    case 'sum':
+                        $sumField = $rule['sum_field'] ?? 'amount';
+                        $actual = $query->sum($sumField);
+                        break;
+                    case 'avg':
+                        $avgField = $rule['avg_field'] ?? 'amount';
+                        $actual = $query->avg($avgField);
+                        break;
+                    case 'min':
+                        $minField = $rule['min_field'] ?? 'amount';
+                        $actual = $query->min($minField);
+                        break;
+                    case 'max':
+                        $maxField = $rule['max_field'] ?? 'amount';
+                        $actual = $query->max($maxField);
+                        break;
+                    case 'first':
+                        $firstField = $rule['first_field'] ?? null;
+                        $record = $query->orderBy('id')->first();
+                        $actual = $record && $firstField ? data_get($record, $firstField) : null;
+                        break;
+                    case 'last':
+                        $lastField = $rule['last_field'] ?? null;
+                        $record = $query->orderByDesc('id')->first();
+                        $actual = $record && $lastField ? data_get($record, $lastField) : null;
+                        break;
+                    case 'distinct_count':
+                        $distinctField = $rule['distinct_field'] ?? null;
+                        $actual = $distinctField ? $query->distinct($distinctField)->count($distinctField) : null;
+                        break;
+                    default:
+                        $actual = null;
+                }
+
+                $results[] = $this->compare($actual, $operator, $value);
+            } else {
+                $related = $customer->$relation;
+
+                if ($related instanceof \Illuminate\Support\Collection) {
+                    // MANY: match ANY related record
+                    $matchAny = $related->contains(function ($item) use ($fieldPart, $operator, $value) {
+                        return $this->compare(data_get($item, $fieldPart), $operator, $value);
+                    });
+                    $results[] = $matchAny;
+                } else {
+                    // Single related row
+                    $actual = data_get($related, $fieldPart);
+                    $results[] = $this->compare($actual, $operator, $value);
                 }
             }
-
-            if ($matchAll) {
-                return true; // OR condition: one group matches
-            }
+        } else {
+            // Direct customer field
+            $actual = data_get($customer, $field);
+            $results[] = $this->compare($actual, $operator, $value);
         }
-
-        return false;
     }
+
+    return $matchType === 'AND'
+        ? !in_array(false, $results, true)
+        : in_array(true, $results, true);
+}
 
     /**
      * Compare values with various operators.
