@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,6 +13,7 @@ use App\Models\Subscriber;
 use App\Models\User;
 use App\Jobs\SendCampaignEmail;
 use Carbon\Carbon;
+
 class CampaignController extends Controller
 {
     public function index($seller_id) {
