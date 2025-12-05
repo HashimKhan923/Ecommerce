@@ -607,6 +607,23 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                     
+                                                        /// Campaign \\\
+
+            Route::group(['prefix' => '/admin/campaign/'], function() {
+                Route::controller(App\Http\Controllers\Admin\CampaignController::class)->group(function () {
+                    Route::get('show','index');
+                    Route::get('detail/{id}','detail');
+                    Route::post('create','create');
+                    Route::get('sendCampaign/{id}','sendCampaign');
+                    Route::post('update','update');
+                    Route::get('delete/{id}','delete');
+                    Route::post('multi_delete','multi_delete');
+                });
+            });
+
+
+
 
 
 

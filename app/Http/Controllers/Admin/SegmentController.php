@@ -6,27 +6,40 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Segment;
 use App\Models\User;
-
+use App\Models\Subscriber;
 
 class SegmentController extends Controller
 {
-   public function index()
+    /**
+     * List admin segments for given type (user / subscriber).
+     * Pass ?segment_type=user or ?segment_type=subscriber
+     */
+    public function index(Request $request)
     {
-        $segments = Segment::whereNull('seller_id')->get();
-        $totalUsers = User::count();
+        $segmentType = $request->get('segment_type', 'user'); // default: user
 
-        // Preload all users once to avoid N+1
-        $users = User::with('order')->get();
+        $segments = Segment::whereNull('seller_id')
+            ->where('segment_type', $segmentType)
+            ->get();
 
-        $data = $segments->map(function ($segment) use ($totalUsers, $users) {
-            $matchedUsers = $users->filter(fn($user) =>
-                $this->evaluateRules($user, json_decode($segment->rules, true))
+        // Load base data depending on segment type
+        if ($segmentType === 'subscriber') {
+            $total = Subscriber::count();
+            $entities = Subscriber::all();
+        } else {
+            $total = User::count();
+            $entities = User::with('order')->get();
+        }
+
+        $data = $segments->map(function ($segment) use ($total, $entities) {
+            $matched = $entities->filter(fn($entity) =>
+                $this->evaluateRules($entity, json_decode($segment->rules, true))
             );
 
             return [
-                'segment' => $segment,
-                'total_users' => $totalUsers,
-                'matched_users_count' => $matchedUsers->count()
+                'segment'          => $segment,
+                'total_entities'   => $total,
+                'matched_count'    => $matched->count(),
             ];
         });
 
@@ -34,14 +47,18 @@ class SegmentController extends Controller
     }
 
     /**
-     * Create a new admin segment (for users table).
+     * Create a new admin segment (for users OR subscribers).
+     * Request must send: name, rules, segment_type (user|subscriber)
      */
     public function create(Request $request)
     {
+        $segmentType = $request->get('segment_type', 'user'); // default user
+
         $segment = Segment::create([
-            'seller_id' => null,
-            'name' => $request->name,
-            'rules' => $request->rules, // JSON string
+            'seller_id'    => null,
+            'segment_type' => $segmentType,
+            'name'         => $request->name,
+            'rules'        => $request->rules, // JSON string
         ]);
 
         return response()->json(['segment' => $segment]);
@@ -59,15 +76,17 @@ class SegmentController extends Controller
         }
 
         $segment->update([
-            'name' => $request->name,
-            'rules' => $request->rules
+            'name'         => $request->name,
+            'rules'        => $request->rules,
+            // optional: allow changing type
+            'segment_type' => $request->get('segment_type', $segment->segment_type),
         ]);
 
         return response()->json(['segment' => $segment]);
     }
 
     /**
-     * Apply segment rules and return matched users.
+     * Apply segment rules and return matched entities (users or subscribers).
      */
     public function apply($segmentId)
     {
@@ -77,32 +96,53 @@ class SegmentController extends Controller
             return response()->json(['error' => 'This is not an admin segment.'], 403);
         }
 
-        $users = User::with('order')->get();
+        // Decide which base model to query
+        if ($segment->segment_type === 'subscriber') {
+            $entities = Subscriber::all();
+        } else {
+            $entities = User::with('order')->get();
+        }
 
-        $matchedUsers = $users->filter(fn($user) =>
-            $this->evaluateRules($user, json_decode($segment->rules, true))
+        $matched = $entities->filter(fn($entity) =>
+            $this->evaluateRules($entity, json_decode($segment->rules, true))
         );
 
-        return response()->json([
+        // Response key depends on type (for convenience)
+        $resultKey = $segment->segment_type === 'subscriber'
+            ? 'matched_subscribers'
+            : 'matched_users';
+
+        $response = [
             'segment' => $segment,
-            'matched_users' => $matchedUsers->values(),
-            'count' => $matchedUsers->count()
-        ]);
+            'count'   => $matched->count(),
+        ];
+        $response[$resultKey] = $matched->values();
+
+        return response()->json($response);
     }
 
     /**
-     * Evaluate rules against a single user.
+     * Evaluate rules against a single entity (User or Subscriber).
      * Compatible with AND/OR logic.
+     *
+     * $rulesGroup = [
+     *   [ ['field' => 'email', 'operator' => 'contains', 'value' => '@gmail.com'], ... ],  // group1 (AND inside, OR between groups)
+     *   [ ... ] // group2
+     * ]
      */
     private function evaluateRules($entity, $rulesGroup)
     {
+        if (empty($rulesGroup)) {
+            return false;
+        }
+
         foreach ($rulesGroup as $group) {
             $matchAll = true;
 
             foreach ($group as $rule) {
-                $field = $rule['field'];
+                $field    = $rule['field'];
                 $operator = $rule['operator'];
-                $value = $rule['value'];
+                $value    = $rule['value'];
 
                 $actualValue = data_get($entity, $field);
 
@@ -125,6 +165,12 @@ class SegmentController extends Controller
      */
     private function compare($actual, $operator, $expected)
     {
+        // normalize for string-based operators
+        if (in_array($operator, ['contains', 'starts_with', 'ends_with'])) {
+            $actual   = (string) $actual;
+            $expected = (string) $expected;
+        }
+
         switch ($operator) {
             case '=':
                 return $actual == $expected;
@@ -149,22 +195,20 @@ class SegmentController extends Controller
         }
     }
 
+    public function delete($segment_id)
+    {
+        Segment::find($segment_id)?->delete();
 
+        return response()->json(['message' => 'Segment deleted successfully.']);
+    }
 
-        public function delete($segment_id)
-        {
-            Segment::find($segment_id)->delete();
+    public function multi_delete(Request $request)
+    {
+        Segment::whereIn('id', $request->ids)->delete();
 
-            return response()->json(['message' => 'Segment deleted successfully.']);
-
-        }
-
-        public function multi_delete(Request $request)
-        {
-            Segment::whereIn('id',$request->ids)->delete();
-
-
-            $response = ['status'=>true,"message" => "Segments Deleted Successfully!"];
-            return response($response, 200);
-        }
+        return response()->json([
+            'status'  => true,
+            'message' => 'Segments Deleted Successfully!',
+        ], 200);
+    }
 }
