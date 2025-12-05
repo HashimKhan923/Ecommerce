@@ -9,6 +9,7 @@ use App\Models\CampaignRecipient;
 use App\Models\CampaignSegment;
 use App\Models\LinkStat;
 use App\Models\Segment;
+use App\Models\Subscriber;
 use App\Models\User;
 use App\Jobs\SendCampaignEmail;
 use Carbon\Carbon;
@@ -67,122 +68,202 @@ class CampaignController extends Controller
     }
 
 
-    public function create(Request $request)
-    {
-        $campaign = Campaign::create([
-            'seller_id'     => null,
-            'name'          => $request->name,
-            'subject'       => $request->subject,
-            'preview_text'  => $request->preview_text,
-            'content'       => $request->content,
-            'send_time'     => $request->send_time,
-            'status'        => $request->status,
+public function create(Request $request)
+{
+    $campaign = Campaign::create([
+        'seller_id'     => null,
+        'name'          => $request->name,
+        'subject'       => $request->subject,
+        'preview_text'  => $request->preview_text,
+        'content'       => $request->content,
+        'send_time'     => $request->send_time,
+        'status'        => $request->status,
+    ]);
+
+    $allMatchedUsers = collect();
+    $allMatchedSubscribers = collect();
+
+    // Load once for performance
+    $allUsers = User::with('order')->get();
+    $allSubscribers = Subscriber::all();
+
+    foreach ($request->segment_ids as $segment_id) {
+        CampaignSegment::create([
+            'campaign_id' => $campaign->id,
+            'segment_id'  => $segment_id,
         ]);
 
-        $allMatchedUsers = collect();
+        $segment = Segment::findOrFail($segment_id);
 
-        foreach ($request->segment_ids as $segment_id) {
-            $campaignSegment = CampaignSegment::create([
-                'campaign_id' => $campaign->id,
-                'segment_id' => $segment_id,
-            ]);
+        // Decide which base collection to filter
+        if ($segment->segment_type === 'subscriber') {
 
-            $segment = Segment::findOrFail($segment_id);
+            $matched = $allSubscribers->filter(function ($subscriber) use ($segment) {
+                // evaluateRules must support Subscriber entity as well
+                return $this->evaluateRules($subscriber, $segment->rules);
+            });
 
-            $users = User::with('order')->get();
+            $allMatchedSubscribers = $allMatchedSubscribers->merge($matched);
 
-            $matched = $users->filter(function ($user) use ($segment) {
+        } else {
+            // default: users
+            $matched = $allUsers->filter(function ($user) use ($segment) {
                 return $this->evaluateRules($user, $segment->rules);
             });
 
             $allMatchedUsers = $allMatchedUsers->merge($matched);
         }
+    }
 
-       $recipient_ids = $allMatchedUsers->pluck('id')->filter()->unique()->toArray();
+    // Unique IDs
+    $userIds = $allMatchedUsers
+        ->pluck('id')
+        ->filter()
+        ->unique()
+        ->values();
 
+    $subscriberIds = $allMatchedSubscribers
+        ->pluck('id')
+        ->filter()
+        ->unique()
+        ->values();
 
-            $recipients = collect($recipient_ids)->map(function ($userId) use ($campaign) {
-                return [
-                        'campaign_id' => $campaign->id,
-                        'user_id'     => $userId,
-                        'created_at'  => now(),
-                        'updated_at'  => now(),
-                    ];
-                });
+    // Build recipient rows for users
+    $recipients = collect();
 
-
-
-
-
-        CampaignRecipient::insert($recipients->toArray());
-
-        return response()->json([
-            'message' => 'Campaign created successfully',
+    foreach ($userIds as $userId) {
+        $recipients->push([
+            'campaign_id'   => $campaign->id,
+            'user_id'       => $userId,
+            'subscriber_id' => null,
+            'created_at'    => now(),
+            'updated_at'    => now(),
         ]);
     }
 
+    // Build recipient rows for subscribers
+    foreach ($subscriberIds as $subscriberId) {
+        $recipients->push([
+            'campaign_id'   => $campaign->id,
+            'user_id'       => null,
+            'subscriber_id' => $subscriberId,
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ]);
+    }
 
-    public function update(Request $request)
-    {
-        $campaign = Campaign::findOrFail($request->id);
+    if ($recipients->isNotEmpty()) {
+        CampaignRecipient::insert($recipients->toArray());
+    }
 
-        // Update campaign fields
-        $campaign->update([
-            'seller_id'     => null,
-            'name'          => $request->name,
-            'subject'       => $request->subject,
-            'preview_text'  => $request->preview_text,
-            'content'       => $request->content,
-            'send_time'     => $request->send_time,
-            'status'        => $request->status,
+    return response()->json([
+        'message'      => 'Campaign created successfully',
+        'campaign_id'  => $campaign->id,
+        'user_count'   => $userIds->count(),
+        'subscriber_count' => $subscriberIds->count(),
+    ]);
+}
+
+
+
+public function update(Request $request)
+{
+    $campaign = Campaign::findOrFail($request->id);
+
+    // Update campaign fields
+    $campaign->update([
+        'seller_id'     => null,
+        'name'          => $request->name,
+        'subject'       => $request->subject,
+        'preview_text'  => $request->preview_text,
+        'content'       => $request->content,
+        'send_time'     => $request->send_time,
+        'status'        => $request->status,
+    ]);
+
+    // Remove old campaign segments and recipients
+    CampaignSegment::where('campaign_id', $campaign->id)->delete();
+    CampaignRecipient::where('campaign_id', $campaign->id)->delete();
+
+    // Recalculate based on selected segments
+    $allMatchedUsers = collect();
+    $allMatchedSubscribers = collect();
+
+    // Load once
+    $allUsers = User::with('order')->get();
+    $allSubscribers = Subscriber::all();
+
+    foreach ($request->segment_ids as $segment_id) {
+        CampaignSegment::create([
+            'campaign_id' => $campaign->id,
+            'segment_id'  => $segment_id,
         ]);
 
-        // 🔁 Remove old campaign segments and recipients
-        CampaignSegment::where('campaign_id', $campaign->id)->delete();
-        CampaignRecipient::where('campaign_id', $campaign->id)->delete();
+        $segment = Segment::findOrFail($segment_id);
 
-        // 🔍 Recalculate based on selected segments
-        $allMatchedUsers = collect();
+        if ($segment->segment_type === 'subscriber') {
+            $matched = $allSubscribers->filter(function ($subscriber) use ($segment) {
+                return $this->evaluateRules($subscriber, $segment->rules);
+            });
 
-        foreach ($request->segment_ids as $segment_id) {
-            CampaignSegment::create([
-                'campaign_id' => $campaign->id,
-                'segment_id' => $segment_id,
-            ]);
+            $allMatchedSubscribers = $allMatchedSubscribers->merge($matched);
 
-            $segment = Segment::findOrFail($segment_id);
-
-            $users = User::with('order')->get();
-
-            $matched = $users->filter(function ($user) use ($segment) {
+        } else { // user segment
+            $matched = $allUsers->filter(function ($user) use ($segment) {
                 return $this->evaluateRules($user, $segment->rules);
             });
 
             $allMatchedUsers = $allMatchedUsers->merge($matched);
         }
+    }
 
-        $recipient_ids = $allMatchedUsers
-            ->pluck('id')
-            ->filter()
-            ->unique()
-            ->toArray();
+    // Unique IDs
+    $userIds = $allMatchedUsers
+        ->pluck('id')
+        ->filter()
+        ->unique()
+        ->values();
 
-        $recipients = collect($recipient_ids)->map(function ($userId) use ($campaign) {
-            return [
-                'campaign_id' => $campaign->id,
-                'user_id'     => $userId,
-                'created_at'  => now(),
-                'updated_at'  => now(),
-            ];
-        });
+    $subscriberIds = $allMatchedSubscribers
+        ->pluck('id')
+        ->filter()
+        ->unique()
+        ->values();
 
-        CampaignRecipient::insert($recipients->toArray());
+    $recipients = collect();
 
-        return response()->json([
-            'message' => 'Campaign updated successfully',
-            'campaign_id' => $campaign->id
+    foreach ($userIds as $userId) {
+        $recipients->push([
+            'campaign_id'   => $campaign->id,
+            'user_id'       => $userId,
+            'subscriber_id' => null,
+            'created_at'    => now(),
+            'updated_at'    => now(),
         ]);
     }
+
+    foreach ($subscriberIds as $subscriberId) {
+        $recipients->push([
+            'campaign_id'   => $campaign->id,
+            'user_id'       => null,
+            'subscriber_id' => $subscriberId,
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ]);
+    }
+
+    if ($recipients->isNotEmpty()) {
+        CampaignRecipient::insert($recipients->toArray());
+    }
+
+    return response()->json([
+        'message'          => 'Campaign updated successfully',
+        'campaign_id'      => $campaign->id,
+        'user_count'       => $userIds->count(),
+        'subscriber_count' => $subscriberIds->count(),
+    ]);
+}
+
 
 
 
