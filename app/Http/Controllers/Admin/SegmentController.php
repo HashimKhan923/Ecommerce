@@ -14,37 +14,56 @@ class SegmentController extends Controller
      * List admin segments for given type (user / subscriber).
      * Pass ?segment_type=user or ?segment_type=subscriber
      */
-    public function index(Request $request)
-    {
-        $segmentType = $request->get('segment_type', 'user'); // default: user
+public function index(Request $request)
+{
+    $segmentType = $request->get('segment_type', 'user'); // default: user
 
-        $segments = Segment::whereNull('seller_id')
-            ->where('segment_type', $segmentType)
-            ->get();
+    // Fetch only admin segments
+    $segments = Segment::whereNull('seller_id')
+        ->where('segment_type', $segmentType)
+        ->get();
 
-        // Load base data depending on segment type
-        if ($segmentType === 'subscriber') {
-            $total = Subscriber::count();
-            $entities = Subscriber::all();
-        } else {
-            $total = User::count();
-            $entities = User::with('order')->get();
-        }
+    /**
+     * Load all base data ONCE depending on segment type
+     */
+    if ($segmentType === 'subscriber') {
+        $entities = Subscriber::all();
+        $totalEntities = $entities->count();
+    } else {
+        $entities = User::with('order')->get();
+        $totalEntities = $entities->count();
+    }
 
-        $data = $segments->map(function ($segment) use ($total, $entities) {
-            $matched = $entities->filter(fn($entity) =>
-                $this->evaluateRules($entity, json_decode($segment->rules, true))
-            );
+    /**
+     * Prepare response
+     */
+    $data = $segments->map(function ($segment) use ($entities, $totalEntities) {
 
-            return [
-                'segment'          => $segment,
-                'total_entities'   => $total,
-                'matched_count'    => $matched->count(),
-            ];
+        $rules = json_decode($segment->rules, true) ?? [];
+
+        // Find matched based on rules
+        $matched = $entities->filter(function ($entity) use ($rules) {
+            return $this->evaluateRules($entity, $rules);
         });
 
-        return response()->json(['segments' => $data]);
-    }
+        $matchedCount = $matched->count();
+
+        $percentage = $totalEntities > 0
+            ? round(($matchedCount / $totalEntities) * 100, 2)
+            : 0;
+
+        return [
+            'id'                 => $segment->id,
+            'name'               => $segment->name,
+            'percentage'         => $percentage,
+            'last_activity'      => $segment->updated_at?->toDateTimeString(),
+            'matchedCount'       => $matchedCount,
+            'totalEntityCount'   => $totalEntities
+        ];
+    });
+
+    return response()->json(['data' => $data]);
+}
 
     /**
      * Create a new admin segment (for users OR subscribers).
