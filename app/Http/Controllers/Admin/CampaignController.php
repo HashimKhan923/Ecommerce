@@ -16,7 +16,7 @@ use Carbon\Carbon;
 
 class CampaignController extends Controller
 {
-    public function index($seller_id) {
+    public function index() {
 
 
         
