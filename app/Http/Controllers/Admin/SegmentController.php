@@ -111,6 +111,7 @@ public function index(Request $request)
     {
         $segment = Segment::findOrFail($segmentId);
 
+        // Only admin segments (no seller_id)
         if ($segment->seller_id !== null) {
             return response()->json(['error' => 'This is not an admin segment.'], 403);
         }
@@ -122,23 +123,36 @@ public function index(Request $request)
             $entities = User::with('order')->get();
         }
 
-        $matched = $entities->filter(fn($entity) =>
-            $this->evaluateRules($entity, json_decode($segment->rules, true))
-        );
+        $totalEntities = $entities->count();
+
+        // Decode rules once
+        $rulesGroup = json_decode($segment->rules, true) ?? [];
+
+        // Filter entities using your rules engine
+        $matched = $entities->filter(function ($entity) use ($rulesGroup) {
+            return $this->evaluateRules($entity, $rulesGroup);
+        });
+
+        $matchedCount = $matched->count();
+
+        $percentage = $totalEntities > 0
+            ? round(($matchedCount / $totalEntities) * 100, 2)
+            : 0;
 
         // Response key depends on type (for convenience)
         $resultKey = $segment->segment_type === 'subscriber'
             ? 'matched_subscribers'
             : 'matched_users';
 
-        $response = [
-            'segment' => $segment,
-            'count'   => $matched->count(),
-        ];
-        $response[$resultKey] = $matched->values();
-
-        return response()->json($response);
+        return response()->json([
+            'segment'         => $segment,
+            'total_entities'  => $totalEntities,
+            'count'           => $matchedCount,
+            'percentage'      => $percentage,
+            $resultKey        => $matched->values(),
+        ]);
     }
+
 
     /**
      * Evaluate rules against a single entity (User or Subscriber).
