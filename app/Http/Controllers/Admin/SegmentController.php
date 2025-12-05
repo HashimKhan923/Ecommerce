@@ -39,11 +39,11 @@ public function index(Request $request)
      */
     $data = $segments->map(function ($segment) use ($entities, $totalEntities) {
 
-        $rules = json_decode($segment->rules, true) ?? [];
+        // $rules = json_decode($segment->rules, true) ?? [];
 
         // Find matched based on rules
-        $matched = $entities->filter(function ($entity) use ($rules) {
-            return $this->evaluateRules($entity, $rules);
+        $matched = $entities->filter(function ($entity) use ($segment) {
+            return $this->evaluateRules($entity, $segment->rules);
         });
 
         $matchedCount = $matched->count();
