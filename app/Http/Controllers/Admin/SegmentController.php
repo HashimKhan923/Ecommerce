@@ -126,11 +126,11 @@ public function index(Request $request)
         $totalEntities = $entities->count();
 
         // Decode rules once
-        $rulesGroup = json_decode($segment->rules, true) ?? [];
+        // $rulesGroup = json_decode($segment->rules, true) ?? [];
 
         // Filter entities using your rules engine
-        $matched = $entities->filter(function ($entity) use ($rulesGroup) {
-            return $this->evaluateRules($entity, $rulesGroup);
+        $matched = $entities->filter(function ($entity) use ($segment) {
+            return $this->evaluateRules($entity, $segment->rules, true);
         });
 
         $matchedCount = $matched->count();
