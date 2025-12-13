@@ -1466,4 +1466,14 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+            /// Product Comparison \\\
+
+            Route::group(['prefix' => '/product/comparison/'], function() {
+                Route::controller(App\Http\Controllers\ProductComparisonController::class)->group(function () {
+                    Route::get('compare/{productTitle}','compare');
+                });
+            });
+
+
+
 

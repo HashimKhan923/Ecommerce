@@ -54,6 +54,11 @@ return [
         'key' => env('EXCHANGERATE_API_KEY'),
     ],
 
+    'serpapi' => [
+    'key' => env('SERP_API_KEY'),
+    'endpoint' => 'https://serpapi.com/search',
+    ],
+
     
 
 ];
