@@ -6,23 +6,28 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 class ProductMatcher
 {
-    public function score($original, $candidate)
-    {
-        $prompt = "
-        Compare the following auto parts for compatibility.
-        Output only a number 0.0 to 1.0.
-
+public function score($original, $candidate)
+{
+    $prompt = "
+        Compare these two auto parts for compatibility (model/make/year).
+        Return ONLY a float number between 0.0 and 1.0.
+        
         Original: $original
         Candidate: $candidate
-        ";
+    ";
 
-        $response = OpenAI::chat()->create([
-            'model' => 'gpt-4o-mini',
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt]
-            ]
-        ]);
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+        'Content-Type'  => 'application/json',
+    ])->post('https://api.openai.com/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => [
+            ['role' => 'system', 'content' => 'You are an expert in auto parts compatibility.'],
+            ['role' => 'user', 'content' => $prompt],
+        ],
+    ]);
 
-        return floatval($response['choices'][0]['message']['content']);
-    }
+    return floatval($response->json('choices.0.message.content'));
+}
+
 }

@@ -6,22 +6,28 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 class AIKeywordExtractor
 {
-    public function extract($title)
-    {
-        $prompt = "
-            Extract search terms for model/make/year + part.
-            Return comma-separated keywords only.
+public function extract($title)
+{
+    $prompt = "
+        Extract model, make, year, chassis code, and part type keywords.
+        Return ONLY comma-separated keywords. No sentences.
 
-            Title: \"$title\"
-        ";
+        Title: \"$title\"
+    ";
 
-        $response = OpenAI::chat()->create([
-            'model' => 'gpt-4o-mini',
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt]
-            ]
-        ]);
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+        'Content-Type'  => 'application/json',
+    ])->post('https://api.openai.com/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => [
+            ['role' => 'system', 'content' => 'You are an expert in the auto parts industry.'],
+            ['role' => 'user', 'content' => $prompt],
+        ],
+    ]);
 
-        return explode(',', $response['choices'][0]['message']['content']);
-    }
+    $keywords = $response->json('choices.0.message.content');
+
+    return array_map('trim', explode(',', $keywords));
+}
 }
