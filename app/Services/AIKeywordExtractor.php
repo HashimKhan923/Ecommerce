@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use OpenAI\Laravel\Facades\OpenAI;
+use Illuminate\Support\Facades\Http;
 
 class AIKeywordExtractor
 {
