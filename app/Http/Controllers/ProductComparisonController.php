@@ -16,9 +16,11 @@ class ProductComparisonController extends Controller
         $keywords = implode(' ', (new AIKeywordExtractor())->extract($productTitle));
 
         $stores = [
-            'xgenauto.com',
-            'swaautosports.com',
-        ];
+'carid.com',
+'vlandshop.com',
+'alphardsupply.com',
+'autopartswarehouse.com',
+      ];
 
         $search = new SerpApiSearchService();
         $scraper = new ProductScraper();
