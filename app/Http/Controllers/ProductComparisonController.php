@@ -7,50 +7,67 @@ use App\Services\AIKeywordExtractor;
 use App\Services\SerpApiSearchService;
 use App\Services\ProductScraper;
 use App\Services\ProductMatcher;
-use Illuminate\Support\Facades\Http;
 
 class ProductComparisonController extends Controller
 {
-   public function compare($productTitle)
+    public function compare($productTitle)
     {
-        $prompt = "
-            You are an AI product comparison engine.
+        // Extract keywords from product title
+        $keywords = implode(' ', (new AIKeywordExtractor())->extract($productTitle));
 
-            Task:
-            - Search these websites for the product: $productTitle
-            - Websites:
-                - xgenauto.com
-                - vlandshop.com
-                - carid.com
-                - alphardsupply.com
-            - Return ONLY JSON with:
-                - store
-                - title
-                - price
-                - image
-                - url
-                - match_score (0–1)
+        $stores = [
+'xgenauto.com',
+'swaautosports.com'
+      ];
 
-            If not found on a store, omit it.
-        ";
+        $search = new SerpApiSearchService();
+        $scraper = new ProductScraper();
+        $matcher = new ProductMatcher();
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
-            'Content-Type'  => 'application/json',
-        ])->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-4.1',    // web browsing enabled
-            'messages' => [
-                ['role' => 'system', 'content' => 'You are an automotive product scraper and search agent.'],
-                ['role' => 'user', 'content' => $prompt],
-            ],
-        ]);
+        $results = [];
 
-        $data = $response->json('choices.0.message.content');
+        foreach ($stores as $store) {
+
+            $searchResults = $search->searchSite($store, $keywords);
+
+foreach ($searchResults as $item) {
+
+    $url = $item['link'] ?? null;
+    if (!$url) continue;
+
+    // FILTER NON-PRODUCT PAGES
+    if (
+        str_contains($url, '/category') ||
+        str_contains($url, '/tag') ||
+        str_contains($url, '/search') ||
+        (str_contains($url, '/collections/') && !str_contains($url, '/products/'))
+    ) {
+        continue;
+    }
+
+    // SCRAPE PRODUCT DETAILS
+    $details = $scraper->scrape($url);
+
+    // SCORE MATCH
+    $score = $matcher->score($productTitle, $details['title']);
+    if ($score >= 0.40) {  // use 0.40 for testing, increase later
+        $results[] = [
+            'store' => $store,
+            'match_score' => $score,
+            'title'       => $details['title'],
+            'price'       => $details['price'],
+            'image'       => $details['image'],
+            'url'         => $details['url']
+        ];
+    }
+}
+
+        }
 
         return response()->json([
             'status' => 'success',
             'product' => $productTitle,
-            'comparisons' => json_decode($data, true)
+            'comparisons' => $results
         ]);
     }
 }

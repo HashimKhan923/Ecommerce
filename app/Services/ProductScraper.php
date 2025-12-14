@@ -11,15 +11,10 @@ class ProductScraper
     {
         try {
             $html = Http::withHeaders([
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+                'Accept' => 'text/html,application/xhtml+xml',
                 'Accept-Language' => 'en-US,en;q=0.5'
-            ])
-            ->timeout(15)
-            ->retry(3, 300)
-            ->get($url)
-            ->body();
-
+            ])->timeout(15)->retry(3, 200)->get($url)->body();
         } catch (\Exception $e) {
             return [
                 'title' => '',
@@ -32,21 +27,32 @@ class ProductScraper
 
         $crawler = new Crawler($html);
 
-        // 1. Try JSON-LD extraction for accurate price
-        $price = '';
-        $jsonLd = $crawler->filter('script[type="application/ld+json"]')->each(fn($n) => $n->text());
+        // TITLE DETECTION (advanced)
+        $title = $this->safeText($crawler, [
+            'h1',
+            '.product-title',
+            '.product__title',
+            '.page-title',
+            '.product_title'
+        ]);
 
-        foreach ($jsonLd as $json) {
-            $data = json_decode($json, true);
-            if (isset($data['offers']['price'])) {
-                $price = $data['offers']['price'];
-            }
-        }
+        // PRICE DETECTION (advanced)
+        $price = $this->safeText($crawler, [
+            '.price',
+            '.price-item',
+            '.money',
+            '.product-price',
+            '.product__price',
+            '.woocommerce-Price-amount'
+        ]);
 
-        // 2. Fallback HTML selectors
-        $title = $this->safeText($crawler, ['h1', '.product-title', '.product__title']);
-        $price = $price ?: $this->safeText($crawler, ['.money', '.price', '.price-item']);
-        $image = $this->safeAttr($crawler, ['img', '.product__media img', '.woocommerce-product-gallery__image img'], 'src');
+        // IMAGE DETECTION (safe)
+        $image = $this->safeAttr($crawler, [
+            '.product-gallery img',
+            '.woocommerce-product-gallery__image img',
+            '.product__media img',
+            'img'
+        ], 'src');
 
         return [
             'title' => trim($title),
@@ -56,7 +62,8 @@ class ProductScraper
         ];
     }
 
-    private function safeText($crawler, $selectors)
+    // Safe extraction helper: NEVER crashes
+    private function safeText(Crawler $crawler, array $selectors)
     {
         foreach ($selectors as $selector) {
             try {
@@ -67,7 +74,7 @@ class ProductScraper
         return '';
     }
 
-    private function safeAttr($crawler, $selectors, $attr)
+    private function safeAttr(Crawler $crawler, array $selectors, $attr)
     {
         foreach ($selectors as $selector) {
             try {
