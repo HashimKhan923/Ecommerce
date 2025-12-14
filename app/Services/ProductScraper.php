@@ -1,6 +1,12 @@
 <?php
 
 namespace App\Services;
+use Goutte\Client;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+
 
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Facades\Http;
