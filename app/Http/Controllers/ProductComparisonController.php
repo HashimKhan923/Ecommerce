@@ -10,54 +10,46 @@ use App\Services\ProductMatcher;
 
 class ProductComparisonController extends Controller
 {
-    public function compare($productTitle)
+   public function compare($productTitle)
     {
-        // Extract keywords from product title
-        $keywords = implode(' ', (new AIKeywordExtractor())->extract($productTitle));
+        $prompt = "
+            You are an AI product comparison engine.
 
-        $stores = [
-'xgenauto.com',
-'swaautosports.com'
-      ];
+            Task:
+            - Search these websites for the product: $productTitle
+            - Websites:
+                - xgenauto.com
+                - vlandshop.com
+                - carid.com
+                - alphardsupply.com
+            - Return ONLY JSON with:
+                - store
+                - title
+                - price
+                - image
+                - url
+                - match_score (0–1)
 
-        $search = new SerpApiSearchService();
-        $scraper = new ProductScraper();
-        $matcher = new ProductMatcher();
+            If not found on a store, omit it.
+        ";
 
-        $results = [];
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+            'Content-Type'  => 'application/json',
+        ])->post('https://api.openai.com/v1/chat/completions', [
+            'model' => 'gpt-4.1',    // web browsing enabled
+            'messages' => [
+                ['role' => 'system', 'content' => 'You are an automotive product scraper and search agent.'],
+                ['role' => 'user', 'content' => $prompt],
+            ],
+        ]);
 
-        foreach ($stores as $store) {
-
-            $searchResults = $search->searchSite($store, $keywords);
-
-            foreach ($searchResults as $item) {
-
-                $url = $item['link'] ?? null;
-                if (!$url) continue;
-
-                // Scrape real product details
-                $details = $scraper->scrape($url);
-
-                // Score match using productTitle
-                $score = $matcher->score($productTitle, $details['title']);
-
-                if ($score >= 0.70) {
-                    $results[] = [
-                        'store' => $store,
-                        'match_score' => $score,
-                        'title' => $details['title'],
-                        'price' => $details['price'],
-                        'image' => $details['image'],
-                        'url' => $details['url']
-                    ];
-                }
-            }
-        }
+        $data = $response->json('choices.0.message.content');
 
         return response()->json([
             'status' => 'success',
             'product' => $productTitle,
-            'comparisons' => $results
+            'comparisons' => json_decode($data, true)
         ]);
     }
 }
