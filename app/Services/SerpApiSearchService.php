@@ -15,16 +15,35 @@ class SerpApiSearchService
         $this->endpoint = config('services.serpapi.endpoint');
     }
 
-    public function searchSite($site, $query)
-    {
-        $params = [
-            'engine' => 'google',
-            'q' => "site:$site $query",
-            'api_key' => $this->key,
-            'num' => 10
-        ];
+public function searchSite($site, $query)
+{
+    $queries = [
+        "inurl:products $query site:$site",
+        "inurl:product $query site:$site",
+        "$query site:$site",
+        "$query $site",
+        "$query $site LED tail lights",
+    ];
 
-        $response = Http::get($this->endpoint, $params);
-        return $response->json()['organic_results'] ?? [];
+    foreach ($queries as $q) {
+        $response = Http::get($this->endpoint, [
+            'engine' => 'google',
+            'q' => $q,
+            'num' => 10,
+            'api_key' => $this->key
+        ]);
+
+        $results = $response->json()['organic_results'] ?? [];
+
+        \Log::info("Query tried: $q");
+        \Log::info("Results count: " . count($results));
+
+        if (!empty($results)) {
+            return $results;
+        }
     }
+
+    return [];
+}
+
 }
