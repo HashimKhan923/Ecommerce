@@ -11,63 +11,90 @@ use App\Services\ProductMatcher;
 class ProductComparisonController extends Controller
 {
     public function compare($productTitle)
-    {
-        // Extract keywords from product title
-        $keywords = implode(' ', (new AIKeywordExtractor())->extract($productTitle));
+{
+    $stores = [
+        'vlandshop.com',
+        'carid.com',
+        'alphardsupply.com',
+        'carparts.com'
+    ];
 
-        $stores = [
-'xgenauto.com',
-'swaautosports.com'
-      ];
+    $keywords = implode(' ', (new AIKeywordExtractor())->extract($productTitle));
 
-        $search = new SerpApiSearchService();
-        $scraper = new ProductScraper();
-        $matcher = new ProductMatcher();
+    $search = new SerpApiSearchService();
+    $scraper = new ProductScraper();
+    $matcher = new ProductMatcher();
 
-        $results = [];
+    $results = [];
+    $searchErrors = [];
 
-        foreach ($stores as $store) {
+    foreach ($stores as $store) {
 
-            $searchResults = $search->searchSite($store, $keywords);
+        // 1. SEARCH USING SERPAPI
+        $searchResults = $search->searchSite($store, $keywords);
 
-foreach ($searchResults as $item) {
-
-    $url = $item['link'] ?? null;
-    if (!$url) continue;
-
-    // FILTER NON-PRODUCT PAGES
-    if (
-        str_contains($url, '/category') ||
-        str_contains($url, '/tag') ||
-        str_contains($url, '/search') ||
-        (str_contains($url, '/collections/') && !str_contains($url, '/products/'))
-    ) {
-        continue;
-    }
-
-    // SCRAPE PRODUCT DETAILS
-    $details = $scraper->scrape($url);
-
-    // SCORE MATCH
-    $score = $matcher->score($productTitle, $details['title']);
-    if ($score >= 0.40) {  // use 0.40 for testing, increase later
-        $results[] = [
-            'store' => $store,
-            'match_score' => $score,
-            'title'       => $details['title'],
-            'price'       => $details['price'],
-            'image'       => $details['image'],
-            'url'         => $details['url']
-        ];
-    }
-}
-
+        if (empty($searchResults)) {
+            $searchErrors[] = "No search results found for $store";
+            continue;
         }
 
-        return response()->json([
-            'status' => 'success',
-            'product' => $productTitle,
-            'comparisons' => $results
-        ]);
+        foreach ($searchResults as $item) {
+
+            $url = $item['link'] ?? null;
+
+            if (!$url) {
+                $searchErrors[] = "Invalid result structure from $store";
+                continue;
+            }
+
+            // FILTER BAD URLS
+            if (
+                str_contains($url, '/category') ||
+                str_contains($url, '/tag') ||
+                str_contains($url, '/search') ||
+                (str_contains($url, '/collections/') && !str_contains($url, '/products/'))
+            ) {
+                continue;
+            }
+
+            // 2. SCRAPE PRODUCT PAGE
+            $details = $scraper->scrape($url);
+
+            if (empty($details['title'])) {
+                $searchErrors[] = "Scraper failed on URL: $url";
+                continue;
+            }
+
+            // 3. MATCH SCORE
+            $score = $matcher->score($productTitle, $details['title']);
+
+            if ($score >= 0.40) {
+                $results[] = [
+                    'store'       => $store,
+                    'match_score' => $score,
+                    'title'       => $details['title'],
+                    'price'       => $details['price'],
+                    'image'       => $details['image'],
+                    'url'         => $details['url']
+                ];
+            }
+        }
     }
+
+    // RETURN RESULTS OR ERROR
+    if (empty($results)) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'No matching products found.',
+            'errors'  => $searchErrors
+        ], 404);
+    }
+
+    return response()->json([
+        'status'      => 'success',
+        'product'     => $productTitle,
+        'comparisons' => $results
+    ]);
+}
+
 }
