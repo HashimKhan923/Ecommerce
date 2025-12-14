@@ -7,6 +7,7 @@ use App\Services\AIKeywordExtractor;
 use App\Services\SerpApiSearchService;
 use App\Services\ProductScraper;
 use App\Services\ProductMatcher;
+use Illuminate\Support\Facades\Http;
 
 class ProductComparisonController extends Controller
 {
