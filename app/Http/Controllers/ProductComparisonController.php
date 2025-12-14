@@ -13,10 +13,8 @@ class ProductComparisonController extends Controller
     public function compare($productTitle)
 {
     $stores = [
-        'vlandshop.com',
-        'carid.com',
-        'alphardsupply.com',
-        'carparts.com'
+'xgenauto.com',
+'swaautosports.com'
     ];
 
     $keywords = implode(' ', (new AIKeywordExtractor())->extract($productTitle));
