@@ -9,7 +9,7 @@ class StockNotifyMe extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['email','product_id','variant_id','status'];
+    protected $fillable = ['email','product_id','seller_id','variant_id','status'];
 
 
     public function product()
