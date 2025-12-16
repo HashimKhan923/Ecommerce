@@ -16,54 +16,81 @@ class SegmentController extends Controller
      */
 public function index(Request $request)
 {
-    
+    /**
+     * Fetch admin segments for BOTH types
+     */
+    $userSegments = Segment::whereNull('seller_id')
+        ->where('segment_type', 'user')
+        ->get();
 
-    // Fetch only admin segments
-    $segments = Segment::whereNull('seller_id')
-        ->where('segment_type','user')->orWhere('segment_type','subscriber')
+    $subscriberSegments = Segment::whereNull('seller_id')
+        ->where('segment_type', 'subscriber')
         ->get();
 
     /**
-     * Load all base data ONCE depending on segment type
+     * Load data once
      */
-    if ($segmentType === 'subscriber') {
-        $entities = Subscriber::all();
-        $totalEntities = $entities->count();
-    } else {
-        $entities = User::with('order')->get();
-        $totalEntities = $entities->count();
-    }
+    $users = User::with('order')->get();
+    $totalUsers = $users->count();
+
+    $subscribers = Subscriber::all();
+    $totalSubscribers = $subscribers->count();
+
+    $final = [];
 
     /**
-     * Prepare response
+     * Build user segment results
      */
-    $data = $segments->map(function ($segment) use ($entities, $totalEntities) {
+    foreach ($userSegments as $segment) {
 
-        // $rules = json_decode($segment->rules, true) ?? [];
-
-        // Find matched based on rules
-        $matched = $entities->filter(function ($entity) use ($segment) {
-            return $this->evaluateRules($entity, $segment->rules);
+        $matched = $users->filter(function ($user) use ($segment) {
+            return $this->evaluateRules($user, $segment->rules);
         });
 
         $matchedCount = $matched->count();
-
-        $percentage = $totalEntities > 0
-            ? round(($matchedCount / $totalEntities) * 100, 2)
+        $percentage = $totalUsers > 0
+            ? round(($matchedCount / $totalUsers) * 100, 2)
             : 0;
 
-        return [
-            'id'                 => $segment->id,
-            'name'               => $segment->name,
-            'percentage'         => $percentage,
-            'last_activity'      => $segment->updated_at?->toDateTimeString(),
-            'matchedCount'       => $matchedCount,
-            'totalEntityCount'   => $totalEntities
+        $final[] = [
+            'id'               => $segment->id,
+            'segment_type'     => 'user',
+            'name'             => $segment->name,
+            'percentage'       => $percentage,
+            'matchedCount'     => $matchedCount,
+            'totalEntityCount' => $totalUsers,
+            'last_activity'    => $segment->updated_at?->toDateTimeString(),
         ];
-    });
+    }
 
-    return response()->json(['data' => $data]);
+    /**
+     * Build subscriber segment results
+     */
+    foreach ($subscriberSegments as $segment) {
+
+        $matched = $subscribers->filter(function ($subscriber) use ($segment) {
+            return $this->evaluateRules($subscriber, $segment->rules);
+        });
+
+        $matchedCount = $matched->count();
+        $percentage = $totalSubscribers > 0
+            ? round(($matchedCount / $totalSubscribers) * 100, 2)
+            : 0;
+
+        $final[] = [
+            'id'               => $segment->id,
+            'segment_type'     => 'subscriber',
+            'name'             => $segment->name,
+            'percentage'       => $percentage,
+            'matchedCount'     => $matchedCount,
+            'totalEntityCount' => $totalSubscribers,
+            'last_activity'    => $segment->updated_at?->toDateTimeString(),
+        ];
+    }
+
+    return response()->json(['data' => $final]);
 }
+
 
     /**
      * Create a new admin segment (for users OR subscribers).
