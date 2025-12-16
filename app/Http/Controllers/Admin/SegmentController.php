@@ -16,11 +16,11 @@ class SegmentController extends Controller
      */
 public function index(Request $request)
 {
-    $segmentType = $request->get('segment_type', 'user'); // default: user
+    
 
     // Fetch only admin segments
     $segments = Segment::whereNull('seller_id')
-        ->where('segment_type', $segmentType)
+        ->where('segment_type','user')->orWhere('segment_type','subscriber')
         ->get();
 
     /**
