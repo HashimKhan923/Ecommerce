@@ -8,6 +8,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Campaign;
+use App\Models\CampaignRecipient;
+use App\Models\Subscriber;
 use App\Models\User;
 use Mail;
 use App\Mail\CampaignMail;
