@@ -8,6 +8,7 @@ use App\Models\Segment;
 use App\Models\User;
 use App\Models\Subscriber;
 
+
 class SegmentController extends Controller
 {
     /**
