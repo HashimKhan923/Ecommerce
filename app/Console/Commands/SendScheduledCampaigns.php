@@ -16,15 +16,28 @@ class SendScheduledCampaigns extends Command
     public function handle()
     {
         $now = Carbon::now();
-        $campaigns = Campaign::where('status','scheduled')
-                             ->where('send_time','<=',$now->toDateTimeString())
+
+        $campaigns = Campaign::where('status', 'scheduled')
+                             ->where('send_time', '<=', $now)
                              ->get();
+
         foreach ($campaigns as $campaign) {
-            // Dispatch emails to all recipients
-            foreach ($campaign->recipients as $user) {
-                SendCampaignEmail::dispatch($campaign->id, $user->id);
+
+            // 1. Dispatch emails to all user recipients
+            foreach ($campaign->userRecipients as $user) {
+                SendCampaignEmail::dispatch($campaign->id, $user->id, null);
             }
+
+            // 2. Dispatch emails to all subscriber recipients
+            foreach ($campaign->subscriberRecipients as $subscriber) {
+                SendCampaignEmail::dispatch($campaign->id, null, $subscriber->id);
+            }
+
+            // 3. Mark campaign as sent
             $campaign->update(['status' => 'sent']);
         }
+
+        return 0;
     }
 }
+
