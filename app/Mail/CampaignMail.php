@@ -17,10 +17,10 @@ class CampaignMail extends Mailable implements ShouldQueue
 
     public $campaign, $recipient;
 
-    public function __construct(Campaign $campaign, User $recipient)
+    public function __construct(Campaign $campaign, $recipient)
     {
         $this->campaign = $campaign;
-        $this->recipient = $recipient;
+        $this->recipient = $recipient;  // Can be User or Subscriber
     }
  
     public function build()

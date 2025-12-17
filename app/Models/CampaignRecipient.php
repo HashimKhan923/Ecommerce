@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class CampaignRecipient extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+    'campaign_id',
+    'user_id',
+    'subscriber_id',
+    'unsubscribed',
+];
+
 }

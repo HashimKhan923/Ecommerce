@@ -49,23 +49,36 @@ class CampaignController extends Controller
                 'click_rate' => $campaign->summary->click_rate,
             ]);
         } else {
-            // Use live stats
-            $totalSent = $campaign->recipient()->count();
-            $totalOpened = $campaign->trackingEvents()->where('event_type','open')->count();
-            $totalClicked = $campaign->trackingEvents()->where('event_type', 'click')->count();
-            $totalUnsubscribed = $campaign->recipient()->where('unsubscribed', true)->count();
+        // Total sent (users + subscribers)
+        $totalSent = $campaign->allRecipients()->count();
 
-            $openRate = $totalSent > 0 ? round(($totalOpened / $totalSent) * 100, 2) : 0;
-            $clickRate = $totalSent > 0 ? round(($totalClicked / $totalSent) * 100, 2) : 0;
+        // Opens (users + subscribers)
+        $totalOpened = $campaign->trackingEvents()
+            ->where('event_type', 'open')
+            ->count();
 
-            return response()->json([
-                'total_sent' => $totalSent,
-                'total_opened' => $totalOpened,
-                'total_clicked' => $totalClicked,
-                'open_rate' => $openRate,
-                'click_rate' => $clickRate,
-            ]);
-        }
+        // Clicks (users + subscribers)
+        $totalClicked = $campaign->trackingEvents()
+            ->where('event_type', 'click')
+            ->count();
+
+        // Unsubscribed (users + subscribers)
+        $totalUnsubscribed = $campaign->allRecipients()
+            ->where('unsubscribed', true)
+            ->count();
+
+        $openRate = $totalSent > 0 ? round(($totalOpened / $totalSent) * 100, 2) : 0;
+        $clickRate = $totalSent > 0 ? round(($totalClicked / $totalSent) * 100, 2) : 0;
+
+        return response()->json([
+            'total_sent'        => $totalSent,
+            'total_opened'      => $totalOpened,
+            'total_clicked'     => $totalClicked,
+            'total_unsubscribed'=> $totalUnsubscribed,
+            'open_rate'         => $openRate,
+            'click_rate'        => $clickRate,
+        ]);
+                }
     }
 
 
@@ -288,8 +301,14 @@ public function update(Request $request)
     {
         $campaign = Campaign::findOrFail($id);
 
-        foreach ($campaign->recipients as $user) {
-            SendCampaignEmail::dispatch($campaign->id, $user->id);
+        // Send to Users
+        foreach ($campaign->userRecipients as $user) {
+            SendCampaignEmail::dispatch($campaign->id, $user->id, null);
+        }
+
+        // Send to Subscribers
+        foreach ($campaign->subscriberRecipients as $subscriber) {
+            SendCampaignEmail::dispatch($campaign->id, null, $subscriber->id);
         }
 
         return response()->json(['message' => 'Campaign emails queued successfully.']);

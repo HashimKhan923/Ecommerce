@@ -23,10 +23,29 @@ class Campaign extends Model
     {
         return $this->hasMany(CampaignRecipient::class);
     }
-    public function recipients() {
-        return $this->belongsToMany(User::class, 'campaign_recipients')
-                    ->withPivot('unsubscribed')->withTimestamps();
+
+    public function allRecipients()
+    {
+        return $this->hasMany(CampaignRecipient::class, 'campaign_id');
     }
+
+
+    public function userRecipients()
+    {
+        return $this->belongsToMany(User::class, 'campaign_recipients', 'campaign_id', 'user_id')
+                    ->withPivot('unsubscribed')
+                    ->wherePivotNotNull('user_id')
+                    ->withTimestamps();
+    }
+
+    public function subscriberRecipients()
+    {
+        return $this->belongsToMany(Subscriber::class, 'campaign_recipients', 'campaign_id', 'subscriber_id')
+                    ->withPivot('unsubscribed')
+                    ->wherePivotNotNull('subscriber_id')
+                    ->withTimestamps();
+    }
+    
     public function trackingEvents() {
         return $this->hasMany(TrackingEvent::class);
     }
