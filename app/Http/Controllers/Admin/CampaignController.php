@@ -20,7 +20,7 @@ class CampaignController extends Controller
 
 
         
-        $campaigns = Campaign::with('segments','trackingEvents','opens','clicks')->withCount('allRecipients')->where('seller_id', null)->get();
+        $campaigns = Campaign::with('segments','trackingEvents','opens','clicks')->withCount('userRecipients')->withCount('subscriberRecipients')->where('seller_id', null)->get();
 
         return response()->json(['campaigns'=>$campaigns]);
     }
