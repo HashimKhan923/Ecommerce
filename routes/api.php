@@ -1427,9 +1427,10 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
 
 
-        Route::get('track/open/{campaign}/{user}', [App\Http\Controllers\Seller\TrackingController::class, 'open'])->name('track.open');
-        Route::get('track/click/{campaign}/{user}/{link}', [App\Http\Controllers\Seller\TrackingController::class, 'click'])->name('track.click');
-        Route::get('track/unsubscribe/{campaign}/{user}', [App\Http\Controllers\Seller\TrackingController::class, 'unsubscribe'])->name('track.unsubscribe');
+Route::get('track/open',  [App\Http\Controllers\Seller\TrackingController::class, 'open'])->name('track.open');
+Route::get('track/click', [App\Http\Controllers\Seller\TrackingController::class, 'click'])->name('track.click');
+Route::get('track/unsubscribe', [App\Http\Controllers\Seller\TrackingController::class, 'unsubscribe'])->name('track.unsubscribe');
+
 
 
 

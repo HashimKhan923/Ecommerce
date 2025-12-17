@@ -28,7 +28,7 @@ class CampaignMail extends Mailable implements ShouldQueue
         $content = $this->campaign->content;
         $content = str_replace('{{buyer_name}}', $this->recipient->name, $content);
 
-        $content = app('App\Services\TrackingHelper')->injectTracking($content, $this->campaign->id, $this->recipient->id);
+        $content = app('App\Services\TrackingHelper')->injectTracking($content, $this->campaign->id, $this->recipient);
 
         return $this->subject($this->campaign->subject)
                     ->html($content);

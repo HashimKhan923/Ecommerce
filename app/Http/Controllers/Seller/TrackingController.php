@@ -6,57 +6,96 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TrackingEvent;
 use App\Models\LinkStat;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class TrackingController extends Controller
 {
-        // Handle open tracking pixel
-    public function open($campaignId, $userId) {
+    /**
+     * OPEN TRACKING PIXEL
+     */
+    public function open(Request $request)
+    {
+        $campaignId    = $request->campaign_id;
+        $recipientType = $request->recipient_type; // user | subscriber
+        $recipientId   = $request->recipient_id;
+
         TrackingEvent::create([
-            'campaign_id' => $campaignId,
-            'user_id' => $userId,
-            'event_type' => 'open',
+            'campaign_id'   => $campaignId,
+            'user_id'       => $recipientType === 'user' ? $recipientId : null,
+            'subscriber_id' => $recipientType === 'subscriber' ? $recipientId : null,
+            'event_type'    => 'open',
+            'created_at'    => now(),
         ]);
-        // Return a 1x1 transparent pixel image
+
         return response()->file(public_path('images/pixel.png'));
     }
 
-    // Handle link click
-    public function click($campaignId, $userId, $linkId) {
+
+    /**
+     * CLICK TRACKING
+     */
+    public function click(Request $request)
+    {
+        $campaignId    = $request->campaign_id;
+        $recipientType = $request->recipient_type;
+        $recipientId   = $request->recipient_id;
+        $linkId        = $request->link_id;
+
         $link = LinkStat::find($linkId);
-        if ($link) {
-            // Update click stats
-            $link->increment('clicks');
-            // Unique click?
-            $already = TrackingEvent::where(['campaign_id'=>$campaignId,'user_id'=>$userId,'event_type'=>'click','url'=>$link->url])->exists();
-            if (!$already) {
-                $link->increment('unique_clicks');
-            }
-            // Log event
-            TrackingEvent::create([
-                'campaign_id' => $campaignId,
-                'user_id' => $userId,
-                'event_type' => 'click',
-                'url' => $link->url,
-            ]);
-            // Redirect to actual URL
-            return redirect()->away($link->url);
+        if (!$link) abort(404);
+
+        $link->increment('clicks');
+
+        $column = $recipientType === 'user' ? 'user_id' : 'subscriber_id';
+
+        $alreadyClicked = TrackingEvent::where([
+            'campaign_id'   => $campaignId,
+            $column         => $recipientId,
+            'event_type'    => 'click',
+            'url'           => $link->url
+        ])->exists();
+
+        if (!$alreadyClicked) {
+            $link->increment('unique_clicks');
         }
-        abort(404);
+
+        TrackingEvent::create([
+            'campaign_id'   => $campaignId,
+            'user_id'       => $recipientType === 'user' ? $recipientId : null,
+            'subscriber_id' => $recipientType === 'subscriber' ? $recipientId : null,
+            'event_type'    => 'click',
+            'url'           => $link->url,
+            'created_at'    => now(),
+        ]);
+
+        return redirect()->away($link->url);
     }
 
-    // Handle unsubscribe link
-    public function unsubscribe($campaignId, $userId) {
-        // Mark pivot unsubscribed
+
+    /**
+     * UNSUBSCRIBE
+     */
+    public function unsubscribe(Request $request)
+    {
+        $campaignId    = $request->campaign_id;
+        $recipientType = $request->recipient_type;
+        $recipientId   = $request->recipient_id;
+
+        $column = $recipientType === 'user' ? 'user_id' : 'subscriber_id';
+
         DB::table('campaign_recipients')
-          ->where('campaign_id', $campaignId)
-          ->where('user_id', $userId)
-          ->update(['unsubscribed' => true]);
+            ->where('campaign_id', $campaignId)
+            ->where($column, $recipientId)
+            ->update(['unsubscribed' => true]);
+
         TrackingEvent::create([
-            'campaign_id' => $campaignId,
-            'user_id' => $userId,
-            'event_type' => 'unsubscribe'
+            'campaign_id'   => $campaignId,
+            'user_id'       => $recipientType === 'user' ? $recipientId : null,
+            'subscriber_id' => $recipientType === 'subscriber' ? $recipientId : null,
+            'event_type'    => 'unsubscribe',
+            'created_at'    => now()
         ]);
-        return response('You have been unsubscribed.');
+
+        return response('<h3>You have been unsubscribed.</h3>');
     }
 }

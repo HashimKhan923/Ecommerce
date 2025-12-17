@@ -3,55 +3,57 @@
 namespace App\Services;
 
 use App\Models\LinkStat;
-use Illuminate\Support\Facades\Http;
-
 
 class TrackingHelper
 {
-    function injectTracking($html, $campaignId, $userId)
+    public function injectTracking($html, $campaignId, $recipient)
     {
-        $baseUrl = 'https://api.dragonautomart.com';
+        $baseUrl = 'https://api.dragonautomart.com/api/track';
 
-        // Open tracking pixel
-        $pixel = "<img src=\"{$baseUrl}/api/track/open/{$campaignId}/{$userId}\" width=\"1\" height=\"1\" style=\"display:none;\" />";
+        $recipientType = $recipient instanceof \App\Models\User ? 'user' : 'subscriber';
+        $recipientId   = $recipient->id;
+
+        //////////////////////////////////////
+        // 1. OPEN TRACKING PIXEL
+        //////////////////////////////////////
+        $pixelUrl = "{$baseUrl}/open?campaign_id={$campaignId}&recipient_type={$recipientType}&recipient_id={$recipientId}";
+        $pixel = '<img src="'.$pixelUrl.'" width="1" height="1" style="display:none;" />';
         $html .= $pixel;
 
-        $html = preg_replace_callback('/<a\s+href="([^"]+)"/i', function ($matches) use ($campaignId, $userId, $baseUrl) {
-            $originalUrl = $matches[1];
+        //////////////////////////////////////
+        // 2. CLICK TRACKING
+        //////////////////////////////////////
+        $html = preg_replace_callback('/<a\s+href="([^"]+)"/i', function ($matches) use ($campaignId, $recipientType, $recipientId, $baseUrl) {
 
-            // ✅ Add campaign_id as query param
-            $parsed = parse_url($originalUrl);
+            $realUrl = $matches[1];
 
-            // Check if URL already has query params
-            $query = isset($parsed['query']) ? $parsed['query'] . '&' : '';
-            $query .= 'campaign_id=' . $campaignId;
+            // Save or fetch LinkStat
+            $link = LinkStat::firstOrCreate(
+                ['campaign_id' => $campaignId, 'url' => $realUrl],
+                ['clicks' => 0, 'unique_clicks' => 0]
+            );
 
-            // Rebuild URL with new query
-            $newUrl = (isset($parsed['scheme']) ? "{$parsed['scheme']}://" : '') .
-                    (isset($parsed['host']) ? "{$parsed['host']}" : '') .
-                    (isset($parsed['path']) ? "{$parsed['path']}" : '') .
-                    '?' . $query;
+            $trackUrl =
+                "{$baseUrl}/click?".
+                "campaign_id={$campaignId}".
+                "&link_id={$link->id}".
+                "&recipient_type={$recipientType}".
+                "&recipient_id={$recipientId}";
 
-            if (isset($parsed['fragment'])) {
-                $newUrl .= '#' . $parsed['fragment'];
-            }
-
-            // ✅ Save link in DB with appended campaign_id
-            $link = LinkStat::firstOrCreate([
-                'campaign_id' => $campaignId,
-                'url' => $newUrl
-            ]);
-
-            // ✅ Replace with your tracked redirect link
-            $trackUrl = "{$baseUrl}/api/track/click/{$campaignId}/{$userId}/{$link->id}";
-
-            return '<a href="' . $trackUrl . '"';
+            return '<a href="'.$trackUrl.'"';
         }, $html);
+
+        //////////////////////////////////////
+        // 3. UNSUBSCRIBE LINK
+        //////////////////////////////////////
+        $unsubscribeUrl =
+            "{$baseUrl}/unsubscribe?".
+            "campaign_id={$campaignId}".
+            "&recipient_type={$recipientType}".
+            "&recipient_id={$recipientId}";
+
+        $html = str_replace('{{unsubscribe_url}}', $unsubscribeUrl, $html);
 
         return $html;
     }
-
-
-
-
 }
