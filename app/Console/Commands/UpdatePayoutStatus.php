@@ -171,6 +171,7 @@ class UpdatePayoutStatus extends Command
                                     Mail::send(
                                         'email.Payout.insufficient_funds',
                                         [
+                                            'payout_id' => $payout->id,
                                             'seller_name' => $Seller->name,
                                             'seller_email' => $Seller->email,
                                             'amount' => $payout->amount,

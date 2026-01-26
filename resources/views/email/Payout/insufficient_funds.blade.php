@@ -64,6 +64,7 @@
             </div>
 
             <p class="card-text">
+                <strong>Payout ID:</strong> {{ $payout_id }}<br>
                 <strong>Seller Name:</strong> {{ $seller_name }}<br>
                 <strong>Seller Email:</strong> {{ $seller_email }}<br>
                 <strong>Payout Amount:</strong> ${{ $amount }}
