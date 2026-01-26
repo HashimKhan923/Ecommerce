@@ -155,17 +155,43 @@ class UpdatePayoutStatus extends Command
                                     Stripe::setApiKey(config('services.stripe.secret'));
 
                         
-                                    try {
-                                        Transfer::create([
-                                            'amount' => $payout->amount * 100,
-                                            'currency' => 'usd',
-                                            'destination' => $Seller->stripe_account_id,
-                                        ]);
+                            try {
+                                Transfer::create([
+                                    'amount' => $payout->amount * 100,
+                                    'currency' => 'usd',
+                                    'destination' => $Seller->stripe_account_id,
+                                ]);
 
-                                    } catch (\Exception $e) {
-                                        $this->error('Stripe Payout Error: ' . $e->getMessage());
-                                        continue;
-                                    }
+                            } catch (\Stripe\Exception\ApiErrorException $e) {
+
+                                // Detect insufficient funds
+                                if (str_contains($e->getMessage(), 'Insufficient funds')) {
+
+                                    // 🔔 Send email to admin
+                                    Mail::send(
+                                        'email.Payout.insufficient_funds',
+                                        [
+                                            'seller_name' => $Seller->name,
+                                            'seller_email' => $Seller->email,
+                                            'amount' => $payout->amount,
+                                            'error' => $e->getMessage(),
+                                        ],
+                                        function ($message) {
+                                            $message->from('support@dragonautomart.com', 'Dragon Auto Mart');
+                                            $message->to('support@dragonautomart.com'); // admin email
+                                            $message->subject('Stripe Payout Failed – Insufficient Funds');
+                                        }
+                                    );
+
+                                    // ❌ Do NOT mark payout as paid
+                                    $this->error('Stripe Error (Insufficient Funds) for payout ID: ' . $payout->id);
+                                    continue;
+                                }
+
+                                // Other Stripe errors
+                                $this->error('Stripe Payout Error: ' . $e->getMessage());
+                                continue;
+                            }
 
                                     
                     }
