@@ -30,15 +30,11 @@ class PayoutController extends Controller
             $query->where('order_id', $searchValue);
         }
 
-        // ✅ Date Filter
-        if ($from_date && $to_date) {
-            $query->whereBetween('created_at', [
-                $from_date . ' 00:00:00',
-                $to_date . ' 23:59:59'
-            ]);
-        } elseif ($from_date) {
+        if($from_date) {
             $query->whereDate('created_at', '>=', $from_date);
-        } elseif ($to_date) {
+        } 
+        
+        if ($to_date) {
             $query->whereDate('created_at', '<=', $to_date);
         }
 
