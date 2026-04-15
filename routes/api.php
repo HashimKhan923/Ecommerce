@@ -317,7 +317,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                     Route::group(['prefix' => '/admin/payout/'], function() {
                         Route::controller(App\Http\Controllers\Admin\PayoutController::class)->group(function () {
-                            Route::get('show/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
+                            Route::get('show/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}/{from_date?}/{to_date?}','index');
                             Route::get('status/{payout_id}','status');
                             Route::get('delete/{id}','delete'); 
                         });

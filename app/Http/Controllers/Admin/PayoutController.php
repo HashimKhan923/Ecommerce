@@ -14,10 +14,9 @@ use Mail;
 
 class PayoutController extends Controller
 {
-    public function index($shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
+    public function index($shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null, $from_date = null, $to_date = null)
     {
         $query = Payout::with('order.shop','listing_fee','featuredProductOrders','seller');
-
 
         if ($shop_id) {
             $query->where('shop_id', $shop_id);
@@ -28,7 +27,19 @@ class PayoutController extends Controller
         }
 
         if ($searchValue) {
-            $query->where('order_id',$searchValue);
+            $query->where('order_id', $searchValue);
+        }
+
+        // ✅ Date Filter
+        if ($from_date && $to_date) {
+            $query->whereBetween('created_at', [
+                $from_date . ' 00:00:00',
+                $to_date . ' 23:59:59'
+            ]);
+        } elseif ($from_date) {
+            $query->whereDate('created_at', '>=', $from_date);
+        } elseif ($to_date) {
+            $query->whereDate('created_at', '<=', $to_date);
         }
 
         $data = $query->orderBy('id', 'desc')
