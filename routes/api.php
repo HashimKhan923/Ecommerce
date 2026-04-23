@@ -247,7 +247,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::group(['prefix' => '/admin/order/'], function() {
                 Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function () {
-                    Route::get('show/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
+                    Route::get('show/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}/{from_date?}/{to_date?}','index');
                     Route::get('detail/{id}','detail');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
@@ -767,7 +767,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/order/'], function() {
                 Route::controller(App\Http\Controllers\Seller\OrderController::class)->group(function () {
-                    Route::get('show/{seller_id?}/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
+                    Route::get('show/{seller_id?}/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}/{from_date?}/{to_date?}','index');
                     Route::get('detail/{id}','detail');
                     Route::post('delivery_status','delivery_status');
                     Route::post('payment_status','payment_status');
@@ -826,7 +826,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                 Route::group(['prefix' => '/seller/payout/'], function() {
                     Route::controller(App\Http\Controllers\Seller\PayoutController::class)->group(function () {
-                        Route::get('show/{seller_id}/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}','index');
+                        Route::get('show/{seller_id}/{shop_id?}/{start?}/{length?}/{status?}/{searchValue?}/{from_date?}/{to_date?}','index');
                         Route::post('create','create');
                         Route::get('delete/{id}','delete');
                         Route::post('stripe/connect','create_stripe_connect_account');

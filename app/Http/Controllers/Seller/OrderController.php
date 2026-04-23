@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    public function index($seller_id = null, $shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
+    public function index($seller_id = null, $shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null, $from_date = null, $to_date = null)
     {
         $query = Order::with(['shop', 'order_tracking']);
 
@@ -52,6 +52,14 @@ class OrderController extends Controller
                 $q->where('name', 'like', "%{$searchValue}%")
                 ->orWhere('email', 'like', "%{$searchValue}%");
             });
+        }
+
+        if ($from_date) {
+            $query->whereDate('created_at', '>=', $from_date);
+        }
+
+        if ($to_date) {
+            $query->whereDate('created_at', '<=', $to_date);
         }
 
         $data = $query->orderBy('id', 'desc')

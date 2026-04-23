@@ -21,7 +21,7 @@ class OrderController extends Controller
 {
 
 
-    public function index($shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null)
+    public function index($shop_id = null, $start = 0, $length = 10, $status = null, $searchValue = null, $from_date = null, $to_date = null)
     {
         $order = Order::where('admin_view_status', 0)->get();
         if($order)
@@ -44,6 +44,14 @@ class OrderController extends Controller
 
         if ($status) {
             $query->where('delivery_status', $status);
+        }
+
+        if ($from_date) {
+            $query->whereDate('created_at', '>=', $from_date);
+        }
+
+        if ($to_date) {
+            $query->whereDate('created_at', '<=', $to_date);
         }
 
         if ($searchValue) {
