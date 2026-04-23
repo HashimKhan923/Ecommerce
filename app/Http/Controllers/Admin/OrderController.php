@@ -46,10 +46,10 @@ class OrderController extends Controller
             $query->where('delivery_status', $status);
         }
 
-        if ($from_date) {
+        if($from_date) {
             $query->whereDate('created_at', '>=', $from_date);
-        }
-
+        } 
+        
         if ($to_date) {
             $query->whereDate('created_at', '<=', $to_date);
         }

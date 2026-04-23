@@ -27,12 +27,12 @@ class PayoutController extends Controller
             $query->where('order_id',$searchValue);
         }
 
-        if ($from_date) {
-            $query->whereDate('date', '>=', $from_date);
-        }
-
+        if($from_date) {
+            $query->whereDate('created_at', '>=', $from_date);
+        } 
+        
         if ($to_date) {
-            $query->whereDate('date', '<=', $to_date);
+            $query->whereDate('created_at', '<=', $to_date);
         }
 
         $data = $query->orderBy('id', 'desc')
